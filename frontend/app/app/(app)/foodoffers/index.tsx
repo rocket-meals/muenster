@@ -80,6 +80,7 @@ import { getAppElementTranslation } from '@/helper/resourceHelper';
 import noFoodOffersFound from '@/assets/animations/noFoodOffersFound.json';
 import LottieView from 'lottie-react-native';
 import { replaceLottieColors } from '@/helper/animationHelper';
+import { myContrastColor } from '@/helper/colorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import CustomMarkdown from '@/components/CustomMarkdown/CustomMarkdown';
@@ -129,6 +130,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
     drawerPosition,
     appSettings,
     primaryColor,
+    selectedTheme: mode,
   } = useSelector((state: RootState) => state.settings);
   const {
     ownFoodFeedbacks,
@@ -150,6 +152,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   const foods_area_color = appSettings?.foods_area_color
     ? appSettings?.foods_area_color
     : primaryColor;
+  const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
   // Set Page Title
   useSetPageTitle(selectedCanteen?.alias || TranslationKeys.food_offers);
@@ -988,13 +991,13 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
                       }
                       style={[
                         styles.jumpButton,
-                        { backgroundColor: theme.activeBackground },
+                        { backgroundColor: foods_area_color },
                       ]}
                     >
                       <Text
                         style={[
                           styles.jumpButtonText,
-                          { color: theme.activeText },
+                          { color: contrastColor },
                         ]}
                       >
                         {`${translate(TranslationKeys.show_offers_on)} ${translate(
