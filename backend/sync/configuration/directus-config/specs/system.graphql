@@ -2628,12 +2628,12 @@ type foods {
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   image(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
   food_category(filter: foods_categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): foods_categories
-  markings(filter: foods_markings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foods_markings]
-  markings_func: count_functions
-  translations(filter: foods_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foods_translations]
-  translations_func: count_functions
   feedbacks(filter: foods_feedbacks_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foods_feedbacks]
   feedbacks_func: count_functions
+  translations(filter: foods_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foods_translations]
+  translations_func: count_functions
+  markings(filter: foods_markings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foods_markings]
+  markings_func: count_functions
   attribute_values(filter: foods_attributes_values_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foods_attributes_values]
   attribute_values_func: count_functions
 }
@@ -5004,9 +5004,9 @@ input create_foods_input {
   user_created: create_directus_users_input
   image: create_directus_files_input
   food_category: create_foods_categories_input
-  markings: [create_foods_markings_input]
-  translations: [create_foods_translations_input]
   feedbacks: [create_foods_feedbacks_input]
+  translations: [create_foods_translations_input]
+  markings: [create_foods_markings_input]
   attribute_values: [create_foods_attributes_values_input]
 }
 
@@ -5997,12 +5997,12 @@ input foods_filter {
   user_created: directus_users_filter
   image: directus_files_filter
   food_category: foods_categories_filter
-  markings: foods_markings_filter
-  markings_func: count_function_filter_operators
-  translations: foods_translations_filter
-  translations_func: count_function_filter_operators
   feedbacks: foods_feedbacks_filter
   feedbacks_func: count_function_filter_operators
+  translations: foods_translations_filter
+  translations_func: count_function_filter_operators
+  markings: foods_markings_filter
+  markings_func: count_function_filter_operators
   attribute_values: foods_attributes_values_filter
   attribute_values_func: count_function_filter_operators
   _and: [foods_filter]
@@ -7254,9 +7254,9 @@ input update_foods_input {
   user_created: update_directus_users_input
   image: update_directus_files_input
   food_category: update_foods_categories_input
-  markings: [update_foods_markings_input]
-  translations: [update_foods_translations_input]
   feedbacks: [update_foods_feedbacks_input]
+  translations: [update_foods_translations_input]
+  markings: [update_foods_markings_input]
   attribute_values: [update_foods_attributes_values_input]
 }
 

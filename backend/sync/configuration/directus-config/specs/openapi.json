@@ -47913,16 +47913,17 @@
               }
             ]
           },
-          "markings": {
+          "feedbacks": {
             "nullable": true,
             "type": "array",
             "items": {
               "oneOf": [
                 {
-                  "type": "integer"
+                  "type": "string",
+                  "format": "uuid"
                 },
                 {
-                  "$ref": "#/components/schemas/ItemsFoodsMarkings"
+                  "$ref": "#/components/schemas/ItemsFoodsFeedbacks"
                 }
               ]
             }
@@ -47941,17 +47942,16 @@
               ]
             }
           },
-          "feedbacks": {
+          "markings": {
             "nullable": true,
             "type": "array",
             "items": {
               "oneOf": [
                 {
-                  "type": "string",
-                  "format": "uuid"
+                  "type": "integer"
                 },
                 {
-                  "$ref": "#/components/schemas/ItemsFoodsFeedbacks"
+                  "$ref": "#/components/schemas/ItemsFoodsMarkings"
                 }
               ]
             }

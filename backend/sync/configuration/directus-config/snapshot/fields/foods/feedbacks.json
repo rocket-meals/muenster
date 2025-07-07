@@ -17,17 +17,17 @@
       "enableSearchFilter": true,
       "fields": [
         "comment",
-        "rating",
         "canteen.alias",
-        "foodoffer.date"
+        "date_updated"
       ],
+      "filter": null,
       "layout": "table",
       "sort": "date_updated",
       "sortDirection": "-"
     },
     "readonly": false,
     "required": false,
-    "sort": 18,
+    "sort": 17,
     "special": [
       "o2m"
     ],
