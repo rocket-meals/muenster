@@ -53,4 +53,9 @@ export default StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins_400Regular',
   },
+  noOffersText: {
+    fontSize: 10,
+    fontFamily: 'Poppins_400Regular',
+    textAlign: 'center',
+  },
 });
