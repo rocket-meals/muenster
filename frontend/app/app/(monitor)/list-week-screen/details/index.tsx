@@ -511,8 +511,11 @@ const index = () => {
                 const dayName = weekDayNames[index];
                 const shortDayName = dayName?.concat('_S');
 
+                const columns = getColumns();
+                const totalFlex = columns.reduce((sum, c) => sum + c.flex, 0);
+
                 // Check if any column for this day has food items
-                const hasAnyFood = getColumns().some((col) => {
+                const hasAnyFood = columns.some((col) => {
                   if (col.key === 'day') return false;
                   return (
                     foods[dayName]?.some(
@@ -520,8 +523,6 @@ const index = () => {
                     ) || false
                   );
                 });
-
-                if (!hasAnyFood) return null;
 
                 return (
                   <View
@@ -540,8 +541,9 @@ const index = () => {
                         pageBreakInside: 'avoid', // Avoid the page break
                       }}
                     >
-                      {getColumns().map((col, colIndex) => {
-                        const foodItems = foods[dayName]
+                      {hasAnyFood ? (
+                        columns.map((col, colIndex) => {
+                          const foodItems = foods[dayName]
                           ?.filter(
                             (food: any) => food.food.food_category === col.key
                           )
@@ -660,20 +662,20 @@ const index = () => {
                             );
                           });
 
-                        return (
-                          <View
-                            key={col.key}
-                            style={[
-                              styles.cell,
-                              {
-                                flex: col.flex,
-                                borderRightWidth: 1,
-                                borderBottomWidth: 1,
-                                borderLeftWidth: colIndex === 0 ? 1 : 0,
-                                borderColor: foods_area_color,
-                              },
-                            ]}
-                          >
+                          return (
+                            <View
+                              key={col.key}
+                              style={[
+                                styles.cell,
+                                {
+                                  flex: col.flex,
+                                  borderRightWidth: 1,
+                                  borderBottomWidth: 1,
+                                  borderLeftWidth: colIndex === 0 ? 1 : 0,
+                                  borderColor: foods_area_color,
+                                },
+                              ]}
+                            >
                             {col.key === 'day' ? (
                               <View style={{ flexDirection: 'column' }}>
                                 <Text
@@ -718,9 +720,80 @@ const index = () => {
                                 )}
                               </View>
                             )}
+                            </View>
+                          );
+                        })
+                      ) : (
+                        <>
+                          <View
+                            style={[
+                              styles.cell,
+                              {
+                                flex: columns[0].flex,
+                                borderLeftWidth: 1,
+                                borderRightWidth: 1,
+                                borderBottomWidth: 1,
+                                borderColor: foods_area_color,
+                              },
+                            ]}
+                          >
+                            <View style={{ flexDirection: 'column' }}>
+                              <Text
+                                style={[
+                                  styles.itemText,
+                                  {
+                                    fontSize: isMobile ? fontSize : fontSize,
+                                    fontFamily: isMobile
+                                      ? 'Poppins_400Regular'
+                                      : 'Poppins_700Bold',
+                                    textAlign: 'center',
+                                    color: theme.screen.text,
+                                  },
+                                ]}
+                              >
+                                {translate(shortDayName)}
+                              </Text>
+                              <Text
+                                style={[
+                                  styles.itemText,
+                                  {
+                                    fontSize: isMobile ? fontSize : fontSize,
+                                    fontFamily: isMobile
+                                      ? 'Poppins_400Regular'
+                                      : 'Poppins_700Bold',
+                                    textAlign: 'center',
+                                    color: theme.screen.text,
+                                  },
+                                ]}
+                              >
+                                {formatDate(date)}
+                              </Text>
+                            </View>
                           </View>
-                        );
-                      })}
+                          <View
+                            style={[
+                              styles.cell,
+                              {
+                                flex: totalFlex - columns[0].flex,
+                                borderRightWidth: 1,
+                                borderBottomWidth: 1,
+                                borderColor: foods_area_color,
+                              },
+                            ]}
+                          >
+                            <Text
+                              style={{
+                                ...styles.noOffersText,
+                                color: theme.screen.text,
+                              }}
+                            >
+                              {translate(
+                                TranslationKeys.no_foodoffers_found_for_selection
+                              )}
+                            </Text>
+                          </View>
+                        </>
+                      )}
                     </View>
                   </View>
                 );
