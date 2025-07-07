@@ -13,6 +13,7 @@ import {
 
 import { SortSheetProps } from './types';
 import Checkbox from 'expo-checkbox';
+import { FoodSortOption } from '@/constants/SortingEnums';
 import { SET_SELECTED_CANTEEN_FOOD_OFFERS, SET_SORTING } from '@/redux/Types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -48,7 +49,7 @@ const SortSheet: React.FC<SortSheetProps> = ({ closeSheet }) => {
     (state: RootState) => state.food
   );
   const { profile } = useSelector((state: RootState) => state.authReducer);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<FoodSortOption | null>(null);
   const foods_area_color = appSettings?.foods_area_color
     ? appSettings?.foods_area_color
     : primaryColor;
@@ -60,48 +61,48 @@ const SortSheet: React.FC<SortSheetProps> = ({ closeSheet }) => {
 
   const sortingOptions = [
     {
-      id: 'intelligent',
+      id: FoodSortOption.INTELLIGENT,
       label: 'sort_option_intelligent',
       icon: <MaterialCommunityIcons name='brain' size={24} />,
     },
     {
-      id: 'favorite',
+      id: FoodSortOption.FAVORITE,
       label: 'sort_option_favorite',
       icon: <AntDesign name='heart' size={24} />,
     },
     {
-      id: 'eating',
+      id: FoodSortOption.EATING,
       label: 'eating_habits',
       icon: <Ionicons name='bag-add' size={24} />,
     },
     {
-      id: 'food_category',
+      id: FoodSortOption.FOOD_CATEGORY,
       label: 'sort_option_food_category',
       icon: <MaterialCommunityIcons name='food' size={24} />,
     },
     {
-      id: 'foodoffer_category',
+      id: FoodSortOption.FOODOFFER_CATEGORY,
       label: 'sort_option_foodoffer_category',
       icon: <MaterialCommunityIcons name='food-variant' size={24} />,
     },
     {
-      id: 'rating',
+      id: FoodSortOption.RATING,
       label: 'sort_option_public_rating',
       icon: <AntDesign name='star' size={24} />,
     },
     {
-      id: 'alphabetical',
+      id: FoodSortOption.ALPHABETICAL,
       label: 'sort_option_alphabetical',
       icon: <FontAwesome5 name='sort-alpha-down' size={24} />,
     },
     {
-      id: 'none',
+      id: FoodSortOption.NONE,
       label: 'sort_option_none',
       icon: <MaterialCommunityIcons name='sort-variant-remove' size={24} />,
     },
   ];
 
-  const updateSort = (option: { id: string }) => {
+  const updateSort = (option: { id: FoodSortOption }) => {
     setSelectedOption(option.id);
     dispatch({ type: SET_SORTING, payload: option.id });
 
@@ -110,38 +111,38 @@ const SortSheet: React.FC<SortSheetProps> = ({ closeSheet }) => {
 
     // Sorting logic based on option id
     switch (option.id) {
-      case 'alphabetical':
+      case FoodSortOption.ALPHABETICAL:
         copiedFoodOffers = sortByFoodName(copiedFoodOffers, languageCode);
         break;
-      case 'favorite':
+      case FoodSortOption.FAVORITE:
         copiedFoodOffers = sortByOwnFavorite(
           copiedFoodOffers,
           ownFoodFeedbacks
         );
         break;
-      case 'eating':
+      case FoodSortOption.EATING:
         copiedFoodOffers = sortByEatingHabits(
           copiedFoodOffers,
           profile.markings
         );
         break;
-      case 'food_category':
+      case FoodSortOption.FOOD_CATEGORY:
         copiedFoodOffers = sortByFoodCategory(
           copiedFoodOffers,
           foodCategories,
             languageCode
         );
         break;
-      case 'foodoffer_category':
+      case FoodSortOption.FOODOFFER_CATEGORY:
         copiedFoodOffers = sortByFoodOfferCategory(
           copiedFoodOffers,
           foodOfferCategories
         );
         break;
-      case 'rating':
+      case FoodSortOption.RATING:
         copiedFoodOffers = sortByPublicFavorite(copiedFoodOffers);
         break;
-      case 'intelligent':
+      case FoodSortOption.INTELLIGENT:
         copiedFoodOffers = intelligentSort(
           copiedFoodOffers,
           ownFoodFeedbacks,
@@ -165,7 +166,7 @@ const SortSheet: React.FC<SortSheetProps> = ({ closeSheet }) => {
   };
 
   useEffect(() => {
-    setSelectedOption(sortBy);
+    setSelectedOption(sortBy as FoodSortOption);
   }, []);
 
   return (

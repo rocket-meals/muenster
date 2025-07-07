@@ -15,6 +15,11 @@ import {
   SET_APARTMENTS_SORTING,
   SET_CAMPUSES_SORTING,
 } from '@/redux/Types/types';
+import {
+  CampusSortOption,
+  ApartmentSortOption,
+  BuildingSortOption,
+} from '@/constants/SortingEnums';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLanguage } from '@/hooks/useLanguage';
 import { myContrastColor } from '@/helper/colorHelper';
@@ -35,7 +40,7 @@ const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({
     appSettings,
     selectedTheme: mode,
   } = useSelector((state: RootState) => state.settings);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<BuildingSortOption | null>(null);
   const housing_area_color = appSettings?.housing_area_color
     ? appSettings?.housing_area_color
     : projectColor;
@@ -50,28 +55,34 @@ const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({
 
   const sortingOptions = [
     {
-      id: 'intelligent',
+      id: freeRooms
+        ? ApartmentSortOption.INTELLIGENT
+        : CampusSortOption.INTELLIGENT,
       label: 'sort_option_intelligent',
       icon: <MaterialCommunityIcons name='brain' size={24} />,
     },
     {
-      id: 'free rooms',
+      id: ApartmentSortOption.FREE_ROOMS,
       label: 'free_rooms',
       icon: <MaterialCommunityIcons name='door-open' size={24} />,
     },
     {
-      id: 'distance',
+      id: freeRooms
+        ? ApartmentSortOption.DISTANCE
+        : CampusSortOption.DISTANCE,
       label: 'sort_option_distance',
       icon: <MaterialCommunityIcons name='map-marker-distance' size={24} />,
     },
 
     {
-      id: 'alphabetical',
+      id: freeRooms
+        ? ApartmentSortOption.ALPHABETICAL
+        : CampusSortOption.ALPHABETICAL,
       label: 'sort_option_alphabetical',
       icon: <FontAwesome5 name='sort-alpha-down' size={24} />,
     },
     {
-      id: 'none',
+      id: freeRooms ? ApartmentSortOption.NONE : CampusSortOption.NONE,
       label: 'sort_option_none',
       icon: <MaterialCommunityIcons name='sort-variant-remove' size={24} />,
     },
@@ -79,9 +90,9 @@ const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({
 
   const filteredSortingOptions = freeRooms
     ? sortingOptions
-    : sortingOptions.filter((option) => option.id !== 'free rooms');
+    : sortingOptions.filter((option) => option.id !== ApartmentSortOption.FREE_ROOMS);
 
-  const updateSort = (option: { id: string }) => {
+  const updateSort = (option: { id: BuildingSortOption }) => {
     setSelectedOption(option.id);
     if (freeRooms) {
       dispatch({ type: SET_APARTMENTS_SORTING, payload: option.id });
@@ -93,9 +104,9 @@ const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({
 
   useEffect(() => {
     if (freeRooms) {
-      setSelectedOption(apartmentsSortBy);
+      setSelectedOption(apartmentsSortBy as BuildingSortOption);
     } else {
-      setSelectedOption(campusesSortBy);
+      setSelectedOption(campusesSortBy as BuildingSortOption);
     }
   }, [campusesSortBy, apartmentsSortBy]);
 
