@@ -16,6 +16,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { ApartmentSortOption } from '@/constants/SortingEnums';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
@@ -227,23 +228,23 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
     fetchAllApartments();
   }, []);
 
-  const updateSort = (id: string, apartments: Apartments[]) => {
+  const updateSort = (id: ApartmentSortOption, apartments: Apartments[]) => {
     // Copy food offers to avoid mutation
     setLoading(true);
     let copiedApartments = [...apartments];
 
     // Sorting logic based on option id
     switch (id) {
-      case 'intelligent':
+      case ApartmentSortOption.INTELLIGENT:
         copiedApartments = sortApartmentsIntelligently(copiedApartments) || [];
         break;
-      case 'alphabetical':
+      case ApartmentSortOption.ALPHABETICAL:
         copiedApartments = sortApartmentsAlphabetically(copiedApartments) || [];
         break;
-      case 'distance':
+      case ApartmentSortOption.DISTANCE:
         copiedApartments = sortApartmentsWithDistance(copiedApartments) || [];
         break;
-      case 'free rooms':
+      case ApartmentSortOption.FREE_ROOMS:
         copiedApartments =
           sortApartmentsByAvailableDate(copiedApartments) || [];
         break;
@@ -322,7 +323,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
   useEffect(() => {
     if (apartments && distanceAdded) {
-      updateSort(apartmentsSortBy, apartments);
+      updateSort(apartmentsSortBy as ApartmentSortOption, apartments);
     }
   }, [apartmentsSortBy, distanceAdded]);
 

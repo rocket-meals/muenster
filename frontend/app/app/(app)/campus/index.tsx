@@ -16,6 +16,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { CampusSortOption } from '@/constants/SortingEnums';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
@@ -133,18 +134,18 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
     }
   };
 
-  const updateSort = (id: string, campuses: Buildings[]) => {
+  const updateSort = (id: CampusSortOption, campuses: Buildings[]) => {
     setLoading(true);
     let copiedCampuses = [...campuses];
 
     switch (id) {
-      case 'intelligent':
+      case CampusSortOption.INTELLIGENT:
         copiedCampuses = sortCampusesWithDistance(copiedCampuses) || [];
         break;
-      case 'alphabetical':
+      case CampusSortOption.ALPHABETICAL:
         copiedCampuses = sortCampusesAlphabetically(copiedCampuses) || [];
         break;
-      case 'distance':
+      case CampusSortOption.DISTANCE:
         copiedCampuses = sortCampusesWithDistance(copiedCampuses) || [];
         break;
       default:
@@ -234,7 +235,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
   useEffect(() => {
     if (campuses && distanceAdded) {
-      updateSort(campusesSortBy, campuses);
+      updateSort(campusesSortBy as CampusSortOption, campuses);
     }
   }, [campusesSortBy, distanceAdded]);
 

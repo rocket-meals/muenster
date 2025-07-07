@@ -24,6 +24,11 @@ import {
   Profiles,
   Wikis,
 } from '@/constants/types';
+import {
+  FoodSortOption,
+  CampusSortOption,
+  ApartmentSortOption,
+} from '@/constants/SortingEnums';
 
 export interface AuthState {
   user: DirectusUsers | Record<string, any> | null;
@@ -60,9 +65,9 @@ export interface CanteensState {
 export interface SettingsState {
   selectedTheme: string;
   isWarning: boolean;
-  sortBy: string;
-  campusesSortBy: string;
-  apartmentsSortBy: string;
+  sortBy: FoodSortOption;
+  campusesSortBy: CampusSortOption;
+  apartmentsSortBy: ApartmentSortOption;
   serverInfo: Record<string, any>;
   primaryColor: string;
   appSettings: AppSettings;

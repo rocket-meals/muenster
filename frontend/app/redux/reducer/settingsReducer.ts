@@ -16,13 +16,18 @@ import {
   SET_WIKIS,
   SET_WIKIS_PAGES,
 } from '@/redux/Types/types';
+import {
+  FoodSortOption,
+  CampusSortOption,
+  ApartmentSortOption,
+} from '@/constants/SortingEnums';
 
 const initialState = {
   selectedTheme: 'systematic',
   isWarning: false,
-  sortBy: 'intelligent',
-  campusesSortBy: 'intelligent',
-  apartmentsSortBy: 'intelligent',
+  sortBy: FoodSortOption.INTELLIGENT,
+  campusesSortBy: CampusSortOption.INTELLIGENT,
+  apartmentsSortBy: ApartmentSortOption.INTELLIGENT,
   serverInfo: {},
   primaryColor: '#FCDE31',
   appSettings: {},

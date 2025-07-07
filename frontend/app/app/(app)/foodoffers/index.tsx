@@ -16,6 +16,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { FoodSortOption } from '@/constants/SortingEnums';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import {
@@ -382,44 +383,44 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
     return format(day, 'dd.MM.yyyy'); // Return the date if it's not Today, Yesterday, or Tomorrow
   };
 
-  const updateSort = (id: string, foodOffers: Foodoffers[]) => {
+  const updateSort = (id: FoodSortOption, foodOffers: Foodoffers[]) => {
     // Copy food offers to avoid mutation
     let copiedFoodOffers = [...foodOffers];
 
     // Sorting logic based on option id
     switch (id) {
-      case 'alphabetical':
+      case FoodSortOption.ALPHABETICAL:
         copiedFoodOffers = sortByFoodName(copiedFoodOffers, languageCode);
         break;
-      case 'favorite':
+      case FoodSortOption.FAVORITE:
         copiedFoodOffers = sortByOwnFavorite(
           copiedFoodOffers,
           ownFoodFeedbacks
         );
         break;
-      case 'eating':
+      case FoodSortOption.EATING:
         copiedFoodOffers = sortByEatingHabits(
           copiedFoodOffers,
           profile.markings
         );
         break;
-      case 'food_category':
+      case FoodSortOption.FOOD_CATEGORY:
         copiedFoodOffers = sortByFoodCategory(
           copiedFoodOffers,
           foodCategories,
             languageCode
         );
         break;
-      case 'foodoffer_category':
+      case FoodSortOption.FOODOFFER_CATEGORY:
         copiedFoodOffers = sortByFoodOfferCategory(
           copiedFoodOffers,
           foodOfferCategories
         );
         break;
-      case 'rating':
+      case FoodSortOption.RATING:
         copiedFoodOffers = sortByPublicFavorite(copiedFoodOffers);
         break;
-      case 'intelligent':
+      case FoodSortOption.INTELLIGENT:
         copiedFoodOffers = intelligentSort(
           copiedFoodOffers,
           ownFoodFeedbacks,
@@ -491,7 +492,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
         }
       }
 
-      updateSort(sortBy, foodOffers);
+      updateSort(sortBy as FoodSortOption, foodOffers);
 
       dispatch({
         type: SET_SELECTED_CANTEEN_FOOD_OFFERS_LOCAL,
