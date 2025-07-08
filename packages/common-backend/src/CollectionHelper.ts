@@ -4,10 +4,7 @@ import {CollectionNames} from "repo-depkit-common";
 import {DatabaseTypes} from "repo-depkit-common";
 
 const pathToCommon = require.resolve("repo-depkit-common");
-console.log(pathToCommon);
-
-const pathToDatabaseTypes = resolve(pathToCommon, "src", "databaseTypes", "types.ts");
-console.log(pathToDatabaseTypes);
+const pathToDatabaseTypes = resolve(pathToCommon, "..", "src", "databaseTypes", "types.ts");
 
 // Initialize a ts-morph project
 const project = new Project();
