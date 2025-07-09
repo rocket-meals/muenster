@@ -1,4 +1,4 @@
-import {CollectionNames} from "../CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {DatabaseTypes} from "repo-depkit-common"
 
 import {ApiContext} from "../ApiContext";

@@ -1,7 +1,7 @@
 import moment from "moment"
 import {ReportGenerator, ReportType} from "./ReportGenerator";
 import {ItemsServiceCreator} from "../helpers/ItemsServiceCreator";
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {ApiContext} from "../helpers/ApiContext";
 import {DatabaseTypes} from "repo-depkit-common";
 

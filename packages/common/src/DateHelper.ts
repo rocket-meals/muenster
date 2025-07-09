@@ -358,15 +358,6 @@ export class DateHelper {
         return DateHelper.addMinutes(date, totalMinutesToAdd);
     }
 
-    static formatToOfferDate(date: Date) {
-        //const iso = date.toISOString();
-        //const trimmed = iso.slice(0, 'YYYY-MM-DD'.length);
-        //return trimmed;
-
-        // As switched backend foodoffers from dateAndTime to dateOnly, we need to adjust the date format
-        return DateHelper.foodofferDateTypeToString(date);
-    }
-
     static formatDateToIso8601WithoutTimezone(date: Date, clearSeconds: boolean = true): string {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -381,9 +372,6 @@ export class DateHelper {
         return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     }
 
-    static foodofferDateTypeToString(dateObj: Date){
-        return DateHelper.getDirectusDateOnlyString(dateObj);
-    }
 
     static getDirectusDateOnlyString(dateObj: Date) {
         const date = {

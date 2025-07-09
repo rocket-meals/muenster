@@ -1,6 +1,6 @@
 import {CollectionHelper} from "repo-depkit-common-backend";
 
-import {CollectionNames} from "../../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";;
 import {FIELD_VALUE_KEY_PREFIX, FormAnswersValueFieldKeys} from "../FormImportTypes";
 
 describe("Form Answer Value Fields Test", () => {

@@ -1,4 +1,4 @@
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {MyDatabaseHelper} from "../helpers/MyDatabaseHelper";
 import {DatabaseTypes} from "repo-depkit-common"
 import {PrimaryKey} from "@directus/types";

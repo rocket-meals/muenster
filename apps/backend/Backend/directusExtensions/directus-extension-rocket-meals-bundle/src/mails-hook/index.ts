@@ -1,6 +1,6 @@
 import {defineHook} from '@directus/extensions-sdk';
 import {DatabaseInitializedCheck} from "../helpers/DatabaseInitializedCheck";
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {DatabaseTypes} from "repo-depkit-common"
 import {EmailOptions, MailService as MailServiceType} from "@directus/api/dist/services/mail";
 import {DEFAULT_HTML_TEMPLATE} from "../helpers/html/HtmlGenerator";

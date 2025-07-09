@@ -1,5 +1,5 @@
 import {ApiContext} from "./ApiContext";
-import {CollectionNames} from "./CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {EventContext, PrimaryKey} from "@directus/types";
 import {DatabaseTypes} from "repo-depkit-common";
 import {EnvVariableHelper} from "./EnvVariableHelper";

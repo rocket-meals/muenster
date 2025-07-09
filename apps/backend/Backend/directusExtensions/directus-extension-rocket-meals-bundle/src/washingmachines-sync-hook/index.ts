@@ -1,6 +1,6 @@
 import {WashingmachineParseSchedule} from "./WashingmachineParseSchedule";
 import {defineHook} from "@directus/extensions-sdk";
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {DemoWashingmachineParser} from "./testParser/DemoWashingmachineParser";
 import {WashingmachineParserInterface} from "./WashingmachineParserInterface";
 import {EnvVariableHelper, SyncForCustomerEnum} from "../helpers/EnvVariableHelper";

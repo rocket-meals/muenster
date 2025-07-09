@@ -3,7 +3,7 @@ import axios from "axios";
 import {DatabaseInitializedCheck} from "../helpers/DatabaseInitializedCheck";
 import {DatabaseTypes} from "repo-depkit-common";
 import {ItemsServiceHelper} from "../helpers/ItemsServiceHelper";
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {MyDatabaseHelper} from "../helpers/MyDatabaseHelper";
 
 const SCHEDULE_NAME = "push_notification";

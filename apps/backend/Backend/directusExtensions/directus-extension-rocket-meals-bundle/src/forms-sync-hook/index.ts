@@ -2,7 +2,7 @@ import {defineHook} from "@directus/extensions-sdk";
 import {EnvVariableHelper, SyncForCustomerEnum} from "../helpers/EnvVariableHelper";
 import {FormSyncHannover} from "./customers/hannover/FormSyncHannover";
 import {registerHookToCreateFormAnswersForFormSubmission} from "./RegisterHookCreateFormSubmissionsFormAnswers";
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {DatabaseTypes} from "repo-depkit-common"
 import {FormSubmissionState} from "./FormImportTypes";
 import {RegisterFunctions} from "@directus/extensions";

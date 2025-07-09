@@ -1,7 +1,7 @@
 import {defineHook} from '@directus/extensions-sdk';
 import {ReportSchedule} from "./ReportSchedule";
 import {DatabaseInitializedCheck} from "../helpers/DatabaseInitializedCheck";
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {DatabaseTypes} from "repo-depkit-common";
 
 const SCHEDULE_NAME = "food_feedback_report";

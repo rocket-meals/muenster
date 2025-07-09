@@ -2,7 +2,7 @@ import {PrimaryKey} from "@directus/types";
 import {DatabaseTypes} from "repo-depkit-common";
 
 import {MyDatabaseHelper} from "./MyDatabaseHelper";
-import {CollectionNames} from "./CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 
 const FIELD_TRANSLATION_LANGUAGE_CODE = "languages_code"; // TODO Import from directus-extension-auto-translation package the field name
 const FIELD_LANGUAGE_ID = "code"; // TODO Import from directus-extension-auto-translation package the field name

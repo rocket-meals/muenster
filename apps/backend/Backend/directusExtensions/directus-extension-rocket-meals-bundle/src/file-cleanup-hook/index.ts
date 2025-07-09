@@ -5,7 +5,7 @@ import {WorkflowScheduleHelper} from "../workflows-runs-hook";
 import {SingleWorkflowRun, WorkflowEnum, WorkflowRunLogger} from "../workflows-runs-hook/WorkflowRunJobInterface";
 import {DatabaseTypes} from "repo-depkit-common"
 import {WORKFLOW_RUN_STATE} from "../helpers/itemServiceHelpers/WorkflowsRunEnum";
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {Query} from "@directus/types";
 import {ByteSizeHelper} from "../helpers/ByteSizeHelper";
 

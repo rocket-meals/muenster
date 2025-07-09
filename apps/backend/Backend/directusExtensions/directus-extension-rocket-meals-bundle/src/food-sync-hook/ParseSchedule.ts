@@ -13,7 +13,7 @@ import {DateHelper} from "repo-depkit-common";
 import {ListHelper} from "../helpers/ListHelper";
 import {DatabaseTypes} from "repo-depkit-common";
 import {MyDatabaseHelper} from "../helpers/MyDatabaseHelper";
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {DictMarkingsExclusions, MarkingFilterHelper} from "../helpers/MarkingFilterHelper";
 import {MyTimer, MyTimers} from "../helpers/MyTimer";
 import {WorkflowRunLogger} from "../workflows-runs-hook/WorkflowRunJobInterface";

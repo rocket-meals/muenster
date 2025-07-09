@@ -3,7 +3,7 @@ import {TranslatorSettings} from "./TranslatorSettings";
 import {DatabaseTypes} from "repo-depkit-common"
 import {MyDatabaseHelper} from "../helpers/MyDatabaseHelper";
 import {SchemaOverview} from "@directus/types";
-import {CollectionNames} from "../helpers/CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 
 export class DirectusCollectionTranslator {
     static FIELD_BE_SOURCE_FOR_TRANSLATION = "be_source_for_translations";

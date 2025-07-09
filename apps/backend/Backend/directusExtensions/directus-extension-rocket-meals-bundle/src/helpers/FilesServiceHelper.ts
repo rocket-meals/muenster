@@ -6,7 +6,7 @@ import {
     MutationOptions
 } from "./ItemsServiceCreator";
 import {ItemsServiceHelper} from "./ItemsServiceHelper";
-import {CollectionNames} from "./CollectionNames";
+import {CollectionNames} from "repo-depkit-common";
 import {PrimaryKey} from "@directus/types";
 import {DatabaseTypes} from "repo-depkit-common";
 import {AssetsService} from "@directus/api";
