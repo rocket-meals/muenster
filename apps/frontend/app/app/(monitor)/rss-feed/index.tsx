@@ -3,6 +3,7 @@ import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, Linking } 
 import { useLocalSearchParams } from 'expo-router';
 import { useTheme } from '@/hooks/useTheme';
 import styles from './styles';
+import Server from '@/constants/ServerUrl';
 
 const parseFeed = (xml: string) => {
   const items: { title: string; link: string; content: string }[] = [];
@@ -42,7 +43,8 @@ const RssFeedScreen = () => {
         const urlList = Array.isArray(urls) ? urls : String(urls).split(',');
         const allItems: any[] = [];
         for (const url of urlList) {
-          const res = await fetch(url.trim());
+          const encoded = encodeURIComponent(url.trim());
+          const res = await fetch(`${Server.ServerUrl}/rss-feed?url=${encoded}`);
           const text = await res.text();
           allItems.push(...parseFeed(text));
         }
