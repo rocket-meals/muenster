@@ -35,6 +35,8 @@ import {
 } from '@/redux/Types/types';
 import { FoodOffersCategoriesHelper } from '@/redux/actions/FoodOffersCategories/FoodOffersCategories';
 
+const company_image = require('@/assets/images/company.png')
+
 const Index = () => {
   useSetPageTitle(TranslationKeys.big_screen);
   const dispatch = useDispatch();
@@ -72,9 +74,6 @@ const Index = () => {
   const refreshIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const { canteens } = useSelector((state: RootState) => state.canteenReducer);
   const [selectedCanteen, setSelectedCanteen] = useState<any>(null);
-  const companyImage =
-    appSettings?.company_image &&
-    getImageUrl(String(appSettings?.company_image))?.split('?')[0];
   const foods_area_color = appSettings?.foods_area_color
     ? appSettings?.foods_area_color
     : projectColor;
@@ -86,7 +85,7 @@ const Index = () => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
-      setIsConnected(state?.isConnected);
+      setIsConnected(state?.isConnected || false);
     });
 
     return () => unsubscribe();
@@ -384,7 +383,7 @@ const Index = () => {
         >
           <View style={styles.headerCol1}>
             <View style={styles.logoContainer}>
-              <Image source={{ uri: companyImage }} style={logoStyle} />
+              <Image source={company_image} style={logoStyle} />
             </View>
             <View style={styles.labelText}>
               <View style={styles.row}>
