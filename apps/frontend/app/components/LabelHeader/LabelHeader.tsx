@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import { RootState } from '@/redux/reducer';
 
-const company_image = require('@/assets/images/company.png')
-
 const LabelHeader: React.FC<{ Label: any; isConnected?: Boolean }> = ({
   Label,
   isConnected = true,
@@ -16,6 +14,9 @@ const LabelHeader: React.FC<{ Label: any; isConnected?: Boolean }> = ({
   const [logoStyle, setLogoStyle] = useState(styles.logo);
   const { width } = Dimensions.get('window');
   const { appSettings } = useSelector((state: RootState) => state.settings);
+  const companyImage =
+    appSettings?.company_image &&
+    getImageUrl(String(appSettings?.company_image))?.split('?')[0];
   const updateLogoStyle = useCallback(() => {
     setLogoStyle({
       width: width < 600 ? 150 : width > 600 ? 300 : 300,
@@ -54,7 +55,7 @@ const LabelHeader: React.FC<{ Label: any; isConnected?: Boolean }> = ({
       }}
     >
       <View style={styles.logoContainer}>
-        <Image source={company_image} style={logoStyle} />
+        <Image source={{ uri: companyImage }} style={logoStyle} />
       </View>
       <View style={{ ...styles.row }}>
         <View style={styles.labelText}>
