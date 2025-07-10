@@ -181,7 +181,7 @@ const index = () => {
         <TouchableOpacity
           style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }}
           onPress={() => {
-            router.navigate('/rss-feed');
+            router.navigate('/rss-feed-config');
           }}
         >
           <View style={styles.col}>
