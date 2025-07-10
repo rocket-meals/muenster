@@ -22,9 +22,10 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   image: {
-    width: '100%',
-    height: 200,
+    width: 300,
+    height: 300,
     marginBottom: 10,
     borderRadius: 8,
+    alignSelf: 'center',
   },
 });
