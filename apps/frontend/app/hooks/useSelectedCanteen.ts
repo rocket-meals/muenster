@@ -12,19 +12,31 @@ export default function useSelectedCanteen() {
   );
 
   return useMemo(() => {
-    if (kioskMode) {
-      if (canteens_id) {
-        const found = canteens.find(
-          (c) => String(c.id) === String(canteens_id),
-        );
-        if (found) {
-          return found;
-        }
-      }
-      if (selectedCanteen) {
-        return selectedCanteen;
+    if (canteens_id) {
+      const found = canteens.find(
+        (c) => String(c.id) === String(canteens_id),
+      );
+      if (found) {
+        return found;
       }
     }
-    return selectedCanteen;
+
+    if (kioskMode) {
+      const firstPublished = canteens.find((c) => c.status === 'published');
+      if (firstPublished) {
+        return firstPublished;
+      }
+    }
+
+    if (selectedCanteen) {
+      const exists = canteens.find(
+        (c) => String(c.id) === String(selectedCanteen.id),
+      );
+      if (exists) {
+        return exists;
+      }
+    }
+
+    return null;
   }, [kioskMode, canteens_id, canteens, selectedCanteen]);
 }
