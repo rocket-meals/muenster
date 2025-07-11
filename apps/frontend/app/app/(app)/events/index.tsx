@@ -1,7 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
-import SupportFAQ from '@/components/SupportFAQ/SupportFAQ';
+import SettingList from '@/components/SettingList/SettingList';
+import { MaterialIcons, Octicons } from '@expo/vector-icons';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import PopupEventSheet from '@/components/PopupEventSheet/PopupEventSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
@@ -56,22 +57,24 @@ const EventsScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.background }}>
       <ScrollView contentContainerStyle={styles.container}>
-        <SupportFAQ
-          icon='refresh'
+        <SettingList
+          leftIcon={<MaterialIcons name='refresh' size={24} color={theme.screen.icon} />}
           label={translate(TranslationKeys.reset_seen_popup_events)}
-          onPress={resetSeenEvents}
-          redirectIcon={false}
+          rightIcon={<Octicons name='chevron-right' size={24} color={theme.screen.icon} />}
+          handleFunction={resetSeenEvents}
         />
         {!kioskMode &&
           popupEvents.map((event: any) => (
-            <SupportFAQ
+            <SettingList
               key={event.id}
+              leftIcon={<MaterialIcons name='event' size={24} color={theme.screen.icon} />}
               label={
                 event.translations
                   ? getTitleFromTranslation(event.translations, language)
                   : event.alias
               }
-              onPress={() => openSheet(event)}
+              rightIcon={<Octicons name='chevron-right' size={24} color={theme.screen.icon} />}
+              handleFunction={() => openSheet(event)}
             />
           ))}
       </ScrollView>
