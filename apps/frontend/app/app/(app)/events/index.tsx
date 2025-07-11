@@ -14,12 +14,14 @@ import styles from './styles';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
+import useKioskMode from '@/hooks/useKioskMode';
 
 const EventsScreen = () => {
   useSetPageTitle(TranslationKeys.events);
   const { theme } = useTheme();
   const { translate, language } = useLanguage();
   const dispatch = useDispatch();
+  const kioskMode = useKioskMode();
   const { popupEvents } = useSelector((state: RootState) => state.food);
   const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -60,19 +62,20 @@ const EventsScreen = () => {
           onPress={resetSeenEvents}
           redirectIcon={false}
         />
-        {popupEvents.map((event: any) => (
-          <SupportFAQ
-            key={event.id}
-            label={
-              event.translations
-                ? getTitleFromTranslation(event.translations, language)
-                : event.alias
-            }
-            onPress={() => openSheet(event)}
-          />
-        ))}
+        {!kioskMode &&
+          popupEvents.map((event: any) => (
+            <SupportFAQ
+              key={event.id}
+              label={
+                event.translations
+                  ? getTitleFromTranslation(event.translations, language)
+                  : event.alias
+              }
+              onPress={() => openSheet(event)}
+            />
+          ))}
       </ScrollView>
-      {isActive && (
+      {isActive && !kioskMode && (
         <BaseBottomSheet
           ref={bottomSheetRef}
           index={-1}

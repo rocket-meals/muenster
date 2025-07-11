@@ -5,6 +5,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { Redirect, useGlobalSearchParams } from 'expo-router';
+import useKioskMode from '@/hooks/useKioskMode';
 import { ProfileHelper } from '@/redux/actions/Profile/Profile';
 import { DatabaseTypes } from 'repo-depkit-common';
 import {
@@ -72,7 +73,8 @@ import { sortMarkingsByGroup, sortBySortField } from '@/helper/sortingHelper';
 export default function Layout() {
   const { theme } = useTheme();
   const { translate } = useLanguage();
-  const { deviceMock, kioskMode } = useGlobalSearchParams();
+  const { deviceMock } = useGlobalSearchParams();
+  const kioskMode = useKioskMode();
   const dispatch = useDispatch();
   const wikisHelper = new WikisHelper();
   const markingHelper = new MarkingHelper();
@@ -111,7 +113,7 @@ export default function Layout() {
 
   useEffect(() => {
     const autoLogin = async () => {
-      if (kioskMode === 'true' && !loggedIn) {
+      if (kioskMode && !loggedIn) {
         updateLoginStatus(dispatch, { id: '' } as any);
         const currentDate = format(new Date(), 'dd.MM.yyyy HH:mm:ss');
         dispatch({ type: UPDATE_PRIVACY_POLICY_DATE, payload: currentDate });
@@ -134,7 +136,7 @@ export default function Layout() {
 
   useEffect(() => {
     const selectCanteen = async () => {
-      if (kioskMode === 'true' && !selectedCanteen) {
+      if (kioskMode && !selectedCanteen) {
         try {
           const helper = new CanteenHelper();
           const result = (await helper.fetchCanteens({})) as DatabaseTypes.Canteens[];
@@ -151,7 +153,7 @@ export default function Layout() {
     selectCanteen();
   }, [kioskMode, selectedCanteen]);
 
-  if (!loggedIn && kioskMode !== 'true') {
+  if (!loggedIn && !kioskMode) {
     return <Redirect href='/(auth)/login' />;
   }
 
@@ -413,6 +415,9 @@ export default function Layout() {
   };
 
   const getAllEvents = async () => {
+    if (kioskMode) {
+      return;
+    }
     try {
       const response =
         (await popupEventsHelper.fetchAllPopupEvents()) as DatabaseTypes.PopupEvents[];
@@ -522,6 +527,7 @@ export default function Layout() {
       if (result) {
         const serverMap = transformUpdateDatesToMap(result);
         if (
+          !kioskMode &&
           shouldFetch(
             [
               CollectionKeys.POPUP_EVENTS,

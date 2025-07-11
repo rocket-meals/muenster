@@ -28,6 +28,7 @@ import FoodItem from '@/components/FoodItem/FoodItem';
 import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
+import useKioskMode from '@/hooks/useKioskMode';
 import { fetchFoodOffersByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
 import {
   SET_BUSINESS_HOURS,
@@ -148,6 +149,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
     (state: RootState) => state.canteenReducer,
   );
   const selectedCanteen = useSelectedCanteen();
+  const kioskMode = useKioskMode();
   const [prefetchedFoodOffers, setPrefetchedFoodOffers] = useState<
     Record<string, Record<string, DatabaseTypes.Foodoffers[]>>
   >({});
@@ -250,13 +252,16 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   );
 
   useEffect(() => {
+    if (kioskMode) {
+      return;
+    }
     const currentEvent = popupEvents?.find((e: any) => e.isCurrent);
     if (currentEvent) {
       setTimeout(() => {
         openEventSheet();
       }, 300);
     }
-  }, [popupEvents]);
+  }, [popupEvents, kioskMode]);
 
   const openSheet = useCallback(
     (sheet: 'menu' | keyof typeof SHEET_COMPONENTS, props = {}) => {
@@ -278,6 +283,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   };
 
   const openEventSheet = () => {
+    if (kioskMode) return;
     eventSheetRef?.current?.expand();
   };
 
@@ -1051,7 +1057,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
             )}
           </ScrollView>
         </View>
-        {isActive && (
+        {isActive && !kioskMode && popupEvents.length > 0 && (
           selectedSheet === 'menu' ? (
             <MarkingBottomSheet ref={bottomSheetRef} onClose={closeSheet} />
           ) : (
