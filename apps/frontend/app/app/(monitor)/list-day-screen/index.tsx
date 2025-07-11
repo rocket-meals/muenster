@@ -33,14 +33,16 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { ColumnPercentages } from './types';
 import { RootState } from '@/redux/reducer';
+import { CanteenHelper } from '@/redux/actions';
+import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
 import { FoodCategoriesHelper } from '@/redux/actions/FoodCategories/FoodCategories';
 import { SET_FOOD_CATEGORIES } from '@/redux/Types/types';
 import { sortMarkingsByGroup } from '@/helper/sortingHelper';
-import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { MarkingGroupsHelper } from '@/redux/actions/MarkingGroups/MarkingGroups';
 const index = () => {
   useSetPageTitle('list-day-screen');
   const {
+    canteens_id,
     refreshDataIntervalInSeconds,
     nextPageIntervalInSeconds,
     monitor_additional_canteens_id,
@@ -53,6 +55,8 @@ const index = () => {
   const { markings, foodCategories: localFoodCategories } = useSelector(
     (state: RootState) => state.food
   );
+  const canteenHelper = new CanteenHelper();
+  const buildingsHelper = new BuildingsHelper();
   const foodAttributesHelper = new FoodAttributesHelper();
   const foodCategoriesHelper = new FoodCategoriesHelper();
   const [foods, setFoods] = useState([]);
@@ -62,7 +66,8 @@ const index = () => {
   const [optionalFoodMarkings, setOptionalFoodMarkings] = useState<any>({});
   const [mainFoodCategories, setMainFoodCategories] = useState<any>({});
   const [optionalFoodCategories, setOptionalFoodCategories] = useState<any>({});
-  const selectedCanteen = useSelectedCanteen();
+  const [selectedCanteen, setSelectedCanteen] = useState<any>(null);
+  const { canteens } = useSelector((state: RootState) => state.canteenReducer);
   const { isManagement } = useSelector((state: RootState) => state.authReducer);
   const {
     primaryColor: projectColor,
@@ -214,6 +219,88 @@ const index = () => {
     fetchAliases();
   }, [foodAttributesData, foodAttributesDict, language]);
 
+  const getCanteensWithBuildings = async () => {
+    try {
+      const buildingsData = (await buildingsHelper.fetchBuildings(
+        {}
+      )) as DatabaseTypes.Buildings[];
+      const buildings = buildingsData || [];
+
+      const buildingsDict = buildings.reduce(
+        (acc: Record<string, any>, building: any) => {
+          acc[building.id] = building;
+          return acc;
+        },
+        {}
+      );
+
+      const canteensData = (await canteenHelper.fetchCanteens(
+        {}
+      )) as DatabaseTypes.Canteens[];
+
+      const filteredCanteens = canteensData.filter((canteen) => {
+        const status = canteen.status || '';
+
+        // Normal users: only show published
+        if (!isManagement) {
+          return status === 'published';
+        }
+
+        // Management: show all, but only handle published + archived
+        return status === 'published' || status === 'archived';
+      });
+
+      const sortedCanteens = filteredCanteens.sort((a, b) => {
+        const aPublished = a.status === 'published';
+        const bPublished = b.status === 'published';
+
+        // Move unpublished (archived) to the end
+        if (aPublished !== bPublished) {
+          return aPublished ? -1 : 1;
+        }
+
+        // If both are same status, sort by sort value
+        return (a.sort || 0) - (b.sort || 0);
+      });
+
+      const updatedCanteens = sortedCanteens.map((canteen) => {
+        const building = buildingsDict[canteen?.building as string];
+        return {
+          ...canteen,
+          imageAssetId: building?.image,
+          thumbHash: building?.image_thumb_hash,
+          image_url: building?.image_remote_url || getImageUrl(building?.image),
+        };
+      });
+      return updatedCanteens;
+      // dispatch({ type: SET_CANTEENS, payload: updatedCanteens });
+    } catch (error) {
+      return [];
+    }
+  };
+
+  const fetchSelectedCanteen = useCallback(async () => {
+    if (!canteens_id) return;
+    let canteensData: DatabaseTypes.Canteens[] = [];
+    if (!canteens || canteens.length === 0) {
+      canteensData = await getCanteensWithBuildings();
+    } else {
+      canteensData = canteens;
+    }
+    const foundCanteen = canteensData?.find(
+      (canteen: any) => canteen.id === canteens_id
+    );
+
+    if (foundCanteen) {
+      setSelectedCanteen(foundCanteen);
+    } else {
+      console.warn('Canteen not found for ID:', canteens_id);
+    }
+  }, [canteens_id, canteens]);
+
+  useEffect(() => {
+    fetchSelectedCanteen();
+  }, [canteens_id, canteens]);
 
   const filterFoodAttributes = (foodOffers: any) => {
     if (!foodOffers || !foodAttributesDataFull) return {};
@@ -291,7 +378,7 @@ const index = () => {
     try {
       const todayDate = new Date().toISOString().split('T')[0];
       const foodData = await fetchFoodsByCanteen(
-        String(selectedCanteen?.id),
+        String(canteens_id),
         todayDate
       );
       const foodOffers = foodData?.data || [];
@@ -343,13 +430,13 @@ const index = () => {
   }, [refreshDataIntervalInSeconds]);
 
   useEffect(() => {
-    if (selectedCanteen?.id) {
+    if (canteens_id) {
       fetchFoods();
     }
     if (monitor_additional_canteens_id) {
       fetchOptionalFoods();
     }
-  }, [selectedCanteen?.id, monitor_additional_canteens_id]);
+  }, [canteens_id, monitor_additional_canteens_id]);
 
   const fetchFoodMarkingLabels = useCallback(
     async (foodList: any, setMarkingsState: any) => {

@@ -83,7 +83,6 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import CustomMarkdown from '@/components/CustomMarkdown/CustomMarkdown';
 import { RootState } from '@/redux/reducer';
 import MarkingBottomSheet from '@/components/MarkingBottomSheet';
-import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 
 export const SHEET_COMPONENTS = {
   canteen: CanteenSelectionSheet,
@@ -144,10 +143,8 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
     (state: RootState) => state.authReducer
   );
   const { appElements } = useSelector((state: RootState) => state.appElements);
-  const { selectedCanteenFoodOffers, canteenFeedbackLabels } = useSelector(
-    (state: RootState) => state.canteenReducer,
-  );
-  const selectedCanteen = useSelectedCanteen();
+  const { selectedCanteen, selectedCanteenFoodOffers, canteenFeedbackLabels } =
+    useSelector((state: RootState) => state.canteenReducer);
   const [prefetchedFoodOffers, setPrefetchedFoodOffers] = useState<
     Record<string, Record<string, DatabaseTypes.Foodoffers[]>>
   >({});
