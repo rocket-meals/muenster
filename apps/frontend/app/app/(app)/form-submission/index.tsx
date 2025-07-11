@@ -32,11 +32,11 @@ import { FormAnswersHelper } from '@/redux/actions/Forms/FormAnswers';
 import SubmissionWarningModal from '@/components/SubmissionWarningModal/SubmissionWarningModal';
 import { FormsSubmissionsHelper } from '@/redux/actions/Forms/FormSubmitions';
 import { DatabaseTypes } from 'repo-depkit-common';
-import SingleLineInput from '@/components/SingleLineInput/SingleLineInput';
 import MultiLineInput from '@/components/MultiLineInput/MultiLineInput';
 import IBANInput from '@/components/IBANInput/IBANInput';
 import NumberInput from '@/components/NumberInput/NumberInput';
 import EmailInput from '@/components/EmailInput/EmailInput';
+import TextInputSheet from '@/components/TextInputSheet';
 import {
   DateInput,
   DateWithTimeInput,
@@ -775,15 +775,20 @@ const index = () => {
                         </View>
                       )}
                       {custom_id === 'string' && showInForm && (
-                        <SingleLineInput
-                          id={fieldId}
+                        <TextInputSheet
+                          label={
+                            answer?.form_field?.translations?.length > 0
+                              ? getFromCategoryTranslation(
+                                  answer?.form_field?.translations,
+                                  language
+                                )
+                              : answer?.form_field?.alias || ''
+                          }
                           value={formData[fieldId]?.value || ''}
-                          onChange={handleChange}
-                          error={formData[fieldId]?.error}
-                          isDisabled={isDisabled}
-                          custom_type={custom_type}
-                          prefix={prefix}
-                          suffix={suffix}
+                          onChange={(val) =>
+                            handleChange(fieldId, val, custom_type)
+                          }
+                          placeholder={translate(TranslationKeys.type_here)}
                         />
                       )}
                       {custom_id === 'multiline' && showInForm && (
