@@ -59,8 +59,8 @@ import { transformUpdateDatesToMap } from '@/helper/dateMap';
 import { shouldFetch } from '@/helper/shouldFetch';
 import { updateLoginStatus } from '@/constants/HelperFunctions';
 import { format } from 'date-fns';
-import { CanteenHelper } from '@/redux/actions/Canteens/Canteens';
-import { SET_CANTEENS, SET_SELECTED_CANTEEN, UPDATE_PRIVACY_POLICY_DATE } from '@/redux/Types/types';
+import { UPDATE_PRIVACY_POLICY_DATE } from '@/redux/Types/types';
+import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 // TODO: replace HashHelper with expo-crypto once packages can be installed
 import { HashHelper } from '@/helper/hashHelper';
 import { CollectionKeys } from '@/constants/collectionKeys';
@@ -103,9 +103,7 @@ export default function Layout() {
   const { loggedIn, user } = useSelector(
     (state: RootState) => state.authReducer
   );
-  const { canteens, selectedCanteen } = useSelector(
-    (state: RootState) => state.canteenReducer
-  );
+  useSelectedCanteen();
 
   useEffect(() => {
     const autoLogin = async () => {
@@ -130,24 +128,6 @@ export default function Layout() {
     autoLogin();
   }, [kioskMode, loggedIn]);
 
-  useEffect(() => {
-    const selectCanteen = async () => {
-      if (kioskMode === 'true' && !selectedCanteen) {
-        try {
-          const helper = new CanteenHelper();
-          const result = (await helper.fetchCanteens({})) as DatabaseTypes.Canteens[];
-          const published = result.filter((c) => c.status === 'published');
-          if (published.length > 0) {
-            dispatch({ type: SET_CANTEENS, payload: published });
-            dispatch({ type: SET_SELECTED_CANTEEN, payload: published[0] });
-          }
-        } catch (error) {
-          console.error('Error fetching canteens:', error);
-        }
-      }
-    };
-    selectCanteen();
-  }, [kioskMode, selectedCanteen]);
 
   if (!loggedIn && kioskMode !== 'true') {
     return <Redirect href='/(auth)/login' />;

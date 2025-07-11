@@ -21,6 +21,7 @@ import { getTextFromTranslation } from '@/helper/resourceHelper';
 import { myContrastColor } from '@/helper/colorHelper';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useLocalSearchParams } from 'expo-router';
+import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import NetInfo from '@react-native-community/netinfo';
 import { iconLibraries } from '@/components/Drawer/CustomDrawerContent';
 import MarkingIcon from '@/components/MarkingIcon';
@@ -71,8 +72,7 @@ const Index = () => {
   const [isConnected, setIsConnected] = useState(true);
   const progressAnim = useRef(new Animated.Value(0)).current;
   const refreshIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const { canteens } = useSelector((state: RootState) => state.canteenReducer);
-  const [selectedCanteen, setSelectedCanteen] = useState<any>(null);
+  const selectedCanteen = useSelectedCanteen();
   const foods_area_color = appSettings?.foods_area_color
     ? appSettings?.foods_area_color
     : projectColor;
@@ -126,29 +126,12 @@ const Index = () => {
     }
   }, [foodCategories, foodOfferCategories]);
 
-  const fetchSelectedCanteen = useCallback(() => {
-    if (!params?.canteens_id || !canteens || canteens.length === 0) return;
-
-    const foundCanteen = canteens?.find(
-      (canteen: any) => canteen.id === params?.canteens_id
-    );
-
-    if (foundCanteen) {
-      setSelectedCanteen(foundCanteen);
-    } else {
-      console.warn('Canteen not found for ID:', params?.canteens_id);
-    }
-  }, [params?.canteens_id, canteens]);
-
-  useEffect(() => {
-    fetchSelectedCanteen();
-  }, [params?.canteens_id, canteens]);
 
   const fetchFoods = async () => {
     try {
       const todayDate = new Date().toISOString().split('T')[0];
       const foodData = await fetchFoodsByCanteen(
-        String(params?.canteens_id),
+        String(selectedCanteen?.id),
         todayDate
       );
 
@@ -205,10 +188,10 @@ const Index = () => {
   }, [params?.refreshFoodOffersIntervalInSeconds]);
 
   useEffect(() => {
-    if (params?.canteens_id) {
+    if (selectedCanteen?.id) {
       fetchFoods();
     }
-  }, [params?.foodCategoryIds, params?.canteens_id]);
+  }, [params?.foodCategoryIds, selectedCanteen?.id]);
 
   useEffect(() => {
     if (foods.length > 0 && params?.nextFoodIntervalInSeconds) {
