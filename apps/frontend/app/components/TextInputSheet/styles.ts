@@ -13,6 +13,10 @@ export default StyleSheet.create({
     fontFamily: 'Poppins_400Regular',
     fontSize: 16,
   },
+  modalContainer: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
   sheetView: {
     width: '100%',
     height: '100%',
