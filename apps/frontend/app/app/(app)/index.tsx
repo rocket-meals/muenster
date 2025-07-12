@@ -21,7 +21,7 @@ import {
 } from '@/redux/Types/types';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { excerpt, getImageUrl } from '@/constants/HelperFunctions';
-import { DatabaseTypes } from 'repo-depkit-common';
+import { DatabaseTypes, AppLinks, AppScreens } from 'repo-depkit-common';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { RootState } from '@/redux/reducer';
 
@@ -45,13 +45,13 @@ const Home = () => {
 
   const checkCanteenSelection = () => {
     if (selectedCanteen) {
-      router.push('/(app)/foodoffers');
+      router.push('/(app)/' + AppScreens.FOOD_OFFERS);
     }
   };
 
   const handleSelectCanteen = (canteen: DatabaseTypes.Canteens) => {
     dispatch({ type: SET_SELECTED_CANTEEN, payload: canteen });
-    router.push('/(app)/foodoffers');
+    router.push('/(app)/' + AppScreens.FOOD_OFFERS);
   };
 
   const getCanteensWithBuildings = async () => {

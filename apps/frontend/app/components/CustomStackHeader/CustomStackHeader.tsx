@@ -13,6 +13,7 @@ import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
+import { AppLinks, AppScreens } from 'repo-depkit-common';
 const CustomStackHeader: React.FC<CustomStackHeaderProps> = ({ label }) => {
   const { theme } = useTheme();
   const { translate } = useLanguage();
@@ -24,8 +25,8 @@ const CustomStackHeader: React.FC<CustomStackHeaderProps> = ({ label }) => {
   );
 
   const handleGoback = () => {
-    if (pathname.includes('/foodoffers/details')) {
-      router.navigate('/foodoffers');
+    if (pathname.includes(`/${AppScreens.FOOD_OFFERS}/details`)) {
+      router.navigate(`/${AppScreens.FOOD_OFFERS}`);
     } else if (pathname.includes('/housing/details')) {
       router.navigate('/housing');
     } else if (pathname.includes('/statistics')) {
@@ -55,7 +56,7 @@ const CustomStackHeader: React.FC<CustomStackHeaderProps> = ({ label }) => {
     } else if (router.canGoBack()) {
       router.back();
     } else if (loggedIn) {
-      router.navigate('/foodoffers');
+      router.navigate(`/${AppScreens.FOOD_OFFERS}`);
     } else {
       router.navigate('/login');
     }

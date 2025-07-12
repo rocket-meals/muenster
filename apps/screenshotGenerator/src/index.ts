@@ -3,6 +3,8 @@ import { promises as fs } from "fs";
 // reduce the size of the screenshot with sharp
 import sharp from "sharp";
 
+import {AppLinks, AppScreens} from "repo-depkit-common";
+
 import yargs from "yargs";
 
 // Define command-line arguments using yargs
@@ -59,7 +61,7 @@ console.log(`Generating screenshots for ${repositoryOwner}/${repositoryName}`);
 
 const screens = [
     "login",
-    'foodoffers',
+    AppScreens.FOOD_OFFERS,
     "eating-habits",
     "account-balance",
     "campus",
@@ -79,7 +81,10 @@ const screens = [
 const baseUrl = 'https://' + repositoryOwner + '.github.io/' + repositoryName + '/';
 
 const urls = screens.map(screen =>
-    baseUrl + screen + '?kioskMode=true&deviceMock=iphone'
+    baseUrl + AppLinks.build(screen, [
+        { key: 'kioskMode', value: true },
+        { key: 'deviceMock', value: 'iphone' }
+    ])
 );
 
 type Device = {

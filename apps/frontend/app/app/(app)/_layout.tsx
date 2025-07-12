@@ -7,7 +7,7 @@ import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { Redirect, useGlobalSearchParams } from 'expo-router';
 import useKioskMode from '@/hooks/useKioskMode';
 import { ProfileHelper } from '@/redux/actions/Profile/Profile';
-import { DatabaseTypes } from 'repo-depkit-common';
+import { DatabaseTypes, AppLinks, AppScreens } from 'repo-depkit-common';
 import {
   SET_APP_ELEMENTS,
   SET_APP_SETTINGS,
@@ -595,7 +595,7 @@ export default function Layout() {
           }}
         />
         <Drawer.Screen
-          name='foodoffers'
+          name={AppScreens.FOOD_OFFERS}
           options={{
             title: 'Canteens',
             headerShown: false,
