@@ -5,6 +5,7 @@ import { isWeb } from '@/constants/Constants';
 import { excerpt, getImageUrl } from '@/constants/HelperFunctions';
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
+import { myContrastColor } from '@/helper/colorHelper';
 import styles from './styles';
 import { BuildingItemProps } from './types';
 import { router } from 'expo-router';
@@ -21,10 +22,18 @@ const BuildingItem: React.FC<BuildingItemProps> = ({
 }) => {
   const { theme } = useTheme();
   const { translate } = useLanguage();
-  const { amountColumnsForcard, primaryColor, serverInfo } = useSelector(
-    (state: RootState) => state.settings
-  );
+  const {
+    amountColumnsForcard,
+    primaryColor,
+    serverInfo,
+    appSettings,
+    selectedTheme: mode,
+  } = useSelector((state: RootState) => state.settings);
   const defaultImage = getImageUrl(serverInfo?.info?.project?.project_logo);
+  const campus_area_color = appSettings?.campus_area_color
+    ? appSettings?.campus_area_color
+    : primaryColor;
+  const contrastColor = myContrastColor(campus_area_color, theme, mode === 'dark');
   const { isManagement } = useSelector((state: RootState) => state.authReducer);
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get('window').width
@@ -153,15 +162,15 @@ const BuildingItem: React.FC<BuildingItemProps> = ({
               <TouchableOpacity
                 style={{
                   ...styles.directionButton,
-                  backgroundColor: primaryColor,
+                  backgroundColor: campus_area_color,
                 }}
               >
                 <MaterialCommunityIcons
                   name='map-marker-distance'
                   size={20}
-                  color={theme.activeText}
+                  color={contrastColor}
                 />
-                <Text style={{ ...styles.distance, color: theme.activeText }}>
+                <Text style={{ ...styles.distance, color: contrastColor }}>
                   {getDistanceUnit(campus?.distance)}
                 </Text>
               </TouchableOpacity>
