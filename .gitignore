@@ -27,5 +27,8 @@ apps/frontend/app/android
 tools/screenshotGenerator/dist/
 secrets/
 
+# Ignore built Directus extension
+apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/dist/
+
 # Virtual environment folder
 **/venv/
