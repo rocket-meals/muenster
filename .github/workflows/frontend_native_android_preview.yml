@@ -7,7 +7,8 @@ on:
       - 'apps/frontend/app/**'
       - 'packages/common/**'
       - '.github/workflows/**'
-      - '!apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/dist/**'
+    paths-ignore:
+      - 'apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/dist/**'
 
 jobs:
   check-build:
