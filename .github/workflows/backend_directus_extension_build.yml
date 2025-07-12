@@ -7,6 +7,7 @@ on:
     paths:
       - 'apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/**'
       - '.github/workflows/**'
+      - 'package.json'
 
 jobs:
   build:
