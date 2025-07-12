@@ -5,8 +5,7 @@ on:
     branches: [master]
     paths:
       - 'apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/**'
-    paths-ignore:
-      - 'apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/dist/**'
+      - '!apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/dist/**'
 
 jobs:
   build:
