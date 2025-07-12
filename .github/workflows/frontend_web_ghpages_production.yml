@@ -7,8 +7,6 @@ on:
       - 'apps/frontend/app/**'
       - 'packages/common/**'
       - '.github/workflows/**'
-    paths-ignore:
-      - 'apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/dist/**'
 
 jobs:
   deploy-gh-pages:
