@@ -3,7 +3,7 @@ import { promises as fs } from "fs";
 // reduce the size of the screenshot with sharp
 import sharp from "sharp";
 
-import {AppLinks, AppScreens} from "repo-depkit-common";
+import {AppLinks, AppScreens, APP_ROUTES} from "repo-depkit-common";
 
 import yargs from "yargs";
 
@@ -27,6 +27,12 @@ const argv = yargs
         type: 'string',
         demandOption: false,
     })
+    .option('browserLang', {
+        alias: 'b',
+        description: 'Language for the browser',
+        type: 'string',
+        demandOption: false,
+    })
     // option to skip existing screenshots
     .option('skipExisting', {
         alias: 's',
@@ -43,6 +49,7 @@ const repositoryOwner = argv.repositoryOwner || process.env.REPOSITORY_OWNER;
 const repositoryName = argv.repositoryName || process.env.REPOSITORY_NAME;
 const screenshotDir = argv.screenshotDir || process.env.SCREENSHOT_DIR;
 const skipExisting = argv.skipExisting || process.env.SKIP_EXISTING;
+const browserLang = argv.browserLang || process.env.BROWSER_LANG || 'de';
 
 // check if all required environment variables are set
 if (!repositoryOwner || !repositoryName || !screenshotDir) {
@@ -59,24 +66,7 @@ const screenshotDirWithSlash = screenshotDir.endsWith('/') ? screenshotDir : scr
 
 console.log(`Generating screenshots for ${repositoryOwner}/${repositoryName}`);
 
-const screens = [
-    "login",
-    AppScreens.FOOD_OFFERS,
-    "eating-habits",
-    "account-balance",
-    AppScreens.CAMPUS,
-    'housing',
-    "news",
-    "course-timetable",
-    "settings",
-    "price-group",
-    "data-access",
-    "support-FAQ",
-    "licenseInformation",
-    "management",
-    "statistics",
-    "labels",
-]; // Add your screens here
+const screens = APP_ROUTES;
 
 const baseUrl = 'https://' + repositoryOwner + '.github.io/' + repositoryName + '/';
 
@@ -210,7 +200,7 @@ async function doesFileExist(fileName: string) {
 
 (async () => {
     let browser = await puppeteer.launch({
-        args: ['--lang=de', '--no-sandbox', '--disable-setuid-sandbox'],  // Set the browser language to German
+        args: [`--lang=${browserLang}`, '--no-sandbox', '--disable-setuid-sandbox'],
     });
 
     let totalAmountOfScreenshots = urls.length * devices.length;

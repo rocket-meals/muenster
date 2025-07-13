@@ -1,6 +1,20 @@
 export enum AppScreens {
+    LOGIN = 'login',
     FOOD_OFFERS = 'foodoffers',
+    EATING_HABITS = 'eating-habits',
+    ACCOUNT_BALANCE = 'account-balance',
     CAMPUS = 'campus',
+    HOUSING = 'housing',
+    NEWS = 'news',
+    COURSE_TIMETABLE = 'course-timetable',
+    SETTINGS = 'settings',
+    PRICE_GROUP = 'price-group',
+    DATA_ACCESS = 'data-access',
+    SUPPORT_FAQ = 'support-FAQ',
+    LICENSE_INFORMATION = 'licenseInformation',
+    MANAGEMENT = 'management',
+    STATISTICS = 'statistics',
+    LABELS = 'labels',
 }
 
 export interface AppLinkParam {
@@ -24,3 +38,5 @@ export class AppLinks {
         return this.build(AppScreens.CAMPUS, params);
     }
 }
+
+export const APP_ROUTES = Object.values(AppScreens);
