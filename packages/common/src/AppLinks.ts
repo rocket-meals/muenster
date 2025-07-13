@@ -1,5 +1,6 @@
 export enum AppScreens {
     FOOD_OFFERS = 'foodoffers',
+    CAMPUS = 'campus',
 }
 
 export interface AppLinkParam {
@@ -17,5 +18,9 @@ export class AppLinks {
 
     static foodOffers(params: AppLinkParam[] = []): string {
         return this.build(AppScreens.FOOD_OFFERS, params);
+    }
+
+    static campus(params: AppLinkParam[] = []): string {
+        return this.build(AppScreens.CAMPUS, params);
     }
 }

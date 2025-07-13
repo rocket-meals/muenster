@@ -64,7 +64,7 @@ const screens = [
     AppScreens.FOOD_OFFERS,
     "eating-habits",
     "account-balance",
-    "campus",
+    AppScreens.CAMPUS,
     'housing',
     "news",
     "course-timetable",
