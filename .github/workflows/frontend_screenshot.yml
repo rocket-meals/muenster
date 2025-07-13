@@ -24,15 +24,10 @@ jobs:
       - name: 🏗 Checkout Repository
         uses: actions/checkout@v3
 
-      - name: 🏗 Setup Node
-        uses: actions/setup-node@v3
+      - name: 🧰 Setup Node.js, Yarn & Dependencies
+        uses: ./.github/actions/setup-and-install
         with:
-          node-version: '18.19.1'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: 📦 Install dependencies with Yarn
-        run: yarn install --frozen-lockfile
-        working-directory: apps/screenshotGenerator
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
       - name: 🛠 Compile TypeScript
         run: yarn build
