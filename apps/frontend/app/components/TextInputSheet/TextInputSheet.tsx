@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Text, TouchableOpacity, View, TextInput } from 'react-native';
-import Modal from 'react-native-modal';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
+import type BottomSheet from '@gorhom/bottom-sheet';
+import BaseBottomSheet from '../BaseBottomSheet';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -22,6 +24,7 @@ const TextInputSheet: React.FC<TextInputSheetProps> = ({
   placeholder,
   onChange,
 }) => {
+  const sheetRef = useRef<BottomSheet>(null);
   const { theme } = useTheme();
   const { translate } = useLanguage();
   const { primaryColor, selectedTheme: mode } = useSelector(
@@ -30,15 +33,13 @@ const TextInputSheet: React.FC<TextInputSheetProps> = ({
   const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
   const [tempValue, setTempValue] = useState(value);
 
-  const [isVisible, setIsVisible] = useState(false);
-
   const openSheet = () => {
     setTempValue(value);
-    setIsVisible(true);
+    sheetRef.current?.expand();
   };
 
   const closeSheet = () => {
-    setIsVisible(false);
+    sheetRef.current?.close();
   };
 
   const saveValue = () => {
@@ -56,16 +57,15 @@ const TextInputSheet: React.FC<TextInputSheetProps> = ({
         </View>
       </TouchableOpacity>
 
-      <Modal
-        isVisible={isVisible}
-        onBackdropPress={closeSheet}
-        style={styles.modalContainer}
-        animationIn='slideInUp'
-        animationOut='slideOutDown'
-        backdropOpacity={0.7}
-        useNativeDriver
+      <BaseBottomSheet
+        ref={sheetRef}
+        index={-1}
+        backgroundStyle={{ backgroundColor: theme.sheet.sheetBg }}
+        enablePanDownToClose
+        handleComponent={null}
+        onClose={closeSheet}
       >
-        <View style={[styles.sheetView, { backgroundColor: theme.sheet.sheetBg }]}>
+        <BottomSheetView style={[styles.sheetView, { backgroundColor: theme.sheet.sheetBg }]}>
           <View style={styles.sheetHeader}>
             <View />
             <Text style={[styles.sheetHeading, { color: theme.sheet.text }]}>{label}</Text>
@@ -104,8 +104,8 @@ const TextInputSheet: React.FC<TextInputSheetProps> = ({
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </Modal>
+        </BottomSheetView>
+      </BaseBottomSheet>
     </>
   );
 };
