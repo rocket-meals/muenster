@@ -207,7 +207,8 @@ const CanteenSelectionSheet: React.FC<CanteenSelectionSheetProps> = ({
               {excerpt(String(canteen.alias), 20)}
             </Text>
           </TouchableOpacity>
-        ))}
+        );
+        })}
       </View>
     </BottomSheetScrollView>
   );
