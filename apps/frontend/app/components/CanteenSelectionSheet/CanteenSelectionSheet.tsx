@@ -28,13 +28,20 @@ const CanteenSelectionSheet: React.FC<CanteenSelectionSheetProps> = ({
   const dispatch = useDispatch();
   const canteenHelper = new CanteenHelper();
   const buildingsHelper = new BuildingsHelper();
-  const { serverInfo } = useSelector((state: RootState) => state.settings);
-  const { canteens } = useSelector((state: RootState) => state.canteenReducer);
+  const { serverInfo, appSettings, primaryColor } = useSelector(
+    (state: RootState) => state.settings,
+  );
+  const { canteens, selectedCanteen } = useSelector(
+    (state: RootState) => state.canteenReducer,
+  );
   const { isManagement } = useSelector((state: RootState) => state.authReducer);
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get('window').width
   );
   const defaultImage = getImageUrl(serverInfo?.info?.project?.project_logo);
+  const foods_area_color = appSettings?.foods_area_color
+    ? appSettings?.foods_area_color
+    : primaryColor;
 
   const handleSelectCanteen = (canteen: DatabaseTypes.Canteens) => {
     dispatch({ type: SET_SELECTED_CANTEEN, payload: canteen });
@@ -147,19 +154,25 @@ const CanteenSelectionSheet: React.FC<CanteenSelectionSheetProps> = ({
           marginTop: isWeb ? 40 : 20,
         }}
       >
-        {canteens.map((canteen, index: number) => (
-          <TouchableOpacity
-            style={{
-              ...styles.card,
-              width: screenWidth > 800 ? 210 : 160,
-              backgroundColor: theme.card.background,
-              marginBottom: 10,
-            }}
-            key={canteen.id + canteen.alias}
-            onPress={() => {
-              handleSelectCanteen(canteen);
-            }}
-          >
+        {canteens.map((canteen, index: number) => {
+          const isSelected =
+            selectedCanteen &&
+            String(selectedCanteen.id) === String(canteen.id);
+          return (
+            <TouchableOpacity
+              style={{
+                ...styles.card,
+                width: screenWidth > 800 ? 210 : 160,
+                backgroundColor: theme.card.background,
+                marginBottom: 10,
+                borderColor: isSelected ? foods_area_color : 'transparent',
+                borderWidth: isSelected ? 3 : 0,
+              }}
+              key={canteen.id + canteen.alias}
+              onPress={() => {
+                handleSelectCanteen(canteen);
+              }}
+            >
             <View
               style={{
                 ...styles.imageContainer,
