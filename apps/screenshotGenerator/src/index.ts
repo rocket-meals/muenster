@@ -1,7 +1,6 @@
 import puppeteer from "puppeteer";
 import { AppLinks, APP_ROUTES, GlobalParams } from "repo-depkit-common";
 import {
-    devices,
     createDirIfNotExists,
     createScreenshotUncompressed,
     getFileName,
@@ -9,8 +8,8 @@ import {
     printEstimatedTime,
     deleteAllScreenshots,
     doesFileExist,
-    Device,
 } from "./helpers";
+import { devices, Device } from "./devices";
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -74,11 +73,11 @@ const screenshotDirWithSlash = screenshotDir.endsWith('/') ? screenshotDir : scr
 
 console.log(`Generating screenshots for ${repositoryOwner}/${repositoryName}`);
 
-const screens = APP_ROUTES;
+const screens: string[] = APP_ROUTES;
 
 const baseUrl = AppLinks.getGithubPagesBaseUrl(repositoryOwner, repositoryName);
 
-const urls = screens.map((screen) =>
+const urls = screens.map((screen: string) =>
     AppLinks.getGithubPagesUrl(repositoryOwner, repositoryName, screen, [
         { key: GlobalParams.kioskMode, value: true },
         { key: GlobalParams.deviceMock, value: 'iphone' },
