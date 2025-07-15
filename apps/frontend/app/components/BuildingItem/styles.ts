@@ -42,7 +42,7 @@ export default StyleSheet.create({
   },
   campusName: {
     fontSize: 16,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'Poppins_400Regular',
     textAlign: 'center',
     marginBottom: 5,
   },

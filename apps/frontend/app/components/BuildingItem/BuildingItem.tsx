@@ -121,6 +121,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({
           contentStyle={{
             paddingHorizontal: 5,
           }}
+          borderColor={campus_area_color}
           imageChildren={
             <View style={styles.imageActionContainer}>
               {isManagement ? (
