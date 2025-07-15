@@ -37,6 +37,16 @@ export class AppLinks {
     static campus(params: AppLinkParam[] = []): string {
         return this.build(AppScreens.CAMPUS, params);
     }
+
+    static getGithubPagesBaseUrl(repositoryOwner: string, repositoryName: string): string {
+        return `https://${repositoryOwner}.github.io/${repositoryName}`;
+    }
+
+    static getGithubPagesUrl(repositoryOwner: string, repositoryName: string, path: AppScreens | string, params: AppLinkParam[] = []){
+        const baseUrl = this.getGithubPagesBaseUrl(repositoryOwner, repositoryName);
+        const fullPath = this.build(path, params);
+        return `${baseUrl}/${fullPath}`;
+    }
 }
 
 export const APP_ROUTES = Object.values(AppScreens);

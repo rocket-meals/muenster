@@ -3,7 +3,7 @@ import { promises as fs } from "fs";
 // reduce the size of the screenshot with sharp
 import sharp from "sharp";
 
-import {AppLinks, AppScreens, APP_ROUTES} from "repo-depkit-common";
+import {AppLinks, APP_ROUTES} from "repo-depkit-common";
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -69,13 +69,15 @@ console.log(`Generating screenshots for ${repositoryOwner}/${repositoryName}`);
 
 const screens = APP_ROUTES;
 
-const baseUrl = 'https://' + repositoryOwner + '.github.io/' + repositoryName + '/';
+const baseUrl = AppLinks.getGithubPagesBaseUrl(repositoryOwner, repositoryName);
 
 const urls = screens.map(screen =>
-    baseUrl + AppLinks.build(screen, [
-        { key: 'kioskMode', value: true },
-        { key: 'deviceMock', value: 'iphone' }
-    ])
+    {
+        return AppLinks.getGithubPagesUrl(repositoryOwner, repositoryName, screen, [
+            { key: 'kioskMode', value: true },
+            { key: 'deviceMock', value: 'iphone' }
+        ]);
+    }
 );
 
 type Device = {
