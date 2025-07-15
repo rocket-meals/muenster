@@ -36,22 +36,6 @@ export default StyleSheet.create({
     rowGap: 10,
     paddingBottom: 20,
   },
-  card: {
-    borderRadius: 18,
-    paddingBottom: 10,
-  },
-  imageContainer: {
-    width: '100%',
-    height: '75%',
-    borderRadius: 18,
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    borderTopRightRadius: 18,
-    borderTopLeftRadius: 18,
-    resizeMode: 'cover',
-  },
   foodName: {
     fontSize: 16,
     fontFamily: 'Poppins_400Regular',
