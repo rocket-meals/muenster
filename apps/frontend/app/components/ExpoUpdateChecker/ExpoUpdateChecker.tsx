@@ -1,8 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AppState, AppStateStatus, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {
+  AppState,
+  AppStateStatus,
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
 import * as Updates from 'expo-updates';
-import ModalComponent from '../ModalSetting/ModalComponent';
-import { styles as modalStyles } from '../ModalSetting/styles';
+import BaseBottomSheet from '../BaseBottomSheet';
+import { BottomSheetView } from '@gorhom/bottom-sheet';
 import usePlatformHelper from '@/helper/platformHelper';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
@@ -65,43 +73,73 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
   return (
     <>
       {children}
-      <ModalComponent
-        isVisible={modalVisible}
+      <BaseBottomSheet
+        index={modalVisible ? 0 : -1}
+        enablePanDownToClose
         onClose={() => setModalVisible(false)}
-        title={translate(TranslationKeys.update_available)}
-        onSave={applyUpdate}
-        showButtons={false}
+        backgroundStyle={{ backgroundColor: theme.sheet.sheetBg }}
       >
-        <View style={{ gap: 20 }}>
+        <BottomSheetView style={sheetStyles.contentContainer}>
           <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
             {translate(TranslationKeys.update_available_message)}
           </Text>
-          <View style={[modalStyles.buttonContainer, { width: '80%' }]}>
+          <View style={sheetStyles.buttonContainer}>
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
-              style={[modalStyles.cancelButton, { borderColor: primaryColor }]}
+              style={[sheetStyles.cancelButton, { borderColor: primaryColor }]}
             >
-              <Text style={[modalStyles.buttonText, { color: theme.screen.text }]}>
+              <Text style={[sheetStyles.buttonText, { color: theme.screen.text }]}>
                 {translate(TranslationKeys.cancel)}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={applyUpdate}
-              style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}
+              style={[sheetStyles.saveButton, { backgroundColor: primaryColor }]}
             >
               {updating ? (
                 <ActivityIndicator color={theme.activeText} />
               ) : (
-                <Text style={[modalStyles.buttonText, { color: theme.activeText }]}>
+                <Text style={[sheetStyles.buttonText, { color: theme.activeText }]}>
                   {translate(TranslationKeys.to_update)}
                 </Text>
               )}
             </TouchableOpacity>
           </View>
-        </View>
-      </ModalComponent>
+        </BottomSheetView>
+      </BaseBottomSheet>
     </>
   );
 };
 
 export default ExpoUpdateChecker;
+
+const sheetStyles = StyleSheet.create({
+  contentContainer: {
+    gap: 20,
+    alignItems: 'center',
+    padding: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+  },
+  cancelButton: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 5,
+    alignItems: 'center',
+    borderWidth: 1,
+  },
+  saveButton: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 5,
+    marginLeft: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontWeight: 'bold',
+  },
+});
