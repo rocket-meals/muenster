@@ -82,6 +82,12 @@ import LottieView from 'lottie-react-native';
 import { replaceLottieColors } from '@/helper/animationHelper';
 import { myContrastColor } from '@/helper/colorHelper';
 import { TranslationKeys } from '@/locales/keys';
+import {
+  FlingGestureHandler,
+  Directions,
+  State,
+} from 'react-native-gesture-handler';
+import usePlatformHelper from '@/helper/platformHelper';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import CustomMarkdown from '@/components/CustomMarkdown/CustomMarkdown';
 import { RootState } from '@/redux/reducer';
@@ -95,6 +101,46 @@ export const SHEET_COMPONENTS = {
   forecast: ForecastSheet,
   imageManagement: ImageManagementSheet,
   eatingHabits: EatingHabitsSheet,
+};
+
+interface DaySwipeScrollViewProps extends ScrollViewProps {
+  onSwipeLeft: () => void;
+  onSwipeRight: () => void;
+}
+
+const DaySwipeScrollView: React.FC<DaySwipeScrollViewProps> = ({
+  onSwipeLeft,
+  onSwipeRight,
+  children,
+  ...rest
+}) => {
+  const { isSmartPhone } = usePlatformHelper();
+
+  if (!isSmartPhone()) {
+    return <ScrollView {...rest}>{children}</ScrollView>;
+  }
+
+  return (
+    <FlingGestureHandler
+      direction={Directions.LEFT}
+      onHandlerStateChange={(ev) => {
+        if (ev.nativeEvent.state === State.END) {
+          onSwipeLeft();
+        }
+      }}
+    >
+      <FlingGestureHandler
+        direction={Directions.RIGHT}
+        onHandlerStateChange={(ev) => {
+          if (ev.nativeEvent.state === State.END) {
+            onSwipeRight();
+          }
+        }}
+      >
+        <ScrollView {...rest}>{children}</ScrollView>
+      </FlingGestureHandler>
+    </FlingGestureHandler>
+  );
 };
 
 
@@ -955,7 +1001,9 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
               </View>
             </View>
           </View>
-          <ScrollView
+          <DaySwipeScrollView
+            onSwipeLeft={() => handleDateChange('next')}
+            onSwipeRight={() => handleDateChange('prev')}
             style={{
               ...styles.container,
               backgroundColor: theme.screen.background,
@@ -1071,7 +1119,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
                 {memoizedCanteenFeedbackLabels}
               </View>
             )}
-          </ScrollView>
+          </DaySwipeScrollView>
         </View>
         {isActive && !kioskMode && popupEvents.length > 0 && (
           selectedSheet === 'menu' ? (
