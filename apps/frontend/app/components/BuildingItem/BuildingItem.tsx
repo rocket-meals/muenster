@@ -20,6 +20,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({
   campus,
   openImageManagementSheet,
   setSelectedApartementId,
+  openDistanceSheet,
 }) => {
   const { theme } = useTheme();
   const { translate } = useLanguage();
@@ -160,6 +161,7 @@ const BuildingItem: React.FC<BuildingItemProps> = ({
                   ...styles.directionButton,
                   backgroundColor: campus_area_color,
                 }}
+                onPress={openDistanceSheet}
               >
                 <MaterialCommunityIcons
                   name='map-marker-distance'
