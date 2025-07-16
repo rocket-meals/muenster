@@ -42,6 +42,8 @@ import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
 import { calculateDistanceInMeter } from '@/helper/distanceHelper';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
+import DistanceInfoSheet from '@/components/DistanceInfoSheet';
+import * as Location from 'expo-location';
 import BuildingSortSheet from '@/components/BuildingSortSheet/BuildingSortSheet';
 import useToast from '@/hooks/useToast';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -83,6 +85,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
   const sortSheetRef = useRef<BottomSheet>(null);
   const imageManagementSheetRef = useRef<BottomSheet>(null);
+  const distanceSheetRef = useRef<BottomSheet>(null);
 
   const openSortSheet = () => {
     sortSheetRef.current?.expand();
@@ -98,6 +101,14 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
   const closeImageManagementSheet = () => {
     imageManagementSheetRef?.current?.close();
+  };
+
+  const openDistanceSheet = () => {
+    distanceSheetRef.current?.expand();
+  };
+
+  const closeDistanceSheet = () => {
+    distanceSheetRef.current?.close();
   };
 
   useFocusEffect(
@@ -224,6 +235,23 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
       }
     } else {
       toast('Please select canteen', 'error');
+    }
+  };
+
+  const useCurrentLocationForDistance = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        toast('Permission denied', 'error');
+        return;
+      }
+      const loc = await Location.getCurrentPositionAsync({});
+      setSelectedBuilding({
+        coordinates: { coordinates: [loc.coords.latitude, loc.coords.longitude] },
+      } as any);
+      closeDistanceSheet();
+    } catch (error) {
+      console.error('Error getting location:', error);
     }
   };
 
@@ -395,6 +423,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
                   campus={campus}
                   setSelectedApartementId={setSelectedApartementId}
                   openImageManagementSheet={openImageManagementSheet}
+                  openDistanceSheet={openDistanceSheet}
                 />
               ))
             ) : (
@@ -455,7 +484,26 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
                 setCampusesDispatched(false);
                 fetchAllCampuses();
               }}
-              fileName='buildings'
+            fileName='buildings'
+          />
+        </BaseBottomSheet>
+        )}
+
+        {isActive && (
+          <BaseBottomSheet
+            ref={distanceSheetRef}
+            index={-1}
+            backgroundStyle={{
+              ...styles.sheetBackground,
+              backgroundColor: theme.sheet.sheetBg,
+            }}
+            handleComponent={null}
+            enablePanDownToClose
+            onClose={closeDistanceSheet}
+          >
+            <DistanceInfoSheet
+              closeSheet={closeDistanceSheet}
+              onUseCurrentPosition={useCurrentLocationForDistance}
             />
           </BaseBottomSheet>
         )}
