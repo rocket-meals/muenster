@@ -29,10 +29,6 @@ jobs:
         with:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: 🛠 Compile TypeScript
-        run: yarn build
-        working-directory: apps/screenshotGenerator
-
       - name: 🚀 Generate Screenshots
         run: yarn start
         working-directory: apps/screenshotGenerator
