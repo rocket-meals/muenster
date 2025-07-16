@@ -5,7 +5,6 @@ import { useLocalSearchParams } from 'expo-router';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { TranslationKeys } from '@/locales/keys';
 import MyMarkdown from '@/components/MyMarkdown/MyMarkdown';
-import CustomStackHeader from '@/components/CustomStackHeader/CustomStackHeader';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import { myContrastColor } from '@/helper/colorHelper';
@@ -109,7 +108,6 @@ const ChatDetailsScreen = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.screen.background }]}>
-      <CustomStackHeader label={chatTitle} />
       <FlatList
         data={chatMessages}
         keyExtractor={(item) => item.id}

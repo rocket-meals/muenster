@@ -26,7 +26,9 @@ export default function ChatsLayout() {
       <Stack.Screen
         name='details/index'
         options={{
-          headerShown: false,
+          header: () => (
+            <CustomStackHeader label={translate(TranslationKeys.chat)} />
+          ),
         }}
       />
     </Stack>
