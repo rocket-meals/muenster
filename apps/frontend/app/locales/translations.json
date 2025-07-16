@@ -1169,6 +1169,16 @@
     "tr": "Mesafe, seçtiğiniz kantine veya açıkça sorduysanız cihazınızın konumuna olan mesafeye göre hesaplanır.",
     "zh": "距离是根据您选择的食堂的距离或，如果您明确要求，根据您设备的位置计算的。"
   },
+  "use_current_position_for_distance": {
+    "de": "Aktuelle Position für Entfernung nutzen",
+    "en": "Use current position for distance",
+    "ar": "استخدم الموقع الحالي للمسافة",
+    "es": "Usar la posición actual para la distancia",
+    "fr": "Utiliser la position actuelle pour la distance",
+    "ru": "Использовать текущую позицию для расстояния",
+    "tr": "Mesafe için mevcut konumu kullan",
+    "zh": "使用当前位置计算距离"
+  },
   "coordinates": {
     "de": "Koordinaten",
     "en": "Coordinates",

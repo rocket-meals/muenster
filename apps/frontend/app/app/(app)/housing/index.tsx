@@ -46,6 +46,8 @@ import BuildingSortSheet from '@/components/BuildingSortSheet/BuildingSortSheet'
 import useToast from '@/hooks/useToast';
 import { useLanguage } from '@/hooks/useLanguage';
 import ImageManagementSheet from '@/components/ImageManagementSheet/ImageManagementSheet';
+import DistanceInfoSheet from '@/components/DistanceInfoSheet';
+import * as Location from 'expo-location';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
 import { TranslationKeys } from '@/locales/keys';
@@ -66,6 +68,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   const [isActive, setIsActive] = useState(false);
   const sortSheetRef = useRef<BottomSheet>(null);
   const imageManagementSheetRef = useRef<BottomSheet>(null);
+  const distanceSheetRef = useRef<BottomSheet>(null);
   const [apartmentsDispatched, setApartmentsDispatched] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [distanceAdded, setDistanceAdded] = useState(false);
@@ -107,6 +110,14 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
   const closeImageManagementSheet = () => {
     imageManagementSheetRef?.current?.close();
+  };
+
+  const openDistanceSheet = () => {
+    distanceSheetRef.current?.expand();
+  };
+
+  const closeDistanceSheet = () => {
+    distanceSheetRef.current?.close();
   };
 
   useFocusEffect(
@@ -219,6 +230,23 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
       }
     } else {
       toast('Please select canteen', 'error');
+    }
+  };
+
+  const useCurrentLocationForDistance = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        toast('Permission denied', 'error');
+        return;
+      }
+      const loc = await Location.getCurrentPositionAsync({});
+      setSelectedBuilding({
+        coordinates: { coordinates: [loc.coords.latitude, loc.coords.longitude] },
+      } as any);
+      closeDistanceSheet();
+    } catch (error) {
+      console.error('Error getting location:', error);
     }
   };
 
@@ -499,6 +527,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
                   apartment={apartment}
                   setSelectedApartementId={setSelectedApartementId}
                   openImageManagementSheet={openImageManagementSheet}
+                  openDistanceSheet={openDistanceSheet}
                 />
               ))
             ) : (
@@ -560,7 +589,26 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
                 setApartmentsDispatched(false);
                 fetchAllApartments();
               }}
-              fileName='buildings'
+            fileName='buildings'
+          />
+        </BaseBottomSheet>
+        )}
+
+        {isActive && (
+          <BaseBottomSheet
+            ref={distanceSheetRef}
+            index={-1}
+            backgroundStyle={{
+              ...styles.sheetBackground,
+              backgroundColor: theme.sheet.sheetBg,
+            }}
+            handleComponent={null}
+            enablePanDownToClose
+            onClose={closeDistanceSheet}
+          >
+            <DistanceInfoSheet
+              closeSheet={closeDistanceSheet}
+              onUseCurrentPosition={useCurrentLocationForDistance}
             />
           </BaseBottomSheet>
         )}

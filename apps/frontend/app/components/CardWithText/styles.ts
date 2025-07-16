@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   card: {
     borderRadius: 18,
-    paddingBottom: 10,
+    paddingBottom: 0,
   },
   imageContainer: {
     width: '100%',

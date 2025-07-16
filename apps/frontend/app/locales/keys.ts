@@ -110,6 +110,7 @@ export enum TranslationKeys {
   feedback_labels = 'feedback_labels',
   open_navitation_to_location = 'open_navitation_to_location',
   distance_based_canteen_selection_or_if_asked_on_real_location = 'distance_based_canteen_selection_or_if_asked_on_real_location',
+  use_current_position_for_distance = 'use_current_position_for_distance',
   coordinates = 'coordinates',
   copy_url = 'copy_url',
   copy = 'copy',
