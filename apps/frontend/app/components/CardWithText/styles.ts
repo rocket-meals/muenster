@@ -21,5 +21,6 @@ export default StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
     flex: 1,
+    paddingBottom: 18,
   },
 });
