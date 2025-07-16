@@ -9,8 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import * as Updates from 'expo-updates';
-import BaseBottomSheet from '../BaseBottomSheet';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
+import BaseModal from '../BaseModal';
 import usePlatformHelper from '@/helper/platformHelper';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
@@ -73,48 +72,46 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
   return (
     <>
       {children}
-      <BaseBottomSheet
-        index={modalVisible ? 0 : -1}
-        enablePanDownToClose
+      <BaseModal
+        isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
-        backgroundStyle={{ backgroundColor: theme.sheet.sheetBg }}
         title={translate(TranslationKeys.update_available)}
       >
-        <BottomSheetView style={sheetStyles.contentContainer}>
+        <View style={modalStyles.contentContainer}>
           <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
             {translate(TranslationKeys.update_available_message)}
           </Text>
-          <View style={sheetStyles.buttonContainer}>
+          <View style={modalStyles.buttonContainer}>
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
-              style={[sheetStyles.cancelButton, { borderColor: primaryColor }]}
+              style={[modalStyles.cancelButton, { borderColor: primaryColor }]}
             >
-              <Text style={[sheetStyles.buttonText, { color: theme.screen.text }]}>
+              <Text style={[modalStyles.buttonText, { color: theme.screen.text }]}>
                 {translate(TranslationKeys.cancel)}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={applyUpdate}
-              style={[sheetStyles.saveButton, { backgroundColor: primaryColor }]}
+              style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}
             >
               {updating ? (
                 <ActivityIndicator color={theme.activeText} />
               ) : (
-                <Text style={[sheetStyles.buttonText, { color: theme.activeText }]}>
+                <Text style={[modalStyles.buttonText, { color: theme.activeText }]}>
                   {translate(TranslationKeys.to_update)}
                 </Text>
               )}
             </TouchableOpacity>
           </View>
-        </BottomSheetView>
-      </BaseBottomSheet>
+        </View>
+      </BaseModal>
     </>
   );
 };
 
 export default ExpoUpdateChecker;
 
-const sheetStyles = StyleSheet.create({
+const modalStyles = StyleSheet.create({
   contentContainer: {
     gap: 20,
     alignItems: 'center',
