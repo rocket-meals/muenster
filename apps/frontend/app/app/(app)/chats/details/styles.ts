@@ -9,12 +9,16 @@ export default StyleSheet.create({
     gap: 10,
   },
   messageItem: {
+    maxWidth: '80%',
+    gap: 4,
+  },
+  bubble: {
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 3,
   },
   timestamp: {
     fontSize: 12,
     fontFamily: 'Poppins_400Regular',
-    marginBottom: 4,
+    marginTop: 2,
   },
 });

@@ -13,7 +13,7 @@ interface Chat {
   title: string;
 }
 
-const CHATS: Chat[] = [
+export const CHATS: Chat[] = [
   { id: '1', owner: '1', title: 'General' },
   { id: '2', owner: '2', title: 'Project X' },
 ];
