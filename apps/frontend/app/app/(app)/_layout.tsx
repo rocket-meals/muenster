@@ -727,6 +727,14 @@ export default function Layout() {
           }}
         />
 
+        <Drawer.Screen
+          name='chats'
+          options={{
+            title: translate(TranslationKeys.chats),
+            headerShown: false,
+          }}
+        />
+
 
         <Drawer.Screen
           name='notification/index'
