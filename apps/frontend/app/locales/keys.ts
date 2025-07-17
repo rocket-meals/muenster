@@ -50,6 +50,7 @@ export enum TranslationKeys {
   amount_ratings = 'amount_ratings',
   no_value = 'no_value',
   no_data_found = 'no_data_found',
+  no_canteens_found = 'no_canteens_found',
   accountbalanceLastTransaction = 'accountbalanceLastTransaction',
   accountbalanceDateUpdated = 'accountbalanceDateUpdated',
   sort = 'sort',

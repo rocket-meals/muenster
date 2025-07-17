@@ -2733,6 +2733,16 @@
     "tr": "Yemekhaneler",
     "zh": "食堂"
   },
+  "no_canteens_found": {
+    "de": "Keine Mensen gefunden.",
+    "en": "No canteens found.",
+    "ar": "لم يتم العثور على مقاصف.",
+    "es": "No se encontraron cantinas.",
+    "fr": "Aucune cantine trouvée.",
+    "ru": "Столовые не найдены.",
+    "tr": "Yemekhane bulunamadı.",
+    "zh": "未找到食堂。"
+  },
   "buildings": {
     "de": "Gebäude",
     "en": "Buildings",
