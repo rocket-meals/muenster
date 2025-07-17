@@ -42,7 +42,7 @@ import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
 import { calculateDistanceInMeter } from '@/helper/distanceHelper';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import DistanceInfoSheet from '@/components/DistanceInfoSheet';
+import DistanceModal from '@/components/DistanceModal';
 import * as Location from 'expo-location';
 import BuildingSortSheet from '@/components/BuildingSortSheet/BuildingSortSheet';
 import useToast from '@/hooks/useToast';
@@ -85,7 +85,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
   const sortSheetRef = useRef<BottomSheet>(null);
   const imageManagementSheetRef = useRef<BottomSheet>(null);
-  const distanceSheetRef = useRef<BottomSheet>(null);
+  const [distanceModalVisible, setDistanceModalVisible] = useState(false);
 
   const openSortSheet = () => {
     sortSheetRef.current?.expand();
@@ -104,11 +104,11 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   };
 
   const openDistanceSheet = () => {
-    distanceSheetRef.current?.expand();
+    setDistanceModalVisible(true);
   };
 
   const closeDistanceSheet = () => {
-    distanceSheetRef.current?.close();
+    setDistanceModalVisible(false);
   };
 
   useFocusEffect(
@@ -490,23 +490,11 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
         )}
 
         {isActive && (
-          <BaseBottomSheet
-            ref={distanceSheetRef}
-            index={-1}
-            backgroundStyle={{
-              ...styles.sheetBackground,
-              backgroundColor: theme.sheet.sheetBg,
-            }}
-            handleComponent={null}
-            enablePanDownToClose
+          <DistanceModal
+            visible={distanceModalVisible}
             onClose={closeDistanceSheet}
-            title={translate(TranslationKeys.sort_option_distance)}
-          >
-            <DistanceInfoSheet
-              closeSheet={closeDistanceSheet}
-              onUseCurrentPosition={useCurrentLocationForDistance}
-            />
-          </BaseBottomSheet>
+            onUseCurrentPosition={useCurrentLocationForDistance}
+          />
         )}
       </View>
     </SafeAreaView>

@@ -46,7 +46,7 @@ import BuildingSortSheet from '@/components/BuildingSortSheet/BuildingSortSheet'
 import useToast from '@/hooks/useToast';
 import { useLanguage } from '@/hooks/useLanguage';
 import ImageManagementSheet from '@/components/ImageManagementSheet/ImageManagementSheet';
-import DistanceInfoSheet from '@/components/DistanceInfoSheet';
+import DistanceModal from '@/components/DistanceModal';
 import * as Location from 'expo-location';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
@@ -68,7 +68,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   const [isActive, setIsActive] = useState(false);
   const sortSheetRef = useRef<BottomSheet>(null);
   const imageManagementSheetRef = useRef<BottomSheet>(null);
-  const distanceSheetRef = useRef<BottomSheet>(null);
+  const [distanceModalVisible, setDistanceModalVisible] = useState(false);
   const [apartmentsDispatched, setApartmentsDispatched] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [distanceAdded, setDistanceAdded] = useState(false);
@@ -113,11 +113,11 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   };
 
   const openDistanceSheet = () => {
-    distanceSheetRef.current?.expand();
+    setDistanceModalVisible(true);
   };
 
   const closeDistanceSheet = () => {
-    distanceSheetRef.current?.close();
+    setDistanceModalVisible(false);
   };
 
   useFocusEffect(
@@ -595,23 +595,11 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
         )}
 
         {isActive && (
-          <BaseBottomSheet
-            ref={distanceSheetRef}
-            index={-1}
-            backgroundStyle={{
-              ...styles.sheetBackground,
-              backgroundColor: theme.sheet.sheetBg,
-            }}
-            handleComponent={null}
-            enablePanDownToClose
+          <DistanceModal
+            visible={distanceModalVisible}
             onClose={closeDistanceSheet}
-            title={translate(TranslationKeys.sort_option_distance)}
-          >
-            <DistanceInfoSheet
-              closeSheet={closeDistanceSheet}
-              onUseCurrentPosition={useCurrentLocationForDistance}
-            />
-          </BaseBottomSheet>
+            onUseCurrentPosition={useCurrentLocationForDistance}
+          />
         )}
       </View>
     </SafeAreaView>

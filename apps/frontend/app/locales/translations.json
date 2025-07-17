@@ -1189,6 +1189,16 @@
     "tr": "Mesafe için mevcut konumu kullan",
     "zh": "使用当前位置计算距离"
   },
+  "distance": {
+    "de": "Entfernung",
+    "en": "Distance",
+    "ar": "المسافة",
+    "es": "Distancia",
+    "fr": "Distance",
+    "ru": "Расстояние",
+    "tr": "Mesafe",
+    "zh": "距离"
+  },
   "coordinates": {
     "de": "Koordinaten",
     "en": "Coordinates",

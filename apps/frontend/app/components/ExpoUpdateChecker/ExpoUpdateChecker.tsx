@@ -15,11 +15,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 import * as Updates from 'expo-updates';
-import Modal from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';
+import ModalSheet from '../BaseBottomModal';
 import popupStyles from '../PopupEventSheet/styles';
 import usePlatformHelper from '@/helper/platformHelper';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -106,58 +105,37 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
     <UpdateCheckerContext.Provider value={{ manualCheck: () => checkForUpdates(true) }}>
       {children}
       {modalVisible && (
-        <Modal
-          isVisible={modalVisible}
-          style={modalStyles.modalContainer}
-          onBackdropPress={() => setModalVisible(false)}
-          backdropOpacity={0.5}
-          swipeDirection="down"
-          onSwipeComplete={() => setModalVisible(false)}
-        >
-          <View style={[modalStyles.sheet, { backgroundColor: theme.sheet.sheetBg }]}>
+        <ModalSheet visible={modalVisible} onClose={() => setModalVisible(false)} title={translate(titleKey)}>
+          <ScrollView>
+            <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
+              {translate(messageKey)}
+            </Text>
+          </ScrollView>
+          <View style={modalStyles.buttonContainer}>
             <TouchableOpacity
-              style={[modalStyles.closeButton, { backgroundColor: theme.sheet.closeBg }]}
               onPress={() => setModalVisible(false)}
+              style={[modalStyles.cancelButton, { borderColor: primaryColor }]}
             >
-              <AntDesign name='close' size={24} color={theme.sheet.closeIcon} />
+              <Text style={[modalStyles.buttonText, { color: theme.screen.text }]}>
+                {translate(updateAvailable ? TranslationKeys.cancel : TranslationKeys.okay)}
+              </Text>
             </TouchableOpacity>
-            <View style={modalStyles.handleRow}>
-              <View style={[modalStyles.handle, { backgroundColor: theme.sheet.closeBg }]} />
-            </View>
-            <Text style={[modalStyles.title, { color: theme.sheet.text }]}>{translate(titleKey)}</Text>
-            <View style={[popupStyles.popupContainer, { marginTop: 0 }]}>
-              <ScrollView>
-                <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
-                  {translate(messageKey)}
-                </Text>
-              </ScrollView>
-              <View style={modalStyles.buttonContainer}>
-                <TouchableOpacity
-                  onPress={() => setModalVisible(false)}
-                  style={[modalStyles.cancelButton, { borderColor: primaryColor }]}
-                >
-                  <Text style={[modalStyles.buttonText, { color: theme.screen.text }]}> 
-                    {translate(updateAvailable ? TranslationKeys.cancel : TranslationKeys.okay)}
+            {updateAvailable && (
+              <TouchableOpacity
+                onPress={applyUpdate}
+                style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}
+              >
+                {updating ? (
+                  <ActivityIndicator color={theme.activeText} />
+                ) : (
+                  <Text style={[modalStyles.buttonText, { color: theme.activeText }]}>
+                    {translate(TranslationKeys.to_update)}
                   </Text>
-                </TouchableOpacity>
-                {updateAvailable && (
-                  <TouchableOpacity
-                    onPress={applyUpdate}
-                    style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}
-                  >
-                    {updating ? (
-                      <ActivityIndicator color={theme.activeText} />
-                    ) : (
-                      <Text style={[modalStyles.buttonText, { color: theme.activeText }]}> 
-                        {translate(TranslationKeys.to_update)}
-                      </Text>
-                    )}
-                  </TouchableOpacity>
                 )}
-              </View>
-            </View>
+              </TouchableOpacity>
+            )}
           </View>
-        </Modal>
+        </ModalSheet>
       )}
     </UpdateCheckerContext.Provider>
   );
@@ -172,51 +150,6 @@ export const useExpoUpdateChecker = () => {
 export default ExpoUpdateChecker;
 
 const modalStyles = StyleSheet.create({
-  modalContainer: {
-    justifyContent: 'flex-end',
-    margin: 0,
-  },
-  sheet: {
-    height: Dimensions.get('window').height * 0.8,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    padding: 10,
-  },
-  handleRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  closeButton: {
-    width: 45,
-    height: 45,
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    right: 10,
-    top: 10,
-  },
-  handle: {
-    width: '30%',
-    height: 6,
-    borderRadius: 3,
-    alignSelf: 'center',
-  },
-  title: {
-    // position title below the close button so long titles don't overlap
-    marginTop: 60,
-    marginBottom: 10,
-    textAlign: 'center',
-    fontSize: 18,
-    fontFamily: 'Poppins_700Bold',
-  },
-  contentContainer: {
-    gap: 20,
-    alignItems: 'center',
-    padding: 20,
-  },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
