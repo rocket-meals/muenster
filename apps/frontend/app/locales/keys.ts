@@ -14,6 +14,7 @@ export enum TranslationKeys {
   loggingInPleaseWait = 'loggingInPleaseWait',
   developer = 'developer',
   developerModeActive = 'developerModeActive',
+  backend_server = 'backend_server',
   developer_homepage = 'developer_homepage',
   download_or_open_the_app = 'download_or_open_the_app',
   software_homepage = 'software_homepage',

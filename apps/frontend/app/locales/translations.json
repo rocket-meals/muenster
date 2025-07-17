@@ -149,6 +149,16 @@
     "tr": "Geliştirici Modu Aktif",
     "zh": "开发者模式已启用"
   },
+  "backend_server": {
+    "de": "Backend-Server",
+    "en": "Backend Server",
+    "ar": "خادم الخلفية",
+    "es": "Servidor Backend",
+    "fr": "Serveur Backend",
+    "ru": "Сервер Бэкэнда",
+    "tr": "Arka Uç Sunucusu",
+    "zh": "后端服务器"
+  },
   "developer_homepage": {
     "de": "Entwickler-Homepage",
     "en": "Developer Homepage",
