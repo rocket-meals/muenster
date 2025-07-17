@@ -8,6 +8,7 @@ import {
   RefreshControl,
   View,
   Platform,
+  Animated,
 } from 'react-native';
 import React, {
   useCallback,
@@ -83,8 +84,7 @@ import { replaceLottieColors } from '@/helper/animationHelper';
 import { myContrastColor } from '@/helper/colorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import {
-  FlingGestureHandler,
-  Directions,
+  PanGestureHandler,
   State,
 } from 'react-native-gesture-handler';
 import usePlatformHelper from '@/helper/platformHelper';
@@ -116,30 +116,44 @@ const DaySwipeScrollView: React.FC<DaySwipeScrollViewProps> = ({
 }) => {
   const { isSmartPhone } = usePlatformHelper();
 
+  const translateX = useRef(new Animated.Value(0)).current;
+
   if (!isSmartPhone()) {
     return <ScrollView {...rest}>{children}</ScrollView>;
   }
 
+  const handleGestureEvent = Animated.event(
+    [{ nativeEvent: { translationX: translateX } }],
+    { useNativeDriver: true }
+  );
+
+  const handleStateChange = (ev: any) => {
+    if (ev.nativeEvent.state === State.END) {
+      const dragX = ev.nativeEvent.translationX;
+      if (dragX < -80) {
+        onSwipeLeft();
+      } else if (dragX > 80) {
+        onSwipeRight();
+      }
+      Animated.timing(translateX, {
+        toValue: 0,
+        duration: 150,
+        useNativeDriver: true,
+      }).start();
+    }
+  };
+
   return (
-    <FlingGestureHandler
-      direction={Directions.LEFT}
-      onHandlerStateChange={(ev) => {
-        if (ev.nativeEvent.state === State.END) {
-          onSwipeLeft();
-        }
-      }}
+    <PanGestureHandler
+      onGestureEvent={handleGestureEvent}
+      onHandlerStateChange={handleStateChange}
+      activeOffsetX={[-10, 10]}
+      failOffsetY={[-10, 10]}
     >
-      <FlingGestureHandler
-        direction={Directions.RIGHT}
-        onHandlerStateChange={(ev) => {
-          if (ev.nativeEvent.state === State.END) {
-            onSwipeRight();
-          }
-        }}
-      >
+      <Animated.View style={{ transform: [{ translateX }] }}>
         <ScrollView {...rest}>{children}</ScrollView>
-      </FlingGestureHandler>
-    </FlingGestureHandler>
+      </Animated.View>
+    </PanGestureHandler>
   );
 };
 
