@@ -34,13 +34,18 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [updating, setUpdating] = useState(false);
 
+  useEffect(() => {
+    if (modalVisible) {
+      bottomSheetRef.current?.expand();
+    }
+  }, [modalVisible]);
+
   const checkForUpdates = async () => {
     if (!isSmartPhone()) return;
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
         setModalVisible(true);
-        setTimeout(() => bottomSheetRef.current?.expand(), 0);
       }
     } catch (e) {
       console.error('Error while checking updates', e);
