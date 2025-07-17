@@ -29,6 +29,7 @@ import {
 } from '@expo/vector-icons';
 import { isWeb } from '@/constants/Constants';
 import SettingList from '@/components/SettingList/SettingList';
+import { useExpoUpdateChecker } from '@/components/ExpoUpdateChecker/ExpoUpdateChecker';
 import NicknameSheet from '@/components/NicknameSheet/NicknameSheet';
 import ColorSchemeSheet from '@/components/ColorSchemeSheet/ColorSchemeSheet';
 import DrawerPositionSheet from '@/components/DrawerPositionSheet/DrawerPositionSheet';
@@ -102,6 +103,7 @@ const Settings = () => {
   const firstDaySheetRef = useRef<BottomSheet>(null);
   const colorSchemeSheetRef = useRef<BottomSheet>(null);
   const [disabled, setDisabled] = useState(false);
+  const { manualCheck } = useExpoUpdateChecker();
   const {
     user,
     profile,
@@ -220,6 +222,10 @@ const Settings = () => {
 
   const closeFirstDayModal = () => {
     firstDaySheetRef?.current?.close();
+  };
+
+  const handleCheckForUpdates = () => {
+    manualCheck();
   };
 
   const changeLanguage = (language: {
@@ -550,7 +556,13 @@ const Settings = () => {
                 color={theme.screen.icon}
               />
             }
-            handleFunction={() => openFirstDayModal()}
+          handleFunction={() => openFirstDayModal()}
+          />
+          <SettingList
+            leftIcon={<Ionicons name='cloud-download-outline' size={24} color={theme.screen.icon} />}
+            label={translate(TranslationKeys.CHECK_FOR_APP_UPDATES)}
+            rightIcon={<Octicons name='chevron-right' size={24} color={theme.screen.icon} />}
+            handleFunction={handleCheckForUpdates}
           />
           {user?.id ? (
             <SettingList

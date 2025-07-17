@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  createContext,
+  useContext,
+  ReactNode,
+} from 'react';
 import {
   AppState,
   AppStateStatus,
@@ -20,8 +27,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 
 interface ExpoUpdateCheckerProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
+
+interface UpdateCheckerContextType {
+  manualCheck: () => void;
+}
+
+const UpdateCheckerContext = createContext<UpdateCheckerContextType | null>(null);
 
 const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
   const appState = useRef<AppStateStatus>(AppState.currentState);
@@ -33,6 +46,13 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [updating, setUpdating] = useState(false);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [titleKey, setTitleKey] = useState<TranslationKeys>(
+    TranslationKeys.update_available
+  );
+  const [messageKey, setMessageKey] = useState<TranslationKeys>(
+    TranslationKeys.update_available_message
+  );
 
   useEffect(() => {
     if (modalVisible) {
@@ -40,11 +60,19 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
     }
   }, [modalVisible]);
 
-  const checkForUpdates = async () => {
+  const checkForUpdates = async (showUpToDate = false) => {
     if (!isSmartPhone()) return;
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
+        setUpdateAvailable(true);
+        setTitleKey(TranslationKeys.update_available);
+        setMessageKey(TranslationKeys.update_available_message);
+        setModalVisible(true);
+      } else if (showUpToDate) {
+        setUpdateAvailable(false);
+        setTitleKey(TranslationKeys.no_updates_available);
+        setMessageKey(TranslationKeys.no_updates_available);
         setModalVisible(true);
       }
     } catch (e) {
@@ -79,7 +107,7 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
   };
 
   return (
-    <>
+    <UpdateCheckerContext.Provider value={{ manualCheck: () => checkForUpdates(true) }}>
       {children}
       {modalVisible && (
         <BaseBottomSheet
@@ -89,11 +117,11 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
           enablePanDownToClose={false}
           handleComponent={null}
           onClose={() => setModalVisible(false)}
-          title={translate(TranslationKeys.update_available)}
+          title={translate(titleKey)}
         >
           <View style={[popupStyles.popupContainer, { marginTop: 0 }]}>
             <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
-              {translate(TranslationKeys.update_available_message)}
+              {translate(messageKey)}
             </Text>
             <View style={modalStyles.buttonContainer}>
               <TouchableOpacity
@@ -104,27 +132,35 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
               style={[modalStyles.cancelButton, { borderColor: primaryColor }]}
               >
               <Text style={[modalStyles.buttonText, { color: theme.screen.text }]}>
-                {translate(TranslationKeys.cancel)}
+                {translate(updateAvailable ? TranslationKeys.cancel : TranslationKeys.okay)}
               </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-              onPress={applyUpdate}
-              style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}
-              >
-              {updating ? (
-                <ActivityIndicator color={theme.activeText} />
-              ) : (
-                <Text style={[modalStyles.buttonText, { color: theme.activeText }]}>
-                  {translate(TranslationKeys.to_update)}
-                </Text>
+              {updateAvailable && (
+                <TouchableOpacity
+                  onPress={applyUpdate}
+                  style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}
+                >
+                  {updating ? (
+                    <ActivityIndicator color={theme.activeText} />
+                  ) : (
+                    <Text style={[modalStyles.buttonText, { color: theme.activeText }]}>
+                      {translate(TranslationKeys.to_update)}
+                    </Text>
+                  )}
+                </TouchableOpacity>
               )}
-              </TouchableOpacity>
             </View>
           </View>
         </BaseBottomSheet>
       )}
-    </>
+    </UpdateCheckerContext.Provider>
   );
+};
+
+export const useExpoUpdateChecker = () => {
+  const ctx = useContext(UpdateCheckerContext);
+  if (!ctx) throw new Error('useExpoUpdateChecker must be used within ExpoUpdateChecker');
+  return ctx;
 };
 
 export default ExpoUpdateChecker;
