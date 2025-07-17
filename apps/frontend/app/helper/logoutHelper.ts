@@ -13,6 +13,7 @@ import {
   CLEAR_POPUP_EVENTS_HASH,
   ON_LOGOUT,
 } from '@/redux/Types/types';
+import { persistor } from '@/redux/store';
 
 export const performLogout = async (
   dispatch: Dispatch,
@@ -36,6 +37,8 @@ export const performLogout = async (
     } else {
       dispatch({ type: ON_LOGOUT });
     }
+    dispatch({ type: 'RESET_STORE' });
+    persistor.purge();
     router.replace({ pathname: '/(auth)/login', params: { logout: 'true' } });
   } catch (error) {
     console.error('Error during logout:', error);
