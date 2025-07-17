@@ -14,10 +14,11 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import * as Updates from 'expo-updates';
-import BaseBottomSheet from '../BaseBottomSheet';
-import type BottomSheet from '@gorhom/bottom-sheet';
+import Modal from 'react-native-modal';
+import { AntDesign } from '@expo/vector-icons';
 import popupStyles from '../PopupEventSheet/styles';
 import usePlatformHelper from '@/helper/platformHelper';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -44,7 +45,6 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
   const { primaryColor } = useSelector((state: RootState) => state.settings);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const bottomSheetRef = useRef<BottomSheet>(null);
   const [updating, setUpdating] = useState(false);
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [titleKey, setTitleKey] = useState<TranslationKeys>(
@@ -54,11 +54,6 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
     TranslationKeys.update_available_message
   );
 
-  useEffect(() => {
-    if (modalVisible) {
-      bottomSheetRef.current?.expand();
-    }
-  }, [modalVisible]);
 
   const checkForUpdates = async (showUpToDate = false) => {
     if (!isSmartPhone()) return;
@@ -110,48 +105,58 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
     <UpdateCheckerContext.Provider value={{ manualCheck: () => checkForUpdates(true) }}>
       {children}
       {modalVisible && (
-        <BaseBottomSheet
-          ref={bottomSheetRef}
-          index={-1}
-          backgroundStyle={{ backgroundColor: theme.sheet.sheetBg }}
-          enablePanDownToClose={false}
-          handleComponent={null}
-          onClose={() => setModalVisible(false)}
-          title={translate(titleKey)}
+        <Modal
+          isVisible={modalVisible}
+          style={modalStyles.modalContainer}
+          backdropOpacity={0}
         >
-          <View style={[popupStyles.popupContainer, { marginTop: 0 }]}>
-            <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
-              {translate(messageKey)}
-            </Text>
-            <View style={modalStyles.buttonContainer}>
+          <TouchableOpacity
+            style={modalStyles.backdrop}
+            activeOpacity={1}
+            onPress={() => setModalVisible(false)}
+          />
+          <View style={[modalStyles.sheet, { backgroundColor: theme.sheet.sheetBg }]}>
+            <View style={modalStyles.handleRow}>
+              <View style={[modalStyles.handle, { backgroundColor: theme.sheet.closeBg }]} />
               <TouchableOpacity
-              onPress={() => {
-                bottomSheetRef.current?.close();
-                setModalVisible(false);
-              }}
-              style={[modalStyles.cancelButton, { borderColor: primaryColor }]}
+                style={[modalStyles.closeButton, { backgroundColor: theme.sheet.closeBg }]}
+                onPress={() => setModalVisible(false)}
               >
-              <Text style={[modalStyles.buttonText, { color: theme.screen.text }]}>
-                {translate(updateAvailable ? TranslationKeys.cancel : TranslationKeys.okay)}
-              </Text>
+                <AntDesign name='close' size={24} color={theme.sheet.closeIcon} />
               </TouchableOpacity>
-              {updateAvailable && (
+            </View>
+            <Text style={[modalStyles.title, { color: theme.sheet.text }]}>{translate(titleKey)}</Text>
+            <View style={[popupStyles.popupContainer, { marginTop: 0 }]}>
+              <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
+                {translate(messageKey)}
+              </Text>
+              <View style={modalStyles.buttonContainer}>
                 <TouchableOpacity
-                  onPress={applyUpdate}
-                  style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}
+                  onPress={() => setModalVisible(false)}
+                  style={[modalStyles.cancelButton, { borderColor: primaryColor }]}
                 >
-                  {updating ? (
-                    <ActivityIndicator color={theme.activeText} />
-                  ) : (
-                    <Text style={[modalStyles.buttonText, { color: theme.activeText }]}>
-                      {translate(TranslationKeys.to_update)}
-                    </Text>
-                  )}
+                  <Text style={[modalStyles.buttonText, { color: theme.screen.text }]}> 
+                    {translate(updateAvailable ? TranslationKeys.cancel : TranslationKeys.okay)}
+                  </Text>
                 </TouchableOpacity>
-              )}
+                {updateAvailable && (
+                  <TouchableOpacity
+                    onPress={applyUpdate}
+                    style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}
+                  >
+                    {updating ? (
+                      <ActivityIndicator color={theme.activeText} />
+                    ) : (
+                      <Text style={[modalStyles.buttonText, { color: theme.activeText }]}> 
+                        {translate(TranslationKeys.to_update)}
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
           </View>
-        </BaseBottomSheet>
+        </Modal>
       )}
     </UpdateCheckerContext.Provider>
   );
@@ -166,6 +171,49 @@ export const useExpoUpdateChecker = () => {
 export default ExpoUpdateChecker;
 
 const modalStyles = StyleSheet.create({
+  modalContainer: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  backdrop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: Dimensions.get('window').height * 0.2,
+    backgroundColor: '#00000055',
+  },
+  sheet: {
+    height: Dimensions.get('window').height * 0.8,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+    padding: 10,
+  },
+  handleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  closeButton: {
+    width: 45,
+    height: 45,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  handle: {
+    width: '30%',
+    height: 6,
+    borderRadius: 3,
+    alignSelf: 'center',
+  },
+  title: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: 'center',
+    fontSize: 18,
+    fontFamily: 'Poppins_700Bold',
+  },
   contentContainer: {
     gap: 20,
     alignItems: 'center',
