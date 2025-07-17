@@ -11,6 +11,7 @@ import {
   AppStateStatus,
   View,
   Text,
+  ScrollView,
   TouchableOpacity,
   ActivityIndicator,
   StyleSheet,
@@ -108,15 +109,11 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
         <Modal
           isVisible={modalVisible}
           style={modalStyles.modalContainer}
-          backdropOpacity={0}
+          onBackdropPress={() => setModalVisible(false)}
+          backdropOpacity={0.5}
           swipeDirection="down"
           onSwipeComplete={() => setModalVisible(false)}
         >
-          <TouchableOpacity
-            style={modalStyles.backdrop}
-            activeOpacity={1}
-            onPress={() => setModalVisible(false)}
-          />
           <View style={[modalStyles.sheet, { backgroundColor: theme.sheet.sheetBg }]}>
             <View style={modalStyles.handleRow}>
               <View style={[modalStyles.handle, { backgroundColor: theme.sheet.closeBg }]} />
@@ -129,9 +126,11 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
             </View>
             <Text style={[modalStyles.title, { color: theme.sheet.text }]}>{translate(titleKey)}</Text>
             <View style={[popupStyles.popupContainer, { marginTop: 0 }]}>
-              <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
-                {translate(messageKey)}
-              </Text>
+              <ScrollView>
+                <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
+                  {translate(messageKey)}
+                </Text>
+              </ScrollView>
               <View style={modalStyles.buttonContainer}>
                 <TouchableOpacity
                   onPress={() => setModalVisible(false)}
@@ -176,14 +175,6 @@ const modalStyles = StyleSheet.create({
   modalContainer: {
     justifyContent: 'flex-end',
     margin: 0,
-  },
-  backdrop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: Dimensions.get('window').height * 0.2,
-    backgroundColor: '#00000055',
   },
   sheet: {
     height: Dimensions.get('window').height * 0.8,
