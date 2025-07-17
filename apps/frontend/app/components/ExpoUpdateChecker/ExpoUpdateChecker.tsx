@@ -118,14 +118,14 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
             onPress={() => setModalVisible(false)}
           />
           <View style={[modalStyles.sheet, { backgroundColor: theme.sheet.sheetBg }]}>
+            <TouchableOpacity
+              style={[modalStyles.closeButton, { backgroundColor: theme.sheet.closeBg }]}
+              onPress={() => setModalVisible(false)}
+            >
+              <AntDesign name='close' size={24} color={theme.sheet.closeIcon} />
+            </TouchableOpacity>
             <View style={modalStyles.handleRow}>
               <View style={[modalStyles.handle, { backgroundColor: theme.sheet.closeBg }]} />
-              <TouchableOpacity
-                style={[modalStyles.closeButton, { backgroundColor: theme.sheet.closeBg }]}
-                onPress={() => setModalVisible(false)}
-              >
-                <AntDesign name='close' size={24} color={theme.sheet.closeIcon} />
-              </TouchableOpacity>
             </View>
             <Text style={[modalStyles.title, { color: theme.sheet.text }]}>{translate(titleKey)}</Text>
             <View style={[popupStyles.popupContainer, { marginTop: 0 }]}>
@@ -204,7 +204,8 @@ const modalStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    right: 0,
+    right: 10,
+    top: 10,
   },
   handle: {
     width: '30%',
