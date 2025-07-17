@@ -205,7 +205,8 @@ const modalStyles = StyleSheet.create({
     alignSelf: 'center',
   },
   title: {
-    marginTop: 10,
+    // position title below the close button so long titles don't overlap
+    marginTop: 60,
     marginBottom: 10,
     textAlign: 'center',
     fontSize: 18,
