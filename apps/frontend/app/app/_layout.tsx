@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Slot } from 'expo-router';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import {
@@ -74,6 +74,14 @@ export default function Layout() {
     Poppins_900Black,
     Poppins_900Black_Italic,
   });
+
+  useEffect(() => {
+    AsyncStorage.getItem('server_url_custom').then((url) => {
+      if (url) {
+        ServerAPI.serverUrlCustom = url;
+      }
+    });
+  }, []);
 
   if (!fontsLoaded) {
     return (
