@@ -401,7 +401,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
               placeholderTextColor={theme.screen.placeholder}
               onChangeText={setQuery}
               value={query}
-              placeholder='Search campus here...'
+              placeholder={translate(TranslationKeys.search_campus_here)}
             />
           </View>
           <View style={{ ...styles.campusContainer, gap: isWeb ? 10 : 10 }}>

@@ -25,6 +25,8 @@ export enum TranslationKeys {
   nickname = 'nickname',
   search = 'search',
   search_here = 'search_here',
+  search_campus_here = 'search_campus_here',
+  search_apartment_here = 'search_apartment_here',
   type_here = 'type_here',
   enter_number = 'enter_number',
   iban_format = 'iban_format',

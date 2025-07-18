@@ -259,6 +259,26 @@
     "tr": "Burada ara...",
     "zh": "在这里搜索..."
   },
+  "search_campus_here": {
+    "de": "Campus suchen...",
+    "en": "Search campus here...",
+    "ar": "ابحث عن الحرم الجامعي هنا...",
+    "es": "Buscar campus aquí...",
+    "fr": "Rechercher le campus ici...",
+    "ru": "Искать кампус здесь...",
+    "tr": "Yerleşkeyi burada ara...",
+    "zh": "在这里搜索校园..."
+  },
+  "search_apartment_here": {
+    "de": "Apartment suchen...",
+    "en": "Search apartment here...",
+    "ar": "ابحث عن شقة هنا...",
+    "es": "Buscar apartamento aquí...",
+    "fr": "Rechercher un appartement ici...",
+    "ru": "Искать квартиру здесь...",
+    "tr": "Daireyi burada ara...",
+    "zh": "在这里搜索公寓..."
+  },
   "type_here": {
     "de": "Hier eingeben...",
     "en": "Type here...",
