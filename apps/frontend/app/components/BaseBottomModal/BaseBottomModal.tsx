@@ -22,6 +22,7 @@ const BaseBottomModal: React.FC<BaseBottomModalProps> = ({ visible, onClose, tit
       backdropOpacity={0.5}
       swipeDirection="down"
       onSwipeComplete={onClose}
+      propagateSwipe
     >
       <View style={[styles.sheet, { backgroundColor: theme.sheet.sheetBg }]}>
         <TouchableOpacity
