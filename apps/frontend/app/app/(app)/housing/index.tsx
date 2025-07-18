@@ -242,7 +242,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
       }
       const loc = await Location.getCurrentPositionAsync({});
       setSelectedBuilding({
-        coordinates: { coordinates: [loc.coords.latitude, loc.coords.longitude] },
+        coordinates: { coordinates: [loc.coords.longitude, loc.coords.latitude] },
       } as any);
       closeDistanceSheet();
     } catch (error) {
