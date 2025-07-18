@@ -133,6 +133,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     gap: 20,
     alignItems: 'center',
-    padding: 20,
+    padding: 0,
   },
 });

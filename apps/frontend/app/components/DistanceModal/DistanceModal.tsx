@@ -35,7 +35,7 @@ const DistanceModal: React.FC<DistanceModalProps> = ({
       onClose={onClose}
       title={translate(TranslationKeys.distance)}
     >
-      <View style={{ gap: 20 }}>
+      <View style={{ gap: 20, padding: 20 }}>
         <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
           {translate(
             TranslationKeys.distance_based_canteen_selection_or_if_asked_on_real_location

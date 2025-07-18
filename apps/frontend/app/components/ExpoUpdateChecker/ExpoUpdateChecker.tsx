@@ -105,7 +105,7 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
       {children}
       {modalVisible && (
         <ModalSheet visible={modalVisible} onClose={() => setModalVisible(false)} title={translate(titleKey)}>
-          <View>
+          <View style={{ padding: 20 }}>
             <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
               {translate(messageKey)}
             </Text>
