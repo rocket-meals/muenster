@@ -64,6 +64,11 @@ const DistanceModal: React.FC<DistanceModalProps> = ({
             'Lorem insulin dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
           }
         </Text>
+        <Text style={{ color: theme.screen.text }}>
+          {
+            'Curabitur tempus id lacus a faucibus. Sed quis gravida risus, a interdum nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi placerat ultrices urna. Cras ut sollicitudin libero. Duis sed nisl luctus, semper est non, lobortis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque ac gravida nunc. Integer at dui at tortor eleifend tincidunt. Suspendisse potenti. Praesent vehicula porttitor massa, in vehicula lectus porttitor ac. Vivamus vitae lorem vitae turpis malesuada varius.'
+          }
+        </Text>
       </ScrollView>
     </BaseBottomModal>
   );
