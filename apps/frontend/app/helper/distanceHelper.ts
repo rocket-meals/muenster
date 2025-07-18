@@ -7,14 +7,15 @@ export function calculateDistanceInMeter(
   selectedLocation: Array<number>,
   targetLocation: Array<number>
 ): Number {
+  // selectedLocation and targetLocation follow the [longitude, latitude] order
   if (selectedLocation && targetLocation) {
     const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
 
     const earthRadiusMeters = 6371000; // Earth's radius in meters
-    const lat1 = toRadians(selectedLocation[0]);
-    const lon1 = toRadians(selectedLocation[1]);
-    const lat2 = toRadians(targetLocation[0]);
-    const lon2 = toRadians(targetLocation[1]);
+    const lon1 = toRadians(selectedLocation[0]);
+    const lat1 = toRadians(selectedLocation[1]);
+    const lon2 = toRadians(targetLocation[0]);
+    const lat2 = toRadians(targetLocation[1]);
 
     const deltaLat = lat2 - lat1;
     const deltaLon = lon2 - lon1;
