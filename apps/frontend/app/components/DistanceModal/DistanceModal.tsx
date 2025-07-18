@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useSelector } from 'react-redux';
@@ -35,7 +35,7 @@ const DistanceModal: React.FC<DistanceModalProps> = ({
       onClose={onClose}
       title={translate(TranslationKeys.distance)}
     >
-      <View style={{ gap: 20 }}>
+      <ScrollView contentContainerStyle={{ gap: 20 }}>
         <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
           {translate(
             TranslationKeys.distance_based_canteen_selection_or_if_asked_on_real_location
@@ -54,7 +54,12 @@ const DistanceModal: React.FC<DistanceModalProps> = ({
             {translate(TranslationKeys.use_current_position_for_distance)}
           </Text>
         </TouchableOpacity>
-      </View>
+        <Text style={{ color: theme.screen.text }}>
+          {
+            'Wir teilen deinen aktuellen Standort nicht mit uns. Er wird ausschließlich auf deinem Handy verwendet, um die Entfernung zu berechnen. Aus Datenschutzgründen verlassen diese Daten niemals dein Gerät und werden nicht gespeichert. So kannst du sicher sein, dass deine Privatsphäre geschützt ist, während du den vollen Funktionsumfang testen kannst.'
+          }
+        </Text>
+      </ScrollView>
     </BaseBottomModal>
   );
 };

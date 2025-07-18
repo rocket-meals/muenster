@@ -289,6 +289,7 @@ export enum TranslationKeys {
   update_available = 'update_available',
   update_available_message = 'update_available_message',
   no_updates_available = 'no_updates_available',
+  updates = 'updates',
   send = 'send',
   button_disabled = 'button_disabled',
   select = 'select',

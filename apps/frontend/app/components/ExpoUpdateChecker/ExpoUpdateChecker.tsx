@@ -66,7 +66,7 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
         setModalVisible(true);
       } else if (showUpToDate) {
         setUpdateAvailable(false);
-        setTitleKey(TranslationKeys.no_updates_available);
+        setTitleKey(TranslationKeys.updates);
         setMessageKey(TranslationKeys.no_updates_available);
         setModalVisible(true);
       }

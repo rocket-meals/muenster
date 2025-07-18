@@ -3694,7 +3694,7 @@
     "zh": "选择一个表单提交"
   },
   "no_updates_available": {
-    "de": "Keine Updates verfügbar",
+    "de": "Es gibt keine weiteren Updates, du scheinst das aktuellste Update zu haben.",
     "en": "App is up to date",
     "ar": "التطبيق محدث",
     "es": "La aplicación está actualizada",
@@ -3702,5 +3702,15 @@
     "ru": "Приложение обновлено",
     "tr": "Uygulama güncel",
     "zh": "应用已是最新版本"
+  },
+  "updates": {
+    "de": "Updates",
+    "en": "Updates",
+    "ar": "التحديثات",
+    "es": "Actualizaciones",
+    "fr": "Mises à jour",
+    "ru": "Обновления",
+    "tr": "Güncellemeler",
+    "zh": "更新"
   }
 }
