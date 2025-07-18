@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useSelector } from 'react-redux';
@@ -35,7 +35,7 @@ const DistanceModal: React.FC<DistanceModalProps> = ({
       onClose={onClose}
       title={translate(TranslationKeys.distance)}
     >
-      <ScrollView contentContainerStyle={{ gap: 20 }}>
+      <View style={{ gap: 20 }}>
         <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
           {translate(
             TranslationKeys.distance_based_canteen_selection_or_if_asked_on_real_location
@@ -69,7 +69,7 @@ const DistanceModal: React.FC<DistanceModalProps> = ({
             'Curabitur tempus id lacus a faucibus. Sed quis gravida risus, a interdum nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi placerat ultrices urna. Cras ut sollicitudin libero. Duis sed nisl luctus, semper est non, lobortis mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque ac gravida nunc. Integer at dui at tortor eleifend tincidunt. Suspendisse potenti. Praesent vehicula porttitor massa, in vehicula lectus porttitor ac. Vivamus vitae lorem vitae turpis malesuada varius.'
           }
         </Text>
-      </ScrollView>
+      </View>
     </BaseBottomModal>
   );
 };

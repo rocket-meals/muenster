@@ -11,7 +11,6 @@ import {
   AppStateStatus,
   View,
   Text,
-  ScrollView,
   TouchableOpacity,
   ActivityIndicator,
   StyleSheet,
@@ -106,11 +105,11 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
       {children}
       {modalVisible && (
         <ModalSheet visible={modalVisible} onClose={() => setModalVisible(false)} title={translate(titleKey)}>
-          <ScrollView>
+          <View>
             <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
               {translate(messageKey)}
             </Text>
-          </ScrollView>
+          </View>
           <View style={modalStyles.buttonContainer}>
             <TouchableOpacity
               onPress={() => setModalVisible(false)}
