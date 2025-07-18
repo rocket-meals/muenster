@@ -674,7 +674,7 @@ const index = () => {
       </View>
       <View
         style={{
-          height: Dimensions.get('window').height - headerHeight - 10,
+          minHeight: Dimensions.get('window').height - headerHeight - 10,
           justifyContent: 'space-between',
         }}
       >
