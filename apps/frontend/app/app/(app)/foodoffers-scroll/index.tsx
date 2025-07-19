@@ -10,7 +10,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
-import { Ionicons, MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
+import { Ionicons, FontAwesome6 } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
@@ -18,6 +18,8 @@ import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { fetchFoodOffersByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { addDays, subDays, format } from 'date-fns';
+import { useNavigation, router } from 'expo-router';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import FoodItem from '@/components/FoodItem/FoodItem';
 import CanteenFeedbackLabels from '@/components/CanteenFeedbackLabels/CanteenFeedbackLabels';
 import { CanteenFeedbackLabelHelper } from '@/redux/actions/CanteenFeedbacksLabel/CanteenFeedbacksLabel';
@@ -39,6 +41,7 @@ const FoodOffersScroll = () => {
   const dispatch = useDispatch();
   const selectedCanteen = useSelectedCanteen();
   const { selectedDate } = useSelector((state: RootState) => state.food);
+  const { profile } = useSelector((state: RootState) => state.authReducer);
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get('window').width,
   );
@@ -49,6 +52,7 @@ const FoodOffersScroll = () => {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [loadingPrev, setLoadingPrev] = useState(false);
+  const navigation = useNavigation<DrawerNavigationProp<any>>();
 
   useEffect(() => {
     const sub = Dimensions.addEventListener('change', ({ window }) => {
@@ -72,7 +76,7 @@ const FoodOffersScroll = () => {
   const init = useCallback(async () => {
     setLoading(true);
     const baseDate = new Date(selectedDate);
-    const toLoad = [-1, 0, 1, 2];
+    const toLoad = [-2, -1, 0, 1, 2];
     const loaded: DayData[] = [];
     for (const offset of toLoad) {
       const d = addDays(baseDate, offset).toISOString().split('T')[0];
@@ -136,6 +140,37 @@ const FoodOffersScroll = () => {
     }
   };
 
+  const getPriceGroup = (price_group: string) => {
+    if (price_group) {
+      return `price_group_${price_group.toLocaleLowerCase()}`;
+    }
+    return '';
+  };
+
+  const getDayLabel = (date: string) => {
+    const currentDate = new Date();
+    const day = new Date(date);
+
+    currentDate.setHours(0, 0, 0, 0);
+    day.setHours(0, 0, 0, 0);
+
+    if (currentDate.toDateString() === day.toDateString()) {
+      return 'today';
+    }
+
+    currentDate.setDate(currentDate.getDate() - 1);
+    if (currentDate.toDateString() === day.toDateString()) {
+      return 'yesterday';
+    }
+
+    currentDate.setDate(currentDate.getDate() + 2);
+    if (currentDate.toDateString() === day.toDateString()) {
+      return 'tomorrow';
+    }
+
+    return format(day, 'dd.MM.yyyy');
+  };
+
   const renderDay = ({ item }: { item: DayData }) => {
     const feedbacks = canteenFeedbackLabels?.map((label, idx) => (
       <CanteenFeedbackLabels key={`fl-${idx}`} label={label} date={item.date} />
@@ -187,26 +222,26 @@ const FoodOffersScroll = () => {
     <View style={[styles.header, { backgroundColor: theme.header.background }]}>
       <View style={styles.row}>
         <View style={styles.col1}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
             <Ionicons name='menu' size={24} color={theme.header.text} />
           </TouchableOpacity>
           <TouchableOpacity>
             <Text style={{ ...styles.heading, color: theme.header.text }}>
-              {selectedCanteen?.alias || 'Food Offers'}
+              {selectedCanteen?.alias || translate(TranslationKeys.food_offers)}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.col2}>
-          <TouchableOpacity>
-            <MaterialIcons name='sort' size={24} color={theme.header.text} />
-          </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.navigate('/price-group')}>
             <FontAwesome6 name='euro-sign' size={24} color={theme.header.text} />
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.row}>
-        <Text style={{ color: theme.header.text }}>{selectedDate}</Text>
+        <Text style={{ color: theme.header.text }}>
+          {translate(getDayLabel(selectedDate))}
+          {profile?.price_group ? ` - ${translate(getPriceGroup(profile.price_group))}` : ''}
+        </Text>
       </View>
     </View>
   );
