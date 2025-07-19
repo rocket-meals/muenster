@@ -126,7 +126,7 @@ const FoodOffersScroll = () => {
   };
 
   const loadPrev = async () => {
-    if (loadingPrev) return;
+    if (loadingPrev || days.length === 0) return;
     setLoadingPrev(true);
     const firstDate = days[0].date;
     const prevDate = subDays(new Date(firstDate), 1).toISOString().split('T')[0];
@@ -145,8 +145,10 @@ const FoodOffersScroll = () => {
     setRefreshing(false);
   };
 
+  const SCROLL_THRESHOLD = 300;
+
   const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y <= 100) {
+    if (e.nativeEvent.contentOffset.y <= SCROLL_THRESHOLD) {
       loadPrev();
     }
   };
