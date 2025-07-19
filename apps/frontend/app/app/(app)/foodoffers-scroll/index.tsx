@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import {
   FlatList,
   Text,
@@ -49,6 +49,8 @@ const FoodOffersScroll = () => {
     (state: RootState) => state.canteenReducer,
   );
   const [days, setDays] = useState<DayData[]>([]);
+  const [initialized, setInitialized] = useState(false);
+  const flatListRef = useRef<FlatList<any>>(null);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [loadingPrev, setLoadingPrev] = useState(false);
@@ -83,12 +85,21 @@ const FoodOffersScroll = () => {
       loaded.push(await loadDay(d));
     }
     setDays(loaded);
+    setInitialized(true);
     setLoading(false);
   }, [selectedDate, loadDay]);
 
   useEffect(() => {
     init();
   }, [init]);
+
+  useEffect(() => {
+    if (initialized) {
+      setTimeout(() => {
+        flatListRef.current?.scrollToIndex({ index: 2, animated: false });
+      }, 0);
+    }
+  }, [initialized]);
 
   const fetchCanteenLabels = useCallback(async () => {
     try {
@@ -135,7 +146,7 @@ const FoodOffersScroll = () => {
   };
 
   const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y <= 0) {
+    if (e.nativeEvent.contentOffset.y <= 100) {
       loadPrev();
     }
   };
@@ -248,6 +259,7 @@ const FoodOffersScroll = () => {
 
   return (
     <FlatList
+      ref={flatListRef}
       data={days}
       keyExtractor={(item) => item.date}
       renderItem={renderDay}
@@ -257,6 +269,7 @@ const FoodOffersScroll = () => {
       ListHeaderComponent={listHeader}
       onScroll={handleScroll}
       scrollEventThrottle={16}
+      maintainVisibleContentPosition={{ minIndexForVisible: 1 }}
       contentContainerStyle={{ backgroundColor: theme.screen.background }}
     />
   );
