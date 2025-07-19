@@ -1,13 +1,27 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { FlatList, Text, View, ActivityIndicator, RefreshControl } from 'react-native';
+import {
+  FlatList,
+  Text,
+  View,
+  ActivityIndicator,
+  RefreshControl,
+  TouchableOpacity,
+  Dimensions,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
+import { Ionicons, MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { fetchFoodOffersByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { addDays, subDays, format } from 'date-fns';
 import FoodItem from '@/components/FoodItem/FoodItem';
+import CanteenFeedbackLabels from '@/components/CanteenFeedbackLabels/CanteenFeedbackLabels';
+import { CanteenFeedbackLabelHelper } from '@/redux/actions/CanteenFeedbacksLabel/CanteenFeedbacksLabel';
+import { SET_CANTEEN_FEEDBACK_LABELS } from '@/redux/Types/types';
 import styles from './styles';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { TranslationKeys } from '@/locales/keys';
@@ -22,11 +36,26 @@ const FoodOffersScroll = () => {
   useSetPageTitle('FoodOffersScroll');
   const { translate } = useLanguage();
   const { theme } = useTheme();
+  const dispatch = useDispatch();
   const selectedCanteen = useSelectedCanteen();
   const { selectedDate } = useSelector((state: RootState) => state.food);
+  const [screenWidth, setScreenWidth] = useState(
+    Dimensions.get('window').width,
+  );
+  const { canteenFeedbackLabels } = useSelector(
+    (state: RootState) => state.canteenReducer,
+  );
   const [days, setDays] = useState<DayData[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [loadingPrev, setLoadingPrev] = useState(false);
+
+  useEffect(() => {
+    const sub = Dimensions.addEventListener('change', ({ window }) => {
+      setScreenWidth(window.width);
+    });
+    return () => sub?.remove();
+  }, []);
 
   const loadDay = useCallback(async (date: string) => {
     const canteenId = selectedCanteen?.id as string;
@@ -43,7 +72,7 @@ const FoodOffersScroll = () => {
   const init = useCallback(async () => {
     setLoading(true);
     const baseDate = new Date(selectedDate);
-    const toLoad = [0, 1, 2];
+    const toLoad = [-1, 0, 1, 2];
     const loaded: DayData[] = [];
     for (const offset of toLoad) {
       const d = addDays(baseDate, offset).toISOString().split('T')[0];
@@ -57,6 +86,23 @@ const FoodOffersScroll = () => {
     init();
   }, [init]);
 
+  const fetchCanteenLabels = useCallback(async () => {
+    try {
+      const helper = new CanteenFeedbackLabelHelper();
+      const labels =
+        (await helper.fetchCanteenFeedbackLabels()) as DatabaseTypes.CanteensFeedbacksLabels[];
+      dispatch({ type: SET_CANTEEN_FEEDBACK_LABELS, payload: labels });
+    } catch (e) {
+      console.error('Error fetching Canteen Feedback Labels:', e);
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!canteenFeedbackLabels || canteenFeedbackLabels.length === 0) {
+      fetchCanteenLabels();
+    }
+  }, [fetchCanteenLabels]);
+
   const loadNext = async () => {
     const lastDate = days[days.length - 1].date;
     const nextDate = addDays(new Date(lastDate), 1).toISOString().split('T')[0];
@@ -65,10 +111,13 @@ const FoodOffersScroll = () => {
   };
 
   const loadPrev = async () => {
+    if (loadingPrev) return;
+    setLoadingPrev(true);
     const firstDate = days[0].date;
     const prevDate = subDays(new Date(firstDate), 1).toISOString().split('T')[0];
     const prevDay = await loadDay(prevDate);
     setDays((prev) => [prevDay, ...prev]);
+    setLoadingPrev(false);
   };
 
   const onEndReached = () => {
@@ -81,35 +130,86 @@ const FoodOffersScroll = () => {
     setRefreshing(false);
   };
 
-  const renderDay = ({ item }: { item: DayData }) => (
-    <View style={styles.dayContainer}>
-      <Text style={[styles.dateHeader, { color: theme.screen.text }]}> {format(new Date(item.date), 'dd.MM.yyyy')} </Text>
-      {item.offers.map((offer) => (
-        <FoodItem
-          key={offer.id}
-          item={offer}
-          canteen={selectedCanteen}
-          handleMenuSheet={() => {}}
-          handleImageSheet={() => {}}
-          handleEatingHabitsSheet={() => {}}
-          setSelectedFoodId={() => {}}
-        />
-      ))}
-      {item.offers.length === 0 && (
-        <Text style={{ color: theme.screen.text }}>
-          {translate(TranslationKeys.no_foodoffers_found_for_selection)}
-        </Text>
-      )}
-    </View>
-  );
+  const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (e.nativeEvent.contentOffset.y <= 0) {
+      loadPrev();
+    }
+  };
+
+  const renderDay = ({ item }: { item: DayData }) => {
+    const feedbacks = canteenFeedbackLabels?.map((label, idx) => (
+      <CanteenFeedbackLabels key={`fl-${idx}`} label={label} date={item.date} />
+    ));
+
+    return (
+      <View style={styles.dayContainer}>
+        <Text style={[styles.dateHeader, { color: theme.screen.text }]}> {format(new Date(item.date), 'dd.MM.yyyy')} </Text>
+        <View
+          style={{
+            ...styles.foodContainer,
+            gap: screenWidth > 550 ? 10 : 10,
+            justifyContent: 'center',
+          }}
+        >
+          {item.offers.map((offer) => (
+            <FoodItem
+              key={offer.id}
+              item={offer}
+              canteen={selectedCanteen}
+              handleMenuSheet={() => {}}
+              handleImageSheet={() => {}}
+              handleEatingHabitsSheet={() => {}}
+              setSelectedFoodId={() => {}}
+            />
+          ))}
+          {item.offers.length === 0 && (
+            <Text style={{ color: theme.screen.text }}>
+              {translate(TranslationKeys.no_foodoffers_found_for_selection)}
+            </Text>
+          )}
+        </View>
+        {feedbacks && feedbacks.length > 0 && (
+          <View style={styles.feebackContainer}>{feedbacks}</View>
+        )}
+      </View>
+    );
+  };
 
   if (loading) {
     return (
-      <View style={[styles.loader, { backgroundColor: theme.screen.background }]}> 
+      <View style={[styles.loader, { backgroundColor: theme.screen.background }]}>
         <ActivityIndicator />
       </View>
     );
   }
+
+  const listHeader = (
+    <View style={[styles.header, { backgroundColor: theme.header.background }]}>
+      <View style={styles.row}>
+        <View style={styles.col1}>
+          <TouchableOpacity>
+            <Ionicons name='menu' size={24} color={theme.header.text} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={{ ...styles.heading, color: theme.header.text }}>
+              {selectedCanteen?.alias || 'Food Offers'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.col2}>
+          <TouchableOpacity>
+            <MaterialIcons name='sort' size={24} color={theme.header.text} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <FontAwesome6 name='euro-sign' size={24} color={theme.header.text} />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.row}>
+        <Text style={{ color: theme.header.text }}>{selectedDate}</Text>
+      </View>
+    </View>
+  );
 
   return (
     <FlatList
@@ -119,6 +219,9 @@ const FoodOffersScroll = () => {
       onEndReached={onEndReached}
       onEndReachedThreshold={0.5}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      ListHeaderComponent={listHeader}
+      onScroll={handleScroll}
+      scrollEventThrottle={16}
       contentContainerStyle={{ backgroundColor: theme.screen.background }}
     />
   );
