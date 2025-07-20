@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import {
   FlatList,
+  SafeAreaView,
   Text,
   View,
   ActivityIndicator,
@@ -17,6 +18,8 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
+import type BottomSheet from '@gorhom/bottom-sheet';
+import MarkingBottomSheet from '@/components/MarkingBottomSheet';
 import { useTheme } from '@/hooks/useTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
@@ -47,7 +50,6 @@ const FoodOffersScroll = () => {
   const dispatch = useDispatch();
   const selectedCanteen = useSelectedCanteen();
   const { selectedDate } = useSelector((state: RootState) => state.food);
-  const { profile } = useSelector((state: RootState) => state.authReducer);
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get('window').width,
   );
@@ -57,6 +59,8 @@ const FoodOffersScroll = () => {
   const [days, setDays] = useState<DayData[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
   // This screen only supports scrolling forward in time
   // so we don't maintain loading state for previous days
   const navigation = useNavigation<DrawerNavigationProp<any>>();
@@ -136,12 +140,15 @@ const FoodOffersScroll = () => {
     // Intentionally left blank to disable loading previous days
   };
 
-  const getPriceGroup = (price_group: string) => {
-    if (price_group) {
-      return `price_group_${price_group.toLocaleLowerCase()}`;
-    }
-    return '';
-  };
+  const openMenuSheet = useCallback(() => {
+    setSheetOpen(true);
+    setTimeout(() => bottomSheetRef.current?.expand(), 150);
+  }, []);
+
+  const closeSheet = useCallback(() => {
+    bottomSheetRef.current?.close();
+    setSheetOpen(false);
+  }, []);
 
   const getDayLabel = (date: string) => {
     const currentDate = new Date();
@@ -201,7 +208,7 @@ const FoodOffersScroll = () => {
               key={offer.id}
               item={offer}
               canteen={selectedCanteen}
-              handleMenuSheet={() => {}}
+              handleMenuSheet={openMenuSheet}
               handleImageSheet={() => {}}
               handleEatingHabitsSheet={() => {}}
               setSelectedFoodId={() => {}}
@@ -275,18 +282,24 @@ const FoodOffersScroll = () => {
   );
 
   return (
-    <FlatList
-      data={days}
-      keyExtractor={(item) => item.date}
-      renderItem={renderDay}
-      onEndReached={onEndReached}
-      onEndReachedThreshold={0.5}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      ListHeaderComponent={listHeader}
-      onScroll={handleScroll}
-      scrollEventThrottle={16}
-      contentContainerStyle={{ backgroundColor: theme.screen.background }}
-    />
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.iconBg }}>
+      {listHeader}
+      <FlatList
+        data={days}
+        keyExtractor={(item) => item.date}
+        renderItem={renderDay}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.5}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ backgroundColor: theme.screen.background }}
+      />
+      {sheetOpen && (
+        <MarkingBottomSheet ref={bottomSheetRef} onClose={closeSheet} />
+      )}
+    </SafeAreaView>
   );
 };
 
