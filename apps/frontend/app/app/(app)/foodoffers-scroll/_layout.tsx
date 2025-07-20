@@ -1,13 +1,10 @@
 import React from 'react';
 import { useTheme } from '@/hooks/useTheme';
 import { Stack } from 'expo-router';
-import CustomStackHeader from '@/components/CustomStackHeader/CustomStackHeader';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
 
-export default function FoodOffersScrollLayout() {
+
+export default function FoodOfferLayout() {
   const { theme } = useTheme();
-  const { translate } = useLanguage();
   return (
     <Stack
       screenOptions={{
@@ -20,12 +17,6 @@ export default function FoodOffersScrollLayout() {
         options={{
           title: 'Food Offers',
           headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name='details/index'
-        options={{
-          header: () => <CustomStackHeader label={translate(TranslationKeys.food_details)} />,
         }}
       />
     </Stack>

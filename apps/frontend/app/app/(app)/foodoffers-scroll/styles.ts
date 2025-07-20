@@ -1,17 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  dayContainer: {
-    padding: 10,
-  },
-  dateHeader: {
-    fontSize: 18,
-    marginBottom: 8,
-  },
-  loader: {
+  foodOfferContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   header: {
     width: '100%',
@@ -33,11 +24,18 @@ export default StyleSheet.create({
   col2: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
   },
   heading: {
     fontSize: 18,
     fontFamily: 'Poppins_400Regular',
+  },
+  container: {
+    flex: 1,
+  },
+  contentContainer: {
+    width: '100%',
+    alignItems: 'center',
+    paddingBottom: 20,
   },
   foodContainer: {
     width: '100%',
@@ -46,8 +44,47 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: 20,
   },
+  sheetBackground: {
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+  },
   feebackContainer: {
     width: '100%',
     marginTop: 20,
+  },
+  foodLabels: {
+    fontSize: 24,
+    fontFamily: 'Poppins_700Bold',
+  },
+  elementContainer: {
+    width: '100%',
+    marginTop: 20,
+  },
+  noFoodContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  animationContainer: {
+    width: 250,
+    height: 250,
+    marginBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noFoodOffer: {
+    fontSize: 18,
+    fontFamily: 'Poppins_400Regular',
+  },
+  jumpButton: {
+    marginTop: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  jumpButtonText: {
+    fontSize: 16,
+    fontFamily: 'Poppins_500Medium',
   },
 });
