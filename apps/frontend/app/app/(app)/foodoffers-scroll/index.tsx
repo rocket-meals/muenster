@@ -29,7 +29,6 @@ import useKioskMode from '@/hooks/useKioskMode';
 import { fetchFoodOffersByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
 import {
   SET_BUSINESS_HOURS,
-  SET_CANTEEN_FEEDBACK_LABELS,
   SET_POPUP_EVENTS,
   SET_SELECTED_CANTEEN_FOOD_OFFERS,
   SET_SELECTED_CANTEEN_FOOD_OFFERS_LOCAL,
@@ -56,8 +55,6 @@ import { useLanguage } from '@/hooks/useLanguage';
 import ForecastSheet from '@/components/ForecastSheet/ForecastSheet';
 import ImageManagementSheet from '@/components/ImageManagementSheet/ImageManagementSheet';
 import EatingHabitsSheet from '@/components/EatingHabitsSheet/EatingHabitsSheet';
-import { CanteenFeedbackLabelHelper } from '@/redux/actions/CanteenFeedbacksLabel/CanteenFeedbacksLabel';
-import CanteenFeedbackLabels from '@/components/CanteenFeedbackLabels/CanteenFeedbackLabels';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import * as Notifications from 'expo-notifications';
 import {
@@ -73,7 +70,6 @@ import { format, addDays } from 'date-fns';
 import { BusinessHoursHelper } from '@/redux/actions/BusinessHours/BusinessHours';
 import PopupEventSheet from '@/components/PopupEventSheet/PopupEventSheet';
 import { PopupEventHelper } from '@/helper/PopupEventHelper';
-import { getAppElementTranslation } from '@/helper/resourceHelper';
 import noFoodOffersFound from '@/assets/animations/noFoodOffersFound.json';
 import LottieView from 'lottie-react-native';
 import { replaceLottieColors } from '@/helper/animationHelper';
@@ -81,7 +77,6 @@ import { myContrastColor } from '@/helper/colorHelper';
 import { TranslationKeys } from '@/locales/keys';
 
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import CustomMarkdown from '@/components/CustomMarkdown/CustomMarkdown';
 import { RootState } from '@/redux/reducer';
 import MarkingBottomSheet from '@/components/MarkingBottomSheet';
 
@@ -106,15 +101,11 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const eventSheetRef = useRef<BottomSheet>(null);
   const businessHoursHelper = new BusinessHoursHelper();
-  const canteenFeedbackLabelHelper = new CanteenFeedbackLabelHelper();
   const [loading, setLoading] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [beforeElement, setBeforeElement] = useState<any>(null);
-  const [afterElement, setAfterElement] = useState<any>(null);
   const [selectedFoodId, setSelectedFoodId] = useState('');
   const [sheetProps, setSheetProps] = useState<Record<string, any>>({});
-  const [feedbackLabelsLoading, setFeedbackLabelsLoading] = useState(true);
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get('window').width
   );
@@ -146,10 +137,6 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   const [animationJson, setAmimationJson] = useState<any>(null);
   const { profile, user } = useSelector(
     (state: RootState) => state.authReducer
-  );
-  const { appElements } = useSelector((state: RootState) => state.appElements);
-  const { selectedCanteenFoodOffers, canteenFeedbackLabels } = useSelector(
-    (state: RootState) => state.canteenReducer,
   );
   const selectedCanteen = useSelectedCanteen();
   const kioskMode = useKioskMode();
@@ -220,30 +207,6 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (!appElements || !appSettings) return;
-
-    const getElement = (id: string) => {
-      const element = appElements?.find((el: any) => el.id === id);
-      if (!element || !element.translations) return null;
-      const { content, popup_button_text, popup_content } =
-        getAppElementTranslation(element.translations, languageCode);
-
-      return {
-        content,
-        popup_button_text,
-        popup_content,
-      };
-    };
-
-    const before = getElement(
-      String(appSettings.foodoffers_list_before_element)
-    );
-    const after = getElement(String(appSettings.foodoffers_list_after_element));
-
-    setBeforeElement(before);
-    setAfterElement(after);
-  }, [appElements, appSettings]);
 
   useFocusEffect(
     useCallback(() => {
@@ -532,52 +495,15 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
     }
   };
 
-  const fetchCanteenLabels = async () => {
-    try {
-      setFeedbackLabelsLoading(true);
-      // Fetch Canteen Feedback Labels
-      const canteenFeedbackLabels =
-        (await canteenFeedbackLabelHelper.fetchCanteenFeedbackLabels()) as DatabaseTypes.CanteensFeedbacksLabels[];
-      dispatch({
-        type: SET_CANTEEN_FEEDBACK_LABELS,
-        payload: canteenFeedbackLabels,
-      });
-    } catch (error) {
-      console.error('Error fetching Canteen Feedback Labels:', error);
-    } finally {
-      setFeedbackLabelsLoading(false);
-    }
-  };
-
   useEffect(() => {
     fetchFoods();
   }, [selectedCanteen, selectedDate]);
 
-  useEffect(() => {
-    fetchCanteenLabels();
-  }, []);
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchFoods();
-    fetchCanteenLabels();
     setRefreshing(false);
   }, []);
-
-  const memoizedCanteenFeedbackLabels = useMemo(
-    () =>
-      canteenFeedbackLabels?.map(
-        (label: DatabaseTypes.CanteensFeedbacksLabels, index: number) => (
-          <CanteenFeedbackLabels
-            key={label?.id || `feedback-label-${index}`}
-            label={label}
-            date={selectedDate}
-          />
-        )
-      ),
-    [canteenFeedbackLabels, selectedDate]
-  );
-  const canteenFeedbackLabelsExist = canteenFeedbackLabels?.length > 0;
 
   const nextAvailableDate = useMemo(() => {
     const canteenId = selectedCanteen?.id as string;
@@ -959,46 +885,11 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
               backgroundColor: theme.screen.background,
             }}
           >
-            <View style={styles.elementContainer}>
-              {beforeElement && (
-                <CustomMarkdown
-                  content={beforeElement?.content || ''}
-                  backgroundColor={foods_area_color}
-                  imageWidth={440}
-                  imageHeight={293}
-                />
-              )}
-            </View>
             {selectedCanteen && (
               <FoodOfferFlatList
                 canteenId={selectedCanteen.id}
                 startDate={selectedDate}
               />
-            )}
-            <View style={styles.elementContainer}>
-              {afterElement && (
-                <CustomMarkdown
-                  content={afterElement?.content || ''}
-                  backgroundColor={foods_area_color}
-                  imageWidth={440}
-                  imageHeight={293}
-                />
-              )}
-            </View>
-            {!feedbackLabelsLoading && canteenFeedbackLabelsExist > 0 && (
-              <View style={styles.feebackContainer}>
-                <View>
-                  <Text
-                    style={{
-                      ...styles.foodLabels,
-                      color: theme.screen.text,
-                    }}
-                  >
-                    {translate(TranslationKeys.feedback_labels)}
-                  </Text>
-                </View>
-                {memoizedCanteenFeedbackLabels}
-              </View>
             )}
           </View>
         </View>
