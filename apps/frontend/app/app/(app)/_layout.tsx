@@ -730,13 +730,8 @@ export default function Layout() {
         <Drawer.Screen
           name='foodoffers-scroll/index'
           options={{
-            header: () => (
-              <CustomStackHeader
-                label={translate(TranslationKeys.foodoffers_scroll)}
-                key={'foodoffers_scroll'}
-              />
-            ),
             title: translate(TranslationKeys.foodoffers_scroll),
+            headerShown: false,
           }}
         />
 
