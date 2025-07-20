@@ -56,6 +56,16 @@ const FoodOffersScroll = () => {
   const [loadingPrev, setLoadingPrev] = useState(false);
   const navigation = useNavigation<DrawerNavigationProp<any>>();
 
+  if (!selectedCanteen) {
+    return (
+      <View style={[styles.loader, { backgroundColor: theme.screen.background }]}>
+        <Text style={{ color: theme.screen.text }}>
+          {translate(TranslationKeys.no_canteens_found)}
+        </Text>
+      </View>
+    );
+  }
+
   useEffect(() => {
     const sub = Dimensions.addEventListener('change', ({ window }) => {
       setScreenWidth(window.width);
@@ -64,7 +74,10 @@ const FoodOffersScroll = () => {
   }, []);
 
   const loadDay = useCallback(async (date: string) => {
-    const canteenId = selectedCanteen?.id as string;
+    if (!selectedCanteen) {
+      return { date, offers: [] } as DayData;
+    }
+    const canteenId = selectedCanteen.id as string;
     try {
       const res = await fetchFoodOffersByCanteen(canteenId, date);
       const offers = res?.data || [];
@@ -94,12 +107,12 @@ const FoodOffersScroll = () => {
   }, [init]);
 
   useEffect(() => {
-    if (initialized) {
+    if (initialized && days.length >= 3) {
       setTimeout(() => {
         flatListRef.current?.scrollToIndex({ index: 2, animated: false });
       }, 0);
     }
-  }, [initialized]);
+  }, [initialized, days.length]);
 
   const fetchCanteenLabels = useCallback(async () => {
     try {
