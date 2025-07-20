@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   FlatList,
   Text,
@@ -49,22 +49,10 @@ const FoodOffersScroll = () => {
     (state: RootState) => state.canteenReducer,
   );
   const [days, setDays] = useState<DayData[]>([]);
-  const [initialized, setInitialized] = useState(false);
-  const flatListRef = useRef<FlatList<any>>(null);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [loadingPrev, setLoadingPrev] = useState(false);
   const navigation = useNavigation<DrawerNavigationProp<any>>();
-
-  if (!selectedCanteen) {
-    return (
-      <View style={[styles.loader, { backgroundColor: theme.screen.background }]}>
-        <Text style={{ color: theme.screen.text }}>
-          {translate(TranslationKeys.no_canteens_found)}
-        </Text>
-      </View>
-    );
-  }
 
   useEffect(() => {
     const sub = Dimensions.addEventListener('change', ({ window }) => {
@@ -74,10 +62,7 @@ const FoodOffersScroll = () => {
   }, []);
 
   const loadDay = useCallback(async (date: string) => {
-    if (!selectedCanteen) {
-      return { date, offers: [] } as DayData;
-    }
-    const canteenId = selectedCanteen.id as string;
+    const canteenId = selectedCanteen?.id as string;
     try {
       const res = await fetchFoodOffersByCanteen(canteenId, date);
       const offers = res?.data || [];
@@ -98,21 +83,12 @@ const FoodOffersScroll = () => {
       loaded.push(await loadDay(d));
     }
     setDays(loaded);
-    setInitialized(true);
     setLoading(false);
   }, [selectedDate, loadDay]);
 
   useEffect(() => {
     init();
   }, [init]);
-
-  useEffect(() => {
-    if (initialized && days.length >= 3) {
-      setTimeout(() => {
-        flatListRef.current?.scrollToIndex({ index: 2, animated: false });
-      }, 0);
-    }
-  }, [initialized, days.length]);
 
   const fetchCanteenLabels = useCallback(async () => {
     try {
@@ -139,7 +115,7 @@ const FoodOffersScroll = () => {
   };
 
   const loadPrev = async () => {
-    if (loadingPrev || days.length === 0) return;
+    if (loadingPrev) return;
     setLoadingPrev(true);
     const firstDate = days[0].date;
     const prevDate = subDays(new Date(firstDate), 1).toISOString().split('T')[0];
@@ -158,10 +134,8 @@ const FoodOffersScroll = () => {
     setRefreshing(false);
   };
 
-  const SCROLL_THRESHOLD = 300;
-
   const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (e.nativeEvent.contentOffset.y <= SCROLL_THRESHOLD) {
+    if (e.nativeEvent.contentOffset.y <= 0) {
       loadPrev();
     }
   };
@@ -274,7 +248,6 @@ const FoodOffersScroll = () => {
 
   return (
     <FlatList
-      ref={flatListRef}
       data={days}
       keyExtractor={(item) => item.date}
       renderItem={renderDay}
@@ -284,7 +257,6 @@ const FoodOffersScroll = () => {
       ListHeaderComponent={listHeader}
       onScroll={handleScroll}
       scrollEventThrottle={16}
-      maintainVisibleContentPosition={{ minIndexForVisible: 1 }}
       contentContainerStyle={{ backgroundColor: theme.screen.background }}
     />
   );
