@@ -33,7 +33,6 @@ export const performLogout = async (
     await AsyncStorage.multiRemove(['auth_data', 'persist:root']);
     if (asGuest) {
       dispatch({ type: CLEAR_ANONYMOUSLY });
-      dispatch({ type: CLEAR_ANONYMOUSLY });
     } else {
       dispatch({ type: ON_LOGOUT });
     }

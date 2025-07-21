@@ -93,6 +93,17 @@ const DebugLogout = () => {
     },
   ];
 
+  const myTestLogout = async () => {
+    const exclude = ['CLEAR_ANONYMOUSLY', 'ON_LOGOUT', 'RESET_STORE'];
+    for (const step of steps) {
+      if (exclude.includes(step.label)) continue;
+      const result = step.action();
+      if (result instanceof Promise) {
+        await result;
+      }
+    }
+  };
+
   return (
     <ScrollView
       style={{ ...styles.container, backgroundColor: theme.screen.background }}
@@ -116,6 +127,14 @@ const DebugLogout = () => {
             </Text>
           </TouchableOpacity>
         ))}
+        <TouchableOpacity
+          style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }}
+          onPress={myTestLogout}
+        >
+          <Text style={{ ...styles.body, color: theme.screen.text }}>
+            MY_TEST_LOGOUT
+          </Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
