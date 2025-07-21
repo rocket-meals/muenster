@@ -17,6 +17,16 @@ import FoodItem from '@/components/FoodItem/FoodItem';
 import CanteenFeedbackLabels from '@/components/CanteenFeedbackLabels/CanteenFeedbackLabels';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
+import {
+  intelligentSort,
+  sortByEatingHabits,
+  sortByFoodCategory,
+  sortByFoodName,
+  sortByFoodOfferCategory,
+  sortByOwnFavorite,
+  sortByPublicFavorite,
+} from '@/helper/sortingHelper';
+import { FoodSortOption } from '@/constants/SortingEnums';
 import styles from './styles';
 
 interface FoodOffersScrollListProps {
@@ -38,6 +48,13 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({
   const { canteenFeedbackLabels, canteens } = useSelector(
     (state: RootState) => state.canteenReducer,
   );
+  const { sortBy, language } = useSelector((state: RootState) => state.settings);
+  const {
+    ownFoodFeedbacks,
+    foodCategories,
+    foodOfferCategories,
+  } = useSelector((state: RootState) => state.food);
+  const { profile } = useSelector((state: RootState) => state.authReducer);
   const selectedCanteen = canteens?.find((c) => c.id === canteenId) as
     | DatabaseTypes.Canteens
     | undefined;
@@ -48,6 +65,48 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
+  const sortOffers = useCallback(
+    (foodOffers: DatabaseTypes.Foodoffers[]) => {
+      let copiedFoodOffers = [...foodOffers];
+
+      switch (sortBy as FoodSortOption) {
+        case FoodSortOption.ALPHABETICAL:
+          copiedFoodOffers = sortByFoodName(copiedFoodOffers, language);
+          break;
+        case FoodSortOption.FAVORITE:
+          copiedFoodOffers = sortByOwnFavorite(copiedFoodOffers, ownFoodFeedbacks);
+          break;
+        case FoodSortOption.EATING:
+          copiedFoodOffers = sortByEatingHabits(copiedFoodOffers, profile.markings);
+          break;
+        case FoodSortOption.FOOD_CATEGORY:
+          copiedFoodOffers = sortByFoodCategory(copiedFoodOffers, foodCategories, language);
+          break;
+        case FoodSortOption.FOODOFFER_CATEGORY:
+          copiedFoodOffers = sortByFoodOfferCategory(copiedFoodOffers, foodOfferCategories);
+          break;
+        case FoodSortOption.RATING:
+          copiedFoodOffers = sortByPublicFavorite(copiedFoodOffers);
+          break;
+        case FoodSortOption.INTELLIGENT:
+          copiedFoodOffers = intelligentSort(
+            copiedFoodOffers,
+            ownFoodFeedbacks,
+            profile.markings,
+            language,
+            foodCategories,
+            foodOfferCategories,
+          );
+          break;
+        default:
+          break;
+      }
+
+      return copiedFoodOffers;
+    },
+    [sortBy, language, ownFoodFeedbacks, profile.markings, foodCategories, foodOfferCategories],
+  );
+
   useEffect(() => {
     const sub = Dimensions.addEventListener('change', ({ window }) => {
       setScreenWidth(window.width);
@@ -55,18 +114,23 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({
     return () => sub?.remove();
   }, []);
 
+  useEffect(() => {
+    setDays((prev) => prev.map((d) => ({ ...d, offers: sortOffers(d.offers) })));
+  }, [sortOffers]);
+
   const loadDay = useCallback(
     async (date: string) => {
       try {
         const res = await fetchFoodOffersByCanteen(canteenId, date);
         const offers = res?.data || [];
-        return { date, offers } as DayData;
+        const sortedOffers = sortOffers(offers);
+        return { date, offers: sortedOffers } as DayData;
       } catch (e) {
         console.error('Error loading food offers', e);
         return { date, offers: [] } as DayData;
       }
     },
-    [canteenId],
+    [canteenId, sortOffers],
   );
 
   const init = useCallback(async () => {
