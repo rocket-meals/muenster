@@ -118,6 +118,18 @@ const index = () => {
           </View>
           <Entypo name='chevron-small-right' color={theme.screen.icon} size={24} />
         </TouchableOpacity>
+        <TouchableOpacity
+          style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }}
+          onPress={() => router.push('/experimentell/rate-app')}
+        >
+          <View style={styles.col}>
+            <MaterialCommunityIcons name='star' color={theme.screen.icon} size={24} />
+            <Text style={{ ...styles.body, color: theme.screen.text }}>
+              {translate(TranslationKeys.rate_app)}
+            </Text>
+          </View>
+          <Entypo name='chevron-small-right' color={theme.screen.icon} size={24} />
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

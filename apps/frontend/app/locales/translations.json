@@ -2453,6 +2453,16 @@
     "tr": "Debug Logout",
     "zh": "Debug Logout"
   },
+  "rate_app": {
+    "de": "App bewerten",
+    "en": "Rate App",
+    "ar": "Rate App",
+    "es": "Rate App",
+    "fr": "Rate App",
+    "ru": "Rate App",
+    "tr": "Rate App",
+    "zh": "Rate App"
+  },
   "vertical_image_scroll": {
     "de": "Vertikaler Bildlauf",
     "en": "Vertical Image Scroll",

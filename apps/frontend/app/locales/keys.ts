@@ -244,6 +244,7 @@ export enum TranslationKeys {
   course_timetable = 'course_timetable',
   experimentell = "experimentell",
   debug_logout = 'debug_logout',
+  rate_app = 'rate_app',
   vertical_image_scroll = 'vertical_image_scroll',
   foodoffers_scroll = 'foodoffers_scroll',
   chats = 'chats',
