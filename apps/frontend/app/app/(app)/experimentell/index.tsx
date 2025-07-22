@@ -84,6 +84,18 @@ const index = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }}
+          onPress={() => router.push('/vertical-scroll-top-food')}
+        >
+          <View style={styles.col}>
+            <MaterialCommunityIcons name='image-multiple' color={theme.screen.icon} size={24} />
+            <Text style={{ ...styles.body, color: theme.screen.text }}>
+              {translate(TranslationKeys.vertical_scroll_top_food)}
+            </Text>
+          </View>
+          <Entypo name='chevron-small-right' color={theme.screen.icon} size={24} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }}
           onPress={() => router.push('/foodoffers-scroll')}
         >
           <View style={styles.col}>
