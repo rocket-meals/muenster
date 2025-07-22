@@ -245,6 +245,7 @@ export enum TranslationKeys {
   experimentell = "experimentell",
   debug_logout = 'debug_logout',
   rate_app = 'rate_app',
+  app_download = 'app_download',
   vertical_image_scroll = 'vertical_image_scroll',
   foodoffers_scroll = 'foodoffers_scroll',
   chats = 'chats',

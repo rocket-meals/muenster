@@ -2463,6 +2463,16 @@
     "tr": "Rate App",
     "zh": "Rate App"
   },
+  "app_download": {
+    "de": "App-Download",
+    "en": "App Download",
+    "ar": "App Download",
+    "es": "App Download",
+    "fr": "App Download",
+    "ru": "App Download",
+    "tr": "App Download",
+    "zh": "App Download"
+  },
   "vertical_image_scroll": {
     "de": "Vertikaler Bildlauf",
     "en": "Vertical Image Scroll",
