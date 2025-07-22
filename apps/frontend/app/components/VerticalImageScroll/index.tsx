@@ -57,23 +57,23 @@ const VerticalImageScroll: React.FC = () => {
   const [speedPercent, setSpeedPercent] = useState(5);
 
   return (
-    <View key={amountColumnsForcard} style={[styles.container, { backgroundColor: theme.screen.background }]}>\
-      <View style={styles.controls}>\
-        <TouchableOpacity onPress={() => setSpeedPercent(s => Math.max(1, s - 1))}>\
-          <Ionicons name='remove' size={24} color={theme.primary} />\
-        </TouchableOpacity>\
-        <Text style={{ color: theme.primary }}>{Math.round(speedPercent)}%/s</Text>\
-        <TouchableOpacity onPress={() => setSpeedPercent(s => s + 1)}>\
-          <Ionicons name='add' size={24} color={theme.primary} />\
-        </TouchableOpacity>\
-      </View>\
-      <AutoImageScroller\
-        images={images}\
-        numColumns={numColumns}\
-        size={size}\
-        speedPercent={speedPercent}\
-        loadMore={loadMoreImages}\
-      />\
+    <View key={amountColumnsForcard} style={[styles.container, { backgroundColor: theme.screen.background }]}>
+      <View style={styles.controls}>
+        <TouchableOpacity onPress={() => setSpeedPercent(s => Math.max(1, s - 1))}>
+          <Ionicons name='remove' size={24} color={theme.primary} />
+        </TouchableOpacity>
+        <Text style={{ color: theme.primary }}>{Math.round(speedPercent)}%/s</Text>
+        <TouchableOpacity onPress={() => setSpeedPercent(s => s + 1)}>
+          <Ionicons name='add' size={24} color={theme.primary} />
+        </TouchableOpacity>
+      </View>
+      <AutoImageScroller
+        images={images}
+        numColumns={numColumns}
+        size={size}
+        speedPercent={speedPercent}
+        loadMore={loadMoreImages}
+      />
     </View>
   );
 };
