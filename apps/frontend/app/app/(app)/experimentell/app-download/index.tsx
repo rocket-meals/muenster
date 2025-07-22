@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View, Platform, Linking } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  Text,
+  View,
+  Platform,
+  Linking,
+  Dimensions,
+} from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import { useTheme } from '@/hooks/useTheme';
@@ -9,6 +17,7 @@ import styles from './styles';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import RedirectButton from '@/components/RedirectButton';
 import QRCode from 'qrcode';
+import CardDimensionHelper from '@/helper/CardDimensionHelper';
 
 const AppDownload = () => {
   useSetPageTitle(TranslationKeys.app_download);
@@ -17,6 +26,17 @@ const AppDownload = () => {
   const [projectName, setProjectName] = useState('');
   const [iosQr, setIosQr] = useState<string>('');
   const [androidQr, setAndroidQr] = useState<string>('');
+  const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+  const [debugLogs, setDebugLogs] = useState<string[]>([]);
+
+  const log = (msg: string) => setDebugLogs((logs) => [...logs, msg]);
+
+  useEffect(() => {
+    const sub = Dimensions.addEventListener('change', ({ window }) => {
+      setScreenWidth(window.width);
+    });
+    return () => sub.remove();
+  }, []);
 
   useEffect(() => {
     if (serverInfo && serverInfo.info) {
@@ -26,14 +46,28 @@ const AppDownload = () => {
 
   useEffect(() => {
     if (appSettings?.app_stores_url_to_apple) {
+      log(`Generate iOS QR for ${appSettings.app_stores_url_to_apple}`);
       QRCode.toDataURL(appSettings.app_stores_url_to_apple)
-        .then(setIosQr)
-        .catch(console.error);
+        .then((url) => {
+          setIosQr(url);
+          log('iOS QR created');
+        })
+        .catch((e) => {
+          console.error(e);
+          log(`iOS QR error: ${e}`);
+        });
     }
     if (appSettings?.app_stores_url_to_google) {
+      log(`Generate Android QR for ${appSettings.app_stores_url_to_google}`);
       QRCode.toDataURL(appSettings.app_stores_url_to_google)
-        .then(setAndroidQr)
-        .catch(console.error);
+        .then((url) => {
+          setAndroidQr(url);
+          log('Android QR created');
+        })
+        .catch((e) => {
+          console.error(e);
+          log(`Android QR error: ${e}`);
+        });
     }
   }, [appSettings]);
 
@@ -60,6 +94,8 @@ const AppDownload = () => {
     ? { uri: projectLogo }
     : require('../../../../assets/images/icon.png');
 
+  const qrSize = CardDimensionHelper.getCardDimension(screenWidth);
+
   return (
     <ScrollView
       style={{ ...styles.container, backgroundColor: theme.screen.background }}
@@ -74,8 +110,13 @@ const AppDownload = () => {
         <View style={styles.qrRow}>
           {iosQr ? (
             <View style={styles.qrCol}>
+              {appSettings?.app_stores_url_to_apple && (
+                <Text selectable style={styles.urlText}>
+                  {appSettings.app_stores_url_to_apple}
+                </Text>
+              )}
               <View style={styles.qrDebugWrapper}>
-                <Image source={{ uri: iosQr }} style={styles.qr} />
+                <Image source={{ uri: iosQr }} style={[styles.qr, { width: qrSize, height: qrSize }]} />
               </View>
               <Text selectable style={styles.uriText}>{iosQr}</Text>
               <RedirectButton
@@ -86,8 +127,13 @@ const AppDownload = () => {
           ) : null}
           {androidQr ? (
             <View style={styles.qrCol}>
+              {appSettings?.app_stores_url_to_google && (
+                <Text selectable style={styles.urlText}>
+                  {appSettings.app_stores_url_to_google}
+                </Text>
+              )}
               <View style={styles.qrDebugWrapper}>
-                <Image source={{ uri: androidQr }} style={styles.qr} />
+                <Image source={{ uri: androidQr }} style={[styles.qr, { width: qrSize, height: qrSize }]} />
               </View>
               <Text selectable style={styles.uriText}>{androidQr}</Text>
               <RedirectButton
@@ -97,6 +143,17 @@ const AppDownload = () => {
             </View>
           ) : null}
         </View>
+        {debugLogs.length > 0 && (
+          <View style={styles.debugLogContainer}>
+            <ScrollView>
+              {debugLogs.map((l, i) => (
+                <Text key={i} style={styles.debugLogText}>
+                  {l}
+                </Text>
+              ))}
+            </ScrollView>
+          </View>
+        )}
       </View>
     </ScrollView>
   );

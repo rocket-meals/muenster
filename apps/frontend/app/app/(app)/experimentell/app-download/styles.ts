@@ -45,4 +45,21 @@ export default StyleSheet.create({
     fontSize: 10,
     color: 'gray',
   },
+  urlText: {
+    fontSize: 12,
+    color: 'gray',
+    textAlign: 'center',
+  },
+  debugLogContainer: {
+    maxHeight: 100,
+    marginTop: 20,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    padding: 5,
+  },
+  debugLogText: {
+    fontSize: 10,
+    color: 'gray',
+  },
 });
