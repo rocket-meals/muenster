@@ -28,4 +28,15 @@ export default StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins_400Regular',
   },
+  debugLogContainer: {
+    maxHeight: 120,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    padding: 5,
+  },
+  debugLogText: {
+    fontSize: 12,
+    color: 'gray',
+  },
 });

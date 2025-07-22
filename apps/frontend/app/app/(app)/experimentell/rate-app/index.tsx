@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -11,14 +11,22 @@ const RateApp = () => {
   useSetPageTitle(TranslationKeys.rate_app);
   const { theme } = useTheme();
   const { translate } = useLanguage();
+  const [debugLogs, setDebugLogs] = useState<string[]>([]);
+
+  const addLog = (msg: string) =>
+    setDebugLogs((logs) => [...logs, msg]);
 
   const handleRate = async () => {
     try {
+      addLog('Checking availability');
       const available = await StoreReview.isAvailableAsync();
+      addLog(`Available: ${available}`);
       if (available) {
         await StoreReview.requestReview();
+        addLog('Review requested');
       }
-    } catch (e) {
+    } catch (e: any) {
+      addLog(`Error: ${e?.message || e}`);
       console.log('Error requesting review', e);
     }
   };
@@ -43,6 +51,17 @@ const RateApp = () => {
             {translate(TranslationKeys.rate_app)}
           </Text>
         </TouchableOpacity>
+        {debugLogs.length > 0 && (
+          <View style={styles.debugLogContainer}>
+            <ScrollView>
+              {debugLogs.map((l, i) => (
+                <Text key={i} style={styles.debugLogText}>
+                  {l}
+                </Text>
+              ))}
+            </ScrollView>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
