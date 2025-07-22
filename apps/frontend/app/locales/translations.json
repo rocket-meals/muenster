@@ -2483,6 +2483,16 @@
     "tr": "Dikey Resim Kaydırma",
     "zh": "垂直图片滚动"
   },
+  "vertical_scroll_top_food": {
+    "de": "Top-Essen-Scroll",
+    "en": "Top Food Scroll",
+    "ar": "Top Food Scroll",
+    "es": "Top Food Scroll",
+    "fr": "Top Food Scroll",
+    "ru": "Top Food Scroll",
+    "tr": "Top Food Scroll",
+    "zh": "Top Food Scroll"
+  },
   "foodoffers_scroll": {
     "de": "Speiseplan-Scroll",
     "en": "Food Offers Scroll",
