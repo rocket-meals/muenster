@@ -31,6 +31,17 @@ const AppDownload = () => {
 
   const log = (msg: string) => setDebugLogs((logs) => [...logs, msg]);
 
+  const qrOptions = {
+    errorCorrectionLevel: 'H',
+    type: 'image/jpeg',
+    quality: 0.3,
+    margin: 1,
+    color: {
+      dark: '#010599FF',
+      light: '#FFBF60FF',
+    },
+  };
+
   useEffect(() => {
     const sub = Dimensions.addEventListener('change', ({ window }) => {
       setScreenWidth(window.width);
@@ -47,27 +58,27 @@ const AppDownload = () => {
   useEffect(() => {
     if (appSettings?.app_stores_url_to_apple) {
       log(`Generate iOS QR for ${appSettings.app_stores_url_to_apple}`);
-      QRCode.toDataURL(appSettings.app_stores_url_to_apple)
-        .then((url) => {
-          setIosQr(url);
-          log('iOS QR created');
-        })
-        .catch((e) => {
-          console.error(e);
-          log(`iOS QR error: ${e}`);
-        });
+      QRCode.toDataURL(appSettings.app_stores_url_to_apple, qrOptions, (err, url) => {
+        if (err) {
+          console.error(err);
+          log(`iOS QR error: ${err}`);
+          return;
+        }
+        setIosQr(url);
+        log('iOS QR created');
+      });
     }
     if (appSettings?.app_stores_url_to_google) {
       log(`Generate Android QR for ${appSettings.app_stores_url_to_google}`);
-      QRCode.toDataURL(appSettings.app_stores_url_to_google)
-        .then((url) => {
-          setAndroidQr(url);
-          log('Android QR created');
-        })
-        .catch((e) => {
-          console.error(e);
-          log(`Android QR error: ${e}`);
-        });
+      QRCode.toDataURL(appSettings.app_stores_url_to_google, qrOptions, (err, url) => {
+        if (err) {
+          console.error(err);
+          log(`Android QR error: ${err}`);
+          return;
+        }
+        setAndroidQr(url);
+        log('Android QR created');
+      });
     }
   }, [appSettings]);
 
