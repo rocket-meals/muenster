@@ -22,6 +22,7 @@ import QrCode from '@/components/QrCode';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 import appleLogo from "@/assets/icons/apple-store.png"
 import googleLogo from "@/assets/icons/google-play.png"
+import CardWithText from '@/components/CardWithText/CardWithText';
 
 const AppDownload = () => {
   useSetPageTitle(TranslationKeys.app_download);
@@ -80,6 +81,42 @@ const AppDownload = () => {
     maxQrSize,
   );
 
+  const renderQrCard = (
+    url: string | undefined,
+    label: string,
+    logo: any,
+  ) => {
+    if (!url) return null;
+    return (
+      <CardWithText
+        onPress={() => openInBrowser(url)}
+        containerStyle={[styles.qrCol, { width: qrSize, backgroundColor: theme.card.background }]}
+        imageContainerStyle={[styles.qrImageContainer, { height: qrSize }]}
+        imageChildren={
+          <QrCode
+            value={url}
+            size={qrSize}
+            image={logo}
+            backgroundColor='white'
+            margin={2}
+          />
+        }
+        bottomContent={
+          <TouchableOpacity
+            style={[styles.qrButton, { backgroundColor: primaryColor }]}
+          >
+            <Text style={[styles.qrButtonText, { color: contrastColor }]}>{label}</Text>
+            <FontAwesome6
+              name='arrow-up-right-from-square'
+              size={20}
+              color={contrastColor}
+            />
+          </TouchableOpacity>
+        }
+      />
+    );
+  };
+
   return (
     <ScrollView
       style={{ ...styles.container, backgroundColor: theme.screen.background }}
@@ -92,66 +129,8 @@ const AppDownload = () => {
         <Image source={iconSource} style={styles.icon} />
         <Text style={{ ...styles.heading, color: theme.screen.text }}>{projectName}</Text>
         <View style={styles.qrRow}>
-          {appSettings?.app_stores_url_to_apple ? (
-            <View style={[styles.qrCol, { width: qrSize, backgroundColor: theme.card.background }]}> 
-              <View style={[styles.qrImageContainer, { height: qrSize }]}> 
-                <QrCode
-                  value={appSettings.app_stores_url_to_apple}
-                  size={qrSize}
-                  image={appleLogo}
-                  backgroundColor='white'
-                  margin={2}
-                />
-              </View>
-              <TouchableOpacity
-                style={[
-                  styles.qrButton,
-                  { backgroundColor: primaryColor },
-                ]}
-                onPress={() =>
-                  appSettings?.app_stores_url_to_apple &&
-                  openInBrowser(appSettings.app_stores_url_to_apple)
-                }
-              >
-                <Text style={[styles.qrButtonText, { color: contrastColor }]}>iOS</Text>
-                <FontAwesome6
-                  name='arrow-up-right-from-square'
-                  size={20}
-                  color={contrastColor}
-                />
-              </TouchableOpacity>
-            </View>
-          ) : null}
-          {appSettings?.app_stores_url_to_google ? (
-            <View style={[styles.qrCol, { width: qrSize, backgroundColor: theme.card.background }]}> 
-              <View style={[styles.qrImageContainer, { height: qrSize }]}>
-                <QrCode
-                  value={appSettings.app_stores_url_to_google}
-                  size={qrSize}
-                  image={googleLogo}
-                  backgroundColor='white'
-                  margin={2}
-                />
-              </View>
-              <TouchableOpacity
-                style={[
-                  styles.qrButton,
-                  { backgroundColor: primaryColor },
-                ]}
-                onPress={() =>
-                  appSettings?.app_stores_url_to_google &&
-                  openInBrowser(appSettings.app_stores_url_to_google)
-                }
-              >
-                <Text style={[styles.qrButtonText, { color: contrastColor }]}>Android</Text>
-                <FontAwesome6
-                  name='arrow-up-right-from-square'
-                  size={20}
-                  color={contrastColor}
-                />
-              </TouchableOpacity>
-            </View>
-          ) : null}
+          {renderQrCard(appSettings?.app_stores_url_to_apple, 'iOS', appleLogo)}
+          {renderQrCard(appSettings?.app_stores_url_to_google, 'Android', googleLogo)}
         </View>
       </View>
     </ScrollView>
