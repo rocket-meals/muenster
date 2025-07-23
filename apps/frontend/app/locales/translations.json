@@ -2473,16 +2473,6 @@
     "tr": "App Download",
     "zh": "App Download"
   },
-  "react_qr_code": {
-    "de": "React QR Code",
-    "en": "React QR Code",
-    "ar": "React QR Code",
-    "es": "React QR Code",
-    "fr": "React QR Code",
-    "ru": "React QR Code",
-    "tr": "React QR Code",
-    "zh": "React QR Code"
-  },
   "react_native_qrcode_svg": {
     "de": "React Native QRCode SVG",
     "en": "React Native QRCode SVG",
