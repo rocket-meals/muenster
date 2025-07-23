@@ -29,7 +29,6 @@ export enum AppScreens {
     NOTIFICATION = 'notification',
     SUPPORT_TICKET = 'support-ticket',
     VERTICAL_IMAGE_SCROLL = 'vertical-image-scroll',
-    VERTICAL_SCROLL_TOP_FOOD = 'vertical-scroll-top-food',
     WIKIS = 'wikis',
     BIG_SCREEN = 'bigScreen',
     FOOD_PLAN_DAY = 'foodPlanDay',

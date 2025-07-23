@@ -4091,13 +4091,6 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@nuintun/qrcode@^5.0.2":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@nuintun/qrcode/-/qrcode-5.0.2.tgz#47c3e7a3b71064ad03b31e79ebb85a8d8e2dc719"
-  integrity sha512-IkbIU+bgHmivthsdjwR5Cos0ZkFJKILY/PgwARiTOzYGQLP4vBa40LDXajlkH5HX/zRuPgg3Jyufp+81t67XLg==
-  dependencies:
-    tslib "^2.8.1"
-
 "@opentelemetry/api@^1.4.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-1.9.0.tgz#d03eba68273dc0f7509e2a3d5cba21eae10379fe"
