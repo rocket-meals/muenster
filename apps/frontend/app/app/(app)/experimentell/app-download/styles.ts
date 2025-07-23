@@ -34,7 +34,7 @@ export default StyleSheet.create({
   },
   qrCol: {
     alignItems: 'center',
-    gap: 10,
+    gap: 5,
     overflow: 'hidden',
     borderBottomLeftRadius: 18,
     borderBottomRightRadius: 18,
