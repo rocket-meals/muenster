@@ -3,9 +3,9 @@ import { ImageSourcePropType } from 'react-native';
 export interface QrCodeProps {
   value: string;
   size?: number;
-  logoSource?: ImageSourcePropType;
-  logoUrl?: string;
-  logoSize?: number;
-  logoBackgroundColor?: string;
-  logoMargin?: number;
+  image?: ImageSourcePropType;
+  imageUrl?: string;
+  imagePercentage?: number;
+  backgroundColor?: string;
+  margin?: number;
 }

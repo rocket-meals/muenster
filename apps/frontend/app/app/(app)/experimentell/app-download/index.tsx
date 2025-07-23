@@ -87,9 +87,9 @@ const AppDownload = () => {
               <QrCode
                 value={appSettings.app_stores_url_to_apple}
                 size={qrSize}
-                logoSource={appleLogo}
-                logoBackgroundColor='white'
-                logoMargin={2}
+                image={appleLogo}
+                backgroundColor='white'
+                margin={2}
               />
               <RedirectButton
                 label='iOS'
@@ -108,10 +108,10 @@ const AppDownload = () => {
               <QrCode
                 value={appSettings.app_stores_url_to_google}
                 size={qrSize}
-                logoSource={googleLogo}
-                logoBackgroundColor='white'
-                logoMargin={2}
-                />
+                image={googleLogo}
+                backgroundColor='white'
+                margin={2}
+              />
               <RedirectButton
                 label='Android'
                 onClick={() =>
