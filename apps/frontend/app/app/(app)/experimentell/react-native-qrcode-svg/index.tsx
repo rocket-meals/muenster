@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View, Image } from 'react-native';
+import React from 'react';
+import { ScrollView, Text, View } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { TranslationKeys } from '@/locales/keys';
 import { useLanguage } from '@/hooks/useLanguage';
+import QRCode from 'react-native-qrcode-svg';
 import styles from './styles';
-import QRCodeGenerator from 'qrcode-generator';
 
-const QrcodeGeneratorScreen = () => {
-  useSetPageTitle(TranslationKeys.qrcode_generator);
+const ReactNativeQrCodeSvgScreen = () => {
+  useSetPageTitle(TranslationKeys.react_native_qrcode_svg);
   const { theme } = useTheme();
   const { translate } = useLanguage();
-  const [uri, setUri] = useState('');
-
-  useEffect(() => {
-    const qr = QRCodeGenerator(0, 'H');
-    qr.addData('https://example.com');
-    qr.make();
-    setUri(qr.createDataURL(8, 4));
-  }, []);
 
   return (
     <ScrollView
@@ -30,12 +22,12 @@ const QrcodeGeneratorScreen = () => {
     >
       <View style={{ ...styles.content }}>
         <Text style={{ ...styles.heading, color: theme.screen.text }}>
-          {translate(TranslationKeys.qrcode_generator)}
+          {translate(TranslationKeys.react_native_qrcode_svg)}
         </Text>
-        {uri ? <Image source={{ uri }} style={styles.qr} /> : null}
+        <QRCode value="https://example.com" size={200} />
       </View>
     </ScrollView>
   );
 };
 
-export default QrcodeGeneratorScreen;
+export default ReactNativeQrCodeSvgScreen;

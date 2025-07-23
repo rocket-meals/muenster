@@ -16,9 +16,4 @@ export default StyleSheet.create({
     fontFamily: 'Poppins_700Bold',
     marginVertical: 10,
   },
-  qr: {
-    width: 200,
-    height: 200,
-    marginTop: 20,
-  },
 });

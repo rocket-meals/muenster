@@ -2473,16 +2473,6 @@
     "tr": "App Download",
     "zh": "App Download"
   },
-  "qrcode_generator": {
-    "de": "QR Code Generator",
-    "en": "QR Code Generator",
-    "ar": "QR Code Generator",
-    "es": "QR Code Generator",
-    "fr": "QR Code Generator",
-    "ru": "QR Code Generator",
-    "tr": "QR Code Generator",
-    "zh": "QR Code Generator"
-  },
   "react_qr_code": {
     "de": "React QR Code",
     "en": "React QR Code",
@@ -2492,6 +2482,16 @@
     "ru": "React QR Code",
     "tr": "React QR Code",
     "zh": "React QR Code"
+  },
+  "react_native_qrcode_svg": {
+    "de": "React Native QRCode SVG",
+    "en": "React Native QRCode SVG",
+    "ar": "React Native QRCode SVG",
+    "es": "React Native QRCode SVG",
+    "fr": "React Native QRCode SVG",
+    "ru": "React Native QRCode SVG",
+    "tr": "React Native QRCode SVG",
+    "zh": "React Native QRCode SVG"
   },
   "vertical_image_scroll": {
     "de": "Vertikaler Bildlauf",
