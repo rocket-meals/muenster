@@ -16,7 +16,7 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import styles from './styles';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import RedirectButton from '@/components/RedirectButton';
-import QRCode from 'qrcode';
+import QrCode from '@/components/QrCode';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 
 const AppDownload = () => {
@@ -24,22 +24,7 @@ const AppDownload = () => {
   const { theme } = useTheme();
   const { serverInfo, appSettings } = useSelector((state: RootState) => state.settings);
   const [projectName, setProjectName] = useState('');
-  const [iosQrUri, setIosQrUri] = useState<string>('');
-  const [androidQrUri, setAndroidQrUri] = useState<string>('');
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-  const [debugLogs, setDebugLogs] = useState<string[]>([]);
-
-
-  const log = (msg: string) => setDebugLogs((logs) => [...logs, msg]);
-
-  const qrOptions = {
-    errorCorrectionLevel: 'H',
-    margin: 1,
-    color: {
-      dark: '#010599FF',
-      light: '#FFBF60FF',
-    },
-  };
 
   useEffect(() => {
     const sub = Dimensions.addEventListener('change', ({ window }) => {
@@ -54,40 +39,6 @@ const AppDownload = () => {
     }
   }, [serverInfo]);
 
-  useEffect(() => {
-    if (appSettings?.app_stores_url_to_apple) {
-      log(`Generate iOS QR for ${appSettings.app_stores_url_to_apple}`);
-      QRCode.toDataURL(
-        appSettings.app_stores_url_to_apple,
-        { errorCorrectionLevel: 'H', margin: 1, color: qrOptions.color },
-        (err, url) => {
-          if (err) {
-            console.error(err);
-            log(`iOS QR error: ${err}`);
-            return;
-          }
-          setIosQrUri(url);
-          log('iOS QR created');
-        }
-      );
-    }
-    if (appSettings?.app_stores_url_to_google) {
-      log(`Generate Android QR for ${appSettings.app_stores_url_to_google}`);
-      QRCode.toDataURL(
-        appSettings.app_stores_url_to_google,
-        { errorCorrectionLevel: 'H', margin: 1, color: qrOptions.color },
-        (err, url) => {
-          if (err) {
-            console.error(err);
-            log(`Android QR error: ${err}`);
-            return;
-          }
-          setAndroidQrUri(url);
-          log('Android QR created');
-        }
-      );
-    }
-  }, [appSettings]);
 
   const openInBrowser = async (url: string) => {
     try {
@@ -131,17 +82,11 @@ const AppDownload = () => {
               <Text selectable style={styles.urlText}>
                 {appSettings.app_stores_url_to_apple}
               </Text>
-              <View style={styles.qrDebugWrapper}>
-                {iosQrUri ? (
-                  <Image
-                    source={{ uri: iosQrUri }}
-                    style={{ width: qrSize, height: qrSize }}
-                  />
-                ) : null}
-              </View>
-              {iosQrUri ? (
-                <Text selectable style={styles.uriText}>{iosQrUri}</Text>
-              ) : null}
+              <QrCode
+                value={appSettings.app_stores_url_to_apple}
+                size={qrSize}
+                logoUrl="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+              />
               <RedirectButton
                 label='iOS'
                 onClick={() =>
@@ -156,17 +101,11 @@ const AppDownload = () => {
               <Text selectable style={styles.urlText}>
                 {appSettings.app_stores_url_to_google}
               </Text>
-              <View style={styles.qrDebugWrapper}>
-                {androidQrUri ? (
-                  <Image
-                    source={{ uri: androidQrUri }}
-                    style={{ width: qrSize, height: qrSize }}
-                  />
-                ) : null}
-              </View>
-              {androidQrUri ? (
-                <Text selectable style={styles.uriText}>{androidQrUri}</Text>
-              ) : null}
+              <QrCode
+                value={appSettings.app_stores_url_to_google}
+                size={qrSize}
+                logoUrl="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"
+              />
               <RedirectButton
                 label='Android'
                 onClick={() =>
@@ -177,17 +116,6 @@ const AppDownload = () => {
             </View>
           ) : null}
         </View>
-        {debugLogs.length > 0 && (
-          <View style={styles.debugLogContainer}>
-            <ScrollView>
-              {debugLogs.map((l, i) => (
-                <Text key={i} style={styles.debugLogText}>
-                  {l}
-                </Text>
-              ))}
-            </ScrollView>
-          </View>
-        )}
       </View>
     </ScrollView>
   );

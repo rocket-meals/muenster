@@ -37,29 +37,9 @@ export default StyleSheet.create({
     width: 150,
     height: 150,
   },
-  qrDebugWrapper: {
-    backgroundColor: 'rgba(255, 0, 0, 0.2)',
-    padding: 5,
-  },
-  uriText: {
-    fontSize: 10,
-    color: 'gray',
-  },
   urlText: {
     fontSize: 12,
     color: 'gray',
     textAlign: 'center',
-  },
-  debugLogContainer: {
-    maxHeight: 100,
-    marginTop: 20,
-    width: '100%',
-    borderWidth: 1,
-    borderColor: 'lightgray',
-    padding: 5,
-  },
-  debugLogText: {
-    fontSize: 10,
-    color: 'gray',
   },
 });
