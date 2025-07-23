@@ -88,6 +88,8 @@ const AppDownload = () => {
                 value={appSettings.app_stores_url_to_apple}
                 size={qrSize}
                 logoSource={appleLogo}
+                logoBackgroundColor='white'
+                logoMargin={2}
               />
               <RedirectButton
                 label='iOS'
@@ -107,6 +109,8 @@ const AppDownload = () => {
                 value={appSettings.app_stores_url_to_google}
                 size={qrSize}
                 logoSource={googleLogo}
+                logoBackgroundColor='white'
+                logoMargin={2}
                 />
               <RedirectButton
                 label='Android'
