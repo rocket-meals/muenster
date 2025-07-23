@@ -92,6 +92,9 @@ const AppDownload = () => {
         onPress={() => openInBrowser(url)}
         containerStyle={[styles.qrCol, { width: qrSize, backgroundColor: theme.card.background }]}
         imageContainerStyle={[styles.qrImageContainer, { height: qrSize }]}
+        contentStyle={{ paddingBottom: 0 }}
+        topRadius={0}
+        borderColor={primaryColor}
         imageChildren={
           <QrCode
             value={url}
