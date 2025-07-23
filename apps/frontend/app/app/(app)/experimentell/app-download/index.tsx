@@ -17,7 +17,6 @@ import styles from './styles';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import RedirectButton from '@/components/RedirectButton';
 import QRCode from 'qrcode';
-import { SvgXml } from 'react-native-svg';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 
 const AppDownload = () => {
@@ -25,8 +24,8 @@ const AppDownload = () => {
   const { theme } = useTheme();
   const { serverInfo, appSettings } = useSelector((state: RootState) => state.settings);
   const [projectName, setProjectName] = useState('');
-  const [iosQr, setIosQr] = useState<string>('');
-  const [androidQr, setAndroidQr] = useState<string>('');
+  const [iosQrUri, setIosQrUri] = useState<string>('');
+  const [androidQrUri, setAndroidQrUri] = useState<string>('');
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
   const [debugLogs, setDebugLogs] = useState<string[]>([]);
 
@@ -58,32 +57,32 @@ const AppDownload = () => {
   useEffect(() => {
     if (appSettings?.app_stores_url_to_apple) {
       log(`Generate iOS QR for ${appSettings.app_stores_url_to_apple}`);
-      QRCode.toString(
+      QRCode.toDataURL(
         appSettings.app_stores_url_to_apple,
-        { type: 'svg', errorCorrectionLevel: 'H', margin: 1, color: qrOptions.color },
-        (err, svg) => {
+        { errorCorrectionLevel: 'H', margin: 1, color: qrOptions.color },
+        (err, url) => {
           if (err) {
             console.error(err);
             log(`iOS QR error: ${err}`);
             return;
           }
-          setIosQr(svg);
+          setIosQrUri(url);
           log('iOS QR created');
         }
       );
     }
     if (appSettings?.app_stores_url_to_google) {
       log(`Generate Android QR for ${appSettings.app_stores_url_to_google}`);
-      QRCode.toString(
+      QRCode.toDataURL(
         appSettings.app_stores_url_to_google,
-        { type: 'svg', errorCorrectionLevel: 'H', margin: 1, color: qrOptions.color },
-        (err, svg) => {
+        { errorCorrectionLevel: 'H', margin: 1, color: qrOptions.color },
+        (err, url) => {
           if (err) {
             console.error(err);
             log(`Android QR error: ${err}`);
             return;
           }
-          setAndroidQr(svg);
+          setAndroidQrUri(url);
           log('Android QR created');
         }
       );
@@ -133,19 +132,15 @@ const AppDownload = () => {
                 {appSettings.app_stores_url_to_apple}
               </Text>
               <View style={styles.qrDebugWrapper}>
-                {iosQr ? (
-                  Platform.OS === 'web' ? (
-                    <div
-                      style={{ width: qrSize, height: qrSize }}
-                      dangerouslySetInnerHTML={{ __html: iosQr }}
-                    />
-                  ) : (
-                    <SvgXml xml={iosQr} width={qrSize} height={qrSize} />
-                  )
+                {iosQrUri ? (
+                  <Image
+                    source={{ uri: iosQrUri }}
+                    style={{ width: qrSize, height: qrSize }}
+                  />
                 ) : null}
               </View>
-              {iosQr ? (
-                <Text selectable style={styles.uriText}>{iosQr}</Text>
+              {iosQrUri ? (
+                <Text selectable style={styles.uriText}>{iosQrUri}</Text>
               ) : null}
               <RedirectButton
                 label='iOS'
@@ -162,19 +157,15 @@ const AppDownload = () => {
                 {appSettings.app_stores_url_to_google}
               </Text>
               <View style={styles.qrDebugWrapper}>
-                {androidQr ? (
-                  Platform.OS === 'web' ? (
-                    <div
-                      style={{ width: qrSize, height: qrSize }}
-                      dangerouslySetInnerHTML={{ __html: androidQr }}
-                    />
-                  ) : (
-                    <SvgXml xml={androidQr} width={qrSize} height={qrSize} />
-                  )
+                {androidQrUri ? (
+                  <Image
+                    source={{ uri: androidQrUri }}
+                    style={{ width: qrSize, height: qrSize }}
+                  />
                 ) : null}
               </View>
-              {androidQr ? (
-                <Text selectable style={styles.uriText}>{androidQr}</Text>
+              {androidQrUri ? (
+                <Text selectable style={styles.uriText}>{androidQrUri}</Text>
               ) : null}
               <RedirectButton
                 label='Android'

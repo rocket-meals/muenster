@@ -246,6 +246,8 @@ export enum TranslationKeys {
   debug_logout = 'debug_logout',
   rate_app = 'rate_app',
   app_download = 'app_download',
+  qrcode_generator = 'qrcode_generator',
+  react_qr_code = 'react_qr_code',
   vertical_image_scroll = 'vertical_image_scroll',
   foodoffers_scroll = 'foodoffers_scroll',
   chats = 'chats',

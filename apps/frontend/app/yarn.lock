@@ -12228,6 +12228,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qr.js@npm:0.0.0":
+  version: 0.0.0
+  resolution: "qr.js@npm:0.0.0"
+  checksum: 10c0/1c6a4c7a58d04e52ec2fee99e39b680fdc5b2a510a981df42c36b716a8eac6634d130fc4d65af8f030f2a07dbf5fa046b97cdfa7456c250ebb50a73916efdcb5
+  languageName: node
+  linkType: hard
+
+"qrcode-generator@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "qrcode-generator@npm:2.0.2"
+  checksum: 10c0/1d3ea827ca3d035258695a956d9b6fef8f02fadc359e9ed068f0b038fbf192bf5631e7937e876296f412236316aa0e424f0795efcb8f6321627c55c5a3ce6ea8
+  languageName: node
+  linkType: hard
+
 "qrcode-terminal@npm:0.11.0":
   version: 0.11.0
   resolution: "qrcode-terminal@npm:0.11.0"
@@ -12560,7 +12574,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-
 "react-native-reanimated@npm:~3.16.1":
   version: 3.16.7
   resolution: "react-native-reanimated@npm:3.16.7"
@@ -12785,6 +12798,18 @@ __metadata:
   bin:
     react-native: cli.js
   checksum: 10c0/dfcef981bc6b02497ed0f300faadd06c7b78dbb90de5d082c2760ab055962af68df0b6222fbecd903eea3b711a0af8c22c9612731acdc90d9980f5c586093a32
+  languageName: node
+  linkType: hard
+
+"react-qr-code@npm:^2.0.18":
+  version: 2.0.18
+  resolution: "react-qr-code@npm:2.0.18"
+  dependencies:
+    prop-types: "npm:^15.8.1"
+    qr.js: "npm:0.0.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/4e13b795cbb10f1dcf0e39d682bb59851e4c84010ba2be7225b2ad9d5c1ffea52d2d38f884ee26235b7002b8ca99e83b805f55e877663c39d67496764d975cf1
   languageName: node
   linkType: hard
 
@@ -13415,6 +13440,7 @@ __metadata:
     lottie-react-native: "npm:7.1.0"
     markdown-it: "npm:^14.1.0"
     qrcode: "npm:^1.5.4"
+    qrcode-generator: "npm:^2.0.2"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     react-i18next: "npm:^15.1.2"
@@ -13436,6 +13462,7 @@ __metadata:
     react-native-svg-transformer: "npm:^1.5.0"
     react-native-web: "npm:~0.19.13"
     react-native-webview: "npm:13.12.5"
+    react-qr-code: "npm:^2.0.18"
     react-redux: "npm:^9.1.2"
     react-signature-canvas: "npm:^1.1.0-alpha.1"
     react-test-renderer: "npm:18.3.1"
@@ -14484,7 +14511,6 @@ __metadata:
   checksum: 10c0/019d33d81adff3f9f1bfcff18125fb2d3c65564f437d9be539270ee74b994986abb8260c7c2ce90e8f30162178b09dbbce33c6389273afac4f36069c48521f57
   languageName: node
   linkType: hard
-
 
 "thenify-all@npm:^1.0.0":
   version: 1.6.0
