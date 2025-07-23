@@ -5,4 +5,7 @@ export interface QrCodeProps {
   size?: number;
   logoSource?: ImageSourcePropType;
   logoUrl?: string;
+  logoSize?: number;
+  logoBackgroundColor?: string;
+  logoMargin?: number;
 }
