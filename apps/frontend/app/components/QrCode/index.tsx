@@ -8,7 +8,7 @@ const QrCode: React.FC<QrCodeProps> = ({
   size = 200,
   image,
   imageUrl,
-  imagePercentage = 20,
+  imagePercentage = 21,
   backgroundColor = 'white',
   margin = 0,
 }) => {
@@ -19,7 +19,14 @@ const QrCode: React.FC<QrCodeProps> = ({
   const containerSize = innerSize + marginSize * 2;
 
   return (
-    <View style={{ width: size, height: size }}>
+    <View
+      style={{
+        width: size,
+        height: size,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <QRCode value={value} size={size} />
       {imageSource && (
         <View
@@ -32,6 +39,7 @@ const QrCode: React.FC<QrCodeProps> = ({
             backgroundColor,
             alignItems: 'center',
             justifyContent: 'center',
+            borderRadius: 2,
           }}
         >
           <Image

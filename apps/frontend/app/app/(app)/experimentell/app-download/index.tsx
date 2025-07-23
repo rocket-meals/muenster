@@ -15,7 +15,9 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import styles from './styles';
 import { getImageUrl } from '@/constants/HelperFunctions';
-import RedirectButton from '@/components/RedirectButton';
+import ProjectButton from '@/components/ProjectButton';
+import { FontAwesome6 } from '@expo/vector-icons';
+import { myContrastColor } from '@/helper/colorHelper';
 import QrCode from '@/components/QrCode';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 import appleLogo from "@/assets/icons/apple-store.png"
@@ -24,7 +26,9 @@ import googleLogo from "@/assets/icons/google-play.png"
 const AppDownload = () => {
   useSetPageTitle(TranslationKeys.app_download);
   const { theme } = useTheme();
-  const { serverInfo, appSettings } = useSelector((state: RootState) => state.settings);
+  const { serverInfo, appSettings, primaryColor, selectedTheme } = useSelector(
+    (state: RootState) => state.settings
+  );
   const [projectName, setProjectName] = useState('');
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
@@ -65,6 +69,8 @@ const AppDownload = () => {
     ? { uri: projectLogo }
     : require('../../../../assets/images/icon.png');
 
+  const contrastColor = myContrastColor(primaryColor, theme, selectedTheme === 'dark');
+
   const qrSize = CardDimensionHelper.getCardDimension(screenWidth);
 
   return (
@@ -80,43 +86,55 @@ const AppDownload = () => {
         <Text style={{ ...styles.heading, color: theme.screen.text }}>{projectName}</Text>
         <View style={styles.qrRow}>
           {appSettings?.app_stores_url_to_apple ? (
-            <View style={styles.qrCol}>
-              <Text selectable style={styles.urlText}>
-                {appSettings.app_stores_url_to_apple}
-              </Text>
-              <QrCode
-                value={appSettings.app_stores_url_to_apple}
-                size={qrSize}
-                image={appleLogo}
-                backgroundColor='white'
-                margin={2}
-              />
-              <RedirectButton
-                label='iOS'
-                onClick={() =>
+            <View style={[styles.qrCol, { width: qrSize, backgroundColor: theme.card.background }]}> 
+              <View style={[styles.qrImageContainer, { height: qrSize }]}> 
+                <QrCode
+                  value={appSettings.app_stores_url_to_apple}
+                  size={qrSize}
+                  image={appleLogo}
+                  backgroundColor='white'
+                  margin={2}
+                />
+              </View>
+              <ProjectButton
+                text='iOS'
+                onPress={() =>
                   appSettings?.app_stores_url_to_apple &&
                   openInBrowser(appSettings.app_stores_url_to_apple)
+                }
+                iconRight={
+                  <FontAwesome6
+                    name='arrow-up-right-from-square'
+                    size={20}
+                    color={contrastColor}
+                  />
                 }
               />
             </View>
           ) : null}
           {appSettings?.app_stores_url_to_google ? (
-            <View style={styles.qrCol}>
-              <Text selectable style={styles.urlText}>
-                {appSettings.app_stores_url_to_google}
-              </Text>
-              <QrCode
-                value={appSettings.app_stores_url_to_google}
-                size={qrSize}
-                image={googleLogo}
-                backgroundColor='white'
-                margin={2}
-              />
-              <RedirectButton
-                label='Android'
-                onClick={() =>
+            <View style={[styles.qrCol, { width: qrSize, backgroundColor: theme.card.background }]}> 
+              <View style={[styles.qrImageContainer, { height: qrSize }]}> 
+                <QrCode
+                  value={appSettings.app_stores_url_to_google}
+                  size={qrSize}
+                  image={googleLogo}
+                  backgroundColor='white'
+                  margin={2}
+                />
+              </View>
+              <ProjectButton
+                text='Android'
+                onPress={() =>
                   appSettings?.app_stores_url_to_google &&
                   openInBrowser(appSettings.app_stores_url_to_google)
+                }
+                iconRight={
+                  <FontAwesome6
+                    name='arrow-up-right-from-square'
+                    size={20}
+                    color={contrastColor}
+                  />
                 }
               />
             </View>

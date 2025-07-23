@@ -32,6 +32,14 @@ export default StyleSheet.create({
   qrCol: {
     alignItems: 'center',
     gap: 10,
+    overflow: 'hidden',
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
+  },
+  qrImageContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   qr: {
     width: 150,
