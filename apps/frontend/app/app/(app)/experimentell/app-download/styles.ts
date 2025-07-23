@@ -26,7 +26,9 @@ export default StyleSheet.create({
   qrRow: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 10,
     marginTop: 20,
   },
   qrCol: {

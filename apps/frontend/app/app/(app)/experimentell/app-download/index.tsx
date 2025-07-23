@@ -102,6 +102,7 @@ const AppDownload = () => {
                   appSettings?.app_stores_url_to_apple &&
                   openInBrowser(appSettings.app_stores_url_to_apple)
                 }
+                style={{ width: '100%', marginVertical: 10 }}
                 iconRight={
                   <FontAwesome6
                     name='arrow-up-right-from-square'
@@ -129,6 +130,7 @@ const AppDownload = () => {
                   appSettings?.app_stores_url_to_google &&
                   openInBrowser(appSettings.app_stores_url_to_google)
                 }
+                style={{ width: '100%', marginVertical: 10 }}
                 iconRight={
                   <FontAwesome6
                     name='arrow-up-right-from-square'
