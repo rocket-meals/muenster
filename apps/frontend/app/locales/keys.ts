@@ -247,7 +247,6 @@ export enum TranslationKeys {
   rate_app = 'rate_app',
   app_download = 'app_download',
   vertical_image_scroll = 'vertical_image_scroll',
-  vertical_scroll_top_food = 'vertical_scroll_top_food',
   foodoffers_scroll = 'foodoffers_scroll',
   chats = 'chats',
   chat = 'chat',

@@ -727,18 +727,6 @@ export default function Layout() {
           }}
         />
 
-        <Drawer.Screen
-          name='vertical-scroll-top-food/index'
-          options={{
-            header: () => (
-              <CustomStackHeader
-                label={translate(TranslationKeys.vertical_scroll_top_food)}
-                key={'vertical_scroll_top_food'}
-              />
-            ),
-            title: translate(TranslationKeys.vertical_scroll_top_food),
-          }}
-        />
 
         <Drawer.Screen
           name='foodoffers-scroll/index'
