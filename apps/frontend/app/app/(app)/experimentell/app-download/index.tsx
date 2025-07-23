@@ -18,8 +18,8 @@ import { getImageUrl } from '@/constants/HelperFunctions';
 import RedirectButton from '@/components/RedirectButton';
 import QrCode from '@/components/QrCode';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
-import appleLogo fron "@/assets/icons/IMG_5577.png"
-import googleLogo fron "@/assets/icons/IMG_5578.png"
+import appleLogo from "@/assets/icons/IMG_5577.png"
+import googleLogo from "@/assets/icons/IMG_5578.png"
 
 const AppDownload = () => {
   useSetPageTitle(TranslationKeys.app_download);
