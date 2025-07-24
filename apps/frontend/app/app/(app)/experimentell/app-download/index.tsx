@@ -6,6 +6,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { getImageUrl } from '@/constants/HelperFunctions';
+import DownloadItem from '@/components/DownloadItem';
 import styles from './styles';
 
 const AppDownload = () => {
@@ -36,6 +37,18 @@ const AppDownload = () => {
     >
       <View style={styles.content}>
         <Image source={iconSource} style={styles.icon} />
+        <View style={styles.downloadRow}>
+          <DownloadItem
+            label='iOS'
+            imageSource={require('../../../../assets/icons/apple-store.png')}
+            containerStyle={styles.downloadItem}
+          />
+          <DownloadItem
+            label='Android'
+            imageSource={require('../../../../assets/icons/google-play.png')}
+            containerStyle={styles.downloadItem}
+          />
+        </View>
       </View>
     </ScrollView>
   );

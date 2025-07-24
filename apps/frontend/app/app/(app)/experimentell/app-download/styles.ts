@@ -17,4 +17,14 @@ export default StyleSheet.create({
     resizeMode: 'contain',
     marginBottom: 10,
   },
+  downloadRow: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 10,
+    marginTop: 20,
+  },
+  downloadItem: {
+    flex: 1,
+  },
 });
