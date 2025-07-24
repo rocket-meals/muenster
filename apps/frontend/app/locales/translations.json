@@ -2863,6 +2863,16 @@
     "tr": "Yerleşke",
     "zh": "校园"
   },
+  "no_campus_found": {
+    "de": "Kein Campus gefunden.",
+    "en": "No campus found.",
+    "ar": "لم يتم العثور على حرم جامعي.",
+    "es": "No se encontró campus.",
+    "fr": "Aucun campus trouvé.",
+    "ru": "Кампус не найден.",
+    "tr": "Yerleşke bulunamadı.",
+    "zh": "未找到校园。"
+  },
   "housing": {
     "de": "Wohnen",
     "en": "Housing",

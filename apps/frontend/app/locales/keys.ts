@@ -53,6 +53,7 @@ export enum TranslationKeys {
   no_value = 'no_value',
   no_data_found = 'no_data_found',
   no_canteens_found = 'no_canteens_found',
+  no_campus_found = 'no_campus_found',
   accountbalanceLastTransaction = 'accountbalanceLastTransaction',
   accountbalanceDateUpdated = 'accountbalanceDateUpdated',
   sort = 'sort',
