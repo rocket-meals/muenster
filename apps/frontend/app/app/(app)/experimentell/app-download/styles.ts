@@ -21,8 +21,6 @@ export default StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 10,
     marginTop: 20,
   },
   downloadItem: {

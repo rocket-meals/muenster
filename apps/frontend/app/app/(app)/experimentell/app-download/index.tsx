@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView, View, Linking } from 'react-native';
+import { Image, ScrollView, View, Linking, useWindowDimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import { useTheme } from '@/hooks/useTheme';
@@ -12,6 +12,7 @@ import styles from './styles';
 const AppDownload = () => {
   useSetPageTitle(TranslationKeys.app_download);
   const { theme } = useTheme();
+  const { width: screenWidth } = useWindowDimensions();
   const { serverInfo, appSettings } = useSelector(
     (state: RootState) => state.settings
   );
@@ -40,7 +41,13 @@ const AppDownload = () => {
     >
       <View style={styles.content}>
         <Image source={iconSource} style={styles.icon} />
-        <View style={styles.downloadRow}>
+        <View
+          style={{
+            ...styles.downloadRow,
+            gap: screenWidth > 550 ? 10 : 10,
+            justifyContent: 'center',
+          }}
+        >
           <DownloadItem
             label='iOS'
             imageSource={require('../../../../assets/icons/apple-store.png')}
