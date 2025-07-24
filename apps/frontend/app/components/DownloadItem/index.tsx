@@ -20,18 +20,18 @@ const DownloadItem: React.FC<DownloadItemProps> = ({
   return (
     <CardWithText
       onPress={onPress}
-      imageSource={imageSource}
       containerStyle={[
         styles.card,
         { backgroundColor: theme.card.background },
         containerStyle,
       ]}
       imageContainerStyle={styles.imageContainer}
+      topRadius={0}
       borderColor={primaryColor}
       imageChildren={
         qrValue ? (
-          <View style={styles.qrOverlay} pointerEvents='none'>
-            <QrCode value={qrValue} size={110} />
+          <View style={styles.qrContainer} pointerEvents='none'>
+            <QrCode value={qrValue} size={110} image={imageSource} />
           </View>
         ) : undefined
       }

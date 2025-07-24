@@ -13,12 +13,10 @@ export default StyleSheet.create({
     fontFamily: 'Poppins_400Regular',
     fontSize: 16,
   },
-  qrOverlay: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
+  qrContainer: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: 10,
   },
 });
