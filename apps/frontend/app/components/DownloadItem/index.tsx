@@ -25,7 +25,7 @@ const DownloadItem: React.FC<DownloadItemProps> = ({
       onPress={onPress}
       containerStyle={[
         styles.card,
-        { backgroundColor: theme.card.background },
+        { backgroundColor: theme.card.background, width: size },
         containerStyle,
       ]}
       imageContainerStyle={[styles.imageContainer, { height: size }]}

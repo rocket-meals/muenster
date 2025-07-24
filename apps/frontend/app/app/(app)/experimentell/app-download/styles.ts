@@ -20,11 +20,12 @@ export default StyleSheet.create({
   downloadRow: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     gap: 10,
     marginTop: 20,
   },
   downloadItem: {
-    flex: 1,
+    
   },
 });
