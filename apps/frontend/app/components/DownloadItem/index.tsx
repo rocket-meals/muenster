@@ -17,9 +17,15 @@ const DownloadItem: React.FC<DownloadItemProps> = ({
   qrValue,
 }) => {
   const { theme } = useTheme();
-  const { primaryColor } = useSelector((state: RootState) => state.settings);
+  const { primaryColor, amountColumnsForcard } = useSelector(
+    (state: RootState) => state.settings
+  );
   const { width: screenWidth } = useWindowDimensions();
-  const size = CardDimensionHelper.getCardWidth(screenWidth, 2);
+  const size =
+    (amountColumnsForcard === 0
+      ? CardDimensionHelper.getCardDimension(screenWidth)
+      : CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard)) -
+    5;
   return (
     <CardWithText
       onPress={onPress}
