@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, useWindowDimensions } from 'react-native';
 import CardWithText from '../CardWithText/CardWithText';
 import { DownloadItemProps } from './types';
 import styles from './styles';
@@ -7,6 +7,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import QrCode from '@/components/QrCode';
+import CardDimensionHelper from '@/helper/CardDimensionHelper';
 
 const DownloadItem: React.FC<DownloadItemProps> = ({
   label,
@@ -17,6 +18,8 @@ const DownloadItem: React.FC<DownloadItemProps> = ({
 }) => {
   const { theme } = useTheme();
   const { primaryColor } = useSelector((state: RootState) => state.settings);
+  const { width: screenWidth } = useWindowDimensions();
+  const size = CardDimensionHelper.getCardWidth(screenWidth, 2);
   return (
     <CardWithText
       onPress={onPress}
@@ -25,13 +28,13 @@ const DownloadItem: React.FC<DownloadItemProps> = ({
         { backgroundColor: theme.card.background },
         containerStyle,
       ]}
-      imageContainerStyle={styles.imageContainer}
+      imageContainerStyle={[styles.imageContainer, { height: size }]}
       topRadius={0}
       borderColor={primaryColor}
       imageChildren={
         qrValue ? (
           <View style={styles.qrContainer} pointerEvents='none'>
-            <QrCode value={qrValue} size={120} image={imageSource} />
+            <QrCode value={qrValue} size={size} image={imageSource} />
           </View>
         ) : undefined
       }

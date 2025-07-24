@@ -5,7 +5,6 @@ export default StyleSheet.create({
     flex: 1,
   },
   imageContainer: {
-    height: 120,
   },
   label: {
     paddingVertical: 10,
