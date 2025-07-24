@@ -12,6 +12,15 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: 'center',
   },
+  itemsContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginTop: 20,
+  },
   icon: {
     width: 120,
     height: 120,
@@ -19,3 +28,4 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
 });
+

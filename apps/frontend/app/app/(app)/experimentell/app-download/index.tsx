@@ -6,12 +6,18 @@ import { useTheme } from '@/hooks/useTheme';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { getImageUrl } from '@/constants/HelperFunctions';
+import { CommonSystemActionHelper } from '@/helper/SystemActionHelper';
+import DownloadItem from '@/components/DownloadItem';
+import appleStoreIcon from '@/assets/icons/apple-store.png';
+import googlePlayIcon from '@/assets/icons/google-play.png';
 import styles from './styles';
 
 const AppDownload = () => {
   useSetPageTitle(TranslationKeys.app_download);
   const { theme } = useTheme();
-  const { serverInfo } = useSelector((state: RootState) => state.settings);
+  const { serverInfo, appSettings } = useSelector(
+    (state: RootState) => state.settings
+  );
 
 
 
@@ -22,6 +28,24 @@ const AppDownload = () => {
   const iconSource = projectLogo
     ? { uri: projectLogo }
     : require('../../../../assets/images/icon.png');
+
+  const handleOpenAppleStore = () => {
+    if (appSettings?.app_stores_url_to_apple) {
+      CommonSystemActionHelper.openExternalURL(
+        appSettings.app_stores_url_to_apple,
+        true
+      );
+    }
+  };
+
+  const handleOpenGooglePlay = () => {
+    if (appSettings?.app_stores_url_to_google) {
+      CommonSystemActionHelper.openExternalURL(
+        appSettings.app_stores_url_to_google,
+        true
+      );
+    }
+  };
 
 
 
@@ -35,9 +59,22 @@ const AppDownload = () => {
     >
       <View style={styles.content}>
         <Image source={iconSource} style={styles.icon} />
+        <View style={styles.itemsContainer}>
+          <DownloadItem
+            label='iOS'
+            imageSource={appleStoreIcon}
+            onPress={handleOpenAppleStore}
+          />
+          <DownloadItem
+            label='Android'
+            imageSource={googlePlayIcon}
+            onPress={handleOpenGooglePlay}
+          />
+        </View>
       </View>
     </ScrollView>
   );
 };
 
 export default AppDownload;
+
