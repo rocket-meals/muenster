@@ -14,6 +14,7 @@ import CardWithText from '@/components/CardWithText/CardWithText';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 import QrCode from '@/components/QrCode';
 import { getImageUrl } from '@/constants/HelperFunctions';
+import styles from './styles';
 
 const AppDownload = () => {
   useSetPageTitle(TranslationKeys.app_download);
@@ -47,6 +48,10 @@ const AppDownload = () => {
   const projectLogo =
     serverInfo?.info?.project?.project_logo &&
     getImageUrl(serverInfo.info.project.project_logo);
+
+  const iconSource = projectLogo
+    ? { uri: projectLogo }
+    : require('../../../../assets/images/icon.png');
 
   
   const cardSize = CardDimensionHelper.getCardWidth(screenWidth, 2);
