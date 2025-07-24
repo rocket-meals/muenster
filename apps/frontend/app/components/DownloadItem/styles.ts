@@ -10,7 +10,7 @@ export default StyleSheet.create({
   label: {
     paddingVertical: 10,
     textAlign: 'center',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'Poppins_400Regular',
     fontSize: 16,
   },
 });
