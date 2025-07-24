@@ -3,7 +3,6 @@ import {
   Image,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
   Platform,
   Linking,
@@ -16,7 +15,6 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import styles from './styles';
 import { getImageUrl } from '@/constants/HelperFunctions';
-import { FontAwesome6 } from '@expo/vector-icons';
 import { myContrastColor } from '@/helper/colorHelper';
 import QrCode from '@/components/QrCode';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
@@ -102,7 +100,7 @@ const AppDownload = () => {
           },
         ]}
         imageContainerStyle={[styles.qrImageContainer, { height: qrSize }]}
-        contentStyle={{ paddingBottom: 0 }}
+        contentStyle={{ paddingBottom: 5 }}
         topRadius={0}
         borderColor={color}
         imageChildren={
@@ -113,21 +111,11 @@ const AppDownload = () => {
             backgroundColor='white'
             margin={2}
           />
-        }
-        bottomContent={
-          <TouchableOpacity
-            style={[styles.qrButton, { backgroundColor: color }]}
-          >
-            <Text style={[styles.qrButtonText, { color: contrastColor }]}>{label}</Text>
-            <FontAwesome6
-              name='arrow-up-right-from-square'
-              size={20}
-              color={contrastColor}
-              style={{ marginLeft: 5 }}
-            />
-          </TouchableOpacity>
-        }
-      />
+        }>
+        <Text style={[styles.qrButtonText, { color: theme.screen.text }]}>
+          {label}
+        </Text>
+      </CardWithText>
     );
   };
 
