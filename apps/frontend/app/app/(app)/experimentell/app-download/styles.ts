@@ -18,7 +18,7 @@ export default StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
     flexWrap: 'nowrap',
-    gap: 5,
+    gap: 10,
     marginTop: 20,
   },
   icon: {
