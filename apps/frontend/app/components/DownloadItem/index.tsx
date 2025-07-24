@@ -29,6 +29,7 @@ const DownloadItem: React.FC<DownloadItemProps> = ({
         containerStyle,
       ]}
       imageContainerStyle={[styles.imageContainer, { height: size }]}
+      contentStyle={{ paddingHorizontal: 5 }}
       topRadius={0}
       borderColor={primaryColor}
       imageChildren={
