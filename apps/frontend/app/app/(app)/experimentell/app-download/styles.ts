@@ -17,8 +17,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
     justifyContent: 'center',
-    flexWrap: 'wrap',
-    gap: 10,
+    flexWrap: 'nowrap',
+    gap: 5,
     marginTop: 20,
   },
   icon: {
