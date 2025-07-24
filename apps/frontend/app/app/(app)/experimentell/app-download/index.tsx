@@ -99,8 +99,6 @@ const AppDownload = () => {
           {
             width: qrSize,
             backgroundColor: theme.card.background,
-            borderWidth: 2,
-            borderColor: color,
           },
         ]}
         imageContainerStyle={[styles.qrImageContainer, { height: qrSize }]}
