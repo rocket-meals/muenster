@@ -8,7 +8,8 @@ export default StyleSheet.create({
   content: {
     width: '100%',
     height: '100%',
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
     alignItems: 'center',
   },
   icon: {
