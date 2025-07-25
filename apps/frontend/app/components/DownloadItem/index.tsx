@@ -38,11 +38,16 @@ const DownloadItem: React.FC<DownloadItemProps> = ({
       topRadius={0}
       borderColor={primaryColor}
       imageChildren={
-        qrValue ? (
-          <View style={styles.qrContainer} pointerEvents='none'>
-            <QrCode value={qrValue} size={size} image={imageSource} />
-          </View>
-        ) : undefined
+          qrValue ? (
+            <View style={styles.qrContainer} pointerEvents='none'>
+              <QrCode
+                value={qrValue}
+                size={size}
+                image={imageSource}
+                innerSize={30}
+              />
+            </View>
+          ) : undefined
       }
       bottomContent={
         <Text style={[styles.label, { color: theme.screen.text }]}>{label}</Text>

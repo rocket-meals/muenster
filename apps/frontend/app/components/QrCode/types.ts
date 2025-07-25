@@ -1,5 +1,19 @@
 import { ImageSourcePropType } from 'react-native';
 
+/**
+ * Error correction levels supported by the QR code component.
+ */
+export enum QrCodeEcl {
+  /** Low error correction */
+  L = 'L',
+  /** Medium error correction */
+  M = 'M',
+  /** Quartile error correction */
+  Q = 'Q',
+  /** High error correction */
+  H = 'H',
+}
+
 export interface QrCodeProps {
   value: string;
   size?: number;
@@ -14,7 +28,7 @@ export interface QrCodeProps {
    * Error correction level for the QR code.
    * Defaults to a level calculated from `innerSize`.
    */
-  ecl?: 'L' | 'M' | 'Q' | 'H';
+  ecl?: QrCodeEcl;
   backgroundColor?: string;
   margin?: number;
 }

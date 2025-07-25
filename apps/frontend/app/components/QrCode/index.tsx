@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { QrCodeProps } from './types';
+import { QrCodeProps, QrCodeEcl } from './types';
 
 const QrCode: React.FC<QrCodeProps> = ({
   value,
@@ -21,10 +21,10 @@ const QrCode: React.FC<QrCodeProps> = ({
   const containerSize = innerSizePx + marginSize * 2;
 
   const calculatedEcl = (() => {
-    if (clampedInnerSize <= 7) return 'L';
-    if (clampedInnerSize <= 15) return 'M';
-    if (clampedInnerSize <= 25) return 'Q';
-    return 'H';
+    if (clampedInnerSize <= 7) return QrCodeEcl.L;
+    if (clampedInnerSize <= 15) return QrCodeEcl.M;
+    if (clampedInnerSize <= 25) return QrCodeEcl.Q;
+    return QrCodeEcl.H;
   })();
   const qrEcl = ecl ?? calculatedEcl;
 
