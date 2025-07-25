@@ -357,52 +357,58 @@ const Settings = () => {
                   setDisabled(false);
                 }
               }}
-              groupPosition='bottom'
+              groupPosition='middle'
             />
+            {user?.id ? (
+              <>
+                <SettingList
+                  iconBgColor={primaryColor}
+                  leftIcon={
+                    <Entypo name='login' size={24} color={theme.screen.icon} />
+                  }
+                  label={translate(TranslationKeys.logout)}
+                  rightIcon={
+                    <Entypo name='login' size={24} color={theme.screen.icon} />
+                  }
+                  handleFunction={handleLogout}
+                  groupPosition='middle'
+                />
+                <SettingList
+                  iconBgColor={primaryColor}
+                  leftIcon={
+                    <AntDesign
+                      name='deleteuser'
+                      size={24}
+                      color={theme.screen.icon}
+                    />
+                  }
+                  label={`${translate(TranslationKeys.account_delete)}`}
+                  rightIcon={
+                    <Octicons
+                      name='chevron-right'
+                      size={24}
+                      color={theme.screen.icon}
+                    />
+                  }
+                  handleFunction={handleDeleteAccount}
+                  groupPosition='bottom'
+                />
+              </>
+            ) : (
+              <SettingList
+                iconBgColor={primaryColor}
+                leftIcon={
+                  <Entypo name='login' size={24} color={theme.screen.icon} />
+                }
+                label={translate(TranslationKeys.sign_in)}
+                rightIcon={
+                  <Entypo name='login' size={24} color={theme.screen.icon} />
+                }
+                handleFunction={handleLogin}
+                groupPosition='bottom'
+              />
+            )}
           </View>
-          {user?.id ? (
-            <SettingList iconBgColor={primaryColor}
-              leftIcon={
-                <Entypo name='login' size={24} color={theme.screen.icon} />
-              }
-              label={translate(TranslationKeys.logout)}
-              rightIcon={
-                <Entypo name='login' size={24} color={theme.screen.icon} />
-              }
-              handleFunction={handleLogout}
-            />
-          ) : (
-            <SettingList iconBgColor={primaryColor}
-              leftIcon={
-                <Entypo name='login' size={24} color={theme.screen.icon} />
-              }
-              label={translate(TranslationKeys.sign_in)}
-              rightIcon={
-                <Entypo name='login' size={24} color={theme.screen.icon} />
-              }
-              handleFunction={handleLogin}
-            />
-          )}
-          {user?.id && (
-            <SettingList iconBgColor={primaryColor}
-              leftIcon={
-                <AntDesign
-                  name='deleteuser'
-                  size={24}
-                  color={theme.screen.icon}
-                />
-              }
-              label={`${translate(TranslationKeys.account_delete)}`}
-              rightIcon={
-                <Octicons
-                  name='chevron-right'
-                  size={24}
-                  color={theme.screen.icon}
-                />
-              }
-              handleFunction={handleDeleteAccount}
-            />
-          )}
           {/* Language */}
           <SettingList iconBgColor={primaryColor}
             leftIcon={
