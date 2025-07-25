@@ -22,25 +22,9 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     borderRadius: 12,
   },
-  termList: {
-    width: '100%',
-    borderRadius: 12,
-    paddingVertical: 10,
-  },
   col: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-  },
-  termRow: {
-    width: '90%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  termRow2: {
-    width: '100%',
-    alignItems: 'flex-end',
     gap: 10,
   },
   label: {

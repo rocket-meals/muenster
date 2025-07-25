@@ -316,68 +316,47 @@ const Settings = () => {
             width: windowWidth < 500 ? '100%' : isWeb ? '80%' : '100%',
           }}
         >
-          {/* Account */}
-
-          <View
-            style={{
-              ...styles.list,
-              backgroundColor: theme.screen.iconBg,
-              paddingHorizontal: isWeb ? 20 : 10,
-            }}
-          >
-            <View style={{ ...styles.col }}>
-              <MaterialCommunityIcons
-                name='clipboard-account'
-                size={24}
-                color={theme.screen.icon}
-              />
-              <Text style={{ ...styles.label, color: theme.screen.text }}>
-                {translate(TranslationKeys.account)}
-              </Text>
-            </View>
-            <View style={{ ...styles.col, maxWidth: '60%' }}>
-              <Text
-                style={{
-                  ...styles.value,
-                  color: theme.screen.text,
-                  fontSize: isWeb ? 16 : 14,
-                  textAlign: 'right',
-                }}
-              >
-                {user?.id
-                  ? user?.id
-                  : translate(TranslationKeys.without_account)}
-              </Text>
-            </View>
-          </View>
-          {/* NickName */}
-          <SettingList iconBgColor={primaryColor}
-            leftIcon={
-              <MaterialCommunityIcons
-                name='account'
-                size={24}
-                color={theme.screen.icon}
-              />
-            }
-            label={translate(TranslationKeys.nickname)}
-            value={profile?.id ? profile?.nickname : nickNameLocal}
-            rightIcon={
-              <MaterialCommunityIcons
-                name='pencil'
-                size={24}
-                color={theme.screen.icon}
-              />
-            }
-            handleFunction={() => {
-              openNicknameSheet();
-              setNickname(profile?.id ? profile?.nickname : nickNameLocal);
-              if (profile?.nickname === nickname) {
-                setDisabled(true);
-              } else {
-                setDisabled(false);
+          {/* Account & Nickname */}
+          <View style={{ gap: 0 }}>
+            <SettingList
+              iconBgColor={primaryColor}
+              leftIcon={<MaterialCommunityIcons name='clipboard-account' size={24} color={theme.screen.icon} />}
+              label={translate(TranslationKeys.account)}
+              value={user?.id ? user?.id : translate(TranslationKeys.without_account)}
+              handleFunction={() => {}}
+              groupPosition='top'
+            />
+            {/* NickName */}
+            <SettingList
+              iconBgColor={primaryColor}
+              leftIcon={
+                <MaterialCommunityIcons
+                  name='account'
+                  size={24}
+                  color={theme.screen.icon}
+                />
               }
-            }}
-          />
+              label={translate(TranslationKeys.nickname)}
+              value={profile?.id ? profile?.nickname : nickNameLocal}
+              rightIcon={
+                <MaterialCommunityIcons
+                  name='pencil'
+                  size={24}
+                  color={theme.screen.icon}
+                />
+              }
+              handleFunction={() => {
+                openNicknameSheet();
+                setNickname(profile?.id ? profile?.nickname : nickNameLocal);
+                if (profile?.nickname === nickname) {
+                  setDisabled(true);
+                } else {
+                  setDisabled(false);
+                }
+              }}
+              groupPosition='bottom'
+            />
+          </View>
           {/* Language */}
           <SettingList iconBgColor={primaryColor}
             leftIcon={
@@ -691,43 +670,21 @@ const Settings = () => {
             handleFunction={() => router.navigate('/licenseInformation')}
           />
           {/* Terms & Conditions */}
-          <View
-            style={{
-              ...styles.termList,
-              backgroundColor: theme.screen.iconBg,
-              paddingHorizontal: isWeb ? 20 : 10,
-            }}
-          >
-            <View style={styles.termRow}>
+          <SettingList
+            iconBgColor={primaryColor}
+            leftIcon={
               <MaterialCommunityIcons
-                name='clipboard-account'
+                name='file-document-check'
                 size={24}
                 color={theme.screen.icon}
               />
-              <Text
-                style={{
-                  ...styles.label,
-                  color: theme.screen.text,
-                  fontSize: isWeb ? 16 : 14,
-                }}
-              >
-                {translate(
-                  TranslationKeys.terms_and_conditions_accepted_and_privacy_policy_read_at_date
-                )}
-              </Text>
-            </View>
-            <View style={styles.termRow2}>
-              <Text
-                style={{
-                  ...styles.value,
-                  color: theme.screen.text,
-                  fontSize: isWeb ? 16 : 14,
-                }}
-              >
-                {termsAndPrivacyConsentAcceptedDate}
-              </Text>
-            </View>
-          </View>
+            }
+            label={translate(
+              TranslationKeys.terms_and_conditions_accepted_and_privacy_policy_read_at_date
+            )}
+            value={termsAndPrivacyConsentAcceptedDate}
+            handleFunction={() => {}}
+          />
           <TouchableOpacity
             style={styles.footer}
             onPress={() => {

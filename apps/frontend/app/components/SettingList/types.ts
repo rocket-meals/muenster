@@ -7,4 +7,5 @@ export interface SettingListProps {
   value?: string;
   iconBgColor?: string;
   handleFunction: (event: GestureResponderEvent) => void;
+  groupPosition?: 'top' | 'middle' | 'bottom' | 'single';
 }

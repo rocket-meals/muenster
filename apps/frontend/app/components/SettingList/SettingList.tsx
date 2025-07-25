@@ -15,6 +15,7 @@ const SettingList: React.FC<SettingListProps> = ({
   value,
   handleFunction,
   iconBgColor,
+  groupPosition = 'single',
 }) => {
   const { theme } = useTheme();
   const { primaryColor, selectedTheme } = useSelector(
@@ -41,6 +42,25 @@ const SettingList: React.FC<SettingListProps> = ({
         ...styles.list,
         backgroundColor: theme.screen.iconBg,
         paddingHorizontal: isWeb ? 20 : 10,
+        ...(groupPosition === 'top' && {
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+          borderTopLeftRadius: 12,
+          borderTopRightRadius: 12,
+          borderBottomWidth: 1,
+          borderColor: theme.screen.iconBg,
+        }),
+        ...(groupPosition === 'middle' && {
+          borderRadius: 0,
+          borderBottomWidth: 1,
+          borderColor: theme.screen.iconBg,
+        }),
+        ...(groupPosition === 'bottom' && {
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+          borderBottomLeftRadius: 12,
+          borderBottomRightRadius: 12,
+        }),
       }}
       onPress={handleFunction}
     >
