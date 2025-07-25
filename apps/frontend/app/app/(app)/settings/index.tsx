@@ -316,6 +316,9 @@ const Settings = () => {
             width: windowWidth < 500 ? '100%' : isWeb ? '80%' : '100%',
           }}
         >
+          <Text style={{ ...styles.groupHeading, color: theme.screen.text }}>
+            {translate(TranslationKeys.group_account_personalization)}
+          </Text>
           {/* Account & Nickname */}
           <View style={{ gap: 0 }}>
             <SettingList
@@ -357,6 +360,49 @@ const Settings = () => {
               groupPosition='bottom'
             />
           </View>
+          {user?.id ? (
+            <SettingList iconBgColor={primaryColor}
+              leftIcon={
+                <Entypo name='login' size={24} color={theme.screen.icon} />
+              }
+              label={translate(TranslationKeys.logout)}
+              rightIcon={
+                <Entypo name='login' size={24} color={theme.screen.icon} />
+              }
+              handleFunction={handleLogout}
+            />
+          ) : (
+            <SettingList iconBgColor={primaryColor}
+              leftIcon={
+                <Entypo name='login' size={24} color={theme.screen.icon} />
+              }
+              label={translate(TranslationKeys.sign_in)}
+              rightIcon={
+                <Entypo name='login' size={24} color={theme.screen.icon} />
+              }
+              handleFunction={handleLogin}
+            />
+          )}
+          {user?.id && (
+            <SettingList iconBgColor={primaryColor}
+              leftIcon={
+                <AntDesign
+                  name='deleteuser'
+                  size={24}
+                  color={theme.screen.icon}
+                />
+              }
+              label={`${translate(TranslationKeys.account_delete)}`}
+              rightIcon={
+                <Octicons
+                  name='chevron-right'
+                  size={24}
+                  color={theme.screen.icon}
+                />
+              }
+              handleFunction={handleDeleteAccount}
+            />
+          )}
           {/* Language */}
           <SettingList iconBgColor={primaryColor}
             leftIcon={
@@ -373,6 +419,9 @@ const Settings = () => {
             }
             handleFunction={() => openLanguageModal()}
           />
+          <Text style={{ ...styles.groupHeading, color: theme.screen.text }}>
+            {translate(TranslationKeys.group_canteen_usage)}
+          </Text>
           {/* Canteen */}
           <SettingList iconBgColor={primaryColor}
             leftIcon={
@@ -392,24 +441,6 @@ const Settings = () => {
               />
             }
             handleFunction={openCanteenSheet}
-          />
-          <SettingList iconBgColor={primaryColor}
-            leftIcon={
-              <Ionicons
-                name='bag-add-sharp'
-                size={24}
-                color={theme.screen.icon}
-              />
-            }
-            label={translate(TranslationKeys.eating_habits)}
-            rightIcon={
-              <Octicons
-                name='chevron-right'
-                size={24}
-                color={theme.screen.icon}
-              />
-            }
-            handleFunction={() => router.navigate('/eating-habits')}
           />
           <SettingList iconBgColor={primaryColor}
             leftIcon={
@@ -453,6 +484,24 @@ const Settings = () => {
           <SettingList iconBgColor={primaryColor}
             leftIcon={
               <Ionicons
+                name='bag-add-sharp'
+                size={24}
+                color={theme.screen.icon}
+              />
+            }
+            label={translate(TranslationKeys.eating_habits)}
+            rightIcon={
+              <Octicons
+                name='chevron-right'
+                size={24}
+                color={theme.screen.icon}
+              />
+            }
+            handleFunction={() => router.navigate('/eating-habits')}
+          />
+          <SettingList iconBgColor={primaryColor}
+            leftIcon={
+              <Ionicons
                 name='notifications'
                 size={24}
                 color={theme.screen.icon}
@@ -468,6 +517,9 @@ const Settings = () => {
             }
             handleFunction={() => router.navigate('/notification')}
           />
+          <Text style={{ ...styles.groupHeading, color: theme.screen.text }}>
+            {translate(TranslationKeys.group_app_settings)}
+          </Text>
           {/* color Scheme */}
           <View style={{ gap: 0 }}>
             <SettingList
@@ -565,55 +617,15 @@ const Settings = () => {
               groupPosition='bottom'
             />
           </View>
+          <Text style={{ ...styles.groupHeading, color: theme.screen.text }}>
+            {translate(TranslationKeys.group_app_management)}
+          </Text>
           <SettingList iconBgColor={primaryColor}
             leftIcon={<Ionicons name='cloud-download-outline' size={24} color={theme.screen.icon} />}
             label={translate(TranslationKeys.CHECK_FOR_APP_UPDATES)}
             rightIcon={<Octicons name='chevron-right' size={24} color={theme.screen.icon} />}
             handleFunction={handleCheckForUpdates}
           />
-          {user?.id ? (
-            <SettingList iconBgColor={primaryColor}
-              leftIcon={
-                <Entypo name='login' size={24} color={theme.screen.icon} />
-              }
-              label={translate(TranslationKeys.logout)}
-              rightIcon={
-                <Entypo name='login' size={24} color={theme.screen.icon} />
-              }
-              handleFunction={handleLogout}
-            />
-          ) : (
-            <SettingList iconBgColor={primaryColor}
-              leftIcon={
-                <Entypo name='login' size={24} color={theme.screen.icon} />
-              }
-              label={translate(TranslationKeys.sign_in)}
-              rightIcon={
-                <Entypo name='login' size={24} color={theme.screen.icon} />
-              }
-              handleFunction={handleLogin}
-            />
-          )}
-          {user?.id && (
-            <SettingList iconBgColor={primaryColor}
-              leftIcon={
-                <AntDesign
-                  name='deleteuser'
-                  size={24}
-                  color={theme.screen.icon}
-                />
-              }
-              label={`${translate(TranslationKeys.account_delete)}`}
-              rightIcon={
-                <Octicons
-                  name='chevron-right'
-                  size={24}
-                  color={theme.screen.icon}
-                />
-              }
-              handleFunction={handleDeleteAccount}
-            />
-          )}
           <SettingList iconBgColor={primaryColor}
             leftIcon={
               <MaterialCommunityIcons

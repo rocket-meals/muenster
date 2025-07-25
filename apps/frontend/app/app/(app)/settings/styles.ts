@@ -158,6 +158,12 @@ export default StyleSheet.create({
     fontSize: 28,
     fontFamily: 'Poppins_700Bold',
   },
+  groupHeading: {
+    fontSize: 22,
+    fontFamily: 'Poppins_700Bold',
+    marginTop: 20,
+    marginBottom: 10,
+  },
   logo: {
     width: 72,
     height: 72,

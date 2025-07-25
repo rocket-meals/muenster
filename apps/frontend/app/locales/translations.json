@@ -3792,5 +3792,45 @@
     "ru": "Обновления",
     "tr": "Güncellemeler",
     "zh": "更新"
+  },
+  "group_account_personalization": {
+    "de": "Konto & Personalisierung",
+    "en": "Account & Personalization",
+    "ar": "الحساب والتخصيص",
+    "es": "Cuenta y personalización",
+    "fr": "Compte et personnalisation",
+    "ru": "Аккаунт и персонализация",
+    "tr": "Hesap ve kişiselleştirme",
+    "zh": "账户和个性化"
+  },
+  "group_canteen_usage": {
+    "de": "Mensa & Nutzung",
+    "en": "Canteen & Usage",
+    "ar": "المقصف والاستخدام",
+    "es": "Comedor y uso",
+    "fr": "Cantine et utilisation",
+    "ru": "Столовая и использование",
+    "tr": "Yemekhane ve kullanım",
+    "zh": "食堂和使用"
+  },
+  "group_app_settings": {
+    "de": "App-Einstellungen",
+    "en": "App Settings",
+    "ar": "إعدادات التطبيق",
+    "es": "Configuración de la aplicación",
+    "fr": "Paramètres de l'application",
+    "ru": "Настройки приложения",
+    "tr": "Uygulama ayarları",
+    "zh": "应用设置"
+  },
+  "group_app_management": {
+    "de": "App-Verwaltung",
+    "en": "App Management",
+    "ar": "إدارة التطبيق",
+    "es": "Gestión de la aplicación",
+    "fr": "Gestion de l'application",
+    "ru": "Управление приложением",
+    "tr": "Uygulama yönetimi",
+    "zh": "应用管理"
   }
 }
