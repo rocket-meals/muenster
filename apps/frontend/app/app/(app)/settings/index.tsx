@@ -391,41 +391,41 @@ const Settings = () => {
                     />
                   }
                   handleFunction={handleDeleteAccount}
-                  groupPosition='bottom'
+                  groupPosition='middle'
                 />
               </>
             ) : (
-              <SettingList
-                iconBgColor={primaryColor}
-                leftIcon={
-                  <Entypo name='login' size={24} color={theme.screen.icon} />
-                }
-                label={translate(TranslationKeys.sign_in)}
-                rightIcon={
-                  <Entypo name='login' size={24} color={theme.screen.icon} />
-                }
-                handleFunction={handleLogin}
-                groupPosition='bottom'
-              />
-            )}
+                <SettingList
+                  iconBgColor={primaryColor}
+                  leftIcon={
+                    <Entypo name='login' size={24} color={theme.screen.icon} />
+                  }
+                  label={translate(TranslationKeys.sign_in)}
+                  rightIcon={
+                    <Entypo name='login' size={24} color={theme.screen.icon} />
+                  }
+                  handleFunction={handleLogin}
+                  groupPosition='middle'
+                />
+              )}
+            <SettingList
+              iconBgColor={primaryColor}
+              leftIcon={
+                <Ionicons name='language' size={24} color={theme.screen.icon} />
+              }
+              label={translate(TranslationKeys.language)}
+              value={languageName}
+              rightIcon={
+                <MaterialCommunityIcons
+                  name='pencil'
+                  size={20}
+                  color={theme.screen.icon}
+                />
+              }
+              handleFunction={() => openLanguageModal()}
+              groupPosition='bottom'
+            />
           </View>
-          {/* Language */}
-          <SettingList iconBgColor={primaryColor}
-            leftIcon={
-              <Ionicons name='language' size={24} color={theme.screen.icon} />
-            }
-            label={translate(TranslationKeys.language)}
-            value={languageName}
-            rightIcon={
-              <MaterialCommunityIcons
-                name='pencil'
-                size={20}
-                color={theme.screen.icon}
-              />
-            }
-            handleFunction={() => openLanguageModal()}
-            groupPosition='bottom'
-          />
           <Text style={{ ...styles.groupHeading, color: theme.screen.text }}>
             {translate(TranslationKeys.group_canteen_usage)}
           </Text>
