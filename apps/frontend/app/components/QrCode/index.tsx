@@ -8,15 +8,25 @@ const QrCode: React.FC<QrCodeProps> = ({
   size = 200,
   image,
   imageUrl,
-  imagePercentage = 21,
+  innerSize = 21,
+  ecl,
   backgroundColor = 'white',
   margin = 0,
 }) => {
   const imageSource = image ? image : imageUrl ? { uri: imageUrl } : undefined;
 
+  const clampedInnerSize = Math.max(0, Math.min(30, innerSize));
   const marginSize = size * (margin / 100);
-  const innerSize = size * (imagePercentage / 100);
-  const containerSize = innerSize + marginSize * 2;
+  const innerSizePx = size * (clampedInnerSize / 100);
+  const containerSize = innerSizePx + marginSize * 2;
+
+  const calculatedEcl = (() => {
+    if (clampedInnerSize <= 7) return 'L';
+    if (clampedInnerSize <= 15) return 'M';
+    if (clampedInnerSize <= 25) return 'Q';
+    return 'H';
+  })();
+  const qrEcl = ecl ?? calculatedEcl;
 
   return (
     <View
@@ -27,7 +37,7 @@ const QrCode: React.FC<QrCodeProps> = ({
         justifyContent: 'center',
       }}
     >
-      <QRCode value={value} size={size} />
+      <QRCode value={value} size={size} ecl={qrEcl} />
       {imageSource && (
         <View
           style={{
@@ -44,7 +54,7 @@ const QrCode: React.FC<QrCodeProps> = ({
         >
           <Image
             source={imageSource}
-            style={{ width: innerSize, height: innerSize, resizeMode: 'contain' }}
+            style={{ width: innerSizePx, height: innerSizePx, resizeMode: 'contain' }}
           />
         </View>
       )}
