@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
-import { Ionicons, Octicons } from '@expo/vector-icons';
 import { SettingListProps } from './types';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/reducer';
+import { myContrastColor } from '@/helper/colorHelper';
 
 const SettingList: React.FC<SettingListProps> = ({
   leftIcon,
@@ -12,8 +14,12 @@ const SettingList: React.FC<SettingListProps> = ({
   rightIcon,
   value,
   handleFunction,
+  iconBgColor,
 }) => {
   const { theme } = useTheme();
+  const { primaryColor, selectedTheme } = useSelector(
+    (state: RootState) => state.settings
+  );
   const [windowWidth, setWindowWidth] = useState(
     Dimensions.get('window').width
   );
@@ -39,7 +45,22 @@ const SettingList: React.FC<SettingListProps> = ({
       onPress={handleFunction}
     >
       <View style={{ ...styles.col, gap: isWeb ? 10 : 5 }}>
-        {leftIcon}
+        <View
+          style={{
+            ...styles.iconBox,
+            backgroundColor: iconBgColor || primaryColor,
+          }}
+        >
+          {React.isValidElement(leftIcon)
+            ? React.cloneElement(leftIcon, {
+                color: myContrastColor(
+                  iconBgColor || primaryColor,
+                  theme,
+                  selectedTheme === 'dark'
+                ),
+              })
+            : leftIcon}
+        </View>
         <Text
           style={{
             ...styles.label,

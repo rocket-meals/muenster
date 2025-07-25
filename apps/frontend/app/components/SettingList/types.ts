@@ -5,5 +5,6 @@ export interface SettingListProps {
   label: string;
   rightIcon?: React.ReactNode;
   value?: string;
+  iconBgColor?: string;
   handleFunction: (event: GestureResponderEvent) => void;
 }

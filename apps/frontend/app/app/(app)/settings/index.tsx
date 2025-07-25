@@ -351,7 +351,7 @@ const Settings = () => {
             </View>
           </View>
           {/* NickName */}
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <MaterialCommunityIcons
                 name='account'
@@ -379,7 +379,7 @@ const Settings = () => {
             }}
           />
           {/* Language */}
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <Ionicons name='language' size={24} color={theme.screen.icon} />
             }
@@ -395,7 +395,7 @@ const Settings = () => {
             handleFunction={() => openLanguageModal()}
           />
           {/* Canteen */}
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <MaterialIcons
                 name='restaurant-menu'
@@ -414,7 +414,7 @@ const Settings = () => {
             }
             handleFunction={openCanteenSheet}
           />
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <Ionicons
                 name='bag-add-sharp'
@@ -432,7 +432,7 @@ const Settings = () => {
             }
             handleFunction={() => router.navigate('/eating-habits')}
           />
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <MaterialIcons name='euro' size={24} color={theme.screen.icon} />
             }
@@ -452,7 +452,7 @@ const Settings = () => {
             }
             handleFunction={() => router.navigate('/price-group')}
           />
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <Ionicons name='card' size={24} color={theme.screen.icon} />
             }
@@ -471,7 +471,7 @@ const Settings = () => {
             }
             handleFunction={() => router.navigate('/account-balance')}
           />
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <Ionicons
                 name='notifications'
@@ -490,7 +490,7 @@ const Settings = () => {
             handleFunction={() => router.navigate('/notification')}
           />
           {/* color Scheme */}
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <MaterialCommunityIcons
                 name='theme-light-dark'
@@ -517,7 +517,7 @@ const Settings = () => {
           />
 
 
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <Entypo name='menu' size={24} color={theme.screen.icon} />
             }
@@ -539,7 +539,7 @@ const Settings = () => {
             handleFunction={() => openDrawerSheet()}
           />
 
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <FontAwesome5
                 name='columns'
@@ -562,7 +562,7 @@ const Settings = () => {
             }
             handleFunction={() => openAmountColumnModal()}
           />
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <Feather name='calendar' size={24} color={theme.screen.icon} />
             }
@@ -577,14 +577,14 @@ const Settings = () => {
             }
           handleFunction={() => openFirstDayModal()}
           />
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={<Ionicons name='cloud-download-outline' size={24} color={theme.screen.icon} />}
             label={translate(TranslationKeys.CHECK_FOR_APP_UPDATES)}
             rightIcon={<Octicons name='chevron-right' size={24} color={theme.screen.icon} />}
             handleFunction={handleCheckForUpdates}
           />
           {user?.id ? (
-            <SettingList
+            <SettingList iconBgColor={primaryColor}
               leftIcon={
                 <Entypo name='login' size={24} color={theme.screen.icon} />
               }
@@ -595,7 +595,7 @@ const Settings = () => {
               handleFunction={handleLogout}
             />
           ) : (
-            <SettingList
+            <SettingList iconBgColor={primaryColor}
               leftIcon={
                 <Entypo name='login' size={24} color={theme.screen.icon} />
               }
@@ -607,7 +607,7 @@ const Settings = () => {
             />
           )}
           {user?.id && (
-            <SettingList
+            <SettingList iconBgColor={primaryColor}
               leftIcon={
                 <AntDesign
                   name='deleteuser'
@@ -626,7 +626,7 @@ const Settings = () => {
               handleFunction={handleDeleteAccount}
             />
           )}
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <MaterialCommunityIcons
                 name='database-eye'
@@ -644,7 +644,7 @@ const Settings = () => {
             }
           handleFunction={() => router.navigate('/data-access')}
         />
-        <SettingList
+        <SettingList iconBgColor={primaryColor}
           leftIcon={
             <MaterialIcons name='event' size={24} color={theme.screen.icon} />
           }
@@ -654,7 +654,7 @@ const Settings = () => {
           }
           handleFunction={() => router.navigate('/events')}
         />
-        <SettingList
+        <SettingList iconBgColor={primaryColor}
           leftIcon={
             <MaterialIcons
               name='support-agent'
@@ -672,7 +672,7 @@ const Settings = () => {
             }
             handleFunction={() => router.navigate('/support-FAQ')}
           />
-          <SettingList
+          <SettingList iconBgColor={primaryColor}
             leftIcon={
               <MaterialCommunityIcons
                 name='license'
@@ -758,7 +758,7 @@ const Settings = () => {
             </Text>
           )}
           {isManagement && isDevMode && (
-            <SettingList
+            <SettingList iconBgColor={primaryColor}
               leftIcon={
                 <MaterialCommunityIcons
                   name='server'

@@ -13,11 +13,19 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '48%',
+    gap: 10,
   },
   label: {
     fontFamily: 'Poppins_700Bold',
   },
   value: {
     fontFamily: 'Poppins_400Regular',
+  },
+  iconBox: {
+    width: 34,
+    height: 34,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

@@ -17,6 +17,7 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 import useKioskMode from '@/hooks/useKioskMode';
 
+
 const EventsScreen = () => {
   useSetPageTitle(TranslationKeys.events);
   const { theme } = useTheme();
@@ -24,6 +25,7 @@ const EventsScreen = () => {
   const dispatch = useDispatch();
   const kioskMode = useKioskMode();
   const { popupEvents } = useSelector((state: RootState) => state.food);
+  const { primaryColor } = useSelector((state: RootState) => state.settings);
   const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [isActive, setIsActive] = useState(false);
@@ -58,6 +60,7 @@ const EventsScreen = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.background }}>
       <ScrollView contentContainerStyle={styles.container}>
         <SettingList
+          iconBgColor={primaryColor}
           leftIcon={<MaterialIcons name='refresh' size={24} color={theme.screen.icon} />}
           label={translate(TranslationKeys.reset_seen_popup_events)}
           rightIcon={<Octicons name='chevron-right' size={24} color={theme.screen.icon} />}
@@ -66,6 +69,7 @@ const EventsScreen = () => {
         {!kioskMode &&
           popupEvents.map((event: any) => (
             <SettingList
+              iconBgColor={primaryColor}
               key={event.id}
               leftIcon={<MaterialIcons name='event' size={24} color={theme.screen.icon} />}
               label={
