@@ -31,8 +31,10 @@ export interface SettingsListProps {
    */
   showSeparator?: boolean;
   /**
-   * Group positioning from the old component. It has no effect but
-   * allows drop-in replacement without TypeScript errors.
+   * Visual grouping support. When set to "top" the item receives a
+   * rounded top border and extra padding at the top. "bottom" applies
+   * the same to the bottom side. "single" rounds all corners and
+   * adds padding on both sides. "middle" leaves the default styling.
    */
   groupPosition?: 'top' | 'middle' | 'bottom' | 'single';
 }
