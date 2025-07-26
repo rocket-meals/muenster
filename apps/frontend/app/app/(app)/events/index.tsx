@@ -65,6 +65,7 @@ const EventsScreen = () => {
           label={translate(TranslationKeys.reset_seen_popup_events)}
           rightIcon={<Octicons name='chevron-right' size={24} color={theme.screen.icon} />}
           handleFunction={resetSeenEvents}
+          groupPosition={"single"}
         />
         {!kioskMode &&
           popupEvents.map((event: any) => (
@@ -79,6 +80,7 @@ const EventsScreen = () => {
               }
               rightIcon={<Octicons name='chevron-right' size={24} color={theme.screen.icon} />}
               handleFunction={() => openSheet(event)}
+              groupPosition={"single"}
             />
           ))}
       </ScrollView>
