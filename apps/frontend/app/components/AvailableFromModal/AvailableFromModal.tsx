@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import BaseModal from '@/components/BaseModal';
+import BaseBottomModal from '@/components/BaseBottomModal';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
@@ -21,11 +21,11 @@ const AvailableFromModal: React.FC<AvailableFromModalProps> = ({
   const formatted = new Date(availableFrom).toLocaleDateString();
 
   return (
-    <BaseModal isVisible={visible} onClose={onClose} title={translate(TranslationKeys.free_rooms)}>
-      <Text style={{ color: theme.modal.text, textAlign: 'center' }}>
+    <BaseBottomModal visible={visible} onClose={onClose} title={translate(TranslationKeys.free_rooms)}>
+      <Text style={{ color: theme.screen.text, textAlign: 'center' }}>
         {translate(TranslationKeys.free_from)}: {formatted}
       </Text>
-    </BaseModal>
+    </BaseBottomModal>
   );
 };
 

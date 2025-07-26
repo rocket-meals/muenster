@@ -64,7 +64,6 @@ export default StyleSheet.create({
     gap: 10,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    height: '80%',
   },
   freeBadgeText: {
     fontSize: 16,
