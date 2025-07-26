@@ -13,6 +13,9 @@ import { RootState } from '@/redux/reducer';
 import { myContrastColor } from '@/helper/colorHelper';
 import { SettingsListProps } from './types';
 
+const padding = 10; // px used for additional padding and border radius
+const basePaddingVertical = 10;
+
 const SettingsList: React.FC<SettingsListProps> = ({
   leftIcon,
   title,
@@ -44,21 +47,21 @@ const SettingsList: React.FC<SettingsListProps> = ({
 
   if (groupPosition === 'top') {
     containerStyles.push({
-      borderTopLeftRadius: 5,
-      borderTopRightRadius: 5,
-      paddingTop: 5,
+      borderTopLeftRadius: padding,
+      borderTopRightRadius: padding,
+      paddingTop: basePaddingVertical + padding,
     });
   } else if (groupPosition === 'bottom') {
     containerStyles.push({
-      borderBottomLeftRadius: 5,
-      borderBottomRightRadius: 5,
-      paddingBottom: 5,
+      borderBottomLeftRadius: padding,
+      borderBottomRightRadius: padding,
+      paddingBottom: basePaddingVertical + padding,
     });
   } else if (groupPosition === 'single') {
     containerStyles.push({
-      borderRadius: 5,
-      paddingTop: 5,
-      paddingBottom: 5,
+      borderRadius: padding,
+      paddingTop: basePaddingVertical + padding,
+      paddingBottom: basePaddingVertical + padding,
     });
   }
 
@@ -111,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingVertical: basePaddingVertical,
   },
   iconWrapper: {
     width: 34,
