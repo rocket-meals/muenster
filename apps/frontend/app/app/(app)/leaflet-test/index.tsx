@@ -42,14 +42,13 @@ const LeafletMap = () => {
 
         if (Platform.OS === 'web') {
           setMarkerIconSrc(asset.uri);
-        } else if (asset.localUri || asset.uri) {
-          const fileUri = asset.localUri ?? asset.uri;
-          if (fileUri) {
-            const content = await FileSystem.readAsStringAsync(fileUri, {
-              encoding: FileSystem.EncodingType.Base64,
-            });
-            setMarkerIconSrc(content);
-          }
+        } else if (asset.localUri) {
+          const content = await FileSystem.readAsStringAsync(asset.localUri, {
+            encoding: FileSystem.EncodingType.Base64,
+          });
+          setMarkerIconSrc(content);
+        } else {
+          setMarkerError('marker asset missing localUri');
         }
       } catch (error) {
         console.error('Error loading marker icon:', error);
@@ -111,7 +110,15 @@ const LeafletMap = () => {
   return (
     <View style={{ flex: 1 }}>
       {markerError && (
-        <View style={{ maxHeight: '50%' }}>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '40%',
+          }}
+        >
           <ScrollView>
             <Text selectable>{markerError}</Text>
           </ScrollView>
