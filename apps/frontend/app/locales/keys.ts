@@ -238,6 +238,7 @@ export enum TranslationKeys {
   please_select_your_canteen = 'please_select_your_canteen',
   map = 'map',
   leaflet_map = 'leaflet_map',
+  leaflet_test = 'leaflet_test',
   news = 'news',
   food_offers = 'food_offers',
   read_more = 'read_more',

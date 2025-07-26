@@ -70,6 +70,28 @@ const index = () => {
           </View>
           <Entypo name='chevron-small-right' color={theme.screen.icon} size={24} />
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }}
+          onPress={() =>
+            router.push({
+              pathname: '/leaflet-test',
+              params: {
+                lat: String(buildingPosition?.lat ?? '52.275'),
+                lng: String(buildingPosition?.lng ?? '7.4584'),
+                zoom: '16',
+              },
+            })
+          }
+        >
+          <View style={styles.col}>
+            <MaterialCommunityIcons name='map' color={theme.screen.icon} size={24} />
+            <Text style={{ ...styles.body, color: theme.screen.text }}>
+              {translate(TranslationKeys.leaflet_test)}
+            </Text>
+          </View>
+          <Entypo name='chevron-small-right' color={theme.screen.icon} size={24} />
+        </TouchableOpacity>
         <TouchableOpacity
           style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }}
           onPress={() => router.push('/vertical-image-scroll')}

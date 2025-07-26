@@ -715,6 +715,19 @@ export default function Layout() {
         />
 
         <Drawer.Screen
+          name='leaflet-test/index'
+          options={{
+            header: () => (
+              <CustomStackHeader
+                label={translate(TranslationKeys.leaflet_test)}
+                key={'LeafletTest'}
+              />
+            ),
+            title: translate(TranslationKeys.leaflet_test),
+          }}
+        />
+
+        <Drawer.Screen
           name='vertical-image-scroll/index'
           options={{
             header: () => (
