@@ -121,8 +121,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   rightWrapper: {
-    justifyContent: 'center',
+    width: 34,
+    height: 34,
+    borderRadius: 8,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 12,
   },
   separator: {
     width: '100%',
