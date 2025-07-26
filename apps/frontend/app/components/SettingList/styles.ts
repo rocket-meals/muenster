@@ -6,14 +6,19 @@ export default StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     borderRadius: 12,
   },
-  col: {
+  iconContainer: {
+    width: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  contentContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    width: '48%',
-    gap: 10,
+    justifyContent: 'space-between',
   },
   label: {
     fontFamily: 'Poppins_700Bold',

@@ -61,7 +61,7 @@ const SettingList: React.FC<SettingListProps> = ({
       }}
       onPress={handleFunction}
     >
-      <View style={{ ...styles.col, gap: isWeb ? 10 : 5 }}>
+      <View style={styles.iconContainer}>
         <View
           style={{
             ...styles.iconBox,
@@ -78,6 +78,18 @@ const SettingList: React.FC<SettingListProps> = ({
               })
             : leftIcon}
         </View>
+      </View>
+      <View
+        style={{
+          ...styles.contentContainer,
+          gap: isWeb ? 10 : 5,
+          borderColor: theme.screen.background,
+          borderBottomWidth:
+            groupPosition === 'top' || groupPosition === 'middle'
+              ? StyleSheet.hairlineWidth
+              : 0,
+        }}
+      >
         <Text
           style={{
             ...styles.label,
@@ -88,42 +100,28 @@ const SettingList: React.FC<SettingListProps> = ({
         >
           {label}
         </Text>
-      </View>
-      <View
-        style={{
-          ...styles.col,
-          gap: isWeb ? 10 : 5,
-          alignItems: 'center',
-          // backgroundColor: 'red',
-          justifyContent: 'flex-end',
-        }}
-      >
-        {value && (
-          <Text
-            style={{
-              ...styles.value,
-              color: theme.screen.text,
-              fontSize: windowWidth > 500 ? 16 : 13,
-              marginTop: isWeb ? 0 : 2,
-            }}
-          >
-            {value}
-          </Text>
-        )}
-        {rightIcon}
-      </View>
-      {(groupPosition === 'top' || groupPosition === 'middle') && (
         <View
           style={{
-            position: 'absolute',
-            bottom: 0,
-            left: '10%',
-            width: '80%',
-            height: 1,
-            backgroundColor: theme.screen.background,
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: isWeb ? 10 : 5,
           }}
-        />
-      )}
+        >
+          {value && (
+            <Text
+              style={{
+                ...styles.value,
+                color: theme.screen.text,
+                fontSize: windowWidth > 500 ? 16 : 13,
+                marginTop: isWeb ? 0 : 2,
+              }}
+            >
+              {value}
+            </Text>
+          )}
+          {rightIcon}
+        </View>
+      </View>
     </TouchableOpacity>
   );
 };
