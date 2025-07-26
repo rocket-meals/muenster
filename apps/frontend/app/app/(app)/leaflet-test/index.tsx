@@ -27,6 +27,10 @@ const LeafletMap = () => {
   );
   const selectedCanteen = useSelectedCanteen();
 
+  const [debugText, setDebugText] = useState('');
+  const addDebug = (msg: string) =>
+    setDebugText((prev) => `${prev}${msg}\n`);
+
   const [markerIconSrc, setMarkerIconSrc] = useState<string | null>(null);
   const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,22 +41,28 @@ const LeafletMap = () => {
     const loadMarkerIcon = async () => {
       try {
         const mapMarkerIcon = require('@/assets/map/marker-icon-2x.png');
+        addDebug(`loadMarkerIcon start on ${Platform.OS}`);
         const asset = await Asset.fromModule(mapMarkerIcon);
         await asset.downloadAsync();
+        addDebug(`asset uri: ${asset.uri} localUri: ${asset.localUri}`);
 
         if (Platform.OS === 'web') {
           setMarkerIconSrc(asset.uri);
+          addDebug('markerIconSrc set from uri');
         } else if (asset.localUri) {
           const content = await FileSystem.readAsStringAsync(asset.localUri, {
             encoding: FileSystem.EncodingType.Base64,
           });
           setMarkerIconSrc(content);
+          addDebug(`markerIconSrc set from base64 length: ${content.length}`);
         } else {
           setMarkerError('marker asset missing localUri');
+          addDebug('marker asset missing localUri');
         }
       } catch (error) {
         console.error('Error loading marker icon:', error);
         setMarkerError(String(error));
+        addDebug(`Error loading marker icon: ${error}`);
       }
     };
 
@@ -109,21 +119,6 @@ const LeafletMap = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {markerError && (
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '40%',
-          }}
-        >
-          <ScrollView>
-            <Text selectable>{markerError}</Text>
-          </ScrollView>
-        </View>
-      )}
       <View style={{ flex: 1 }}>
         <Text>
           Selected: {selectedMarkerId ?? 'none'} Visible: {String(modalVisible)}
@@ -136,6 +131,14 @@ const LeafletMap = () => {
           renderMarkerModal={renderMarkerModal}
           onMarkerSelectionChange={handleSelectionChange}
         />
+      </View>
+      <View style={{ flex: 1 }}>
+        <ScrollView>
+          {markerError && (
+            <Text selectable>{markerError}</Text>
+          )}
+          <Text selectable>{debugText}</Text>
+        </ScrollView>
       </View>
     </View>
   );
