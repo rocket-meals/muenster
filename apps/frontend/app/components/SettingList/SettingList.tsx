@@ -1,4 +1,4 @@
-import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -42,18 +42,15 @@ const SettingList: React.FC<SettingListProps> = ({
         ...styles.list,
         backgroundColor: theme.screen.iconBg,
         paddingHorizontal: isWeb ? 20 : 10,
+        position: 'relative',
         ...(groupPosition === 'top' && {
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
           borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
-          borderBottomWidth: 1,
-          borderColor: theme.screen.iconBg,
         }),
         ...(groupPosition === 'middle' && {
           borderRadius: 0,
-          borderBottomWidth: 1,
-          borderColor: theme.screen.iconBg,
         }),
         ...(groupPosition === 'bottom' && {
           borderTopLeftRadius: 0,
@@ -115,6 +112,18 @@ const SettingList: React.FC<SettingListProps> = ({
         )}
         {rightIcon}
       </View>
+      {(groupPosition === 'top' || groupPosition === 'middle') && (
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: '10%',
+            width: '80%',
+            height: StyleSheet.hairlineWidth,
+            backgroundColor: theme.screen.iconBg,
+          }}
+        />
+      )}
     </TouchableOpacity>
   );
 };
