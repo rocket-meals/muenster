@@ -59,10 +59,12 @@ export default StyleSheet.create({
     right: 5,
     borderRadius: 8,
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 5,
+    gap: 10,
     paddingVertical: 5,
     paddingHorizontal: 10,
+    height: '80%',
   },
   freeBadgeText: {
     fontSize: 16,
