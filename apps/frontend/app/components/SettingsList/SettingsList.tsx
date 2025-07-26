@@ -25,6 +25,7 @@ const SettingsList: React.FC<SettingsListProps> = ({
   iconBackgroundColor,
   iconBgColor,
   showSeparator = true,
+  groupPosition,
 }) => {
   const { theme } = useTheme();
   const { primaryColor, selectedTheme } = useSelector(
@@ -36,15 +37,34 @@ const SettingsList: React.FC<SettingsListProps> = ({
   const iconBg = iconBackgroundColor || iconBgColor || primaryColor;
   const iconColor = myContrastColor(iconBg, theme, selectedTheme === 'dark');
 
+  const containerStyles: ViewStyle[] = [
+    styles.container,
+    { backgroundColor: theme.screen.iconBg } as ViewStyle,
+  ];
+
+  if (groupPosition === 'top') {
+    containerStyles.push({
+      borderTopLeftRadius: 5,
+      borderTopRightRadius: 5,
+      paddingTop: 5,
+    });
+  } else if (groupPosition === 'bottom') {
+    containerStyles.push({
+      borderBottomLeftRadius: 5,
+      borderBottomRightRadius: 5,
+      paddingBottom: 5,
+    });
+  } else if (groupPosition === 'single') {
+    containerStyles.push({
+      borderRadius: 5,
+      paddingTop: 5,
+      paddingBottom: 5,
+    });
+  }
+
   return (
     <>
-      <Container
-        onPress={pressHandler}
-        style={[
-          styles.container,
-          { backgroundColor: theme.screen.iconBg } as ViewStyle,
-        ]}
-      >
+      <Container onPress={pressHandler} style={containerStyles}>
         <View style={[styles.iconWrapper, { backgroundColor: iconBg }]}> 
           {React.isValidElement(leftIcon)
             ? React.cloneElement(leftIcon, { color: iconColor })
