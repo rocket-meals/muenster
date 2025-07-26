@@ -13,7 +13,8 @@ import { RootState } from '@/redux/reducer';
 import { myContrastColor } from '@/helper/colorHelper';
 import { SettingsListProps } from './types';
 
-const padding = 10; // px used for additional padding and border radius
+const padding = 0; // px used for additional padding and border radius
+const borderRadius = 10;
 const basePaddingVertical = 10;
 
 const SettingsList: React.FC<SettingsListProps> = ({
@@ -47,19 +48,19 @@ const SettingsList: React.FC<SettingsListProps> = ({
 
   if (groupPosition === 'top') {
     containerStyles.push({
-      borderTopLeftRadius: padding,
-      borderTopRightRadius: padding,
+      borderTopLeftRadius: borderRadius,
+      borderTopRightRadius: borderRadius,
       paddingTop: basePaddingVertical + padding,
     });
   } else if (groupPosition === 'bottom') {
     containerStyles.push({
-      borderBottomLeftRadius: padding,
-      borderBottomRightRadius: padding,
+      borderBottomLeftRadius: borderRadius,
+      borderBottomRightRadius: borderRadius,
       paddingBottom: basePaddingVertical + padding,
     });
   } else if (groupPosition === 'single') {
     containerStyles.push({
-      borderRadius: padding,
+      borderRadius: borderRadius,
       paddingTop: basePaddingVertical + padding,
       paddingBottom: basePaddingVertical + padding,
     });
