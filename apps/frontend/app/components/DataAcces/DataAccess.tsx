@@ -126,7 +126,12 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
     <View
       style={{ ...styles.container, backgroundColor: theme.screen.background }}
     >
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={{
+          ...styles.contentContainer,
+          backgroundColor: theme.screen.background,
+        }}
+      >
         <View style={{ alignItems: 'center' }}>
           <View style={styles.imageContainer}>
             <Image
