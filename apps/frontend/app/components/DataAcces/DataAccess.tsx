@@ -225,8 +225,6 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
                   />
                 );
               })}
-          </View>
-        </View>
       </ScrollView>
     </View>
   );
