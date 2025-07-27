@@ -75,12 +75,13 @@ const index = () => {
           <ActivityIndicator size='large' color={theme.screen.text} />
         </View>
       ) : (
-        <Text style={{ ...styles.groupHeading, color: theme.screen.text }}>
-          {translate(TranslationKeys.my_support_tickets)}
-        </Text>
-        <View
-          style={[styles.section, { width: windowWidth > 600 ? '85%' : '95%' }]}
-        >
+        <>
+          <Text style={{ ...styles.groupHeading, color: theme.screen.text }}>
+            {translate(TranslationKeys.my_support_tickets)}
+          </Text>
+          <View
+            style={[styles.section, { width: windowWidth > 600 ? '85%' : '95%' }]}
+          >
           {allTickets &&
             allTickets?.map((item, index: number) => (
               <SettingsList
@@ -120,7 +121,8 @@ const index = () => {
                 }
               />
             ))}
-        </View>
+          </View>
+        </>
       )}
     </ScrollView>
   );
