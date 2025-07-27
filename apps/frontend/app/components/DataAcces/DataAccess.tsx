@@ -139,16 +139,6 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
               style={styles.image}
             />
           </View>
-
-          <View
-            style={[
-              styles.infoContainer,
-              {
-                width:
-                  windowWidth < 500 ? '100%' : isWeb ? '80%' : '100%',
-              },
-            ]}
-          >
             <View>{parseMarkdown(dataAccessText, theme)}</View>
           </View>
           <SettingsGroupTitle>
