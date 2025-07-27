@@ -137,7 +137,10 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
           <View
             style={[
               styles.infoContainer,
-              { width: windowWidth > 600 ? '85%' : '90%' },
+              {
+                width:
+                  windowWidth < 500 ? '100%' : isWeb ? '80%' : '90%',
+              },
             ]}
           >
             <View>{parseMarkdown(dataAccessText, theme)}</View>
@@ -146,7 +149,10 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
           <View
             style={[
               styles.infoContainer,
-              { width: windowWidth > 600 ? '90%' : '100%' },
+              {
+                width:
+                  windowWidth < 500 ? '100%' : isWeb ? '80%' : '100%',
+              },
             ]}
           >
             <View>
