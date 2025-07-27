@@ -7,7 +7,6 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9F9F9',
     // alignItems: 'center',
-    paddingTop: 50,
     // justifyContent:'center'
   },
   sheetView: {

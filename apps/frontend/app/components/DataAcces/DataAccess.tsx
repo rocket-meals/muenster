@@ -157,19 +157,12 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
             )}
           </SettingsGroupTitle>
             {/* Info Items List */}
-            <View
-              style={{
-                ...styles.infoContainer,
-                width:
-                  windowWidth < 500 ? '100%' : isWeb ? '80%' : '100%',
-              }}
-            >
-              {infoItems.map((item, index) => {
-                const last = index === infoItems.length - 1;
-                const first = index === 0;
-                const groupPosition =
-                  infoItems.length === 1
-                    ? 'single'
+          {infoItems.map((item, index) => {
+              const last = index === infoItems.length - 1;
+              const first = index === 0;
+              const groupPosition =
+                infoItems.length === 1
+                  ? 'single'
                     : first
                     ? 'top'
                     : last
@@ -201,13 +194,6 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
               })}
 
             {/* Device Data List */}
-            <View
-              style={{
-                ...styles.infoContainer,
-                width:
-                  windowWidth < 500 ? '100%' : isWeb ? '80%' : '100%',
-              }}
-            >
             <SettingsGroupTitle>
               {translate(
                 TranslationKeys.translation_all_on_device_saved_data
@@ -249,7 +235,6 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
                   />
                 );
               })}
-            </View>
           </View>
         </View>
       </ScrollView>
