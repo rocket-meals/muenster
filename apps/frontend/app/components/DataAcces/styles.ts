@@ -20,6 +20,8 @@ export default StyleSheet.create({
   },
   contentContainer: {
     alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 40,
   },
 
   imageContainer: {
