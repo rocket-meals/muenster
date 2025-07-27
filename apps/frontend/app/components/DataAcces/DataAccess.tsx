@@ -196,7 +196,7 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
                         color={theme.screen.icon}
                       />
                     }
-                    label={translate(item.label)}
+                    label={translate(item.label) || item.label}
                     rightIcon={
                       <Entypo
                         name='chevron-small-right'
