@@ -28,7 +28,7 @@ const EXTERNAL_MARKER_URL =
   'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/map-marker-512.png';
 
 const LeafletMap = () => {
-  useSetPageTitle(TranslationKeys.leaflet_test);
+  useSetPageTitle(TranslationKeys.leaflet_map);
 
   const { buildings } = useSelector(
       (state: RootState) => state.canteenReducer
@@ -37,12 +37,8 @@ const LeafletMap = () => {
 
   const [markerIconSrc, setMarkerIconSrc] = useState<string | null>(null);
   const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
   const [markerError, setMarkerError] = useState<string | null>(null);
-  const [logs, setLogs] = useState<string[]>([]);
-
-  const addLog = (msg: string) => {
-    setLogs((l) => [...l, msg]);
-  };
 
   // Load marker asset asynchronously
   useEffect(() => {
@@ -60,15 +56,11 @@ const LeafletMap = () => {
           });
           setMarkerIconSrc(content);
         } else {
-          const msg = 'marker asset missing localUri';
-          addLog(msg);
-          setMarkerError(msg);
+          setMarkerError('marker asset missing localUri');
         }
       } catch (error) {
         console.error('Error loading marker icon:', error);
-        const msg = String(error);
-        addLog(msg);
-        setMarkerError(msg);
+        setMarkerError(String(error));
       }
     };
 
@@ -123,13 +115,12 @@ const LeafletMap = () => {
 
   const handleMarkerClick = (id: string) => {
     console.log('marker clicked', id);
-    addLog(`marker clicked: ${id}`);
     setSelectedMarkerId(id);
   };
 
   const handleSelectionChange = (id: string | null) => {
+    setModalVisible(id !== null);
     setSelectedMarkerId(id);
-    addLog(`selection change: ${id ?? 'none'}`);
   };
 
   const renderMarkerModal = (id: string, onClose: () => void) => (
@@ -138,27 +129,33 @@ const LeafletMap = () => {
 
   return (
     <View style={{ flex: 1 }}>
+      {markerError && (
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '40%',
+          }}
+        >
+          <ScrollView>
+            <Text selectable>{markerError}</Text>
+          </ScrollView>
+        </View>
+      )}
       <View style={{ flex: 1 }}>
+        <Text>
+          Selected: {selectedMarkerId ?? 'none'} Visible: {String(modalVisible)}
+        </Text>
         <MyMap
           mapCenterPosition={centerPosition || POSITION_BUNDESTAG}
           mapMarkers={markers}
           onMarkerClick={handleMarkerClick}
-          onMapEvent={(e) => {
-            addLog(`map event: ${e.tag}`);
-          }}
+          onMapEvent={(e) => console.log('map event', e.tag)}
           renderMarkerModal={renderMarkerModal}
           onMarkerSelectionChange={handleSelectionChange}
         />
-      </View>
-      <View style={{ flex: 1 }}>
-        <ScrollView>
-          {markerError && <Text selectable>{markerError}</Text>}
-          {logs.map((l, i) => (
-            <Text key={i} selectable>
-              {l}
-            </Text>
-          ))}
-        </ScrollView>
       </View>
     </View>
   );
