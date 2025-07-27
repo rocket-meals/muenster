@@ -24,6 +24,11 @@ const POSITION_IMG_MARKER = {
   lng: 13.376281624711964,
 };
 
+const POSITION_IMG_MARKER_BASE64 = {
+  lat: 52.5205942474568,
+  lng: 13.376281624711964,
+};
+
 const EXTERNAL_MARKER_URL =
   'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/map-marker-512.png';
 
@@ -36,6 +41,8 @@ const LeafletMap = () => {
   const selectedCanteen = useSelectedCanteen();
 
   const [markerIconSrc, setMarkerIconSrc] = useState<string | null>(null);
+  const [externalMarkerBase64, setExternalMarkerBase64] =
+    useState<string | null>(null);
   const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [markerError, setMarkerError] = useState<string | null>(null);
@@ -65,6 +72,24 @@ const LeafletMap = () => {
     };
 
     loadMarkerIcon();
+  }, []);
+
+  useEffect(() => {
+    const loadExternalMarker = async () => {
+      try {
+        const localUri = `${FileSystem.cacheDirectory}external-marker.png`;
+        await FileSystem.downloadAsync(EXTERNAL_MARKER_URL, localUri);
+        const base64 = await FileSystem.readAsStringAsync(localUri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+        setExternalMarkerBase64(base64);
+      } catch (error) {
+        console.error('Error loading external marker:', error);
+        setMarkerError(String(error));
+      }
+    };
+
+    loadExternalMarker();
   }, []);
 
   const centerPosition = useMemo(() => {
@@ -111,6 +136,20 @@ const LeafletMap = () => {
         MARKER_DEFAULT_SIZE,
       ),
     },
+    ...(externalMarkerBase64
+      ? [
+          {
+            id: 'img-marker-base64',
+            position: POSITION_IMG_MARKER_BASE64,
+            icon: MyMapMarkerIcons.getIconForWebByBase64(externalMarkerBase64),
+            size: [MARKER_DEFAULT_SIZE, MARKER_DEFAULT_SIZE],
+            iconAnchor: getDefaultIconAnchor(
+              MARKER_DEFAULT_SIZE,
+              MARKER_DEFAULT_SIZE,
+            ),
+          },
+        ]
+      : []),
   ];
 
   const handleMarkerClick = (id: string) => {
