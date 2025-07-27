@@ -5,13 +5,13 @@ import {
   Image,
   Dimensions,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
 import { useSelector } from 'react-redux';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import SettingsList from '@/components/SettingsList';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
@@ -52,6 +52,7 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
   const { user, profile } = useSelector(
     (state: RootState) => state.authReducer
   );
+  const { primaryColor } = useSelector((state: RootState) => state.settings);
   const {
     canteens,
     buildings,
@@ -158,42 +159,58 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
               </Text>
             </View>
             {/* Info Items List */}
-            <View style={styles.infoContainer}>
-              {infoItems.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={[
-                    styles.infoRow,
-                    {
-                      backgroundColor: theme.screen.iconBg,
-                      paddingHorizontal: isWeb ? 20 : 10,
-                      paddingVertical: isWeb ? 20 : 10,
-                    },
-                  ]}
-                  onPress={() => onOpenBottomSheet(item)}
-                >
-                  <View style={styles.iconLabelContainer}>
-                    <Text
-                      style={{
-                        ...styles.label,
-                        color: theme.header.text,
-                        fontSize: windowWidth < 500 ? 16 : 18,
-                      }}
-                    >
-                      {translate(item.label)}
-                    </Text>
-                  </View>
-                  <Entypo
-                    name='chevron-small-right'
-                    size={25}
-                    color={theme.screen.icon}
+            <View
+              style={{
+                ...styles.infoContainer,
+                width:
+                  windowWidth < 500 ? '100%' : isWeb ? '80%' : '100%',
+              }}
+            >
+              {infoItems.map((item, index) => {
+                const last = index === infoItems.length - 1;
+                const first = index === 0;
+                const groupPosition =
+                  infoItems.length === 1
+                    ? 'single'
+                    : first
+                    ? 'top'
+                    : last
+                    ? 'bottom'
+                    : 'middle';
+                return (
+                  <SettingsList
+                    key={index}
+                    iconBgColor={primaryColor}
+                    leftIcon={
+                      <MaterialCommunityIcons
+                        name='database-eye'
+                        size={24}
+                        color={theme.screen.icon}
+                      />
+                    }
+                    label={translate(item.label)}
+                    rightIcon={
+                      <Entypo
+                        name='chevron-small-right'
+                        size={24}
+                        color={theme.screen.icon}
+                      />
+                    }
+                    handleFunction={() => onOpenBottomSheet(item)}
+                    groupPosition={groupPosition as any}
                   />
-                </TouchableOpacity>
-              ))}
+                );
+              })}
             </View>
 
             {/* Device Data List */}
-            <View style={styles.infoContainer}>
+            <View
+              style={{
+                ...styles.infoContainer,
+                width:
+                  windowWidth < 500 ? '100%' : isWeb ? '80%' : '100%',
+              }}
+            >
               <View>
                 <Text
                   style={{
@@ -208,39 +225,40 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
                 </Text>
               </View>
               {dataDevice.map((data, index) => {
-                if (data?.value) {
-                  return (
-                    <TouchableOpacity
-                      key={index}
-                      style={[
-                        styles.infoRow,
-                        {
-                          backgroundColor: theme.screen.iconBg,
-                          paddingHorizontal: isWeb ? 20 : 10,
-                          paddingVertical: isWeb ? 20 : 10,
-                        },
-                      ]}
-                      onPress={() => onOpenBottomSheet(data)}
-                    >
-                      <View style={styles.iconLabelContainer}>
-                        <Text
-                          style={{
-                            ...styles.label,
-                            color: theme.header.text,
-                            fontSize: windowWidth < 500 ? 16 : 18,
-                          }}
-                        >
-                          {data.label}
-                        </Text>
-                      </View>
-                      <Entypo
-                        name='chevron-small-right'
-                        size={25}
+                if (!data?.value) return null;
+                const last = index === dataDevice.length - 1;
+                const first = index === 0;
+                const groupPosition =
+                  dataDevice.length === 1
+                    ? 'single'
+                    : first
+                    ? 'top'
+                    : last
+                    ? 'bottom'
+                    : 'middle';
+                return (
+                  <SettingsList
+                    key={index}
+                    iconBgColor={primaryColor}
+                    leftIcon={
+                      <MaterialCommunityIcons
+                        name='database-eye'
+                        size={24}
                         color={theme.screen.icon}
                       />
-                    </TouchableOpacity>
-                  );
-                }
+                    }
+                    label={data.label}
+                    rightIcon={
+                      <Entypo
+                        name='chevron-small-right'
+                        size={24}
+                        color={theme.screen.icon}
+                      />
+                    }
+                    handleFunction={() => onOpenBottomSheet(data)}
+                    groupPosition={groupPosition as any}
+                  />
+                );
               })}
             </View>
           </View>
