@@ -138,3 +138,7 @@ export interface ManagementState {
 export interface PopupEventsHashState {
   hashValue: string;
 }
+
+export interface ChatsState {
+  chats: DatabaseTypes.Chats[];
+}
