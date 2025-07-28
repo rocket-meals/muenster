@@ -95,7 +95,7 @@ const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({
         ownCanteenFeedBackLabelEntries,
         label?.id,
         likeStats,
-        selectedCanteen.id,
+        selectedCanteen?.id,
         date
       )) as DatabaseTypes.CanteensFeedbacksLabelsEntries;
     getLabelEntries(label?.id);
