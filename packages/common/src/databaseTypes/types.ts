@@ -1034,12 +1034,15 @@ export type FoodoffersMarkings = {
 };
 
 export type FoodoffersStaticElements = {
+  canteen?: string | Canteens | null;
   date_created?: string | null;
   date_updated?: string | null;
   id: string;
   image?: string | AppElements | null;
+  link?: string | null;
   name?: string | AppElements | null;
   placement?: string | null;
+  show_when_no_foodoffers_found?: boolean | null;
   sort?: number | null;
   status: string;
   user_created?: string | DirectusUsers | null;

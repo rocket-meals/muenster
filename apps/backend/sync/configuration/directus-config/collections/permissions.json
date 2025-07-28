@@ -3,8 +3,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_comments",
@@ -15,8 +15,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "create",
     "collection": "directus_dashboards",
@@ -27,8 +27,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "delete",
     "collection": "directus_dashboards",
@@ -39,8 +39,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_dashboards",
@@ -51,8 +51,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "update",
     "collection": "directus_dashboards",
@@ -63,8 +63,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "create",
     "collection": "directus_files",
@@ -75,8 +75,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "delete",
     "collection": "directus_files",
@@ -87,8 +87,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_files",
@@ -99,8 +99,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "update",
     "collection": "directus_files",
@@ -117,12 +117,12 @@
       "options",
       "trigger"
     ],
+    "validation": null,
     "permissions": {
       "trigger": {
         "_eq": "manual"
       }
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "directus_flows",
@@ -133,8 +133,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "create",
     "collection": "directus_folders",
@@ -143,8 +143,8 @@
   },
   {
     "fields": null,
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "delete",
     "collection": "directus_folders",
@@ -155,8 +155,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_folders",
@@ -167,8 +167,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "update",
     "collection": "directus_folders",
@@ -179,8 +179,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "create",
     "collection": "directus_panels",
@@ -191,8 +191,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "delete",
     "collection": "directus_panels",
@@ -203,8 +203,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_panels",
@@ -215,8 +215,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "update",
     "collection": "directus_panels",
@@ -227,8 +227,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_roles",
@@ -239,8 +239,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "create",
     "collection": "directus_shares",
@@ -251,12 +251,12 @@
     "fields": [
       "*"
     ],
+    "validation": null,
     "permissions": {
       "user_created": {
         "_eq": "$CURRENT_USER"
       }
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "directus_shares",
@@ -267,6 +267,7 @@
     "fields": [
       "*"
     ],
+    "validation": null,
     "permissions": {
       "_or": [
         {
@@ -281,7 +282,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "directus_shares",
@@ -292,12 +292,12 @@
     "fields": [
       "*"
     ],
+    "validation": null,
     "permissions": {
       "user_created": {
         "_eq": "$CURRENT_USER"
       }
     },
-    "validation": null,
     "presets": null,
     "action": "update",
     "collection": "directus_shares",
@@ -308,8 +308,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": null,
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_users",
@@ -334,12 +334,12 @@
       "theme_dark_overrides",
       "tfa_secret"
     ],
+    "validation": null,
     "permissions": {
       "id": {
         "_eq": "$CURRENT_USER"
       }
     },
-    "validation": null,
     "presets": null,
     "action": "update",
     "collection": "directus_users",
@@ -350,8 +350,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "apartments",
@@ -362,8 +362,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "delete",
     "collection": "apartments",
@@ -374,8 +374,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "apartments",
@@ -386,8 +386,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "update",
     "collection": "apartments",
@@ -398,8 +398,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "app_settings_housing_translations",
@@ -410,8 +410,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "delete",
     "collection": "app_settings_housing_translations",
@@ -422,8 +422,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "app_settings_housing_translations",
@@ -434,8 +434,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "update",
     "collection": "app_settings_housing_translations",
@@ -446,8 +446,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "app_settings",
@@ -467,8 +467,8 @@
       "washingmachine_parsing_last_date",
       "id"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "update",
     "collection": "app_settings",
@@ -479,8 +479,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "washingmachines",
@@ -491,8 +491,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "delete",
     "collection": "washingmachines",
@@ -503,8 +503,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "washingmachines",
@@ -515,8 +515,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "update",
     "collection": "washingmachines",
@@ -544,7 +544,6 @@
       "user_updated",
       "date_updated"
     ],
-    "permissions": null,
     "validation": {
       "_and": [
         {
@@ -563,6 +562,7 @@
         }
       ]
     },
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "app_feedbacks",
@@ -571,6 +571,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -580,7 +581,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "app_feedbacks",
@@ -591,6 +591,7 @@
     "fields": [
       "*"
     ],
+    "validation": {},
     "permissions": {
       "_and": [
         {
@@ -600,7 +601,6 @@
         }
       ]
     },
-    "validation": {},
     "presets": null,
     "action": "read",
     "collection": "app_feedbacks",
@@ -624,6 +624,7 @@
       "display_pixelratio",
       "display_scale"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -633,7 +634,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "update",
     "collection": "app_feedbacks",
@@ -656,7 +656,6 @@
       "canteen",
       "like"
     ],
-    "permissions": null,
     "validation": {
       "_and": [
         {
@@ -666,6 +665,7 @@
         }
       ]
     },
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "canteens_feedbacks_labels_entries",
@@ -674,6 +674,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -683,7 +684,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "canteens_feedbacks_labels_entries",
@@ -694,8 +694,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "canteens_feedbacks_labels_entries",
@@ -718,6 +718,7 @@
       "canteen",
       "like"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -727,7 +728,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "update",
     "collection": "canteens_feedbacks_labels_entries",
@@ -749,7 +749,6 @@
       "attachment",
       "image"
     ],
-    "permissions": null,
     "validation": {
       "_and": [
         {
@@ -759,6 +758,7 @@
         }
       ]
     },
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "chat_messages",
@@ -767,6 +767,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -778,7 +779,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "chat_messages",
@@ -787,6 +787,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -802,7 +803,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "chat_messages",
@@ -822,6 +822,7 @@
       "attachment",
       "image"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -833,7 +834,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "update",
     "collection": "chat_messages",
@@ -855,6 +855,7 @@
       "foods_feedback",
       "linked_entities"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -868,7 +869,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "chats",
@@ -904,7 +904,6 @@
       "pushTokenObj",
       "is_landscape"
     ],
-    "permissions": null,
     "validation": {
       "_and": [
         {
@@ -914,6 +913,7 @@
         }
       ]
     },
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "devices",
@@ -922,6 +922,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -933,7 +934,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "devices",
@@ -969,6 +969,7 @@
       "is_landscape",
       "pushTokenObj"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -980,7 +981,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "devices",
@@ -1016,6 +1016,15 @@
       "is_landscape",
       "pushTokenObj"
     ],
+    "validation": {
+      "_and": [
+        {
+          "profile": {
+            "_eq": "$CURRENT_USER.profile"
+          }
+        }
+      ]
+    },
     "permissions": {
       "_and": [
         {
@@ -1023,15 +1032,6 @@
             "id": {
               "_eq": "$CURRENT_USER.profile"
             }
-          }
-        }
-      ]
-    },
-    "validation": {
-      "_and": [
-        {
-          "profile": {
-            "_eq": "$CURRENT_USER.profile"
           }
         }
       ]
@@ -1044,6 +1044,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1064,7 +1065,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "directus_users",
@@ -1104,6 +1104,7 @@
       "auth_data",
       "external_identifier"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1124,7 +1125,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "directus_users",
@@ -1155,6 +1155,7 @@
       "id",
       "last_page"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1175,7 +1176,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "update",
     "collection": "directus_users",
@@ -1199,7 +1199,6 @@
       "dislike",
       "like"
     ],
-    "permissions": null,
     "validation": {
       "_and": [
         {
@@ -1209,6 +1208,7 @@
         }
       ]
     },
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "foods_feedbacks_labels_entries",
@@ -1217,6 +1217,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1226,7 +1227,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "foods_feedbacks_labels_entries",
@@ -1237,8 +1237,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foods_feedbacks_labels_entries",
@@ -1262,6 +1262,7 @@
       "dislike",
       "like"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1271,7 +1272,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "update",
     "collection": "foods_feedbacks_labels_entries",
@@ -1295,7 +1295,6 @@
       "profile",
       "canteen"
     ],
-    "permissions": null,
     "validation": {
       "_and": [
         {
@@ -1305,6 +1304,7 @@
         }
       ]
     },
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "foods_feedbacks",
@@ -1313,6 +1313,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1322,7 +1323,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "foods_feedbacks",
@@ -1333,8 +1333,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foods_feedbacks",
@@ -1358,6 +1358,7 @@
       "profile",
       "canteen"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1367,7 +1368,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "update",
     "collection": "foods_feedbacks",
@@ -1380,7 +1380,6 @@
       "profiles_id",
       "buildings_id"
     ],
-    "permissions": null,
     "validation": {
       "_and": [
         {
@@ -1390,6 +1389,7 @@
         }
       ]
     },
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "profiles_buildings_favorites",
@@ -1398,6 +1398,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1407,7 +1408,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "profiles_buildings_favorites",
@@ -1420,6 +1420,7 @@
       "profiles_id",
       "buildings_id"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1429,7 +1430,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "profiles_buildings_favorites",
@@ -1442,7 +1442,7 @@
       "buildings_id",
       "profiles_id"
     ],
-    "permissions": {
+    "validation": {
       "_and": [
         {
           "profiles_id": {
@@ -1451,7 +1451,7 @@
         }
       ]
     },
-    "validation": {
+    "permissions": {
       "_and": [
         {
           "profiles_id": {
@@ -1472,7 +1472,6 @@
       "profiles_id",
       "buildings_id"
     ],
-    "permissions": null,
     "validation": {
       "_and": [
         {
@@ -1482,6 +1481,7 @@
         }
       ]
     },
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "profiles_buildings_last_opened",
@@ -1490,6 +1490,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1499,7 +1500,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "profiles_buildings_last_opened",
@@ -1512,6 +1512,7 @@
       "profiles_id",
       "buildings_id"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1521,7 +1522,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "profiles_buildings_last_opened",
@@ -1534,7 +1534,7 @@
       "profiles_id",
       "buildings_id"
     ],
-    "permissions": {
+    "validation": {
       "_and": [
         {
           "profiles_id": {
@@ -1543,7 +1543,7 @@
         }
       ]
     },
-    "validation": {
+    "permissions": {
       "_and": [
         {
           "profiles_id": {
@@ -1566,7 +1566,6 @@
       "dislike",
       "like"
     ],
-    "permissions": {},
     "validation": {
       "_and": [
         {
@@ -1576,6 +1575,7 @@
         }
       ]
     },
+    "permissions": {},
     "presets": null,
     "action": "create",
     "collection": "profiles_markings",
@@ -1584,6 +1584,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1593,7 +1594,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "profiles_markings",
@@ -1608,6 +1608,7 @@
       "dislike",
       "like"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1619,7 +1620,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "profiles_markings",
@@ -1634,7 +1634,7 @@
       "dislike",
       "like"
     ],
-    "permissions": {
+    "validation": {
       "_and": [
         {
           "profiles_id": {
@@ -1643,7 +1643,7 @@
         }
       ]
     },
-    "validation": {
+    "permissions": {
       "_and": [
         {
           "profiles_id": {
@@ -1660,6 +1660,7 @@
   },
   {
     "fields": null,
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1669,7 +1670,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "delete",
     "collection": "profiles",
@@ -1702,6 +1702,7 @@
       "credit_balance_last_transaction",
       "credit_balance_date_updated"
     ],
+    "validation": null,
     "permissions": {
       "_and": [
         {
@@ -1711,7 +1712,6 @@
         }
       ]
     },
-    "validation": null,
     "presets": null,
     "action": "read",
     "collection": "profiles",
@@ -1744,7 +1744,7 @@
       "credit_balance_last_transaction",
       "credit_balance_date_updated"
     ],
-    "permissions": {
+    "validation": {
       "_and": [
         {
           "id": {
@@ -1753,7 +1753,7 @@
         }
       ]
     },
-    "validation": {
+    "permissions": {
       "_and": [
         {
           "id": {
@@ -1772,8 +1772,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "apartments",
@@ -1784,8 +1784,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "app_elements_translations",
@@ -1796,8 +1796,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "app_elements",
@@ -1824,8 +1824,8 @@
       "display_height",
       "display_width"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "app_feedbacks",
@@ -1836,8 +1836,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "share",
     "collection": "app_feedbacks",
@@ -1848,8 +1848,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "app_settings_balance_translations",
@@ -1860,8 +1860,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "app_settings_housing_translations",
@@ -1872,8 +1872,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "app_settings_login_screen_translations",
@@ -1884,8 +1884,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "app_settings",
@@ -1896,8 +1896,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "buildings_businesshours",
@@ -1908,8 +1908,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "buildings_translations",
@@ -1920,8 +1920,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "buildings",
@@ -1932,8 +1932,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "businesshours_groups_translations",
@@ -1944,8 +1944,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "businesshours_groups",
@@ -1956,8 +1956,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "businesshours",
@@ -1968,8 +1968,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "canteens_feedbacks_labels_entries",
@@ -1980,8 +1980,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "canteens_feedbacks_labels_translations",
@@ -1992,8 +1992,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "canteens_feedbacks_labels",
@@ -2004,8 +2004,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "canteens_foodservice_hours_during_semester_break",
@@ -2016,8 +2016,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "canteens_foodservice_hours",
@@ -2040,8 +2040,8 @@
       "foodservice_hours",
       "foodservice_hours_during_semester_break"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "canteens",
@@ -2052,8 +2052,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "collections_dates_last_update",
@@ -2064,8 +2064,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_access",
@@ -2076,8 +2076,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_activity",
@@ -2088,8 +2088,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_collections",
@@ -2100,8 +2100,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_dashboards",
@@ -2112,8 +2112,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_extensions",
@@ -2124,8 +2124,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_fields",
@@ -2136,8 +2136,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_files",
@@ -2148,8 +2148,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_flows",
@@ -2160,8 +2160,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_folders",
@@ -2172,8 +2172,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_migrations",
@@ -2184,8 +2184,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_notifications",
@@ -2196,8 +2196,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_operations",
@@ -2208,8 +2208,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_panels",
@@ -2220,8 +2220,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_permissions",
@@ -2232,8 +2232,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_policies",
@@ -2244,8 +2244,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_presets",
@@ -2256,8 +2256,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_relations",
@@ -2268,8 +2268,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_revisions",
@@ -2280,8 +2280,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_roles",
@@ -2292,8 +2292,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_sessions",
@@ -2304,8 +2304,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_settings",
@@ -2316,8 +2316,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_shares",
@@ -2328,8 +2328,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "directus_translations",
@@ -2340,8 +2340,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_users",
@@ -2352,8 +2352,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_versions",
@@ -2364,8 +2364,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_webhooks",
@@ -2376,8 +2376,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foodoffers_categories_translations",
@@ -2388,8 +2388,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foodoffers_categories",
@@ -2400,8 +2400,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foodoffers_markings",
@@ -2412,8 +2412,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foodoffers_static_elements",
@@ -2424,8 +2424,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foodoffers",
@@ -2436,8 +2436,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foods_attributes_groups_translations",
@@ -2448,8 +2448,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foods_attributes_groups",
@@ -2460,8 +2460,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foods_attributes_translations",
@@ -2472,8 +2472,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foods_attributes_values",
@@ -2484,8 +2484,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foods_attributes",
@@ -2496,8 +2496,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foods_categories_translations",
@@ -2508,8 +2508,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "foods_categories",
@@ -2520,8 +2520,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foods_feedbacks_labels_entries",
@@ -2532,8 +2532,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foods_feedbacks_labels_translations",
@@ -2544,8 +2544,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foods_feedbacks_labels",
@@ -2556,8 +2556,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foods_feedbacks",
@@ -2568,8 +2568,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foods_markings",
@@ -2580,8 +2580,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foods_translations",
@@ -2592,8 +2592,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "foods",
@@ -2604,8 +2604,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "languages",
@@ -2616,8 +2616,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "markings_groups_translations",
@@ -2628,8 +2628,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "markings_groups",
@@ -2640,8 +2640,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "markings_translations",
@@ -2652,8 +2652,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "markings",
@@ -2664,8 +2664,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "news_translations",
@@ -2676,8 +2676,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "news",
@@ -2688,8 +2688,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "popup_events_canteens",
@@ -2700,8 +2700,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "popup_events_translations",
@@ -2712,8 +2712,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "popup_events",
@@ -2724,8 +2724,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "utilizations_entries",
@@ -2736,8 +2736,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "utilizations_groups",
@@ -2748,8 +2748,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "washingmachines",
@@ -2760,8 +2760,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "wikis_directus_roles",
@@ -2772,8 +2772,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "wikis_translations",
@@ -2784,8 +2784,8 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
     "validation": {},
+    "permissions": {},
     "presets": null,
     "action": "read",
     "collection": "wikis",
@@ -2796,8 +2796,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "buildings_businesshours",
@@ -2808,8 +2808,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "delete",
     "collection": "buildings_businesshours",
@@ -2820,8 +2820,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "buildings_businesshours",
@@ -2832,8 +2832,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "update",
     "collection": "buildings_businesshours",
@@ -2844,8 +2844,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "buildings_translations",
@@ -2856,8 +2856,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "delete",
     "collection": "buildings_translations",
@@ -2868,8 +2868,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "buildings_translations",
@@ -2880,8 +2880,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "update",
     "collection": "buildings_translations",
@@ -2892,8 +2892,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "buildings",
@@ -2904,8 +2904,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "delete",
     "collection": "buildings",
@@ -2916,8 +2916,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "buildings",
@@ -2928,8 +2928,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "update",
     "collection": "buildings",
@@ -2940,8 +2940,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "businesshours",
@@ -2952,8 +2952,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "delete",
     "collection": "businesshours",
@@ -2964,8 +2964,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "businesshours",
@@ -2976,8 +2976,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "update",
     "collection": "businesshours",
@@ -2988,8 +2988,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "create",
     "collection": "directus_files",
@@ -3000,8 +3000,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "delete",
     "collection": "directus_files",
@@ -3012,8 +3012,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_files",
@@ -3024,8 +3024,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "update",
     "collection": "directus_files",
@@ -3036,8 +3036,8 @@
     "fields": [
       "*"
     ],
-    "permissions": null,
     "validation": null,
+    "permissions": null,
     "presets": null,
     "action": "read",
     "collection": "directus_folders",
