@@ -735,7 +735,20 @@
     "_syncId": "b079bb70-a0e3-4b4a-9185-13c9d65ab36b"
   },
   {
-    "fields": null,
+    "fields": [
+      "id",
+      "status",
+      "sort",
+      "user_created",
+      "date_created",
+      "user_updated",
+      "date_updated",
+      "chat",
+      "profile",
+      "message",
+      "attachment",
+      "image"
+    ],
     "permissions": null,
     "validation": {
       "_and": [
@@ -797,7 +810,18 @@
     "_syncId": "e9ce7ba1-d29c-4c40-ad71-e60312a7118c"
   },
   {
-    "fields": null,
+    "fields": [
+      "id",
+      "status",
+      "sort",
+      "user_created",
+      "date_created",
+      "user_updated",
+      "date_updated",
+      "message",
+      "attachment",
+      "image"
+    ],
     "permissions": {
       "_and": [
         {
@@ -826,7 +850,10 @@
       "user_updated",
       "date_updated",
       "participants",
-      "alias"
+      "alias",
+      "messages",
+      "foods_feedback",
+      "linked_entities"
     ],
     "permissions": {
       "_and": [

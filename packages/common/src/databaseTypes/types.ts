@@ -20,6 +20,7 @@ export type AppElements = {
   date_created?: string | null;
   date_updated?: string | null;
   id: string;
+  image?: string | DirectusFiles | null;
   sort?: number | null;
   status: string;
   translations: any[] | AppElementsTranslations[];
@@ -428,6 +429,40 @@ export type CashregistersTransactions = {
   weekday_index_calculated?: number | null;
 };
 
+export type ChatMessages = {
+  attachment?: string | DirectusFiles | null;
+  chat?: string | Chats | null;
+  date_created?: string | null;
+  date_updated?: string | null;
+  id: string;
+  image?: string | DirectusFiles | null;
+  message?: string | null;
+  profile?: string | Profiles | null;
+  sort?: number | null;
+  status: string;
+  user_created?: string | DirectusUsers | null;
+  user_updated?: string | DirectusUsers | null;
+};
+
+export type Chats = {
+  alias?: string | null;
+  date_created?: string | null;
+  date_updated?: string | null;
+  id: string;
+  messages: any[] | ChatMessages[];
+  participants: any[] | ChatsParticipants[];
+  sort?: number | null;
+  status: string;
+  user_created?: string | DirectusUsers | null;
+  user_updated?: string | DirectusUsers | null;
+};
+
+export type ChatsParticipants = {
+  chats_id?: string | Chats | null;
+  id: number;
+  profiles_id?: string | Profiles | null;
+};
+
 export type CollectibleEventParticipants = {
   collectible_event?: string | CollectibleEvents | null;
   date_created?: string | null;
@@ -804,6 +839,7 @@ export type DirectusSessions = {
 };
 
 export type DirectusSettings = {
+  accepted_terms?: boolean | null;
   auth_login_attempts?: number | null;
   auth_password_policy?: string | null;
   basemaps?: unknown | null;
@@ -818,6 +854,7 @@ export type DirectusSettings = {
   module_bar?: unknown | null;
   project_color: string;
   project_descriptor?: string | null;
+  project_id?: string | null;
   project_logo?: string | DirectusFiles | null;
   project_name: string;
   project_url?: string | null;
@@ -838,6 +875,7 @@ export type DirectusSettings = {
   theme_dark_overrides?: unknown | null;
   theme_light_overrides?: unknown | null;
   theming_group: string;
+  visual_editor_urls?: unknown | null;
 };
 
 export type DirectusShares = {
@@ -991,6 +1029,18 @@ export type FoodoffersMarkings = {
   foodoffers_id?: string | Foodoffers | null;
   id: number;
   markings_id?: string | Markings | null;
+};
+
+export type FoodoffersStaticElements = {
+  date_created?: string | null;
+  date_updated?: string | null;
+  id: string;
+  image?: string | AppElements | null;
+  name?: string | AppElements | null;
+  sort?: number | null;
+  status: string;
+  user_created?: string | DirectusUsers | null;
+  user_updated?: string | DirectusUsers | null;
 };
 
 export type Foods = {
@@ -1661,6 +1711,7 @@ export type Washingmachines = {
   apartment?: string | Apartments | null;
   date_created?: string | null;
   date_finished?: string | null;
+  date_started?: string | null;
   date_stated?: string | null;
   date_updated?: string | null;
   external_identifier?: string | null;
@@ -1790,6 +1841,9 @@ export type CustomDirectusTypes = {
   canteens_foodservice_hours_during_semester_break: CanteensFoodserviceHoursDuringSemesterBreak[];
   cashregisters: Cashregisters[];
   cashregisters_transactions: CashregistersTransactions[];
+  chat_messages: ChatMessages[];
+  chats: Chats[];
+  chats_participants: ChatsParticipants[];
   collectible_event_participants: CollectibleEventParticipants[];
   collectible_events: CollectibleEvents[];
   collectible_events_translations: CollectibleEventsTranslations[];
@@ -1828,6 +1882,7 @@ export type CustomDirectusTypes = {
   foodoffers_categories: FoodoffersCategories[];
   foodoffers_categories_translations: FoodoffersCategoriesTranslations[];
   foodoffers_markings: FoodoffersMarkings[];
+  foodoffers_static_elements: FoodoffersStaticElements[];
   foods: Foods[];
   foods_attributes: FoodsAttributes[];
   foods_attributes_groups: FoodsAttributesGroups[];
