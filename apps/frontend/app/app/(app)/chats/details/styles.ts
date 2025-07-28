@@ -40,4 +40,12 @@ export default StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
+  oldMessageContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+    gap: 10,
+  },
+  oldMessageText: {
+    fontFamily: 'Poppins_400Regular',
+  },
 });
