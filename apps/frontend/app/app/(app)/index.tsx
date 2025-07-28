@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { CanteenHelper } from '@/redux/actions/Canteens/Canteens';
@@ -43,23 +44,21 @@ const Home = () => {
   const { canteens } = useSelector(
     (state: RootState) => state.canteenReducer
   );
+  const selectedCanteen = useSelectedCanteen();
   const defaultImage = getImageUrl(serverInfo?.info?.project?.project_logo);
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get('window').width
   );
 
-  const { loggedIn } = useSelector((state: RootState) => state.authReducer);
-
   const checkCanteenSelection = () => {
-    if (loggedIn) {
+    if (selectedCanteen) {
       router.push('/(app)/' + AppScreens.FOOD_OFFERS);
-    } else {
-      router.push('/(auth)/login');
     }
   };
 
   const handleSelectCanteen = (canteen: DatabaseTypes.Canteens) => {
     dispatch({ type: SET_SELECTED_CANTEEN, payload: canteen });
+    router.push('/(app)/' + AppScreens.FOOD_OFFERS);
   };
 
   const getCanteensWithBuildings = async () => {
@@ -135,10 +134,6 @@ const Home = () => {
       getCanteensWithBuildings();
     }, [])
   );
-
-  useEffect(() => {
-    checkCanteenSelection();
-  }, [loggedIn]);
 
   useEffect(() => {
     const handleResize = () => {

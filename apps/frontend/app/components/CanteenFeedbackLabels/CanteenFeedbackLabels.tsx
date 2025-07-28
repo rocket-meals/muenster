@@ -95,7 +95,7 @@ const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({
         ownCanteenFeedBackLabelEntries,
         label?.id,
         likeStats,
-        selectedCanteen?.id,
+        selectedCanteen.id,
         date
       )) as DatabaseTypes.CanteensFeedbacksLabelsEntries;
     getLabelEntries(label?.id);
@@ -112,7 +112,7 @@ const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({
       (await canteenFeedbackLabelEntryHelper.fetchCanteenFeedbackLabelEntries(
         {},
         date,
-        selectedCanteen?.id,
+        selectedCanteen.id,
         labelId
       )) as ModifiedCanteensFeedbacksLabelsEntries[];
     if (result) {
