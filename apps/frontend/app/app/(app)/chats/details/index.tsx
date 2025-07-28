@@ -13,7 +13,7 @@ import { myContrastColor } from '@/helper/colorHelper';
 import { ChatMessagesHelper } from '@/redux/actions/Chats/ChatMessages';
 import { useLanguage } from '@/hooks/useLanguage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { DatabaseTypes } from 'repo-depkit-common';
+import { DatabaseTypes, DateHelper } from 'repo-depkit-common';
 import styles from './styles';
 
 
@@ -58,9 +58,9 @@ const ChatDetailsScreen = () => {
   });
 
   const lastMessageDate = sortedMessages[0]?.date_created || sortedMessages[0]?.date_updated;
-  const showOldMessageNotice = lastMessageDate
-    ? new Date(lastMessageDate).getTime() < Date.now() - 7 * 24 * 60 * 60 * 1000
-    : false;
+  let amountDaysForOldMessages = 7; // Default to 7 days
+
+  const showOldMessageNotice = lastMessageDate ? DateHelper.isDateOlderThan(new Date(lastMessageDate), amountDaysForOldMessages) : false;
 
   const handleSendMessage = async () => {
     if (!newMessage.trim() || !chat_id || !profile?.id) {
