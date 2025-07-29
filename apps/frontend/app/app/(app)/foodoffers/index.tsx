@@ -25,6 +25,7 @@ import {
 } from '@react-navigation/drawer';
 import { isWeb } from '@/constants/Constants';
 import FoodItem from '@/components/FoodItem/FoodItem';
+import FoodOfferInfoItem from '@/components/FoodOfferInfoItem/FoodOfferInfoItem';
 import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
@@ -1049,19 +1050,13 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
                       setSelectedFoodId={setSelectedFoodId}
                     />
                   ) : dayItem.foodofferInfoItem ? (
-                    <View
+                    <FoodOfferInfoItem
                       key={dayItem.foodofferInfoItem.id || `info-item-${index}`}
-                      style={styles.infoItemContainer}
-                    >
-                      <CustomMarkdown
-                        content={
-                          getInfoItemContent(dayItem.foodofferInfoItem).content || ''
-                        }
-                        backgroundColor={foods_area_color}
-                        imageWidth={440}
-                        imageHeight={293}
-                      />
-                    </View>
+                      item={dayItem.foodofferInfoItem}
+                      content={
+                        getInfoItemContent(dayItem.foodofferInfoItem).content || ''
+                      }
+                    />
                   ) : null,
                 )
               ) : (
