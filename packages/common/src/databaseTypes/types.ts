@@ -1028,11 +1028,12 @@ export type FoodoffersCategoriesTranslations = {
 };
 
 export type FoodoffersInfoItems = {
-  canteen?: string | null;
+  canteen?: string | Canteens | null;
   date_created?: string | null;
   date_updated?: string | null;
   id: string;
   image?: string | DirectusFiles | null;
+  image_remote_url?: string | null;
   link?: string | null;
   name?: string | AppElements | null;
   placement?: string | null;
