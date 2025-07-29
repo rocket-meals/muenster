@@ -87,4 +87,8 @@ export default StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins_500Medium',
   },
+  infoItemContainer: {
+    width: '100%',
+    marginTop: 20,
+  },
 });
