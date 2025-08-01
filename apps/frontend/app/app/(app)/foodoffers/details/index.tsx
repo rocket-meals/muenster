@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState,} from 'react';
 import {useFocusEffect, useLocalSearchParams} from 'expo-router';
 import {Dimensions, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View,} from 'react-native';
+import { router } from 'expo-router';
 import styles from './styles';
 import {useTheme} from '@/hooks/useTheme';
 import {AntDesign, MaterialCommunityIcons, MaterialIcons,} from '@expo/vector-icons';
@@ -133,6 +134,13 @@ export default function FoodDetailsScreen() {
 
   const closeMenuSheet = () => {
     menuSheetRef?.current?.close();
+  };
+
+  const openFullScreenImage = () => {
+    const uri =
+      foodDetails?.image_remote_url ||
+      (foodDetails?.image ? getImageUrl(foodDetails.image) : defaultImage);
+    router.push({ pathname: '/(app)/image-full-screen', params: { uri } });
   };
 
   const filterAttributes = () => {
@@ -498,6 +506,7 @@ export default function FoodDetailsScreen() {
                           : Dimensions.get('window').width - 40,
                     }}
                   >
+                  <TouchableOpacity onPress={openFullScreenImage} activeOpacity={0.9}>
                     <Image
                       style={styles.featuredImage}
                       source={
@@ -510,6 +519,7 @@ export default function FoodDetailsScreen() {
                           : { uri: defaultImage }
                       }
                     />
+                  </TouchableOpacity>
                   </View>
                 </View>
                 <View
@@ -628,6 +638,7 @@ export default function FoodDetailsScreen() {
             </>
           ) : (
             <View style={styles.mobileImageContainer}>
+              <TouchableOpacity onPress={openFullScreenImage} activeOpacity={0.9}>
               <Image
                 source={
                   foodDetails?.image_remote_url || foodDetails?.image
@@ -640,6 +651,7 @@ export default function FoodDetailsScreen() {
                 }
                 style={styles.mobileFeaturedImage}
               />
+              </TouchableOpacity>
               <View style={styles.overlay}>
                 <View style={styles.mobileDetailsHeader}>
                   <View style={styles.row}>
