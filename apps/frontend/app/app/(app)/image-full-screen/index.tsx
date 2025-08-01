@@ -9,7 +9,12 @@ import Animated, {
   useAnimatedGestureHandler,
   useDerivedValue,
 } from 'react-native-reanimated';
-import { PinchGestureHandler, PinchGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import {
+  PinchGestureHandler,
+  PinchGestureHandlerGestureEvent,
+  TapGestureHandler,
+  TapGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
 import { Image } from 'expo-image';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -40,6 +45,17 @@ export default function ImageFullScreen() {
       },
     },
   );
+
+  const doubleTapHandler = useAnimatedGestureHandler<TapGestureHandlerGestureEvent>({
+    onActive: () => {
+      if (baseScale.value !== 1 || pinchScale.value !== 1) {
+        baseScale.value = 1;
+        pinchScale.value = 1;
+      } else {
+        baseScale.value = 2;
+      }
+    },
+  });
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -79,13 +95,15 @@ export default function ImageFullScreen() {
           </TouchableOpacity>
         </View>
       )}
-      <PinchGestureHandler onGestureEvent={pinchHandler}>
-        <Animated.View style={styles.flex}>
-          <TouchableWithoutFeedback onPress={toggleControls} onLongPress={() => setModalVisible(true)}>
-            <AnimatedImage source={{ uri: String(uri) }} style={[styles.image, animatedStyle]} contentFit='contain' />
-          </TouchableWithoutFeedback>
-        </Animated.View>
-      </PinchGestureHandler>
+      <TapGestureHandler numberOfTaps={2} onGestureEvent={doubleTapHandler}>
+        <PinchGestureHandler onGestureEvent={pinchHandler}>
+          <Animated.View style={styles.flex}>
+            <TouchableWithoutFeedback onPress={toggleControls} onLongPress={() => setModalVisible(true)}>
+              <AnimatedImage source={{ uri: String(uri) }} style={[styles.image, animatedStyle]} contentFit='contain' />
+            </TouchableWithoutFeedback>
+          </Animated.View>
+        </PinchGestureHandler>
+      </TapGestureHandler>
       <BaseBottomModal visible={modalVisible} onClose={() => setModalVisible(false)}>
         <SettingsList
           leftIcon={<Ionicons name='cloud-download-outline' size={24} color={theme.screen.icon} />}
