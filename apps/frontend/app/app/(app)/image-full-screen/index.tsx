@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   useDerivedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Image } from 'expo-image';
@@ -41,10 +42,10 @@ export default function ImageFullScreen() {
     .numberOfTaps(2)
     .onStart(() => {
       if (baseScale.value !== 1 || pinchScale.value !== 1) {
-        baseScale.value = 1;
-        pinchScale.value = 1;
+        baseScale.value = withTiming(1, { duration: 150 });
+        pinchScale.value = withTiming(1, { duration: 150 });
       } else {
-        baseScale.value = 2;
+        baseScale.value = withTiming(2, { duration: 150 });
       }
     });
 
