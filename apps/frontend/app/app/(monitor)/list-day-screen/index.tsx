@@ -93,8 +93,6 @@ const index = () => {
   const optionalFoodsScrollRef = useRef<ScrollView>(null);
   const [foodScrollIndex, setFoodScrollIndex] = useState(0);
   const [optionalFoodScrollIndex, setOptionalFoodScrollIndex] = useState(0);
-  const [isFoodAtEnd, setIsFoodAtEnd] = useState(false);
-  const [isOptionalFoodAtEnd, setIsOptionalFoodAtEnd] = useState(false);
   const windowHeight = Dimensions.get('window').height;
   const windowWidth = Dimensions.get('window').width;
   const headerRef = useRef<View>(null);
@@ -576,21 +574,13 @@ const index = () => {
             : tableMaxHeight;
         const visibleRows = Math.floor(currentHeight / rowHeight);
         const remainingRows = foods.length - (foodScrollIndex + visibleRows);
-        const bottomIndex = Math.max(foods.length - visibleRows, 0);
 
         let nextIndex;
 
         if (remainingRows > 0) {
           nextIndex = foodScrollIndex + 1;
-          if (isFoodAtEnd) setIsFoodAtEnd(false);
         } else {
-          if (!isFoodAtEnd) {
-            nextIndex = bottomIndex;
-            setIsFoodAtEnd(true);
-          } else {
-            nextIndex = 0;
-            setIsFoodAtEnd(false);
-          }
+          nextIndex = 0;
         }
 
         setFoodScrollIndex(nextIndex);
@@ -624,21 +614,13 @@ const index = () => {
         const visibleRows = Math.floor(currentHeight / rowHeight);
         const remainingRows =
           optionalFoods.length - (optionalFoodScrollIndex + visibleRows);
-        const bottomIndex = Math.max(optionalFoods.length - visibleRows, 0);
 
         let nextIndex;
 
         if (remainingRows > 0) {
           nextIndex = optionalFoodScrollIndex + 1;
-          if (isOptionalFoodAtEnd) setIsOptionalFoodAtEnd(false);
         } else {
-          if (!isOptionalFoodAtEnd) {
-            nextIndex = bottomIndex;
-            setIsOptionalFoodAtEnd(true);
-          } else {
-            nextIndex = 0;
-            setIsOptionalFoodAtEnd(false);
-          }
+          nextIndex = 0;
         }
 
         setOptionalFoodScrollIndex(nextIndex);
