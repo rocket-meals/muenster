@@ -77,13 +77,13 @@ export default function ImageFullScreen() {
           </TouchableOpacity>
         </View>
       )}
-      <TouchableWithoutFeedback onPress={toggleControls} onLongPress={() => setModalVisible(true)}>
-        <PinchGestureHandler onGestureEvent={pinchHandler}>
-          <Animated.View style={styles.flex}>
+      <PinchGestureHandler onGestureEvent={pinchHandler}>
+        <Animated.View style={styles.flex}>
+          <TouchableWithoutFeedback onPress={toggleControls} onLongPress={() => setModalVisible(true)}>
             <Image source={{ uri: String(uri) }} style={[styles.image, animatedStyle]} contentFit='contain' />
-          </Animated.View>
-        </PinchGestureHandler>
-      </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </Animated.View>
+      </PinchGestureHandler>
       <BaseBottomModal visible={modalVisible} onClose={() => setModalVisible(false)}>
         <SettingsList
           leftIcon={<Ionicons name='cloud-download-outline' size={24} color={theme.screen.icon} />}
