@@ -11,6 +11,7 @@ import {
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
+import { useLanguage } from '@/hooks/useLanguage';
 import { useSelector } from 'react-redux';
 import Animated, {
   runOnJS,
@@ -26,6 +27,7 @@ import SettingsList from '@/components/SettingsList';
 import * as FileSystem from 'expo-file-system';
 import useToast from '@/hooks/useToast';
 import { getHighResImageUrl } from '@/constants/HelperFunctions';
+import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
 export default function ImageFullScreen() {
@@ -33,6 +35,7 @@ export default function ImageFullScreen() {
   const { theme } = useTheme();
   const { drawerPosition } = useSelector((state: RootState) => state.settings);
   const toast = useToast();
+  const { translate } = useLanguage();
   const [showControls, setShowControls] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -175,7 +178,9 @@ export default function ImageFullScreen() {
         style={[styles.backIndicator, indicatorStyle]}
       >
         <Ionicons name='chevron-down' size={48} color={theme.screen.text} />
-        <Text style={[styles.backText, { color: theme.screen.text }]}>Release to close</Text>
+        <Text style={[styles.backText, { color: theme.screen.text }]}>
+          {translate(TranslationKeys.pull_down_to_close)}
+        </Text>
       </Animated.View>
       {showControls && (
         <View
