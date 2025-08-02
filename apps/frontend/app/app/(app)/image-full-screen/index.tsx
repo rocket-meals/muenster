@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Platform } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Platform,
+  Dimensions,
+} from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import Animated, {
+  runOnJS,
   useSharedValue,
   useAnimatedStyle,
   useDerivedValue,
@@ -35,6 +43,11 @@ export default function ImageFullScreen() {
   const translationY = useSharedValue(0);
   const startX = useSharedValue(0);
   const startY = useSharedValue(0);
+  const containerOpacity = useSharedValue(1);
+
+  const windowHeight = Dimensions.get('window').height;
+  const CLOSE_DISTANCE = windowHeight * 0.3;
+  const FADE_DISTANCE = windowHeight * 0.15;
 
   const pinchGesture = Gesture.Pinch()
     .onUpdate((event) => {
@@ -64,13 +77,29 @@ export default function ImageFullScreen() {
       startY.value = translationY.value;
     })
     .onUpdate((event) => {
-      translationX.value = startX.value + event.translationX;
-      translationY.value = startY.value + event.translationY;
+      if (scale.value > 1) {
+        translationX.value = startX.value + event.translationX;
+        translationY.value = startY.value + event.translationY;
+        containerOpacity.value = 1;
+      } else {
+        translationY.value = event.translationY;
+        if (event.translationY > 0) {
+          containerOpacity.value =
+            1 - Math.min(event.translationY / FADE_DISTANCE, 1);
+        } else {
+          containerOpacity.value = 1;
+        }
+      }
     })
     .onEnd(() => {
       if (scale.value <= 1) {
-        translationX.value = withTiming(0);
-        translationY.value = withTiming(0);
+        if (translationY.value > CLOSE_DISTANCE) {
+          runOnJS(router.back)();
+        } else {
+          translationX.value = withTiming(0);
+          translationY.value = withTiming(0);
+          containerOpacity.value = withTiming(1);
+        }
       }
     });
 
@@ -108,8 +137,14 @@ export default function ImageFullScreen() {
     }
   };
 
+  const containerStyle = useAnimatedStyle(() => ({
+    opacity: containerOpacity.value,
+  }));
+
   return (
-    <View style={[styles.container, { backgroundColor: theme.screen.background }]}> 
+    <Animated.View
+      style={[styles.container, { backgroundColor: theme.screen.background }, containerStyle]}
+    >
       {showControls && (
         <View style={styles.topRow} pointerEvents='box-none'>
           <TouchableOpacity style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]} onPress={downloadImage}>
@@ -145,7 +180,7 @@ export default function ImageFullScreen() {
           groupPosition='single'
         />
       </BaseBottomModal>
-    </View>
+    </Animated.View>
   );
 }
 
