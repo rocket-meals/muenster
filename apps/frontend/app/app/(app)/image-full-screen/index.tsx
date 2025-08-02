@@ -29,6 +29,11 @@ export default function ImageFullScreen() {
   const pinchScale = useSharedValue(1);
   const scale = useDerivedValue(() => baseScale.value * pinchScale.value);
 
+  const translationX = useSharedValue(0);
+  const translationY = useSharedValue(0);
+  const startX = useSharedValue(0);
+  const startY = useSharedValue(0);
+
   const pinchGesture = Gesture.Pinch()
     .onUpdate((event) => {
       pinchScale.value = event.scale;
@@ -44,15 +49,37 @@ export default function ImageFullScreen() {
       if (baseScale.value !== 1 || pinchScale.value !== 1) {
         baseScale.value = withTiming(1, { duration: 150 });
         pinchScale.value = withTiming(1, { duration: 150 });
+        translationX.value = withTiming(0, { duration: 150 });
+        translationY.value = withTiming(0, { duration: 150 });
       } else {
         baseScale.value = withTiming(2, { duration: 150 });
       }
     });
 
-  const composedGesture = Gesture.Simultaneous(doubleTapGesture, pinchGesture);
+  const panGesture = Gesture.Pan()
+    .onStart(() => {
+      startX.value = translationX.value;
+      startY.value = translationY.value;
+    })
+    .onUpdate((event) => {
+      translationX.value = startX.value + event.translationX;
+      translationY.value = startY.value + event.translationY;
+    })
+    .onEnd(() => {
+      if (scale.value <= 1) {
+        translationX.value = withTiming(0);
+        translationY.value = withTiming(0);
+      }
+    });
+
+  const composedGesture = Gesture.Simultaneous(doubleTapGesture, pinchGesture, panGesture);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+    transform: [
+      { scale: scale.value },
+      { translateX: translationX.value },
+      { translateY: translationY.value },
+    ],
   }));
 
   const toggleControls = () => setShowControls((p) => !p);
