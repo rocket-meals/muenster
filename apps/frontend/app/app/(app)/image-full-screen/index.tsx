@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Platform,
   Dimensions,
+  Text,
 } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -47,10 +48,11 @@ export default function ImageFullScreen() {
   const startX = useSharedValue(0);
   const startY = useSharedValue(0);
   const imageOpacity = useSharedValue(1);
+  const indicatorOpacity = useSharedValue(0);
 
   const windowHeight = Dimensions.get('window').height;
-  const CLOSE_DISTANCE = windowHeight * 0.3;
-  const FADE_DISTANCE = windowHeight * 0.15;
+  const CLOSE_DISTANCE = windowHeight * 0.25;
+  const FADE_DISTANCE = windowHeight * 0.25;
 
   const pinchGesture = Gesture.Pinch()
     .onUpdate((event) => {
@@ -87,10 +89,12 @@ export default function ImageFullScreen() {
       } else {
         translationY.value = event.translationY;
         if (event.translationY > 0) {
-          imageOpacity.value =
-            1 - Math.min(event.translationY / FADE_DISTANCE, 1);
+          const progress = Math.min(event.translationY / FADE_DISTANCE, 1);
+          imageOpacity.value = 1 - progress;
+          indicatorOpacity.value = progress;
         } else {
           imageOpacity.value = 1;
+          indicatorOpacity.value = 0;
         }
       }
     })
@@ -105,6 +109,7 @@ export default function ImageFullScreen() {
           startX.value = 0;
           startY.value = 0;
           imageOpacity.value = withTiming(1);
+          indicatorOpacity.value = withTiming(0);
         }
       }
     });
@@ -120,6 +125,10 @@ export default function ImageFullScreen() {
     opacity: imageOpacity.value,
   }));
 
+  const indicatorStyle = useAnimatedStyle(() => ({
+    opacity: indicatorOpacity.value,
+  }));
+
   useFocusEffect(
     useCallback(() => {
       translationX.value = 0;
@@ -129,6 +138,7 @@ export default function ImageFullScreen() {
       imageOpacity.value = 1;
       baseScale.value = 1;
       pinchScale.value = 1;
+      indicatorOpacity.value = 0;
     }, [])
   );
 
@@ -160,6 +170,13 @@ export default function ImageFullScreen() {
     <Animated.View
       style={[styles.container, { backgroundColor: theme.screen.background }]}
     >
+      <Animated.View
+        pointerEvents='none'
+        style={[styles.backIndicator, indicatorStyle]}
+      >
+        <Ionicons name='chevron-down' size={48} color={theme.screen.text} />
+        <Text style={[styles.backText, { color: theme.screen.text }]}>Release to close</Text>
+      </Animated.View>
       {showControls && (
         <View
           style={[
@@ -247,4 +264,14 @@ const styles = StyleSheet.create({
   iconButton: { padding: 8, borderRadius: 20 },
   imageWrapper: { width: '100%', height: '100%' },
   image: { width: '100%', height: '100%' },
+  backIndicator: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backText: { marginTop: 8, fontSize: 16 },
 });
