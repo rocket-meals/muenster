@@ -102,6 +102,8 @@ export default function ImageFullScreen() {
         } else {
           translationX.value = withTiming(0);
           translationY.value = withTiming(0);
+          startX.value = 0;
+          startY.value = 0;
           imageOpacity.value = withTiming(1);
         }
       }
