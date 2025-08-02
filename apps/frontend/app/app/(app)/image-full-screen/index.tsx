@@ -65,8 +65,16 @@ export default function ImageFullScreen() {
       pinchScale.value = event.scale;
     })
     .onEnd(() => {
-      baseScale.value = baseScale.value * pinchScale.value;
-      pinchScale.value = 1;
+      const nextScale = baseScale.value * pinchScale.value;
+      if (nextScale < 1) {
+        baseScale.value = withTiming(1, { duration: 150 });
+        pinchScale.value = 1;
+        translationX.value = withTiming(0, { duration: 150 });
+        translationY.value = withTiming(0, { duration: 150 });
+      } else {
+        baseScale.value = nextScale;
+        pinchScale.value = 1;
+      }
     });
 
   const doubleTapGesture = Gesture.Tap()
