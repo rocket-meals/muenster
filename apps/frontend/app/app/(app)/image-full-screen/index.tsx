@@ -10,6 +10,7 @@ import {
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
+import { useSelector } from 'react-redux';
 import Animated, {
   runOnJS,
   useSharedValue,
@@ -24,10 +25,12 @@ import SettingsList from '@/components/SettingsList';
 import * as FileSystem from 'expo-file-system';
 import useToast from '@/hooks/useToast';
 import { getHighResImageUrl } from '@/constants/HelperFunctions';
+import { RootState } from '@/redux/reducer';
 
 export default function ImageFullScreen() {
   const { uri, assetId } = useLocalSearchParams<{ uri?: string; assetId?: string }>();
   const { theme } = useTheme();
+  const { drawerPosition } = useSelector((state: RootState) => state.settings);
   const toast = useToast();
   const [showControls, setShowControls] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
@@ -146,13 +149,52 @@ export default function ImageFullScreen() {
       style={[styles.container, { backgroundColor: theme.screen.background }, containerStyle]}
     >
       {showControls && (
-        <View style={styles.topRow} pointerEvents='box-none'>
-          <TouchableOpacity style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]} onPress={downloadImage}>
-            <Ionicons name='cloud-download-outline' size={28} color={theme.screen.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]} onPress={() => router.back()}>
-            <Ionicons name='close' size={28} color={theme.screen.icon} />
-          </TouchableOpacity>
+        <View
+          style={[
+            styles.topRow,
+            drawerPosition === 'left' ? styles.topRowLeft : styles.topRowRight,
+          ]}
+          pointerEvents='box-none'
+        >
+          {drawerPosition === 'left' ? (
+            <>
+              <TouchableOpacity
+                style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]}
+                onPress={() => router.back()}
+              >
+                <Ionicons name='close' size={28} color={theme.screen.icon} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]}
+                onPress={downloadImage}
+              >
+                <Ionicons
+                  name='cloud-download-outline'
+                  size={28}
+                  color={theme.screen.icon}
+                />
+              </TouchableOpacity>
+            </>
+          ) : (
+            <>
+              <TouchableOpacity
+                style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]}
+                onPress={downloadImage}
+              >
+                <Ionicons
+                  name='cloud-download-outline'
+                  size={28}
+                  color={theme.screen.icon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]}
+                onPress={() => router.back()}
+              >
+                <Ionicons name='close' size={28} color={theme.screen.icon} />
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       )}
       <GestureDetector gesture={composedGesture}>
@@ -187,7 +229,9 @@ export default function ImageFullScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   flex: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  topRow: { position: 'absolute', top: 40, right: 20, flexDirection: 'row', gap: 10, zIndex: 2 },
+  topRow: { position: 'absolute', top: 40, flexDirection: 'row', gap: 10, zIndex: 2 },
+  topRowLeft: { left: 20 },
+  topRowRight: { right: 20 },
   iconButton: { padding: 8, borderRadius: 20 },
   imageWrapper: { width: '100%', height: '100%' },
   image: { width: '100%', height: '100%' },
