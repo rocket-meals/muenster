@@ -44,7 +44,10 @@ export default function ImageFullScreen() {
 
   const baseScale = useSharedValue(1);
   const pinchScale = useSharedValue(1);
-  const scale = useDerivedValue(() => baseScale.value * pinchScale.value);
+  const dismissScale = useSharedValue(1);
+  const scale = useDerivedValue(
+    () => baseScale.value * pinchScale.value * dismissScale.value
+  );
 
   const translationX = useSharedValue(0);
   const translationY = useSharedValue(0);
@@ -89,15 +92,18 @@ export default function ImageFullScreen() {
         translationX.value = startX.value + event.translationX;
         translationY.value = startY.value + event.translationY;
         imageOpacity.value = 1;
+        dismissScale.value = 1;
       } else {
         translationY.value = event.translationY;
         if (event.translationY > 0) {
           const progress = Math.min(event.translationY / FADE_DISTANCE, 1);
           imageOpacity.value = 1 - progress;
           indicatorOpacity.value = progress;
+          dismissScale.value = 1 - progress * 0.5;
         } else {
           imageOpacity.value = 1;
           indicatorOpacity.value = 0;
+          dismissScale.value = 1;
         }
       }
     })
@@ -105,6 +111,7 @@ export default function ImageFullScreen() {
       if (scale.value <= 1) {
         if (translationY.value > CLOSE_DISTANCE) {
           imageOpacity.value = 1;
+          dismissScale.value = 1;
           runOnJS(router.back)();
         } else {
           translationX.value = withTiming(0);
@@ -113,6 +120,7 @@ export default function ImageFullScreen() {
           startY.value = 0;
           imageOpacity.value = withTiming(1);
           indicatorOpacity.value = withTiming(0);
+          dismissScale.value = withTiming(1);
         }
       }
     });
@@ -142,6 +150,7 @@ export default function ImageFullScreen() {
       baseScale.value = 1;
       pinchScale.value = 1;
       indicatorOpacity.value = 0;
+      dismissScale.value = 1;
     }, [])
   );
 
