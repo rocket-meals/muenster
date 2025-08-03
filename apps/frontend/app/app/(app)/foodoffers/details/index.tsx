@@ -551,7 +551,7 @@ export default function FoodDetailsScreen() {
                         <Text
                           style={{
                             ...styles.totalRating,
-                            color: theme.screen.text,
+                            color: '#fff',
                           }}
                         >
                           {(foodDetails?.rating_average ||
@@ -674,7 +674,7 @@ export default function FoodDetailsScreen() {
                         <Text
                           style={{
                             ...styles.mobileTotalRating,
-                            color: theme.screen.text,
+                            color: '#fff',
                           }}
                         >
                           {(foodDetails?.rating_average ||
