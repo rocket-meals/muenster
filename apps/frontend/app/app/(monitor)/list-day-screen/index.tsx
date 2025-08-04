@@ -43,7 +43,7 @@ import {
   sortByFoodName,
   sortByFoodOfferCategoryOnly,
   sortByFoodCategoryOnly,
-} from '@/helper/sortingHelper';
+} from 'repo-depkit-common';
 import { MarkingGroupsHelper } from '@/redux/actions/MarkingGroups/MarkingGroups';
 const index = () => {
   useSetPageTitle('list-day-screen');
