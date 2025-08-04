@@ -160,7 +160,7 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet }) => {
             <TouchableOpacity
               style={{
                 ...styles.calendarAction,
-                backgroundColor: theme.screen.iconBg,
+                backgroundColor: foods_area_color,
               }}
               onPress={() =>
                 navigateMonth(direction === 'left' ? 'prev' : 'next')
@@ -169,7 +169,7 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet }) => {
               <AntDesign
                 name={direction === 'left' ? 'arrowleft' : 'arrowright'}
                 size={20}
-                color={foods_area_color}
+                color={contrastColor}
               />
             </TouchableOpacity>
           )}
@@ -187,7 +187,7 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet }) => {
             monthTextColor: theme.screen.text,
             dayTextColor: theme.screen.text,
             textDisabledColor: 'gray',
-            arrowColor: foods_area_color,
+            arrowColor: contrastColor,
             disabledArrowColor: 'gray',
             textDayFontFamily: 'Poppins_400Regular',
             textMonthFontFamily: 'Poppins_400Regular',
