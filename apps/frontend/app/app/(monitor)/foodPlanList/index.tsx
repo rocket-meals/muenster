@@ -132,8 +132,16 @@ const Index = () => {
   }, [initialFoodAttributes]);
 
   const handleSortChange = (id: string, newValue: string) => {
-    const numericValue = Math.max(0, Math.min(99, parseInt(newValue) || 0));
-
+    const parsed = parseInt(newValue, 10);
+    if (!newValue || parsed === 0) {
+      setFoodAttributes((prev: any) =>
+        prev.map((attr: any) =>
+          attr.id === id ? { ...attr, manualSort: undefined } : attr
+        )
+      );
+      return;
+    }
+    const numericValue = Math.max(1, Math.min(99, parsed));
     setFoodAttributes((prev: any) =>
       prev.map((attr: any) =>
         attr.id === id ? { ...attr, manualSort: numericValue } : attr
