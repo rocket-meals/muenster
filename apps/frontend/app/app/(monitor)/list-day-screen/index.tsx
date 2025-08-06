@@ -200,8 +200,19 @@ const index = () => {
             ? JSON.parse(foodAttributesData)
             : foodAttributesData;
 
-        const attributeEntries: Array<{ id: string; manualSort?: number }> =
-          parsedData ? Object.values(parsedData) : [];
+        let attributeEntries: Array<{ id: string; manualSort?: number }> = [];
+
+        if (Array.isArray(parsedData)) {
+          // Legacy support: array of ids
+          if (parsedData.every((item) => typeof item === 'string')) {
+            attributeEntries = parsedData.map((id: string) => ({ id }));
+          } else {
+            // Array of objects with id/manualSort
+            attributeEntries = parsedData as Array<{ id: string; manualSort?: number }>;
+          }
+        } else if (parsedData && typeof parsedData === 'object') {
+          attributeEntries = Object.values(parsedData);
+        }
 
         let attributeDataCopy: any[] = [];
         if (
