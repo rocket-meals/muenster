@@ -388,6 +388,11 @@ export enum TranslationKeys {
   group_app_settings = 'group_app_settings',
   pull_down_to_close = 'pull_down_to_close',
   group_app_management = 'group_app_management',
+  game_ideas = 'game_ideas',
+  guess_better_rated_dish = 'guess_better_rated_dish',
+  guess_most_disliked_marking = 'guess_most_disliked_marking',
+  food_memory_game = 'food_memory_game',
+  guess_more_expensive_dish = 'guess_more_expensive_dish',
   // NOT IN TRANSLATION
   feedback_and_support = 'Feedback & Support',
   Food_Plan_Week = 'FoodPlan:Week',
