@@ -43,7 +43,7 @@ const LeafletViewScreen = () => {
   return (
     <View style={styles.container}>
       <LeafletView
-        style={styles.map}
+        webviewStyle={styles.map}
         mapCenterPosition={CENTER}
         zoom={13}
         source={{ html }}
