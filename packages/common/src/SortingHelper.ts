@@ -1,5 +1,5 @@
-import * as DatabaseTypes from './databaseTypes/types';
-import { StringHelper } from './StringHelper';
+import { StringHelper } from 'repo-depkit-common/src/StringHelper';
+import * as DatabaseTypes from 'repo-depkit-common/src/databaseTypes/types';
 
 export type TranslationEntry = {
   languages_code: string;
@@ -259,9 +259,17 @@ export function sortByOwnFavorite(foodOffers: DatabaseTypes.Foodoffers[], ownFee
     const feedbackMap = new Map(
       ownFeedBacks.map((feedback: any) => [feedback.food, feedback.rating])
     );
+  const getFoodId = (
+    food: string | DatabaseTypes.Foods | null | undefined
+  ): string | undefined => {
+    if (typeof food === 'object' && food !== null) {
+      return food.id;
+    }
+    return food ?? undefined;
+  };
   foodOffers = foodOffers.sort((a, b) => {
-      const aRating = feedbackMap.get(a?.food?.id) ?? null;
-      const bRating = feedbackMap.get(b?.food?.id) ?? null;
+      const aRating = feedbackMap.get(getFoodId(a.food)) ?? null;
+      const bRating = feedbackMap.get(getFoodId(b.food)) ?? null;
 
       const getCategory = (rating: any) => {
         if (isRatingNegative(rating)) return 3; // Lowest priority
