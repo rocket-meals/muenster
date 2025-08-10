@@ -1,22 +1,26 @@
-import { beforeAll, describe, expect, it } from '@jest/globals';
+import { afterAll, beforeAll, describe, expect, it } from '@jest/globals';
+import getDatabase from '@directus/api/database/index';
+import install from '@directus/api/database/seeds/run';
+import migrate from '@directus/api/database/migrations/run';
+import { getSchema } from '@directus/api/utils/get-schema';
+import { ItemsService } from '@directus/api/services/items';
 
 let usersService: any;
+let db: any;
 
 beforeAll(async () => {
   process.env.DB_CLIENT = 'sqlite3';
   process.env.DB_FILENAME = ':memory:';
 
-  const { default: getDatabase } = await import('@directus/api/database/index');
-  const { default: install } = await import('@directus/api/database/seeds/run');
-  const { default: migrate } = await import('@directus/api/database/migrations/run');
-  const { getSchema } = await import('@directus/api/utils/get-schema');
-  const { ItemsService } = await import('@directus/api/services/items');
-
-  const db = getDatabase();
+  db = getDatabase();
   await install(db);
   await migrate(db);
   const schema = await getSchema({ database: db });
   usersService = new ItemsService('directus_users', { schema, knex: db });
+});
+
+afterAll(async () => {
+  await db.destroy();
 });
 
 describe('in-memory database with ItemService', () => {

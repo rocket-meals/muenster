@@ -12,15 +12,22 @@
 	"files": [
 		"dist"
 	],
-	"jest": {
-		"testEnvironment": "jest-environment-node",
-		"transform": {
-			"^.+\\.ts$": [
-				"ts-jest"
-			]
-		},
-		"testTimeout": 20000
-	},
+       "jest": {
+               "testEnvironment": "jest-environment-node",
+               "extensionsToTreatAsEsm": [".ts"],
+               "moduleNameMapper": {
+                       "^(\\.{1,2}/.*)\\.js$": "$1"
+               },
+               "transform": {
+                       "^.+\\.ts$": [
+                               "ts-jest",
+                               {
+                                       "useESM": true
+                               }
+                       ]
+               },
+               "testTimeout": 20000
+       },
 	"directus:extension": {
 		"type": "bundle",
 		"path": {
