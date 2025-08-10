@@ -12,7 +12,7 @@ const QrCode: React.FC<QrCodeProps> = ({
   ecl,
   backgroundColor = 'white',
   margin = 0,
-  quietZone = 10,
+  quietZone = 5,
 }) => {
   const imageSource = image ? image : imageUrl ? { uri: imageUrl } : undefined;
 
