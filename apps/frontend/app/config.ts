@@ -241,7 +241,11 @@ export function getFinalConfig(config?: any){
                 ],
                 "expo-localization",
                 "expo-asset",
-                "expo-font"
+                "expo-font",
+                [
+                    "expo-osm-sdk/plugin",
+                    { "locationPermissionText": "This app uses location for map features" }
+                ]
             ],
             "experiments": {
                 "typedRoutes": true,
