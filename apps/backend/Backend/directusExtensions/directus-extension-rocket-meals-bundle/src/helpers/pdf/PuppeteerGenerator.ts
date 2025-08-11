@@ -1,6 +1,7 @@
 import {PdfGeneratorOptions, RequestOptions} from "./PdfGeneratorHelper";
 import { default as puppeteerCore } from "puppeteer-core";
 import {EnvVariableHelper} from "../EnvVariableHelper";
+import path from "path";
 
 export class PuppeteerGenerator {
     public static PuppeteerCore: any = puppeteerCore;
@@ -78,14 +79,44 @@ export class PuppeteerGenerator {
 
             //console.log("Bearer token: " + requestOptions.bearerToken);
 
-            // Intercept requests to add Authorization header
-            if (requestOptions.bearerToken) {
+
+            if (requestOptions.bearerToken || requestOptions.mockImageResolution) {
                 await page.setRequestInterception(true);
+
                 page.on("request", (request: any) => {
-                    const headers = {
-                        ...request.headers(),
-                        Authorization: `Bearer ${requestOptions.bearerToken}`
-                    };
+                    const headers = requestOptions.bearerToken
+                        ? { ...request.headers(), Authorization: `Bearer ${requestOptions.bearerToken}` }
+                        : request.headers();
+
+                    if (requestOptions.mockImageResolution && request.resourceType() === "image") {
+                        console.log("Mocking image resolution for:", request.url());
+
+                        // Aus URL evtl. Breite/Höhe extrahieren
+                        const match = request.url().match(/\/(\d+)(?:\/(\d+))?/);
+                        const width = match?.[1] || "200";
+                        const height = match?.[2] || match?.[1] || "200";
+
+                        // Einfaches SVG mit grauem Hintergrund, Text in der Mitte und Ecken
+                        const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+                    <rect width="100%" height="100%" fill="#ccc"/>
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
+                          font-family="sans-serif" font-size="20" fill="#666">Image</text>
+                    <text x="5" y="15" font-family="sans-serif" font-size="12" fill="#666">TL</text>
+                    <text x="${Number(width) - 15}" y="15" font-family="sans-serif" font-size="12" fill="#666">TR</text>
+                    <text x="5" y="${Number(height) - 5}" font-family="sans-serif" font-size="12" fill="#666">BL</text>
+                    <text x="${Number(width) - 15}" y="${Number(height) - 5}" font-family="sans-serif" font-size="12" fill="#666">BR</text>
+                </svg>
+            `;
+
+                        request.respond({
+                            status: 200,
+                            contentType: "image/svg+xml",
+                            body: Buffer.from(svg)
+                        });
+                        return;
+                    }
+
                     request.continue({ headers });
                 });
             }

@@ -263,11 +263,10 @@ export class FormHelper {
         return markdownContent;
     }
 
-    public static async generatePdfFromHtml(html: string, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface): Promise<Buffer> {
-        let requestOptions: RequestOptions = {
-            bearerToken: null
+    public static async generatePdfFromHtml(html: string, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface, requestOptions?: RequestOptions): Promise<Buffer> {
+        if(!requestOptions){
+            requestOptions = {};
         }
-
         let adminBearerToken = await myDatabaseHelperInterface.getAdminBearerToken();
         if(adminBearerToken){
             requestOptions.bearerToken = adminBearerToken;
@@ -288,9 +287,9 @@ export class FormHelper {
         return html;
     }
 
-    public static async generatePdfFromForm(formExtractRelevantInformation: FormExtractRelevantInformation, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface): Promise<Buffer> {
+    public static async generatePdfFromForm(formExtractRelevantInformation: FormExtractRelevantInformation, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface, requestOptions?: RequestOptions): Promise<Buffer> {
         let html = await this.generateHtmlFromForm(formExtractRelevantInformation, myDatabaseHelperInterface);
-        let pdfBuffer = await this.generatePdfFromHtml(html, myDatabaseHelperInterface);
+        let pdfBuffer = await this.generatePdfFromHtml(html, myDatabaseHelperInterface, requestOptions);
         return pdfBuffer;
     }
 }

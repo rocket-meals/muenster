@@ -13,7 +13,7 @@ describe("Pdf Generator Test", () => {
 
         let html = await getTestHtmlForBaseGermanMarkdownContent();
         let requestOptions = {
-            bearerToken: null
+            mockImageResolution: true // mock image resolution to avoid loading real images
         }
         let pdfBuffer = await PdfGeneratorHelper.generatePdfFromHtml(html, requestOptions);
         expect(pdfBuffer).toBeTruthy();

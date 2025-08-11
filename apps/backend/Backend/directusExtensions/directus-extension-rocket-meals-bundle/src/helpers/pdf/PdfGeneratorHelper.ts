@@ -20,6 +20,7 @@ export type PdfGeneratorOptions = {
 
 export type RequestOptions = {
     bearerToken?: string | null | undefined,
+    mockImageResolution?: boolean, // if true, images are mocked with a placeholder image
 }
 
 

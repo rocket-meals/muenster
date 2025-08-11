@@ -12,7 +12,11 @@ describe("Pdf Generator Test", () => {
         let testFormExtractRelevantInformation = FormHelper.getExampleFormExtractRelevantInformation();
         let myDatabaseTestableHelperInterface = new MyDatabaseTestableHelper();
 
-        let pdfBuffer = await FormHelper.generatePdfFromForm(testFormExtractRelevantInformation, myDatabaseTestableHelperInterface);
+        let requestOptions = {
+            mockImageResolution: true // mock image resolution to avoid loading real images
+        }
+
+        let pdfBuffer = await FormHelper.generatePdfFromForm(testFormExtractRelevantInformation, myDatabaseTestableHelperInterface, requestOptions);
         expect(pdfBuffer).toBeTruthy();
         let savePath = TestArtifacts.saveTestArtifact(pdfBuffer, "form/pdf/" + "example-form" + ".pdf");
         expect(true).toBeTruthy();
