@@ -20,7 +20,7 @@ import {
   FoodSortOption,
   CampusSortOption,
   ApartmentSortOption,
-} from '@/constants/SortingEnums';
+} from 'repo-depkit-common';
 
 const initialState = {
   selectedTheme: 'systematic',

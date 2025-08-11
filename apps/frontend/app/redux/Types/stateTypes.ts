@@ -3,7 +3,7 @@ import {
   FoodSortOption,
   CampusSortOption,
   ApartmentSortOption,
-} from '@/constants/SortingEnums';
+} from 'repo-depkit-common';
 
 export interface AuthState {
   user: DatabaseTypes.DirectusUsers | Record<string, any> | null;
