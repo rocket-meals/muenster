@@ -17,7 +17,7 @@ export class FetchHelper{
         return text;
     }
 
-    static async fetch(url: string, options?: any): Promise<Response> {
+    static async fetch(url: string, options?: any) {
         const response = await undici.fetch(url, {
             dispatcher: agent,
             ...options
