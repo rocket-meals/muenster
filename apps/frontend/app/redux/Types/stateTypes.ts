@@ -53,6 +53,7 @@ export interface SettingsState {
   wikis: DatabaseTypes.Wikis[];
   nickNameLocal: string;
   amountColumnsForcard: number;
+  useWebpForAssets: boolean;
 }
 
 export interface FoodState {
