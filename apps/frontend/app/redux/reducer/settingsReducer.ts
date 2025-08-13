@@ -39,7 +39,7 @@ const initialState = {
   wikis: [],
   nickNameLocal: '',
   amountColumnsForcard: 0,
-  useWebpForAssets: false,
+  useWebpForAssets: true,
 };
 
 const settingReducer = (state = initialState, actions: any) => {
