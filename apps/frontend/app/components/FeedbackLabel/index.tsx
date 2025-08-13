@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, Text, TouchableOpacity, View } from 'react-native';
+import MyImage from '@/components/MyImage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import styles from './styles';
@@ -116,7 +117,7 @@ const FeedbackLabel: React.FC<FeedbackLabelProps> = ({
           >
             {/* <View > */}
             {imageUrl && (
-              <Image source={{ uri: imageUrl }} style={styles.icon} />
+              <MyImage source={{ uri: imageUrl }} style={styles.icon} />
             )}
             {icon && getIconComponent(icon, theme.screen.icon)}
             <Text

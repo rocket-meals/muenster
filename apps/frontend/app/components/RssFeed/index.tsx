@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, Linking, Image } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, Linking } from 'react-native';
+import MyImage from '@/components/MyImage';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 
@@ -105,7 +106,7 @@ const RssFeed: React.FC<RssFeedProps> = ({ urls, switchIntervalInSeconds }) => {
       <TouchableOpacity onPress={() => currentItem.link && Linking.openURL(currentItem.link)}>
         <Text style={[styles.title, { color: theme.screen.text }]}>{currentItem.title}</Text>
         {currentItem.image && (
-          <Image source={{ uri: currentItem.image }} style={styles.image} resizeMode='cover' />
+          <MyImage source={{ uri: currentItem.image }} style={styles.image} resizeMode='cover' />
         )}
         {currentItem.content && (
           <Text style={[styles.body, { color: theme.screen.text }]}>{currentItem.content}</Text>

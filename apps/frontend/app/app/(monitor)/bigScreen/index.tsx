@@ -1,12 +1,5 @@
-import {
-  Animated,
-  Dimensions,
-  Easing,
-  Image,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import { Animated, Dimensions, Easing, ScrollView, Text, View } from 'react-native';
+import MyImage from '@/components/MyImage';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -455,7 +448,7 @@ const Index = () => {
           <>
             {height > width && (
               <View style={{ ...styles.col2 }}>
-                <Image
+                <MyImage
                   source={
                     currentFood?.food?.image_remote_url ||
                     getImageUrl(currentFood?.food?.image)
@@ -607,7 +600,7 @@ const Index = () => {
         <>
           {height < width && (
             <View style={{ ...styles.col2 }}>
-              <Image
+              <MyImage
                 source={
                   currentFood?.food?.image_remote_url ||
                   getImageUrl(currentFood?.food?.image)
@@ -632,7 +625,7 @@ const Index = () => {
       {foods && foods?.length < 1 && (
         <View style={styles.emptyContainer}>
           <View style={{ flex: 1 }}>
-            <Image
+            <MyImage
               source={require('@/assets/images/icon.png')}
               resizeMode='cover'
             />

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
+import MyImage from '@/components/MyImage';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@/hooks/useTheme';
 import { useMyContrastColor } from '@/helper/colorHelper';
@@ -69,7 +70,7 @@ const MarkingIcon: React.FC<MarkingIconProps> = ({
   if (markingImage?.uri) {
     return (
       <View style={containerStyle}>
-        <Image
+        <MyImage
           source={markingImage}
           style={{
             width: size * imageScale,

@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
+import { View, Text, Dimensions, ScrollView } from 'react-native';
+import MyImage from '@/components/MyImage';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
@@ -134,7 +129,7 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
       >
         <View style={{ alignItems: 'center' }}>
           <View style={styles.imageContainer}>
-            <Image
+            <MyImage
               source={require('../../assets/images/dataAccess.png')}
               style={styles.image}
             />

@@ -1,12 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Platform,
-  Dimensions,
-  Image,
-} from 'react-native';
+import { View, TouchableOpacity, Text, Platform, Dimensions } from 'react-native';
+import MyImage from '@/components/MyImage';
 import { useTheme } from '@/hooks/useTheme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
@@ -132,7 +126,7 @@ const SignatureInterface = ({
     <View style={{ ...styles.container, backgroundColor: theme.screen.iconBg }}>
       {value && typeof value === 'string' && value?.startsWith('https') ? (
         <View style={styles.fileContainer}>
-          <Image
+          <MyImage
             source={{ uri: value }}
             style={{
               ...styles.filePreview,

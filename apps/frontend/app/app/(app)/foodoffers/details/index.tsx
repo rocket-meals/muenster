@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState,} from 'react';
 import {useFocusEffect, useLocalSearchParams} from 'expo-router';
-import {Dimensions, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View,} from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import MyImage from '@/components/MyImage';
 import { router } from 'expo-router';
 import styles from './styles';
 import {useTheme} from '@/hooks/useTheme';
@@ -510,7 +511,7 @@ export default function FoodDetailsScreen() {
                     }}
                   >
                   <TouchableOpacity onPress={openFullScreenImage} activeOpacity={0.9}>
-                    <Image
+                    <MyImage
                       style={styles.featuredImage}
                       source={
                         foodDetails?.image_remote_url || foodDetails?.image
@@ -642,7 +643,7 @@ export default function FoodDetailsScreen() {
           ) : (
             <View style={styles.mobileImageContainer}>
               <TouchableOpacity onPress={openFullScreenImage} activeOpacity={0.9}>
-              <Image
+              <MyImage
                 source={
                   foodDetails?.image_remote_url || foodDetails?.image
                     ? {

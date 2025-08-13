@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
+import MyImage from '@/components/MyImage';
 import styles from './styles';
 import { CardWithTextProps } from './types';
 
@@ -29,7 +30,7 @@ const CardWithText: React.FC<CardWithTextProps> = ({
     <TouchableOpacity style={[styles.card, topRadiusStyle, containerStyle]} {...rest}>
       <View style={[styles.imageContainer, topRadiusStyle, imageContainerStyle]}>
         {imageSource ? (
-          <Image style={[styles.image, topRadiusStyle, imageStyle]} source={imageSource} />
+          <MyImage style={[styles.image, topRadiusStyle, imageStyle]} source={imageSource} />
         ) : null}
         {imageChildren}
       </View>

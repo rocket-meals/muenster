@@ -1,15 +1,5 @@
-import {
-  ActivityIndicator,
-  Dimensions,
-  Image,
-  Linking,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, Linking, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import MyImage from '@/components/MyImage';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from '@/hooks/useTheme';
 import styles from './styles';
@@ -168,7 +158,7 @@ const details = () => {
                     : Dimensions.get('window').width - 20,
               }}
             >
-              <Image
+              <MyImage
                 source={
                   campusDetails?.image || campusDetails?.image_remote_url
                     ? {

@@ -1,4 +1,5 @@
-import {ActivityIndicator, Dimensions, Image, Linking, Pressable, Text, View} from 'react-native';
+import { ActivityIndicator, Dimensions, Linking, Pressable, Text, View } from 'react-native';
+import MyImage from '@/components/MyImage';
 import React from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -173,7 +174,7 @@ const handleRedirect = () => {
                                 </TooltipContent>
                               </Tooltip>
                             ) : image ? (
-                              <Image
+                              <MyImage
                                 source={image}
                                 style={[
                                   {

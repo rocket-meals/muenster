@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SET_DRAWER_POSITION } from '@/redux/Types/types';
 import ModalComponent from '../ModalSetting/ModalComponent';
 import { languages } from '../../constants/SettingData';
-import { Image } from 'expo-image';
+import MyImage from '@/components/MyImage';
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import { TranslationKeys } from '@/locales/keys';
@@ -100,7 +100,7 @@ const LoginHeader = () => {
   };
   return (
     <View style={styles.header}>
-      <Image
+      <MyImage
         source={{
           uri: getImageUrl(serverInfo?.info?.project?.project_logo),
         }}
@@ -156,7 +156,7 @@ const LoginHeader = () => {
                 changeLanguage(language);
               }}
             >
-              <Image
+              <MyImage
                 source={language.flag}
                 style={styles.flagIcon}
                 cachePolicy={'memory-disk'}

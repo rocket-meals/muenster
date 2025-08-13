@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import { View, Text, Dimensions, Image, ScrollView } from 'react-native';
+import { View, Text, Dimensions, ScrollView } from 'react-native';
+import MyImage from '@/components/MyImage';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import Form from '@/components/Login/Form';
@@ -239,7 +240,7 @@ export default function Login() {
     return (
       <View style={styles.detailedContentContainer}>
         {imageUrl && (
-          <Image
+          <MyImage
             source={{ uri: imageUrl }}
             style={{
               width: '95%',

@@ -1,12 +1,5 @@
-import {
-  Dimensions,
-  Image,
-  Linking,
-  Platform,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Dimensions, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
+import MyImage from '@/components/MyImage';
 import React, { useEffect, useState } from 'react';
 import styles from './styles';
 import { FontAwesome6 } from '@expo/vector-icons';
@@ -90,7 +83,7 @@ const NewsItem: React.FC<any> = ({ news }) => {
           height: screenWidth > 768 ? 220 : 180,
         }}
       >
-        <Image
+        <MyImage
           source={{
             uri: news?.image_remote_url,
           }}

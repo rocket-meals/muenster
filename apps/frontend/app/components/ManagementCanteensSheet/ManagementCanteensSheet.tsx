@@ -1,4 +1,5 @@
-import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
+import MyImage from '@/components/MyImage';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
@@ -159,7 +160,7 @@ const ManagementCanteensSheet: React.FC<ManagementCanteensSheetProps> = ({
                   height: screenWidth > 800 ? 210 : 160,
                 }}
               >
-                <Image
+                <MyImage
                   style={styles.image}
                   source={
                     canteen?.image_url || canteensData[index]?.image

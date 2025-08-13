@@ -1,12 +1,5 @@
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-  Platform,
-} from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, SafeAreaView, Platform } from 'react-native';
+import MyImage from '@/components/MyImage';
 import React, { useEffect } from 'react';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
@@ -393,7 +386,7 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({
             onPress={() => navigation.navigate('foodoffers')}
           >
             <View style={styles.logoContainer}>
-              <Image
+              <MyImage
                 source={{
                   uri: getImageUrl(serverInfo?.info?.project?.project_logo),
                 }}
