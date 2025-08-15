@@ -1,6 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
-import MyImage from '@/components/MyImage';
+import { View, Image } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import { QrCodeProps, QrCodeEcl } from './types';
 
@@ -54,7 +53,7 @@ const QrCode: React.FC<QrCodeProps> = ({
             borderRadius: 2,
           }}
         >
-          <MyImage
+          <Image
             source={imageSource}
             style={{ width: innerSizePx, height: innerSizePx, resizeMode: 'contain' }}
           />

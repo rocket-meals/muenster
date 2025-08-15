@@ -1,6 +1,5 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
-import MyImage from '@/components/MyImage';
+import { Image, ScrollView, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import { useTheme } from '@/hooks/useTheme';
@@ -62,7 +61,7 @@ const AppDownload = () => {
       }}
     >
       <View style={styles.content}>
-        <MyImage source={iconSource} style={styles.icon} />
+        <Image source={iconSource} style={styles.icon} />
         <View style={styles.itemsContainer}>
           <DownloadItem
             label='iOS'

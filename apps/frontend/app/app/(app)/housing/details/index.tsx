@@ -1,5 +1,15 @@
-import { ActivityIndicator, Dimensions, Linking, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import MyImage from '@/components/MyImage';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  Linking,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTheme } from '@/hooks/useTheme';
 import styles from './styles';
@@ -172,7 +182,7 @@ const details = () => {
                     : Dimensions.get('window').width - 20,
               }}
             >
-              <MyImage
+              <Image
                 source={
                   apartmentDetails?.image || apartmentDetails?.image_remote_url
                     ? {

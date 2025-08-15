@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Dimensions, View, Platform, Linking, Text } from 'react-native';
-import MyImage from '@/components/MyImage';
+import {
+  ScrollView,
+  Dimensions,
+  View,
+  Image,
+  Platform,
+  Linking,
+  Text,
+} from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { router } from 'expo-router';
 import SettingsList from '@/components/SettingsList';
@@ -76,7 +83,7 @@ const supportfaq = () => {
       <ScrollView>
         <View style={{ alignItems: 'center', marginBottom: 20 }}>
           <View style={styles.imageContainer}>
-            <MyImage
+            <Image
               source={require('../../../assets/images/dataAccess.png')}
               style={styles.image}
             />

@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import MyImage from '@/components/MyImage';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
@@ -68,7 +67,7 @@ const LanguageSheet: React.FC<LanguageSheetProps> = ({
               closeSheet();
             }}
           >
-            <MyImage
+            <Image
               source={language.flag}
               style={styles.flagIcon}
               cachePolicy={'memory-disk'}

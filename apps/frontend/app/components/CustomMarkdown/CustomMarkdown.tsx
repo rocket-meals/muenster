@@ -1,8 +1,8 @@
 import { DimensionValue, Linking, Text, View } from 'react-native';
-import MyImage from '@/components/MyImage';
 import React, { useState } from 'react';
 import CustomCollapsible from '../CustomCollapsible/CustomCollapsible';
 import RedirectButton from '../RedirectButton';
+import { Image } from 'react-native';
 import styles from './styles';
 import { CustomMarkdownProps } from './types';
 import { myContrastColor } from '@/helper/colorHelper';
@@ -194,7 +194,7 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
                   padding: 10,
                 }}
               >
-                <MyImage
+                <Image
                   source={{ uri: url }}
                   style={{
                     width: (imageWidth ? imageWidth : '100%') as DimensionValue,

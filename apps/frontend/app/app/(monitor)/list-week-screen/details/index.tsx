@@ -1,5 +1,12 @@
-import { View, Text, ScrollView, Dimensions, ActivityIndicator, Platform } from 'react-native';
-import MyImage from '@/components/MyImage';
+import {
+  View,
+  Text,
+  ScrollView,
+  Dimensions,
+  Image,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '@/hooks/useTheme';
@@ -634,7 +641,7 @@ const index = () => {
                                               </Text>
                                             </View>
                                           ) : marking?.image?.uri ? (
-                                            <MyImage
+                                            <Image
                                               key={idx}
                                               source={marking.image.uri}
                                               style={{

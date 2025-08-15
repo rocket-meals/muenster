@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
-import MyImage from '@/components/MyImage';
+import { Image, Pressable, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import styles from './styles';
@@ -144,7 +143,7 @@ const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({
             onHoverOut={() => setShowTooltip(false)}
           >
             {label?.image_remote_url || label?.image ? (
-              <MyImage
+              <Image
                 source={{
                   uri: label?.image_remote_url || getImageUrl(label?.image),
                 }}

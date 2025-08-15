@@ -24,8 +24,7 @@ import {
   Poppins_900Black,
   Poppins_900Black_Italic,
 } from '@expo-google-fonts/poppins';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
-import MyImage from '@/components/MyImage';
+import { Image, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
@@ -98,7 +97,7 @@ export default function Layout() {
           backgroundColor: '#ffffff',
         }}
       >
-        <MyImage
+        <Image
           source={require('@/assets/images/company.png')}
           style={{ width: 250, height: 250 }}
           resizeMode='contain'

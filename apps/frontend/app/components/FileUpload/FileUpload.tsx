@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import MyImage from '@/components/MyImage';
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -269,7 +268,7 @@ const FileUpload = ({
                   >
                     <Ionicons name='close' size={18} color={'red'} />
                   </TouchableOpacity>
-                  <MyImage
+                  <Image
                     source={{ uri: item?.image }}
                     style={styles.filePreview}
                   />

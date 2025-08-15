@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { FlatList, View, Dimensions } from 'react-native';
-import MyImage from '@/components/MyImage';
+import { Image } from 'expo-image';
 import styles from './styles';
 
 interface AutoImageScrollerProps {
@@ -76,7 +76,7 @@ const AutoImageScroller: React.FC<AutoImageScrollerProps> = ({
     const offset = (columnIndex % 3) * (size / 3);
     return (
       <View style={{ transform: [{ translateY: offset }] }}>
-        <MyImage
+        <Image
           source={{ uri: item }}
           style={[styles.image, { width: size, height: size }]}
           contentFit='cover'

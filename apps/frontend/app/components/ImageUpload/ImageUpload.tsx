@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import MyImage from '@/components/MyImage';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -166,7 +165,7 @@ const ImageUpload = ({
           >
             <Ionicons name='close' size={18} color={'red'} />
           </TouchableOpacity>
-          <MyImage
+          <Image
             source={{ uri: value?.image ? value?.image : value }}
             style={styles.filePreview}
           />

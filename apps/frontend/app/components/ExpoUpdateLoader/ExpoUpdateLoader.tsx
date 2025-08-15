@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
-import MyImage from '@/components/MyImage';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+  Image,
+} from 'react-native';
 import * as Updates from 'expo-updates';
 import usePlatformHelper from '@/helper/platformHelper';
 import { TranslationKeys } from '@/locales/keys';
@@ -88,7 +94,7 @@ const ExpoUpdateLoader: React.FC<ExpoUpdateLoaderProps> = ({ children }) => {
 
   return (
     <View style={styles.container}>
-      <MyImage
+      <Image
         source={require('@/assets/images/company.png')}
         style={styles.logo}
         resizeMode='contain'

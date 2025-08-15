@@ -22,7 +22,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import MyImage from '@/components/MyImage';
+import { Image } from 'expo-image';
 import BaseBottomModal from '@/components/BaseBottomModal';
 import SettingsList from '@/components/SettingsList';
 import * as FileSystem from 'expo-file-system';
@@ -259,8 +259,8 @@ export default function ImageFullScreen() {
         <Animated.View style={styles.flex}>
           <TouchableWithoutFeedback onPress={toggleControls} onLongPress={() => setModalVisible(true)}>
             <Animated.View style={[styles.imageWrapper, animatedStyle]}>
-              <MyImage source={{ uri: lowResUri }} style={styles.image} contentFit='contain' />
-              <MyImage
+              <Image source={{ uri: lowResUri }} style={styles.image} contentFit='contain' />
+              <Image
                 source={{ uri: highResUri }}
                 style={[styles.image, StyleSheet.absoluteFill]}
                 contentFit='contain'

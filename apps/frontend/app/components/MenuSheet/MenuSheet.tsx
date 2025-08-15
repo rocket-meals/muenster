@@ -1,5 +1,4 @@
-import { Text, View } from 'react-native';
-import MyImage from '@/components/MyImage';
+import { Image, Text, View } from 'react-native';
 import React from 'react';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import styles from './styles';
@@ -50,7 +49,7 @@ const MenuSheet: React.FC<MenuSheetProps> = ({ closeSheet }) => {
       </View>
       <View style={{ ...styles.menuContainer, width: isWeb ? '90%' : '100%' }}>
         <View style={styles.imageContainer}>
-          <MyImage
+          <Image
             source={{
               uri:
                 markingDetails?.image_remote_url ||

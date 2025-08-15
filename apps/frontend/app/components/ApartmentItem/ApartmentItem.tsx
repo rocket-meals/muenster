@@ -1,4 +1,4 @@
-import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
 import React, { memo, useEffect, useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { isWeb } from '@/constants/Constants';
