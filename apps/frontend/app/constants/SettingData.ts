@@ -19,42 +19,42 @@ export const themes = [
 export const languages = [
   {
     label: 'English',
-    flag: 'https://flagcdn.com/w80/us.png',
+    flag: flagUs,
     value: "en"
   },
   {
     label: 'Turkish (Türkçe)',
-    flag: 'https://flagcdn.com/w80/tr.png',
+    flag: flagTr,
     value: "tr"
   },
   {
     label: 'Spanish (Español)',
-    flag: 'https://flagcdn.com/w80/es.png',
+    flag: flagEs,
     value: "es"
   },
   {
     label: 'French (Français)',
-    flag: 'https://flagcdn.com/w80/fr.png',
+    flag: flagFr,
     value: "fr"
   },
   {
     label: 'German',
-    flag: 'https://flagcdn.com/w80/de.png',
+    flag: flagDe,
     value: "de"
   },
   {
     label: 'Chinese (中文)',
-    flag: 'https://flagcdn.com/w80/cn.png',
+    flag: flagCn,
     value: "zh"
   },
   {
     label: 'Arabic (العربية)',
-    flag: 'https://flagcdn.com/w80/sa.png',
+    flag: flagAr,
     value: "ar"
   },
   {
     label: 'Russian (Русский)',
-    flag: 'https://flagcdn.com/w80/ru.png',
+    flag: flagRu,
     value: "ru"
   },
 

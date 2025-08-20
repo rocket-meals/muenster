@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import { LanguageSheetProps } from './types';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 import { myContrastColor } from '@/helper/colorHelper';
+import MyImage from '@/components/MyImage';
 
 const LanguageSheet: React.FC<LanguageSheetProps> = ({
   closeSheet,
@@ -67,13 +68,7 @@ const LanguageSheet: React.FC<LanguageSheetProps> = ({
               closeSheet();
             }}
           >
-            <Image
-              source={language.flag}
-              style={styles.flagIcon}
-              cachePolicy={'memory-disk'}
-              transition={500}
-              contentFit='cover'
-            />
+            <MyImage source={language.flag} style={styles.flagIcon} />
             <Text
               style={{
                 ...styles.languageText,
