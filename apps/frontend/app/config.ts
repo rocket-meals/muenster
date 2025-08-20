@@ -177,11 +177,7 @@ export function getFinalConfig(config?: any){
                     "backgroundColor": "#ffffff"
                 },
                 "package": customerConfig.bundleIdAndroid,
-                "versionCode": getBuildNumber(),
-                "blockedPermissions": [
-                    "android.permission.READ_MEDIA_IMAGES",
-                    "android.permission.READ_MEDIA_VIDEO"
-                ]
+                "versionCode": getBuildNumber()
             },
             "web": {
                 "bundler": "metro",
@@ -220,8 +216,8 @@ export function getFinalConfig(config?: any){
                 [
                     "expo-image-picker",
                     {
-                        "photosPermission": "custom photos permission",
-                        "cameraPermission": "Allow $(PRODUCT_NAME) to open the camera",
+                        "photosPermission": "This app needs access to your photo library to capture and manage meal photos as part of the core digital meal plan functionality. Photos are essential for documenting meals in our canteen and restaurant management system.",
+                        "cameraPermission": "This app needs camera access to take photos of meals for the digital meal plan management system. Camera functionality is core to documenting and tracking meals in canteens and restaurants.",
                         "//": "Disables the microphone permission",
                         "microphonePermission": false
                     }
