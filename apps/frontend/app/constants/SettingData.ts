@@ -1,11 +1,20 @@
-import flagUs from '@/assets/images/flags/us.svg';
-import flagTr from '@/assets/images/flags/tr.svg';
-import flagEs from '@/assets/images/flags/es.svg';
-import flagFr from '@/assets/images/flags/fr.svg';
-import flagDe from '@/assets/images/flags/de.svg';
-import flagCn from '@/assets/images/flags/cn.svg';
-import flagAr from '@/assets/images/flags/ar.svg';
-import flagRu from '@/assets/images/flags/ru.svg';
+//import flagUs from '@/assets/images/flags/us.svg';
+//import flagTr from '@/assets/images/flags/tr.svg';
+//import flagEs from '@/assets/images/flags/es.svg';
+//import flagFr from '@/assets/images/flags/fr.svg';
+//import flagDe from '@/assets/images/flags/de.svg';
+//import flagCn from '@/assets/images/flags/cn.svg';
+//import flagSa from '@/assets/images/flags/sa.svg';
+//import flagRu from '@/assets/images/flags/ru.svg';
+const flagUs = require('@/assets/images/flags/us.png');
+const flagTr = require('@/assets/images/flags/tr.png');
+const flagEs = require('@/assets/images/flags/es.png');
+const flagFr = require('@/assets/images/flags/fr.png');
+const flagDe = require('@/assets/images/flags/de.png');
+const flagCn = require('@/assets/images/flags/cn.png');
+const flagSa = require('@/assets/images/flags/sa.png');
+const flagRu = require('@/assets/images/flags/ru.png');
+
 
 
 // Themes
@@ -49,7 +58,7 @@ export const languages = [
   },
   {
     label: 'Arabic (العربية)',
-    flag: flagAr,
+    flag: flagSa,
     value: "ar"
   },
   {
