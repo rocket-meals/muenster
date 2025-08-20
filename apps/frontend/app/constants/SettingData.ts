@@ -1,11 +1,20 @@
-import flagUs from '@/assets/images/flags/us.svg';
-import flagTr from '@/assets/images/flags/tr.svg';
-import flagEs from '@/assets/images/flags/es.svg';
-import flagFr from '@/assets/images/flags/fr.svg';
-import flagDe from '@/assets/images/flags/de.svg';
-import flagCn from '@/assets/images/flags/cn.svg';
-import flagAr from '@/assets/images/flags/ar.svg';
-import flagRu from '@/assets/images/flags/ru.svg';
+//import flagUs from '@/assets/images/flags/us.svg';
+//import flagTr from '@/assets/images/flags/tr.svg';
+//import flagEs from '@/assets/images/flags/es.svg';
+//import flagFr from '@/assets/images/flags/fr.svg';
+//import flagDe from '@/assets/images/flags/de.svg';
+//import flagCn from '@/assets/images/flags/cn.svg';
+//import flagSa from '@/assets/images/flags/sa.svg';
+//import flagRu from '@/assets/images/flags/ru.svg';
+const flagUs = require('@/assets/images/flags/us.png');
+const flagTr = require('@/assets/images/flags/tr.png');
+const flagEs = require('@/assets/images/flags/es.png');
+const flagFr = require('@/assets/images/flags/fr.png');
+const flagDe = require('@/assets/images/flags/de.png');
+const flagCn = require('@/assets/images/flags/cn.png');
+const flagSa = require('@/assets/images/flags/sa.png');
+const flagRu = require('@/assets/images/flags/ru.png');
+
 
 
 // Themes
@@ -19,42 +28,42 @@ export const themes = [
 export const languages = [
   {
     label: 'English',
-    flag: 'https://flagcdn.com/w80/us.png',
+    flag: flagUs,
     value: "en"
   },
   {
     label: 'Turkish (Türkçe)',
-    flag: 'https://flagcdn.com/w80/tr.png',
+    flag: flagTr,
     value: "tr"
   },
   {
     label: 'Spanish (Español)',
-    flag: 'https://flagcdn.com/w80/es.png',
+    flag: flagEs,
     value: "es"
   },
   {
     label: 'French (Français)',
-    flag: 'https://flagcdn.com/w80/fr.png',
+    flag: flagFr,
     value: "fr"
   },
   {
     label: 'German',
-    flag: 'https://flagcdn.com/w80/de.png',
+    flag: flagDe,
     value: "de"
   },
   {
     label: 'Chinese (中文)',
-    flag: 'https://flagcdn.com/w80/cn.png',
+    flag: flagCn,
     value: "zh"
   },
   {
     label: 'Arabic (العربية)',
-    flag: 'https://flagcdn.com/w80/sa.png',
+    flag: flagSa,
     value: "ar"
   },
   {
     label: 'Russian (Русский)',
-    flag: 'https://flagcdn.com/w80/ru.png',
+    flag: flagRu,
     value: "ru"
   },
 

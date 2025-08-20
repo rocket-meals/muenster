@@ -1,22 +1,9 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  Dimensions,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState,} from 'react';
+import {Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, View,} from 'react-native';
 import MyImage from '@/components/MyImage';
-import { useTheme } from '@/hooks/useTheme';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
-import { Languages, PriceGroupKey } from './types';
+import {Languages, PriceGroupKey} from './types';
 import {
   AntDesign,
   Entypo,
@@ -27,40 +14,20 @@ import {
   MaterialIcons,
   Octicons,
 } from '@expo/vector-icons';
-import { isWeb } from '@/constants/Constants';
+import {isWeb} from '@/constants/Constants';
 import SettingsList from '@/components/SettingsList';
-import { useExpoUpdateChecker } from '@/components/ExpoUpdateChecker/ExpoUpdateChecker';
+import {useExpoUpdateChecker} from '@/components/ExpoUpdateChecker/ExpoUpdateChecker';
 import SettingsGroupTitle from '@/components/SettingsGroupTitle';
 import NicknameSheet from '@/components/NicknameSheet/NicknameSheet';
 import ColorSchemeSheet from '@/components/ColorSchemeSheet/ColorSchemeSheet';
 import DrawerPositionSheet from '@/components/DrawerPositionSheet/DrawerPositionSheet';
 import ServerSelectionSheet from '@/components/ServerSelectionSheet/ServerSelectionSheet';
-import { router, useFocusEffect } from 'expo-router';
-import {
-  themes,
-  languages,
-  drawers,
-  AmountColumn,
-  days,
-} from '../../../constants/SettingData';
-import { devConfig, swosyConfig, studiFutterConfig, type CustomerConfig } from '@/config';
-import { useDispatch, useSelector } from 'react-redux';
+import {router, useFocusEffect} from 'expo-router';
+import {type CustomerConfig} from '@/config';
+import {useDispatch, useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import AmountColumns from '@/components/AmountColumn/AmountColumns';
-import { useLanguage } from '@/hooks/useLanguage';
+import {useLanguage} from '@/hooks/useLanguage';
 import {
-  CLEAR_ANONYMOUSLY,
-  CLEAR_APARTMENTS,
-  CLEAR_CAMPUSES,
-  CLEAR_CANTEENS,
-  CLEAR_COLLECTION_DATES_LAST_UPDATED,
-  CLEAR_FOODS,
-  CLEAR_MANAGEMENT,
-  CLEAR_NEWS,
-  CLEAR_CHATS,
-  CLEAR_SETTINGS,
-  CLEAR_POPUP_EVENTS_HASH,
-  ON_LOGOUT,
   SET_AMOUNT_COLUMNS_FOR_CARDS,
   SET_DRAWER_POSITION,
   SET_FIRST_DAY_OF_THE_WEEK,
@@ -70,7 +37,7 @@ import {
   UPDATE_MANAGEMENT,
   UPDATE_PROFILE,
 } from '@/redux/Types/types';
-import { performLogout } from '@/helper/logoutHelper';
+import {performLogout} from '@/helper/logoutHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
@@ -78,18 +45,13 @@ import CanteenSelectionSheet from '@/components/CanteenSelectionSheet/CanteenSel
 import LanguageSheet from '@/components/LanguageSheet/LanguageSheet';
 import AmountColumnSheet from '@/components/AmountColumnSheet/AmountColumnSheet';
 import FirstDaySheet from '@/components/FirstDaySheet/FirstDaySheet';
-import {
-  excerpt,
-  formatPrice,
-  getImageUrl,
-  showFormatedPrice,
-} from '@/constants/HelperFunctions';
-import { ProfileHelper } from '@/redux/actions/Profile/Profile';
-import { ServerAPI } from '@/redux/actions';
-import { TranslationKeys } from '@/locales/keys';
+import {excerpt, formatPrice, getImageUrl, showFormatedPrice,} from '@/constants/HelperFunctions';
+import {ProfileHelper} from '@/redux/actions/Profile/Profile';
+import {ServerAPI} from '@/redux/actions';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { RootState } from '@/redux/reducer';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {RootState} from '@/redux/reducer';
 
 const Settings = () => {
   useSetPageTitle(TranslationKeys.settings);
