@@ -4,7 +4,10 @@ import type { ConfigContext } from "@expo/config";
 // precompiled JavaScript file.
 require("ts-node").register({
   transpileOnly: true,
-  compilerOptions: { module: "commonjs" },
+  compilerOptions: { 
+    module: "Node16",
+    moduleResolution: "node16"
+  },
 });
 
 const { getFinalConfig } = require("./config.ts");
