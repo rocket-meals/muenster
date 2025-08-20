@@ -82,7 +82,7 @@ const packages = [
   },
   {
     name: 'expo',
-    version: '52.0.14',
+    version: '53.0.20',
     license: 'MIT',
     repository: 'https://github.com/expo/expo',
     licenseUrl: 'https://github.com/expo/expo/blob/master/LICENSE',
@@ -188,7 +188,7 @@ const packages = [
   },
   {
     name: 'expo-router',
-    version: '~4.0.11',
+    version: '~5.1.3',
     license: 'MIT',
     repository: 'https://github.com/expo/expo-router',
     licenseUrl: 'https://github.com/expo/expo-router/blob/main/LICENSE',

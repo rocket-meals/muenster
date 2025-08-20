@@ -620,7 +620,10 @@ export default function Layout() {
           headerStyle: { backgroundColor: theme.header.background },
           headerTintColor: theme.header.text,
           drawerType: 'front',
-          drawerPosition: drawerPosition === 'system' ? 'left' : drawerPosition,
+          drawerPosition: (() => {
+            const position = drawerPosition === 'system' ? 'left' : drawerPosition;
+            return (position === 'left' || position === 'right') ? position : 'left';
+          })(),
         }}
         detachInactiveScreens={true}
         drawerContent={(props) => <CustomDrawerContent {...props} />}

@@ -74,7 +74,7 @@ const TimetableScreen = () => {
     mode === 'dark'
   );
   const { text, label, link } = extractTextAndLink(
-    courseTimetableDescriptionEmpty[language ? language : 'en']
+    courseTimetableDescriptionEmpty[language as keyof typeof courseTimetableDescriptionEmpty] || courseTimetableDescriptionEmpty.en
   );
 
   const openSheet = useCallback(() => {
@@ -204,7 +204,7 @@ const TimetableScreen = () => {
               type='link'
               backgroundColor={course_timetable_area_color}
               color={contrastColor}
-              onClick={handleOpenInBrowser}
+              onClick={() => handleOpenInBrowser(link)}
             />
           )}
         </View>

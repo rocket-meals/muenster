@@ -103,8 +103,8 @@ const DebugLogout = () => {
     for (const step of steps) {
       if (exclude.includes(step.label)) continue;
       const result = step.action();
-      if (result instanceof Promise) {
-        await result;
+      if (result && typeof result === 'object' && typeof (result as any).then === 'function') {
+        await (result as Promise<any>);
       }
     }
   };
