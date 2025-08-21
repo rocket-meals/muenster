@@ -13,6 +13,20 @@ import { FileRelation, FormAnswer } from './types';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
+/**
+ *  "images" | "videos" | "livePhotos"
+ *
+ * Media types that can be picked by the image picker.
+ * 'images' - for images.
+ * 'videos' - for videos.
+ * 'livePhotos' - for live photos (iOS only).
+ */
+export enum ImagePickerMediaTypes {
+    Images = 'images',
+    Videos = 'videos',
+    LivePhotos = 'livePhotos',
+}
+
 const FileUpload = ({
   id,
   value,
@@ -85,7 +99,7 @@ const FileUpload = ({
         });
       } else {
         result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ['images'],
+          mediaTypes: [ ImagePickerMediaTypes.Images],
           allowsEditing: true,
           aspect: [4, 3],
           quality: 1,

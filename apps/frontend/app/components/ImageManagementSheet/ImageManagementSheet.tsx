@@ -26,6 +26,7 @@ import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
+import {ImagePickerMediaTypes} from "@/components/FileUpload/FileUpload";
 
 const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
   closeSheet,
@@ -82,7 +83,7 @@ const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
 
       const pickerResult = useCamera
         ? await ImagePicker.launchCameraAsync({
-            mediaTypes: ['images'],
+            mediaTypes: [ImagePickerMediaTypes.Images],
             allowsEditing: true,
             aspect: [1, 1],
             allowsMultipleSelection: false,
@@ -90,7 +91,7 @@ const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
             quality: 1,
           })
         : await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ['images'],
+            mediaTypes: [ImagePickerMediaTypes.Images],
             allowsEditing: true,
             aspect: [1, 1],
             allowsMultipleSelection: false,
