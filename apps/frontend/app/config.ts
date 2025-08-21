@@ -1,4 +1,5 @@
-// This file can not have any imports. See app.config.ts as it will transpile this file to JavaScript.
+// This file can not have any imports. See app.config.ts as it will transpile this file to JavaScript
+// Todo: Check this with expo v53
 
 export type CustomerConfig = {
     projectName: string;
