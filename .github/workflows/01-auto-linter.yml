@@ -45,29 +45,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v4
+      - name: 🧰 Setup Node.js, Yarn & Dependencies
+        uses: ./.github/actions/setup-and-install
         with:
-          node-version: "22"
-          cache: "yarn"
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
       - name: 📦 Install Global Tools
         run: |
           npm install -g prettier@3.3.3
           echo "Global tools installed successfully"
-
-      - name: 📦 Install Project Dependencies
-        run: |
-          # Try to install root dependencies, but don't fail if there are version conflicts
-          echo "Attempting to install root dependencies..."
-          yarn install --frozen-lockfile --ignore-engines 2>&1 || echo "Root dependencies installation failed, continuing..."
-
-      - name: 📦 Install Frontend Dependencies
-        run: |
-          echo "Attempting to install frontend dependencies..."
-          cd apps/frontend/app
-          # Try to install frontend dependencies, but don't fail if there are version conflicts
-          yarn install --frozen-lockfile --ignore-engines 2>&1 || echo "Frontend dependencies installation failed, continuing with global tools..."
 
       - name: 🎨 Create Prettier Configuration
         run: |
