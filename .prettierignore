@@ -45,3 +45,4 @@ Dockerfile*
 # Git files
 .git/
 .gitignore
+.github/
