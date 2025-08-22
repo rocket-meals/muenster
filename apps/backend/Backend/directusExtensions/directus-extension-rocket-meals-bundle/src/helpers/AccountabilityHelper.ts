@@ -7,7 +7,6 @@ export class AccountabilityHelper {
   public static getAccountabilityFromRequest(
     req: any
   ): Accountability | undefined {
-    // @ts-ignore
     const accountability = req?.accountability;
     if (accountability) {
       return accountability as Accountability;

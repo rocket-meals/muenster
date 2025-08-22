@@ -50,7 +50,6 @@ export function getTestRawReport(
   for (let rawJsonObject of rawJsonObjectList) {
     // Add data
     for (let key in rawJsonObject) {
-      // @ts-ignore
       let value = rawJsonObject?.[key];
       if (value !== undefined) {
         result += value + CSVExportParser.INLINE_DELIMITER_TAB;

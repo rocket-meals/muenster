@@ -65,7 +65,6 @@ export default defineHook(async ({ action, filter }, apiContext) => {
     collection + '.items.delete',
     async (
       payloadModifiable,
-      // @ts-ignore
       meta,
       context
     ) => {

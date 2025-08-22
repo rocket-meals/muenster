@@ -7,7 +7,7 @@ import {
   NewsTypeForParser,
 } from './../NewsParserInterface';
 //import undici, {Agent} from 'undici';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes, DateHelper} from 'repo-depkit-common';
 import { WorkflowRunLogger } from '../../workflows-runs-hook/WorkflowRunJobInterface';
 import { FetchHelper } from '../../helpers/FetchHelper';
 
@@ -194,14 +194,7 @@ export class StudentenwerkHannoverNews_Parser implements NewsParserInterface {
 
       // .news-list-date > time:nth-child(2)
       let datePublishedText = $articleDetails('.news-list-date').text().trim();
-
-      let dateParts = datePublishedText.split('.');
-      // @ts-ignore if dateParts is not valid, the Date constructor will throw an error
-      let dateAsDate = new Date(
-        parseInt(dateParts[2]),
-        parseInt(dateParts[1]) - 1,
-        parseInt(dateParts[0])
-      );
+      let dateAsDate = DateHelper.parseDD_MM_YYYY(datePublishedText);
       dateAsDate.setHours(12, 0, 0, 0);
       return dateAsDate.toISOString();
     } catch (error) {

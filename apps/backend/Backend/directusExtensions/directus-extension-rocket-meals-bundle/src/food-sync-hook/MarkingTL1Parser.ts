@@ -61,7 +61,6 @@ export class MarkingTL1Parser implements MarkingParserInterface {
   }): MarkingsTypeForParser | null {
     let id = rawMarking['ID'];
     let name = rawMarking['BESCHREIBUNG'];
-    // @ts-ignore
     let hint = rawMarking['HINWEISE'];
     let short = rawMarking['KUERZEL'];
 

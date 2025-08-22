@@ -40,8 +40,7 @@ export function registerHookToCreateFormAnswersForFormSubmission(
 
       // Check which form_answers are already passed
       // @ts-ignore - this way directus will create the relation
-      let passedCreateFormAnswers: Partial<FormAnswers>[] =
-        input.form_answers?.create || [];
+      let passedCreateFormAnswers: Partial<FormAnswers>[] = input.form_answers?.create || [];
       let passedCreateFormAnswerFieldIdsDict: {
         [key: string]: Partial<DatabaseTypes.FormAnswers>;
       } = {};

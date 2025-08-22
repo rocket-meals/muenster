@@ -41,7 +41,6 @@ function getFoodParser(): FoodParserInterface | null {
         DIRECTUS_TL1_FOOD_PATH,
         FOOD_SYNC_TL1FILE_EXPORT_CSV_FILE_ENCODING
       );
-      // @ts-ignore // this should be fine, because the class implements the interface // TODO: Investigate why this is necessary
 
       return FoodParserWithCustomerAdaptions.getFoodParser(ftpFileReader);
     case 'TL1WEB':
@@ -61,7 +60,6 @@ function getFoodParser(): FoodParserInterface | null {
       const urlReader = new FoodTL1Parser_RawReportUrlReader(
         FOOD_SYNC_TL1WEB_EXPORT_URL
       );
-      // @ts-ignore // this should be fine, because the class implements the interface // TODO: Investigate why this is necessary
       return FoodParserWithCustomerAdaptions.getFoodParser(urlReader);
     case 'SWOSY_API':
       const FOOD_SYNC_SWOSY_API_URL =
