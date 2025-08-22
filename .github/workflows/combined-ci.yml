@@ -132,13 +132,8 @@ jobs:
         uses: ./.github/actions/setup-and-install
         with:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-      - name: 🛠️ Build Android App
-        run: eas build --platform android --non-interactive --profile production
-        working-directory: ./apps/frontend/app
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-      - name: 📤 Submit Android Build to Play Store
-        run: eas submit --platform android --non-interactive --latest --profile production
+      - name: 🛠️ Build and Submit Android App
+        run: eas build --platform android --non-interactive --profile production --auto-submit
         working-directory: ./apps/frontend/app
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
@@ -175,13 +170,8 @@ jobs:
         uses: ./.github/actions/setup-and-install
         with:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-      - name: 🛠️ Build iOS App
-        run: eas build --platform ios --non-interactive
-        working-directory: ./apps/frontend/app
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-      - name: 📤 Submit iOS Build to App Store
-        run: eas submit --platform ios --non-interactive --latest
+      - name: 🛠️ Build and Submit iOS App
+        run: eas build --platform ios --non-interactive --auto-submit
         working-directory: ./apps/frontend/app
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
