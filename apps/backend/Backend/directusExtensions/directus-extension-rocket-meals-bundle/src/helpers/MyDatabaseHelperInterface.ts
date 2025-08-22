@@ -12,9 +12,7 @@ export interface MyDatabaseTestableHelperInterface {
   getAdminBearerToken(): Promise<string | undefined>;
 }
 
-export class MyDatabaseTestableHelper
-  implements MyDatabaseTestableHelperInterface
-{
+export class MyDatabaseTestableHelper implements MyDatabaseTestableHelperInterface {
   private cachedServerInfo: ServerInfo | undefined = undefined;
   private cachedClient: any | undefined = undefined;
   public useOfflineServerInfo: boolean = true;
@@ -51,9 +49,7 @@ export class MyDatabaseTestableHelper
 
   public getPublicClient() {
     if (!this.cachedClient) {
-      this.cachedClient = createDirectus<DatabaseTypes.CustomDirectusTypes>(
-        this.getServerUrl()
-      ).with(rest());
+      this.cachedClient = createDirectus<DatabaseTypes.CustomDirectusTypes>(this.getServerUrl()).with(rest());
     }
     return this.cachedClient;
   }
@@ -67,8 +63,7 @@ export class MyDatabaseTestableHelper
   }
 }
 
-export interface MyDatabaseHelperInterface
-  extends MyDatabaseTestableHelperInterface {
+export interface MyDatabaseHelperInterface extends MyDatabaseTestableHelperInterface {
   apiContext: ApiContext;
   eventContext: ExtentContextDirectusTypes | undefined;
 

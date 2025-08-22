@@ -7,10 +7,7 @@ import { isWeb } from '@/constants/Constants';
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
 import { getImageUrl } from '@/constants/HelperFunctions';
-import {
-	getDescriptionFromTranslation,
-	getTextFromTranslation,
-} from '@/helper/resourceHelper';
+import { getDescriptionFromTranslation, getTextFromTranslation } from '@/helper/resourceHelper';
 import MyMarkdown from '../MyMarkdown';
 import { RootState } from '@/redux/reducer';
 
@@ -18,15 +15,9 @@ const MenuSheet: React.FC<MenuSheetProps> = ({ closeSheet }) => {
 	const { theme } = useTheme();
 	const { markingDetails } = useSelector((state: RootState) => state.food);
 	const { language } = useSelector((state: RootState) => state.settings);
-	const description = getDescriptionFromTranslation(
-		markingDetails?.translations,
-		language
-	);
+	const description = getDescriptionFromTranslation(markingDetails?.translations, language);
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -51,20 +42,12 @@ const MenuSheet: React.FC<MenuSheetProps> = ({ closeSheet }) => {
 				<View style={styles.imageContainer}>
 					<Image
 						source={{
-							uri:
-								markingDetails?.image_remote_url ||
-								getImageUrl(String(markingDetails?.image)),
+							uri: markingDetails?.image_remote_url || getImageUrl(String(markingDetails?.image)),
 						}}
 						style={{
 							...styles.image,
-							backgroundColor: markingDetails?.background_color
-								? markingDetails?.background_color
-								: 'transparent',
-							borderRadius: markingDetails?.background_color
-								? 8
-								: markingDetails.hide_border
-									? 5
-									: 0,
+							backgroundColor: markingDetails?.background_color ? markingDetails?.background_color : 'transparent',
+							borderRadius: markingDetails?.background_color ? 8 : markingDetails.hide_border ? 5 : 0,
 						}}
 					/>
 				</View>

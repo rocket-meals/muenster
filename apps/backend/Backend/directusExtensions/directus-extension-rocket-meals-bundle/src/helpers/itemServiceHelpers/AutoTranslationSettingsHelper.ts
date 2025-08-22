@@ -13,17 +13,9 @@ export class AutoTranslationSettingsHelper {
     this.eventContext = eventContext;
   }
 
-  async setAutoTranslationSettings(
-    appSettings: Partial<DatabaseTypes.AutoTranslationSettings>
-  ) {
-    const itemsServiceCreator = new ItemsServiceCreator(
-      this.apiExtensionContext,
-      this.eventContext
-    );
-    const itemsService =
-      await itemsServiceCreator.getItemsService<DatabaseTypes.AutoTranslationSettings>(
-        CollectionNames.AUTO_TRANSLATION_SETTINGS
-      );
+  async setAutoTranslationSettings(appSettings: Partial<DatabaseTypes.AutoTranslationSettings>) {
+    const itemsServiceCreator = new ItemsServiceCreator(this.apiExtensionContext, this.eventContext);
+    const itemsService = await itemsServiceCreator.getItemsService<DatabaseTypes.AutoTranslationSettings>(CollectionNames.AUTO_TRANSLATION_SETTINGS);
     await itemsService.upsertSingleton(appSettings);
     /**
      * await this.database(TABLENAME_FLOWHOOKS).update({
@@ -32,17 +24,9 @@ export class AutoTranslationSettingsHelper {
      */
   }
 
-  async getAppSettings(): Promise<
-    Partial<DatabaseTypes.AutoTranslationSettings> | undefined | null
-  > {
-    const itemsServiceCreator = new ItemsServiceCreator(
-      this.apiExtensionContext,
-      this.eventContext
-    );
-    const itemsService =
-      await itemsServiceCreator.getItemsService<DatabaseTypes.AutoTranslationSettings>(
-        CollectionNames.AUTO_TRANSLATION_SETTINGS
-      );
+  async getAppSettings(): Promise<Partial<DatabaseTypes.AutoTranslationSettings> | undefined | null> {
+    const itemsServiceCreator = new ItemsServiceCreator(this.apiExtensionContext, this.eventContext);
+    const itemsService = await itemsServiceCreator.getItemsService<DatabaseTypes.AutoTranslationSettings>(CollectionNames.AUTO_TRANSLATION_SETTINGS);
     return await itemsService.readSingleton({});
   }
 }

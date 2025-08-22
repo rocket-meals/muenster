@@ -4,29 +4,13 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './styles';
 import { isWeb } from '@/constants/Constants';
 import { useTheme } from '@/hooks/useTheme';
-import {
-	AntDesign,
-	MaterialCommunityIcons,
-	MaterialIcons,
-} from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { FoodItemProps } from './types';
-import {
-	excerpt,
-	getImageUrl,
-	getpreviousFeedback,
-	showFormatedPrice,
-	showPrice,
-} from '@/constants/HelperFunctions';
-import {
-	getDescriptionFromTranslation,
-	getTextFromTranslation,
-} from '@/helper/resourceHelper';
+import { excerpt, getImageUrl, getpreviousFeedback, showFormatedPrice, showPrice } from '@/constants/HelperFunctions';
+import { getDescriptionFromTranslation, getTextFromTranslation } from '@/helper/resourceHelper';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	SET_MARKING_DETAILS,
-	SET_SELECTED_FOOD_MARKINGS,
-} from '@/redux/Types/types';
+import { SET_MARKING_DETAILS, SET_SELECTED_FOOD_MARKINGS } from '@/redux/Types/types';
 import PermissionModal from '../PermissionModal/PermissionModal';
 import { router } from 'expo-router';
 import { createSelector } from 'reselect';
@@ -41,25 +25,12 @@ import useFoodCard from '@/hooks/useFoodCard';
 
 const selectFoodState = (state: RootState) => state.food;
 
-const selectPreviousFeedback = createSelector(
-	[selectFoodState, (_, foodId) => foodId],
-	(foodState, foodId) => getpreviousFeedback(foodState.ownFoodFeedbacks, foodId)
-);
+const selectPreviousFeedback = createSelector([selectFoodState, (_, foodId) => foodId], (foodState, foodId) => getpreviousFeedback(foodState.ownFoodFeedbacks, foodId));
 
-const selectMarkings = createSelector(
-	[selectFoodState],
-	foodState => foodState.markings
-);
+const selectMarkings = createSelector([selectFoodState], foodState => foodState.markings);
 
 const FoodItem: React.FC<FoodItemProps> = memo(
-	({
-		item,
-		canteen,
-		handleMenuSheet,
-		handleImageSheet,
-		setSelectedFoodId,
-		handleEatingHabitsSheet,
-	}) => {
+	({ item, canteen, handleMenuSheet, handleImageSheet, setSelectedFoodId, handleEatingHabitsSheet }) => {
 		const toast = useToast();
 		const [warning, setWarning] = useState(false);
 		const dispatch = useDispatch();
@@ -68,22 +39,11 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 		const { food } = item;
 		const foodItem = food as DatabaseTypes.Foods;
 		const markings = useSelector(selectMarkings);
-		const { user, profile, isManagement } = useSelector(
-			(state: RootState) => state.authReducer
-		);
-		const previousFeedback = useSelector(state =>
-			selectPreviousFeedback(state, foodItem.id)
-		);
-		const { language, serverInfo, appSettings, primaryColor } = useSelector(
-			(state: RootState) => state.settings
-		);
-		const foods_area_color = appSettings?.foods_area_color
-			? appSettings?.foods_area_color
-			: primaryColor;
-		const defaultImage =
-			getImageUrl(String(appSettings.foods_placeholder_image)) ||
-			appSettings.foods_placeholder_image_remote_url ||
-			getImageUrl(serverInfo?.info?.project?.project_logo);
+		const { user, profile, isManagement } = useSelector((state: RootState) => state.authReducer);
+		const previousFeedback = useSelector(state => selectPreviousFeedback(state, foodItem.id));
+		const { language, serverInfo, appSettings, primaryColor } = useSelector((state: RootState) => state.settings);
+		const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+		const defaultImage = getImageUrl(String(appSettings.foods_placeholder_image)) || appSettings.foods_placeholder_image_remote_url || getImageUrl(serverInfo?.info?.project?.project_logo);
 
 		const getPriceGroup = (price_group: string) => {
 			if (price_group) {
@@ -117,24 +77,9 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 			}
 		};
 
-		const dislikedMarkings = useMemo(
-			() =>
-				item?.markings?.filter(marking =>
-					profile?.markings?.some(
-						(profileMarking: DatabaseTypes.ProfilesMarkings) =>
-							profileMarking?.markings_id === marking?.markings_id &&
-							profileMarking?.like === false
-					)
-				),
-			[item?.markings, profile?.markings]
-		);
+		const dislikedMarkings = useMemo(() => item?.markings?.filter(marking => profile?.markings?.some((profileMarking: DatabaseTypes.ProfilesMarkings) => profileMarking?.markings_id === marking?.markings_id && profileMarking?.like === false)), [item?.markings, profile?.markings]);
 
-		const {
-			screenWidth,
-			containerStyle: cardContainerStyle,
-			imageContainerStyle: cardImageContainerStyle,
-			contentStyle: cardContentStyle,
-		} = useFoodCard(dislikedMarkings.length > 0 ? 3 : 0);
+		const { screenWidth, containerStyle: cardContainerStyle, imageContainerStyle: cardImageContainerStyle, contentStyle: cardContentStyle } = useFoodCard(dislikedMarkings.length > 0 ? 3 : 0);
 
 		const handleOpenSheet = useCallback(() => {
 			dispatch({ type: SET_SELECTED_FOOD_MARKINGS, payload: dislikedMarkings });
@@ -157,15 +102,7 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 			[foodItem?.id, profile?.id, canteen?.id, previousFeedback, dispatch]
 		);
 
-		const markingsData = useMemo(
-			() =>
-				markings
-					?.filter((m: DatabaseTypes.Markings) =>
-						item?.markings.some(mark => mark.markings_id === m.id)
-					)
-					.slice(0, 2),
-			[markings, item?.markings]
-		);
+		const markingsData = useMemo(() => markings?.filter((m: DatabaseTypes.Markings) => item?.markings.some(mark => mark.markings_id === m.id)).slice(0, 2), [markings, item?.markings]);
 
 		const openMarkingLabel = (marking: DatabaseTypes.Markings) => {
 			dispatch({
@@ -190,8 +127,7 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 								if (item.redirect_url) {
 									openInBrowser(item.redirect_url);
 								} else {
-									const foodId =
-										item?.food && typeof item.food !== 'string' ? item.food.id : '';
+									const foodId = item?.food && typeof item.food !== 'string' ? item.food.id : '';
 
 									handleNavigation(item?.id, foodId);
 								}
@@ -221,19 +157,13 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 														handleImageSheet(item?.food?.id);
 													}}
 												>
-													<MaterialCommunityIcons
-														name="image-edit"
-														size={20}
-														color={'white'}
-													/>
+													<MaterialCommunityIcons name="image-edit" size={20} color={'white'} />
 												</TouchableOpacity>
 											)}
 										>
 											<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 												<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-													{`${translate(TranslationKeys.edit)}: ${translate(
-														TranslationKeys.image
-													)}`}
+													{`${translate(TranslationKeys.edit)}: ${translate(TranslationKeys.image)}`}
 												</TooltipText>
 											</TooltipContent>
 										</Tooltip>
@@ -243,10 +173,7 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 											<Tooltip
 												placement="top"
 												trigger={triggerProps => (
-													<TouchableOpacity
-														{...triggerProps}
-														onPress={() => updateRating(null)}
-													>
+													<TouchableOpacity {...triggerProps} onPress={() => updateRating(null)}>
 														<AntDesign name="star" size={20} color={foods_area_color} />
 													</TouchableOpacity>
 												)}
@@ -261,10 +188,7 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 											<Tooltip
 												placement="top"
 												trigger={triggerProps => (
-													<TouchableOpacity
-														{...triggerProps}
-														onPress={() => updateRating(5)}
-													>
+													<TouchableOpacity {...triggerProps} onPress={() => updateRating(5)}>
 														<AntDesign name="staro" size={20} color={'white'} />
 													</TouchableOpacity>
 												)}
@@ -294,25 +218,17 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 										>
 											<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 												<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-													{`${translate(TranslationKeys.attention)} ${translate(
-														TranslationKeys.eating_habits
-													)}`}
+													{`${translate(TranslationKeys.attention)} ${translate(TranslationKeys.eating_habits)}`}
 												</TooltipText>
 											</TooltipContent>
 										</Tooltip>
 									)}
 									<View style={styles.categoriesContainer}>
 										{markingsData?.map((mark: any) => {
-											const description = getDescriptionFromTranslation(
-												mark?.translations,
-												language
-											);
+											const description = getDescriptionFromTranslation(mark?.translations, language);
 											if ((mark?.image_remote_url || mark?.image) && description)
 												return (
-													<TouchableOpacity
-														key={mark.id}
-														onPress={() => openMarkingLabel(mark)}
-													>
+													<TouchableOpacity key={mark.id} onPress={() => openMarkingLabel(mark)}>
 														<MyImage
 															source={
 																mark?.image_remote_url || mark?.image
@@ -323,13 +239,8 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 															}
 															style={{
 																...styles.categoryLogo,
-																backgroundColor:
-																	mark?.background_color && mark?.background_color,
-																borderRadius: mark?.background_color
-																	? 8
-																	: mark.hide_border
-																		? 5
-																		: 0,
+																backgroundColor: mark?.background_color && mark?.background_color,
+																borderRadius: mark?.background_color ? 8 : mark.hide_border ? 5 : 0,
 															}}
 														/>
 													</TouchableOpacity>
@@ -339,53 +250,21 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 									<Tooltip
 										placement="top"
 										trigger={triggerProps => (
-											<TouchableOpacity
-												style={styles.priceTag}
-												{...triggerProps}
-												onPress={handlePriceChange}
-											>
-												<Text style={styles.priceText}>
-													{showFormatedPrice(showPrice(item, profile))}
-												</Text>
+											<TouchableOpacity style={styles.priceTag} {...triggerProps} onPress={handlePriceChange}>
+												<Text style={styles.priceText}>{showFormatedPrice(showPrice(item, profile))}</Text>
 											</TouchableOpacity>
 										)}
 									>
 										<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 											<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-												{`${showFormatedPrice(
-													showPrice(item, profile)
-												)} - ${translate(TranslationKeys.edit)}: ${translate(
-													TranslationKeys.price_group
-												)} ${translate(
-													profile?.price_group ? getPriceGroup(profile?.price_group) : ''
-												)}`}
+												{`${showFormatedPrice(showPrice(item, profile))} - ${translate(TranslationKeys.edit)}: ${translate(TranslationKeys.price_group)} ${translate(profile?.price_group ? getPriceGroup(profile?.price_group) : '')}`}
 											</TooltipText>
 										</TooltipContent>
 									</Tooltip>
 								</>
 							}
 						>
-							<Text style={{ ...styles.foodName, color: theme.screen.text }}>
-								{screenWidth > 1000
-									? excerpt(
-											getTextFromTranslation(foodItem?.translations, language),
-											120
-										)
-									: screenWidth > 700
-										? excerpt(
-												getTextFromTranslation(foodItem?.translations, language),
-												80
-											)
-										: screenWidth > 460
-											? excerpt(
-													getTextFromTranslation(foodItem?.translations, language),
-													60
-												)
-											: excerpt(
-													getTextFromTranslation(foodItem?.translations, language),
-													40
-												)}
-							</Text>
+							<Text style={{ ...styles.foodName, color: theme.screen.text }}>{screenWidth > 1000 ? excerpt(getTextFromTranslation(foodItem?.translations, language), 120) : screenWidth > 700 ? excerpt(getTextFromTranslation(foodItem?.translations, language), 80) : screenWidth > 460 ? excerpt(getTextFromTranslation(foodItem?.translations, language), 60) : excerpt(getTextFromTranslation(foodItem?.translations, language), 40)}</Text>
 						</CardWithText>
 					)}
 				>

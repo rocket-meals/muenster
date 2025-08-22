@@ -28,17 +28,8 @@ export class EmojiHelper {
   public static EmojiPixelSize = EmojiPixelSize;
   public static EmojiFileNames = EmojiFileNames;
 
-  private static getEmojiImageURL(
-    filename: EmojiFileNames,
-    size: EmojiPixelSize
-  ): string {
-    return (
-      'https://raw.githubusercontent.com/rocket-meals/noto-emoji/refs/heads/main/png/' +
-      size +
-      '/' +
-      filename +
-      '.png'
-    );
+  private static getEmojiImageURL(filename: EmojiFileNames, size: EmojiPixelSize): string {
+    return 'https://raw.githubusercontent.com/rocket-meals/noto-emoji/refs/heads/main/png/' + size + '/' + filename + '.png';
   }
 
   private static getEmojiDivTextSize(size: DivTextSize): string {
@@ -77,11 +68,7 @@ export class EmojiHelper {
   }
 
   // Generate the full `div` with inline style for embedding
-  public static getEmojiDivHTML(
-    filename: EmojiFileNames,
-    textSize?: DivTextSize,
-    emojiImageSize?: EmojiPixelSize
-  ): string {
+  public static getEmojiDivHTML(filename: EmojiFileNames, textSize?: DivTextSize, emojiImageSize?: EmojiPixelSize): string {
     emojiImageSize = emojiImageSize || EmojiPixelSize.SMALL;
     textSize = textSize || DivTextSize.SMALL;
     const imageUrl = EmojiHelper.getEmojiImageURL(filename, emojiImageSize);

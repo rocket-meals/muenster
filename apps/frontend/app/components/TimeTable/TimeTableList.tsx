@@ -3,23 +3,11 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
-import {
-	MaterialCommunityIcons,
-	Octicons,
-	MaterialIcons,
-	FontAwesome5,
-	Feather,
-} from '@expo/vector-icons';
+import { MaterialCommunityIcons, Octicons, MaterialIcons, FontAwesome5, Feather } from '@expo/vector-icons';
 import { TimeTableListProps } from './types';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
-const TimeTableList: React.FC<TimeTableListProps> = ({
-	leftIcon,
-	label,
-	rightIcon,
-	value,
-	handleFunction,
-}) => {
+const TimeTableList: React.FC<TimeTableListProps> = ({ leftIcon, label, rightIcon, value, handleFunction }) => {
 	const { theme } = useTheme();
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
@@ -35,10 +23,7 @@ const TimeTableList: React.FC<TimeTableListProps> = ({
 	}, []);
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<TouchableOpacity
 				style={{
 					...styles.list,
@@ -46,11 +31,7 @@ const TimeTableList: React.FC<TimeTableListProps> = ({
 				}}
 			>
 				<View style={{ ...styles.col, gap: isWeb ? 10 : 5 }}>
-					<MaterialCommunityIcons
-						name="tag-text-outline"
-						size={24}
-						color={theme.screen.icon}
-					/>
+					<MaterialCommunityIcons name="tag-text-outline" size={24} color={theme.screen.icon} />
 					<Text
 						style={{
 							...styles.label,
@@ -88,11 +69,7 @@ const TimeTableList: React.FC<TimeTableListProps> = ({
 				}}
 			>
 				<View style={{ ...styles.col, gap: isWeb ? 10 : 5 }}>
-					<MaterialCommunityIcons
-						name="tag-text-outline"
-						size={24}
-						color={theme.screen.icon}
-					/>
+					<MaterialCommunityIcons name="tag-text-outline" size={24} color={theme.screen.icon} />
 					<Text
 						style={{
 							...styles.label,
@@ -167,11 +144,7 @@ const TimeTableList: React.FC<TimeTableListProps> = ({
 				}}
 			>
 				<View style={{ ...styles.col, gap: isWeb ? 10 : 5 }}>
-					<MaterialCommunityIcons
-						name="clock-start"
-						size={24}
-						color={theme.screen.icon}
-					/>
+					<MaterialCommunityIcons name="clock-start" size={24} color={theme.screen.icon} />
 					<Text
 						style={{
 							...styles.label,
@@ -210,11 +183,7 @@ const TimeTableList: React.FC<TimeTableListProps> = ({
 				}}
 			>
 				<View style={{ ...styles.col, gap: isWeb ? 10 : 5 }}>
-					<MaterialCommunityIcons
-						name="clock-end"
-						size={24}
-						color={theme.screen.icon}
-					/>
+					<MaterialCommunityIcons name="clock-end" size={24} color={theme.screen.icon} />
 					<Text
 						style={{
 							...styles.label,

@@ -5,18 +5,9 @@ import path from 'path';
 import fs from 'fs';
 
 // load preloaded html file content from "./HannoverNews.html"
-const htmlNews = fs.readFileSync(
-  path.resolve(__dirname, './News.html'),
-  'utf8'
-);
-const htmlNewsUnterstuetzungBeimStart = fs.readFileSync(
-  path.resolve(__dirname, './NewsUnterstuetzungBeimStart.html'),
-  'utf8'
-);
-const htmlNewsBafoegAntragLeichterGemacht = fs.readFileSync(
-  path.resolve(__dirname, './NewsBafoegAntragLeichterGemacht.html'),
-  'utf8'
-);
+const htmlNews = fs.readFileSync(path.resolve(__dirname, './News.html'), 'utf8');
+const htmlNewsUnterstuetzungBeimStart = fs.readFileSync(path.resolve(__dirname, './NewsUnterstuetzungBeimStart.html'), 'utf8');
+const htmlNewsBafoegAntragLeichterGemacht = fs.readFileSync(path.resolve(__dirname, './NewsBafoegAntragLeichterGemacht.html'), 'utf8');
 
 describe('NewsTestHannover', () => {
   let newsParser = new StudentenwerkHannoverNews_Parser();
@@ -29,13 +20,11 @@ describe('NewsTestHannover', () => {
 
   it('test date from news article', async () => {
     //console.log("Testing date extraction from news article");
-    let articleUrl =
-      'https://www.studentenwerk-hannover.de/unternehmen/news/detail/neu-co2-kennzeichnung-fuer-unsere-gerichte';
+    let articleUrl = 'https://www.studentenwerk-hannover.de/unternehmen/news/detail/neu-co2-kennzeichnung-fuer-unsere-gerichte';
 
     //console.log("Article URL: " + articleUrl);
 
-    let response =
-      await StudentenwerkHannoverNews_Parser.fetchArticleDate(articleUrl);
+    let response = await StudentenwerkHannoverNews_Parser.fetchArticleDate(articleUrl);
     //console.log("Response: " + response);
     //console.log(response);
     expect(response).toBeDefined();

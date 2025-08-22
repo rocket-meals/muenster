@@ -1,12 +1,5 @@
 import { Text, TouchableOpacity, View } from 'react-native';
-import React, {
-	cloneElement,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import React, { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons';
@@ -34,11 +27,7 @@ const index = () => {
 	const profileHelper = new ProfileHelper();
 	const [loading, setLoading] = useState(false);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
-	const {
-		primaryColor,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	const [autoPlay, setAutoPlay] = useState(appSettings?.animations_auto_start);
 	const animationRef = useRef<LottieView>(null);
@@ -90,16 +79,7 @@ const index = () => {
 
 	const renderLottie = useMemo(() => {
 		if (animationJson) {
-			return (
-				<LottieView
-					ref={animationRef}
-					source={animationJson}
-					resizeMode="contain"
-					style={{ width: '100%', height: '100%' }}
-					autoPlay={autoPlay}
-					loop={false}
-				/>
-			);
+			return <LottieView ref={animationRef} source={animationJson} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay={autoPlay} loop={false} />;
 		}
 	}, [autoPlay, animationJson]);
 	const updatePricing = async (option: string) => {
@@ -108,9 +88,7 @@ const index = () => {
 			setSelectedOption(option);
 			const payload = { ...profile, price_group: option };
 			if (profile.id) {
-				const result = (await profileHelper.updateProfile(
-					payload
-				)) as DatabaseTypes.Profiles;
+				const result = (await profileHelper.updateProfile(payload)) as DatabaseTypes.Profiles;
 				if (result) {
 					dispatch({ type: UPDATE_PROFILE, payload });
 				}
@@ -129,13 +107,9 @@ const index = () => {
 	}, [profile]);
 
 	return (
-		<View
-			style={{ ...styles.container, backgroundColor: theme.screen.background }}
-		>
+		<View style={{ ...styles.container, backgroundColor: theme.screen.background }}>
 			<View style={styles.gifContainer}>{renderLottie}</View>
-			<View
-				style={{ ...styles.priceGroupContainer, width: isWeb ? '80%' : '100%' }}
-			>
+			<View style={{ ...styles.priceGroupContainer, width: isWeb ? '80%' : '100%' }}>
 				{sortingOptions.map(option => (
 					<TouchableOpacity
 						key={option.id}
@@ -152,12 +126,7 @@ const index = () => {
 						onPress={() => updatePricing(option.id)}
 					>
 						<View style={styles.col}>
-							{cloneElement(
-								option.icon,
-								selectedOption === option.id
-									? { color: contrastColor }
-									: { color: theme.screen.icon }
-							)}
+							{cloneElement(option.icon, selectedOption === option.id ? { color: contrastColor } : { color: theme.screen.icon })}
 							<Text
 								style={[
 									styles.label,

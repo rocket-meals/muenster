@@ -115,32 +115,19 @@ class MyKvStorage {
     const duration = maxTtl || defaultDuration;
 
     //this.kvImplementation = !!redisUrl ? new MyKvStorageRedis(redisUrl, duration)
-    this.kvImplementation = redisUrl
-      ? new MyKvStorageRedis(redisUrl, duration)
-      : new MyKvStorageMemory(duration);
+    this.kvImplementation = redisUrl ? new MyKvStorageRedis(redisUrl, duration) : new MyKvStorageMemory(duration);
   }
 
-  async setCodeChallenge(
-    authorization_code: string,
-    code_challenge: CodeChallengeRedisEntryType
-  ) {
+  async setCodeChallenge(authorization_code: string, code_challenge: CodeChallengeRedisEntryType) {
     mylog('associateCodeChallengeWithCode: state: ' + authorization_code);
     mylog(JSON.stringify(code_challenge, null, 2));
     mylog('-----');
-    await this.kvImplementation.set(
-      MyKvStorage.prefix_code_challenge + authorization_code,
-      JSON.stringify(code_challenge)
-    );
+    await this.kvImplementation.set(MyKvStorage.prefix_code_challenge + authorization_code, JSON.stringify(code_challenge));
   }
 
   async getCodeChallenge(authorization_code: string) {
-    let savedKey = await this.kvImplementation.get(
-      MyKvStorage.prefix_code_challenge + authorization_code
-    );
-    mylog(
-      'getAssociatedCodeChallengeFromCode: authorization_code: ' +
-        authorization_code
-    );
+    let savedKey = await this.kvImplementation.get(MyKvStorage.prefix_code_challenge + authorization_code);
+    mylog('getAssociatedCodeChallengeFromCode: authorization_code: ' + authorization_code);
     mylog(savedKey);
     if (!!savedKey) {
       let obj = JSON.parse(savedKey) as CodeChallengeRedisEntryType;
@@ -150,25 +137,15 @@ class MyKvStorage {
     return null;
   }
 
-  async setStateInformation(
-    state: string,
-    authCodeAndRedirect: AuthorizationCodeAndRedirectType
-  ) {
+  async setStateInformation(state: string, authCodeAndRedirect: AuthorizationCodeAndRedirectType) {
     mylog('setStateInformation: state: ' + state);
     mylog(JSON.stringify(authCodeAndRedirect, null, 2));
     mylog('-----');
-    await this.kvImplementation.set(
-      MyKvStorage.prefix_save_session + state,
-      JSON.stringify(authCodeAndRedirect)
-    );
+    await this.kvImplementation.set(MyKvStorage.prefix_save_session + state, JSON.stringify(authCodeAndRedirect));
   }
 
-  async getStateInformation(
-    state: string
-  ): Promise<AuthorizationCodeAndRedirectType | null> {
-    let savedKey = await this.kvImplementation.get(
-      MyKvStorage.prefix_save_session + state
-    );
+  async getStateInformation(state: string): Promise<AuthorizationCodeAndRedirectType | null> {
+    let savedKey = await this.kvImplementation.get(MyKvStorage.prefix_save_session + state);
     mylog('getStateInformation: state: ' + state);
     mylog(savedKey);
     if (!!savedKey) {
@@ -185,9 +162,7 @@ class MyKvStorage {
   }
 
   async clearAssociatedCodeChallengeFromCode(authorization_code: string) {
-    await this.kvImplementation.del(
-      MyKvStorage.prefix_code_challenge + authorization_code
-    );
+    await this.kvImplementation.del(MyKvStorage.prefix_code_challenge + authorization_code);
   }
 }
 
@@ -203,17 +178,9 @@ class CodeChallengeMethods {
   static METHOD_plain = 'plain';
 }
 
-async function generateRefreshToken(
-  directus_session_token: string,
-  accountability: any,
-  userId: string,
-  database: Knex<any, any[]>
-) {
+async function generateRefreshToken(directus_session_token: string, accountability: any, userId: string, database: Knex<any, any[]>) {
   // we need to obtain the directus_refresh_token from the directus_session_token
-  mylog(
-    'Redirect with token endpoint: directus_session_token: ' +
-      directus_session_token
-  );
+  mylog('Redirect with token endpoint: directus_session_token: ' + directus_session_token);
   mylog('Redirect with token endpoint: userId: ' + userId);
   if (!userId) {
     throw new Error('No user Id given');
@@ -225,8 +192,7 @@ async function generateRefreshToken(
    * Start of copy: https://github.com/directus/directus/blob/main/api/src/services/authentication.ts Login
    */
   const refreshToken = await NanoidHelper.getNanoid(64);
-  const msRefreshTokenTTL: number =
-    ms(String(EnvVariableHelper.getRefreshTTL())) || 0;
+  const msRefreshTokenTTL: number = ms(String(EnvVariableHelper.getRefreshTTL())) || 0;
   const refreshTokenExpiration = new Date(Date.now() + msRefreshTokenTTL);
 
   await knex('directus_sessions').insert({
@@ -250,9 +216,7 @@ function getEnvVarNameAuthProviderRedirectAllowList(provider: string) {
 }
 
 function getProviderRedirectAllowList(provider: string): string[] {
-  let allowed_redirect_urls_raw = env?.[
-    getEnvVarNameAuthProviderRedirectAllowList(provider)
-  ] as string[] | string;
+  let allowed_redirect_urls_raw = env?.[getEnvVarNameAuthProviderRedirectAllowList(provider)] as string[] | string;
   mylog('allowed_redirect_urls_raw');
   mylog(allowed_redirect_urls_raw);
   mylog('type of: ' + typeof allowed_redirect_urls_raw);
@@ -269,21 +233,14 @@ function getProviderRedirectAllowList(provider: string): string[] {
   return allowed_redirect_urls;
 }
 
-async function isRedirectUrlWhitelisted(
-  redirect_url_as_url: URL,
-  provider: string,
-  apiContext: ApiContext
-) {
+async function isRedirectUrlWhitelisted(redirect_url_as_url: URL, provider: string, apiContext: ApiContext) {
   const redirect_url = redirect_url_as_url.toString();
   const allowed_redirect_urls = getProviderRedirectAllowList(provider);
   if (redirect_url.startsWith(PUBLIC_URL)) {
     // we will always allow the redirect to the server page
     return true;
   } else {
-    return RedirectWhitelistHelper.isRedirectUrlAllowedForWhitelistEntriesWithSimpleWildcards(
-      allowed_redirect_urls,
-      redirect_url_as_url
-    );
+    return RedirectWhitelistHelper.isRedirectUrlAllowedForWhitelistEntriesWithSimpleWildcards(allowed_redirect_urls, redirect_url_as_url);
   }
 }
 
@@ -312,9 +269,7 @@ function generateAuthorizationCode(amountBytes?: number) {
   const bytesMinAmount = 32;
   const bytesMaxAmount = 96;
   const usedAmountBytes = amountBytes || bytesMinAmount;
-  const authorization_code = crypto
-    .randomBytes(usedAmountBytes)
-    .toString('hex');
+  const authorization_code = crypto.randomBytes(usedAmountBytes).toString('hex');
   return authorization_code;
 }
 
@@ -332,10 +287,7 @@ export default defineEndpoint({
     const redisUrl = env?.['REDIS'];
     let validRedisUrl: string | null = null;
     if (!redisUrl || redisUrl.length === 0) {
-      mylog(
-        EndpointTopName +
-          ' current is only supported with redis. Please configure env var REDIS.'
-      );
+      mylog(EndpointTopName + ' current is only supported with redis. Please configure env var REDIS.');
       return;
     } else {
       validRedisUrl = redisUrl;
@@ -349,8 +301,7 @@ export default defineEndpoint({
     // 4.3.  Client Sends the Code Challenge with the Authorization Request - Directus Extension
     router.post('/authorize', async (req, res) => {
       mylog('Authorize Called');
-      const { provider, code_challenge, redirect_url, code_challenge_method } =
-        req.body;
+      const { provider, code_challenge, redirect_url, code_challenge_method } = req.body;
       mylog(req.body);
 
       //   The client sends the code challenge as part of the OAuth 2.0
@@ -370,92 +321,55 @@ export default defineEndpoint({
         //    "error_description" or the response of "error_uri" SHOULD explain the
         //    nature of error, e.g., code challenge required.
         mylog('Missing required parameters code_challenge.');
-        return res
-          .status(400)
-          .json({ error: 'Missing required parameters code_challenge.' });
+        return res.status(400).json({ error: 'Missing required parameters code_challenge.' });
       }
 
       //
       //    code_challenge_method
       //       OPTIONAL, defaults to "plain" if not present in the request.  Code
       //       verifier transformation method is "S256" or "plain".
-      let code_challenge_method_app =
-        code_challenge_method || CodeChallengeMethods.METHOD_plain;
+      let code_challenge_method_app = code_challenge_method || CodeChallengeMethods.METHOD_plain;
 
-      if (
-        !(
-          code_challenge_method_app === CodeChallengeMethods.METHOD_S256 ||
-          code_challenge_method_app === CodeChallengeMethods.METHOD_plain
-        )
-      ) {
+      if (!(code_challenge_method_app === CodeChallengeMethods.METHOD_S256 || code_challenge_method_app === CodeChallengeMethods.METHOD_plain)) {
         // Clients are
         //    permitted to use "plain" only if they cannot support "S256" for some
         //    technical reason and know via out-of-band configuration that the
         //    server supports "plain".
-        mylog(
-          'Code challenge method provided ' +
-            code_challenge_method_app +
-            ' method has to be either ' +
-            CodeChallengeMethods.METHOD_S256 +
-            ' or ' +
-            CodeChallengeMethods.METHOD_plain
-        );
-        return res
-          .status(400)
-          .json({
-            error: `Code challenge method provided ${code_challenge_method_app} method has to be either "${CodeChallengeMethods.METHOD_S256}" or "${CodeChallengeMethods.METHOD_plain}"`,
-          });
+        mylog('Code challenge method provided ' + code_challenge_method_app + ' method has to be either ' + CodeChallengeMethods.METHOD_S256 + ' or ' + CodeChallengeMethods.METHOD_plain);
+        return res.status(400).json({
+          error: `Code challenge method provided ${code_challenge_method_app} method has to be either "${CodeChallengeMethods.METHOD_S256}" or "${CodeChallengeMethods.METHOD_plain}"`,
+        });
       }
 
       if (!provider) {
         mylog('Missing required parameter provider');
-        return res
-          .status(400)
-          .json({
-            error:
-              'Missing required parameter provider. Has to be an auth provider configured in directus.',
-          });
+        return res.status(400).json({
+          error: 'Missing required parameter provider. Has to be an auth provider configured in directus.',
+        });
       }
       const providerIsRegistered = checkIfProviderRegistered(provider);
       if (!providerIsRegistered) {
         mylog(`Provider ${provider} not listed in AUTH_PROVIDERS`);
-        return res
-          .status(400)
-          .json({ error: `Provider ${provider} not listed in AUTH_PROVIDERS` });
+        return res.status(400).json({ error: `Provider ${provider} not listed in AUTH_PROVIDERS` });
       }
 
       if (!redirect_url) {
         mylog('Missing required parameter redirect_url');
-        return res
-          .status(400)
-          .json({ error: 'Missing required parameter redirect_url' });
+        return res.status(400).json({ error: 'Missing required parameter redirect_url' });
       }
-      let redirect_url_well_formed =
-        RedirectWhitelistHelper.getUrlFromString(redirect_url);
+      let redirect_url_well_formed = RedirectWhitelistHelper.getUrlFromString(redirect_url);
       if (!redirect_url_well_formed) {
-        mylog(
-          `Parameter redirect_url is not a well formed url: ${redirect_url}`
-        );
-        return res
-          .status(400)
-          .json({
-            error: `Parameter redirect_url is not a well formed url: ${redirect_url}`,
-          });
+        mylog(`Parameter redirect_url is not a well formed url: ${redirect_url}`);
+        return res.status(400).json({
+          error: `Parameter redirect_url is not a well formed url: ${redirect_url}`,
+        });
       }
-      let redirect_url_is_allowed = isRedirectUrlWhitelisted(
-        redirect_url_well_formed,
-        provider,
-        apiContext
-      );
+      let redirect_url_is_allowed = isRedirectUrlWhitelisted(redirect_url_well_formed, provider, apiContext);
       if (!redirect_url_is_allowed) {
-        mylog(
-          `Redirect url ${redirect_url} is not included in the redirect allow list for the provider ${provider}`
-        );
-        return res
-          .status(400)
-          .json({
-            error: `Redirect url ${redirect_url} is not included in the redirect allow list for the provider ${provider}`,
-          });
+        mylog(`Redirect url ${redirect_url} is not included in the redirect allow list for the provider ${provider}`);
+        return res.status(400).json({
+          error: `Redirect url ${redirect_url} is not included in the redirect allow list for the provider ${provider}`,
+        });
       }
 
       const authorization_code = generateAuthorizationCode();
@@ -486,10 +400,7 @@ export default defineEndpoint({
 
       const redirectUrlToSaveSession = `${PUBLIC_URL}/${EndpointTopName}/save-session?state=${state}`;
 
-      const urlToProviderLogin = getUrlToProviderLogin(
-        provider,
-        redirectUrlToSaveSession
-      );
+      const urlToProviderLogin = getUrlToProviderLogin(provider, redirectUrlToSaveSession);
       return res.json({
         urlToProviderLogin: urlToProviderLogin,
       });
@@ -503,59 +414,38 @@ export default defineEndpoint({
       const { state } = req.query;
       if (!state) {
         mylog('Missing required parameter state.');
-        return res
-          .status(400)
-          .json({ error: 'Missing required parameter state.' });
+        return res.status(400).json({ error: 'Missing required parameter state.' });
       }
       const stateAsString = state.toString();
 
       const directus_session_token = req.cookies.directus_session_token;
       if (!directus_session_token) {
         mylog('Missing directus_session_token in cookies.');
-        return res
-          .status(400)
-          .json({ error: 'Missing directus_session_token in cookies.' });
+        return res.status(400).json({ error: 'Missing directus_session_token in cookies.' });
       }
 
-      let saved_authorization_code_and_redirect =
-        await myStorage.getStateInformation(stateAsString);
+      let saved_authorization_code_and_redirect = await myStorage.getStateInformation(stateAsString);
       if (!saved_authorization_code_and_redirect) {
         mylog('No information found for state. Might be too long');
-        return res
-          .status(400)
-          .json({ error: 'No information found for state. Might be too long' });
+        return res.status(400).json({ error: 'No information found for state. Might be too long' });
       }
       const redirect_url = saved_authorization_code_and_redirect.redirect_url;
-      const authorization_code =
-        saved_authorization_code_and_redirect.authorization_code;
+      const authorization_code = saved_authorization_code_and_redirect.authorization_code;
       if (!authorization_code || !redirect_url) {
         mylog('No information found for state. Might be too long / outdated');
-        return res
-          .status(400)
-          .json({
-            error:
-              'No information found for state. Might be too long / outdated',
-          });
+        return res.status(400).json({
+          error: 'No information found for state. Might be too long / outdated',
+        });
       }
 
       await myStorage.clearStateInformation(stateAsString); // clear state information, as we got all the information and they exist.
 
-      const storedCodeChallenge =
-        await myStorage.getCodeChallenge(authorization_code);
-      if (
-        !storedCodeChallenge ||
-        !storedCodeChallenge.code_challenge_method ||
-        !storedCodeChallenge.code_challenge
-      ) {
-        mylog(
-          'No information found for saved authorization code. Might be too long'
-        );
-        return res
-          .status(400)
-          .json({
-            error:
-              'No information found for saved authorization code. Might be too long',
-          });
+      const storedCodeChallenge = await myStorage.getCodeChallenge(authorization_code);
+      if (!storedCodeChallenge || !storedCodeChallenge.code_challenge_method || !storedCodeChallenge.code_challenge) {
+        mylog('No information found for saved authorization code. Might be too long');
+        return res.status(400).json({
+          error: 'No information found for saved authorization code. Might be too long',
+        });
       }
 
       // @ts-ignore
@@ -564,32 +454,21 @@ export default defineEndpoint({
       const userId = req?.accountability?.user;
       if (!accountability || !userId) {
         mylog('No accountability or userId found.');
-        return res
-          .status(400)
-          .json({ error: 'No accountability or userId found.' });
+        return res.status(400).json({ error: 'No accountability or userId found.' });
       }
       let knexDatabase = database as any as Knex<any, any[]>;
-      let directus_refresh_token = await generateRefreshToken(
-        directus_session_token,
-        accountability,
-        userId,
-        knexDatabase
-      );
+      let directus_refresh_token = await generateRefreshToken(directus_session_token, accountability, userId, knexDatabase);
 
       // Save the directus refresh token in the code challenge
-      await myStorage.setCodeChallenge(
-        saved_authorization_code_and_redirect.authorization_code,
-        {
-          code_challenge: storedCodeChallenge?.code_challenge,
-          code_challenge_method: storedCodeChallenge?.code_challenge_method,
-          directus_refresh_token: directus_refresh_token,
-          //directus_session_token: directus_session_token, // currently we have not saved the directus_refresh_token. After the OAuth2 Flow we will add it there
-        }
-      );
+      await myStorage.setCodeChallenge(saved_authorization_code_and_redirect.authorization_code, {
+        code_challenge: storedCodeChallenge?.code_challenge,
+        code_challenge_method: storedCodeChallenge?.code_challenge_method,
+        directus_refresh_token: directus_refresh_token,
+        //directus_session_token: directus_session_token, // currently we have not saved the directus_refresh_token. After the OAuth2 Flow we will add it there
+      });
 
       // now redirect the user to the previously verified redirect url
-      const redirect_url_with_authorization_code =
-        redirect_url + '?code=' + authorization_code;
+      const redirect_url_with_authorization_code = redirect_url + '?code=' + authorization_code;
       mylog('Redirecting to: ' + redirect_url_with_authorization_code);
       return res.redirect(redirect_url_with_authorization_code); // The user in the native app (using Auth WebBrowser) or SPA, will get the authorization code
     });
@@ -605,14 +484,11 @@ export default defineEndpoint({
       const code_verifier_app = code_verifier;
       if (!code_verifier_app) {
         mylog('Missing required parameter code_verifier.');
-        return res
-          .status(400)
-          .json({ error: 'Missing required parameter: code_verifier.' });
+        return res.status(400).json({ error: 'Missing required parameter: code_verifier.' });
       }
 
       const authorization_code = code;
-      const storedCodeChallenge =
-        await myStorage.getCodeChallenge(authorization_code);
+      const storedCodeChallenge = await myStorage.getCodeChallenge(authorization_code);
       if (!storedCodeChallenge) {
         mylog('Invalid or expired state.');
         return res.status(400).json({ error: 'Invalid or expired state.' });
@@ -620,15 +496,9 @@ export default defineEndpoint({
 
       try {
         // Validate the code_verifier_app against the stored code_challenge_app
-        let generatedChallenge = crypto
-          .createHash('sha256')
-          .update(code_verifier_app)
-          .digest('base64url');
+        let generatedChallenge = crypto.createHash('sha256').update(code_verifier_app).digest('base64url');
 
-        if (
-          storedCodeChallenge.code_challenge_method ===
-          CodeChallengeMethods.METHOD_plain
-        ) {
+        if (storedCodeChallenge.code_challenge_method === CodeChallengeMethods.METHOD_plain) {
           mylog('Code Challenge Method is plain');
           // 4.6
           // If the "code_challenge_method" from Section 4.3 was "plain", they are
@@ -640,12 +510,7 @@ export default defineEndpoint({
 
         mylog('Token Called: generatedChallenge: ' + generatedChallenge);
         // Secure comparison of the code challenge
-        if (
-          !crypto.timingSafeEqual(
-            Buffer.from(generatedChallenge),
-            Buffer.from(storedCodeChallenge.code_challenge)
-          )
-        ) {
+        if (!crypto.timingSafeEqual(Buffer.from(generatedChallenge), Buffer.from(storedCodeChallenge.code_challenge))) {
           mylog('Token Called: Invalid code verifier.');
           return res.status(400).json({ error: 'Invalid code verifier.' });
         }
@@ -657,18 +522,12 @@ export default defineEndpoint({
 
         mylog('Token Called: Valid code verifier.');
 
-        const directus_refresh_token =
-          storedCodeChallenge.directus_refresh_token;
+        const directus_refresh_token = storedCodeChallenge.directus_refresh_token;
 
         // If valid, clear the stored state and session
-        await myStorage.clearAssociatedCodeChallengeFromCode(
-          authorization_code
-        );
+        await myStorage.clearAssociatedCodeChallengeFromCode(authorization_code);
 
-        mylog(
-          'Token Called: Returning directus_refresh_token: ' +
-            directus_refresh_token
-        );
+        mylog('Token Called: Returning directus_refresh_token: ' + directus_refresh_token);
         // Return the session or token associated with the validated request
         return res.json({
           message: 'Validation successful',
@@ -677,9 +536,7 @@ export default defineEndpoint({
         });
       } catch (error: any) {
         mylog('Error during validation:', error);
-        return res
-          .status(500)
-          .json({ error: 'Internal server error.', message: error.toString() });
+        return res.status(500).json({ error: 'Internal server error.', message: error.toString() });
       }
     });
   },

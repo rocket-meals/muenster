@@ -11,13 +11,7 @@ interface AutoImageScrollerProps {
 	loadMore: () => void;
 }
 
-const AutoImageScroller: React.FC<AutoImageScrollerProps> = ({
-	images,
-	numColumns,
-	size,
-	speedPercent,
-	loadMore,
-}) => {
+const AutoImageScroller: React.FC<AutoImageScrollerProps> = ({ images, numColumns, size, speedPercent, loadMore }) => {
 	const flatListRef = useRef<FlatList<string>>(null);
 	const scrollOffset = useRef(0);
 	const screenHeight = Dimensions.get('window').height;
@@ -44,10 +38,7 @@ const AutoImageScroller: React.FC<AutoImageScrollerProps> = ({
 			scrollOffset.current += distance;
 
 			const listHeight = Math.ceil(images.length / numColumns) * size;
-			if (
-				!loadingRef.current &&
-				scrollOffset.current + screenHeight >= listHeight - size
-			) {
+			if (!loadingRef.current && scrollOffset.current + screenHeight >= listHeight - size) {
 				loadingRef.current = true;
 				loadMore();
 			}
@@ -76,29 +67,12 @@ const AutoImageScroller: React.FC<AutoImageScrollerProps> = ({
 		const offset = (columnIndex % 3) * (size / 3);
 		return (
 			<View style={{ transform: [{ translateY: offset }] }}>
-				<Image
-					source={{ uri: item }}
-					style={[styles.image, { width: size, height: size }]}
-					contentFit="cover"
-				/>
+				<Image source={{ uri: item }} style={[styles.image, { width: size, height: size }]} contentFit="cover" />
 			</View>
 		);
 	};
 
-	return (
-		<FlatList
-			ref={flatListRef}
-			key={numColumns}
-			data={extendedImages}
-			renderItem={renderItem}
-			keyExtractor={(_, idx) => idx.toString()}
-			numColumns={numColumns}
-			showsVerticalScrollIndicator={false}
-			scrollEnabled={false}
-			onEndReached={loadMore}
-			onEndReachedThreshold={0.5}
-		/>
-	);
+	return <FlatList ref={flatListRef} key={numColumns} data={extendedImages} renderItem={renderItem} keyExtractor={(_, idx) => idx.toString()} numColumns={numColumns} showsVerticalScrollIndicator={false} scrollEnabled={false} onEndReached={loadMore} onEndReachedThreshold={0.5} />;
 };
 
 export default AutoImageScroller;

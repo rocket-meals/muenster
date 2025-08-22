@@ -10,20 +10,19 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 0,
-        period_days_amount: 7,
-        send_on_mondays: true,
-        send_on_tuesdays: true,
-        send_on_wednesdays: true,
-        send_on_thursdays: true,
-        send_on_fridays: true,
-        send_on_saturdays: true,
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 0,
+      period_days_amount: 7,
+      send_on_mondays: true,
+      send_on_tuesdays: true,
+      send_on_wednesdays: true,
+      send_on_thursdays: true,
+      send_on_fridays: true,
+      send_on_saturdays: true,
+      send_on_sundays: true,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -44,21 +43,16 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
       seconds: 0,
       milliseconds: 0,
     });
-    const expectedGenerateForDateOnly: FoodofferDateType =
-      DateHelper.getFoodofferDateTypeFromDate(expectedGenerateForDate);
+    const expectedGenerateForDateOnly: FoodofferDateType = DateHelper.getFoodofferDateTypeFromDate(expectedGenerateForDate);
 
     // we simulate as if the report is due now
-    const generateForDate = ReportSchedule.getReferenceDate(
-      recipientEntry,
-      now_simulated
-    );
+    const generateForDate = ReportSchedule.getReferenceDate(recipientEntry, now_simulated);
     expect(generateForDate).not.toBeNull();
     if (generateForDate === null) {
       return;
     }
 
-    const generateForDateOnly: FoodofferDateType =
-      DateHelper.getFoodofferDateTypeFromDate(generateForDate);
+    const generateForDateOnly: FoodofferDateType = DateHelper.getFoodofferDateTypeFromDate(generateForDate);
 
     expect(generateForDateOnly).toEqual(expectedGenerateForDateOnly);
   });
@@ -69,20 +63,19 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
     let startDay = 1; // 1st of July is a Monday
     let offset = 3; // 3 days offset
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: offset,
-        period_days_amount: 7,
-        send_on_mondays: true,
-        send_on_tuesdays: true,
-        send_on_wednesdays: true,
-        send_on_thursdays: true,
-        send_on_fridays: true,
-        send_on_saturdays: true,
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: offset,
+      period_days_amount: 7,
+      send_on_mondays: true,
+      send_on_tuesdays: true,
+      send_on_wednesdays: true,
+      send_on_thursdays: true,
+      send_on_fridays: true,
+      send_on_saturdays: true,
+      send_on_sundays: true,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -103,22 +96,17 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
       seconds: 0,
       milliseconds: 0,
     });
-    const expectedGenerateForDateOnly: FoodofferDateType =
-      DateHelper.getFoodofferDateTypeFromDate(expectedGenerateForDate);
+    const expectedGenerateForDateOnly: FoodofferDateType = DateHelper.getFoodofferDateTypeFromDate(expectedGenerateForDate);
     //console.log("expectedGenerateForDateOnly", expectedGenerateForDateOnly);
 
     // we simulate as if the report is due now
-    const generateForDate = ReportSchedule.getReferenceDate(
-      recipientEntry,
-      now_simulated
-    );
+    const generateForDate = ReportSchedule.getReferenceDate(recipientEntry, now_simulated);
     expect(generateForDate).not.toBeNull();
     if (generateForDate === null) {
       return;
     }
 
-    const generateForDateOnly: FoodofferDateType =
-      DateHelper.getFoodofferDateTypeFromDate(generateForDate);
+    const generateForDateOnly: FoodofferDateType = DateHelper.getFoodofferDateTypeFromDate(generateForDate);
     //console.log("generateForDateOnly", generateForDateOnly);
 
     expect(generateForDateOnly).toEqual(expectedGenerateForDateOnly);
@@ -128,20 +116,19 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 0,
-        period_days_amount: 1,
-        send_on_mondays: true,
-        send_on_tuesdays: true,
-        send_on_wednesdays: true,
-        send_on_thursdays: true,
-        send_on_fridays: true,
-        send_on_saturdays: true,
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 0,
+      period_days_amount: 1,
+      send_on_mondays: true,
+      send_on_tuesdays: true,
+      send_on_wednesdays: true,
+      send_on_thursdays: true,
+      send_on_fridays: true,
+      send_on_saturdays: true,
+      send_on_sundays: true,
+    };
 
     const referenceDate = DateHelper.getDate({
       year: 2024,
@@ -162,15 +149,10 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
       seconds: 0,
       milliseconds: 0,
     });
-    const expectedStartDateOnly: FoodofferDateType =
-      DateHelper.getFoodofferDateTypeFromDate(expectedStartDate);
+    const expectedStartDateOnly: FoodofferDateType = DateHelper.getFoodofferDateTypeFromDate(expectedStartDate);
 
-    const startDate = ReportSchedule.getStartDateBasedOnReferenceDate(
-      referenceDate,
-      recipientEntry
-    );
-    const startDateOnly: FoodofferDateType =
-      DateHelper.getFoodofferDateTypeFromDate(startDate);
+    const startDate = ReportSchedule.getStartDateBasedOnReferenceDate(referenceDate, recipientEntry);
+    const startDateOnly: FoodofferDateType = DateHelper.getFoodofferDateTypeFromDate(startDate);
 
     expect(expectedStartDateOnly).toEqual(startDateOnly);
   });
@@ -179,20 +161,19 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 0,
-        period_days_amount: 2,
-        send_on_mondays: true,
-        send_on_tuesdays: true,
-        send_on_wednesdays: true,
-        send_on_thursdays: true,
-        send_on_fridays: true,
-        send_on_saturdays: true,
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 0,
+      period_days_amount: 2,
+      send_on_mondays: true,
+      send_on_tuesdays: true,
+      send_on_wednesdays: true,
+      send_on_thursdays: true,
+      send_on_fridays: true,
+      send_on_saturdays: true,
+      send_on_sundays: true,
+    };
 
     const referenceDate = DateHelper.getDate({
       year: 2024,
@@ -213,15 +194,10 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
       seconds: 0,
       milliseconds: 0,
     });
-    const expectedStartDateOnly: FoodofferDateType =
-      DateHelper.getFoodofferDateTypeFromDate(expectedStartDate);
+    const expectedStartDateOnly: FoodofferDateType = DateHelper.getFoodofferDateTypeFromDate(expectedStartDate);
 
-    const startDate = ReportSchedule.getStartDateBasedOnReferenceDate(
-      referenceDate,
-      recipientEntry
-    );
-    const startDateOnly: FoodofferDateType =
-      DateHelper.getFoodofferDateTypeFromDate(startDate);
+    const startDate = ReportSchedule.getStartDateBasedOnReferenceDate(referenceDate, recipientEntry);
+    const startDateOnly: FoodofferDateType = DateHelper.getFoodofferDateTypeFromDate(startDate);
 
     expect(expectedStartDateOnly).toEqual(startDateOnly);
   });
@@ -230,20 +206,19 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: false,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 0,
-        period_days_amount: 2,
-        send_on_mondays: true,
-        send_on_tuesdays: true,
-        send_on_wednesdays: true,
-        send_on_thursdays: true,
-        send_on_fridays: true,
-        send_on_saturdays: true,
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: false,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 0,
+      period_days_amount: 2,
+      send_on_mondays: true,
+      send_on_tuesdays: true,
+      send_on_wednesdays: true,
+      send_on_thursdays: true,
+      send_on_fridays: true,
+      send_on_saturdays: true,
+      send_on_sundays: true,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -255,10 +230,7 @@ describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
       milliseconds: 0,
     });
 
-    const generateForDate = ReportSchedule.getReferenceDate(
-      recipientEntry,
-      now_simulated
-    );
+    const generateForDate = ReportSchedule.getReferenceDate(recipientEntry, now_simulated);
 
     expect(generateForDate).toBeNull();
   });

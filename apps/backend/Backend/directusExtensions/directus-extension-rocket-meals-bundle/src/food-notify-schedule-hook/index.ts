@@ -2,10 +2,7 @@ import { defineHook } from '@directus/extensions-sdk';
 import { NotifySchedule } from './NotifySchedule';
 import { WorkflowScheduleHelper } from '../workflows-runs-hook';
 import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import {
-  SingleWorkflowRun,
-  WorkflowRunLogger,
-} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import { SingleWorkflowRun, WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 
@@ -14,19 +11,11 @@ class FoodNotifyWorkflow extends SingleWorkflowRun {
     return 'food-notify';
   }
 
-  async runJob(
-    workflowRun: DatabaseTypes.WorkflowsRuns,
-    myDatabaseHelper: MyDatabaseHelper,
-    logger: WorkflowRunLogger
-  ): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
+  async runJob(workflowRun: DatabaseTypes.WorkflowsRuns, myDatabaseHelper: MyDatabaseHelper, logger: WorkflowRunLogger): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
     await logger.appendLog('Starting food parsing');
 
     try {
-      const notifySchedule = new NotifySchedule(
-        workflowRun,
-        myDatabaseHelper,
-        logger
-      );
+      const notifySchedule = new NotifySchedule(workflowRun, myDatabaseHelper, logger);
       let aboutMealsInDays = 1;
       return await notifySchedule.notify(aboutMealsInDays);
     } catch (err: any) {

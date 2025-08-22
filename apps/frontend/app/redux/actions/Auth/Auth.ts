@@ -1,25 +1,4 @@
-import {
-	authentication,
-	AuthenticationClient,
-	AuthenticationConfig,
-	AuthenticationData,
-	AuthenticationStorage,
-	createDirectus,
-	deleteUser,
-	DirectusClient,
-	graphql,
-	GraphqlClient,
-	readMe,
-	readPermissions,
-	readPolicies,
-	ReadProviderOutput,
-	readProviders,
-	readRoles,
-	rest,
-	RestClient,
-	serverInfo,
-	ServerInfoOutput,
-} from '@directus/sdk';
+import { authentication, AuthenticationClient, AuthenticationConfig, AuthenticationData, AuthenticationStorage, createDirectus, deleteUser, DirectusClient, graphql, GraphqlClient, readMe, readPermissions, readPolicies, ReadProviderOutput, readProviders, readRoles, rest, RestClient, serverInfo, ServerInfoOutput } from '@directus/sdk';
 
 import { DatabaseTypes } from 'repo-depkit-common';
 
@@ -54,12 +33,7 @@ export type AuthProvider = {
 };
 
 export class ServerAPI {
-	static client:
-		| (DirectusClient<any> &
-				AuthenticationClient<any> &
-				GraphqlClient<any> &
-				RestClient<any>)
-		| null = null;
+	static client: (DirectusClient<any> & AuthenticationClient<any> & GraphqlClient<any> & RestClient<any>) | null = null;
 	static serverUrlCustom: string | null = null;
 	static ParamNameForAccessToken = 'directus_refresh_token';
 	static PROVIDER_NAME_APPLE = 'apple';
@@ -83,24 +57,17 @@ export class ServerAPI {
 		return this.ParamNameForAccessToken;
 	}
 
-	static getDirectusAccessTokenFromParams(
-		params: any
-	): string | null | undefined {
+	static getDirectusAccessTokenFromParams(params: any): string | null | undefined {
 		return params?.[this.getParamNameForDirectusAccessToken()];
 	}
 
 	// Creates a public Directus client
 	static getPublicClient() {
-		return createDirectus<DatabaseTypes.CustomDirectusTypes>(
-			this.getServerUrl()
-		).with(rest());
+		return createDirectus<DatabaseTypes.CustomDirectusTypes>(this.getServerUrl()).with(rest());
 	}
 
 	// Initializes authentication storage
-	static createAuthentificationStorage(
-		get: () => Promise<AuthenticationData | null> | AuthenticationData | null,
-		set: (value: AuthenticationData | null) => Promise<void> | void
-	) {
+	static createAuthentificationStorage(get: () => Promise<AuthenticationData | null> | AuthenticationData | null, set: (value: AuthenticationData | null) => Promise<void> | void) {
 		if (!this.simpleAuthentificationStorage) {
 			this.simpleAuthentificationStorage = { get, set };
 		}
@@ -109,9 +76,7 @@ export class ServerAPI {
 	static getClient() {
 		if (!this.client) {
 			if (!this.simpleAuthentificationStorage) {
-				throw new Error(
-					'Authentication storage not initialized. Call createAuthentificationStorage() first.'
-				);
+				throw new Error('Authentication storage not initialized. Call createAuthentificationStorage() first.');
 			}
 			const authConfig: Partial<AuthenticationConfig> = {
 				autoRefresh: true,
@@ -119,10 +84,7 @@ export class ServerAPI {
 				storage: this.simpleAuthentificationStorage,
 			};
 
-			this.client = createDirectus(this.getServerUrl())
-				.with(authentication('json', authConfig))
-				.with(graphql())
-				.with(rest());
+			this.client = createDirectus(this.getServerUrl()).with(authentication('json', authConfig)).with(graphql()).with(rest());
 		}
 		return this.client;
 	}
@@ -144,10 +106,7 @@ export class ServerAPI {
 		}
 	}
 
-	static async authenticateWithEmailAndPassword(
-		email: string,
-		password: string
-	) {
+	static async authenticateWithEmailAndPassword(email: string, password: string) {
 		try {
 			const client = this.getClient();
 			const result = await client.login(email, password);

@@ -1,20 +1,7 @@
 import React from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
-import {
-	CLEAR_CANTEENS,
-	CLEAR_CAMPUSES,
-	CLEAR_APARTMENTS,
-	CLEAR_FOODS,
-	CLEAR_MANAGEMENT,
-	CLEAR_NEWS,
-	CLEAR_CHATS,
-	CLEAR_SETTINGS,
-	CLEAR_POPUP_EVENTS_HASH,
-	CLEAR_COLLECTION_DATES_LAST_UPDATED,
-	CLEAR_ANONYMOUSLY,
-	ON_LOGOUT,
-} from '@/redux/Types/types';
+import { CLEAR_CANTEENS, CLEAR_CAMPUSES, CLEAR_APARTMENTS, CLEAR_FOODS, CLEAR_MANAGEMENT, CLEAR_NEWS, CLEAR_CHATS, CLEAR_SETTINGS, CLEAR_POPUP_EVENTS_HASH, CLEAR_COLLECTION_DATES_LAST_UPDATED, CLEAR_ANONYMOUSLY, ON_LOGOUT } from '@/redux/Types/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistor } from '@/redux/store';
 import { router } from 'expo-router';
@@ -93,8 +80,7 @@ const DebugLogout = () => {
 		},
 		{
 			label: 'ROUTER_REPLACE_LOGIN',
-			action: () =>
-				router.replace({ pathname: '/(auth)/login', params: { logout: 'true' } }),
+			action: () => router.replace({ pathname: '/(auth)/login', params: { logout: 'true' } }),
 		},
 	];
 
@@ -103,11 +89,7 @@ const DebugLogout = () => {
 		for (const step of steps) {
 			if (exclude.includes(step.label)) continue;
 			const result = step.action();
-			if (
-				result &&
-				typeof result === 'object' &&
-				typeof (result as any).then === 'function'
-			) {
+			if (result && typeof result === 'object' && typeof (result as any).then === 'function') {
 				await (result as Promise<any>);
 			}
 		}
@@ -122,27 +104,14 @@ const DebugLogout = () => {
 			}}
 		>
 			<View style={{ ...styles.content }}>
-				<Text style={{ ...styles.heading, color: theme.screen.text }}>
-					{translate(TranslationKeys.debug_logout)}
-				</Text>
+				<Text style={{ ...styles.heading, color: theme.screen.text }}>{translate(TranslationKeys.debug_logout)}</Text>
 				{steps.map((step, index) => (
-					<TouchableOpacity
-						key={index}
-						style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }}
-						onPress={step.action}
-					>
-						<Text style={{ ...styles.body, color: theme.screen.text }}>
-							{step.label}
-						</Text>
+					<TouchableOpacity key={index} style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }} onPress={step.action}>
+						<Text style={{ ...styles.body, color: theme.screen.text }}>{step.label}</Text>
 					</TouchableOpacity>
 				))}
-				<TouchableOpacity
-					style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }}
-					onPress={myTestLogout}
-				>
-					<Text style={{ ...styles.body, color: theme.screen.text }}>
-						MY_TEST_LOGOUT
-					</Text>
+				<TouchableOpacity style={{ ...styles.listItem, backgroundColor: theme.screen.iconBg }} onPress={myTestLogout}>
+					<Text style={{ ...styles.body, color: theme.screen.text }}>MY_TEST_LOGOUT</Text>
 				</TouchableOpacity>
 			</View>
 		</ScrollView>

@@ -9,16 +9,10 @@ import { useSelector } from 'react-redux';
 import { myContrastColor } from '@/helper/colorHelper';
 import { RootState } from '@/redux/reducer';
 
-const CustomCollapsible: React.FC<CustomCollapsibleProps> = ({
-	headerText,
-	children,
-	customColor = '',
-}) => {
+const CustomCollapsible: React.FC<CustomCollapsibleProps> = ({ headerText, children, customColor = '' }) => {
 	const [collapsed, setCollapsed] = useState(true);
 	const { theme } = useTheme();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const resolvedColor = customColor || primaryColor;
 	const contrastColor = myContrastColor(resolvedColor, theme, mode === 'dark');
 
@@ -34,12 +28,7 @@ const CustomCollapsible: React.FC<CustomCollapsibleProps> = ({
 					}}
 				>
 					<View style={{ ...styles.iconText, backgroundColor: resolvedColor }}>
-						<MaterialIcons
-							name={collapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
-							size={22}
-							color={contrastColor}
-							style={{ alignSelf: 'center' }}
-						/>
+						<MaterialIcons name={collapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'} size={22} color={contrastColor} style={{ alignSelf: 'center' }} />
 					</View>
 					<View style={{ marginLeft: 10, width: '70%' }}>
 						<Text

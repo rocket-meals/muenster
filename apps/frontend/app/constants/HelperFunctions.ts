@@ -17,27 +17,18 @@ export const generateCodeVerifier = async () => {
 	const printableAsciiRange = printableAsciiEnd - printableAsciiStart + 1; // Calculate the range
 
 	const array = await Crypto.getRandomBytesAsync(bytesAmount); // Generates 32 random bytes
-	return Array.from(array, byte =>
-		String.fromCharCode(printableAsciiStart + (byte % printableAsciiRange))
-	).join('');
+	return Array.from(array, byte => String.fromCharCode(printableAsciiStart + (byte % printableAsciiRange))).join('');
 };
 
 // Generate a code challenge using the S256 method
 export const generateCodeChallenge = async (codeVerifier: string) => {
-	const digest = await Crypto.digestStringAsync(
-		Crypto.CryptoDigestAlgorithm.SHA256,
-		codeVerifier,
-		{ encoding: Crypto.CryptoEncoding.BASE64 }
-	);
+	const digest = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, codeVerifier, { encoding: Crypto.CryptoEncoding.BASE64 });
 	// Adjust the base64url encoding
 	return digest.replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 };
 
 // Update the login status
-export const updateLoginStatus = async (
-	dispatch: any,
-	payload: DatabaseTypes.DirectusUsers
-) => {
+export const updateLoginStatus = async (dispatch: any, payload: DatabaseTypes.DirectusUsers) => {
 	dispatch({ type: UPDATE_LOGIN, payload });
 };
 
@@ -199,10 +190,7 @@ export const filterNullishProperties = (obj: Record<string, any>) => {
 	);
 };
 
-export function formatFoodInformationValue(
-	value: string | number | null | undefined,
-	unit: string | null | undefined
-): string | null {
+export function formatFoodInformationValue(value: string | number | null | undefined, unit: string | null | undefined): string | null {
 	// If the value is not found, return null early
 	if (!value) return null;
 

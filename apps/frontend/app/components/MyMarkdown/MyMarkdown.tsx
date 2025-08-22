@@ -4,13 +4,7 @@ import { FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 import MarkdownIt from 'markdown-it';
 import { lightTheme, darkTheme } from '@/styles/themes';
 import { Appearance } from 'react-native';
-import RenderHtml, {
-	CustomBlockRenderer,
-	CustomMixedRenderer,
-	CustomTextualRenderer,
-	HTMLElementModel,
-	HTMLContentModel,
-} from 'react-native-render-html';
+import RenderHtml, { CustomBlockRenderer, CustomMixedRenderer, CustomTextualRenderer, HTMLElementModel, HTMLContentModel } from 'react-native-render-html';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import ProjectButton from '../ProjectButton';
@@ -34,23 +28,11 @@ export const replaceLinebreaks = (sourceContent: string) => {
 	return sourceContent;
 };
 
-const MyMarkdown: React.FC<MyMarkdownProps> = ({
-	content,
-	textColor: textColorProp,
-}) => {
-	const { primaryColor, selectedTheme } = useSelector(
-		(state: RootState) => state.settings
-	);
+const MyMarkdown: React.FC<MyMarkdownProps> = ({ content, textColor: textColorProp }) => {
+	const { primaryColor, selectedTheme } = useSelector((state: RootState) => state.settings);
 
 	const colorScheme = Appearance.getColorScheme();
-	const theme =
-		selectedTheme === 'systematic'
-			? colorScheme === 'dark'
-				? darkTheme
-				: lightTheme
-			: selectedTheme === 'dark'
-				? darkTheme
-				: lightTheme;
+	const theme = selectedTheme === 'systematic' ? (colorScheme === 'dark' ? darkTheme : lightTheme) : selectedTheme === 'dark' ? darkTheme : lightTheme;
 
 	const { width } = useWindowDimensions();
 	const md = new MarkdownIt({ html: true });
@@ -66,11 +48,7 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({
 
 	const fontSize = 16;
 	const textColor = textColorProp ?? theme.sheet.text;
-	const contrastColor = myContrastColor(
-		primaryColor,
-		theme,
-		selectedTheme === 'dark'
-	);
+	const contrastColor = myContrastColor(primaryColor, theme, selectedTheme === 'dark');
 
 	const tagsStyles = {
 		blockquote: { fontStyle: 'italic' },
@@ -97,10 +75,7 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({
 		fontStyle: 'normal',
 	};
 
-	const customRenderers: Record<
-		string,
-		CustomBlockRenderer | CustomTextualRenderer | CustomMixedRenderer
-	> = {
+	const customRenderers: Record<string, CustomBlockRenderer | CustomTextualRenderer | CustomMixedRenderer> = {
 		a: (props: any) => {
 			const { href } = props.tnode.attributes;
 			const { data } = props.tnode;
@@ -108,49 +83,29 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({
 
 			const handlePress = () => {
 				if (href) {
-					Linking.openURL(href).catch(err =>
-						console.error('Failed to open URL:', err)
-					);
+					Linking.openURL(href).catch(err => console.error('Failed to open URL:', err));
 				}
 			};
 
-			let iconLeft = (
-				<FontAwesome6
-					name="arrow-up-right-from-square"
-					size={20}
-					color={contrastColor}
-				/>
-			);
+			let iconLeft = <FontAwesome6 name="arrow-up-right-from-square" size={20} color={contrastColor} />;
 
 			if (href?.startsWith('tel:')) {
 				iconLeft = <FontAwesome6 name="phone" size={20} color={contrastColor} />;
 			} else if (href?.startsWith('mailto:')) {
-				iconLeft = (
-					<MaterialCommunityIcons name="email" size={24} color={contrastColor} />
-				);
+				iconLeft = <MaterialCommunityIcons name="email" size={24} color={contrastColor} />;
 			}
 
-			return (
-				<ProjectButton text={text} onPress={handlePress} iconLeft={iconLeft} />
-			);
+			return <ProjectButton text={text} onPress={handlePress} iconLeft={iconLeft} />;
 		},
 		sub: (props: any) => {
 			const { data } = props.tnode;
 			const text = data || props.children[0]?.data;
-			return (
-				<Text style={{ fontSize, verticalAlign: 'sub', color: textColor }}>
-					{text}
-				</Text>
-			);
+			return <Text style={{ fontSize, verticalAlign: 'sub', color: textColor }}>{text}</Text>;
 		},
 		sup: (props: any) => {
 			const { data } = props.tnode;
 			const text = data || props.children[0]?.data;
-			return (
-				<Text style={{ fontSize, verticalAlign: 'super', color: textColor }}>
-					{text}
-				</Text>
-			);
+			return <Text style={{ fontSize, verticalAlign: 'super', color: textColor }}>{text}</Text>;
 		},
 	};
 

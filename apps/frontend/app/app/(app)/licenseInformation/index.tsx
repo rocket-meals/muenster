@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles';
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	Linking,
-	Dimensions,
-	ScrollView,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Linking, Dimensions, ScrollView } from 'react-native';
 import packages from '../../../constants/LicenseData';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
@@ -74,19 +67,7 @@ const LicenseInformation = () => {
 										>
 											{pkg.version}
 										</Text>
-										{expanded === index ? (
-											<Entypo
-												name="chevron-small-up"
-												size={24}
-												color={theme.screen.icon}
-											/>
-										) : (
-											<Entypo
-												name="chevron-small-down"
-												size={24}
-												color={theme.screen.icon}
-											/>
-										)}
+										{expanded === index ? <Entypo name="chevron-small-up" size={24} color={theme.screen.icon} /> : <Entypo name="chevron-small-down" size={24} color={theme.screen.icon} />}
 									</View>
 								</TouchableOpacity>
 								{expanded === index && (
@@ -165,10 +146,7 @@ const LicenseInformation = () => {
 													width: '48%',
 												}}
 											>
-												<Text
-													style={{ color: 'blue', textAlign: 'right' }}
-													onPress={() => Linking.openURL(pkg.repository)}
-												>
+												<Text style={{ color: 'blue', textAlign: 'right' }} onPress={() => Linking.openURL(pkg.repository)}>
 													{pkg.repository}
 												</Text>
 											</View>

@@ -28,12 +28,10 @@ export const CollectionKeys = {
 	FOODS_FEEDBACKS_LABELS_TRANSLATIONS: 'foods_feedbacks_labels_translations',
 	FORM_EXTRACTS_FORM_FIELDS: 'form_extracts_form_fields',
 	FOODS_FEEDBACKS_LABELS: 'foods_feedbacks_labels',
-	CANTEEN_FOOD_FEEDBACK_REPORT_SCHEDULES_CANTEENS:
-		'canteen_food_feedback_report_schedules_canteens',
+	CANTEEN_FOOD_FEEDBACK_REPORT_SCHEDULES_CANTEENS: 'canteen_food_feedback_report_schedules_canteens',
 	CASHREGISTERS: 'cashregisters',
 	FOODS_ATTRIBUTES: 'foods_attributes',
-	CANTEEN_FOOD_FEEDBACK_REPORT_SCHEDULES_REPORT_RECIPIENTS:
-		'canteen_food_feedback_report_schedules_report_recipients',
+	CANTEEN_FOOD_FEEDBACK_REPORT_SCHEDULES_REPORT_RECIPIENTS: 'canteen_food_feedback_report_schedules_report_recipients',
 	PROFILES_BUILDINGS_FAVORITES: 'profiles_buildings_favorites',
 	PROFILES_BUILDINGS_LAST_OPENED: 'profiles_buildings_last_opened',
 	MARKINGS_GROUPS_TRANSLATIONS: 'markings_groups_translations',
@@ -46,8 +44,7 @@ export const CollectionKeys = {
 	DIRECTUS_PRESETS: 'directus_presets',
 	LANGUAGES: 'languages',
 	FOODS_CATEGORIES: 'foods_categories',
-	FOODS_FEEDBACKS_FOODS_FEEDBACKS_LABELS:
-		'foods_feedbacks_foods_feedbacks_labels',
+	FOODS_FEEDBACKS_FOODS_FEEDBACKS_LABELS: 'foods_feedbacks_foods_feedbacks_labels',
 	CANTEENS_FEEDBACKS_LABELS: 'canteens_feedbacks_labels',
 	FOODOFFERS_CATEGORIES: 'foodoffers_categories',
 	DIRECTUS_POLICIES: 'directus_policies',
@@ -70,11 +67,9 @@ export const CollectionKeys = {
 	FORM_EXTRACTS: 'form_extracts',
 	APARTMENTS: 'apartments',
 	POPUP_EVENTS_TRANSLATIONS: 'popup_events_translations',
-	CANTEENS_FOODSERVICE_HOURS_DURING_SEMESTER_BREAK:
-		'canteens_foodservice_hours_during_semester_break',
+	CANTEENS_FOODSERVICE_HOURS_DURING_SEMESTER_BREAK: 'canteens_foodservice_hours_during_semester_break',
 	APP_SETTINGS_HOUSING_TRANSLATIONS: 'app_settings_housing_translations',
-	APP_SETTINGS_LOGIN_SCREEN_TRANSLATIONS:
-		'app_settings_login_screen_translations',
+	APP_SETTINGS_LOGIN_SCREEN_TRANSLATIONS: 'app_settings_login_screen_translations',
 	WIKIS_TRANSLATIONS: 'wikis_translations',
 	BUILDINGS_TRANSLATIONS: 'buildings_translations',
 	MARKINGS_TRANSLATIONS: 'markings_translations',
@@ -88,8 +83,7 @@ export const CollectionKeys = {
 	COLLECTIBLE_EVENT_PARTICIPANTS: 'collectible_event_participants',
 	FORM_FIELDS: 'form_fields',
 	FORM_CATEGORIES_TRANSLATIONS: 'form_categories_translations',
-	CANTEENS_FEEDBACKS_LABELS_TRANSLATIONS:
-		'canteens_feedbacks_labels_translations',
+	CANTEENS_FEEDBACKS_LABELS_TRANSLATIONS: 'canteens_feedbacks_labels_translations',
 	BUSINESSHOURS_GROUPS_TRANSLATIONS: 'businesshours_groups_translations',
 	FOODS_ATTRIBUTES_TRANSLATIONS: 'foods_attributes_translations',
 	FOODS_ATTRIBUTES_GROUPS_TRANSLATIONS: 'foods_attributes_groups_translations',
@@ -123,6 +117,5 @@ export const CollectionKeys = {
 	UTILIZATIONS_ENTRIES: 'utilizations_entries',
 	APP_SETTINGS: 'app_settings',
 	UTILIZATIONS_GROUPS: 'utilizations_groups',
-	CANTEEN_FOOD_FEEDBACK_REPORT_SCHEDULES:
-		'canteen_food_feedback_report_schedules',
+	CANTEEN_FOOD_FEEDBACK_REPORT_SCHEDULES: 'canteen_food_feedback_report_schedules',
 };

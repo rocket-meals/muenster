@@ -15,12 +15,7 @@ export class NewsParseSchedule {
   private logger: WorkflowRunLogger;
   private workflowRun: DatabaseTypes.WorkflowsRuns;
 
-  constructor(
-    workflowRun: DatabaseTypes.WorkflowsRuns,
-    myDatabaseHelper: MyDatabaseHelper,
-    logger: WorkflowRunLogger,
-    parser: NewsParserInterface
-  ) {
+  constructor(workflowRun: DatabaseTypes.WorkflowsRuns, myDatabaseHelper: MyDatabaseHelper, logger: WorkflowRunLogger, parser: NewsParserInterface) {
     this.workflowRun = workflowRun;
     this.myDatabaseHelper = myDatabaseHelper;
     this.logger = logger;
@@ -28,9 +23,7 @@ export class NewsParseSchedule {
   }
 
   async getPreviousHash() {
-    return await this.myDatabaseHelper
-      .getWorkflowsRunsHelper()
-      .getPreviousResultHash(this.workflowRun, this.logger);
+    return await this.myDatabaseHelper.getWorkflowsRunsHelper().getPreviousResultHash(this.workflowRun, this.logger);
   }
 
   async parse(): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
@@ -38,24 +31,15 @@ export class NewsParseSchedule {
 
     try {
       await this.logger.appendLog('Getting news items');
-      let newsJSONList = await this.parser.getNewsItems(
-        this.workflowRun,
-        this.logger
-      );
-      await this.logger.appendLog(
-        'Found ' + newsJSONList.length + ' news items'
-      );
+      let newsJSONList = await this.parser.getNewsItems(this.workflowRun, this.logger);
+      await this.logger.appendLog('Found ' + newsJSONList.length + ' news items');
 
-      let currentHash = new WorkflowResultHash(
-        HashHelper.hashFromObject(newsJSONList)
-      );
+      let currentHash = new WorkflowResultHash(HashHelper.hashFromObject(newsJSONList));
 
       let previousMealOffersHash = await this.getPreviousHash();
       if (WorkflowResultHash.isError(previousMealOffersHash)) {
         console.log('Previous Hash is Error');
-        await this.logger.appendLog(
-          'Error: ' + previousMealOffersHash.toString()
-        );
+        await this.logger.appendLog('Error: ' + previousMealOffersHash.toString());
         return this.logger.getFinalLogWithStateAndParams({
           state: WORKFLOW_RUN_STATE.FAILED,
         });
@@ -90,23 +74,11 @@ export class NewsParseSchedule {
     return await itemService.findOrCreateItem(searchJson, searchJson);
   }
 
-  async updateNewsTranslations(
-    item: DatabaseTypes.News,
-    newsJSON: NewsTypeForParser
-  ) {
-    await TranslationHelper.updateItemTranslations(
-      item,
-      newsJSON.translations,
-      'news_id',
-      CollectionNames.NEWS,
-      this.myDatabaseHelper
-    );
+  async updateNewsTranslations(item: DatabaseTypes.News, newsJSON: NewsTypeForParser) {
+    await TranslationHelper.updateItemTranslations(item, newsJSON.translations, 'news_id', CollectionNames.NEWS, this.myDatabaseHelper);
   }
 
-  async updateOtherFields(
-    item: DatabaseTypes.News,
-    newsJSON: NewsTypeForParser
-  ) {
+  async updateOtherFields(item: DatabaseTypes.News, newsJSON: NewsTypeForParser) {
     let itemService = this.myDatabaseHelper.getNewsHelper();
     await itemService.updateOne(item?.id, newsJSON.basicNews);
   }
@@ -115,9 +87,7 @@ export class NewsParseSchedule {
     await this.logger.appendLog('Updating news items');
     for (let index = 0; index < newsJSONList.length; index++) {
       let newsJSON = newsJSONList[index] as NewsTypeForParser;
-      await this.logger.appendLog(
-        `Processing news item ${index + 1} of ${newsJSONList.length}`
-      );
+      await this.logger.appendLog(`Processing news item ${index + 1} of ${newsJSONList.length}`);
       let news = await this.findOrCreateSingleNews(newsJSON);
       if (!!news && news?.id) {
         await this.updateOtherFields(news, newsJSON);

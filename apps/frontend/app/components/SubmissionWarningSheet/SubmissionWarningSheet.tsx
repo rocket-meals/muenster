@@ -1,10 +1,4 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import styles from './styles';
@@ -29,23 +23,17 @@ const SubmissionWarningSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 
 	const handleProceed = async () => {
 		setLoading(true);
-		const update = (await formsSubmissionsHelper.updateFormSubmissionById(
-			String(id),
-			{
-				user_locked_by: String(user?.id),
-				date_started: new Date().toISOString(),
-			}
-		)) as DatabaseTypes.FormSubmissions;
+		const update = (await formsSubmissionsHelper.updateFormSubmissionById(String(id), {
+			user_locked_by: String(user?.id),
+			date_started: new Date().toISOString(),
+		})) as DatabaseTypes.FormSubmissions;
 		if (update) {
 			closeSheet();
 			setLoading(false);
 		}
 	};
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -70,8 +58,7 @@ const SubmissionWarningSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 					color: theme.modal.text,
 				}}
 			>
-				This form is currently being edited by another user. Proceeding may
-				overwrite their changes. Do you still want to continue?
+				This form is currently being edited by another user. Proceeding may overwrite their changes. Do you still want to continue?
 			</Text>
 			<View style={styles.actionContainer}>
 				<TouchableOpacity
@@ -82,13 +69,7 @@ const SubmissionWarningSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 					}}
 					onPress={handleProceed}
 				>
-					{loading ? (
-						<ActivityIndicator size={22} color={theme.background} />
-					) : (
-						<Text style={{ ...styles.loginLabel, color: theme.activeText }}>
-							{translate(TranslationKeys.proceed)}
-						</Text>
-					)}
+					{loading ? <ActivityIndicator size={22} color={theme.background} /> : <Text style={{ ...styles.loginLabel, color: theme.activeText }}>{translate(TranslationKeys.proceed)}</Text>}
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={{
@@ -100,11 +81,7 @@ const SubmissionWarningSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 					}}
 					onPress={() => router.navigate('/form-submissions')}
 				>
-					{
-						<Text style={{ ...styles.loginLabel, color: theme.screen.text }}>
-							{translate(TranslationKeys.cancel)}
-						</Text>
-					}
+					{<Text style={{ ...styles.loginLabel, color: theme.screen.text }}>{translate(TranslationKeys.cancel)}</Text>}
 				</TouchableOpacity>
 			</View>
 		</BottomSheetScrollView>

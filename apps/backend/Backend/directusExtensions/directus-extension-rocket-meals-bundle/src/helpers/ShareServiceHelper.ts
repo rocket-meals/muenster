@@ -25,9 +25,7 @@ export type CreateShareLinkOptionForDirectusFiles = {
 } & ShareLinkOptions;
 
 export interface ShareDirectusFileMethod {
-  createDirectusFilesShareLink(
-    options: CreateShareLinkOptionForDirectusFiles
-  ): Promise<string | null>;
+  createDirectusFilesShareLink(options: CreateShareLinkOptionForDirectusFiles): Promise<string | null>;
 }
 
 export class ShareServiceHelper implements ShareDirectusFileMethod {
@@ -41,13 +39,8 @@ export class ShareServiceHelper implements ShareDirectusFileMethod {
     this.eventContext = myDatabaseHelper.eventContext as EventContext;
   }
 
-  async createDirectusFilesShareLink(
-    options: CreateShareLinkOptionForDirectusFiles
-  ): Promise<string | null> {
-    let filesSharesHelper = new ItemsServiceHelper<DatabaseTypes.FilesShares>(
-      this.myDatabaseHelper,
-      CollectionNames.FILES_SHARES
-    );
+  async createDirectusFilesShareLink(options: CreateShareLinkOptionForDirectusFiles): Promise<string | null> {
+    let filesSharesHelper = new ItemsServiceHelper<DatabaseTypes.FilesShares>(this.myDatabaseHelper, CollectionNames.FILES_SHARES);
     let filesSharesItemId = await filesSharesHelper.createOne({
       file: options.directus_files_id as string,
     });
@@ -59,9 +52,7 @@ export class ShareServiceHelper implements ShareDirectusFileMethod {
     });
   }
 
-  async createShareLink(
-    options: CreateShareLinkOptions
-  ): Promise<string | null> {
+  async createShareLink(options: CreateShareLinkOptions): Promise<string | null> {
     let usersHelper = await this.myDatabaseHelper.getUsersHelper();
     let adminEmail = EnvVariableHelper.getAdminEmail();
     let adminUser = await usersHelper.findFirstItem({
@@ -89,8 +80,7 @@ export class ShareServiceHelper implements ShareDirectusFileMethod {
     }
 
     let ShareService = this.apiContext.services.SharesService;
-    let schema =
-      this?.eventContext?.schema || (await this.apiContext.getSchema());
+    let schema = this?.eventContext?.schema || (await this.apiContext.getSchema());
 
     let permissions: DatabaseTypes.DirectusPermissions[] = [];
 
@@ -118,8 +108,7 @@ export class ShareServiceHelper implements ShareDirectusFileMethod {
     // Is Data Sharing Safe? https://docs.directus.io/user-guide/content-module/content/shares.html#is-data-sharing-safe
     // Data sharing only gives "view" permissions, but also to the items relationally linked to the shared item.
 
-    let name: string | undefined =
-      options.name || 'Share of ' + options.collection + ' item ' + options.id;
+    let name: string | undefined = options.name || 'Share of ' + options.collection + ' item ' + options.id;
 
     // https://docs.directus.io/reference/system/shares.html#create-a-share
     let shareId = await shareService.createOne({

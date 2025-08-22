@@ -2,12 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import type { LeafletWebViewEvent, MapMarker } from './model';
-import {
-	LatLng,
-	LeafletView,
-	MapMarker as LeafletViewMapMarkers,
-	WebviewLeafletMessage,
-} from 'react-native-leaflet-view';
+import { LatLng, LeafletView, MapMarker as LeafletViewMapMarkers, WebviewLeafletMessage } from 'react-native-leaflet-view';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { TranslationKeys } from '@/locales/keys';
 import { Asset } from 'expo-asset';
@@ -15,15 +10,7 @@ import * as FileSystem from 'expo-file-system';
 import { MyMapProps } from '@/components/MyMap/MyMapHelper';
 import BaseModal from '@/components/BaseModal';
 
-const MyMap: React.FC<MyMapProps> = ({
-	mapCenterPosition,
-	zoom,
-	mapMarkers,
-	onMarkerClick,
-	onMapEvent,
-	renderMarkerModal,
-	onMarkerSelectionChange,
-}) => {
+const MyMap: React.FC<MyMapProps> = ({ mapCenterPosition, zoom, mapMarkers, onMarkerClick, onMapEvent, renderMarkerModal, onMarkerSelectionChange }) => {
 	const { theme } = useTheme();
 
 	const [selectedMarker, setSelectedMarker] = useState<string | null>(null);
@@ -36,9 +23,7 @@ const MyMap: React.FC<MyMapProps> = ({
 		let isMounted = true;
 		const loadAssets = async () => {
 			const htmlAsset = Asset.fromModule(require('@/assets/leaflet.html'));
-			const iconAsset = Asset.fromModule(
-				require('@/assets/map/marker-icon-2x.png')
-			);
+			const iconAsset = Asset.fromModule(require('@/assets/map/marker-icon-2x.png'));
 			await Promise.all([htmlAsset.downloadAsync(), iconAsset.downloadAsync()]);
 			const [htmlContent, iconContent] = await Promise.all([
 				FileSystem.readAsStringAsync(htmlAsset.localUri!),

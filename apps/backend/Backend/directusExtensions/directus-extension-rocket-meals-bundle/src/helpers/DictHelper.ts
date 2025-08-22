@@ -11,10 +11,7 @@ export class DictHelper {
     return values;
   }
 
-  static transformListToDict<T>(
-    list: T[],
-    keySelector: ((item: T) => string) | string
-  ): Record<string, T> {
+  static transformListToDict<T>(list: T[], keySelector: ((item: T) => string) | string): Record<string, T> {
     let dict: { [p: string]: T } = {};
     for (let item of list) {
       let key: string | undefined = undefined;

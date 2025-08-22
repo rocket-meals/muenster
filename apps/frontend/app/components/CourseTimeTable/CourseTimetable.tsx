@@ -1,43 +1,23 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-	View,
-	Text,
-	ScrollView,
-	Dimensions,
-	TouchableOpacity,
-} from 'react-native';
+import { View, Text, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { days, timeSlots } from './constant';
 import { CourseTimetableProps, EventTypes } from './types';
-import {
-	Feather,
-	FontAwesome5,
-	MaterialCommunityIcons,
-	MaterialIcons,
-	Octicons,
-} from '@expo/vector-icons';
+import { Feather, FontAwesome5, MaterialCommunityIcons, MaterialIcons, Octicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 import { daysData } from '@/constants/SettingData';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
-const CourseTimetable: React.FC<CourseTimetableProps> = ({
-	events,
-	openSheet,
-	setIsUpdate,
-	setTimeTableData,
-	setSelectedEventId,
-}) => {
+const CourseTimetable: React.FC<CourseTimetableProps> = ({ events, openSheet, setIsUpdate, setTimeTableData, setSelectedEventId }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const [currentTimeOffset, setCurrentTimeOffset] = useState(0);
 	const [showCurrentTimeOffset, setShowCurrentTimeOffset] = useState(false);
-	const { firstDayOfTheWeek } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { firstDayOfTheWeek } = useSelector((state: RootState) => state.settings);
 	useEffect(() => {
 		const handleResize = () => {
 			setScreenWidth(Dimensions.get('window').width);
@@ -57,8 +37,7 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 
 			const currentHour = now.getHours();
 			const currentMinute = now.getMinutes();
-			const totalMinutesSinceStart =
-				(currentHour - startHour) * 60 + currentMinute;
+			const totalMinutesSinceStart = (currentHour - startHour) * 60 + currentMinute;
 
 			const offset = (totalMinutesSinceStart / 60) * slotHeight;
 			if (currentHour === 20) {
@@ -101,20 +80,12 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 	};
 
 	const handleUpdateEvent = (event: EventTypes) => {
-		const filteredDay = daysData?.filter(
-			(day: any) => day.id === event?.day?.toLocaleLowerCase()
-		);
+		const filteredDay = daysData?.filter((day: any) => day.id === event?.day?.toLocaleLowerCase());
 		// Function to transform the event into TimeTableData format
 		const formattedData = [
 			{
 				id: 1,
-				leftIcon: (
-					<MaterialCommunityIcons
-						name="tag-text-outline"
-						size={24}
-						color={theme.screen.icon}
-					/>
-				),
+				leftIcon: <MaterialCommunityIcons name="tag-text-outline" size={24} color={theme.screen.icon} />,
 				label: 'title',
 				value: event.title,
 				rightIcon: <FontAwesome5 name="pen" size={16} color={theme.screen.icon} />,
@@ -124,13 +95,7 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 			},
 			{
 				id: 2,
-				leftIcon: (
-					<MaterialCommunityIcons
-						name="map-marker-outline"
-						size={24}
-						color={theme.screen.icon}
-					/>
-				),
+				leftIcon: <MaterialCommunityIcons name="map-marker-outline" size={24} color={theme.screen.icon} />,
 				label: 'location',
 				value: event.location,
 				rightIcon: <FontAwesome5 name="pen" size={16} color={theme.screen.icon} />,
@@ -140,9 +105,7 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 			},
 			{
 				id: 3,
-				leftIcon: (
-					<MaterialIcons name="color-lens" size={24} color={theme.screen.icon} />
-				),
+				leftIcon: <MaterialIcons name="color-lens" size={24} color={theme.screen.icon} />,
 				label: 'color',
 				value: event.color,
 				rightIcon: <FontAwesome5 name="pen" size={16} color={theme.screen.icon} />,
@@ -152,13 +115,7 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 			},
 			{
 				id: 4,
-				leftIcon: (
-					<MaterialCommunityIcons
-						name="clock-start"
-						size={24}
-						color={theme.screen.icon}
-					/>
-				),
+				leftIcon: <MaterialCommunityIcons name="clock-start" size={24} color={theme.screen.icon} />,
 				label: 'startTime',
 				value: event.startTime,
 				rightIcon: <FontAwesome5 name="pen" size={16} color={theme.screen.icon} />,
@@ -168,13 +125,7 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 			},
 			{
 				id: 5,
-				leftIcon: (
-					<MaterialCommunityIcons
-						name="clock-end"
-						size={24}
-						color={theme.screen.icon}
-					/>
-				),
+				leftIcon: <MaterialCommunityIcons name="clock-end" size={24} color={theme.screen.icon} />,
 				label: 'endTime',
 				value: event.endTime,
 				rightIcon: <FontAwesome5 name="pen" size={16} color={theme.screen.icon} />,
@@ -187,9 +138,7 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 				leftIcon: <Feather name="calendar" size={24} color={theme.screen.icon} />,
 				label: 'weekday',
 				value: filteredDay[0],
-				rightIcon: (
-					<Octicons name="chevron-right" size={24} color={theme.screen.icon} />
-				),
+				rightIcon: <Octicons name="chevron-right" size={24} color={theme.screen.icon} />,
 				handleFunction: () => {
 					console.log('Weekday clicked');
 				},
@@ -202,9 +151,7 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 	};
 
 	const reorderedDays = useMemo(() => {
-		const firstDayIndex = days?.findIndex(
-			day => day.id.toLocaleLowerCase() === firstDayOfTheWeek.id
-		);
+		const firstDayIndex = days?.findIndex(day => day.id.toLocaleLowerCase() === firstDayOfTheWeek.id);
 		console.log('firstDayIndex', firstDayOfTheWeek);
 		if (firstDayIndex === -1) return days; // Fallback if the firstDayOfTheWeek is invalid
 		return [...days?.slice(firstDayIndex), ...days?.slice(0, firstDayIndex)];
@@ -214,9 +161,7 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 	console.log('reorderedDays', reorderedDays);
 
 	return (
-		<View
-			style={{ ...styles.container, backgroundColor: theme.screen.background }}
-		>
+		<View style={{ ...styles.container, backgroundColor: theme.screen.background }}>
 			<ScrollView contentContainerStyle={{ flexDirection: 'row' }}>
 				{showCurrentTimeOffset && (
 					<View
@@ -246,17 +191,11 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 					/>
 					{timeSlots.map(time => (
 						<View key={time} style={styles.timeColumn}>
-							<Text style={{ ...styles.timeText, color: theme.screen.text }}>
-								{time}
-							</Text>
+							<Text style={{ ...styles.timeText, color: theme.screen.text }}>{time}</Text>
 						</View>
 					))}
 				</View>
-				<ScrollView
-					horizontal
-					style={{}}
-					contentContainerStyle={{ flexDirection: 'column' }}
-				>
+				<ScrollView horizontal style={{}} contentContainerStyle={{ flexDirection: 'column' }}>
 					<View style={styles.headerRow}>
 						{/* Empty space for time column */}
 						{reorderedDays &&
@@ -301,21 +240,10 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 								{events &&
 									events
 										?.filter(event => event?.day?.toLocaleLowerCase() === day.id) // Filter events for the current day
-										.sort(
-											(a, b) =>
-												new Date(`1970-01-01T${a.startTime}:00Z`).getTime() -
-												new Date(`1970-01-01T${b.startTime}:00Z`).getTime()
-										) // Sort events by start time
+										.sort((a, b) => new Date(`1970-01-01T${a.startTime}:00Z`).getTime() - new Date(`1970-01-01T${b.startTime}:00Z`).getTime()) // Sort events by start time
 										.map((event, eventIndex, dayEvents) => {
 											// Find overlapping events
-											const overlappingEvents = dayEvents.filter(
-												(e, i) =>
-													i !== eventIndex &&
-													new Date(`1970-01-01T${e.startTime}:00Z`).getTime() <
-														new Date(`1970-01-01T${event.endTime}:00Z`).getTime() &&
-													new Date(`1970-01-01T${e.endTime}:00Z`).getTime() >
-														new Date(`1970-01-01T${event.startTime}:00Z`).getTime()
-											);
+											const overlappingEvents = dayEvents.filter((e, i) => i !== eventIndex && new Date(`1970-01-01T${e.startTime}:00Z`).getTime() < new Date(`1970-01-01T${event.endTime}:00Z`).getTime() && new Date(`1970-01-01T${e.endTime}:00Z`).getTime() > new Date(`1970-01-01T${event.startTime}:00Z`).getTime());
 
 											// Calculate horizontal position and width
 											const overlapCount = overlappingEvents.length + 1; // Include the current event
@@ -346,9 +274,7 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({
 												>
 													<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 														<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-															{`${translate(
-																TranslationKeys.event
-															)}: ${translate(TranslationKeys.edit)}`}
+															{`${translate(TranslationKeys.event)}: ${translate(TranslationKeys.edit)}`}
 														</TooltipText>
 													</TooltipContent>
 												</Tooltip>

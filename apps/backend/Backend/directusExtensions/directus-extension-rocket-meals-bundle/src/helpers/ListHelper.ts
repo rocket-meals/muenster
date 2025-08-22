@@ -1,8 +1,5 @@
 export class ListHelper {
-  static removeDuplicatesFromJsonListWithSelector<T>(
-    jsonList: T[],
-    selector: (json: T) => any
-  ) {
+  static removeDuplicatesFromJsonListWithSelector<T>(jsonList: T[], selector: (json: T) => any) {
     let valueList: any = [];
     let keyDict: any = {};
 
@@ -21,9 +18,6 @@ export class ListHelper {
   }
 
   static removeDuplicatesFromJsonList<T>(jsonList: T[], key: keyof T) {
-    return ListHelper.removeDuplicatesFromJsonListWithSelector(
-      jsonList,
-      json => json[key]
-    );
+    return ListHelper.removeDuplicatesFromJsonListWithSelector(jsonList, json => json[key]);
   }
 }

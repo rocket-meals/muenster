@@ -21,16 +21,8 @@ const ReactNativeQrCodeSvgScreen = () => {
 			}}
 		>
 			<View style={{ ...styles.content }}>
-				<Text style={{ ...styles.heading, color: theme.screen.text }}>
-					{translate(TranslationKeys.react_native_qrcode_svg)}
-				</Text>
-				<QRCode
-					value="https://example.com"
-					size={200}
-					logo={require('@/assets/images/react-logo.png')}
-					logoSize={40}
-					logoBackgroundColor="transparent"
-				/>
+				<Text style={{ ...styles.heading, color: theme.screen.text }}>{translate(TranslationKeys.react_native_qrcode_svg)}</Text>
+				<QRCode value="https://example.com" size={200} logo={require('@/assets/images/react-logo.png')} logoSize={40} logoBackgroundColor="transparent" />
 			</View>
 		</ScrollView>
 	);

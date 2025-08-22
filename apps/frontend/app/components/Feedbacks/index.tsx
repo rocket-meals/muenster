@@ -1,12 +1,4 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	Platform,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -14,18 +6,12 @@ import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import FeedbackLabel from '../FeedbackLabel';
 import { isWeb } from '@/constants/Constants';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	getpreviousFeedback,
-	numToOneDecimal,
-} from '@/constants/HelperFunctions';
+import { getpreviousFeedback, numToOneDecimal } from '@/constants/HelperFunctions';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { FoodFeedbackHelper } from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
 import useToast from '@/hooks/useToast';
 import { DateHelper } from 'repo-depkit-common';
-import {
-	DELETE_FOOD_FEEDBACK_LOCAL,
-	UPDATE_FOOD_FEEDBACK_LOCAL,
-} from '@/redux/Types/types';
+import { DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL } from '@/redux/Types/types';
 import PermissionModal from '../PermissionModal/PermissionModal';
 import { createSelector } from 'reselect';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -40,47 +26,28 @@ const loadingState = {
 	deleteLoading: false,
 };
 
-const selectFeedbackData = createSelector(
-	[(state: RootState) => state.food, (state: any, foodId: string) => foodId],
-	(food, foodId) => ({
-		labels: food.foodFeedbackLabels,
-		labelEntries: food.ownfoodFeedbackLabelEntries,
-		previousFeedback: getpreviousFeedback(food.ownFoodFeedbacks, foodId),
-	})
-);
+const selectFeedbackData = createSelector([(state: RootState) => state.food, (state: any, foodId: string) => foodId], (food, foodId) => ({
+	labels: food.foodFeedbackLabels,
+	labelEntries: food.ownfoodFeedbackLabelEntries,
+	previousFeedback: getpreviousFeedback(food.ownFoodFeedbacks, foodId),
+}));
 
-const Feedbacks: React.FC<FeedbacksProps> = ({
-	foodDetails,
-	offerId,
-	canteenId,
-}) => {
+const Feedbacks: React.FC<FeedbacksProps> = ({ foodDetails, offerId, canteenId }) => {
 	const toast = useToast();
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
 	const foodOfferCanteenId = canteenId;
 	const { user, profile } = useSelector((state: RootState) => state.authReducer);
-	const {
-		appSettings,
-		primaryColor,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { appSettings, primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const [commentType, setCommentType] = useState('');
 	const [loading, setLoading] = useState(loadingState);
 	const [warning, setWarning] = useState(false);
 	const [comment, setComment] = useState('');
 	const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
-	const { labels, labelEntries, previousFeedback } = useSelector((state: any) =>
-		selectFeedbackData(state, foodDetails?.id)
-	);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const { labels, labelEntries, previousFeedback } = useSelector((state: any) => selectFeedbackData(state, foodDetails?.id));
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 	useEffect(() => {
 		if (appSettings?.foods_feedbacks_comments_type) {
 			setCommentType(appSettings?.foods_feedbacks_comments_type);
@@ -105,11 +72,7 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 		}));
 
 		try {
-			const result = (await foodFeedbackHelper.updateFoodFeedback(
-				foodDetails?.id,
-				profile?.id,
-				{ ...previousFeedback, comment: string, canteen: foodOfferCanteenId }
-			)) as DatabaseTypes.FoodsFeedbacks;
+			const result = (await foodFeedbackHelper.updateFoodFeedback(foodDetails?.id, profile?.id, { ...previousFeedback, comment: string, canteen: foodOfferCanteenId })) as DatabaseTypes.FoodsFeedbacks;
 			// Dispatch the correct action
 			dispatch({
 				type: result?.id ? UPDATE_FOOD_FEEDBACK_LOCAL : DELETE_FOOD_FEEDBACK_LOCAL,
@@ -145,15 +108,9 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 	};
 
 	const resp = Dimensions.get('window').width > 800;
-	const rating =
-		foodDetails?.rating_average ?? foodDetails?.rating_average_legacy;
+	const rating = foodDetails?.rating_average ?? foodDetails?.rating_average_legacy;
 
-	const otherComments = foodDetails?.feedbacks
-		?.filter(feedback => feedback.profile !== profile.id && feedback.comment)
-		.sort(
-			(a, b) =>
-				new Date(b.date_updated).getTime() - new Date(a.date_updated).getTime()
-		);
+	const otherComments = foodDetails?.feedbacks?.filter(feedback => feedback.profile !== profile.id && feedback.comment).sort((a, b) => new Date(b.date_updated).getTime() - new Date(a.date_updated).getTime());
 	return (
 		<View style={styles.container}>
 			{appSettings?.foods_ratings_amount_display ||
@@ -172,16 +129,9 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 				<Tooltip
 					placement="top"
 					trigger={triggerProps => (
-						<TouchableOpacity
-							{...triggerProps}
-							style={{ ...styles.row, cursor: 'default' }}
-						>
+						<TouchableOpacity {...triggerProps} style={{ ...styles.row, cursor: 'default' }}>
 							<View style={styles.col}>
-								<Ionicons
-									name="bar-chart"
-									size={isWeb ? 24 : 22}
-									color={theme.screen.text}
-								/>
+								<Ionicons name="bar-chart" size={isWeb ? 24 : 22} color={theme.screen.text} />
 								<Text
 									style={{
 										...styles.label,
@@ -215,16 +165,9 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 				<Tooltip
 					placement="top"
 					trigger={triggerProps => (
-						<TouchableOpacity
-							{...triggerProps}
-							style={{ ...styles.row, cursor: 'default' }}
-						>
+						<TouchableOpacity {...triggerProps} style={{ ...styles.row, cursor: 'default' }}>
 							<View style={styles.col}>
-								<AntDesign
-									name="areachart"
-									size={isWeb ? 24 : 22}
-									color={theme.screen.icon}
-								/>
+								<AntDesign name="areachart" size={isWeb ? 24 : 22} color={theme.screen.icon} />
 								<Text
 									style={{
 										...styles.label,
@@ -244,9 +187,7 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 									marginTop: 2,
 								}}
 							>
-								{typeof rating === 'number' && !isNaN(rating) && (
-									<Text>{numToOneDecimal(rating)}</Text>
-								)}
+								{typeof rating === 'number' && !isNaN(rating) && <Text>{numToOneDecimal(rating)}</Text>}
 							</Text>
 						</TouchableOpacity>
 					)}
@@ -269,15 +210,7 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 				{translate(TranslationKeys.feedback_labels)}
 			</Text>
 			{labels.map((label: any) => (
-				<FeedbackLabel
-					key={label.id}
-					label={label.translations}
-					icon={label.icon ? label.icon : undefined}
-					imageUrl={label.image ? label.image : undefined}
-					labelEntries={labelEntries}
-					foodId={foodDetails?.id}
-					offerId={offerId}
-				/>
+				<FeedbackLabel key={label.id} label={label.translations} icon={label.icon ? label.icon : undefined} imageUrl={label.image ? label.image : undefined} labelEntries={labelEntries} foodId={foodDetails?.id} offerId={offerId} />
 			))}
 			{commentType !== 'disabled' && commentType !== 'read' && (
 				<View
@@ -289,21 +222,7 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 						gap: 20,
 					}}
 				>
-					<TextInput
-						style={[
-							styles.input,
-							{ width: resp ? '70%' : '100%' },
-							Platform.OS === 'web' && ({ outlineStyle: 'none' } as any),
-						]}
-						cursorColor={theme.modal.text}
-						placeholderTextColor={theme.modal.placeholder}
-						onChangeText={handleTextChange}
-						value={comment}
-						placeholder={translate(TranslationKeys.your_comment)}
-						editable={
-							commentType === 'disabled' || commentType === 'read' ? false : true
-						}
-					/>
+					<TextInput style={[styles.input, { width: resp ? '70%' : '100%' }, Platform.OS === 'web' && ({ outlineStyle: 'none' } as any)]} cursorColor={theme.modal.text} placeholderTextColor={theme.modal.placeholder} onChangeText={handleTextChange} value={comment} placeholder={translate(TranslationKeys.your_comment)} editable={commentType === 'disabled' || commentType === 'read' ? false : true} />
 					<TouchableOpacity
 						style={{
 							...styles.commentButton,
@@ -316,13 +235,7 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 						}}
 						disabled={previousFeedback?.comment === comment}
 					>
-						{loading.submitLoading ? (
-							<ActivityIndicator color={theme.background} size={22} />
-						) : (
-							<Text style={[styles.commentLabel, { color: contrastColor }]}>
-								{translate(TranslationKeys.save_comment)}
-							</Text>
-						)}
+						{loading.submitLoading ? <ActivityIndicator color={theme.background} size={22} /> : <Text style={[styles.commentLabel, { color: contrastColor }]}>{translate(TranslationKeys.save_comment)}</Text>}
 					</TouchableOpacity>
 				</View>
 			)}
@@ -354,24 +267,12 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 									}}
 									onPress={() => submitCommentFeedback(null)}
 								>
-									{loading.deleteLoading ? (
-										<ActivityIndicator color={foods_area_color} size={20} />
-									) : (
-										<MaterialIcons name="delete-outline" size={24} color={'red'} />
-									)}
+									{loading.deleteLoading ? <ActivityIndicator color={foods_area_color} size={20} /> : <MaterialIcons name="delete-outline" size={24} color={'red'} />}
 								</TouchableOpacity>
 							</View>
 							<View style={styles.comment}>
-								<Text style={{ ...styles.commentText, color: theme.screen.text }}>
-									{previousFeedback.comment}
-								</Text>
-								<Text style={{ ...styles.commentDate, color: theme.screen.text }}>
-									{DateHelper.formatOfferDateToReadable(
-										previousFeedback.updated_at,
-										true,
-										true
-									)}
-								</Text>
+								<Text style={{ ...styles.commentText, color: theme.screen.text }}>{previousFeedback.comment}</Text>
+								<Text style={{ ...styles.commentDate, color: theme.screen.text }}>{DateHelper.formatOfferDateToReadable(previousFeedback.updated_at, true, true)}</Text>
 								<View style={styles.divider} />
 							</View>
 						</View>
@@ -405,11 +306,7 @@ const Feedbacks: React.FC<FeedbacksProps> = ({
 													color: theme.screen.text,
 												}}
 											>
-												{DateHelper.formatOfferDateToReadable(
-													feedback.date_updated,
-													true,
-													true
-												)}
+												{DateHelper.formatOfferDateToReadable(feedback.date_updated, true, true)}
 											</Text>
 											<View style={styles.divider} />
 										</View>

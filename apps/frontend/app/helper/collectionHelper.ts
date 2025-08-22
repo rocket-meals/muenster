@@ -1,43 +1,9 @@
-import {
-	DirectusClient,
-	RestClient,
-	createItem,
-	deleteItem,
-	deleteItems,
-	readItem,
-	readItems,
-	readSingleton,
-	updateItem,
-	updateItems,
-	aggregate,
-	withToken,
-} from '@directus/sdk';
+import { DirectusClient, RestClient, createItem, deleteItem, deleteItems, readItem, readItems, readSingleton, updateItem, updateItems, aggregate, withToken } from '@directus/sdk';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { ServerAPI } from '@/redux/actions/Auth/Auth';
 
 // Define types for queries and filters
-export type FilterOperator =
-	| 'eq'
-	| 'neq'
-	| 'lt'
-	| 'lte'
-	| 'gt'
-	| 'gte'
-	| 'in'
-	| 'nin'
-	| 'null'
-	| 'nnull'
-	| 'contains'
-	| 'ncontains'
-	| 'icontains'
-	| 'between'
-	| 'nbetween'
-	| 'empty'
-	| 'nempty'
-	| 'intersects'
-	| 'nintersects'
-	| 'intersects_bbox'
-	| 'nintersects_bbox';
+export type FilterOperator = 'eq' | 'neq' | 'lt' | 'lte' | 'gt' | 'gte' | 'in' | 'nin' | 'null' | 'nnull' | 'contains' | 'ncontains' | 'icontains' | 'between' | 'nbetween' | 'empty' | 'nempty' | 'intersects' | 'nintersects' | 'intersects_bbox' | 'nintersects_bbox';
 
 export type Query<CollectionScheme> = {
 	fields?: (keyof CollectionScheme)[] | null;
@@ -62,13 +28,9 @@ export type AggregateQuery<CollectionScheme> = {
 
 export class CollectionHelper<CollectionScheme> {
 	private collection: string;
-	private client: DirectusClient<DatabaseTypes.CustomDirectusTypes> &
-		RestClient<any>;
+	private client: DirectusClient<DatabaseTypes.CustomDirectusTypes> & RestClient<any>;
 
-	constructor(
-		collection: string,
-		client?: DirectusClient<DatabaseTypes.CustomDirectusTypes> & RestClient<any>
-	) {
+	constructor(collection: string, client?: DirectusClient<DatabaseTypes.CustomDirectusTypes> & RestClient<any>) {
 		this.collection = collection;
 		this.client = client ?? ServerAPI.getClient();
 	}
@@ -76,10 +38,7 @@ export class CollectionHelper<CollectionScheme> {
 	/**
 	 * Centralized API call handler for reducing redundancy
 	 */
-	private async handleRequest<T>(
-		method: (...args: any[]) => any,
-		...args: any[]
-	): Promise<T> {
+	private async handleRequest<T>(method: (...args: any[]) => any, ...args: any[]): Promise<T> {
 		try {
 			return await this.client.request<T>(method(this.collection, ...args));
 		} catch (error) {
@@ -109,10 +68,7 @@ export class CollectionHelper<CollectionScheme> {
 		return this.handleRequest(updateItem, id, data);
 	}
 
-	async updateItems(
-		query: Query<CollectionScheme>,
-		data: Partial<CollectionScheme>
-	) {
+	async updateItems(query: Query<CollectionScheme>, data: Partial<CollectionScheme>) {
 		return this.handleRequest(updateItems, query, data);
 	}
 
@@ -133,18 +89,11 @@ export class CollectionHelper<CollectionScheme> {
 		return { fields };
 	}
 
-	static convertDictToList<CollectionScheme>(
-		dict: Record<string, CollectionScheme | undefined | null> | null | undefined
-	): CollectionScheme[] {
-		return dict
-			? (Object.values(dict).filter(Boolean) as CollectionScheme[])
-			: [];
+	static convertDictToList<CollectionScheme>(dict: Record<string, CollectionScheme | undefined | null> | null | undefined): CollectionScheme[] {
+		return dict ? (Object.values(dict).filter(Boolean) as CollectionScheme[]) : [];
 	}
 
-	static convertListToDict<CollectionScheme>(
-		list: CollectionScheme[],
-		key: keyof CollectionScheme
-	): Record<string, CollectionScheme> {
+	static convertListToDict<CollectionScheme>(list: CollectionScheme[], key: keyof CollectionScheme): Record<string, CollectionScheme> {
 		return list.reduce(
 			(dict, item) => {
 				const id = item[key];
@@ -157,10 +106,7 @@ export class CollectionHelper<CollectionScheme> {
 		);
 	}
 
-	static convertListToDictWithListAsValue<CollectionScheme>(
-		list: CollectionScheme[],
-		key: keyof CollectionScheme | ((item: CollectionScheme) => string)
-	): Record<string, CollectionScheme[]> {
+	static convertListToDictWithListAsValue<CollectionScheme>(list: CollectionScheme[], key: keyof CollectionScheme | ((item: CollectionScheme) => string)): Record<string, CollectionScheme[]> {
 		return list.reduce(
 			(dict, item) => {
 				const id = typeof key === 'function' ? key(item) : item[key];

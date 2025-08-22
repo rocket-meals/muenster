@@ -19,12 +19,7 @@ export default function FoodOfferLayout() {
 			<Stack.Screen
 				name="delete-user/index"
 				options={{
-					header: () => (
-						<CustomStackHeader
-							label={translate(TranslationKeys.account_delete)}
-							key={'account_delete'}
-						/>
-					),
+					header: () => <CustomStackHeader label={translate(TranslationKeys.account_delete)} key={'account_delete'} />,
 				}}
 			/>
 		</Stack>

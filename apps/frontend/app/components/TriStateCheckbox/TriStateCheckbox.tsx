@@ -42,13 +42,7 @@ const TriStateCheckbox = ({
 			disabled={isDisabled}
 		>
 			<MaterialIcons name={getIcon()} size={24} color={theme.screen.text} />
-			<Text style={{ ...styles.checkboxLabel, color: theme.screen.text }}>
-				{value === 0
-					? translate(TranslationKeys.unchecked)
-					: value === 1
-						? translate(TranslationKeys.checked)
-						: translate(TranslationKeys.indeterminate)}
-			</Text>
+			<Text style={{ ...styles.checkboxLabel, color: theme.screen.text }}>{value === 0 ? translate(TranslationKeys.unchecked) : value === 1 ? translate(TranslationKeys.checked) : translate(TranslationKeys.indeterminate)}</Text>
 		</TouchableOpacity>
 	);
 };

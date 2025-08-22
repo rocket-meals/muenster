@@ -21,15 +21,9 @@ type ColorSchemeProps = {
 	onPress: () => void;
 };
 
-const ColorScheme: React.FC<ColorSchemeProps> = ({
-	theme,
-	isSelected,
-	onPress,
-}) => {
+const ColorScheme: React.FC<ColorSchemeProps> = ({ theme, isSelected, onPress }) => {
 	const { theme: themes } = useTheme();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, themes, mode === 'dark');
 	const { translate } = useLanguage();
 	return (
@@ -42,12 +36,7 @@ const ColorScheme: React.FC<ColorSchemeProps> = ({
 			onPress={onPress}
 		>
 			{/* Theme Icon */}
-			<MaterialCommunityIcons
-				name={theme.icon}
-				size={24}
-				color={isSelected ? contrastColor : themes.screen.icon}
-				style={styles.icon}
-			/>
+			<MaterialCommunityIcons name={theme.icon} size={24} color={isSelected ? contrastColor : themes.screen.icon} style={styles.icon} />
 
 			{/* Theme Text */}
 			<Text
@@ -60,12 +49,7 @@ const ColorScheme: React.FC<ColorSchemeProps> = ({
 			</Text>
 
 			{/* Radio Button */}
-			<MaterialCommunityIcons
-				name={isSelected ? 'checkbox-marked' : 'checkbox-blank'}
-				size={24}
-				color={isSelected ? contrastColor : themes.screen.icon}
-				style={styles.radioButton}
-			/>
+			<MaterialCommunityIcons name={isSelected ? 'checkbox-marked' : 'checkbox-blank'} size={24} color={isSelected ? contrastColor : themes.screen.icon} style={styles.radioButton} />
 		</TouchableOpacity>
 	);
 };

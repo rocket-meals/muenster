@@ -34,9 +34,7 @@ export class TimerHelper {
     //console.log("averageTimePerTransaction: "+averageTimePerTransaction)
     let estimatedTotalTime = averageTimePerTransaction * this.total_count;
     //console.log("estimatedTotalTime: "+estimatedTotalTime);
-    let estimatedCompletionTime = new Date(
-      this.private_getNow() + (estimatedTotalTime - timeSpent) * 1000
-    );
+    let estimatedCompletionTime = new Date(this.private_getNow() + (estimatedTotalTime - timeSpent) * 1000);
     //console.log("estimatedCompletionTime: "+estimatedCompletionTime);
     return estimatedCompletionTime;
   }
@@ -72,16 +70,10 @@ export class TimerHelper {
   calcTimeSpent() {
     let current_count = this.current_count;
     let now = this.lastTime || this.private_getNow();
-    let remainingTime =
-      (this.calcEstimatedFinishedDate(current_count).getTime() - now) / 1000; // Remaining time in seconds
+    let remainingTime = (this.calcEstimatedFinishedDate(current_count).getTime() - now) / 1000; // Remaining time in seconds
     let remainingTimeString = this.formatSecondsIntoHHMMSS(remainingTime);
-    let estimatedCompletionTimeString =
-      this.calcEstimatedFinishedDate(current_count).toLocaleTimeString();
-    let totalTimeInformation =
-      `Estimated remaining time for ${this.name}: ${remainingTimeString}, probably finished at: ${estimatedCompletionTimeString} - ` +
-      current_count +
-      ' / ' +
-      this.total_count;
+    let estimatedCompletionTimeString = this.calcEstimatedFinishedDate(current_count).toLocaleTimeString();
+    let totalTimeInformation = `Estimated remaining time for ${this.name}: ${remainingTimeString}, probably finished at: ${estimatedCompletionTimeString} - ` + current_count + ' / ' + this.total_count;
 
     // print how many HH:MM:SS between now and this.lastTime divided by this.print_every_x_count to print the average
     // Calculate average time per count since last print
@@ -90,8 +82,7 @@ export class TimerHelper {
     if (!!this.lastTime) {
       let timeSinceLastPrint = (now - this.lastTime) / 1000; // Time in seconds
       averageTimePerCount = timeSinceLastPrint / this.print_every_x_count;
-      averageTimePerCountFormatted =
-        this.formatSecondsIntoHHMMSS(averageTimePerCount);
+      averageTimePerCountFormatted = this.formatSecondsIntoHHMMSS(averageTimePerCount);
     }
 
     return {

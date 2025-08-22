@@ -13,12 +13,7 @@ export class CanteenFeedbackLabelEntryHelper extends CollectionHelper<DatabaseTy
 		return { ...defaultQuery, ...queryOverride };
 	}
 	// Fetch canteen feedback label entries with query overrides
-	async fetchCanteenFeedbackLabelEntries(
-		queryOverride: any = {},
-		date: string,
-		canteenId: string,
-		labelId: string
-	) {
+	async fetchCanteenFeedbackLabelEntries(queryOverride: any = {}, date: string, canteenId: string, labelId: string) {
 		const defaultQuery = {
 			filter: {
 				_and: [
@@ -40,10 +35,7 @@ export class CanteenFeedbackLabelEntryHelper extends CollectionHelper<DatabaseTy
 	}
 
 	// Fetch canteen feedback label entries by profile
-	async fetchCanteenFeedbackLabelEntriesByProfile(
-		profileId: string,
-		queryOverride: any = {}
-	) {
+	async fetchCanteenFeedbackLabelEntriesByProfile(profileId: string, queryOverride: any = {}) {
 		const defaultQuery = {
 			filter: {
 				_and: [{ profile: { _eq: profileId } }, { status: { _eq: itemStatus } }],
@@ -59,53 +51,33 @@ export class CanteenFeedbackLabelEntryHelper extends CollectionHelper<DatabaseTy
 	}
 
 	// Update or create food feedback label entry
-	async updateCanteenFeedbackLabelEntry(
-		profile_id: string,
-		canteenFeedbackLabelEntriesData:
-			| DatabaseTypes.CanteensFeedbacksLabelsEntries[]
-			| null
-			| undefined,
-		canteenFeedbackLabelId: string,
-		like: boolean | null,
-		canteen_id: string | null | undefined,
-		date: string
-	) {
+	async updateCanteenFeedbackLabelEntry(profile_id: string, canteenFeedbackLabelEntriesData: DatabaseTypes.CanteensFeedbacksLabelsEntries[] | null | undefined, canteenFeedbackLabelId: string, like: boolean | null, canteen_id: string | null | undefined, date: string) {
 		// Default to empty array if no entries provided
 		let canteenFeedbackLabelEntries = canteenFeedbackLabelEntriesData ?? [];
 
 		// Check for existing entry
 		// let existingEntry = foodFeedbackLabelEntries.find(x => x.label === canteenFeedbackLabelId && x.food === foodId);
-		let existingEntry = canteenFeedbackLabelEntries?.find(
-			x =>
-				x.label === canteenFeedbackLabelId &&
-				x.canteen === canteen_id &&
-				x.date === date
-		);
+		let existingEntry = canteenFeedbackLabelEntries?.find(x => x.label === canteenFeedbackLabelId && x.canteen === canteen_id && x.date === date);
 		let isNewEntry = !existingEntry;
 
 		// Prepare new entry data
-		const newFoodFeedbackLabelEntry: Partial<DatabaseTypes.CanteensFeedbacksLabelsEntries> =
-			{
-				canteen: canteen_id,
-				label: canteenFeedbackLabelId,
-				status: itemStatus,
-				date: new Date(date).toISOString(),
-				like,
-				profile: profile_id,
-			};
+		const newFoodFeedbackLabelEntry: Partial<DatabaseTypes.CanteensFeedbacksLabelsEntries> = {
+			canteen: canteen_id,
+			label: canteenFeedbackLabelId,
+			status: itemStatus,
+			date: new Date(date).toISOString(),
+			like,
+			profile: profile_id,
+		};
 
 		// Create a new entry if not found
 		if (isNewEntry) {
-			existingEntry = (await this.createItem(
-				newFoodFeedbackLabelEntry
-			)) as DatabaseTypes.CanteensFeedbacksLabelsEntries;
+			existingEntry = (await this.createItem(newFoodFeedbackLabelEntry)) as DatabaseTypes.CanteensFeedbacksLabelsEntries;
 		}
 
 		// Handle missing entry
 		if (!existingEntry) {
-			console.error(
-				'updateCanteenFeedbackRemote: existingCanteenFeedbackLabelEntry is undefined'
-			);
+			console.error('updateCanteenFeedbackRemote: existingCanteenFeedbackLabelEntry is undefined');
 			return;
 		}
 
@@ -114,8 +86,7 @@ export class CanteenFeedbackLabelEntryHelper extends CollectionHelper<DatabaseTy
 		if (canteen_id) existingEntry.canteen = canteen_id;
 
 		// If 'like' is null or undefined, delete the entry
-		const shouldDelete =
-			existingEntry.like === null || existingEntry.like === undefined;
+		const shouldDelete = existingEntry.like === null || existingEntry.like === undefined;
 		if (shouldDelete && existingEntry.id) {
 			await this.deleteItem(existingEntry.id);
 			return null;

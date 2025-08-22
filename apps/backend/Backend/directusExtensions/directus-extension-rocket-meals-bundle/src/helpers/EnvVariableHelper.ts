@@ -37,16 +37,11 @@ export class EnvVariableHelper {
   }
 
   static getMarkingSyncTL1FileCreateOnlyFromExportCsvFile() {
-    return (
-      this.getEnvVariable(
-        'MARKING_SYNC_TL1FILE_CREATE_ONLY_FROM_EXPORT_CSV_FILE'
-      ) === 'true'
-    );
+    return this.getEnvVariable('MARKING_SYNC_TL1FILE_CREATE_ONLY_FROM_EXPORT_CSV_FILE') === 'true';
   }
 
   static getFoodSyncTL1FileExportCsvFileEncoding() {
-    return (this.getEnvVariable('FOOD_SYNC_TL1FILE_EXPORT_CSV_FILE_ENCODING') ||
-      'latin1') as BufferEncoding;
+    return (this.getEnvVariable('FOOD_SYNC_TL1FILE_EXPORT_CSV_FILE_ENCODING') || 'latin1') as BufferEncoding;
   }
 
   static getFoodSyncTL1WebExportUrl() {
@@ -54,9 +49,7 @@ export class EnvVariableHelper {
   }
 
   static getHousingContractCsvFilePath() {
-    return this.getEnvVariable(
-      'HOUSING_CONTRACT_SYNC_TL1FILE_EXPORT_CSV_FILE_PATH'
-    );
+    return this.getEnvVariable('HOUSING_CONTRACT_SYNC_TL1FILE_EXPORT_CSV_FILE_PATH');
   }
 
   static secretCache: string | null = null;
@@ -88,10 +81,7 @@ export class EnvVariableHelper {
   }
 
   static getMarkingSyncTL1FileExportCsvFileEncoding(): any {
-    return (
-      this.getEnvVariable('MARKING_SYNC_TL1FILE_EXPORT_CSV_FILE_ENCODING') ||
-      ('utf8' as BufferEncoding)
-    );
+    return this.getEnvVariable('MARKING_SYNC_TL1FILE_EXPORT_CSV_FILE_ENCODING') || ('utf8' as BufferEncoding);
   }
 
   static getEnvFieldNameForAutoTranslateApiKey(): string {
@@ -99,9 +89,7 @@ export class EnvVariableHelper {
   }
 
   static getAutoTranslateApiKey() {
-    return this.getEnvVariable(
-      EnvVariableHelper.getEnvFieldNameForAutoTranslateApiKey()
-    );
+    return this.getEnvVariable(EnvVariableHelper.getEnvFieldNameForAutoTranslateApiKey());
   }
 
   static getAdminEmail() {
@@ -115,9 +103,7 @@ export class EnvVariableHelper {
   static getSyncForCustomer(): SyncForCustomerEnum | null {
     let value = this.getEnvVariable('SYNC_FOR_CUSTOMER');
     // check if value is a valid enum value
-    if (
-      Object.values(SyncForCustomerEnum).includes(value as SyncForCustomerEnum)
-    ) {
+    if (Object.values(SyncForCustomerEnum).includes(value as SyncForCustomerEnum)) {
       return value as SyncForCustomerEnum;
     } else {
       return null;

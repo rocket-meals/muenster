@@ -1,7 +1,4 @@
-import {
-  WashingmachineParserInterface,
-  WashingmachinesTypeForParser,
-} from './WashingmachineParserInterface';
+import { WashingmachineParserInterface, WashingmachinesTypeForParser } from './WashingmachineParserInterface';
 import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
@@ -13,12 +10,7 @@ export class WashingmachineParseSchedule {
   private workflowRun: DatabaseTypes.WorkflowsRuns;
   private logger: WorkflowRunLogger;
 
-  constructor(
-    workflowRun: DatabaseTypes.WorkflowsRuns,
-    myDatabaseHelper: MyDatabaseHelper,
-    logger: WorkflowRunLogger,
-    parser: WashingmachineParserInterface
-  ) {
+  constructor(workflowRun: DatabaseTypes.WorkflowsRuns, myDatabaseHelper: MyDatabaseHelper, logger: WorkflowRunLogger, parser: WashingmachineParserInterface) {
     this.parser = parser;
     this.myDatabaseHelper = myDatabaseHelper;
     this.workflowRun = workflowRun;
@@ -47,9 +39,7 @@ export class WashingmachineParseSchedule {
     }
   }
 
-  async updateWashingmachines(
-    washingmachinesForParser: WashingmachinesTypeForParser[]
-  ) {
+  async updateWashingmachines(washingmachinesForParser: WashingmachinesTypeForParser[]) {
     for (let washingmachine of washingmachinesForParser) {
       await this.updateWashingmachine(washingmachine);
     }
@@ -64,24 +54,16 @@ export class WashingmachineParseSchedule {
     };
     const createObject = searchObject;
 
-    let foundItem = await itemsService.findOrCreateItem(
-      searchObject,
-      createObject
-    );
+    let foundItem = await itemsService.findOrCreateItem(searchObject, createObject);
     if (foundItem) {
       const existingAlias = foundItem.alias;
       const isExistingAlisNotEmpty = existingAlias && existingAlias.length > 0;
-      let newAlias = isExistingAlisNotEmpty
-        ? existingAlias
-        : washingmachine.basicData.alias;
+      let newAlias = isExistingAlisNotEmpty ? existingAlias : washingmachine.basicData.alias;
 
-      let isJobStarting =
-        foundItem.date_finished === null &&
-        washingmachine.basicData.date_finished !== null; // maybe the finish time is just extended
+      let isJobStarting = foundItem.date_finished === null && washingmachine.basicData.date_finished !== null; // maybe the finish time is just extended
       let isJobEnding = washingmachine.basicData.date_finished === null; // but if the finish time is null, the job is ending
 
-      const additionalWashingmachineData: Partial<DatabaseTypes.Washingmachines> =
-        {};
+      const additionalWashingmachineData: Partial<DatabaseTypes.Washingmachines> = {};
 
       if (isJobStarting) {
         additionalWashingmachineData.date_stated = new Date().toISOString();
@@ -90,20 +72,13 @@ export class WashingmachineParseSchedule {
         additionalWashingmachineData.date_stated = null;
       }
 
-      await this.logger.appendLog(
-        'Updating washingmachine ' +
-          external_identifier +
-          ' with alias ' +
-          newAlias
-      );
+      await this.logger.appendLog('Updating washingmachine ' + external_identifier + ' with alias ' + newAlias);
       let partialNewWashingmachine: Partial<DatabaseTypes.Washingmachines> = {
         ...washingmachine.basicData,
         ...additionalWashingmachineData,
         alias: newAlias, // do not overwrite alias if it is already set
       };
-      await this.logger.appendLog(
-        JSON.stringify(partialNewWashingmachine, null, 2)
-      );
+      await this.logger.appendLog(JSON.stringify(partialNewWashingmachine, null, 2));
       await itemsService.updateOne(foundItem.id, partialNewWashingmachine);
     }
   }

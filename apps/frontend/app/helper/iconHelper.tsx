@@ -1,25 +1,10 @@
-import {
-	Entypo,
-	FontAwesome,
-	FontAwesome5,
-	FontAwesome6,
-	Ionicons,
-	MaterialCommunityIcons,
-	MaterialIcons,
-} from '@expo/vector-icons';
+import { Entypo, FontAwesome, FontAwesome5, FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { IconProps as DefaultIconProps } from '@expo/vector-icons/build/createIconSet';
 import { Text } from 'react-native';
 import React from 'react';
 
 // Define the available icon families as a union type
-export type IconFamilyType =
-	| 'MaterialCommunityIcons'
-	| 'MaterialIcons'
-	| 'FontAwesome'
-	| 'FontAwesome5'
-	| 'FontAwesome6'
-	| 'Ionicons'
-	| 'Entypo';
+export type IconFamilyType = 'MaterialCommunityIcons' | 'MaterialIcons' | 'FontAwesome' | 'FontAwesome5' | 'FontAwesome6' | 'Ionicons' | 'Entypo';
 
 // IconProps type updated to enforce family as a valid key
 export type IconProps = DefaultIconProps<any> & {
@@ -43,8 +28,7 @@ export function IconParseDirectusStringToIconAndFamily(iconString: string): {
 	family: IconFamilyType;
 	icon: string;
 } {
-	const [family = IconFamily.MaterialIcons, icon] =
-		iconString.split(IconParseDelimeter);
+	const [family = IconFamily.MaterialIcons, icon] = iconString.split(IconParseDelimeter);
 	return { family: family as IconFamilyType, icon };
 }
 

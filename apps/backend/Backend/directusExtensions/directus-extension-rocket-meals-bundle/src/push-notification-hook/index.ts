@@ -11,11 +11,7 @@ const SCHEDULE_NAME = 'push_notification';
 export default defineHook(async ({ filter }, apiContext) => {
   const collectionName = CollectionNames.PUSH_NOTIFICATIONS;
 
-  let allTablesExist =
-    await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(
-      SCHEDULE_NAME,
-      apiContext
-    );
+  let allTablesExist = await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(SCHEDULE_NAME, apiContext);
   if (!allTablesExist) {
     return;
   }
@@ -23,74 +19,62 @@ export default defineHook(async ({ filter }, apiContext) => {
   const myDatabaseHelper = new MyDatabaseHelper(apiContext);
 
   // Trigger before the item is created or updated
-  filter<Partial<DatabaseTypes.PushNotifications>>(
-    collectionName + '.items.create',
-    async (input: any, { collection }) => {
-      //console.log("items.create")
-      //console.log("input")
-      //console.log(input)#
+  filter<Partial<DatabaseTypes.PushNotifications>>(collectionName + '.items.create', async (input: any, { collection }) => {
+    //console.log("items.create")
+    //console.log("input")
+    //console.log(input)#
 
-      if (ItemsServiceHelper.isStatusUndefined(input)) {
-        input = ItemsServiceHelper.setStatusPublished(input);
-      }
-      if (ItemsServiceHelper.isStatusPublished(input)) {
-        await sendNotification(input, input);
-      }
-      return input;
+    if (ItemsServiceHelper.isStatusUndefined(input)) {
+      input = ItemsServiceHelper.setStatusPublished(input);
     }
-  );
+    if (ItemsServiceHelper.isStatusPublished(input)) {
+      await sendNotification(input, input);
+    }
+    return input;
+  });
 
-  filter<Partial<DatabaseTypes.PushNotifications>>(
-    collectionName + '.items.update',
-    async (
-      input: Partial<DatabaseTypes.PushNotifications>,
-      { keys, collection }
-    ) => {
-      let itemService = myDatabaseHelper.getPushNotificationsHelper();
+  filter<Partial<DatabaseTypes.PushNotifications>>(collectionName + '.items.update', async (input: Partial<DatabaseTypes.PushNotifications>, { keys, collection }) => {
+    let itemService = myDatabaseHelper.getPushNotificationsHelper();
 
-      // Fetch the current item from the database
-      if (!keys || keys.length === 0) {
-        throw new Error('No keys provided for update');
+    // Fetch the current item from the database
+    if (!keys || keys.length === 0) {
+      throw new Error('No keys provided for update');
+    }
+
+    for (let i = 0; i < keys.length; i++) {
+      let key = keys[i];
+      const currentItemId = key; // Assuming only one item is being updated
+      const currentItems = await itemService.readByQuery({
+        filter: { id: currentItemId },
+      });
+
+      if (!currentItems || currentItems.length === 0) {
+        throw new Error(`Item with ID ${currentItemId} not found`);
       }
 
-      for (let i = 0; i < keys.length; i++) {
-        let key = keys[i];
-        const currentItemId = key; // Assuming only one item is being updated
-        const currentItems = await itemService.readByQuery({
-          filter: { id: currentItemId },
-        });
+      const currentItem = currentItems[0];
 
-        if (!currentItems || currentItems.length === 0) {
-          throw new Error(`Item with ID ${currentItemId} not found`);
-        }
-
-        const currentItem = currentItems[0];
-
-        // Selectively merge the current item with the updated fields
-        if (!!currentItem) {
-          for (const key in input) {
+      // Selectively merge the current item with the updated fields
+      if (!!currentItem) {
+        for (const key in input) {
+          // @ts-ignore - we want to copy the value from input to currentItem
+          if (input[key] !== undefined) {
             // @ts-ignore - we want to copy the value from input to currentItem
-            if (input[key] !== undefined) {
-              // @ts-ignore - we want to copy the value from input to currentItem
-              currentItem[key] = input[key];
-            }
-          }
-          if (ItemsServiceHelper.isStatusPublished(currentItem)) {
-            await sendNotification(currentItem, input);
-            input = ItemsServiceHelper.setStatusPublished(input);
+            currentItem[key] = input[key];
           }
         }
+        if (ItemsServiceHelper.isStatusPublished(currentItem)) {
+          await sendNotification(currentItem, input);
+          input = ItemsServiceHelper.setStatusPublished(input);
+        }
       }
-
-      return input;
     }
-  );
+
+    return input;
+  });
 
   // Function to send Expo push notification
-  async function sendNotification(
-    payload: DatabaseTypes.PushNotifications,
-    input: any
-  ) {
+  async function sendNotification(payload: DatabaseTypes.PushNotifications, input: any) {
     console.log('Sending notification...');
     console.log('Payload:');
     console.log(payload);
@@ -145,10 +129,7 @@ export default defineHook(async ({ filter }, apiContext) => {
     if (payload_image_url) {
       // check if image_url is set
       // check if image_url is a string and a url
-      if (
-        typeof payload_image_url === 'string' &&
-        payload_image_url.startsWith('http')
-      ) {
+      if (typeof payload_image_url === 'string' && payload_image_url.startsWith('http')) {
         richContent = {
           image: payload_image_url,
         };
@@ -176,10 +157,7 @@ export default defineHook(async ({ filter }, apiContext) => {
     console.log(messages);
 
     try {
-      let answer = await axios.post(
-        'https://exp.host/--/api/v2/push/send',
-        messages
-      );
+      let answer = await axios.post('https://exp.host/--/api/v2/push/send', messages);
       input.status_log = 'success';
     } catch (e: any) {
       console.log(`Failed to send notification: ${e.message}`);

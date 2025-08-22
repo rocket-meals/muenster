@@ -17,12 +17,7 @@ const usePlatformHelper = () => {
 		return 'Unknown';
 	};
 
-	const getPlatformDependentValue = (
-		webValue: any,
-		iosValue: any,
-		androidValue: any,
-		defaultValue: any
-	) => {
+	const getPlatformDependentValue = (webValue: any, iosValue: any, androidValue: any, defaultValue: any) => {
 		if (isWeb()) return webValue;
 		if (isIOS()) return iosValue;
 		if (isAndroid()) return androidValue;
@@ -31,24 +26,15 @@ const usePlatformHelper = () => {
 
 	const getAndroidPreferredBrowserPackageOption = async () => {
 		try {
-			const customTabsSupporting =
-				await WebBrowser.getCustomTabsSupportingBrowsersAsync();
+			const customTabsSupporting = await WebBrowser.getCustomTabsSupportingBrowsersAsync();
 
-			const {
-				preferredBrowserPackage,
-				browserPackages = [],
-				servicePackages = [],
-			} = customTabsSupporting;
+			const { preferredBrowserPackage, browserPackages = [], servicePackages = [] } = customTabsSupporting;
 
 			// Default fallback to Chrome
 			const defaultBrowserPackage = 'com.android.chrome';
 
 			return {
-				browserPackage:
-					preferredBrowserPackage ||
-					browserPackages[0] ||
-					servicePackages[0] ||
-					defaultBrowserPackage,
+				browserPackage: preferredBrowserPackage || browserPackages[0] || servicePackages[0] || defaultBrowserPackage,
 			};
 		} catch (error) {
 			console.error('Error fetching preferred browser package:', error);

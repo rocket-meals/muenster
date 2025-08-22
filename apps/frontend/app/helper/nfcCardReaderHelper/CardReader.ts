@@ -38,10 +38,7 @@ export default class CardReader {
 		let cardInformations;
 		try {
 			const result = await this.NfcManager.start();
-			cardInformations = await MensaCardReaderHelper.readMensaCardInformations(
-				this,
-				message
-			);
+			cardInformations = await MensaCardReaderHelper.readMensaCardInformations(this, message);
 		} catch (err) {
 			console.warn(err);
 		}

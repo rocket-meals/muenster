@@ -2,9 +2,7 @@ import { defineHook } from '@directus/extensions-sdk';
 import { EventHelper } from '../helpers/EventHelper';
 import { DatabaseTypes } from 'repo-depkit-common';
 
-function hasDifferentProviderThanDefault(
-  partialUserInput: Partial<DatabaseTypes.DirectusUsers>
-) {
+function hasDifferentProviderThanDefault(partialUserInput: Partial<DatabaseTypes.DirectusUsers>) {
   const provider = partialUserInput.provider;
   if (!provider) {
     // normally no provider is passed on creation as it is the default value

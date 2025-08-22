@@ -15,36 +15,24 @@ import styles from './styles';
 const AppDownload = () => {
 	useSetPageTitle(TranslationKeys.app_download);
 	const { theme } = useTheme();
-	const { serverInfo, appSettings } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { serverInfo, appSettings } = useSelector((state: RootState) => state.settings);
 
-	const projectLogo =
-		serverInfo?.info?.project?.project_logo &&
-		getImageUrl(serverInfo.info.project.project_logo);
+	const projectLogo = serverInfo?.info?.project?.project_logo && getImageUrl(serverInfo.info.project.project_logo);
 
-	const iconSource = projectLogo
-		? { uri: projectLogo }
-		: require('../../../../assets/images/icon.png');
+	const iconSource = projectLogo ? { uri: projectLogo } : require('../../../../assets/images/icon.png');
 
 	const iosUrl = appSettings?.app_stores_url_to_apple;
 	const androidUrl = appSettings?.app_stores_url_to_google;
 
 	const handleOpenAppleStore = () => {
 		if (appSettings?.app_stores_url_to_apple) {
-			CommonSystemActionHelper.openExternalURL(
-				appSettings.app_stores_url_to_apple,
-				true
-			);
+			CommonSystemActionHelper.openExternalURL(appSettings.app_stores_url_to_apple, true);
 		}
 	};
 
 	const handleOpenGooglePlay = () => {
 		if (appSettings?.app_stores_url_to_google) {
-			CommonSystemActionHelper.openExternalURL(
-				appSettings.app_stores_url_to_google,
-				true
-			);
+			CommonSystemActionHelper.openExternalURL(appSettings.app_stores_url_to_google, true);
 		}
 	};
 
@@ -59,18 +47,8 @@ const AppDownload = () => {
 			<View style={styles.content}>
 				<Image source={iconSource} style={styles.icon} />
 				<View style={styles.itemsContainer}>
-					<DownloadItem
-						label="iOS"
-						qrValue={iosUrl}
-						imageSource={appleStoreIcon}
-						onPress={handleOpenAppleStore}
-					/>
-					<DownloadItem
-						label="Android"
-						qrValue={androidUrl}
-						imageSource={googlePlayIcon}
-						onPress={handleOpenGooglePlay}
-					/>
+					<DownloadItem label="iOS" qrValue={iosUrl} imageSource={appleStoreIcon} onPress={handleOpenAppleStore} />
+					<DownloadItem label="Android" qrValue={androidUrl} imageSource={googlePlayIcon} onPress={handleOpenGooglePlay} />
 				</View>
 			</View>
 		</ScrollView>

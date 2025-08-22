@@ -1,28 +1,9 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	RefreshControl,
-	View,
-	Platform,
-} from 'react-native';
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import { ActivityIndicator, Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, RefreshControl, View, Platform } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FoodSortOption } from 'repo-depkit-common';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
-import {
-	DrawerContentComponentProps,
-	DrawerNavigationProp,
-} from '@react-navigation/drawer';
+import { DrawerContentComponentProps, DrawerNavigationProp } from '@react-navigation/drawer';
 import { isWeb } from '@/constants/Constants';
 import FoodItem from '@/components/FoodItem/FoodItem';
 import FoodOfferInfoItem from '@/components/FoodOfferInfoItem/FoodOfferInfoItem';
@@ -31,23 +12,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import useKioskMode from '@/hooks/useKioskMode';
 import { fetchFoodOffersByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
-import {
-	SET_BUSINESS_HOURS,
-	SET_CANTEEN_FEEDBACK_LABELS,
-	SET_POPUP_EVENTS,
-	SET_SELECTED_CANTEEN_FOOD_OFFERS,
-	SET_SELECTED_CANTEEN_FOOD_OFFERS_LOCAL,
-	SET_SELECTED_DATE,
-	UPDATE_PROFILE,
-} from '@/redux/Types/types';
+import { SET_BUSINESS_HOURS, SET_CANTEEN_FEEDBACK_LABELS, SET_POPUP_EVENTS, SET_SELECTED_CANTEEN_FOOD_OFFERS, SET_SELECTED_CANTEEN_FOOD_OFFERS_LOCAL, SET_SELECTED_DATE, UPDATE_PROFILE } from '@/redux/Types/types';
 import { DatabaseTypes } from 'repo-depkit-common';
-import {
-	Entypo,
-	FontAwesome6,
-	Ionicons,
-	MaterialCommunityIcons,
-	MaterialIcons,
-} from '@expo/vector-icons';
+import { Entypo, FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { RootDrawerParamList } from './types';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
@@ -102,8 +69,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const router = useRouter();
-	const drawerNavigation =
-		useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
+	const drawerNavigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
 	const bottomSheetRef = useRef<BottomSheet>(null);
 	const eventSheetRef = useRef<BottomSheet>(null);
 	const businessHoursHelper = new BusinessHoursHelper();
@@ -117,51 +83,23 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const [sheetProps, setSheetProps] = useState<Record<string, any>>({});
 	const [feedbackLabelsLoading, setFeedbackLabelsLoading] = useState(true);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-	const [selectedSheet, setSelectedSheet] = useState<
-		keyof typeof SHEET_COMPONENTS | null
-	>(null);
-	const [sessionDismissed, setSessionDismissed] = useState<Set<string>>(
-		PopupEventHelper.getAll()
-	);
+	const [selectedSheet, setSelectedSheet] = useState<keyof typeof SHEET_COMPONENTS | null>(null);
+	const [sessionDismissed, setSessionDismissed] = useState<Set<string>>(PopupEventHelper.getAll());
 	const [currentPopupEvent, setCurrentPopupEvent] = useState<any | null>(null);
 
-	const {
-		sortBy,
-		language: languageCode,
-		drawerPosition,
-		appSettings,
-		primaryColor,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
-	const {
-		ownFoodFeedbacks,
-		popupEvents,
-		selectedDate,
-		foodCategories,
-		foodOfferCategories,
-		foodOffersInfoItems,
-	} = useSelector((state: RootState) => state.food);
+	const { sortBy, language: languageCode, drawerPosition, appSettings, primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+	const { ownFoodFeedbacks, popupEvents, selectedDate, foodCategories, foodOfferCategories, foodOffersInfoItems } = useSelector((state: RootState) => state.food);
 	const [autoPlay, setAutoPlay] = useState(appSettings?.animations_auto_start);
 	const animationRef = useRef<LottieView>(null);
 	const [animationJson, setAmimationJson] = useState<any>(null);
 	const { profile, user } = useSelector((state: RootState) => state.authReducer);
 	const { appElements } = useSelector((state: RootState) => state.appElements);
-	const { selectedCanteenFoodOffers, canteenFeedbackLabels } = useSelector(
-		(state: RootState) => state.canteenReducer
-	);
+	const { selectedCanteenFoodOffers, canteenFeedbackLabels } = useSelector((state: RootState) => state.canteenReducer);
 	const selectedCanteen = useSelectedCanteen();
 	const kioskMode = useKioskMode();
-	const [prefetchedFoodOffers, setPrefetchedFoodOffers] = useState<
-		Record<string, Record<string, DatabaseTypes.Foodoffers[]>>
-	>({});
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const [prefetchedFoodOffers, setPrefetchedFoodOffers] = useState<Record<string, Record<string, DatabaseTypes.Foodoffers[]>>>({});
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
 	const dayItems = useMemo(() => {
 		const offers = selectedCanteenFoodOffers || [];
@@ -178,12 +116,8 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 			return hasOffers;
 		});
 
-		const startInfos = sortBySortField(
-			infoItemsFiltered.filter(i => i.placement === 'start')
-		);
-		const endInfos = sortBySortField(
-			infoItemsFiltered.filter(i => i.placement === 'end')
-		);
+		const startInfos = sortBySortField(infoItemsFiltered.filter(i => i.placement === 'start'));
+		const endInfos = sortBySortField(infoItemsFiltered.filter(i => i.placement === 'end'));
 
 		const start = startInfos.map(i => ({
 			foodoffer: null,
@@ -226,16 +160,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
 	const renderLottie = useMemo(() => {
 		if (animationJson) {
-			return (
-				<LottieView
-					ref={animationRef}
-					source={animationJson}
-					resizeMode="contain"
-					style={{ width: '100%', height: '100%' }}
-					autoPlay={autoPlay || false}
-					loop={false}
-				/>
-			);
+			return <LottieView ref={animationRef} source={animationJson} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay={autoPlay || false} loop={false} />;
 		}
 	}, [autoPlay, animationJson]);
 
@@ -258,8 +183,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		const getElement = (id: string) => {
 			const element = appElements?.find((el: any) => el.id === id);
 			if (!element || !element.translations) return null;
-			const { content, popup_button_text, popup_content } =
-				getAppElementTranslation(element.translations, languageCode);
+			const { content, popup_button_text, popup_content } = getAppElementTranslation(element.translations, languageCode);
 
 			return {
 				content,
@@ -298,9 +222,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		if (kioskMode) {
 			return;
 		}
-		const nextEvent = popupEvents?.find(
-			(e: any) => !e.isOpen && !PopupEventHelper.isDismissed(e.id)
-		);
+		const nextEvent = popupEvents?.find((e: any) => !e.isOpen && !PopupEventHelper.isDismissed(e.id));
 		if (nextEvent) {
 			setCurrentPopupEvent(nextEvent);
 			setTimeout(() => {
@@ -311,13 +233,10 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		}
 	}, [popupEvents, kioskMode, sessionDismissed]);
 
-	const openSheet = useCallback(
-		(sheet: 'menu' | keyof typeof SHEET_COMPONENTS, props = {}) => {
-			setSelectedSheet(sheet);
-			setSheetProps(props);
-		},
-		[]
-	);
+	const openSheet = useCallback((sheet: 'menu' | keyof typeof SHEET_COMPONENTS, props = {}) => {
+		setSelectedSheet(sheet);
+		setSheetProps(props);
+	}, []);
 
 	const openManagementSheet = (id: string) => {
 		if (id) {
@@ -339,9 +258,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		eventSheetRef?.current?.close();
 		setTimeout(() => {
 			if (!currentPopupEvent) return;
-			const updatedEvents = popupEvents.map((e: any) =>
-				e.id === currentPopupEvent.id ? { ...e, isOpen: true } : e
-			);
+			const updatedEvents = popupEvents.map((e: any) => (e.id === currentPopupEvent.id ? { ...e, isOpen: true } : e));
 			dispatch({ type: SET_POPUP_EVENTS, payload: updatedEvents });
 			setCurrentPopupEvent(null);
 		}, 500);
@@ -373,9 +290,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
 	const getBusinessHours = async () => {
 		try {
-			const businessHours = (await businessHoursHelper.fetchBusinessHours(
-				{}
-			)) as DatabaseTypes.Businesshours[];
+			const businessHours = (await businessHoursHelper.fetchBusinessHours({})) as DatabaseTypes.Businesshours[];
 			dispatch({ type: SET_BUSINESS_HOURS, payload: businessHours });
 		} catch (error) {
 			console.error('Error fetching business hours:', error);
@@ -439,10 +354,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		return format(day, 'dd.MM.yyyy'); // Return the date if it's not Today, Yesterday, or Tomorrow
 	};
 
-	const updateSort = (
-		id: FoodSortOption,
-		foodOffers: DatabaseTypes.Foodoffers[]
-	) => {
+	const updateSort = (id: FoodSortOption, foodOffers: DatabaseTypes.Foodoffers[]) => {
 		const sortedOffers = sortFoodOffers(id, foodOffers, {
 			languageCode,
 			ownFoodFeedbacks,
@@ -529,8 +441,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		try {
 			setFeedbackLabelsLoading(true);
 			// Fetch Canteen Feedback Labels
-			const canteenFeedbackLabels =
-				(await canteenFeedbackLabelHelper.fetchCanteenFeedbackLabels()) as DatabaseTypes.CanteensFeedbacksLabels[];
+			const canteenFeedbackLabels = (await canteenFeedbackLabelHelper.fetchCanteenFeedbackLabels()) as DatabaseTypes.CanteensFeedbacksLabels[];
 			dispatch({
 				type: SET_CANTEEN_FEEDBACK_LABELS,
 				payload: canteenFeedbackLabels,
@@ -557,19 +468,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		setRefreshing(false);
 	}, []);
 
-	const memoizedCanteenFeedbackLabels = useMemo(
-		() =>
-			canteenFeedbackLabels?.map(
-				(label: DatabaseTypes.CanteensFeedbacksLabels, index: number) => (
-					<CanteenFeedbackLabels
-						key={label?.id || `feedback-label-${index}`}
-						label={label}
-						date={selectedDate}
-					/>
-				)
-			),
-		[canteenFeedbackLabels, selectedDate]
-	);
+	const memoizedCanteenFeedbackLabels = useMemo(() => canteenFeedbackLabels?.map((label: DatabaseTypes.CanteensFeedbacksLabels, index: number) => <CanteenFeedbackLabels key={label?.id || `feedback-label-${index}`} label={label} date={selectedDate} />), [canteenFeedbackLabels, selectedDate]);
 	const canteenFeedbackLabelsExist = canteenFeedbackLabels?.length > 0;
 
 	const nextAvailableDate = useMemo(() => {
@@ -589,10 +488,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		return days[new Date(date).getDay()];
 	};
 
-	const SheetComponent =
-		selectedSheet && selectedSheet !== 'menu'
-			? SHEET_COMPONENTS[selectedSheet]
-			: null;
+	const SheetComponent = selectedSheet && selectedSheet !== 'menu' ? SHEET_COMPONENTS[selectedSheet] : null;
 
 	return (
 		<>
@@ -644,16 +540,8 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								</Tooltip>
 
 								{/* Canteen Heading */}
-								<TouchableOpacity
-									onPress={() => openSheet('canteen')}
-									activeOpacity={0.7}
-								>
-									<Text style={{ ...styles.heading, color: theme.header.text }}>
-										{excerpt(
-											String(selectedCanteen?.alias),
-											screenWidth > 800 ? 30 : 10
-										) || 'Food Offers'}
-									</Text>
+								<TouchableOpacity onPress={() => openSheet('canteen')} activeOpacity={0.7}>
+									<Text style={{ ...styles.heading, color: theme.header.text }}>{excerpt(String(selectedCanteen?.alias), screenWidth > 800 ? 30 : 10) || 'Food Offers'}</Text>
 								</TouchableOpacity>
 							</View>
 							<View
@@ -680,9 +568,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								>
 									<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 										<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-											{`${translate(TranslationKeys.sort)}: ${translate(
-												TranslationKeys.foods
-											)}`}
+											{`${translate(TranslationKeys.sort)}: ${translate(TranslationKeys.foods)}`}
 										</TooltipText>
 									</TooltipContent>
 								</Tooltip>
@@ -706,9 +592,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								>
 									<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 										<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-											{`${translate(TranslationKeys.edit)}: ${translate(
-												TranslationKeys.price_group
-											)} ${translate(getPriceGroup(profile?.price_group))}`}
+											{`${translate(TranslationKeys.edit)}: ${translate(TranslationKeys.price_group)} ${translate(getPriceGroup(profile?.price_group))}`}
 										</TooltipText>
 									</TooltipContent>
 								</Tooltip>
@@ -733,9 +617,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								>
 									<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 										<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-											{` ${translate(
-												TranslationKeys.eating_habits
-											)}: ${translate(TranslationKeys.edit)}`}
+											{` ${translate(TranslationKeys.eating_habits)}: ${translate(TranslationKeys.edit)}`}
 										</TooltipText>
 									</TooltipContent>
 								</Tooltip>
@@ -751,19 +633,13 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 												padding: isWeb ? (screenWidth < 500 ? 5 : 10) : 5,
 											}}
 										>
-											<MaterialIcons
-												name="restaurant-menu"
-												size={24}
-												color={theme.header.text}
-											/>
+											<MaterialIcons name="restaurant-menu" size={24} color={theme.header.text} />
 										</TouchableOpacity>
 									)}
 								>
 									<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 										<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-											{` ${translate(TranslationKeys.canteen)}: ${translate(
-												TranslationKeys.select
-											)}`}
+											{` ${translate(TranslationKeys.canteen)}: ${translate(TranslationKeys.select)}`}
 										</TooltipText>
 									</TooltipContent>
 								</Tooltip>
@@ -793,9 +669,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								>
 									<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 										<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-											{` ${translate(TranslationKeys.day)}: ${translate(
-												TranslationKeys.previous
-											)}`}
+											{` ${translate(TranslationKeys.day)}: ${translate(TranslationKeys.previous)}`}
 										</TooltipText>
 									</TooltipContent>
 								</Tooltip>
@@ -809,19 +683,13 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 												padding: isWeb ? (screenWidth < 500 ? 2 : 5) : 2,
 											}}
 										>
-											<MaterialIcons
-												name="calendar-month"
-												size={24}
-												color={theme.header.text}
-											/>
+											<MaterialIcons name="calendar-month" size={24} color={theme.header.text} />
 										</TouchableOpacity>
 									)}
 								>
 									<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 										<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-											{` ${translate(TranslationKeys.edit)}: ${translate(
-												TranslationKeys.date
-											)}: ${selectedDate}`}
+											{` ${translate(TranslationKeys.edit)}: ${translate(TranslationKeys.date)}: ${selectedDate}`}
 										</TooltipText>
 									</TooltipContent>
 								</Tooltip>
@@ -841,16 +709,12 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								>
 									<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 										<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-											{` ${translate(TranslationKeys.day)}: ${translate(
-												TranslationKeys.proceed
-											)}`}
+											{` ${translate(TranslationKeys.day)}: ${translate(TranslationKeys.proceed)}`}
 										</TooltipText>
 									</TooltipContent>
 								</Tooltip>
 
-								<Text style={{ ...styles.heading, color: theme.header.text }}>
-									{selectedDate ? translate(getDayLabel(selectedDate)) : ''}
-								</Text>
+								<Text style={{ ...styles.heading, color: theme.header.text }}>{selectedDate ? translate(getDayLabel(selectedDate)) : ''}</Text>
 							</View>
 							<View style={{ ...styles.col2, gap: 10 }}>
 								{/* ForeCast */}
@@ -865,19 +729,13 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 													padding: isWeb ? (screenWidth < 500 ? 2 : 5) : 2,
 												}}
 											>
-												<FontAwesome6
-													name="people-group"
-													size={24}
-													color={theme.header.text}
-												/>
+												<FontAwesome6 name="people-group" size={24} color={theme.header.text} />
 											</TouchableOpacity>
 										)}
 									>
 										<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 											<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-												{` ${translate(TranslationKeys.forecast)}: ${translate(
-													TranslationKeys.utilization
-												)}`}
+												{` ${translate(TranslationKeys.forecast)}: ${translate(TranslationKeys.utilization)}`}
 											</TooltipText>
 										</TooltipContent>
 									</Tooltip>
@@ -894,11 +752,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 												padding: isWeb ? (screenWidth < 500 ? 2 : 5) : 2,
 											}}
 										>
-											<MaterialCommunityIcons
-												name="clock-time-eight"
-												size={24}
-												color={theme.header.text}
-											/>
+											<MaterialCommunityIcons name="clock-time-eight" size={24} color={theme.header.text} />
 										</TouchableOpacity>
 									)}
 								>
@@ -920,20 +774,9 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 							...styles.contentContainer,
 							paddingHorizontal: isWeb ? (screenWidth < 500 ? 5 : 20) : 5,
 						}}
-						refreshControl={
-							<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-						}
+						refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
 					>
-						<View style={styles.elementContainer}>
-							{beforeElement && (
-								<CustomMarkdown
-									content={beforeElement?.content || ''}
-									backgroundColor={foods_area_color}
-									imageWidth={440}
-									imageHeight={293}
-								/>
-							)}
-						</View>
+						<View style={styles.elementContainer}>{beforeElement && <CustomMarkdown content={beforeElement?.content || ''} backgroundColor={foods_area_color} imageWidth={440} imageHeight={293} />}</View>
 						<View
 							style={{
 								...styles.foodContainer,
@@ -952,30 +795,10 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 									<ActivityIndicator size={'large'} color={theme.screen.icon} />
 								</View>
 							) : dayItems && dayItems.length > 0 ? (
-								dayItems.map((dayItem: DayItem, index: number) =>
-									dayItem.foodoffer ? (
-										<FoodItem
-											canteen={selectedCanteen}
-											item={dayItem.foodoffer}
-											key={dayItem.foodoffer.id || `food-item-${index}`}
-											handleMenuSheet={openSheet}
-											handleImageSheet={openManagementSheet}
-											handleEatingHabitsSheet={openSheet}
-											setSelectedFoodId={setSelectedFoodId}
-										/>
-									) : dayItem.foodofferInfoItem ? (
-										<FoodOfferInfoItem
-											key={dayItem.foodofferInfoItem.id || `info-item-${index}`}
-											item={dayItem.foodofferInfoItem}
-											content={getInfoItemContent(dayItem.foodofferInfoItem).content || ''}
-										/>
-									) : null
-								)
+								dayItems.map((dayItem: DayItem, index: number) => (dayItem.foodoffer ? <FoodItem canteen={selectedCanteen} item={dayItem.foodoffer} key={dayItem.foodoffer.id || `food-item-${index}`} handleMenuSheet={openSheet} handleImageSheet={openManagementSheet} handleEatingHabitsSheet={openSheet} setSelectedFoodId={setSelectedFoodId} /> : dayItem.foodofferInfoItem ? <FoodOfferInfoItem key={dayItem.foodofferInfoItem.id || `info-item-${index}`} item={dayItem.foodofferInfoItem} content={getInfoItemContent(dayItem.foodofferInfoItem).content || ''} /> : null))
 							) : (
 								<View style={styles.noFoodContainer}>
-									<Text style={{ ...styles.noFoodOffer, color: theme.screen.text }}>
-										{translate(TranslationKeys.no_foodoffers_found_for_selection)}
-									</Text>
+									<Text style={{ ...styles.noFoodOffer, color: theme.screen.text }}>{translate(TranslationKeys.no_foodoffers_found_for_selection)}</Text>
 									<View style={styles.animationContainer}>{renderLottie}</View>
 									{nextAvailableDate && (
 										<TouchableOpacity
@@ -987,26 +810,13 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 											}
 											style={[styles.jumpButton, { backgroundColor: foods_area_color }]}
 										>
-											<Text style={[styles.jumpButtonText, { color: contrastColor }]}>
-												{`${translate(TranslationKeys.show_offers_on)} ${translate(
-													TranslationKeys[getWeekdayKey(nextAvailableDate)]
-												)}`}
-											</Text>
+											<Text style={[styles.jumpButtonText, { color: contrastColor }]}>{`${translate(TranslationKeys.show_offers_on)} ${translate(TranslationKeys[getWeekdayKey(nextAvailableDate)])}`}</Text>
 										</TouchableOpacity>
 									)}
 								</View>
 							)}
 						</View>
-						<View style={styles.elementContainer}>
-							{afterElement && (
-								<CustomMarkdown
-									content={afterElement?.content || ''}
-									backgroundColor={foods_area_color}
-									imageWidth={440}
-									imageHeight={293}
-								/>
-							)}
-						</View>
+						<View style={styles.elementContainer}>{afterElement && <CustomMarkdown content={afterElement?.content || ''} backgroundColor={foods_area_color} imageWidth={440} imageHeight={293} />}</View>
 						{!feedbackLabelsLoading && canteenFeedbackLabelsExist > 0 && (
 							<View style={styles.feebackContainer}>
 								<View>
@@ -1048,9 +858,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 							onClose={closeSheet}
 							handleComponent={null}
 						>
-							{SheetComponent && (
-								<SheetComponent closeSheet={closeSheet} {...sheetProps} />
-							)}
+							{SheetComponent && <SheetComponent closeSheet={closeSheet} {...sheetProps} />}
 						</BaseBottomSheet>
 					))}
 
@@ -1066,10 +874,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 						handleComponent={null}
 						onClose={closeEventSheetForSession}
 					>
-						<PopupEventSheet
-							closeSheet={closeEventSheet}
-							eventData={currentPopupEvent}
-						/>
+						<PopupEventSheet closeSheet={closeEventSheet} eventData={currentPopupEvent} />
 					</BaseBottomSheet>
 				)}
 			</SafeAreaView>

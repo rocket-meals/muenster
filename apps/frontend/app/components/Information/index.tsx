@@ -4,12 +4,7 @@ import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
 import * as Clipboard from 'expo-clipboard';
-import {
-	Entypo,
-	Ionicons,
-	MaterialCommunityIcons,
-	MaterialIcons,
-} from '@expo/vector-icons';
+import { Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import useToast from '@/hooks/useToast';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { TranslationKeys } from '@/locales/keys';
@@ -64,23 +59,15 @@ const Information: React.FC<any> = ({ campusDetails }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={{ ...styles.heading, color: theme.screen.text }}>
-				{translate(TranslationKeys.information)}
-			</Text>
+			<Text style={{ ...styles.heading, color: theme.screen.text }}>{translate(TranslationKeys.information)}</Text>
 			{/* Open Navigation */}
 			<Tooltip
 				placement="top"
 				trigger={triggerProps => (
-					<TouchableOpacity
-						{...triggerProps}
-						style={{ ...styles.row, backgroundColor: theme.screen.iconBg }}
-						onPress={handleOpenNavigation}
-					>
+					<TouchableOpacity {...triggerProps} style={{ ...styles.row, backgroundColor: theme.screen.iconBg }} onPress={handleOpenNavigation}>
 						<View style={styles.col}>
 							<Ionicons name="navigate" size={24} color={theme.screen.icon} />
-							<Text style={{ ...styles.body, color: theme.screen.text }}>
-								{translate(TranslationKeys.open_navitation_to_location)}
-							</Text>
+							<Text style={{ ...styles.body, color: theme.screen.text }}>{translate(TranslationKeys.open_navitation_to_location)}</Text>
 						</View>
 						<Entypo name="chevron-small-right" size={26} color={theme.screen.icon} />
 					</TouchableOpacity>
@@ -97,26 +84,14 @@ const Information: React.FC<any> = ({ campusDetails }) => {
 			<Tooltip
 				placement="top"
 				trigger={triggerProps => (
-					<TouchableOpacity
-						{...triggerProps}
-						style={{ ...styles.row, backgroundColor: theme.screen.iconBg }}
-						onPress={copyCordsToClipboard}
-					>
+					<TouchableOpacity {...triggerProps} style={{ ...styles.row, backgroundColor: theme.screen.iconBg }} onPress={copyCordsToClipboard}>
 						<View style={styles.col}>
 							<Ionicons name="location-sharp" size={24} color={theme.screen.icon} />
-							<Text style={{ ...styles.body, color: theme.screen.text }}>
-								{translate(TranslationKeys.coordinates)}
-							</Text>
+							<Text style={{ ...styles.body, color: theme.screen.text }}>{translate(TranslationKeys.coordinates)}</Text>
 						</View>
 						<View style={styles.col2}>
-							<Text style={{ ...styles.value, color: theme.screen.text }}>
-								52.27780, 8.02325
-							</Text>
-							<MaterialCommunityIcons
-								name="content-copy"
-								size={24}
-								color={theme.screen.icon}
-							/>
+							<Text style={{ ...styles.value, color: theme.screen.text }}>52.27780, 8.02325</Text>
+							<MaterialCommunityIcons name="content-copy" size={24} color={theme.screen.icon} />
 						</View>
 					</TouchableOpacity>
 				)}
@@ -132,14 +107,10 @@ const Information: React.FC<any> = ({ campusDetails }) => {
 			<View style={{ ...styles.row, backgroundColor: theme.screen.iconBg }}>
 				<View style={styles.col}>
 					<MaterialIcons name="construction" size={24} color={theme.screen.icon} />
-					<Text style={{ ...styles.body, color: theme.screen.text }}>
-						{translate(TranslationKeys.year_of_construction)}
-					</Text>
+					<Text style={{ ...styles.body, color: theme.screen.text }}>{translate(TranslationKeys.year_of_construction)}</Text>
 				</View>
 				<View style={styles.col2}>
-					<Text style={{ ...styles.value, color: theme.screen.text }}>
-						{campusDetails?.date_of_construction}
-					</Text>
+					<Text style={{ ...styles.value, color: theme.screen.text }}>{campusDetails?.date_of_construction}</Text>
 				</View>
 			</View>
 			{/* Copy URl */}
@@ -147,27 +118,13 @@ const Information: React.FC<any> = ({ campusDetails }) => {
 				<Tooltip
 					placement="top"
 					trigger={triggerProps => (
-						<TouchableOpacity
-							{...triggerProps}
-							style={{ ...styles.row, backgroundColor: theme.screen.iconBg }}
-							onPress={handleCopyUrlToClipboard}
-						>
+						<TouchableOpacity {...triggerProps} style={{ ...styles.row, backgroundColor: theme.screen.iconBg }} onPress={handleCopyUrlToClipboard}>
 							<View style={styles.col}>
-								<MaterialCommunityIcons
-									name="attachment"
-									size={24}
-									color={theme.screen.icon}
-								/>
-								<Text style={{ ...styles.body, color: theme.screen.text }}>
-									{translate(TranslationKeys.copy_url)}
-								</Text>
+								<MaterialCommunityIcons name="attachment" size={24} color={theme.screen.icon} />
+								<Text style={{ ...styles.body, color: theme.screen.text }}>{translate(TranslationKeys.copy_url)}</Text>
 							</View>
 							<View style={styles.col2}>
-								<MaterialCommunityIcons
-									name="content-copy"
-									size={24}
-									color={theme.screen.icon}
-								/>
+								<MaterialCommunityIcons name="content-copy" size={24} color={theme.screen.icon} />
 							</View>
 						</TouchableOpacity>
 					)}

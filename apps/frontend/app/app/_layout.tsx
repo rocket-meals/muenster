@@ -3,27 +3,7 @@ import 'setimmediate';
 import React, { useEffect } from 'react';
 import { Slot } from 'expo-router';
 import { RootSiblingParent } from 'react-native-root-siblings';
-import {
-	useFonts,
-	Poppins_100Thin,
-	Poppins_100Thin_Italic,
-	Poppins_200ExtraLight,
-	Poppins_200ExtraLight_Italic,
-	Poppins_300Light,
-	Poppins_300Light_Italic,
-	Poppins_400Regular,
-	Poppins_400Regular_Italic,
-	Poppins_500Medium,
-	Poppins_500Medium_Italic,
-	Poppins_600SemiBold,
-	Poppins_600SemiBold_Italic,
-	Poppins_700Bold,
-	Poppins_700Bold_Italic,
-	Poppins_800ExtraBold,
-	Poppins_800ExtraBold_Italic,
-	Poppins_900Black,
-	Poppins_900Black_Italic,
-} from '@expo-google-fonts/poppins';
+import { useFonts, Poppins_100Thin, Poppins_100Thin_Italic, Poppins_200ExtraLight, Poppins_200ExtraLight_Italic, Poppins_300Light, Poppins_300Light_Italic, Poppins_400Regular, Poppins_400Regular_Italic, Poppins_500Medium, Poppins_500Medium_Italic, Poppins_600SemiBold, Poppins_600SemiBold_Italic, Poppins_700Bold, Poppins_700Bold_Italic, Poppins_800ExtraBold, Poppins_800ExtraBold_Italic, Poppins_900Black, Poppins_900Black_Italic } from '@expo-google-fonts/poppins';
 import { Image, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -97,11 +77,7 @@ export default function Layout() {
 					backgroundColor: '#ffffff',
 				}}
 			>
-				<Image
-					source={require('@/assets/images/company.png')}
-					style={{ width: 250, height: 250 }}
-					resizeMode="contain"
-				/>
+				<Image source={require('@/assets/images/company.png')} style={{ width: 250, height: 250 }} resizeMode="contain" />
 			</View>
 		);
 	}
@@ -116,18 +92,8 @@ export default function Layout() {
 								<ThemeProvider>
 									<ServerStatusLoader>
 										<ExpoUpdateChecker>
-											<KeyboardAvoidingView
-												behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-												style={{ flex: 1, backgroundColor: theme.screen.iconBg }}
-											>
-												<SafeAreaView
-													style={{ flex: 1, backgroundColor: theme.screen.iconBg }}
-													edges={
-														pathname?.includes('image-full-screen')
-															? ['bottom']
-															: ['top', 'bottom']
-													}
-												>
+											<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1, backgroundColor: theme.screen.iconBg }}>
+												<SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.iconBg }} edges={pathname?.includes('image-full-screen') ? ['bottom'] : ['top', 'bottom']}>
 													<Slot />
 												</SafeAreaView>
 											</KeyboardAvoidingView>

@@ -1,12 +1,4 @@
-import {
-	Dimensions,
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-	Switch,
-} from 'react-native';
+import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View, Switch } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from '@/hooks/useTheme';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
@@ -16,20 +8,12 @@ import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { router } from 'expo-router';
 import { RootState } from '@/redux/reducer';
 
-const FoodPlanWeek = ({
-	data,
-	onPressItem,
-}: {
-	data: any[];
-	onPressItem: (item: any) => void;
-}) => {
+const FoodPlanWeek = ({ data, onPressItem }: { data: any[]; onPressItem: (item: any) => void }) => {
 	const { theme } = useTheme();
 
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
-	const [toggleStates, setToggleStates] = useState(
-		data.map(item => item.switchState || false)
-	);
+	const [toggleStates, setToggleStates] = useState(data.map(item => item.switchState || false));
 
 	useEffect(() => {
 		const onChange = ({ window }: { window: any }) => {
@@ -51,9 +35,7 @@ const FoodPlanWeek = ({
 	const selectedCanteen = useSelectedCanteen();
 
 	return (
-		<View
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-		>
+		<View style={[styles.container, { backgroundColor: theme.screen.background }]}>
 			{data.map((item, index) => (
 				<TouchableOpacity
 					key={index}
@@ -68,14 +50,7 @@ const FoodPlanWeek = ({
 					}}
 				>
 					<View style={styles.iconTextContainer}>
-						{item.showFeedIcon && (
-							<MaterialCommunityIcons
-								name="silverware-variant"
-								size={20}
-								color={theme.screen.icon}
-								style={{ marginRight: 10 }}
-							/>
-						)}
+						{item.showFeedIcon && <MaterialCommunityIcons name="silverware-variant" size={20} color={theme.screen.icon} style={{ marginRight: 10 }} />}
 						<Text
 							style={{
 								color: theme.screen.text,
@@ -115,21 +90,13 @@ const FoodPlanWeek = ({
 									/>
 								)}
 
-								<MaterialCommunityIcons
-									name="pencil"
-									size={22}
-									color={theme.screen.icon}
-									style={{ marginHorizontal: 5 }}
-								/>
+								<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} style={{ marginHorizontal: 5 }} />
 							</>
 						)}
 					</View>
 				</TouchableOpacity>
 			))}
-			<TouchableOpacity
-				style={[styles.mainContainer, { backgroundColor: theme.screen.iconBg }]}
-				onPress={() => router.navigate('/list-week-screen')}
-			>
+			<TouchableOpacity style={[styles.mainContainer, { backgroundColor: theme.screen.iconBg }]} onPress={() => router.navigate('/list-week-screen')}>
 				<Text
 					style={{
 						color: theme.screen.text,
@@ -138,12 +105,7 @@ const FoodPlanWeek = ({
 				>
 					Wochen Auswahl
 				</Text>
-				<MaterialCommunityIcons
-					name="chevron-right"
-					size={20}
-					color={theme.screen.icon}
-					style={{ marginRight: 10 }}
-				/>
+				<MaterialCommunityIcons name="chevron-right" size={20} color={theme.screen.icon} style={{ marginRight: 10 }} />
 			</TouchableOpacity>
 		</View>
 	);

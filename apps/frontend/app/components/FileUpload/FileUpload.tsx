@@ -27,21 +27,7 @@ export enum ImagePickerMediaTypes {
 	LivePhotos = 'livePhotos',
 }
 
-const FileUpload = ({
-	id,
-	value,
-	onChange,
-	error,
-	isDisabled,
-	custom_type,
-}: {
-	id: string;
-	value: any;
-	onChange: (id: string, value: any, custom_type: string) => void;
-	error: string;
-	isDisabled: boolean;
-	custom_type: string;
-}) => {
+const FileUpload = ({ id, value, onChange, error, isDisabled, custom_type }: { id: string; value: any; onChange: (id: string, value: any, custom_type: string) => void; error: string; isDisabled: boolean; custom_type: string }) => {
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
@@ -76,8 +62,7 @@ const FileUpload = ({
 		try {
 			let result;
 			const cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
-			const mediaPermission =
-				await ImagePicker.requestMediaLibraryPermissionsAsync();
+			const mediaPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
 			// If permission is not granted for Camera
 			if (source === 'camera' && cameraPermission.status !== 'granted') {
@@ -132,18 +117,12 @@ const FileUpload = ({
 					fields: ['id', 'value_files.id', 'value_files.directus_files_id'],
 				})) as FormAnswer;
 
-				if (
-					!formAnswer ||
-					!formAnswer.value_files ||
-					formAnswer.value_files.length === 0
-				) {
+				if (!formAnswer || !formAnswer.value_files || formAnswer.value_files.length === 0) {
 					console.error('No form answer found or no files associated');
 					return;
 				}
 
-				const relation = formAnswer.value_files.find(
-					(file: FileRelation) => file.directus_files_id === item?.directus_files_id
-				);
+				const relation = formAnswer.value_files.find((file: FileRelation) => file.directus_files_id === item?.directus_files_id);
 
 				if (!relation) {
 					console.error('Relation ID not found for file:', item?.directus_files_id);
@@ -156,26 +135,10 @@ const FileUpload = ({
 				})) as FormAnswer;
 
 				if (response) {
-					onChange(
-						id,
-						value
-							? value?.filter(
-									(file: any) => file.directus_files_id !== item?.directus_files_id
-								)
-							: [],
-						custom_type
-					);
+					onChange(id, value ? value?.filter((file: any) => file.directus_files_id !== item?.directus_files_id) : [], custom_type);
 				}
 			} else {
-				onChange(
-					id,
-					value
-						? value?.filter(
-								(file: any) => file.directus_files_id !== item?.directus_files_id
-							)
-						: [],
-					custom_type
-				);
+				onChange(id, value ? value?.filter((file: any) => file.directus_files_id !== item?.directus_files_id) : [], custom_type);
 			}
 		} catch (error) {
 			console.error('Error deleting file:', error);
@@ -195,21 +158,13 @@ const FileUpload = ({
 						disabled={isDisabled}
 					>
 						<MaterialIcons name="image" size={24} color={theme.screen.text} />
-						<Text style={{ ...styles.uploadText, color: theme.screen.text }}>
-							{translate(TranslationKeys.upload_image)}
-						</Text>
+						<Text style={{ ...styles.uploadText, color: theme.screen.text }}>{translate(TranslationKeys.upload_image)}</Text>
 					</TouchableOpacity>
 				)}
 				{!isWeb && (
-					<TouchableOpacity
-						style={{ ...styles.uploadButton, backgroundColor: primaryColor }}
-						onPress={() => pickImage('camera')}
-						disabled={isDisabled}
-					>
+					<TouchableOpacity style={{ ...styles.uploadButton, backgroundColor: primaryColor }} onPress={() => pickImage('camera')} disabled={isDisabled}>
 						<Ionicons name="camera" size={24} color={theme.screen.text} />
-						<Text style={{ ...styles.uploadText, color: theme.screen.text }}>
-							{translate(TranslationKeys.camera)}
-						</Text>
+						<Text style={{ ...styles.uploadText, color: theme.screen.text }}>{translate(TranslationKeys.camera)}</Text>
 					</TouchableOpacity>
 				)}
 				<TouchableOpacity
@@ -222,9 +177,7 @@ const FileUpload = ({
 					disabled={isDisabled}
 				>
 					<MaterialIcons name="cloud-upload" size={24} color={theme.screen.text} />
-					<Text style={{ ...styles.uploadText, color: theme.screen.text }}>
-						{translate(TranslationKeys.upload_file)}
-					</Text>
+					<Text style={{ ...styles.uploadText, color: theme.screen.text }}>{translate(TranslationKeys.upload_file)}</Text>
 				</TouchableOpacity>
 			</View>
 			<ScrollView style={{ width: '100%', maxHeight: 300 }} nestedScrollEnabled>
@@ -240,13 +193,8 @@ const FileUpload = ({
 									}}
 									key={index}
 								>
-									<Text style={{ ...styles.fileName, color: theme.screen.text }}>
-										{item?.name}
-									</Text>
-									<TouchableOpacity
-										style={{ padding: 5 }}
-										onPress={() => deleteFile(item)}
-									>
+									<Text style={{ ...styles.fileName, color: theme.screen.text }}>{item?.name}</Text>
+									<TouchableOpacity style={{ padding: 5 }} onPress={() => deleteFile(item)}>
 										<Ionicons name="close" size={18} color={'red'} />
 									</TouchableOpacity>
 								</View>

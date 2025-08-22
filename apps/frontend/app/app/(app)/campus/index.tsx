@@ -1,30 +1,11 @@
-import {
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-	RefreshControl,
-	ActivityIndicator,
-	Dimensions,
-} from 'react-native';
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import { SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View, RefreshControl, ActivityIndicator, Dimensions } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CampusSortOption } from 'repo-depkit-common';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import {
-	DrawerContentComponentProps,
-	DrawerNavigationProp,
-} from '@react-navigation/drawer';
+import { DrawerContentComponentProps, DrawerNavigationProp } from '@react-navigation/drawer';
 import { RootDrawerParamList } from './types';
 import { useFocusEffect, useNavigation } from 'expo-router';
 import BuildingItem from '@/components/BuildingItem/BuildingItem';
@@ -32,12 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { CampusHelper } from '@/redux/actions/Campus/Campus';
 import { DatabaseTypes } from 'repo-depkit-common';
-import {
-	SET_CAMPUSES,
-	SET_CAMPUSES_DICT,
-	SET_CAMPUSES_LOCAL,
-	SET_UNSORTED_CAMPUSES,
-} from '@/redux/Types/types';
+import { SET_CAMPUSES, SET_CAMPUSES_DICT, SET_CAMPUSES_LOCAL, SET_UNSORTED_CAMPUSES } from '@/redux/Types/types';
 import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
 import { calculateDistanceInMeter } from '@/helper/distanceHelper';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
@@ -66,21 +42,15 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const [refreshing, setRefreshing] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [campusesDispatched, setCampusesDispatched] = useState(false);
-	const [selectedBuilding, setSelectedBuilding] =
-		useState<DatabaseTypes.Buildings | null>();
+	const [selectedBuilding, setSelectedBuilding] = useState<DatabaseTypes.Buildings | null>();
 	const [isActive, setIsActive] = useState(false);
 	const [distanceAdded, setDistanceAdded] = useState(false);
 	const [selectedApartmentId, setSelectedApartementId] = useState<string>('');
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-	const { drawerPosition, campusesSortBy } = useSelector(
-		(state: RootState) => state.settings
-	);
-	const { campuses, campusesLocal, unSortedCampuses } = useSelector(
-		(state: RootState) => state.campus
-	);
+	const { drawerPosition, campusesSortBy } = useSelector((state: RootState) => state.settings);
+	const { campuses, campusesLocal, unSortedCampuses } = useSelector((state: RootState) => state.campus);
 	const selectedCanteen = useSelectedCanteen();
-	const drawerNavigation =
-		useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
+	const drawerNavigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
 
 	const sortSheetRef = useRef<BottomSheet>(null);
 	const imageManagementSheetRef = useRef<BottomSheet>(null);
@@ -128,9 +98,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
 	const fetchAllCampuses = async () => {
 		setLoading(true);
-		const campusData = (await campusHelper.fetchCampus(
-			{}
-		)) as DatabaseTypes.Buildings[];
+		const campusData = (await campusHelper.fetchCampus({})) as DatabaseTypes.Buildings[];
 		const campuses = campusData || [];
 		if (campuses) {
 			const attributesDict = campuses.reduce(
@@ -148,10 +116,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		}
 	};
 
-	const updateSort = (
-		id: CampusSortOption,
-		campuses: DatabaseTypes.Buildings[]
-	) => {
+	const updateSort = (id: CampusSortOption, campuses: DatabaseTypes.Buildings[]) => {
 		setLoading(true);
 		let copiedCampuses = [...campuses];
 
@@ -202,10 +167,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		let campusWithDistance: Array<DatabaseTypes.Buildings> = [];
 		if (campuses) {
 			campuses?.forEach((campus: any) => {
-				const distance = calculateDistanceInMeter(
-					selectedBuilding?.coordinates?.coordinates,
-					campus?.coordinates?.coordinates
-				);
+				const distance = calculateDistanceInMeter(selectedBuilding?.coordinates?.coordinates, campus?.coordinates?.coordinates);
 				campusWithDistance.push({ ...campus, distance });
 			});
 			if (campusWithDistance?.length === 0) {
@@ -233,9 +195,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
 	const fetchSelectedBuilding = async () => {
 		if (selectedCanteen?.building) {
-			const buildingData = (await buildingsHelper.fetchBuildingById(
-				String(selectedCanteen.building)
-			)) as DatabaseTypes.Buildings;
+			const buildingData = (await buildingsHelper.fetchBuildingById(String(selectedCanteen.building))) as DatabaseTypes.Buildings;
 			const building = buildingData || [];
 			if (building) {
 				setSelectedBuilding(building);
@@ -281,9 +241,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 					payload: campusesLocal,
 				});
 			} else {
-				const filteredCampuses = campuses?.filter((campus: any) =>
-					campus?.alias?.toLowerCase()?.includes(query?.toLowerCase())
-				);
+				const filteredCampuses = campuses?.filter((campus: any) => campus?.alias?.toLowerCase()?.includes(query?.toLowerCase()));
 				dispatch({
 					type: SET_CAMPUSES,
 					payload: filteredCampuses,
@@ -333,11 +291,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 							<Tooltip
 								placement="top"
 								trigger={triggerProps => (
-									<TouchableOpacity
-										{...triggerProps}
-										onPress={() => drawerNavigation.toggleDrawer()}
-										style={{ padding: 10 }}
-									>
+									<TouchableOpacity {...triggerProps} onPress={() => drawerNavigation.toggleDrawer()} style={{ padding: 10 }}>
 										<Ionicons name="menu" size={24} color={theme.header.text} />
 									</TouchableOpacity>
 								)}
@@ -349,28 +303,20 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								</TooltipContent>
 							</Tooltip>
 
-							<Text style={{ ...styles.heading, color: theme.header.text }}>
-								{translate(TranslationKeys.campus)}
-							</Text>
+							<Text style={{ ...styles.heading, color: theme.header.text }}>{translate(TranslationKeys.campus)}</Text>
 						</View>
 						<View style={{ ...styles.col2, gap: isWeb ? 30 : 15 }}>
 							<Tooltip
 								placement="top"
 								trigger={triggerProps => (
-									<TouchableOpacity
-										{...triggerProps}
-										onPress={openSortSheet}
-										style={{ padding: 10 }}
-									>
+									<TouchableOpacity {...triggerProps} onPress={openSortSheet} style={{ padding: 10 }}>
 										<MaterialIcons name="sort" size={24} color={theme.header.text} />
 									</TouchableOpacity>
 								)}
 							>
 								<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 									<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-										{`${translate(TranslationKeys.sort)}: ${translate(
-											TranslationKeys.buildings
-										)}`}
+										{`${translate(TranslationKeys.sort)}: ${translate(TranslationKeys.buildings)}`}
 									</TooltipText>
 								</TooltipContent>
 							</Tooltip>
@@ -386,9 +332,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 						...styles.compusContentContainer,
 						paddingHorizontal: isWeb ? 5 : 5,
 					}}
-					refreshControl={
-						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-					}
+					refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
 				>
 					<View
 						style={{
@@ -396,14 +340,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 							width: screenWidth > 768 ? '60%' : '100%',
 						}}
 					>
-						<TextInput
-							style={[styles.searchInput, { color: theme.screen.text }]}
-							cursorColor={theme.screen.text}
-							placeholderTextColor={theme.screen.placeholder}
-							onChangeText={setQuery}
-							value={query}
-							placeholder={translate(TranslationKeys.search_campus_here)}
-						/>
+						<TextInput style={[styles.searchInput, { color: theme.screen.text }]} cursorColor={theme.screen.text} placeholderTextColor={theme.screen.placeholder} onChangeText={setQuery} value={query} placeholder={translate(TranslationKeys.search_campus_here)} />
 					</View>
 					<View style={{ ...styles.campusContainer, gap: isWeb ? 10 : 10 }}>
 						{loading ? (
@@ -418,15 +355,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								<ActivityIndicator size={30} color={theme.screen.text} />
 							</View>
 						) : campuses && campuses?.length > 0 ? (
-							campuses?.map((campus: any) => (
-								<BuildingItem
-									key={campus.id}
-									campus={campus}
-									setSelectedApartementId={setSelectedApartementId}
-									openImageManagementSheet={openImageManagementSheet}
-									openDistanceSheet={openDistanceSheet}
-								/>
-							))
+							campuses?.map((campus: any) => <BuildingItem key={campus.id} campus={campus} setSelectedApartementId={setSelectedApartementId} openImageManagementSheet={openImageManagementSheet} openDistanceSheet={openDistanceSheet} />)
 						) : (
 							<View
 								style={{
@@ -490,13 +419,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 					</BaseBottomSheet>
 				)}
 
-				{isActive && (
-					<DistanceModal
-						visible={distanceModalVisible}
-						onClose={closeDistanceSheet}
-						onUseCurrentPosition={useCurrentLocationForDistance}
-					/>
-				)}
+				{isActive && <DistanceModal visible={distanceModalVisible} onClose={closeDistanceSheet} onUseCurrentPosition={useCurrentLocationForDistance} />}
 			</View>
 		</SafeAreaView>
 	);

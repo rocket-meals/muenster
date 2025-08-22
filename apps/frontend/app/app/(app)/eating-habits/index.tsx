@@ -1,18 +1,5 @@
-import {
-	Dimensions,
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import { Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
@@ -39,11 +26,7 @@ const index = () => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const { markings } = useSelector((state: RootState) => state.food);
-	const {
-		primaryColor,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	const [readMore, setReadMore] = useState(false);
 	const [autoPlay, setAutoPlay] = useState(appSettings?.animations_auto_start);
@@ -98,16 +81,7 @@ const index = () => {
 
 	const renderLottie = useMemo(() => {
 		if (animationJson) {
-			return (
-				<LottieView
-					ref={animationRef}
-					source={animationJson}
-					resizeMode="contain"
-					style={{ width: '100%', height: '100%' }}
-					autoPlay={autoPlay || false}
-					loop={false}
-				/>
-			);
+			return <LottieView ref={animationRef} source={animationJson} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay={autoPlay || false} loop={false} />;
 		}
 	}, [autoPlay, animationJson]);
 
@@ -131,10 +105,7 @@ const index = () => {
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.background }}>
 			<View style={{ flex: 1 }}>
-				<ScrollView
-					style={{ backgroundColor: theme.screen.background }}
-					contentContainerStyle={styles.contentContainer}
-				>
+				<ScrollView style={{ backgroundColor: theme.screen.background }} contentContainerStyle={styles.contentContainer}>
 					<View style={styles.gifContainer}>{renderLottie}</View>
 					<View
 						style={{
@@ -142,17 +113,8 @@ const index = () => {
 							width: isWeb ? (screenWidth > 600 ? '80%' : '100%') : '100%',
 						}}
 					>
-						<Text style={{ ...styles.body1, color: theme.screen.text }}>
-							{readMore
-								? translate(TranslationKeys.eatinghabits_introduction)
-								: excerpt(translate(TranslationKeys.eatinghabits_introduction), 120)}
-						</Text>
-						{readMore && (
-							<FoodLabelingInfo
-								textStyle={styles.body2}
-								backgroundColor={primaryColor}
-							/>
-						)}
+						<Text style={{ ...styles.body1, color: theme.screen.text }}>{readMore ? translate(TranslationKeys.eatinghabits_introduction) : excerpt(translate(TranslationKeys.eatinghabits_introduction), 120)}</Text>
+						{readMore && <FoodLabelingInfo textStyle={styles.body2} backgroundColor={primaryColor} />}
 						<View style={styles.readMoreContainer}>
 							<TouchableOpacity
 								onPress={handleReadMore}
@@ -161,30 +123,18 @@ const index = () => {
 									backgroundColor: theme.primary,
 								}}
 							>
-								<Text style={{ ...styles.readMore, color: contrastColor }}>
-									{readMore
-										? translate(TranslationKeys.read_less)
-										: translate(TranslationKeys.read_more)}
-								</Text>
+								<Text style={{ ...styles.readMore, color: contrastColor }}>{readMore ? translate(TranslationKeys.read_less) : translate(TranslationKeys.read_more)}</Text>
 							</TouchableOpacity>
 						</View>
 						<View style={styles.feedbackLabelsContainer}>
 							{markings?.map(marking => {
-								return (
-									<MarkingLabels
-										key={marking?.id}
-										markingId={marking?.id}
-										handleMenuSheet={openMenuSheet}
-									/>
-								);
+								return <MarkingLabels key={marking?.id} markingId={marking?.id} handleMenuSheet={openMenuSheet} />;
 							})}
 						</View>
 					</View>
 				</ScrollView>
 			</View>
-			{isActive && (
-				<MarkingBottomSheet ref={menuSheetRef} onClose={closeMenuSheet} />
-			)}
+			{isActive && <MarkingBottomSheet ref={menuSheetRef} onClose={closeMenuSheet} />}
 		</SafeAreaView>
 	);
 };

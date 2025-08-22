@@ -3,9 +3,7 @@ import { configureStore } from '@/redux/store';
 import translations from '@/locales/translations.json';
 import { CHANGE_LANGUAGE } from '@/redux/Types/types';
 
-const changeLanguage = (
-	language: 'en' | 'de' | 'fr' | 'ar' | 'es' | 'ru' | 'tr' | 'zh'
-) => ({
+const changeLanguage = (language: 'en' | 'de' | 'fr' | 'ar' | 'es' | 'ru' | 'tr' | 'zh') => ({
 	type: CHANGE_LANGUAGE,
 	payload: language,
 });
@@ -13,13 +11,9 @@ const changeLanguage = (
 export const useLanguage = () => {
 	// console.log(configureStore.getState().settings.language, "lang");
 
-	const [language, setLanguage] = useState(
-		configureStore.getState().settings.language
-	);
+	const [language, setLanguage] = useState(configureStore.getState().settings.language);
 
-	const setLanguageMode = (
-		language: 'en' | 'de' | 'fr' | 'ar' | 'es' | 'ru' | 'tr' | 'zh'
-	) => {
+	const setLanguageMode = (language: 'en' | 'de' | 'fr' | 'ar' | 'es' | 'ru' | 'tr' | 'zh') => {
 		configureStore.dispatch(changeLanguage(language));
 	};
 

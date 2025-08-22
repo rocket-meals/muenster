@@ -1,19 +1,6 @@
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import LottieView from 'lottie-react-native';
-import {
-	View,
-	Text,
-	Dimensions,
-	TouchableOpacity,
-	ScrollView,
-	Linking,
-} from 'react-native';
+import { View, Text, Dimensions, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { styles } from './styles';
@@ -57,12 +44,8 @@ const AccountBalanceScreen = () => {
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
 	const { profile } = useSelector((state: RootState) => state.authReducer);
-	const { appSettings, language, primaryColor } = useSelector(
-		(state: RootState) => state.settings
-	);
-	const balance_area_color = appSettings?.balance_area_color
-		? appSettings?.balance_area_color
-		: primaryColor;
+	const { appSettings, language, primaryColor } = useSelector((state: RootState) => state.settings);
+	const balance_area_color = appSettings?.balance_area_color ? appSettings?.balance_area_color : primaryColor;
 	const [isNfcSupported, setIsNfcSupported] = useState(false);
 	const [isNfcEnabled, setIsNfcEnabled] = useState(false);
 	const [isActive, setIsActive] = useState(false);
@@ -77,9 +60,7 @@ const AccountBalanceScreen = () => {
 			if (profile?.credit_balance) {
 				if (Number(profile?.credit_balance) >= BalanceStateLowerBound.CONFIDENT) {
 					setAmimationJson(replaceLottieColors(moneyConfident, balance_area_color));
-				} else if (
-					Number(profile?.credit_balance) >= BalanceStateLowerBound.FITNESS
-				) {
+				} else if (Number(profile?.credit_balance) >= BalanceStateLowerBound.FITNESS) {
 					setAmimationJson(replaceLottieColors(moneyFitness, balance_area_color));
 				} else if (Number(profile?.credit_balance) >= BalanceStateLowerBound.SAD) {
 					setAmimationJson(replaceLottieColors(moneySad, balance_area_color));
@@ -101,20 +82,16 @@ const AccountBalanceScreen = () => {
 		}
 
 		const nextBalanceAsString = answer.currentBalance;
-		const nextBalanceDefined =
-			nextBalanceAsString !== null && nextBalanceAsString !== undefined;
+		const nextBalanceDefined = nextBalanceAsString !== null && nextBalanceAsString !== undefined;
 
 		const lastTransactionAsString = answer.lastTransaction;
-		const lastTransactionDefined =
-			lastTransactionAsString !== null && lastTransactionAsString !== undefined;
+		const lastTransactionDefined = lastTransactionAsString !== null && lastTransactionAsString !== undefined;
 
 		dispatch({
 			type: UPDATE_PROFILE,
 			payload: {
 				credit_balance: nextBalanceDefined ? parseFloat(nextBalanceAsString) : null,
-				credit_balance_last_transaction: lastTransactionDefined
-					? parseFloat(lastTransactionAsString)
-					: null,
+				credit_balance_last_transaction: lastTransactionDefined ? parseFloat(lastTransactionAsString) : null,
 				credit_balance_date_updated: answer?.readTime?.toISOString(),
 			},
 		});
@@ -129,12 +106,7 @@ const AccountBalanceScreen = () => {
 	};
 
 	const onReadNfcPress = async () => {
-		await myCardReader.readCard(
-			callBack,
-			showInstruction,
-			hideInstruction,
-			translate(TranslationKeys.nfcInstructionRead)
-		);
+		await myCardReader.readCard(callBack, showInstruction, hideInstruction, translate(TranslationKeys.nfcInstructionRead));
 	};
 
 	useEffect(() => {
@@ -195,41 +167,19 @@ const AccountBalanceScreen = () => {
 
 	const renderLottie = useMemo(() => {
 		if (animationJson) {
-			return (
-				<LottieView
-					ref={animationRef}
-					source={animationJson ? animationJson : {}}
-					resizeMode="contain"
-					style={{ width: '100%', height: '100%' }}
-					autoPlay={autoPlay}
-					loop={false}
-				/>
-			);
+			return <LottieView ref={animationRef} source={animationJson ? animationJson : {}} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay={autoPlay} loop={false} />;
 		}
 	}, [autoPlay, animationJson]);
 
 	return (
-		<ScrollView
-			style={{ ...styles.container, backgroundColor: theme.screen.background }}
-			contentContainerStyle={{ alignItems: 'center' }}
-		>
+		<ScrollView style={{ ...styles.container, backgroundColor: theme.screen.background }} contentContainerStyle={{ alignItems: 'center' }}>
 			<View style={styles.imageContainer}>{renderLottie}</View>
 
 			{/* Account Balance Info */}
 
-			<Text style={{ ...styles.balanceTitle, color: theme.header.text }}>
-				{translate(TranslationKeys.accountbalance)}
-			</Text>
-			<Text style={{ ...styles.balance, color: theme.header.text }}>
-				{profile?.credit_balance
-					? showFormatedPrice(formatPrice(profile?.credit_balance))
-					: '? €'}
-			</Text>
-			{(isWeb || !isNfcSupported) && (
-				<Text style={{ ...styles.subText, color: theme.header.text }}>
-					{translate(TranslationKeys.nfcNotSupported)}
-				</Text>
-			)}
+			<Text style={{ ...styles.balanceTitle, color: theme.header.text }}>{translate(TranslationKeys.accountbalance)}</Text>
+			<Text style={{ ...styles.balance, color: theme.header.text }}>{profile?.credit_balance ? showFormatedPrice(formatPrice(profile?.credit_balance)) : '? €'}</Text>
+			{(isWeb || !isNfcSupported) && <Text style={{ ...styles.subText, color: theme.header.text }}>{translate(TranslationKeys.nfcNotSupported)}</Text>}
 			{!isWeb && isNfcEnabled && isNfcSupported && (
 				<TouchableOpacity
 					style={{ ...styles.nfcButton, borderColor: theme.screen.iconBg }}
@@ -242,14 +192,8 @@ const AccountBalanceScreen = () => {
 						}
 					}}
 				>
-					<MaterialCommunityIcons
-						name="credit-card-wireless-outline"
-						size={24}
-						color={theme.screen.icon}
-					/>
-					<Text style={{ ...styles.nfcLabel, color: theme.screen.text }}>
-						{translate(TranslationKeys.nfcReadCard)}
-					</Text>
+					<MaterialCommunityIcons name="credit-card-wireless-outline" size={24} color={theme.screen.icon} />
+					<Text style={{ ...styles.nfcLabel, color: theme.screen.text }}>{translate(TranslationKeys.nfcReadCard)}</Text>
 				</TouchableOpacity>
 			)}
 			{isNfcSupported && !isNfcEnabled && (
@@ -258,89 +202,35 @@ const AccountBalanceScreen = () => {
 					onPress={() => Linking.openSettings()} // Open NFC settings
 				>
 					<MaterialCommunityIcons name="nfc" size={24} color={theme.screen.icon} />
-					<Text style={{ ...styles.nfcLabel, color: theme.screen.text }}>
-						{translate(TranslationKeys.pleaseEnableNFC)}
-					</Text>
+					<Text style={{ ...styles.nfcLabel, color: theme.screen.text }}>{translate(TranslationKeys.pleaseEnableNFC)}</Text>
 				</TouchableOpacity>
 			)}
 
 			{/* Additional Information */}
-			<View
-				style={[
-					styles.infoContainer,
-					{ width: windowWidth > 600 ? '90%' : '100%' },
-				]}
-			>
+			<View style={[styles.infoContainer, { width: windowWidth > 600 ? '90%' : '100%' }]}>
 				<View style={styles.infoRow}>
 					<View style={styles.iconLabelContainer}>
-						<MaterialCommunityIcons
-							name="credit-card"
-							size={24}
-							color={theme.screen.icon}
-							style={styles.icon}
-						/>
-						<Text style={{ ...styles.label, color: theme.header.text }}>
-							{translate(TranslationKeys.accountbalance)}
-						</Text>
+						<MaterialCommunityIcons name="credit-card" size={24} color={theme.screen.icon} style={styles.icon} />
+						<Text style={{ ...styles.label, color: theme.header.text }}>{translate(TranslationKeys.accountbalance)}</Text>
 					</View>
 
-					<Text style={{ ...styles.value, color: theme.header.text }}>
-						{profile?.credit_balance
-							? showFormatedPrice(formatPrice(profile?.credit_balance))
-							: '? €'}
-					</Text>
+					<Text style={{ ...styles.value, color: theme.header.text }}>{profile?.credit_balance ? showFormatedPrice(formatPrice(profile?.credit_balance)) : '? €'}</Text>
 				</View>
 				<View style={styles.infoRow}>
 					<View style={styles.iconLabelContainer}>
-						<MaterialCommunityIcons
-							name="transfer"
-							size={24}
-							color={theme.screen.icon}
-							style={styles.icon}
-						/>
-						<Text style={{ ...styles.label, color: theme.header.text }}>
-							{translate(TranslationKeys.accountbalanceLastTransaction)}
-						</Text>
+						<MaterialCommunityIcons name="transfer" size={24} color={theme.screen.icon} style={styles.icon} />
+						<Text style={{ ...styles.label, color: theme.header.text }}>{translate(TranslationKeys.accountbalanceLastTransaction)}</Text>
 					</View>
-					<Text style={{ ...styles.value, color: theme.header.text }}>
-						{profile?.credit_balance_last_transaction
-							? showFormatedPrice(
-									formatPrice(profile?.credit_balance_last_transaction)
-								)
-							: '? €'}
-					</Text>
+					<Text style={{ ...styles.value, color: theme.header.text }}>{profile?.credit_balance_last_transaction ? showFormatedPrice(formatPrice(profile?.credit_balance_last_transaction)) : '? €'}</Text>
 				</View>
 				<View style={styles.infoRow}>
 					<View style={styles.iconLabelContainer}>
-						<FontAwesome5
-							name="calendar-alt"
-							size={24}
-							color={theme.screen.icon}
-							style={styles.icon}
-						/>
-						<Text style={{ ...styles.label, color: theme.header.text }}>
-							{translate(TranslationKeys.accountbalanceDateUpdated)}
-						</Text>
+						<FontAwesome5 name="calendar-alt" size={24} color={theme.screen.icon} style={styles.icon} />
+						<Text style={{ ...styles.label, color: theme.header.text }}>{translate(TranslationKeys.accountbalanceDateUpdated)}</Text>
 					</View>
-					<Text style={{ ...styles.value, color: theme.header.text }}>
-						{profile?.credit_balance_date_updated
-							? format(profile?.credit_balance_date_updated, 'dd.MM.yyyy HH:mm')
-							: ''}
-					</Text>
+					<Text style={{ ...styles.value, color: theme.header.text }}>{profile?.credit_balance_date_updated ? format(profile?.credit_balance_date_updated, 'dd.MM.yyyy HH:mm') : ''}</Text>
 				</View>
-				<View style={styles.additionalInfoContainer}>
-					{appSettings && appSettings?.balance_translations && (
-						<CustomMarkdown
-							content={
-								getTextFromTranslation(appSettings?.balance_translations, language) ||
-								''
-							}
-							backgroundColor={balance_area_color}
-							imageWidth={'100%'}
-							imageHeight={400}
-						/>
-					)}
-				</View>
+				<View style={styles.additionalInfoContainer}>{appSettings && appSettings?.balance_translations && <CustomMarkdown content={getTextFromTranslation(appSettings?.balance_translations, language) || ''} backgroundColor={balance_area_color} imageWidth={'100%'} imageHeight={400} />}</View>
 			</View>
 			{isActive && (
 				<BaseBottomSheet
@@ -388,13 +278,7 @@ const AccountBalanceScreen = () => {
 									alignItems: 'center',
 								}}
 							>
-								<LottieView
-									source={require('@/assets/gifs/nfc.json')}
-									resizeMode="contain"
-									style={{ width: '100%', height: '100%' }}
-									autoPlay
-									loop
-								/>
+								<LottieView source={require('@/assets/gifs/nfc.json')} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay loop />
 							</View>
 						</View>
 					</BottomSheetView>

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	Dimensions,
-	ScrollView,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';
 import { styles } from './styles';
@@ -18,12 +12,7 @@ export interface BaseModalProps {
 	children?: React.ReactNode;
 }
 
-const BaseModal: React.FC<BaseModalProps> = ({
-	isVisible,
-	title,
-	onClose,
-	children,
-}) => {
+const BaseModal: React.FC<BaseModalProps> = ({ isVisible, title, onClose, children }) => {
 	const { theme } = useTheme();
 
 	const getModalWidth = (windowWidth: number) => {
@@ -32,9 +21,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
 		return 600;
 	};
 
-	const [modalWidth, setModalWidth] = useState(() =>
-		getModalWidth(Dimensions.get('window').width)
-	);
+	const [modalWidth, setModalWidth] = useState(() => getModalWidth(Dimensions.get('window').width));
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -47,22 +34,10 @@ const BaseModal: React.FC<BaseModalProps> = ({
 	}, []);
 
 	return (
-		<Modal
-			isVisible={isVisible}
-			style={styles.modalContainer}
-			onBackdropPress={onClose}
-		>
-			<View
-				style={[
-					styles.modalView,
-					{ backgroundColor: theme.modal.modalBg, width: modalWidth },
-				]}
-			>
+		<Modal isVisible={isVisible} style={styles.modalContainer} onBackdropPress={onClose}>
+			<View style={[styles.modalView, { backgroundColor: theme.modal.modalBg, width: modalWidth }]}>
 				<View style={styles.modalHeader}>
-					<TouchableOpacity
-						style={[styles.closeButton, { backgroundColor: theme.modal.closeBg }]}
-						onPress={onClose}
-					>
+					<TouchableOpacity style={[styles.closeButton, { backgroundColor: theme.modal.closeBg }]} onPress={onClose}>
 						<AntDesign name="close" size={28} color={theme.modal.closeIcon} />
 					</TouchableOpacity>
 				</View>
@@ -77,11 +52,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
 						{title}
 					</Text>
 				)}
-				<ScrollView
-					style={styles.scrollView}
-					nestedScrollEnabled
-					contentContainerStyle={{ flexGrow: 1 }}
-				>
+				<ScrollView style={styles.scrollView} nestedScrollEnabled contentContainerStyle={{ flexGrow: 1 }}>
 					{children}
 				</ScrollView>
 			</View>

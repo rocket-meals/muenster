@@ -29,10 +29,7 @@ export class FoodFeedbackLabelEntryHelper extends CollectionHelper<DatabaseTypes
 	}
 
 	// Fetch food feedback label entries by profile
-	async fetchFoodFeedbackLabelEntriesByProfile(
-		profileId: string,
-		queryOverride: any = {}
-	) {
+	async fetchFoodFeedbackLabelEntriesByProfile(profileId: string, queryOverride: any = {}) {
 		const defaultQuery = {
 			filter: {
 				_and: [{ profile: { _eq: profileId } }, { status: { _eq: 'published' } }],
@@ -48,48 +45,30 @@ export class FoodFeedbackLabelEntryHelper extends CollectionHelper<DatabaseTypes
 	}
 
 	// Update or create food feedback label entry
-	async updateFoodFeedbackLabelEntry(
-		foodId: string,
-		profile_id: string,
-		foodFeedbackLabelEntriesData:
-			| DatabaseTypes.FoodsFeedbacksLabelsEntries[]
-			| null
-			| undefined,
-		foodFeedbackLabelId: string,
-		like: boolean | null,
-		canteen_id: string | null | undefined,
-		foodoffer_id: string | null | undefined
-	) {
+	async updateFoodFeedbackLabelEntry(foodId: string, profile_id: string, foodFeedbackLabelEntriesData: DatabaseTypes.FoodsFeedbacksLabelsEntries[] | null | undefined, foodFeedbackLabelId: string, like: boolean | null, canteen_id: string | null | undefined, foodoffer_id: string | null | undefined) {
 		// Default to empty array if no entries provided
 		let foodFeedbackLabelEntries = foodFeedbackLabelEntriesData ?? [];
 
 		// Check for existing entry
-		let existingEntry = foodFeedbackLabelEntries?.find(
-			x => x.label === foodFeedbackLabelId && x.food === foodId
-		);
+		let existingEntry = foodFeedbackLabelEntries?.find(x => x.label === foodFeedbackLabelId && x.food === foodId);
 		let isNewEntry = !existingEntry;
 
 		// Prepare new entry data
-		const newFoodFeedbackLabelEntry: Partial<DatabaseTypes.FoodsFeedbacksLabelsEntries> =
-			{
-				food: foodId,
-				label: foodFeedbackLabelId,
-				like,
-				profile: profile_id,
-			};
+		const newFoodFeedbackLabelEntry: Partial<DatabaseTypes.FoodsFeedbacksLabelsEntries> = {
+			food: foodId,
+			label: foodFeedbackLabelId,
+			like,
+			profile: profile_id,
+		};
 
 		// Create a new entry if not found
 		if (isNewEntry) {
-			existingEntry = (await this.createItem(
-				newFoodFeedbackLabelEntry
-			)) as DatabaseTypes.FoodsFeedbacksLabelsEntries;
+			existingEntry = (await this.createItem(newFoodFeedbackLabelEntry)) as DatabaseTypes.FoodsFeedbacksLabelsEntries;
 		}
 
 		// Handle missing entry
 		if (!existingEntry) {
-			console.error(
-				'updateFoodFeedbackRemote: existingFoodFeedbackLabelEntry is undefined'
-			);
+			console.error('updateFoodFeedbackRemote: existingFoodFeedbackLabelEntry is undefined');
 			return;
 		}
 
@@ -99,8 +78,7 @@ export class FoodFeedbackLabelEntryHelper extends CollectionHelper<DatabaseTypes
 		if (foodoffer_id) existingEntry.foodoffer = foodoffer_id;
 
 		// If 'like' is null or undefined, delete the entry
-		const shouldDelete =
-			existingEntry.like === null || existingEntry.like === undefined;
+		const shouldDelete = existingEntry.like === null || existingEntry.like === undefined;
 		if (shouldDelete && existingEntry.id) {
 			await this.deleteItem(existingEntry.id);
 			return null;

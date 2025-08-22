@@ -10,13 +10,7 @@ export class ProfileHelper extends CollectionHelper<DatabaseTypes.Profiles> {
 	async fetchProfile(queryOverride: any = {}) {
 		// Default query structure
 		const defaultQuery = {
-			fields: [
-				'*',
-				'markings.*',
-				'devices.*',
-				'buildings_favorites.*',
-				'buildings_last_visited.*',
-			],
+			fields: ['*', 'markings.*', 'devices.*', 'buildings_favorites.*', 'buildings_last_visited.*'],
 			deep: {},
 		};
 
@@ -30,13 +24,7 @@ export class ProfileHelper extends CollectionHelper<DatabaseTypes.Profiles> {
 	async fetchProfileById(id: string, queryOverride: any = {}) {
 		// Default query structure
 		const defaultQuery = {
-			fields: [
-				'*',
-				'markings.*',
-				'devices.*',
-				'buildings_favorites.*',
-				'buildings_last_visited.*',
-			],
+			fields: ['*', 'markings.*', 'devices.*', 'buildings_favorites.*', 'buildings_last_visited.*'],
 			deep: {},
 		};
 
@@ -62,8 +50,6 @@ export class ProfileHelper extends CollectionHelper<DatabaseTypes.Profiles> {
 }
 
 export async function deleteProfileRemote(id: string | number) {
-	const profileCollectionHelper = new CollectionHelper<DatabaseTypes.Profiles>(
-		'profiles'
-	);
+	const profileCollectionHelper = new CollectionHelper<DatabaseTypes.Profiles>('profiles');
 	await profileCollectionHelper.deleteItem(id);
 }

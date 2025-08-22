@@ -15,21 +15,8 @@ const BuildingDescription: React.FC<any> = ({ campusDetails }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={{ ...styles.heading, color: theme.screen.text }}>
-				{translate(TranslationKeys.description)}
-			</Text>
-			{campusDetails && campusDetails?.translations?.length > 0 ? (
-				<Text style={{ ...styles.body, color: theme.screen.text }}>
-					{getBuildingTranslationByLanguageCode(
-						campusDetails?.translations,
-						language
-					) || ''}
-				</Text>
-			) : (
-				<Text style={{ ...styles.body, color: theme.screen.text }}>
-					{'Missing translation(content)'}
-				</Text>
-			)}
+			<Text style={{ ...styles.heading, color: theme.screen.text }}>{translate(TranslationKeys.description)}</Text>
+			{campusDetails && campusDetails?.translations?.length > 0 ? <Text style={{ ...styles.body, color: theme.screen.text }}>{getBuildingTranslationByLanguageCode(campusDetails?.translations, language) || ''}</Text> : <Text style={{ ...styles.body, color: theme.screen.text }}>{'Missing translation(content)'}</Text>}
 		</View>
 	);
 };

@@ -1,17 +1,7 @@
-import {
-  ItemsService,
-  ItemsServiceCreator,
-  MutationOptions,
-  QueryOptions,
-} from './ItemsServiceCreator';
+import { ItemsService, ItemsServiceCreator, MutationOptions, QueryOptions } from './ItemsServiceCreator';
 import type { Filter } from '@directus/types/dist/filter';
 import { ApiContext } from './ApiContext';
-import {
-  Accountability,
-  EventContext,
-  PrimaryKey,
-  Query,
-} from '@directus/types';
+import { Accountability, EventContext, PrimaryKey, Query } from '@directus/types';
 import { TranslationHelper } from './TranslationHelper';
 import { Knex } from 'knex';
 import { MyDatabaseHelperInterface } from './MyDatabaseHelperInterface';
@@ -40,20 +30,12 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
   }
 
   protected async getItemsService(): Promise<ItemsService<T>> {
-    const itemsServiceCreator = new ItemsServiceCreator(
-      this.apiContext,
-      this.eventContext
-    );
-    let itemsService = await itemsServiceCreator.getItemsService<T>(
-      this.tablename
-    );
+    const itemsServiceCreator = new ItemsServiceCreator(this.apiContext, this.eventContext);
+    let itemsService = await itemsServiceCreator.getItemsService<T>(this.tablename);
     return itemsService;
   }
 
-  async upsertOne(
-    upsert: Partial<T & { id: PrimaryKey }>,
-    optsCustom?: OptsCustomType
-  ): Promise<PrimaryKey> {
+  async upsertOne(upsert: Partial<T & { id: PrimaryKey }>, optsCustom?: OptsCustomType): Promise<PrimaryKey> {
     // https://github.com/directus/directus/blob/main/api/src/services/items.ts#L935
     // Can only use upsertOne with a primary key, otherwise it will always create a new item...
 
@@ -62,55 +44,31 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
     return await itemsService.upsertOne(upsert, opts);
   }
 
-  async updateOne(
-    primary_key: PrimaryKey,
-    update: Partial<T>,
-    optsCustom?: OptsCustomType
-  ): Promise<PrimaryKey> {
+  async updateOne(primary_key: PrimaryKey, update: Partial<T>, optsCustom?: OptsCustomType): Promise<PrimaryKey> {
     let itemsService = await this.getItemsService();
     // DO not update status. It should be only set on creation
     let opts = this.getOptsCustom(optsCustom);
     return await itemsService.updateOne(primary_key, update, opts);
   }
 
-  async updateOneItemWithoutHookTrigger(
-    item: TypeWithId<Partial<T>>,
-    update: Partial<T>,
-    optsCustom?: OptsCustomType
-  ): Promise<void> {
+  async updateOneItemWithoutHookTrigger(item: TypeWithId<Partial<T>>, update: Partial<T>, optsCustom?: OptsCustomType): Promise<void> {
     let primary_key = item.id;
-    return await this.updateOneWithoutHookTrigger(
-      primary_key,
-      update,
-      optsCustom
-    );
+    return await this.updateOneWithoutHookTrigger(primary_key, update, optsCustom);
   }
 
-  async updateOneWithoutHookTrigger(
-    primary_key: PrimaryKey,
-    update: Partial<T>,
-    optsCustom?: OptsCustomType
-  ): Promise<void> {
+  async updateOneWithoutHookTrigger(primary_key: PrimaryKey, update: Partial<T>, optsCustom?: OptsCustomType): Promise<void> {
     //console.log("Updating item without hook trigger - pre");
     let database = this.apiContext.database;
     //console.log("Updating item without hook trigger - post");
     await database(this.tablename).update(update).where('id', primary_key);
   }
 
-  async updateManyByItems(
-    items: TypeWithId<T>[],
-    update: Partial<T>,
-    optsCustom?: OptsCustomType
-  ): Promise<PrimaryKey[]> {
+  async updateManyByItems(items: TypeWithId<T>[], update: Partial<T>, optsCustom?: OptsCustomType): Promise<PrimaryKey[]> {
     let primary_keys = items.map(item => item.id);
     return await this.updateManyByPrimaryKeys(primary_keys, update, optsCustom);
   }
 
-  async updateManyByPrimaryKeys(
-    primary_keys: PrimaryKey[],
-    update: Partial<T>,
-    optsCustom?: OptsCustomType
-  ): Promise<PrimaryKey[]> {
+  async updateManyByPrimaryKeys(primary_keys: PrimaryKey[], update: Partial<T>, optsCustom?: OptsCustomType): Promise<PrimaryKey[]> {
     let itemsService = await this.getItemsService();
     // DO not update status. It should be only set on creation
     let opts = this.getOptsCustom(optsCustom);
@@ -150,9 +108,7 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
     // Define the response structure
 
     // Execute the query
-    let answer = (await itemsService.readByQuery(
-      aggregateQuery
-    )) as AggregateAnswer[];
+    let answer = (await itemsService.readByQuery(aggregateQuery)) as AggregateAnswer[];
 
     //console.log("Answer: " + JSON.stringify(answer, null, 2));
 
@@ -174,9 +130,7 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
       limit: -1,
     };
     let totalQuery: Query = { ...query, ...aggregateFilter };
-    let answer = (await itemsService.readByQuery(
-      totalQuery
-    )) as AggregateAnswer[];
+    let answer = (await itemsService.readByQuery(totalQuery)) as AggregateAnswer[];
     // data = {"data":[{"count":"1869"}]}
     if (!!answer && !!answer[0]) {
       return parseInt(answer[0].count);
@@ -185,11 +139,7 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
     }
   }
 
-  async readMany(
-    keys: PrimaryKey[],
-    query?: Query,
-    opts?: QueryOptions
-  ): Promise<T[]> {
+  async readMany(keys: PrimaryKey[], query?: Query, opts?: QueryOptions): Promise<T[]> {
     let itemsService = await this.getItemsService();
     return await itemsService.readMany(keys, query, opts);
   }
@@ -256,8 +206,7 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
 
     let copiedCreateItem = JSON.parse(JSON.stringify(create));
     if (!foundItem) {
-      copiedCreateItem =
-        ItemsServiceHelper.setStatusPublished(copiedCreateItem);
+      copiedCreateItem = ItemsServiceHelper.setStatusPublished(copiedCreateItem);
       await itemsService.createOne(copiedCreateItem);
     }
     queriedItems = await this.findItems(search, customOptions);
@@ -271,10 +220,7 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
     return await itemsService.createOne(create);
   }
 
-  async createManyItems(
-    create: Partial<T>[],
-    optsCustom?: OptsCustomType
-  ): Promise<PrimaryKey[]> {
+  async createManyItems(create: Partial<T>[], optsCustom?: OptsCustomType): Promise<PrimaryKey[]> {
     let itemsService = await this.getItemsService();
     create = create.map(ItemsServiceHelper.setStatusPublished);
     let opts = this.getOptsCustom(optsCustom);
@@ -286,11 +232,7 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
     return items.length > 0;
   }
 
-  async readOneWithTranslations(
-    primary_key: PrimaryKey,
-    query?: Query,
-    opts?: QueryOptions
-  ): Promise<T> {
+  async readOneWithTranslations(primary_key: PrimaryKey, query?: Query, opts?: QueryOptions): Promise<T> {
     let queryWithTranslations = {
       ...query,
       ...TranslationHelper.QUERY_FIELDS_FOR_ALL_FIELDS_AND_FOR_TRANSLATION_FETCHING,
@@ -298,11 +240,7 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
     return await this.readOne(primary_key, queryWithTranslations, opts);
   }
 
-  async readOne(
-    primary_key: PrimaryKey,
-    query?: Query,
-    opts?: QueryOptions
-  ): Promise<T> {
+  async readOne(primary_key: PrimaryKey, query?: Query, opts?: QueryOptions): Promise<T> {
     let itemsService = await this.getItemsService();
     return await itemsService.readOne(primary_key, query, opts);
   }
@@ -330,23 +268,16 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
   }
 
   static setStatusPublished(json: any) {
-    json[ItemsServiceHelper.FIELD_STATUS] =
-      ItemsServiceHelper.FIELD_STATUS_PUBLISHED;
+    json[ItemsServiceHelper.FIELD_STATUS] = ItemsServiceHelper.FIELD_STATUS_PUBLISHED;
     return json;
   }
 
   static isStatusUndefined(json: any) {
-    return (
-      json[ItemsServiceHelper.FIELD_STATUS] === undefined ||
-      json[ItemsServiceHelper.FIELD_STATUS] === null
-    );
+    return json[ItemsServiceHelper.FIELD_STATUS] === undefined || json[ItemsServiceHelper.FIELD_STATUS] === null;
   }
 
   static isStatusPublished(json: any) {
-    return (
-      json[ItemsServiceHelper.FIELD_STATUS] ===
-      ItemsServiceHelper.FIELD_STATUS_PUBLISHED
-    );
+    return json[ItemsServiceHelper.FIELD_STATUS] === ItemsServiceHelper.FIELD_STATUS_PUBLISHED;
   }
 
   async readByQuery(query: Query, opts?: QueryOptions): Promise<T[]> {
@@ -357,18 +288,12 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
   accountability: Accountability | null | undefined;
   knex: Knex;
 
-  async createMany(
-    data: Partial<T>[],
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]> {
+  async createMany(data: Partial<T>[], opts?: MutationOptions): Promise<PrimaryKey[]> {
     let itemsService = await this.getItemsService();
     return await itemsService.createMany(data, opts);
   }
 
-  async deleteByQuery(
-    query: Query,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]> {
+  async deleteByQuery(query: Query, opts?: MutationOptions): Promise<PrimaryKey[]> {
     let itemsService = await this.getItemsService();
     return await itemsService.deleteByQuery(query, opts);
   }
@@ -389,44 +314,27 @@ export class ItemsServiceHelper<T> implements ItemsService<T> {
     );
   }
 
-  async updateBatch(
-    data: Partial<T>[],
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]> {
+  async updateBatch(data: Partial<T>[], opts?: MutationOptions): Promise<PrimaryKey[]> {
     let itemsService = await this.getItemsService();
     return await itemsService.updateBatch(data, opts);
   }
 
-  async updateByQuery(
-    query: Query,
-    data: Partial<T>,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]> {
+  async updateByQuery(query: Query, data: Partial<T>, opts?: MutationOptions): Promise<PrimaryKey[]> {
     let itemsService = await this.getItemsService();
     return await itemsService.updateByQuery(query, data, opts);
   }
 
-  async updateMany(
-    keys: PrimaryKey[],
-    data: Partial<T>,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]> {
+  async updateMany(keys: PrimaryKey[], data: Partial<T>, opts?: MutationOptions): Promise<PrimaryKey[]> {
     let itemsService = await this.getItemsService();
     return await itemsService.updateMany(keys, data, opts);
   }
 
-  async upsertMany(
-    payloads: Partial<T>[],
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]> {
+  async upsertMany(payloads: Partial<T>[], opts?: MutationOptions): Promise<PrimaryKey[]> {
     let itemsService = await this.getItemsService();
     return await itemsService.upsertMany(payloads, opts);
   }
 
-  async upsertSingleton(
-    data: Partial<T>,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey> {
+  async upsertSingleton(data: Partial<T>, opts?: MutationOptions): Promise<PrimaryKey> {
     let itemsService = await this.getItemsService();
     return await itemsService.upsertSingleton(data, opts);
   }

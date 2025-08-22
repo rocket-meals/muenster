@@ -1,10 +1,4 @@
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	TextInput,
-	Dimensions,
-} from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { ManagementFoodCategorySheetProps } from './types';
 import { BottomSheetScrollView, BottomSheetView } from '@gorhom/bottom-sheet';
@@ -18,29 +12,18 @@ import { getTextFromTranslation } from '@/helper/resourceHelper';
 import { RootState } from '@/redux/reducer';
 import { DatabaseTypes } from 'repo-depkit-common';
 
-const ManagementFoodCategorySheet: React.FC<
-	ManagementFoodCategorySheetProps
-> = ({ closeSheet, selectedFoodCategory }) => {
+const ManagementFoodCategorySheet: React.FC<ManagementFoodCategorySheetProps> = ({ closeSheet, selectedFoodCategory }) => {
 	const { theme } = useTheme();
 	const dispatch = useDispatch();
 	const [isCustom, setIsCustom] = useState(false);
-	const [list, setList] = useState<
-		DatabaseTypes.FoodsCategories[] | DatabaseTypes.FoodoffersCategories[]
-	>([]);
+	const [list, setList] = useState<DatabaseTypes.FoodsCategories[] | DatabaseTypes.FoodoffersCategories[]>([]);
 	const { dayPlan } = useSelector((state: RootState) => state.management);
 	const [value, setValue] = useState('');
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-	const { primaryColor, language } = useSelector(
-		(state: RootState) => state.settings
-	);
-	const { foodCategories, foodOfferCategories } = useSelector(
-		(state: RootState) => state.food
-	);
+	const { primaryColor, language } = useSelector((state: RootState) => state.settings);
+	const { foodCategories, foodOfferCategories } = useSelector((state: RootState) => state.food);
 
-	const currentSelectedId =
-		selectedFoodCategory.key === 'Speiseangebot'
-			? dayPlan?.mealOfferCategory?.id
-			: dayPlan?.foodCategory?.id;
+	const currentSelectedId = selectedFoodCategory.key === 'Speiseangebot' ? dayPlan?.mealOfferCategory?.id : dayPlan?.foodCategory?.id;
 
 	useEffect(() => {
 		if (selectedFoodCategory.key === 'Speiseangebot') {
@@ -51,15 +34,9 @@ const ManagementFoodCategorySheet: React.FC<
 	}, [selectedFoodCategory]);
 
 	const handleSelect = (item: any) => {
-		const alias =
-			item?.translations?.length > 0
-				? getTextFromTranslation(item?.translations, language)
-				: item?.alias || '';
+		const alias = item?.translations?.length > 0 ? getTextFromTranslation(item?.translations, language) : item?.alias || '';
 
-		const payloadKey =
-			selectedFoodCategory.key === 'Speiseangebot'
-				? 'mealOfferCategory'
-				: 'foodCategory';
+		const payloadKey = selectedFoodCategory.key === 'Speiseangebot' ? 'mealOfferCategory' : 'foodCategory';
 
 		// Toggle selection directly in Redux
 		if (item?.id === currentSelectedId) {
@@ -151,9 +128,7 @@ const ManagementFoodCategorySheet: React.FC<
 								borderColor: primaryColor,
 							}}
 						>
-							<Text style={[styles.buttonText, { color: theme.screen.text }]}>
-								cancel
-							</Text>
+							<Text style={[styles.buttonText, { color: theme.screen.text }]}>cancel</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 							onPress={handleSaveCustom}
@@ -162,9 +137,7 @@ const ManagementFoodCategorySheet: React.FC<
 								backgroundColor: primaryColor,
 							}}
 						>
-							<Text style={[styles.buttonText, { color: theme.activeText }]}>
-								save
-							</Text>
+							<Text style={[styles.buttonText, { color: theme.activeText }]}>save</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -176,8 +149,7 @@ const ManagementFoodCategorySheet: React.FC<
 								style={{
 									...styles.row,
 									paddingHorizontal: isWeb ? 20 : 10,
-									backgroundColor:
-										currentSelectedId === item?.id ? primaryColor : theme.screen.iconBg,
+									backgroundColor: currentSelectedId === item?.id ? primaryColor : theme.screen.iconBg,
 								}}
 								key={item?.id}
 								onPress={() => handleSelect(item)}
@@ -186,26 +158,14 @@ const ManagementFoodCategorySheet: React.FC<
 								<Text
 									style={{
 										...styles.text,
-										color:
-											currentSelectedId === item?.id
-												? theme.activeText
-												: theme.header.text,
+										color: currentSelectedId === item?.id ? theme.activeText : theme.header.text,
 									}}
 								>
-									{item?.translations?.length > 0
-										? getTextFromTranslation(item?.translations, language)
-										: item?.alias}
+									{item?.translations?.length > 0 ? getTextFromTranslation(item?.translations, language) : item?.alias}
 								</Text>
 
 								{/* Radio Button */}
-								<MaterialCommunityIcons
-									name={
-										currentSelectedId === item?.id ? 'checkbox-marked' : 'checkbox-blank'
-									}
-									size={24}
-									color={currentSelectedId === item?.id ? '#ffffff' : '#ffffff'}
-									style={styles.radioButton}
-								/>
+								<MaterialCommunityIcons name={currentSelectedId === item?.id ? 'checkbox-marked' : 'checkbox-blank'} size={24} color={currentSelectedId === item?.id ? '#ffffff' : '#ffffff'} style={styles.radioButton} />
 							</TouchableOpacity>
 						))}
 					<TouchableOpacity
@@ -227,11 +187,7 @@ const ManagementFoodCategorySheet: React.FC<
 						</Text>
 
 						{/* Radio Button */}
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</TouchableOpacity>
 				</BottomSheetScrollView>
 			)}

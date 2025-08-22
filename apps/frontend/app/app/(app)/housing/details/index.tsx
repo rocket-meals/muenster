@@ -1,15 +1,4 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	Image,
-	Linking,
-	Platform,
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, Image, Linking, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTheme } from '@/hooks/useTheme';
 import styles from './styles';
@@ -33,26 +22,14 @@ const details = () => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const { id } = useLocalSearchParams();
-	const {
-		appSettings,
-		serverInfo,
-		primaryColor,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { appSettings, serverInfo, primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const { apartmentsDict } = useSelector((state: RootState) => state.apartment);
 	const defaultImage = getImageUrl(serverInfo?.info?.project?.project_logo);
-	const housing_area_color = appSettings?.housing_area_color
-		? appSettings?.housing_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		housing_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const housing_area_color = appSettings?.housing_area_color ? appSettings?.housing_area_color : primaryColor;
+	const contrastColor = myContrastColor(housing_area_color, theme, mode === 'dark');
 	const [activeTab, setActiveTab] = useState('information');
 	const [loading, setLoading] = useState(false);
-	const [apartmentDetails, setApartmentDetails] =
-		useState<DatabaseTypes.Apartments | null>(null);
+	const [apartmentDetails, setApartmentDetails] = useState<DatabaseTypes.Apartments | null>(null);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
 	const fetchApartmentById = async () => {
@@ -160,27 +137,15 @@ const details = () => {
 						<View
 							style={{
 								...styles.imageContainer,
-								width:
-									screenWidth > 1000
-										? 400
-										: screenWidth > 900
-											? 350
-											: Dimensions.get('window').width - 20,
-								height:
-									screenWidth > 1000
-										? 400
-										: screenWidth > 900
-											? 350
-											: Dimensions.get('window').width - 20,
+								width: screenWidth > 1000 ? 400 : screenWidth > 900 ? 350 : Dimensions.get('window').width - 20,
+								height: screenWidth > 1000 ? 400 : screenWidth > 900 ? 350 : Dimensions.get('window').width - 20,
 							}}
 						>
 							<Image
 								source={
 									apartmentDetails?.image || apartmentDetails?.image_remote_url
 										? {
-												uri:
-													apartmentDetails?.image_remote_url ||
-													getImageUrl(String(apartmentDetails?.image)),
+												uri: apartmentDetails?.image_remote_url || getImageUrl(String(apartmentDetails?.image)),
 											}
 										: { uri: defaultImage }
 								}
@@ -193,9 +158,7 @@ const details = () => {
 								width: '100%',
 							}}
 						>
-							<Text style={{ ...styles.buildingHeading, color: theme.screen.text }}>
-								{apartmentDetails?.alias}
-							</Text>
+							<Text style={{ ...styles.buildingHeading, color: theme.screen.text }}>{apartmentDetails?.alias}</Text>
 							<View
 								style={{
 									width: '98%',
@@ -215,11 +178,7 @@ const details = () => {
 											}}
 											onPress={handleOpenNavigation}
 										>
-											<MaterialCommunityIcons
-												name="navigation-variant"
-												size={24}
-												color={theme.screen.icon}
-											/>
+											<MaterialCommunityIcons name="navigation-variant" size={24} color={theme.screen.icon} />
 										</TouchableOpacity>
 									)}
 								>
@@ -246,23 +205,8 @@ const details = () => {
 									<Tooltip
 										placement="top"
 										trigger={triggerProps => (
-											<TouchableOpacity
-												{...triggerProps}
-												style={[
-													styles.tab,
-													activeTab === 'information'
-														? themeStyles
-														: { backgroundColor: theme.screen.iconBg },
-												]}
-												onPress={() => setActiveTab('information')}
-											>
-												<Foundation
-													name="info"
-													size={26}
-													color={
-														activeTab === 'information' ? contrastColor : theme.screen.icon
-													}
-												/>
+											<TouchableOpacity {...triggerProps} style={[styles.tab, activeTab === 'information' ? themeStyles : { backgroundColor: theme.screen.iconBg }]} onPress={() => setActiveTab('information')}>
+												<Foundation name="info" size={26} color={activeTab === 'information' ? contrastColor : theme.screen.icon} />
 											</TouchableOpacity>
 										)}
 									>
@@ -275,23 +219,8 @@ const details = () => {
 									<Tooltip
 										placement="top"
 										trigger={triggerProps => (
-											<TouchableOpacity
-												{...triggerProps}
-												style={[
-													styles.tab,
-													activeTab === 'description'
-														? themeStyles
-														: { backgroundColor: theme.screen.iconBg },
-												]}
-												onPress={() => setActiveTab('description')}
-											>
-												<MaterialCommunityIcons
-													name="sort-variant"
-													size={26}
-													color={
-														activeTab === 'description' ? contrastColor : theme.screen.icon
-													}
-												/>
+											<TouchableOpacity {...triggerProps} style={[styles.tab, activeTab === 'description' ? themeStyles : { backgroundColor: theme.screen.iconBg }]} onPress={() => setActiveTab('description')}>
+												<MaterialCommunityIcons name="sort-variant" size={26} color={activeTab === 'description' ? contrastColor : theme.screen.icon} />
 											</TouchableOpacity>
 										)}
 									>
@@ -306,25 +235,8 @@ const details = () => {
 										<Tooltip
 											placement="top"
 											trigger={triggerProps => (
-												<TouchableOpacity
-													{...triggerProps}
-													style={[
-														styles.tab,
-														activeTab === 'washing-machine'
-															? themeStyles
-															: { backgroundColor: theme.screen.iconBg },
-													]}
-													onPress={() => setActiveTab('washing-machine')}
-												>
-													<MaterialCommunityIcons
-														name="washing-machine"
-														size={26}
-														color={
-															activeTab === 'washing-machine'
-																? contrastColor
-																: theme.screen.icon
-														}
-													/>
+												<TouchableOpacity {...triggerProps} style={[styles.tab, activeTab === 'washing-machine' ? themeStyles : { backgroundColor: theme.screen.iconBg }]} onPress={() => setActiveTab('washing-machine')}>
+													<MaterialCommunityIcons name="washing-machine" size={26} color={activeTab === 'washing-machine' ? contrastColor : theme.screen.icon} />
 												</TouchableOpacity>
 											)}
 										>

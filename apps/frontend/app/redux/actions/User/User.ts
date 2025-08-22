@@ -46,9 +46,7 @@ export function useLogoutCallback(): () => void {
 // 	return [currentUser, setUserWithCache]
 // }
 
-function isDirectusUserAnonymous(
-	user: DatabaseTypes.DirectusUsers | undefined
-) {
+function isDirectusUserAnonymous(user: DatabaseTypes.DirectusUsers | undefined) {
 	if (!user) return true;
 	return user?.id === undefined || user?.id === null;
 }
@@ -57,9 +55,7 @@ function isDirectusUserAnonymous(
  * Used in the RootAuthUser Flow Loader where we want to check the cache
  * @param user
  */
-export function getIsCachedUserAnonymous(
-	user: CachedUserInformation | undefined
-): boolean {
+export function getIsCachedUserAnonymous(user: CachedUserInformation | undefined): boolean {
 	return isDirectusUserAnonymous(user);
 }
 

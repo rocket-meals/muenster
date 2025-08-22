@@ -1,12 +1,4 @@
-import {
-	ActivityIndicator,
-	Alert,
-	Dimensions,
-	Platform,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Alert, Dimensions, Platform, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
@@ -25,12 +17,7 @@ import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 import { ImagePickerMediaTypes } from '@/components/FileUpload/FileUpload';
 
-const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
-	closeSheet,
-	selectedFoodId,
-	handleFetch,
-	fileName,
-}) => {
+const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({ closeSheet, selectedFoodId, handleFetch, fileName }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const [loading, setLoading] = useState({
@@ -42,9 +29,7 @@ const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const MAX_IMAGE_DIMENSION = 6000;
 	const { foodCollection } = useSelector((state: RootState) => state.food);
-	const [selectedImage, setSelectedImage] = useState<string | undefined>(
-		undefined
-	);
+	const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 
 	const getFolder = () => {
 		if (foodCollection) {
@@ -64,15 +49,10 @@ const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
 
 	const handleImagePick = async (useCamera: boolean) => {
 		try {
-			const permissionResponse = useCamera
-				? await ImagePicker.requestCameraPermissionsAsync()
-				: await ImagePicker.requestMediaLibraryPermissionsAsync();
+			const permissionResponse = useCamera ? await ImagePicker.requestCameraPermissionsAsync() : await ImagePicker.requestMediaLibraryPermissionsAsync();
 
 			if (!permissionResponse.granted) {
-				Alert.alert(
-					'Permission Denied',
-					'Please grant permissions to access the camera or gallery.'
-				);
+				Alert.alert('Permission Denied', 'Please grant permissions to access the camera or gallery.');
 				return;
 			}
 
@@ -115,11 +95,7 @@ const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
 								height: MAX_IMAGE_DIMENSION,
 							};
 
-				const resizedImage = await ImageManipulator.manipulateAsync(
-					uri,
-					[{ resize: newDimensions }],
-					{ compress: 1, format: ImageManipulator.SaveFormat.JPEG }
-				);
+				const resizedImage = await ImageManipulator.manipulateAsync(uri, [{ resize: newDimensions }], { compress: 1, format: ImageManipulator.SaveFormat.JPEG });
 
 				finalUri = resizedImage.uri;
 			}
@@ -214,9 +190,7 @@ const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
 	};
 
 	return (
-		<BottomSheetView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-		>
+		<BottomSheetView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -244,29 +218,12 @@ const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
 			>
 				{isDelete ? (
 					<View>
-						<TouchableOpacity
-							style={{ ...styles.row, backgroundColor: theme.background }}
-							onPress={handleDeleteImage}
-						>
+						<TouchableOpacity style={{ ...styles.row, backgroundColor: theme.background }} onPress={handleDeleteImage}>
 							<View style={styles.col}>
-								<MaterialCommunityIcons
-									name="delete"
-									size={24}
-									color={theme.screen.icon}
-								/>
-								<Text style={{ ...styles.label, color: theme.screen.text }}>
-									{translate(TranslationKeys.delete)}
-								</Text>
+								<MaterialCommunityIcons name="delete" size={24} color={theme.screen.icon} />
+								<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.delete)}</Text>
 							</View>
-							{loading?.delete ? (
-								<ActivityIndicator size="small" color={theme.screen.icon} />
-							) : (
-								<MaterialCommunityIcons
-									name="checkbox-blank-circle-outline"
-									size={24}
-									color={theme.screen.icon}
-								/>
-							)}
+							{loading?.delete ? <ActivityIndicator size="small" color={theme.screen.icon} /> : <MaterialCommunityIcons name="checkbox-blank-circle-outline" size={24} color={theme.screen.icon} />}
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={{ ...styles.row, backgroundColor: theme.background }}
@@ -276,118 +233,47 @@ const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({
 							}}
 						>
 							<View style={styles.col}>
-								<MaterialCommunityIcons
-									name="close"
-									size={24}
-									color={theme.screen.icon}
-								/>
-								<Text style={{ ...styles.label, color: theme.screen.text }}>
-									{translate(TranslationKeys.cancel)}
-								</Text>
+								<MaterialCommunityIcons name="close" size={24} color={theme.screen.icon} />
+								<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.cancel)}</Text>
 							</View>
-							<MaterialCommunityIcons
-								name="checkbox-blank-circle-outline"
-								size={24}
-								color={theme.screen.icon}
-							/>
+							<MaterialCommunityIcons name="checkbox-blank-circle-outline" size={24} color={theme.screen.icon} />
 						</TouchableOpacity>
-						<TouchableOpacity
-							style={{ ...styles.row, backgroundColor: theme.background }}
-							onPress={() => setIsDelete(false)}
-						>
+						<TouchableOpacity style={{ ...styles.row, backgroundColor: theme.background }} onPress={() => setIsDelete(false)}>
 							<View style={styles.col}>
-								<MaterialCommunityIcons
-									name="keyboard-backspace"
-									size={24}
-									color={theme.screen.icon}
-								/>
-								<Text style={{ ...styles.label, color: theme.screen.text }}>
-									{translate(TranslationKeys.navigate_back)}
-								</Text>
+								<MaterialCommunityIcons name="keyboard-backspace" size={24} color={theme.screen.icon} />
+								<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.navigate_back)}</Text>
 							</View>
 						</TouchableOpacity>
 					</View>
 				) : (
 					<>
 						{!isWeb && (
-							<TouchableOpacity
-								style={{ ...styles.row, backgroundColor: theme.background }}
-								onPress={() => handleImagePick(true)}
-							>
+							<TouchableOpacity style={{ ...styles.row, backgroundColor: theme.background }} onPress={() => handleImagePick(true)}>
 								<View style={styles.col}>
 									<Ionicons name="camera" size={24} color={theme.screen.icon} />
-									<Text style={{ ...styles.label, color: theme.screen.text }}>
-										{translate(TranslationKeys.camera)}
-									</Text>
+									<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.camera)}</Text>
 								</View>
-								{loading?.camera ? (
-									<ActivityIndicator size="small" color={theme.screen.icon} />
-								) : (
-									<MaterialCommunityIcons
-										name="checkbox-blank-circle-outline"
-										size={24}
-										color={theme.screen.icon}
-									/>
-								)}
+								{loading?.camera ? <ActivityIndicator size="small" color={theme.screen.icon} /> : <MaterialCommunityIcons name="checkbox-blank-circle-outline" size={24} color={theme.screen.icon} />}
 							</TouchableOpacity>
 						)}
-						<TouchableOpacity
-							style={{ ...styles.row, backgroundColor: theme.background }}
-							onPress={() => handleImagePick(false)}
-						>
+						<TouchableOpacity style={{ ...styles.row, backgroundColor: theme.background }} onPress={() => handleImagePick(false)}>
 							<View style={styles.col}>
-								<MaterialCommunityIcons
-									name="folder-image"
-									size={24}
-									color={theme.screen.icon}
-								/>
-								<Text style={{ ...styles.label, color: theme.screen.text }}>
-									{translate(TranslationKeys.gallery)}
-								</Text>
+								<MaterialCommunityIcons name="folder-image" size={24} color={theme.screen.icon} />
+								<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.gallery)}</Text>
 							</View>
-							{loading?.image ? (
-								<ActivityIndicator size="small" color={theme.screen.icon} />
-							) : (
-								<MaterialCommunityIcons
-									name="checkbox-blank-circle-outline"
-									size={24}
-									color={theme.screen.icon}
-								/>
-							)}
+							{loading?.image ? <ActivityIndicator size="small" color={theme.screen.icon} /> : <MaterialCommunityIcons name="checkbox-blank-circle-outline" size={24} color={theme.screen.icon} />}
 						</TouchableOpacity>
-						<TouchableOpacity
-							style={{ ...styles.row, backgroundColor: theme.background }}
-							onPress={() => setIsDelete(true)}
-						>
+						<TouchableOpacity style={{ ...styles.row, backgroundColor: theme.background }} onPress={() => setIsDelete(true)}>
 							<View style={styles.col}>
-								<MaterialCommunityIcons
-									name="delete"
-									size={24}
-									color={theme.screen.icon}
-								/>
-								<Text style={{ ...styles.label, color: theme.screen.text }}>
-									{translate(TranslationKeys.delete)}
-								</Text>
+								<MaterialCommunityIcons name="delete" size={24} color={theme.screen.icon} />
+								<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.delete)}</Text>
 							</View>
-							<MaterialCommunityIcons
-								name="arrow-right"
-								size={24}
-								color={theme.screen.icon}
-							/>
+							<MaterialCommunityIcons name="arrow-right" size={24} color={theme.screen.icon} />
 						</TouchableOpacity>
-						<TouchableOpacity
-							style={{ ...styles.row, backgroundColor: theme.background }}
-							onPress={closeSheet}
-						>
+						<TouchableOpacity style={{ ...styles.row, backgroundColor: theme.background }} onPress={closeSheet}>
 							<View style={styles.col}>
-								<MaterialCommunityIcons
-									name="close"
-									size={24}
-									color={theme.screen.icon}
-								/>
-								<Text style={{ ...styles.label, color: theme.screen.text }}>
-									{translate(TranslationKeys.cancel)}
-								</Text>
+								<MaterialCommunityIcons name="close" size={24} color={theme.screen.icon} />
+								<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.cancel)}</Text>
 							</View>
 						</TouchableOpacity>
 					</>

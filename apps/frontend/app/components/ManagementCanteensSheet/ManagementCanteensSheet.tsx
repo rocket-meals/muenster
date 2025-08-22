@@ -16,10 +16,7 @@ import { SET_BUILDINGS, SET_CANTEENS } from '@/redux/Types/types';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const ManagementCanteensSheet: React.FC<ManagementCanteensSheetProps> = ({
-	closeSheet,
-	handleSelectCanteen,
-}) => {
+const ManagementCanteensSheet: React.FC<ManagementCanteensSheetProps> = ({ closeSheet, handleSelectCanteen }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
@@ -33,24 +30,17 @@ const ManagementCanteensSheet: React.FC<ManagementCanteensSheetProps> = ({
 
 	const getCanteensWithBuildings = async () => {
 		try {
-			const buildingsData = (await buildingsHelper.fetchBuildings(
-				{}
-			)) as DatabaseTypes.Buildings[];
+			const buildingsData = (await buildingsHelper.fetchBuildings({})) as DatabaseTypes.Buildings[];
 			const buildings = buildingsData || [];
 
-			const buildingsDict = buildings.reduce(
-				(acc: Record<string, any>, building: any) => {
-					acc[building.id] = building;
-					return acc;
-				},
-				{}
-			);
+			const buildingsDict = buildings.reduce((acc: Record<string, any>, building: any) => {
+				acc[building.id] = building;
+				return acc;
+			}, {});
 
 			dispatch({ type: SET_BUILDINGS, payload: buildings });
 
-			const canteensData = (await canteenHelper.fetchCanteens(
-				{}
-			)) as DatabaseTypes.Canteens[];
+			const canteensData = (await canteenHelper.fetchCanteens({})) as DatabaseTypes.Canteens[];
 
 			const filteredCanteens = canteensData.filter(canteen => {
 				const status = canteen.status || '';
@@ -108,10 +98,7 @@ const ManagementCanteensSheet: React.FC<ManagementCanteensSheetProps> = ({
 	}, []);
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -168,19 +155,11 @@ const ManagementCanteensSheet: React.FC<ManagementCanteensSheetProps> = ({
 								/>
 								{canteen.status === 'archived' && (
 									<View style={styles.archiveContainer}>
-										<MaterialCommunityIcons
-											name="archive"
-											size={18}
-											color={theme.screen.text}
-										/>
+										<MaterialCommunityIcons name="archive" size={18} color={theme.screen.text} />
 									</View>
 								)}
 							</View>
-							<Text
-								style={{ ...styles.foodName, color: theme.screen.text }}
-								numberOfLines={3}
-								ellipsizeMode="tail"
-							>
+							<Text style={{ ...styles.foodName, color: theme.screen.text }} numberOfLines={3} ellipsizeMode="tail">
 								{excerpt(String(canteen.alias), 20)}
 							</Text>
 						</TouchableOpacity>

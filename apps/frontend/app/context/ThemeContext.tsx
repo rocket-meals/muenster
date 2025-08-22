@@ -1,10 +1,4 @@
-import React, {
-	createContext,
-	useState,
-	useEffect,
-	ReactNode,
-	useContext,
-} from 'react';
+import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 import { Appearance } from 'react-native';
 import { lightTheme, darkTheme } from '@/styles/themes';
 
@@ -40,11 +34,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 		return () => listener.remove();
 	}, []);
 
-	return (
-		<ThemeContext.Provider value={{ theme, setThemeMode }}>
-			{children}
-		</ThemeContext.Provider>
-	);
+	return <ThemeContext.Provider value={{ theme, setThemeMode }}>{children}</ThemeContext.Provider>;
 };
 
 export const useTheme = () => {

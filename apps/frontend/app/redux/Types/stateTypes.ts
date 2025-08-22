@@ -1,9 +1,5 @@
 import { DatabaseTypes } from 'repo-depkit-common';
-import {
-	FoodSortOption,
-	CampusSortOption,
-	ApartmentSortOption,
-} from 'repo-depkit-common';
+import { FoodSortOption, CampusSortOption, ApartmentSortOption } from 'repo-depkit-common';
 
 export interface AuthState {
 	user: DatabaseTypes.DirectusUsers | Record<string, any> | null;

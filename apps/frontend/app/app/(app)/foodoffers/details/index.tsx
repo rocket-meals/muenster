@@ -1,48 +1,21 @@
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFocusEffect, useLocalSearchParams } from 'expo-router';
-import {
-	Dimensions,
-	Image,
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { Dimensions, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { router } from 'expo-router';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
-import {
-	AntDesign,
-	MaterialCommunityIcons,
-	MaterialIcons,
-} from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { isWeb } from '@/constants/Constants';
 import Feedbacks from '@/components/Feedbacks';
 import Details from '@/components/Details';
 import Labels from '@/components/Labels';
 import { fetchFoodOffersDetailsById } from '@/redux/actions/FoodOffers/FoodOffers';
-import {
-	excerpt,
-	getImageUrl,
-	getpreviousFeedback,
-	numToOneDecimal,
-} from '@/constants/HelperFunctions';
+import { excerpt, getImageUrl, getpreviousFeedback, numToOneDecimal } from '@/constants/HelperFunctions';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { FoodFeedbackHelper } from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
 import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import {
-	DELETE_FOOD_FEEDBACK_LOCAL,
-	UPDATE_FOOD_FEEDBACK_LOCAL,
-	UPDATE_PROFILE,
-} from '@/redux/Types/types';
+import { DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL, UPDATE_PROFILE } from '@/redux/Types/types';
 import MarkingBottomSheet from '@/components/MarkingBottomSheet';
 import PermissionModal from '@/components/PermissionModal/PermissionModal';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
@@ -50,15 +23,8 @@ import type BottomSheet from '@gorhom/bottom-sheet';
 import NotificationSheet from '@/components/NotificationSheet/NotificationSheet';
 import usePlatformHelper from '@/helper/platformHelper';
 import { NotificationHelper } from '@/helper/NotificationHelper';
-import {
-	getFoodCategoryName,
-	getFoodOfferCategoryName,
-} from '@/helper/resourceHelper';
-import {
-	getCurrentDevice,
-	getDeviceIdentifier,
-	getDeviceInformationWithoutPushToken,
-} from '@/helper/DeviceHelper';
+import { getFoodCategoryName, getFoodOfferCategoryName } from '@/helper/resourceHelper';
+import { getCurrentDevice, getDeviceIdentifier, getDeviceInformationWithoutPushToken } from '@/helper/DeviceHelper';
 import { ProfileHelper } from '@/redux/actions/Profile/Profile';
 import { createSelector } from 'reselect';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -71,11 +37,7 @@ import { RootState } from '@/redux/reducer';
 
 const selectFoodState = (state: RootState) => state.food;
 
-const selectPreviousFeedback = createSelector(
-	[selectFoodState, (_, foodId) => foodId],
-	(foodState, foodId) =>
-		getpreviousFeedback(foodState.ownFoodFeedbacks, foodId.toString())
-);
+const selectPreviousFeedback = createSelector([selectFoodState, (_, foodId) => foodId], (foodState, foodId) => getpreviousFeedback(foodState.ownFoodFeedbacks, foodId.toString()));
 
 export default function FoodDetailsScreen() {
 	useSetPageTitle(TranslationKeys.food_details);
@@ -88,38 +50,16 @@ export default function FoodDetailsScreen() {
 	const menuSheetRef = useRef<BottomSheet>(null);
 	const { isSmartPhone, isAndroid, isIOS } = usePlatformHelper();
 	const { user, profile } = useSelector((state: RootState) => state.authReducer);
-	const {
-		primaryColor,
-		language: languageCode,
-		appSettings,
-		serverInfo,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
-	const previousFeedback = useSelector(state =>
-		selectPreviousFeedback(state, foodId)
-	);
+	const { primaryColor, language: languageCode, appSettings, serverInfo, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+	const previousFeedback = useSelector(state => selectPreviousFeedback(state, foodId));
 	const profileHelper = useMemo(() => new ProfileHelper(), []);
 	const foodfeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
-	const { foodAttributeGroups } = useSelector(
-		(state: RootState) => state.foodAttributes
-	);
-	const { foodCategories, foodOfferCategories } = useSelector(
-		(state: RootState) => state.food
-	);
-	const [pushTokenObj, requestDeviceNotificationPermission] =
-		NotificationHelper.useNotificationPermission(profile);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
-	const defaultImage =
-		getImageUrl(String(appSettings.foods_placeholder_image)) ||
-		appSettings.foods_placeholder_image_remote_url ||
-		getImageUrl(serverInfo?.info?.project?.project_logo);
+	const { foodAttributeGroups } = useSelector((state: RootState) => state.foodAttributes);
+	const { foodCategories, foodOfferCategories } = useSelector((state: RootState) => state.food);
+	const [pushTokenObj, requestDeviceNotificationPermission] = NotificationHelper.useNotificationPermission(profile);
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
+	const defaultImage = getImageUrl(String(appSettings.foods_placeholder_image)) || appSettings.foods_placeholder_image_remote_url || getImageUrl(serverInfo?.info?.project?.project_logo);
 
 	const [warning, setWarning] = useState(false);
 	const selectedCanteen = useSelectedCanteen();
@@ -187,11 +127,7 @@ export default function FoodDetailsScreen() {
 
 		const generalAttributes: any[] = [];
 		if (foodDetails && foodCategories.length) {
-			const name = getFoodCategoryName(
-				foodCategories,
-				foodDetails.food_category,
-				languageCode
-			);
+			const name = getFoodCategoryName(foodCategories, foodDetails.food_category, languageCode);
 			if (name) {
 				generalAttributes.push({
 					id: 'food_category',
@@ -209,16 +145,8 @@ export default function FoodDetailsScreen() {
 			}
 		}
 
-		if (
-			foodDetails &&
-			foodOfferCategories.length &&
-			foodDetails.foodoffer_category
-		) {
-			const name = getFoodOfferCategoryName(
-				foodOfferCategories,
-				foodDetails.foodoffer_category,
-				languageCode
-			);
+		if (foodDetails && foodOfferCategories.length && foodDetails.foodoffer_category) {
+			const name = getFoodOfferCategoryName(foodOfferCategories, foodDetails.foodoffer_category, languageCode);
 			if (name) {
 				generalAttributes.push({
 					id: 'foodoffer_category',
@@ -239,9 +167,7 @@ export default function FoodDetailsScreen() {
 		if (generalAttributes.length) {
 			groupedAttributes?.push({
 				id: 'general',
-				translations: [
-					{ languages_code: languageCode, name: translate(TranslationKeys.general) },
-				],
+				translations: [{ languages_code: languageCode, name: translate(TranslationKeys.general) }],
 				attributes: generalAttributes,
 			});
 		}
@@ -254,41 +180,17 @@ export default function FoodDetailsScreen() {
 		if (foodAttributeGroups && foodAttributes) {
 			filterAttributes();
 		}
-	}, [
-		foodAttributes,
-		foodAttributeGroups,
-		foodDetails,
-		foodCategories,
-		foodOfferCategories,
-	]);
+	}, [foodAttributes, foodAttributeGroups, foodDetails, foodCategories, foodOfferCategories]);
 
 	const renderContent = useCallback(
 		(foodDetails: DatabaseTypes.Foods) => {
 			switch (activeTab) {
 				case 'feedbacks':
-					return (
-						<Feedbacks
-							foodDetails={foodDetails}
-							offerId={id.toString()}
-							canteenId={foodOfferCanteenId}
-						/>
-					);
+					return <Feedbacks foodDetails={foodDetails} offerId={id.toString()} canteenId={foodOfferCanteenId} />;
 				case 'details':
-					return (
-						<Details
-							groupedAttributes={groupedAttributes}
-							loading={foodAttributesLoading}
-						/>
-					);
+					return <Details groupedAttributes={groupedAttributes} loading={foodAttributesLoading} />;
 				case 'labels':
-					return (
-						<Labels
-							foodDetails={foodDetails}
-							offerId={id.toString()}
-							handleMenuSheet={openMenuSheet}
-							color={foods_area_color}
-						/>
-					);
+					return <Labels foodDetails={foodDetails} offerId={id.toString()} handleMenuSheet={openMenuSheet} color={foods_area_color} />;
 				default:
 					return null;
 			}
@@ -318,11 +220,7 @@ export default function FoodDetailsScreen() {
 				canteen: foodOfferCanteenId,
 				notify: !previousFeedback?.notify,
 			};
-			const updateFeedbackResult = (await foodfeedbackHelper.updateFoodFeedback(
-				foodDetails?.id,
-				profile?.id,
-				payload
-			)) as DatabaseTypes.FoodsFeedbacks;
+			const updateFeedbackResult = (await foodfeedbackHelper.updateFoodFeedback(foodDetails?.id, profile?.id, payload)) as DatabaseTypes.FoodsFeedbacks;
 			if (updateFeedbackResult?.id) {
 				dispatch({
 					type: UPDATE_FOOD_FEEDBACK_LOCAL,
@@ -345,10 +243,7 @@ export default function FoodDetailsScreen() {
 			if (foodData && foodData.data) {
 				const { food, attribute_values, foodoffer_category } = foodData?.data;
 
-				const translation = food?.translations?.find(
-					(val: FoodsTranslations) =>
-						String(val?.languages_code)?.split('-')[0] === languageCode
-				);
+				const translation = food?.translations?.find((val: FoodsTranslations) => String(val?.languages_code)?.split('-')[0] === languageCode);
 				setFoodDetails({
 					...food,
 					foodoffer_category,
@@ -407,13 +302,9 @@ export default function FoodDetailsScreen() {
 
 	const updateDeviceInfo = async () => {
 		try {
-			const deviceInformationsWithoutPushToken =
-				getDeviceInformationWithoutPushToken();
-			const deviceInformationsId = getDeviceIdentifier(
-				deviceInformationsWithoutPushToken
-			);
-			const pushTokenObj =
-				await NotificationHelper.loadDeviceNotificationPermission();
+			const deviceInformationsWithoutPushToken = getDeviceInformationWithoutPushToken();
+			const deviceInformationsId = getDeviceIdentifier(deviceInformationsWithoutPushToken);
+			const pushTokenObj = await NotificationHelper.loadDeviceNotificationPermission();
 			let deviceInformationsWithPushToken = {
 				...deviceInformationsWithoutPushToken,
 				pushTokenObj: pushTokenObj,
@@ -465,27 +356,18 @@ export default function FoodDetailsScreen() {
 				if (result?.granted) {
 					updateFoodFeedbackNotification();
 				} else {
-					if (
-						NotificationHelper.isDeviceNotificationPermissionUndetermined(
-							pushTokenObj
-						)
-					) {
+					if (NotificationHelper.isDeviceNotificationPermissionUndetermined(pushTokenObj)) {
 						requestDeviceNotificationPermission();
 					}
 				}
 			}
 			if (isIOS()) {
-				const result =
-					await NotificationHelper.requestDeviceNotificationPermission();
+				const result = await NotificationHelper.requestDeviceNotificationPermission();
 				console.log('Result.grantedios', result);
 				if (result?.granted) {
 					updateFoodFeedbackNotification();
 				} else {
-					if (
-						NotificationHelper.isDeviceNotificationPermissionUndetermined(
-							pushTokenObj
-						)
-					) {
+					if (NotificationHelper.isDeviceNotificationPermissionUndetermined(pushTokenObj)) {
 						requestDeviceNotificationPermission();
 					}
 				}
@@ -544,10 +426,8 @@ export default function FoodDetailsScreen() {
 									<View
 										style={{
 											...styles.imageContainer,
-											width:
-												screenWidth > 1000 ? 400 : Dimensions.get('window').width - 40,
-											height:
-												screenWidth > 1000 ? 400 : Dimensions.get('window').width - 40,
+											width: screenWidth > 1000 ? 400 : Dimensions.get('window').width - 40,
+											height: screenWidth > 1000 ? 400 : Dimensions.get('window').width - 40,
 										}}
 									>
 										<TouchableOpacity onPress={openFullScreenImage} activeOpacity={0.9}>
@@ -556,9 +436,7 @@ export default function FoodDetailsScreen() {
 												source={
 													foodDetails?.image_remote_url || foodDetails?.image
 														? {
-																uri:
-																	foodDetails?.image_remote_url ||
-																	getImageUrl(foodDetails?.image),
+																uri: foodDetails?.image_remote_url || getImageUrl(foodDetails?.image),
 															}
 														: { uri: defaultImage }
 												}
@@ -590,11 +468,7 @@ export default function FoodDetailsScreen() {
 														color: '#fff',
 													}}
 												>
-													{(foodDetails?.rating_average ||
-														foodDetails?.rating_average_legacy) &&
-														numToOneDecimal(
-															foodDetails.rating_average || foodDetails?.rating_average_legacy
-														)}
+													{(foodDetails?.rating_average || foodDetails?.rating_average_legacy) && numToOneDecimal(foodDetails.rating_average || foodDetails?.rating_average_legacy)}
 												</Text>
 											</View>
 										)}
@@ -606,25 +480,14 @@ export default function FoodDetailsScreen() {
 											marginTop: screenWidth > 1000 ? 0 : 20,
 										}}
 									>
-										<Text style={{ ...styles.rateUs, color: theme.screen.text }}>
-											{translate(TranslationKeys.RATE_FOOD)}
-										</Text>
+										<Text style={{ ...styles.rateUs, color: theme.screen.text }}>{translate(TranslationKeys.RATE_FOOD)}</Text>
 										<View style={styles.stars}>
 											{Array.from({ length: 5 }).map((_, index) => (
 												<Tooltip
 													placement="top"
 													trigger={triggerProps => (
-														<TouchableOpacity
-															key={index}
-															{...triggerProps}
-															onPress={() => rateFood(index + 1)}
-															style={{ padding: 5 }}
-														>
-															<AntDesign
-																name={previousFeedback?.rating > index ? 'star' : 'staro'}
-																size={22}
-																color={foods_area_color}
-															/>
+														<TouchableOpacity key={index} {...triggerProps} onPress={() => rateFood(index + 1)} style={{ padding: 5 }}>
+															<AntDesign name={previousFeedback?.rating > index ? 'star' : 'staro'} size={22} color={foods_area_color} />
 														</TouchableOpacity>
 													)}
 												>
@@ -666,8 +529,7 @@ export default function FoodDetailsScreen() {
 									source={
 										foodDetails?.image_remote_url || foodDetails?.image
 											? {
-													uri:
-														foodDetails?.image_remote_url || getImageUrl(foodDetails?.image),
+													uri: foodDetails?.image_remote_url || getImageUrl(foodDetails?.image),
 												}
 											: { uri: defaultImage }
 									}
@@ -692,11 +554,7 @@ export default function FoodDetailsScreen() {
 														color: '#fff',
 													}}
 												>
-													{(foodDetails?.rating_average ||
-														foodDetails?.rating_average_legacy) &&
-														numToOneDecimal(
-															foodDetails.rating_average || foodDetails?.rating_average_legacy
-														)}
+													{(foodDetails?.rating_average || foodDetails?.rating_average_legacy) && numToOneDecimal(foodDetails.rating_average || foodDetails?.rating_average_legacy)}
 												</Text>
 											</View>
 										)}
@@ -729,11 +587,7 @@ export default function FoodDetailsScreen() {
 								<View style={styles.mobileStars}>
 									{Array.from({ length: 5 }).map((_, index) => (
 										<TouchableOpacity key={index} onPress={() => rateFood(index + 1)}>
-											<AntDesign
-												name={previousFeedback?.rating > index ? 'star' : 'staro'}
-												size={20}
-												color={foods_area_color}
-											/>
+											<AntDesign name={previousFeedback?.rating > index ? 'star' : 'staro'} size={20} color={foods_area_color} />
 										</TouchableOpacity>
 									))}
 								</View>
@@ -770,19 +624,13 @@ export default function FoodDetailsScreen() {
 										}}
 										onPress={updateNotification}
 									>
-										<MaterialIcons
-											name="notifications-active"
-											size={32}
-											color={theme.screen.text}
-										/>
+										<MaterialIcons name="notifications-active" size={32} color={theme.screen.text} />
 									</TouchableOpacity>
 								)}
 							>
 								<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 									<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-										{`${translate(TranslationKeys.notification)}: ${translate(
-											TranslationKeys.active
-										)}: ${excerpt(foodDetails?.name, 90)}`}
+										{`${translate(TranslationKeys.notification)}: ${translate(TranslationKeys.active)}: ${excerpt(foodDetails?.name, 90)}`}
 									</TooltipText>
 								</TooltipContent>
 							</Tooltip>
@@ -799,19 +647,13 @@ export default function FoodDetailsScreen() {
 										{...triggerProps}
 										onPress={updateNotification}
 									>
-										<MaterialIcons
-											name="notifications"
-											size={32}
-											color={theme.screen.text}
-										/>
+										<MaterialIcons name="notifications" size={32} color={theme.screen.text} />
 									</TouchableOpacity>
 								)}
 							>
 								<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 									<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-										{`${translate(TranslationKeys.notification)}: ${translate(
-											TranslationKeys.inactive
-										)}: ${excerpt(foodDetails?.name, 90)}`}
+										{`${translate(TranslationKeys.notification)}: ${translate(TranslationKeys.inactive)}: ${excerpt(foodDetails?.name, 90)}`}
 									</TooltipText>
 								</TooltipContent>
 							</Tooltip>
@@ -833,21 +675,8 @@ export default function FoodDetailsScreen() {
 							<Tooltip
 								placement="top"
 								trigger={triggerProps => (
-									<TouchableOpacity
-										{...triggerProps}
-										style={[
-											styles.tab,
-											activeTab === 'feedbacks'
-												? themeStyles
-												: { backgroundColor: theme.screen.iconBg },
-										]}
-										onPress={() => setActiveTab('feedbacks')}
-									>
-										<MaterialCommunityIcons
-											name="chat"
-											size={26}
-											color={activeTab === 'feedbacks' ? contrastColor : theme.screen.icon}
-										/>
+									<TouchableOpacity {...triggerProps} style={[styles.tab, activeTab === 'feedbacks' ? themeStyles : { backgroundColor: theme.screen.iconBg }]} onPress={() => setActiveTab('feedbacks')}>
+										<MaterialCommunityIcons name="chat" size={26} color={activeTab === 'feedbacks' ? contrastColor : theme.screen.icon} />
 									</TouchableOpacity>
 								)}
 							>
@@ -860,21 +689,8 @@ export default function FoodDetailsScreen() {
 							<Tooltip
 								placement="top"
 								trigger={triggerProps => (
-									<TouchableOpacity
-										style={[
-											styles.tab,
-											activeTab === 'details'
-												? themeStyles
-												: { backgroundColor: theme.screen.iconBg },
-										]}
-										{...triggerProps}
-										onPress={() => setActiveTab('details')}
-									>
-										<MaterialCommunityIcons
-											name="nutrition"
-											size={26}
-											color={activeTab === 'details' ? contrastColor : theme.screen.icon}
-										/>
+									<TouchableOpacity style={[styles.tab, activeTab === 'details' ? themeStyles : { backgroundColor: theme.screen.iconBg }]} {...triggerProps} onPress={() => setActiveTab('details')}>
+										<MaterialCommunityIcons name="nutrition" size={26} color={activeTab === 'details' ? contrastColor : theme.screen.icon} />
 									</TouchableOpacity>
 								)}
 							>
@@ -888,21 +704,8 @@ export default function FoodDetailsScreen() {
 							<Tooltip
 								placement="top"
 								trigger={triggerProps => (
-									<TouchableOpacity
-										style={[
-											styles.tab,
-											activeTab === 'labels'
-												? themeStyles
-												: { backgroundColor: theme.screen.iconBg },
-										]}
-										{...triggerProps}
-										onPress={() => setActiveTab('labels')}
-									>
-										<MaterialCommunityIcons
-											name="medical-bag"
-											size={26}
-											color={activeTab === 'labels' ? contrastColor : theme.screen.icon}
-										/>
+									<TouchableOpacity style={[styles.tab, activeTab === 'labels' ? themeStyles : { backgroundColor: theme.screen.iconBg }]} {...triggerProps} onPress={() => setActiveTab('labels')}>
+										<MaterialCommunityIcons name="medical-bag" size={26} color={activeTab === 'labels' ? contrastColor : theme.screen.icon} />
 									</TouchableOpacity>
 								)}
 							>
@@ -938,18 +741,12 @@ export default function FoodDetailsScreen() {
 					handleComponent={null}
 					onClose={closeNotificationSheet}
 				>
-					<NotificationSheet
-						closeSheet={closeNotificationSheet}
-						previousFeedback={previousFeedback}
-						foodDetails={foodDetails}
-					/>
+					<NotificationSheet closeSheet={closeNotificationSheet} previousFeedback={previousFeedback} foodDetails={foodDetails} />
 				</BaseBottomSheet>
 			)}
 			{/* Menu sheet */}
 
-			{isActive && (
-				<MarkingBottomSheet ref={menuSheetRef} onClose={closeMenuSheet} />
-			)}
+			{isActive && <MarkingBottomSheet ref={menuSheetRef} onClose={closeMenuSheet} />}
 		</SafeAreaView>
 	);
 }

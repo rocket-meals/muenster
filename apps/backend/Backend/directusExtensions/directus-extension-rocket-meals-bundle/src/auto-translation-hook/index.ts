@@ -16,9 +16,7 @@ export const scheduleNameAutoTranslation = 'auto-translation';
 
 const DEV_MODE = false;
 
-async function getAndInitItemsServiceCreatorAndTranslatorSettingsAndTranslatorAndSchema(
-  myDatabaseHelper: MyDatabaseHelper
-) {
+async function getAndInitItemsServiceCreatorAndTranslatorSettingsAndTranslatorAndSchema(myDatabaseHelper: MyDatabaseHelper) {
   let translatorSettings = new TranslatorSettings(myDatabaseHelper);
   let translator = new Translator(translatorSettings, myDatabaseHelper);
   await translator.init();
@@ -28,18 +26,11 @@ async function getAndInitItemsServiceCreatorAndTranslatorSettingsAndTranslatorAn
   };
 }
 
-async function getCurrentItemForTranslation(
-  tablename: string,
-  meta: any,
-  translations_field: string,
-  myDatabaseHelper: MyDatabaseHelper
-) {
+async function getCurrentItemForTranslation(tablename: string, meta: any, translations_field: string, myDatabaseHelper: MyDatabaseHelper) {
   //console.log("getCurrentItemForTranslation");
   let currentItem: any = {}; //For create we don't have a current item
   let primaryKeys = meta?.keys || [];
-  const itemsService = myDatabaseHelper.getItemsServiceHelper(
-    tablename as CollectionNames
-  );
+  const itemsService = myDatabaseHelper.getItemsServiceHelper(tablename as CollectionNames);
   for (let primaryKey of primaryKeys) {
     //For update we have a current item
     currentItem = await itemsService.readOne(primaryKey, {
@@ -50,12 +41,7 @@ async function getCurrentItemForTranslation(
   return currentItem;
 }
 
-async function handleCreateOrUpdate(
-  tablename: string,
-  payload: any,
-  meta: any,
-  myDatabaseHelper: MyDatabaseHelper
-) {
+async function handleCreateOrUpdate(tablename: string, payload: any, meta: any, myDatabaseHelper: MyDatabaseHelper) {
   if (tablename === CollectionNames.AUTO_TRANSLATION_SETTINGS) {
     // Don't translate settings
     return payload;
@@ -107,9 +93,7 @@ async function handleCreateOrUpdate(
   }
 
   // search for all fields which are from type "special" and have "translations" in special array
-  let translations_fields = Object.keys(schema_fields).filter(field =>
-    schema_fields?.[field]?.special?.includes(field_special_translation)
-  );
+  let translations_fields = Object.keys(schema_fields).filter(field => schema_fields?.[field]?.special?.includes(field_special_translation));
   //console.log("Translations fields: ");
   //console.log(translations_fields);
 
@@ -122,10 +106,7 @@ async function handleCreateOrUpdate(
   }
   //console.log("Payload contains translations: "+payloadContainsTranslations);
   if (payloadContainsTranslations) {
-    let { translatorSettings, translator } =
-      await getAndInitItemsServiceCreatorAndTranslatorSettingsAndTranslatorAndSchema(
-        myDatabaseHelper
-      );
+    let { translatorSettings, translator } = await getAndInitItemsServiceCreatorAndTranslatorSettingsAndTranslatorAndSchema(myDatabaseHelper);
 
     let autoTranslate = await translatorSettings.isAutoTranslationEnabled();
     if (autoTranslate || DEV_MODE) {
@@ -138,22 +119,8 @@ async function handleCreateOrUpdate(
       let modifiedPayload = payload;
       //console.log("["+scheduleNameAutoTranslation+"] - "+"Start translation for "+tablename+" table");
       for (let translation_field of translations_fields) {
-        let currentItem = await getCurrentItemForTranslation(
-          tablename,
-          meta,
-          translation_field,
-          myDatabaseHelper
-        );
-        modifiedPayload =
-          await DirectusCollectionTranslator.modifyPayloadForTranslation(
-            currentItem,
-            modifiedPayload,
-            translator,
-            translatorSettings,
-            myDatabaseHelper,
-            tablename,
-            translation_field
-          );
+        let currentItem = await getCurrentItemForTranslation(tablename, meta, translation_field, myDatabaseHelper);
+        modifiedPayload = await DirectusCollectionTranslator.modifyPayloadForTranslation(currentItem, modifiedPayload, translator, translatorSettings, myDatabaseHelper, tablename, translation_field);
       }
       //console.log("["+scheduleNameAutoTranslation+"] - "+"End translation for "+tablename+" table");
       //console.log("Modified Payload: ");
@@ -165,41 +132,22 @@ async function handleCreateOrUpdate(
   return payload;
 }
 
-function registerCollectionAutoTranslation(
-  filter: any,
-  apiContext: ApiContext
-) {
+function registerCollectionAutoTranslation(filter: any, apiContext: ApiContext) {
   let events = ['create', 'update'];
   for (let event of events) {
-    filter(
-      'items.' + event,
-      async (payload: any, meta: any, context: EventContext) => {
-        let tablename = meta?.collection;
-        //console.log("Auto-Translation for "+event+" event in "+tablename);
-        let myDatabaseHelper = new MyDatabaseHelper(apiContext, context);
-        return await handleCreateOrUpdate(
-          tablename,
-          payload,
-          meta,
-          myDatabaseHelper
-        );
-      }
-    );
+    filter('items.' + event, async (payload: any, meta: any, context: EventContext) => {
+      let tablename = meta?.collection;
+      //console.log("Auto-Translation for "+event+" event in "+tablename);
+      let myDatabaseHelper = new MyDatabaseHelper(apiContext, context);
+      return await handleCreateOrUpdate(tablename, payload, meta, myDatabaseHelper);
+    });
   }
 }
 
 export default defineHook(({ filter, action, init, schedule }, apiContext) => {
-  let collectionFound = DatabaseInitializedCheck.checkTablesExist(
-    scheduleNameAutoTranslation,
-    apiContext,
-    [CollectionNames.AUTO_TRANSLATION_SETTINGS]
-  );
+  let collectionFound = DatabaseInitializedCheck.checkTablesExist(scheduleNameAutoTranslation, apiContext, [CollectionNames.AUTO_TRANSLATION_SETTINGS]);
   if (!collectionFound) {
-    console.log(
-      'Collection ' +
-        CollectionNames.AUTO_TRANSLATION_SETTINGS +
-        ' not found. Skipping auto-translation initialization.'
-    );
+    console.log('Collection ' + CollectionNames.AUTO_TRANSLATION_SETTINGS + ' not found. Skipping auto-translation initialization.');
     return;
   }
 

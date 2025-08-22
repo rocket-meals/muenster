@@ -1,51 +1,19 @@
 // small jest test
 import { describe, it } from '@jest/globals';
-import {
-  HtmlGenerator,
-  HtmlTemplatesEnum,
-} from '../../helpers/html/HtmlGenerator';
+import { HtmlGenerator, HtmlTemplatesEnum } from '../../helpers/html/HtmlGenerator';
 import { EmojiHelper } from '../../helpers/EmojiHelper';
-import {
-  ReportCanteenEntryLabelsType,
-  ReportCanteenEntryType,
-  ReportFoodEntryLabelType,
-  ReportFoodEntryType,
-  ReportGenerator,
-  ReportStatusTrafficLightValues,
-  ReportType,
-} from '../ReportGenerator';
+import { ReportCanteenEntryLabelsType, ReportCanteenEntryType, ReportFoodEntryLabelType, ReportFoodEntryType, ReportGenerator, ReportStatusTrafficLightValues, ReportType } from '../ReportGenerator';
 import { TestArtifacts } from '../../helpers/TestArtifacts';
 import { MailHelper } from '../../helpers/mail/MailHelper';
 import { MyDatabaseTestableHelper } from '../../helpers/MyDatabaseHelperInterface';
 
 describe('Food Feedback Html Template', () => {
   it('ReferenceDate on same Date', async () => {
-    const canteenFeedbackLabels = [
-      'Ich habe heute Zeit in die Mensa zu gehen',
-      'Heute ist ein  passendes Fleischgericht für mich dabei',
-      'Heute ist ein  passendes vegetarisches Gericht für mich dabei',
-    ];
+    const canteenFeedbackLabels = ['Ich habe heute Zeit in die Mensa zu gehen', 'Heute ist ein  passendes Fleischgericht für mich dabei', 'Heute ist ein  passendes vegetarisches Gericht für mich dabei'];
     const foodFeedbackLabels = ['Geschmack', 'Optik', 'Größe', 'Preis'];
-    const foodNames = [
-      'Frittiertes von der Kartoffel - kleine Portion',
-      'Black Bean Burger Classic mit Pommes',
-      'Kartoffelgratin mit Salat',
-      'Kartoffelgratin mit Salat',
-      'Kartoffelgratin mit Salat',
-    ];
-    const foodComments = [
-      'Sehr lecker',
-      'Der Preis ist ja mal viel zu teuer, als was soll sowas',
-      'Das war ja mal gar nichts',
-      'Das war ja mal gar nichts',
-      'Das war ja mal gar nichts',
-    ];
-    const canteenNames = [
-      'Mensa Zentralstraße',
-      'Mensa Kleine Pause',
-      'Mensa auf dem Berg',
-      'Weitere Mensa',
-    ];
+    const foodNames = ['Frittiertes von der Kartoffel - kleine Portion', 'Black Bean Burger Classic mit Pommes', 'Kartoffelgratin mit Salat', 'Kartoffelgratin mit Salat', 'Kartoffelgratin mit Salat'];
+    const foodComments = ['Sehr lecker', 'Der Preis ist ja mal viel zu teuer, als was soll sowas', 'Das war ja mal gar nichts', 'Das war ja mal gar nichts', 'Das war ja mal gar nichts'];
+    const canteenNames = ['Mensa Zentralstraße', 'Mensa Kleine Pause', 'Mensa auf dem Berg', 'Weitere Mensa'];
 
     function getRatingValues(index: number) {
       // return amount_positive_new, amount_negative_new, amount_total, amount_negative, amount_positive, status_total, status_new
@@ -132,9 +100,7 @@ describe('Food Feedback Html Template', () => {
         id: 'id',
         alias: foodNames[i],
         image_url: 'image_url',
-        rating_average:
-          5 *
-          (foodRatingValues.amount_positive / foodRatingValues.amount_total),
+        rating_average: 5 * (foodRatingValues.amount_positive / foodRatingValues.amount_total),
         rating_amount: foodRatingValues.amount_total,
         comments: foodComments,
         comments_new: i % 2 == 0 ? foodComments : [],
@@ -183,8 +149,7 @@ describe('Food Feedback Html Template', () => {
     }
 
     const food_rating_average = calculateRatingAverage(foods);
-    const foodAverageRatingThresholds =
-      ReportGenerator.getFoodRatingBadAndGoodThresholds(food_rating_average);
+    const foodAverageRatingThresholds = ReportGenerator.getFoodRatingBadAndGoodThresholds(food_rating_average);
 
     let report: ReportType = {
       canteen_alias: canteenNames.join(', '),
@@ -201,25 +166,13 @@ describe('Food Feedback Html Template', () => {
       food_rating_threshold_good: foodAverageRatingThresholds.threshold_good,
       foods: foods,
       canteen_feedbacks: canteen_feedbacks,
-      icon_thumbs_up: EmojiHelper.getEmojiDivHTML(
-        EmojiHelper.EmojiFileNames.THUMBS_UP,
-        EmojiHelper.DivTextSize.MEDIUM
-      ),
-      icon_thumbs_down: EmojiHelper.getEmojiDivHTML(
-        EmojiHelper.EmojiFileNames.THUMBS_DOWN,
-        EmojiHelper.DivTextSize.MEDIUM
-      ),
-      icon_comment: EmojiHelper.getEmojiDivHTML(
-        EmojiHelper.EmojiFileNames.SPEECH_BUBBLE,
-        EmojiHelper.DivTextSize.SMALL
-      ),
+      icon_thumbs_up: EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.THUMBS_UP, EmojiHelper.DivTextSize.MEDIUM),
+      icon_thumbs_down: EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.THUMBS_DOWN, EmojiHelper.DivTextSize.MEDIUM),
+      icon_comment: EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.SPEECH_BUBBLE, EmojiHelper.DivTextSize.SMALL),
       icon_traffic_light_red: ReportStatusTrafficLightValues.RED,
       icon_traffic_light_yellow: ReportStatusTrafficLightValues.YELLOW,
       icon_traffic_light_green: ReportStatusTrafficLightValues.GREEN,
-      icon_star: EmojiHelper.getEmojiDivHTML(
-        EmojiHelper.EmojiFileNames.STAR,
-        EmojiHelper.DivTextSize.SMALL
-      ),
+      icon_star: EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.STAR, EmojiHelper.DivTextSize.SMALL),
     };
 
     let exampleMarkdown = `
@@ -239,10 +192,7 @@ Hier ist der Feedback Report für die Mensen. Text style *italic* und **bold**.
       new MyDatabaseTestableHelper()
     );
 
-    let savePath = TestArtifacts.saveTestArtifact(
-      hmtl,
-      'food-feedback-report/example.html'
-    );
+    let savePath = TestArtifacts.saveTestArtifact(hmtl, 'food-feedback-report/example.html');
 
     expect(true).toBe(true);
   });

@@ -12,20 +12,13 @@ import { isWeb } from '@/constants/Constants';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const DrawerPositionSheet: React.FC<DrawerPositionSheetProps> = ({
-	closeSheet,
-	selectedPosition,
-	onSelect,
-}) => {
+const DrawerPositionSheet: React.FC<DrawerPositionSheetProps> = ({ closeSheet, selectedPosition, onSelect }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,

@@ -13,12 +13,7 @@ import { isWeb } from '@/constants/Constants';
 import { router, useFocusEffect, useGlobalSearchParams } from 'expo-router';
 import { ServerAPI } from '@/redux/actions/Auth/Auth';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	SET_APP_SETTINGS,
-	SET_WIKIS,
-	UPDATE_MANAGEMENT,
-	UPDATE_PRIVACY_POLICY_DATE,
-} from '@/redux/Types/types';
+import { SET_APP_SETTINGS, SET_WIKIS, UPDATE_MANAGEMENT, UPDATE_PRIVACY_POLICY_DATE } from '@/redux/Types/types';
 import AttentionSheet from '@/components/Login/AttentionSheet';
 import useToast from '@/hooks/useToast';
 import { updateLoginStatus } from '@/constants/HelperFunctions';
@@ -27,10 +22,7 @@ import { format } from 'date-fns';
 import { WikisHelper } from '@/redux/actions/Wikis/Wikis';
 import { AppSettingsHelper } from '@/redux/actions/AppSettings/AppSettings';
 import DeviceMock from '@/components/DeviceMock/DeviceMock';
-import {
-	getDetailedDescriptionTranslation,
-	getIntroDescriptionTranslation,
-} from '@/helper/resourceHelper';
+import { getDetailedDescriptionTranslation, getIntroDescriptionTranslation } from '@/helper/resourceHelper';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
@@ -50,24 +42,10 @@ export default function Login() {
 	const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 	const attentionSheetRef = useRef<BottomSheet>(null);
 	const [providers, setProviders] = useState<any>([]);
-	const [isWebVisible, setIsWebVisible] = useState(
-		Dimensions.get('window').width > 500
-	);
-	const { appSettings, language } = useSelector(
-		(state: RootState) => state.settings
-	);
-	const intro_description =
-		appSettings?.login_screen_translations &&
-		getIntroDescriptionTranslation(
-			appSettings?.login_screen_translations,
-			language
-		);
-	const detailed_description =
-		appSettings?.login_screen_translations &&
-		getDetailedDescriptionTranslation(
-			appSettings?.login_screen_translations,
-			language
-		);
+	const [isWebVisible, setIsWebVisible] = useState(Dimensions.get('window').width > 500);
+	const { appSettings, language } = useSelector((state: RootState) => state.settings);
+	const intro_description = appSettings?.login_screen_translations && getIntroDescriptionTranslation(appSettings?.login_screen_translations, language);
+	const detailed_description = appSettings?.login_screen_translations && getDetailedDescriptionTranslation(appSettings?.login_screen_translations, language);
 	const [heading, subHeading] = intro_description?.split('-') || ['', ''];
 	const getProviders = async () => {
 		const providers = await ServerAPI.getAuthProviders();
@@ -78,9 +56,7 @@ export default function Login() {
 
 	const getAppSettings = async () => {
 		try {
-			const result = (await appSettingsHelper.fetchAppSettings(
-				{}
-			)) as DatabaseTypes.AppSettings;
+			const result = (await appSettingsHelper.fetchAppSettings({})) as DatabaseTypes.AppSettings;
 			if (result) {
 				dispatch({ type: SET_APP_SETTINGS, payload: result });
 			}
@@ -112,21 +88,14 @@ export default function Login() {
 		attentionSheetRef?.current?.close();
 	};
 
-	const handleUserLogin = async (
-		token?: string,
-		email?: string,
-		password?: string
-	) => {
+	const handleUserLogin = async (token?: string, email?: string, password?: string) => {
 		try {
 			// Authenticate based on token or credentials
 			setLoading(true);
 			if (token) {
 				await ServerAPI.authenticateWithAccessToken(token);
 			} else if (email && password) {
-				const result = await ServerAPI.authenticateWithEmailAndPassword(
-					email,
-					password
-				);
+				const result = await ServerAPI.authenticateWithEmailAndPassword(email, password);
 				if (!result) throw new Error('Invalid credentials');
 			}
 
@@ -231,8 +200,7 @@ export default function Login() {
 	};
 
 	const renderContent = () => {
-		const [description, imageUrl] =
-			extractDescriptionAndImage(detailed_description);
+		const [description, imageUrl] = extractDescriptionAndImage(detailed_description);
 
 		return (
 			<View style={styles.detailedContentContainer}>
@@ -248,11 +216,7 @@ export default function Login() {
 						}}
 					/>
 				)}
-				{description && (
-					<Text style={{ ...styles.subTitle, color: theme.login.text }}>
-						{description}
-					</Text>
-				)}
+				{description && <Text style={{ ...styles.subTitle, color: theme.login.text }}>{description}</Text>}
 			</View>
 		);
 	};
@@ -279,12 +243,7 @@ export default function Login() {
 					}}
 				>
 					<Header />
-					<Form
-						openSheet={openSheet}
-						openAttentionSheet={openAttentionSheet}
-						onSuccess={handleUserLogin}
-						providers={providers}
-					/>
+					<Form openSheet={openSheet} openAttentionSheet={openAttentionSheet} onSuccess={handleUserLogin} providers={providers} />
 					<Footer />
 				</View>
 				{isWeb && isWebVisible && (
@@ -295,16 +254,8 @@ export default function Login() {
 						}}
 					>
 						<View style={styles.webTitleContainer}>
-							{heading && (
-								<Text style={{ ...styles.title, color: theme.login.text }}>
-									{heading}
-								</Text>
-							)}
-							{subHeading && (
-								<Text style={{ ...styles.subTitle, color: theme.login.text }}>
-									{subHeading}
-								</Text>
-							)}
+							{heading && <Text style={{ ...styles.title, color: theme.login.text }}>{heading}</Text>}
+							{subHeading && <Text style={{ ...styles.subTitle, color: theme.login.text }}>{subHeading}</Text>}
 						</View>
 						{renderContent()}
 					</View>
@@ -323,11 +274,7 @@ export default function Login() {
 						enablePanDownToClose
 						onClose={closeSheet}
 					>
-						<ManagementSheet
-							closeSheet={closeSheet}
-							handleLogin={handleUserLogin}
-							loading={loading}
-						/>
+						<ManagementSheet closeSheet={closeSheet} handleLogin={handleUserLogin} loading={loading} />
 					</BaseBottomSheet>
 				)}
 				{isActive && (
@@ -341,11 +288,7 @@ export default function Login() {
 						}}
 						onClose={closeAttentionSheet}
 					>
-						<AttentionSheet
-							closeSheet={closeAttentionSheet}
-							handleLogin={handleAnonymousLogin}
-							isBottomSheetVisible={isBottomSheetVisible}
-						/>
+						<AttentionSheet closeSheet={closeAttentionSheet} handleLogin={handleAnonymousLogin} isBottomSheetVisible={isBottomSheetVisible} />
 					</BaseBottomSheet>
 				)}
 			</ScrollView>

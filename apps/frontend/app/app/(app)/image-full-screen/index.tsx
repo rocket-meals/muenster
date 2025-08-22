@@ -1,26 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import {
-	View,
-	StyleSheet,
-	TouchableOpacity,
-	TouchableWithoutFeedback,
-	Platform,
-	Dimensions,
-	Text,
-	Share,
-} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Platform, Dimensions, Text, Share } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useSelector } from 'react-redux';
-import Animated, {
-	runOnJS,
-	useSharedValue,
-	useAnimatedStyle,
-	useDerivedValue,
-	withTiming,
-} from 'react-native-reanimated';
+import Animated, { runOnJS, useSharedValue, useAnimatedStyle, useDerivedValue, withTiming } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Image } from 'expo-image';
 import BaseBottomModal from '@/components/BaseBottomModal';
@@ -49,9 +34,7 @@ export default function ImageFullScreen() {
 	const baseScale = useSharedValue(1);
 	const pinchScale = useSharedValue(1);
 	const dismissScale = useSharedValue(1);
-	const scale = useDerivedValue(
-		() => baseScale.value * pinchScale.value * dismissScale.value
-	);
+	const scale = useDerivedValue(() => baseScale.value * pinchScale.value * dismissScale.value);
 
 	const translationX = useSharedValue(0);
 	const translationY = useSharedValue(0);
@@ -134,18 +117,10 @@ export default function ImageFullScreen() {
 			}
 		});
 
-	const composedGesture = Gesture.Simultaneous(
-		doubleTapGesture,
-		pinchGesture,
-		panGesture
-	);
+	const composedGesture = Gesture.Simultaneous(doubleTapGesture, pinchGesture, panGesture);
 
 	const animatedStyle = useAnimatedStyle(() => ({
-		transform: [
-			{ scale: scale.value },
-			{ translateX: translationX.value },
-			{ translateY: translationY.value },
-		],
+		transform: [{ scale: scale.value }, { translateX: translationX.value }, { translateY: translationY.value }],
 		opacity: imageOpacity.value,
 	}));
 
@@ -196,63 +171,30 @@ export default function ImageFullScreen() {
 	};
 
 	return (
-		<Animated.View
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-		>
+		<Animated.View style={[styles.container, { backgroundColor: theme.screen.background }]}>
 			{showControls && (
-				<Animated.View
-					pointerEvents="none"
-					style={[styles.backIndicator, indicatorStyle]}
-				>
+				<Animated.View pointerEvents="none" style={[styles.backIndicator, indicatorStyle]}>
 					<Ionicons name="chevron-down" size={48} color={theme.screen.text} />
-					<Text style={[styles.backText, { color: theme.screen.text }]}>
-						{translate(TranslationKeys.pull_down_to_close)}
-					</Text>
+					<Text style={[styles.backText, { color: theme.screen.text }]}>{translate(TranslationKeys.pull_down_to_close)}</Text>
 				</Animated.View>
 			)}
 			{showControls && (
-				<View
-					style={[
-						styles.topRow,
-						drawerPosition === 'left' ? styles.topRowLeft : styles.topRowRight,
-					]}
-					pointerEvents="box-none"
-				>
+				<View style={[styles.topRow, drawerPosition === 'left' ? styles.topRowLeft : styles.topRowRight]} pointerEvents="box-none">
 					{drawerPosition === 'left' ? (
 						<>
-							<TouchableOpacity
-								style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]}
-								onPress={() => router.back()}
-							>
+							<TouchableOpacity style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]} onPress={() => router.back()}>
 								<Ionicons name="close" size={28} color={theme.screen.icon} />
 							</TouchableOpacity>
-							<TouchableOpacity
-								style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]}
-								onPress={downloadImage}
-							>
-								<Ionicons
-									name="cloud-download-outline"
-									size={28}
-									color={theme.screen.icon}
-								/>
+							<TouchableOpacity style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]} onPress={downloadImage}>
+								<Ionicons name="cloud-download-outline" size={28} color={theme.screen.icon} />
 							</TouchableOpacity>
 						</>
 					) : (
 						<>
-							<TouchableOpacity
-								style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]}
-								onPress={downloadImage}
-							>
-								<Ionicons
-									name="cloud-download-outline"
-									size={28}
-									color={theme.screen.icon}
-								/>
+							<TouchableOpacity style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]} onPress={downloadImage}>
+								<Ionicons name="cloud-download-outline" size={28} color={theme.screen.icon} />
 							</TouchableOpacity>
-							<TouchableOpacity
-								style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]}
-								onPress={() => router.back()}
-							>
+							<TouchableOpacity style={[styles.iconButton, { backgroundColor: theme.screen.iconBg }]} onPress={() => router.back()}>
 								<Ionicons name="close" size={28} color={theme.screen.icon} />
 							</TouchableOpacity>
 						</>
@@ -261,37 +203,17 @@ export default function ImageFullScreen() {
 			)}
 			<GestureDetector gesture={composedGesture}>
 				<Animated.View style={styles.flex}>
-					<TouchableWithoutFeedback
-						onPress={toggleControls}
-						onLongPress={() => setModalVisible(true)}
-					>
+					<TouchableWithoutFeedback onPress={toggleControls} onLongPress={() => setModalVisible(true)}>
 						<Animated.View style={[styles.imageWrapper, animatedStyle]}>
-							<Image
-								source={{ uri: lowResUri }}
-								style={styles.image}
-								contentFit="contain"
-							/>
-							<Image
-								source={{ uri: highResUri }}
-								style={[styles.image, StyleSheet.absoluteFill]}
-								contentFit="contain"
-							/>
+							<Image source={{ uri: lowResUri }} style={styles.image} contentFit="contain" />
+							<Image source={{ uri: highResUri }} style={[styles.image, StyleSheet.absoluteFill]} contentFit="contain" />
 						</Animated.View>
 					</TouchableWithoutFeedback>
 				</Animated.View>
 			</GestureDetector>
-			<BaseBottomModal
-				visible={modalVisible}
-				onClose={() => setModalVisible(false)}
-			>
+			<BaseBottomModal visible={modalVisible} onClose={() => setModalVisible(false)}>
 				<SettingsList
-					leftIcon={
-						<Ionicons
-							name="cloud-download-outline"
-							size={24}
-							color={theme.screen.icon}
-						/>
-					}
+					leftIcon={<Ionicons name="cloud-download-outline" size={24} color={theme.screen.icon} />}
 					label="Download Image"
 					handleFunction={() => {
 						setModalVisible(false);

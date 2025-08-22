@@ -40,16 +40,8 @@ export class PdfGeneratorHelper {
   }
 
   /** Generates a PDF from the provided HTML string */
-  public static async generatePdfFromHtml(
-    html: string,
-    requestOptions: RequestOptions,
-    options?: PdfGeneratorOptions
-  ): Promise<Buffer> {
+  public static async generatePdfFromHtml(html: string, requestOptions: RequestOptions, options?: PdfGeneratorOptions): Promise<Buffer> {
     options = { ...this.getDefaultPdfGeneratorOptions(), ...options };
-    return await PuppeteerGenerator.generatePdfFromHtmlPuppeteer(
-      html,
-      requestOptions,
-      options
-    );
+    return await PuppeteerGenerator.generatePdfFromHtmlPuppeteer(html, requestOptions, options);
   }
 }

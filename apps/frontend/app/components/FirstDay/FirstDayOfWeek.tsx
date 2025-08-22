@@ -22,16 +22,10 @@ type FirstDayOfWeekProps = {
 	onPress: () => void;
 };
 
-const FirstDayOfWeek: React.FC<FirstDayOfWeekProps> = ({
-	position,
-	isSelected,
-	onPress,
-}) => {
+const FirstDayOfWeek: React.FC<FirstDayOfWeekProps> = ({ position, isSelected, onPress }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	return (
 		<TouchableOpacity
@@ -53,12 +47,7 @@ const FirstDayOfWeek: React.FC<FirstDayOfWeekProps> = ({
 			</Text>
 
 			{/* Radio Button */}
-			<MaterialCommunityIcons
-				name={isSelected ? 'checkbox-marked' : 'checkbox-blank'}
-				size={24}
-				color={isSelected ? contrastColor : theme.screen.icon}
-				style={styles.radioButton}
-			/>
+			<MaterialCommunityIcons name={isSelected ? 'checkbox-marked' : 'checkbox-blank'} size={24} color={isSelected ? contrastColor : theme.screen.icon} style={styles.radioButton} />
 		</TouchableOpacity>
 	);
 };

@@ -13,17 +13,12 @@ export type DirectusFileTransformOptions = {
 };
 
 export class DirectusFilesAssetHelper {
-  public static PRESET_FILE_TRANSFORMATION_IMAGE_HD: DirectusFileTransformOptions =
-    {
-      width: 1024,
-      height: 1024,
-    };
+  public static PRESET_FILE_TRANSFORMATION_IMAGE_HD: DirectusFileTransformOptions = {
+    width: 1024,
+    height: 1024,
+  };
 
-  private static getAssetUrl(
-    serverUrl: string,
-    directusFileId: string,
-    options?: DirectusFileTransformOptions
-  ): string {
+  private static getAssetUrl(serverUrl: string, directusFileId: string, options?: DirectusFileTransformOptions): string {
     let url = `${serverUrl}/assets/${directusFileId}`;
 
     const params = new URLSearchParams();
@@ -35,23 +30,11 @@ export class DirectusFilesAssetHelper {
     return params.toString() ? `${url}?${params.toString()}` : url;
   }
 
-  public static getDirectAssetUrlByObjectOrId(
-    directusFile: DatabaseTypes.DirectusFiles | string,
-    myDatabaseTestableHelperInterface: MyDatabaseTestableHelperInterface,
-    options?: DirectusFileTransformOptions
-  ): string {
+  public static getDirectAssetUrlByObjectOrId(directusFile: DatabaseTypes.DirectusFiles | string, myDatabaseTestableHelperInterface: MyDatabaseTestableHelperInterface, options?: DirectusFileTransformOptions): string {
     if (typeof directusFile === 'string') {
-      return DirectusFilesAssetHelper.getDirectAssetUrlById(
-        directusFile,
-        myDatabaseTestableHelperInterface,
-        options
-      );
+      return DirectusFilesAssetHelper.getDirectAssetUrlById(directusFile, myDatabaseTestableHelperInterface, options);
     } else {
-      return DirectusFilesAssetHelper.getDirectAssetUrl(
-        directusFile,
-        myDatabaseTestableHelperInterface,
-        options
-      );
+      return DirectusFilesAssetHelper.getDirectAssetUrl(directusFile, myDatabaseTestableHelperInterface, options);
     }
   }
 
@@ -61,28 +44,12 @@ export class DirectusFilesAssetHelper {
    * @param myDatabaseTestableHelperInterface
    * @param options
    */
-  public static getDirectAssetUrl(
-    directusFile: DatabaseTypes.DirectusFiles,
-    myDatabaseTestableHelperInterface: MyDatabaseTestableHelperInterface,
-    options?: DirectusFileTransformOptions
-  ): string {
-    return DirectusFilesAssetHelper.getDirectAssetUrlById(
-      directusFile.id,
-      myDatabaseTestableHelperInterface,
-      options
-    );
+  public static getDirectAssetUrl(directusFile: DatabaseTypes.DirectusFiles, myDatabaseTestableHelperInterface: MyDatabaseTestableHelperInterface, options?: DirectusFileTransformOptions): string {
+    return DirectusFilesAssetHelper.getDirectAssetUrlById(directusFile.id, myDatabaseTestableHelperInterface, options);
   }
 
-  public static getDirectAssetUrlById(
-    directusFileId: string,
-    myDatabaseTestableHelperInterface: MyDatabaseTestableHelperInterface,
-    options?: DirectusFileTransformOptions
-  ): string {
+  public static getDirectAssetUrlById(directusFileId: string, myDatabaseTestableHelperInterface: MyDatabaseTestableHelperInterface, options?: DirectusFileTransformOptions): string {
     let publicServerUrl = myDatabaseTestableHelperInterface.getServerUrl();
-    return DirectusFilesAssetHelper.getAssetUrl(
-      publicServerUrl,
-      directusFileId,
-      options
-    );
+    return DirectusFilesAssetHelper.getAssetUrl(publicServerUrl, directusFileId, options);
   }
 }

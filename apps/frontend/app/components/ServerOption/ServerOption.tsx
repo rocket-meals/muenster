@@ -13,15 +13,9 @@ interface ServerOptionProps {
 	onPress: () => void;
 }
 
-const ServerOption: React.FC<ServerOptionProps> = ({
-	server,
-	isSelected,
-	onPress,
-}) => {
+const ServerOption: React.FC<ServerOptionProps> = ({ server, isSelected, onPress }) => {
 	const { theme } = useTheme();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	return (
 		<TouchableOpacity
@@ -32,12 +26,7 @@ const ServerOption: React.FC<ServerOptionProps> = ({
 			}}
 			onPress={onPress}
 		>
-			<MaterialCommunityIcons
-				name="server"
-				size={24}
-				color={isSelected ? contrastColor : theme.screen.icon}
-				style={styles.icon}
-			/>
+			<MaterialCommunityIcons name="server" size={24} color={isSelected ? contrastColor : theme.screen.icon} style={styles.icon} />
 			<Text
 				style={{
 					...styles.text,
@@ -46,12 +35,7 @@ const ServerOption: React.FC<ServerOptionProps> = ({
 			>
 				{server.projectName}
 			</Text>
-			<MaterialCommunityIcons
-				name={isSelected ? 'checkbox-marked' : 'checkbox-blank'}
-				size={24}
-				color={isSelected ? contrastColor : theme.screen.icon}
-				style={styles.radioButton}
-			/>
+			<MaterialCommunityIcons name={isSelected ? 'checkbox-marked' : 'checkbox-blank'} size={24} color={isSelected ? contrastColor : theme.screen.icon} style={styles.radioButton} />
 		</TouchableOpacity>
 	);
 };

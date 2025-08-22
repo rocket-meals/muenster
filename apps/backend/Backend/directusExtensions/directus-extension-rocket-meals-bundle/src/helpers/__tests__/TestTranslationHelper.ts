@@ -1,11 +1,6 @@
 // small jest test
 import { describe, expect, it } from '@jest/globals';
-import {
-  LanguageCodes,
-  LanguageCodesType,
-  TranslationsFromParsingType,
-  TranslationHelper,
-} from '../TranslationHelper';
+import { LanguageCodes, LanguageCodesType, TranslationsFromParsingType, TranslationHelper } from '../TranslationHelper';
 import { PrimaryKey } from '@directus/types';
 
 // Mock Data for Testing
@@ -79,9 +74,7 @@ describe('TranslationHelper Test', () => {
     const objectB = {
       name: 'Pasta',
     };
-    expect(
-      TranslationHelper.hasSignificantTranslationChange(objectA, objectB)
-    ).toBe(true);
+    expect(TranslationHelper.hasSignificantTranslationChange(objectA, objectB)).toBe(true);
   });
 
   // should not find any significant change
@@ -92,9 +85,7 @@ describe('TranslationHelper Test', () => {
     const objectB = {
       name: 'Pizza',
     };
-    expect(
-      TranslationHelper.hasSignificantTranslationChange(objectA, objectB)
-    ).toBe(false);
+    expect(TranslationHelper.hasSignificantTranslationChange(objectA, objectB)).toBe(false);
   });
 
   // should not find any significant change but with change at NonSignificantField
@@ -110,9 +101,7 @@ describe('TranslationHelper Test', () => {
       ...objectSameValue,
       id: 'def456',
     };
-    expect(
-      TranslationHelper.hasSignificantTranslationChange(objectA, objectB)
-    ).toBe(false);
+    expect(TranslationHelper.hasSignificantTranslationChange(objectA, objectB)).toBe(false);
   });
 
   // Test case that should pass
@@ -127,9 +116,7 @@ describe('TranslationHelper Test', () => {
     expect(result.updateNeeded).toBe(true);
     expect(result.updateObject.translations.update).toHaveLength(1);
     expect(result.updateObject.translations.create).toHaveLength(0);
-    expect(result.updateObject.translations.update?.[0]?.name).toBe(
-      'Hello there'
-    );
+    expect(result.updateObject.translations.update?.[0]?.name).toBe('Hello there');
   });
 
   // Test case that should fail (when no changes are detected)

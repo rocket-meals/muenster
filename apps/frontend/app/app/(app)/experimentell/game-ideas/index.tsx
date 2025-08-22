@@ -38,20 +38,7 @@ const markings: Marking[] = [
 	{ name: 'Too Sweet', dislikes: 40 },
 ];
 
-const foodIcons = [
-	'🍔',
-	'🍕',
-	'🍣',
-	'🥗',
-	'🍰',
-	'🍟',
-	'🌮',
-	'🍜',
-	'🍩',
-	'🍇',
-	'🍤',
-	'🥐',
-];
+const foodIcons = ['🍔', '🍕', '🍣', '🥗', '🍰', '🍟', '🌮', '🍜', '🍩', '🍇', '🍤', '🥐'];
 
 const getRandomPair = (): [Dish, Dish] => {
 	const shuffled = [...dishes].sort(() => Math.random() - 0.5);
@@ -85,10 +72,7 @@ const GameIdeas = () => {
 	const [board, setBoard] = useState<(Card | null)[]>(generateMemoryBoard());
 	const [selected, setSelected] = useState<number[]>([]);
 
-	const mostDisliked = useMemo(
-		() => markings.reduce((a, b) => (a.dislikes > b.dislikes ? a : b)),
-		[]
-	);
+	const mostDisliked = useMemo(() => markings.reduce((a, b) => (a.dislikes > b.dislikes ? a : b)), []);
 
 	const handleRatingGuess = (dish: Dish) => {
 		const other = ratingPair.find(d => d.name !== dish.name)!;
@@ -134,68 +118,35 @@ const GameIdeas = () => {
 	};
 
 	return (
-		<ScrollView
-			style={{ flex: 1, backgroundColor: theme.screen.background }}
-			contentContainerStyle={styles.container}
-		>
-			<Text style={{ ...styles.heading, color: theme.screen.text }}>
-				{translate(TranslationKeys.game_ideas)}
-			</Text>
+		<ScrollView style={{ flex: 1, backgroundColor: theme.screen.background }} contentContainerStyle={styles.container}>
+			<Text style={{ ...styles.heading, color: theme.screen.text }}>{translate(TranslationKeys.game_ideas)}</Text>
 
-			<Text style={{ ...styles.subheading, color: theme.screen.text }}>
-				{translate(TranslationKeys.guess_better_rated_dish)}
-			</Text>
+			<Text style={{ ...styles.subheading, color: theme.screen.text }}>{translate(TranslationKeys.guess_better_rated_dish)}</Text>
 			<View style={styles.row}>
 				{ratingPair.map(dish => (
-					<TouchableOpacity
-						key={dish.name}
-						style={{ ...styles.button, backgroundColor: theme.screen.iconBg }}
-						onPress={() => handleRatingGuess(dish)}
-					>
+					<TouchableOpacity key={dish.name} style={{ ...styles.button, backgroundColor: theme.screen.iconBg }} onPress={() => handleRatingGuess(dish)}>
 						<Text style={{ color: theme.screen.text }}>{dish.name}</Text>
 					</TouchableOpacity>
 				))}
 			</View>
-			{ratingResult !== '' && (
-				<Text style={{ ...styles.result, color: theme.screen.text }}>
-					{ratingResult}
-				</Text>
-			)}
+			{ratingResult !== '' && <Text style={{ ...styles.result, color: theme.screen.text }}>{ratingResult}</Text>}
 
-			<Text style={{ ...styles.subheading, color: theme.screen.text }}>
-				{translate(TranslationKeys.guess_most_disliked_marking)}
-			</Text>
+			<Text style={{ ...styles.subheading, color: theme.screen.text }}>{translate(TranslationKeys.guess_most_disliked_marking)}</Text>
 			<View style={styles.row}>
 				{markings.map(m => (
-					<TouchableOpacity
-						key={m.name}
-						style={{ ...styles.button, backgroundColor: theme.screen.iconBg }}
-						onPress={() => handleMarkingGuess(m)}
-					>
+					<TouchableOpacity key={m.name} style={{ ...styles.button, backgroundColor: theme.screen.iconBg }} onPress={() => handleMarkingGuess(m)}>
 						<Text style={{ color: theme.screen.text }}>{m.name}</Text>
 					</TouchableOpacity>
 				))}
 			</View>
-			{markingResult !== '' && (
-				<Text style={{ ...styles.result, color: theme.screen.text }}>
-					{markingResult}
-				</Text>
-			)}
+			{markingResult !== '' && <Text style={{ ...styles.result, color: theme.screen.text }}>{markingResult}</Text>}
 
-			<Text style={{ ...styles.subheading, color: theme.screen.text }}>
-				{translate(TranslationKeys.food_memory_game)}
-			</Text>
+			<Text style={{ ...styles.subheading, color: theme.screen.text }}>{translate(TranslationKeys.food_memory_game)}</Text>
 			<View style={styles.memoryContainer}>
 				{board.map((card, idx) =>
 					card ? (
-						<TouchableOpacity
-							key={idx}
-							style={{ ...styles.memoryCard, backgroundColor: theme.screen.iconBg }}
-							onPress={() => handleCardPress(idx)}
-						>
-							<Text style={{ color: theme.screen.text, fontSize: 24 }}>
-								{card.revealed || card.matched ? card.value : '?'}
-							</Text>
+						<TouchableOpacity key={idx} style={{ ...styles.memoryCard, backgroundColor: theme.screen.iconBg }} onPress={() => handleCardPress(idx)}>
+							<Text style={{ color: theme.screen.text, fontSize: 24 }}>{card.revealed || card.matched ? card.value : '?'}</Text>
 						</TouchableOpacity>
 					) : (
 						<View key={idx} style={styles.memoryCard} />
@@ -203,25 +154,15 @@ const GameIdeas = () => {
 				)}
 			</View>
 
-			<Text style={{ ...styles.subheading, color: theme.screen.text }}>
-				{translate(TranslationKeys.guess_more_expensive_dish)}
-			</Text>
+			<Text style={{ ...styles.subheading, color: theme.screen.text }}>{translate(TranslationKeys.guess_more_expensive_dish)}</Text>
 			<View style={styles.row}>
 				{pricePair.map(dish => (
-					<TouchableOpacity
-						key={dish.name}
-						style={{ ...styles.button, backgroundColor: theme.screen.iconBg }}
-						onPress={() => handlePriceGuess(dish)}
-					>
+					<TouchableOpacity key={dish.name} style={{ ...styles.button, backgroundColor: theme.screen.iconBg }} onPress={() => handlePriceGuess(dish)}>
 						<Text style={{ color: theme.screen.text }}>{dish.name}</Text>
 					</TouchableOpacity>
 				))}
 			</View>
-			{priceResult !== '' && (
-				<Text style={{ ...styles.result, color: theme.screen.text }}>
-					{priceResult}
-				</Text>
-			)}
+			{priceResult !== '' && <Text style={{ ...styles.result, color: theme.screen.text }}>{priceResult}</Text>}
 		</ScrollView>
 	);
 };

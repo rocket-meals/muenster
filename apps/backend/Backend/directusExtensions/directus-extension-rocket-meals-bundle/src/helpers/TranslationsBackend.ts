@@ -9,10 +9,7 @@ export class LanguageCodes {
 }
 
 export class TranslationsBackend {
-  public static getTranslation(
-    key: TranslationBackendKeys,
-    language?: string
-  ): string {
+  public static getTranslation(key: TranslationBackendKeys, language?: string): string {
     switch (key) {
       case TranslationBackendKeys.FORM_VALUE_BOOLEAN_TRUE:
         return 'Ja';

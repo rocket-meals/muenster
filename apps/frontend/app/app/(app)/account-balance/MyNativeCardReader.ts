@@ -28,12 +28,7 @@ export default class MyNativeCardReader implements MyCardReaderInterface {
 		return await NfcManager.isSupported();
 	}
 
-	async readCard(
-		callBack: (answer: CardResponse | undefined) => Promise<void>,
-		showInstruction: () => void,
-		hideInstruction: () => void,
-		nfcInstruction: string
-	): Promise<void> {
+	async readCard(callBack: (answer: CardResponse | undefined) => Promise<void>, showInstruction: () => void, hideInstruction: () => void, nfcInstruction: string): Promise<void> {
 		if (isExpoGo || !NfcManager) {
 			console.error('NFC operations are not supported in this environment.');
 			return;

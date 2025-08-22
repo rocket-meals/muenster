@@ -1,18 +1,5 @@
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import {
-	View,
-	ScrollView,
-	TouchableOpacity,
-	Dimensions,
-	Text,
-	TextInput,
-} from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, ScrollView, TouchableOpacity, Dimensions, Text, TextInput } from 'react-native';
 
 import { useTheme } from '@/hooks/useTheme';
 import { router, useFocusEffect } from 'expo-router';
@@ -21,12 +8,7 @@ import styles from './styles';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
-import {
-	AntDesign,
-	Entypo,
-	Ionicons,
-	MaterialCommunityIcons,
-} from '@expo/vector-icons';
+import { AntDesign, Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLanguage } from '@/hooks/useLanguage';
 import ManagementCanteensSheet from '@/components/ManagementCanteensSheet/ManagementCanteensSheet';
 import { SET_DAY_PLAN } from '@/redux/Types/types';
@@ -42,11 +24,7 @@ const Index = () => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
-	const {
-		primaryColor: projectColor,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor: projectColor, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const { dayPlan } = useSelector((state: RootState) => state.management);
 	const [isActive, setIsActive] = useState(false);
 	const [value, setValue] = useState('');
@@ -62,14 +40,8 @@ const Index = () => {
 		key: '',
 		label: '',
 	});
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: projectColor;
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 	const openCanteenSheet = () => {
 		canteenSheetRef?.current?.expand();
 	};
@@ -175,19 +147,11 @@ const Index = () => {
 				>
 					<View style={styles.col1}>
 						<Ionicons name="restaurant-sharp" size={24} color={theme.screen.icon} />
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{translate(TranslationKeys.canteen)}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.canteen)}</Text>
 					</View>
 					<View style={styles.col2}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{dayPlan?.selectedCanteen?.alias}
-						</Text>
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{dayPlan?.selectedCanteen?.alias}</Text>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 				<TouchableOpacity
@@ -196,26 +160,14 @@ const Index = () => {
 						backgroundColor: theme.screen.iconBg,
 						paddingHorizontal: windowWidth > 600 ? 20 : 10,
 					}}
-					onPress={() =>
-						openFoodCategorySheet('Speiseangebot', 'Speiseangebot Kategorie Wählen')
-					}
+					onPress={() => openFoodCategorySheet('Speiseangebot', 'Speiseangebot Kategorie Wählen')}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Speiseangebot Kategorie (optional)
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Speiseangebot Kategorie (optional)</Text>
 					</View>
 					<View style={styles.col2}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{dayPlan?.mealOfferCategory?.alias
-								? dayPlan?.mealOfferCategory?.alias
-								: ''}
-						</Text>
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{dayPlan?.mealOfferCategory?.alias ? dayPlan?.mealOfferCategory?.alias : ''}</Text>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 				<View
@@ -226,9 +178,7 @@ const Index = () => {
 					}}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Zeige Speiseangebot Kateogrie Name
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Zeige Speiseangebot Kateogrie Name</Text>
 					</View>
 					<View style={styles.col2}>
 						<Switch
@@ -251,19 +201,11 @@ const Index = () => {
 					onPress={() => openIntervalSheet('foodInterval', 'Next Food Interval')}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Next Food Interval
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Next Food Interval</Text>
 					</View>
 					<View style={styles.col2}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{dayPlan?.nextFoodInterval}
-						</Text>
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{dayPlan?.nextFoodInterval}</Text>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 				<TouchableOpacity
@@ -272,24 +214,14 @@ const Index = () => {
 						backgroundColor: theme.screen.iconBg,
 						paddingHorizontal: windowWidth > 600 ? 20 : 10,
 					}}
-					onPress={() =>
-						openIntervalSheet('refreshFoodInterval', 'Refresh Food Offers Interval')
-					}
+					onPress={() => openIntervalSheet('refreshFoodInterval', 'Refresh Food Offers Interval')}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Refresh Food Offers Interval
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Refresh Food Offers Interval</Text>
 					</View>
 					<View style={styles.col2}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{dayPlan?.refreshInterval}
-						</Text>
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{dayPlan?.refreshInterval}</Text>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 				<View
@@ -300,9 +232,7 @@ const Index = () => {
 					}}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Full Screen
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Full Screen</Text>
 					</View>
 					<View style={styles.col2}>
 						<Switch
@@ -325,19 +255,11 @@ const Index = () => {
 					onPress={() => openFoodCategorySheet('Speise', 'Speise Kategorie Wählen')}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Speise Kategorie (optional)
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Speise Kategorie (optional)</Text>
 					</View>
 					<View style={styles.col2}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{dayPlan?.foodCategory?.alias ? dayPlan?.foodCategory?.alias : ''}
-						</Text>
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{dayPlan?.foodCategory?.alias ? dayPlan?.foodCategory?.alias : ''}</Text>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 				<View
@@ -348,9 +270,7 @@ const Index = () => {
 					}}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Zeige Speiseangebot Kateogrie Name
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Zeige Speiseangebot Kateogrie Name</Text>
 					</View>
 					<View style={styles.col2}>
 						<Switch
@@ -391,9 +311,7 @@ const Index = () => {
 					}}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							BigScreen
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>BigScreen</Text>
 					</View>
 					<View style={styles.col2}>
 						<Entypo name="chevron-small-right" size={22} color={theme.screen.icon} />
@@ -412,10 +330,7 @@ const Index = () => {
 					handleComponent={null}
 					onClose={closeCanteenSheet}
 				>
-					<ManagementCanteensSheet
-						closeSheet={closeCanteenSheet}
-						handleSelectCanteen={handleSelectCanteen}
-					/>
+					<ManagementCanteensSheet closeSheet={closeCanteenSheet} handleSelectCanteen={handleSelectCanteen} />
 				</BaseBottomSheet>
 			)}
 			{isActive && (
@@ -460,12 +375,7 @@ const Index = () => {
 								<AntDesign name="close" size={26} color={theme.modal.closeIcon} />
 							</TouchableOpacity>
 						</View>
-						<View
-							style={[
-								styles.modalContent,
-								{ paddingHorizontal: windowWidth < 600 ? 5 : 30 },
-							]}
-						>
+						<View style={[styles.modalContent, { paddingHorizontal: windowWidth < 600 ? 5 : 30 }]}>
 							<TextInput
 								style={{
 									...styles.input,
@@ -501,9 +411,7 @@ const Index = () => {
 										borderColor: foods_area_color,
 									}}
 								>
-									<Text style={[styles.buttonText, { color: contrastColor }]}>
-										cancel
-									</Text>
+									<Text style={[styles.buttonText, { color: contrastColor }]}>cancel</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
 									onPress={() => {
@@ -544,10 +452,7 @@ const Index = () => {
 					handleComponent={null}
 					onClose={closeFoodCategorySheet}
 				>
-					<ManagementFoodCategorySheet
-						closeSheet={closeFoodCategorySheet}
-						selectedFoodCategory={selectedFoodCategory}
-					/>
+					<ManagementFoodCategorySheet closeSheet={closeFoodCategorySheet} selectedFoodCategory={selectedFoodCategory} />
 				</BaseBottomSheet>
 			)}
 		</>

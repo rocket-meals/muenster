@@ -22,9 +22,7 @@ const LoginHeader = () => {
 	const { theme } = useTheme();
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
 	const [selectedLanguage, setSelectedLanguage] = useState<string>('');
-	const { primaryColor, serverInfo } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, serverInfo } = useSelector((state: RootState) => state.settings);
 
 	function useDeviceLocaleCodesWithoutRegionCode(): string[] {
 		let localeCodes: string[] = [];
@@ -89,11 +87,7 @@ const LoginHeader = () => {
 		closeLanguageModal();
 	};
 
-	const changeLanguage = (language: {
-		label?: string;
-		flag?: any;
-		value: any;
-	}) => {
+	const changeLanguage = (language: { label?: string; flag?: any; value: any }) => {
 		setSelectedLanguage(language.value);
 		setLanguageMode(language.value);
 		closeLanguageModal();
@@ -126,19 +120,12 @@ const LoginHeader = () => {
 						color: theme.screen.text,
 					}}
 				>
-					{languages.find(lang => lang.value === selectedLanguage)?.label ||
-						'selected language'}
+					{languages.find(lang => lang.value === selectedLanguage)?.label || 'selected language'}
 				</Text>
 				<Entypo name="chevron-small-down" size={25} color={theme.screen.icon} />
 			</TouchableOpacity>
 
-			<ModalComponent
-				isVisible={isLanguageModalVisible}
-				onClose={closeLanguageModal}
-				title={translate(TranslationKeys.language)}
-				onSave={saveLanguage}
-				showButtons={false}
-			>
+			<ModalComponent isVisible={isLanguageModalVisible} onClose={closeLanguageModal} title={translate(TranslationKeys.language)} onSave={saveLanguage} showButtons={false}>
 				<View style={styles.languageContainer}>
 					{languages.map((language, index) => (
 						<TouchableOpacity
@@ -147,10 +134,7 @@ const LoginHeader = () => {
 								...styles.languageRow,
 								paddingHorizontal: isWeb ? 20 : 10,
 
-								backgroundColor:
-									selectedLanguage === language.value
-										? primaryColor
-										: theme.screen.iconBg,
+								backgroundColor: selectedLanguage === language.value ? primaryColor : theme.screen.iconBg,
 							}}
 							onPress={() => {
 								changeLanguage(language);
@@ -160,26 +144,14 @@ const LoginHeader = () => {
 							<Text
 								style={{
 									...styles.languageText,
-									color:
-										selectedLanguage === language.value
-											? theme.activeText
-											: theme.screen.text,
+									color: selectedLanguage === language.value ? theme.activeText : theme.screen.text,
 								}}
 							>
 								{language.label}
 							</Text>
 
 							{/* Radio Button */}
-							<MaterialCommunityIcons
-								name={
-									selectedLanguage === language.value
-										? 'checkbox-marked'
-										: 'checkbox-blank'
-								}
-								size={24}
-								color={selectedLanguage === language.value ? '#ffffff' : '#ffffff'}
-								style={styles.radioButton}
-							/>
+							<MaterialCommunityIcons name={selectedLanguage === language.value ? 'checkbox-marked' : 'checkbox-blank'} size={24} color={selectedLanguage === language.value ? '#ffffff' : '#ffffff'} style={styles.radioButton} />
 						</TouchableOpacity>
 					))}
 				</View>

@@ -7,26 +7,15 @@ import { ApiContext } from './ApiContext';
 const EXTENSION_NAME = 'directus-extension-rocket-meals-bundle';
 
 export class DatabaseInitializedCheck {
-  static async checkAllTablesExistWithApiContext(
-    scheduleName: string,
-    apiContext: ApiContext
-  ) {
-    return await DatabaseInitializedCheck.checkTablesExist(
-      scheduleName,
-      apiContext,
-      getAllCollectionNames()
-    );
+  static async checkAllTablesExistWithApiContext(scheduleName: string, apiContext: ApiContext) {
+    return await DatabaseInitializedCheck.checkTablesExist(scheduleName, apiContext, getAllCollectionNames());
   }
 
-  static async getTableNamesFromApiContext(
-    apiContext: ApiContext
-  ): Promise<CollectionNames[]> {
+  static async getTableNamesFromApiContext(apiContext: ApiContext): Promise<CollectionNames[]> {
     return await DatabaseInitializedCheck.getTableNames(apiContext.getSchema);
   }
 
-  private static async getTableNames(
-    getSchema: any
-  ): Promise<CollectionNames[]> {
+  private static async getTableNames(getSchema: any): Promise<CollectionNames[]> {
     try {
       let schema = await getSchema();
       let collectionKeys = Object.keys(schema.collections);
@@ -44,15 +33,10 @@ export class DatabaseInitializedCheck {
     }
   }
 
-  static async checkTablesExist(
-    scheduleName: string,
-    apiContext: ApiContext,
-    tablesRequiredForPlugin: CollectionNames[]
-  ): Promise<boolean> {
+  static async checkTablesExist(scheduleName: string, apiContext: ApiContext, tablesRequiredForPlugin: CollectionNames[]): Promise<boolean> {
     let missingTables = [];
 
-    let existingTablesNamesOnServer =
-      await DatabaseInitializedCheck.getTableNamesFromApiContext(apiContext);
+    let existingTablesNamesOnServer = await DatabaseInitializedCheck.getTableNamesFromApiContext(apiContext);
     for (let tableRequiredForPlugin of tablesRequiredForPlugin) {
       if (!existingTablesNamesOnServer.includes(tableRequiredForPlugin)) {
         missingTables.push(tableRequiredForPlugin);
@@ -61,12 +45,7 @@ export class DatabaseInitializedCheck {
 
     let allTablesExist = missingTables.length === 0;
     if (!allTablesExist) {
-      let logMessage =
-        '++ ' +
-        EXTENSION_NAME +
-        ' - ' +
-        scheduleName +
-        `: Database not initialized yet. Missing tables: ${missingTables.join(', ')}`;
+      let logMessage = '++ ' + EXTENSION_NAME + ' - ' + scheduleName + `: Database not initialized yet. Missing tables: ${missingTables.join(', ')}`;
       console.log(logMessage);
     }
     return allTablesExist;

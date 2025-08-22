@@ -25,9 +25,7 @@ export default function FoodOfferLayout() {
 			<Stack.Screen
 				name="details/index"
 				options={{
-					header: () => (
-						<CustomStackHeader label={translate(TranslationKeys.food_details)} />
-					),
+					header: () => <CustomStackHeader label={translate(TranslationKeys.food_details)} />,
 				}}
 			/>
 		</Stack>

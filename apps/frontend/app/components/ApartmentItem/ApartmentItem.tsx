@@ -18,33 +18,16 @@ import CardWithText from '../CardWithText/CardWithText';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 import AvailableFromModal from '../AvailableFromModal';
 
-const ApartmentItem: React.FC<BuildingItemProps> = ({
-	apartment,
-	setSelectedApartementId,
-	openImageManagementSheet,
-	openDistanceSheet,
-}) => {
+const ApartmentItem: React.FC<BuildingItemProps> = ({ apartment, setSelectedApartementId, openImageManagementSheet, openDistanceSheet }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
-	const {
-		primaryColor: projectColor,
-		appSettings,
-		serverInfo,
-		selectedTheme: mode,
-		amountColumnsForcard,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor: projectColor, appSettings, serverInfo, selectedTheme: mode, amountColumnsForcard } = useSelector((state: RootState) => state.settings);
 	const defaultImage = getImageUrl(serverInfo?.info?.project?.project_logo);
 	const { isManagement } = useSelector((state: RootState) => state.authReducer);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const [showFreeModal, setShowFreeModal] = useState(false);
-	const housing_area_color = appSettings?.housing_area_color
-		? appSettings?.housing_area_color
-		: projectColor;
-	const contrastColor = myContrastColor(
-		housing_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const housing_area_color = appSettings?.housing_area_color ? appSettings?.housing_area_color : projectColor;
+	const contrastColor = myContrastColor(housing_area_color, theme, mode === 'dark');
 
 	const handleNavigation = (id: string) => {
 		router.push({
@@ -63,17 +46,12 @@ const ApartmentItem: React.FC<BuildingItemProps> = ({
 		return () => subscription?.remove();
 	}, []);
 
-	const getCardDimension = () =>
-		CardDimensionHelper.getCardDimension(screenWidth);
+	const getCardDimension = () => CardDimensionHelper.getCardDimension(screenWidth);
 
-	const getCardWidth = () =>
-		CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
+	const getCardWidth = () => CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
 
 	useEffect(() => {
-		const cardWidth = CardDimensionHelper.getCardWidth(
-			screenWidth,
-			amountColumnsForcard
-		);
+		const cardWidth = CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
 	}, [amountColumnsForcard, screenWidth]);
 
 	return (
@@ -93,18 +71,12 @@ const ApartmentItem: React.FC<BuildingItemProps> = ({
 						}
 						containerStyle={{
 							...styles.card,
-							width:
-								amountColumnsForcard === 0
-									? CardDimensionHelper.getCardDimension(screenWidth)
-									: CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard),
+							width: amountColumnsForcard === 0 ? CardDimensionHelper.getCardDimension(screenWidth) : CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard),
 							backgroundColor: theme.card.background,
 						}}
 						imageContainerStyle={{
 							...styles.imageContainer,
-							height:
-								amountColumnsForcard === 0
-									? CardDimensionHelper.getCardDimension(screenWidth)
-									: CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard),
+							height: amountColumnsForcard === 0 ? CardDimensionHelper.getCardDimension(screenWidth) : CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard),
 						}}
 						contentStyle={{
 							...styles.cardContent,
@@ -121,14 +93,8 @@ const ApartmentItem: React.FC<BuildingItemProps> = ({
 										}}
 										onPress={() => setShowFreeModal(true)}
 									>
-										<MaterialCommunityIcons
-											name="door-open"
-											size={20}
-											color={contrastColor}
-										/>
-										<Text style={{ ...styles.freeBadgeText, color: contrastColor }}>
-											{translate(TranslationKeys.free_rooms)}
-										</Text>
+										<MaterialCommunityIcons name="door-open" size={20} color={contrastColor} />
+										<Text style={{ ...styles.freeBadgeText, color: contrastColor }}>{translate(TranslationKeys.free_rooms)}</Text>
 									</TouchableOpacity>
 								)}
 								<View style={styles.imageActionContainer}>
@@ -144,19 +110,13 @@ const ApartmentItem: React.FC<BuildingItemProps> = ({
 														openImageManagementSheet();
 													}}
 												>
-													<MaterialCommunityIcons
-														name="image-edit"
-														size={20}
-														color={'white'}
-													/>
+													<MaterialCommunityIcons name="image-edit" size={20} color={'white'} />
 												</TouchableOpacity>
 											)}
 										>
 											<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 												<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-													{`${translate(TranslationKeys.edit)}: ${translate(
-														TranslationKeys.image
-													)}`}
+													{`${translate(TranslationKeys.edit)}: ${translate(TranslationKeys.image)}`}
 												</TooltipText>
 											</TooltipContent>
 										</Tooltip>
@@ -170,22 +130,14 @@ const ApartmentItem: React.FC<BuildingItemProps> = ({
 										}}
 										onPress={openDistanceSheet}
 									>
-										<MaterialCommunityIcons
-											name="map-marker-distance"
-											size={20}
-											color={contrastColor}
-										/>
-										<Text style={{ ...styles.distance, color: contrastColor }}>
-											{getDistanceUnit(apartment?.distance)}
-										</Text>
+										<MaterialCommunityIcons name="map-marker-distance" size={20} color={contrastColor} />
+										<Text style={{ ...styles.distance, color: contrastColor }}>{getDistanceUnit(apartment?.distance)}</Text>
 									</TouchableOpacity>
 								</View>
 							</>
 						}
 					>
-						<Text style={{ ...styles.campusName, color: theme.screen.text }}>
-							{isWeb ? excerpt(apartment?.alias, 70) : excerpt(apartment?.alias, 40)}
-						</Text>
+						<Text style={{ ...styles.campusName, color: theme.screen.text }}>{isWeb ? excerpt(apartment?.alias, 70) : excerpt(apartment?.alias, 40)}</Text>
 					</CardWithText>
 				)}
 			>
@@ -195,11 +147,7 @@ const ApartmentItem: React.FC<BuildingItemProps> = ({
 					</TooltipText>
 				</TooltipContent>
 			</Tooltip>
-			<AvailableFromModal
-				visible={showFreeModal}
-				onClose={() => setShowFreeModal(false)}
-				availableFrom={String(apartment?.available_from)}
-			/>
+			<AvailableFromModal visible={showFreeModal} onClose={() => setShowFreeModal(false)} availableFrom={String(apartment?.available_from)} />
 		</>
 	);
 };

@@ -4,31 +4,14 @@ import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
-import {
-	AntDesign,
-	FontAwesome5,
-	Ionicons,
-	MaterialCommunityIcons,
-} from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { SortSheetProps } from './types';
 import Checkbox from 'expo-checkbox';
 import { FoodSortOption } from 'repo-depkit-common';
-import {
-	SET_SELECTED_CANTEEN_FOOD_OFFERS,
-	SET_SORTING,
-} from '@/redux/Types/types';
+import { SET_SELECTED_CANTEEN_FOOD_OFFERS, SET_SORTING } from '@/redux/Types/types';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	intelligentSort,
-	sortByPrice,
-	sortByEatingHabits,
-	sortByFoodName,
-	sortByOwnFavorite,
-	sortByPublicFavorite,
-	sortByFoodCategory,
-	sortByFoodOfferCategory,
-} from 'repo-depkit-common';
+import { intelligentSort, sortByPrice, sortByEatingHabits, sortByFoodName, sortByOwnFavorite, sortByPublicFavorite, sortByFoodCategory, sortByFoodOfferCategory } from 'repo-depkit-common';
 import { useLanguage } from '@/hooks/useLanguage';
 import { myContrastColor } from '@/helper/colorHelper';
 import { TranslationKeys } from '@/locales/keys';
@@ -39,31 +22,13 @@ const SortSheet: React.FC<SortSheetProps> = ({ closeSheet }) => {
 	const { translate } = useLanguage();
 
 	const dispatch = useDispatch();
-	const { canteenFoodOffers } = useSelector(
-		(state: RootState) => state.canteenReducer
-	);
-	const {
-		primaryColor,
-		language: languageCode,
-		sortBy,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
-	const { ownFoodFeedbacks, foodCategories, foodOfferCategories } = useSelector(
-		(state: RootState) => state.food
-	);
+	const { canteenFoodOffers } = useSelector((state: RootState) => state.canteenReducer);
+	const { primaryColor, language: languageCode, sortBy, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+	const { ownFoodFeedbacks, foodCategories, foodOfferCategories } = useSelector((state: RootState) => state.food);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
-	const [selectedOption, setSelectedOption] = useState<FoodSortOption | null>(
-		null
-	);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const [selectedOption, setSelectedOption] = useState<FoodSortOption | null>(null);
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
 	const sortingOptions = [
 		{
@@ -137,44 +102,22 @@ const SortSheet: React.FC<SortSheetProps> = ({ closeSheet }) => {
 				copiedFoodOffers = sortByEatingHabits(copiedFoodOffers, profile.markings);
 				break;
 			case FoodSortOption.FOOD_CATEGORY:
-				copiedFoodOffers = sortByFoodCategory(
-					copiedFoodOffers,
-					foodCategories,
-					languageCode
-				);
+				copiedFoodOffers = sortByFoodCategory(copiedFoodOffers, foodCategories, languageCode);
 				break;
 			case FoodSortOption.FOODOFFER_CATEGORY:
-				copiedFoodOffers = sortByFoodOfferCategory(
-					copiedFoodOffers,
-					foodOfferCategories
-				);
+				copiedFoodOffers = sortByFoodOfferCategory(copiedFoodOffers, foodOfferCategories);
 				break;
 			case FoodSortOption.RATING:
 				copiedFoodOffers = sortByPublicFavorite(copiedFoodOffers);
 				break;
 			case FoodSortOption.PRICE_ASCENDING:
-				copiedFoodOffers = sortByPrice(
-					copiedFoodOffers,
-					profile?.price_group,
-					false
-				);
+				copiedFoodOffers = sortByPrice(copiedFoodOffers, profile?.price_group, false);
 				break;
 			case FoodSortOption.PRICE_DESCENDING:
-				copiedFoodOffers = sortByPrice(
-					copiedFoodOffers,
-					profile?.price_group,
-					true
-				);
+				copiedFoodOffers = sortByPrice(copiedFoodOffers, profile?.price_group, true);
 				break;
 			case FoodSortOption.INTELLIGENT:
-				copiedFoodOffers = intelligentSort(
-					copiedFoodOffers,
-					ownFoodFeedbacks,
-					profile.markings,
-					languageCode,
-					foodCategories,
-					foodOfferCategories
-				);
+				copiedFoodOffers = intelligentSort(copiedFoodOffers, ownFoodFeedbacks, profile.markings, languageCode, foodCategories, foodOfferCategories);
 				break;
 			default:
 				console.warn('Unknown sorting option:', option.id);
@@ -194,10 +137,7 @@ const SortSheet: React.FC<SortSheetProps> = ({ closeSheet }) => {
 	}, []);
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,

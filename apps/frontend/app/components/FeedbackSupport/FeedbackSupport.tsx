@@ -20,17 +20,7 @@ type FeedbackItemProps = {
 	setInputValues?: any;
 };
 
-const FeedbackItem: React.FC<FeedbackItemProps> = ({
-	icon,
-	title,
-	value,
-	extraIcons = [],
-	theme,
-	windowWidth,
-	onPress,
-	inputValues,
-	setInputValues,
-}) => {
+const FeedbackItem: React.FC<FeedbackItemProps> = ({ icon, title, value, extraIcons = [], theme, windowWidth, onPress, inputValues, setInputValues }) => {
 	const { translate } = useLanguage();
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
 
@@ -45,32 +35,14 @@ const FeedbackItem: React.FC<FeedbackItemProps> = ({
 		} else if (name === 'like1' || name === 'dislike1') {
 			return <AntDesign name={name} size={size} color={color} style={style} />;
 		} else {
-			return (
-				<MaterialCommunityIcons
-					name={name}
-					size={size}
-					color={color}
-					style={style}
-				/>
-			);
+			return <MaterialCommunityIcons name={name} size={size} color={color} style={style} />;
 		}
 	};
 
 	return (
-		<TouchableOpacity
-			style={[styles.container, { backgroundColor: theme.screen.iconBg }]}
-			disabled={title === 'like_status'}
-			onPress={title !== 'like_status' ? onPress : null}
-		>
+		<TouchableOpacity style={[styles.container, { backgroundColor: theme.screen.iconBg }]} disabled={title === 'like_status'} onPress={title !== 'like_status' ? onPress : null}>
 			<View style={styles.iconTextContainer}>
-				{icon && (
-					<IconSelector
-						name={icon}
-						size={20}
-						color={theme.screen.icon}
-						style={{ marginRight: 10 }}
-					/>
-				)}
+				{icon && <IconSelector name={icon} size={20} color={theme.screen.icon} style={{ marginRight: 10 }} />}
 				<Text
 					style={{
 						color: theme.screen.text,
@@ -99,12 +71,7 @@ const FeedbackItem: React.FC<FeedbackItemProps> = ({
 							borderBottomLeftRadius: iconName === 'thumb-up-outline' ? 5 : 0,
 							borderBottomRightRadius: iconName === 'thumb-down-outline' ? 5 : 0,
 							borderTopRightRadius: iconName === 'thumb-down-outline' ? 5 : 0,
-							backgroundColor:
-								iconName === 'thumb-up-outline' && inputValues?.positive === true
-									? primaryColor
-									: iconName === 'thumb-down-outline' && inputValues?.positive === false
-										? primaryColor
-										: 'transparent',
+							backgroundColor: iconName === 'thumb-up-outline' && inputValues?.positive === true ? primaryColor : iconName === 'thumb-down-outline' && inputValues?.positive === false ? primaryColor : 'transparent',
 						}}
 						onPress={() => {
 							if (iconName === 'thumb-up-outline') {
@@ -121,23 +88,10 @@ const FeedbackItem: React.FC<FeedbackItemProps> = ({
 						}}
 						key={idx}
 					>
-						<MaterialCommunityIcons
-							key={idx}
-							name={iconName}
-							size={22}
-							color={theme.screen.icon}
-							style={{ marginHorizontal: 5 }}
-						/>
+						<MaterialCommunityIcons key={idx} name={iconName} size={22} color={theme.screen.icon} style={{ marginHorizontal: 5 }} />
 					</TouchableOpacity>
 				))}
-				{title !== 'like_status' && (
-					<MaterialCommunityIcons
-						name="pencil"
-						size={20}
-						color={theme.screen.icon}
-						style={{ marginHorizontal: 5 }}
-					/>
-				)}
+				{title !== 'like_status' && <MaterialCommunityIcons name="pencil" size={20} color={theme.screen.icon} style={{ marginHorizontal: 5 }} />}
 			</View>
 		</TouchableOpacity>
 	);

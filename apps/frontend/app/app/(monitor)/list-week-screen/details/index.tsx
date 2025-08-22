@@ -1,12 +1,4 @@
-import {
-	View,
-	Text,
-	ScrollView,
-	Dimensions,
-	Image,
-	ActivityIndicator,
-	Platform,
-} from 'react-native';
+import { View, Text, ScrollView, Dimensions, Image, ActivityIndicator, Platform } from 'react-native';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '@/hooks/useTheme';
@@ -16,11 +8,7 @@ import styles from './styles';
 import { FoodCategoriesHelper } from '@/redux/actions/FoodCategories/FoodCategories';
 import { fetchFoodsByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
-import {
-	getImageUrl,
-	showDayPlanPrice,
-	showFormatedPrice,
-} from '@/constants/HelperFunctions';
+import { getImageUrl, showDayPlanPrice, showFormatedPrice } from '@/constants/HelperFunctions';
 import { myContrastColor } from '@/helper/colorHelper';
 import { useLocalSearchParams } from 'expo-router';
 import moment from 'moment';
@@ -42,50 +30,27 @@ const index = () => {
 	const { translate } = useLanguage();
 	const { theme, setThemeMode } = useTheme();
 	const dispatch = useDispatch();
-	const {
-		canteens_id,
-		date_iso: dateParam,
-		canteen_alias,
-		week,
-		show_markings,
-	} = useLocalSearchParams();
+	const { canteens_id, date_iso: dateParam, canteen_alias, week, show_markings } = useLocalSearchParams();
 	const markingHelper = new MarkingHelper();
 	const markingGroupsHelper = new MarkingGroupsHelper();
 	const foodCategoriesHelper = new FoodCategoriesHelper();
 	const [foods, setFoods] = useState<any>({});
-	const [categories, setCategories] = useState<
-		Record<string, { alias: string; sort: number }>
-	>({});
+	const [categories, setCategories] = useState<Record<string, { alias: string; sort: number }>>({});
 	const [foodMarkings, setFoodMarkings] = useState<any>({});
 	const { markings } = useSelector((state: RootState) => state.food);
 	const [loading, setLoading] = useState(true);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
-	useSetPageTitle(
-		canteen_alias + ` - ${translate(TranslationKeys.week)} ${week}`
-	);
+	useSetPageTitle(canteen_alias + ` - ${translate(TranslationKeys.week)} ${week}`);
 	const isMobile = screenWidth < 800;
-	const {
-		primaryColor: projectColor,
-		language,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: projectColor;
+	const { primaryColor: projectColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
 
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 	const weekDayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 	const date_iso = dateParam || moment().format('YYYY-MM-DD');
 	const startDate = moment(date_iso);
-	const weekDays = Array.from({ length: 7 }, (_, i) =>
-		startDate.clone().add(i, 'days').format('YYYY-MM-DD')
-	);
+	const weekDays = Array.from({ length: 7 }, (_, i) => startDate.clone().add(i, 'days').format('YYYY-MM-DD'));
 
 	const fetchFoods = async () => {
 		try {
@@ -136,9 +101,7 @@ const index = () => {
 
 					// Fetch category only if it's new (not in newCategories)
 					if (!newCategories[categoryId]) {
-						const result = (await foodCategoriesHelper.fetchFoodCategoriesById(
-							categoryId
-						)) as DatabaseTypes.FoodsCategories;
+						const result = (await foodCategoriesHelper.fetchFoodCategoriesById(categoryId)) as DatabaseTypes.FoodsCategories;
 						if (result) {
 							newCategories[categoryId] = {
 								alias: result?.alias,
@@ -221,8 +184,7 @@ const index = () => {
 			flexSumOfCategories += category.flex;
 		});
 
-		let dayFlexDynamic =
-			flexSumOfCategories * (dayFlexDesign / flexCategoriesDesign);
+		let dayFlexDynamic = flexSumOfCategories * (dayFlexDesign / flexCategoriesDesign);
 
 		// Return the array of column definitions
 		return [
@@ -244,27 +206,16 @@ const index = () => {
 	}, [foods, categories, isMobile, weekDayNames]); // <-- Dependencies for useCallback
 
 	const getPriceText = (food: any) => {
-		return `${showFormatedPrice(
-			showDayPlanPrice(food, 'student')
-		)} / ${showFormatedPrice(
-			showDayPlanPrice(food, 'employee')
-		)} / ${showFormatedPrice(showDayPlanPrice(food, 'guest'))}`;
+		return `${showFormatedPrice(showDayPlanPrice(food, 'student'))} / ${showFormatedPrice(showDayPlanPrice(food, 'employee'))} / ${showFormatedPrice(showDayPlanPrice(food, 'guest'))}`;
 	};
 
 	const getMarkings = async () => {
 		try {
-			const markingResult = (await markingHelper.fetchMarkings(
-				{}
-			)) as DatabaseTypes.Markings[];
-			const markingGroupResult = (await markingGroupsHelper.fetchMarkingGroups(
-				{}
-			)) as DatabaseTypes.MarkingsGroups[];
+			const markingResult = (await markingHelper.fetchMarkings({})) as DatabaseTypes.Markings[];
+			const markingGroupResult = (await markingGroupsHelper.fetchMarkingGroups({})) as DatabaseTypes.MarkingsGroups[];
 
 			// Use the sortMarkingsByGroup function to sort markings
-			const sortedMarkings = sortMarkingsByGroup(
-				markingResult,
-				markingGroupResult
-			);
+			const sortedMarkings = sortMarkingsByGroup(markingResult, markingGroupResult);
 
 			dispatch({ type: UPDATE_MARKINGS, payload: sortedMarkings });
 		} catch (error) {
@@ -290,20 +241,16 @@ const index = () => {
 					if (!food?.id) return; // Skip if food has no ID
 
 					// Extract marking IDs properly
-					const markingIds =
-						food?.markings?.map((mark: any) => mark.markings_id) || [];
+					const markingIds = food?.markings?.map((mark: any) => mark.markings_id) || [];
 
 					// Find matching marking objects from `markings` array
-					let filteredMarkings =
-						markings?.filter((mark: any) => markingIds.includes(mark.id)) || [];
+					let filteredMarkings = markings?.filter((mark: any) => markingIds.includes(mark.id)) || [];
 
 					// Sort the filtered markings using sortMarkingsByGroup
 					filteredMarkings = sortMarkingsByGroup(filteredMarkings, markingGroups);
 
 					const dummyMarkings = filteredMarkings.map((item: any) => ({
-						image: item?.image_remote_url
-							? { uri: item.image_remote_url }
-							: { uri: getImageUrl(item.image) },
+						image: item?.image_remote_url ? { uri: item.image_remote_url } : { uri: getImageUrl(item.image) },
 						bgColor: item?.background_color,
 						color: myContrastColor(item?.background_color, theme, mode === 'dark'),
 						shortCode: item?.short_code,
@@ -336,11 +283,7 @@ const index = () => {
 
 	const formatDate = (dateStr: string) => {
 		const dateObj = new Date(dateStr);
-		return `${dateObj.getDate().toString().padStart(2, '0')}.${(
-			dateObj.getMonth() + 1
-		)
-			.toString()
-			.padStart(2, '0')}`;
+		return `${dateObj.getDate().toString().padStart(2, '0')}.${(dateObj.getMonth() + 1).toString().padStart(2, '0')}`;
 	};
 
 	const handlePrint = () => {
@@ -440,9 +383,7 @@ const index = () => {
 							alignItems: 'center',
 						}}
 					>
-						<Text style={{ ...styles.noDataFound, color: theme.screen.text }}>
-							Keine Angebote an diesem Tag gefunden.
-						</Text>
+						<Text style={{ ...styles.noDataFound, color: theme.screen.text }}>Keine Angebote an diesem Tag gefunden.</Text>
 					</View>
 				) : (
 					<ScrollView
@@ -465,14 +406,10 @@ const index = () => {
 								}}
 							>
 								<View>
-									<Text style={[styles.title, { color: theme.header.text }]}>
-										{canteen_alias}
-									</Text>
+									<Text style={[styles.title, { color: theme.header.text }]}>{canteen_alias}</Text>
 								</View>
 								<View>
-									<Text style={[styles.title, { color: theme.header.text }]}>
-										{`${translate(TranslationKeys.week)} ${week}`}
-									</Text>
+									<Text style={[styles.title, { color: theme.header.text }]}>{`${translate(TranslationKeys.week)} ${week}`}</Text>
 								</View>
 							</View>
 							<View style={[styles.headerRow, { backgroundColor: foods_area_color }]}>
@@ -485,9 +422,7 @@ const index = () => {
 											{ flex: col.flex }, // Use col.flex here
 										]}
 									>
-										<Text style={{ ...styles.headerText, color: contrastColor }}>
-											{col.key === 'day' ? translate(col.key) : col.title}
-										</Text>
+										<Text style={{ ...styles.headerText, color: contrastColor }}>{col.key === 'day' ? translate(col.key) : col.title}</Text>
 									</View>
 								))}
 							</View>
@@ -502,11 +437,7 @@ const index = () => {
 								// Check if any column for this day has food items
 								const hasAnyFood = columns.some(col => {
 									if (col.key === 'day') return false;
-									return (
-										foods[dayName]?.some(
-											(food: any) => food?.food?.food_category === col.key
-										) || false
-									);
+									return foods[dayName]?.some((food: any) => food?.food?.food_category === col.key) || false;
 								});
 
 								return (
@@ -531,10 +462,7 @@ const index = () => {
 													const foodItems = foods[dayName]
 														?.filter((food: any) => food.food.food_category === col.key)
 														?.map((filteredFood: any) => {
-															const foodText = getTextFromTranslation(
-																filteredFood?.food?.translations,
-																language
-															);
+															const foodText = getTextFromTranslation(filteredFood?.food?.translations, language);
 															const priceText = getPriceText(filteredFood);
 
 															return (
@@ -577,58 +505,56 @@ const index = () => {
 																			}}
 																		>
 																			{foodMarkings[filteredFood.id] &&
-																				foodMarkings[filteredFood.id].map(
-																					(marking: any, idx: number) => {
-																						const iconParts = marking?.icon?.split(':') || [];
-																						const [library, name] = iconParts;
-																						const Icon = library && iconLibraries[library];
-																						return marking?.icon ? (
-																							<View
-																								key={idx}
+																				foodMarkings[filteredFood.id].map((marking: any, idx: number) => {
+																					const iconParts = marking?.icon?.split(':') || [];
+																					const [library, name] = iconParts;
+																					const Icon = library && iconLibraries[library];
+																					return marking?.icon ? (
+																						<View
+																							key={idx}
+																							style={{
+																								...styles.iconMarking,
+																								backgroundColor: marking?.bgColor,
+																								marginRight: 5,
+																								borderRadius: 5,
+																							}}
+																						>
+																							<Icon name={name} size={14} color={marking.color} />
+																						</View>
+																					) : !marking?.image?.uri && marking?.shortCode ? (
+																						<View
+																							key={idx}
+																							style={{
+																								...styles.shortCode,
+																								backgroundColor: marking?.bgColor,
+																								marginRight: 5,
+																								padding: 2,
+																								borderRadius: 5,
+																							}}
+																						>
+																							<Text
 																								style={{
-																									...styles.iconMarking,
-																									backgroundColor: marking?.bgColor,
-																									marginRight: 5,
-																									borderRadius: 5,
+																									color: marking.color,
+																									fontSize: fontSize,
 																								}}
 																							>
-																								<Icon name={name} size={14} color={marking.color} />
-																							</View>
-																						) : !marking?.image?.uri && marking?.shortCode ? (
-																							<View
-																								key={idx}
-																								style={{
-																									...styles.shortCode,
-																									backgroundColor: marking?.bgColor,
-																									marginRight: 5,
-																									padding: 2,
-																									borderRadius: 5,
-																								}}
-																							>
-																								<Text
-																									style={{
-																										color: marking.color,
-																										fontSize: fontSize,
-																									}}
-																								>
-																									{marking?.shortCode}
-																								</Text>
-																							</View>
-																						) : marking?.image?.uri ? (
-																							<Image
-																								key={idx}
-																								source={marking.image.uri}
-																								style={{
-																									backgroundColor: marking?.bgColor,
-																									width: 15,
-																									height: 15,
-																									marginRight: 2,
-																									borderRadius: 5,
-																								}}
-																							/>
-																						) : null;
-																					}
-																				)}
+																								{marking?.shortCode}
+																							</Text>
+																						</View>
+																					) : marking?.image?.uri ? (
+																						<Image
+																							key={idx}
+																							source={marking.image.uri}
+																							style={{
+																								backgroundColor: marking?.bgColor,
+																								width: 15,
+																								height: 15,
+																								marginRight: 2,
+																								borderRadius: 5,
+																							}}
+																						/>
+																					) : null;
+																				})}
 																		</View>
 																	)}
 																</View>
@@ -656,9 +582,7 @@ const index = () => {
 																			styles.itemText,
 																			{
 																				fontSize: isMobile ? fontSize : fontSize,
-																				fontFamily: isMobile
-																					? 'Poppins_400Regular'
-																					: 'Poppins_700Bold',
+																				fontFamily: isMobile ? 'Poppins_400Regular' : 'Poppins_700Bold',
 																				textAlign: 'center',
 																				color: theme.screen.text,
 																			},
@@ -671,9 +595,7 @@ const index = () => {
 																			styles.itemText,
 																			{
 																				fontSize: isMobile ? fontSize : fontSize,
-																				fontFamily: isMobile
-																					? 'Poppins_400Regular'
-																					: 'Poppins_700Bold',
+																				fontFamily: isMobile ? 'Poppins_400Regular' : 'Poppins_700Bold',
 																				textAlign: 'center',
 																				color: theme.screen.text,
 																			},
@@ -683,13 +605,7 @@ const index = () => {
 																	</Text>
 																</View>
 															) : (
-																<View style={{ flexDirection: 'column' }}>
-																	{foodItems?.length > 0 ? (
-																		foodItems
-																	) : (
-																		<Text style={{ color: theme.screen.text }}>-</Text>
-																	)}
-																</View>
+																<View style={{ flexDirection: 'column' }}>{foodItems?.length > 0 ? foodItems : <Text style={{ color: theme.screen.text }}>-</Text>}</View>
 															)}
 														</View>
 													);
@@ -714,9 +630,7 @@ const index = () => {
 																	styles.itemText,
 																	{
 																		fontSize: isMobile ? fontSize : fontSize,
-																		fontFamily: isMobile
-																			? 'Poppins_400Regular'
-																			: 'Poppins_700Bold',
+																		fontFamily: isMobile ? 'Poppins_400Regular' : 'Poppins_700Bold',
 																		textAlign: 'center',
 																		color: theme.screen.text,
 																	},
@@ -729,9 +643,7 @@ const index = () => {
 																	styles.itemText,
 																	{
 																		fontSize: isMobile ? fontSize : fontSize,
-																		fontFamily: isMobile
-																			? 'Poppins_400Regular'
-																			: 'Poppins_700Bold',
+																		fontFamily: isMobile ? 'Poppins_400Regular' : 'Poppins_700Bold',
 																		textAlign: 'center',
 																		color: theme.screen.text,
 																	},

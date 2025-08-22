@@ -54,8 +54,7 @@ export type BreakPointsDictionary<T> = {
  * @returns {BreakPoint[]} An ordered array of breakpoints from smallest to largest width.
  */
 function getSmallestToLargestBreakPointList(): BreakPoint[] {
-	const widthBreakPoints: BreakPointsDictionary<number> =
-		getDimensionWidthBreakPoints();
+	const widthBreakPoints: BreakPointsDictionary<number> = getDimensionWidthBreakPoints();
 	const widthToBreakPoint: { width: number; breakPoint: BreakPoint }[] = [];
 	for (const breakPoint in widthBreakPoints) {
 		const width: number | undefined = widthBreakPoints[breakPoint as BreakPoint];
@@ -73,16 +72,13 @@ function getSmallestToLargestBreakPointList(): BreakPoint[] {
  * @param {BreakPointsDictionary<T>} breakPoints An object mapping breakpoints to their corresponding values.
  * @returns {T} The value associated with the current screen width's breakpoint.
  */
-export function useBreakPointValue<T>(
-	breakPoints: BreakPointsDictionary<T>
-): T {
+export function useBreakPointValue<T>(breakPoints: BreakPointsDictionary<T>): T {
 	const dimensions = useWindowDimensions();
 	const scale = dimensions.scale;
 	const widthUnscaled = dimensions.width; // the unscaled width is our reference how "big" the screen is, for fingers size
 	const widthScaled = widthUnscaled * scale; // the scaled width is how fine and detailed the screen is to the eye
 
-	const widthBreakPoints: BreakPointsDictionary<number> =
-		getDimensionWidthBreakPoints();
+	const widthBreakPoints: BreakPointsDictionary<number> = getDimensionWidthBreakPoints();
 
 	const breakPointOrder = getSmallestToLargestBreakPointList().reverse(); // From largest to smallest for iteration.
 
@@ -126,10 +122,7 @@ export function getIsLandScape(): boolean {
 	return isLandscape;
 }
 
-export function getCurrentDevice(
-	deviceInformationsId: string | undefined,
-	devices: any
-): DatabaseTypes.Devices | undefined {
+export function getCurrentDevice(deviceInformationsId: string | undefined, devices: any): DatabaseTypes.Devices | undefined {
 	let foundDevice: undefined | DatabaseTypes.Devices = undefined;
 	if (deviceInformationsId) {
 		for (const device of devices) {
@@ -148,8 +141,7 @@ export function getDeviceIdentifier(device: Partial<DatabaseTypes.Devices>) {
 
 export function getDeviceInformationWithoutPushToken(): Partial<DatabaseTypes.Devices> {
 	// Promise<DeviceInformationType>
-	const { getPlatformDisplayName, isIOS, isAndroid, isWeb } =
-		usePlatformHelper();
+	const { getPlatformDisplayName, isIOS, isAndroid, isWeb } = usePlatformHelper();
 	const windowWidth = Dimensions.get('screen').width;
 	const windowHeight = Dimensions.get('screen').height;
 	const windowScale = Dimensions.get('screen').scale;

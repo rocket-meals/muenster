@@ -9,26 +9,14 @@ import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 
-const RedirectButton: React.FC<RedirectButtonProps> = ({
-	type,
-	label,
-	backgroundColor,
-	color,
-	onClick,
-}) => {
+const RedirectButton: React.FC<RedirectButtonProps> = ({ type, label, backgroundColor, color, onClick }) => {
 	let containerWidth;
 	let fontSize;
 	const { isWeb } = usePlatformHelper();
 	const { theme } = useTheme();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
-	const contrastColor = myContrastColor(
-		backgroundColor || primaryColor,
-		theme,
-		mode === 'dark'
-	);
+	const contrastColor = myContrastColor(backgroundColor || primaryColor, theme, mode === 'dark');
 
 	if (isWeb()) {
 		const windowWidth = Dimensions.get('window').width;
@@ -56,22 +44,8 @@ const RedirectButton: React.FC<RedirectButtonProps> = ({
 			}}
 			onPress={onClick}
 		>
-			{type === 'email' ? (
-				<MaterialCommunityIcons
-					name="email"
-					size={24}
-					color={color || contrastColor}
-				/>
-			) : (
-				<FontAwesome6
-					name="arrow-up-right-from-square"
-					size={20}
-					color={color || contrastColor}
-				/>
-			)}
-			<Text style={{ ...styles.label, color: color || contrastColor, fontSize }}>
-				{label}
-			</Text>
+			{type === 'email' ? <MaterialCommunityIcons name="email" size={24} color={color || contrastColor} /> : <FontAwesome6 name="arrow-up-right-from-square" size={20} color={color || contrastColor} />}
+			<Text style={{ ...styles.label, color: color || contrastColor, fontSize }}>{label}</Text>
 		</TouchableOpacity>
 	);
 };

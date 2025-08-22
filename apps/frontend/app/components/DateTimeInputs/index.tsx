@@ -4,27 +4,7 @@ import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
 
-const DateWithTimeInput = ({
-	id,
-	value,
-	onChange,
-	onError,
-	error,
-	isDisabled,
-	custom_type,
-	prefix,
-	suffix,
-}: {
-	id: string;
-	value: string;
-	onChange: (id: string, value: string, custom_type: string) => void;
-	onError: (id: string, error: string) => void;
-	error: string;
-	isDisabled: boolean;
-	custom_type: string;
-	prefix: string | null | undefined;
-	suffix: string | null | undefined;
-}) => {
+const DateWithTimeInput = ({ id, value, onChange, onError, error, isDisabled, custom_type, prefix, suffix }: { id: string; value: string; onChange: (id: string, value: string, custom_type: string) => void; onError: (id: string, error: string) => void; error: string; isDisabled: boolean; custom_type: string; prefix: string | null | undefined; suffix: string | null | undefined }) => {
 	const { theme } = useTheme();
 	const previousValue = useRef<string>(value);
 	const flag = !suffix && !prefix;
@@ -104,9 +84,7 @@ const DateWithTimeInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{prefix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{prefix}</Text>
 					</View>
 				)}
 				<TextInput
@@ -139,9 +117,7 @@ const DateWithTimeInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{suffix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{suffix}</Text>
 					</View>
 				)}
 			</View>
@@ -150,27 +126,7 @@ const DateWithTimeInput = ({
 	);
 };
 
-const DateInput = ({
-	id,
-	value,
-	onChange,
-	onError,
-	error,
-	isDisabled,
-	custom_type,
-	prefix,
-	suffix,
-}: {
-	id: string;
-	value: string;
-	onChange: (id: string, value: string, custom_type: string) => void;
-	onError: (id: string, error: string) => void;
-	error: string;
-	isDisabled: boolean;
-	custom_type: string;
-	prefix: string | null | undefined;
-	suffix: string | null | undefined;
-}) => {
+const DateInput = ({ id, value, onChange, onError, error, isDisabled, custom_type, prefix, suffix }: { id: string; value: string; onChange: (id: string, value: string, custom_type: string) => void; onError: (id: string, error: string) => void; error: string; isDisabled: boolean; custom_type: string; prefix: string | null | undefined; suffix: string | null | undefined }) => {
 	const { theme } = useTheme();
 	const previousValue = useRef<string>(value);
 	const flag = !suffix && !prefix;
@@ -236,9 +192,7 @@ const DateInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{prefix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{prefix}</Text>
 					</View>
 				)}
 				<TextInput
@@ -271,9 +225,7 @@ const DateInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{suffix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{suffix}</Text>
 					</View>
 				)}
 			</View>
@@ -282,27 +234,7 @@ const DateInput = ({
 	);
 };
 
-const TimeInput = ({
-	id,
-	value,
-	onChange,
-	onError,
-	error,
-	isDisabled,
-	custom_type,
-	prefix,
-	suffix,
-}: {
-	id: string;
-	value: string;
-	onChange: (id: string, value: string, custom_type: string) => void;
-	onError: (id: string, error: string) => void;
-	error: string;
-	isDisabled: boolean;
-	custom_type: string;
-	prefix: string | null | undefined;
-	suffix: string | null | undefined;
-}) => {
+const TimeInput = ({ id, value, onChange, onError, error, isDisabled, custom_type, prefix, suffix }: { id: string; value: string; onChange: (id: string, value: string, custom_type: string) => void; onError: (id: string, error: string) => void; error: string; isDisabled: boolean; custom_type: string; prefix: string | null | undefined; suffix: string | null | undefined }) => {
 	const { theme } = useTheme();
 	const previousValue = useRef<string>(value);
 	const flag = !suffix && !prefix;
@@ -357,9 +289,7 @@ const TimeInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{prefix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{prefix}</Text>
 					</View>
 				)}
 				<TextInput
@@ -392,9 +322,7 @@ const TimeInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{suffix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{suffix}</Text>
 					</View>
 				)}
 			</View>
@@ -403,27 +331,7 @@ const TimeInput = ({
 	);
 };
 
-const PreciseTimestampInput = ({
-	id,
-	value,
-	onChange,
-	onError,
-	error,
-	isDisabled,
-	custom_type,
-	prefix,
-	suffix,
-}: {
-	id: string;
-	value: string;
-	onChange: (id: string, value: string, custom_type: string) => void;
-	onError: (id: string, error: string) => void;
-	error: string;
-	isDisabled: boolean;
-	custom_type: string;
-	prefix: string | null | undefined;
-	suffix: string | null | undefined;
-}) => {
+const PreciseTimestampInput = ({ id, value, onChange, onError, error, isDisabled, custom_type, prefix, suffix }: { id: string; value: string; onChange: (id: string, value: string, custom_type: string) => void; onError: (id: string, error: string) => void; error: string; isDisabled: boolean; custom_type: string; prefix: string | null | undefined; suffix: string | null | undefined }) => {
 	const { theme } = useTheme();
 	const previousValue = useRef<string>(value);
 	const flag = !suffix && !prefix;
@@ -518,9 +426,7 @@ const PreciseTimestampInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{prefix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{prefix}</Text>
 					</View>
 				)}
 				<TextInput
@@ -553,9 +459,7 @@ const PreciseTimestampInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{suffix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{suffix}</Text>
 					</View>
 				)}
 			</View>

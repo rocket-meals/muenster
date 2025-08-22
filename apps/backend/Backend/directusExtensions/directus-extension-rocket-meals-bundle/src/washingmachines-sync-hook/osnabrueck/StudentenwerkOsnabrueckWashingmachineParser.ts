@@ -1,11 +1,7 @@
 import axios from 'axios';
 import { CheerioAPI, load as cheerioLoad } from 'cheerio';
 
-import {
-  WashingmachineParserInterface,
-  WashingmachinesTypeForParser,
-  WashingmachinesTypeForParserOmmited,
-} from './../WashingmachineParserInterface';
+import { WashingmachineParserInterface, WashingmachinesTypeForParser, WashingmachinesTypeForParserOmmited } from './../WashingmachineParserInterface';
 import { DateHelper } from 'repo-depkit-common';
 
 type IntercardWasher = {
@@ -15,36 +11,23 @@ type IntercardWasher = {
   expectedFreeTimeInMinutes: number;
 };
 
-export class StudentenwerkOsnabrueckWashingmachineParser
-  implements WashingmachineParserInterface
-{
+export class StudentenwerkOsnabrueckWashingmachineParser implements WashingmachineParserInterface {
   static url = 'https://swic.sw-os.de/smartWASH-SimpleWebClient/';
-  static getAllTerminalsUrl =
-    StudentenwerkOsnabrueckWashingmachineParser.url + 'allTerminals';
+  static getAllTerminalsUrl = StudentenwerkOsnabrueckWashingmachineParser.url + 'allTerminals';
 
   constructor() {}
 
-  static getWasherExternalIdentifier(
-    terminalNr: number,
-    automateNr: number
-  ): string {
+  static getWasherExternalIdentifier(terminalNr: number, automateNr: number): string {
     return 'osnabrueck_' + terminalNr + '_' + automateNr;
   }
 
-  async getWashingmachines(
-    simulated_now?: Date
-  ): Promise<WashingmachinesTypeForParser[]> {
+  async getWashingmachines(simulated_now?: Date): Promise<WashingmachinesTypeForParser[]> {
     let answer: WashingmachinesTypeForParser[] = [];
-    let intercardWashers =
-      await StudentenwerkOsnabrueckWashingmachineParser.getAllTerminalFromIntercard();
+    let intercardWashers = await StudentenwerkOsnabrueckWashingmachineParser.getAllTerminalFromIntercard();
     for (let i = 0; i < intercardWashers.length; i++) {
       let washer = intercardWashers[i];
       if (!!washer) {
-        let external_identifier =
-          StudentenwerkOsnabrueckWashingmachineParser.getWasherExternalIdentifier(
-            washer.terminalNr,
-            washer.automateNr
-          );
+        let external_identifier = StudentenwerkOsnabrueckWashingmachineParser.getWasherExternalIdentifier(washer.terminalNr, washer.automateNr);
         let date_finished: string | null = null;
         if (washer.intercardStatus && washer.expectedFreeTimeInMinutes > 0) {
           let date = new Date(simulated_now || new Date());
@@ -58,11 +41,8 @@ export class StudentenwerkOsnabrueckWashingmachineParser
 
         let washingmachine: WashingmachinesTypeForParserOmmited = {
           external_identifier: external_identifier,
-          alias:
-            'Washingmachine ' + washer.terminalNr + ' ' + washer.automateNr,
-          date_updated: DateHelper.formatDateToIso8601WithoutTimezone(
-            new Date()
-          ),
+          alias: 'Washingmachine ' + washer.terminalNr + ' ' + washer.automateNr,
+          date_updated: DateHelper.formatDateToIso8601WithoutTimezone(new Date()),
           date_finished: date_finished,
         };
         answer.push({ basicData: washingmachine });
@@ -78,14 +58,9 @@ export class StudentenwerkOsnabrueckWashingmachineParser
    * Will filter out all duplicate washingmachines and use the one with a date_finished if available
    * @param washingmachines
    */
-  filterDuplicateWashingmachines(
-    washingmachines: WashingmachinesTypeForParser[]
-  ): WashingmachinesTypeForParser[] {
+  filterDuplicateWashingmachines(washingmachines: WashingmachinesTypeForParser[]): WashingmachinesTypeForParser[] {
     let answer: WashingmachinesTypeForParser[] = [];
-    let map: Map<string, WashingmachinesTypeForParser> = new Map<
-      string,
-      WashingmachinesTypeForParser
-    >();
+    let map: Map<string, WashingmachinesTypeForParser> = new Map<string, WashingmachinesTypeForParser>();
     for (let i = 0; i < washingmachines.length; i++) {
       let washingmachine = washingmachines[i];
       if (!!washingmachine) {
@@ -111,17 +86,13 @@ export class StudentenwerkOsnabrueckWashingmachineParser
    * @returns {Promise<Array>}
    */
   static async getAllTerminalFromIntercard(): Promise<IntercardWasher[]> {
-    let html =
-      await StudentenwerkOsnabrueckWashingmachineParser.getAllTerminalsRawFromIntercard();
+    let html = await StudentenwerkOsnabrueckWashingmachineParser.getAllTerminalsRawFromIntercard();
     //console.log("HTML from Intercard");
     //console.log(html);
     if (!html) {
       throw new Error('No HTML from Intercard');
     }
-    let washerJSON =
-      await StudentenwerkOsnabrueckWashingmachineParser.parseTerminalsRawFromIntercardToJSON(
-        html
-      );
+    let washerJSON = await StudentenwerkOsnabrueckWashingmachineParser.parseTerminalsRawFromIntercardToJSON(html);
     //console.log("JSON from Intercard");
     //console.log(JSON.stringify(washerJSON, null, 2));
     return washerJSON;
@@ -132,8 +103,7 @@ export class StudentenwerkOsnabrueckWashingmachineParser
    * @returns {Promise<null|*>}
    */
   static async getAllTerminalsRawFromIntercard(): Promise<string | null> {
-    let urlForRequest =
-      StudentenwerkOsnabrueckWashingmachineParser.getAllTerminalsUrl;
+    let urlForRequest = StudentenwerkOsnabrueckWashingmachineParser.getAllTerminalsUrl;
     try {
       //console.log("Requesting Intercard from URL: " + urlForRequest);
       let response = await axios.get(urlForRequest); //get the html
@@ -158,9 +128,7 @@ export class StudentenwerkOsnabrueckWashingmachineParser
    * @param html the raw informations
    * @returns {Promise<Array>} the parsed JSON
    */
-  static async parseTerminalsRawFromIntercardToJSON(
-    html: string
-  ): Promise<IntercardWasher[]> {
+  static async parseTerminalsRawFromIntercardToJSON(html: string): Promise<IntercardWasher[]> {
     let answer: IntercardWasher[] = []; // prepare an empty array to fill
 
     try {

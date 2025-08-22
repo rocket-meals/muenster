@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-	MaterialCommunityIcons,
-	MaterialIcons,
-	FontAwesome,
-} from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { StringHelper } from 'repo-depkit-common';
 
@@ -12,19 +8,14 @@ export type TranslationEntry = {
 	[key: string]: any;
 };
 
-const getIconComponent = (
-	iconString: string,
-	iconColor: string
-): JSX.Element | null => {
+const getIconComponent = (iconString: string, iconColor: string): JSX.Element | null => {
 	if (!iconString) return null;
 
 	const [library, iconName] = iconString.split(':') as [string, any];
 
 	switch (library) {
 		case 'MaterialCommunityIcons':
-			return (
-				<MaterialCommunityIcons name={iconName} size={24} color={iconColor} />
-			);
+			return <MaterialCommunityIcons name={iconName} size={24} color={iconColor} />;
 		case 'MaterialIcons':
 			return <MaterialIcons name={iconName} size={24} color={iconColor} />;
 		case 'FontAwesome':
@@ -44,152 +35,80 @@ interface Translation {
 	title?: string;
 }
 
-const getTextFromTranslation = (
-	translations: Array<Translation | any>,
-	languageCode: string
-): string => {
+const getTextFromTranslation = (translations: Array<Translation | any>, languageCode: string): string => {
 	if (!translations || translations.length === 0) return '';
-	const translation = translations.find(
-		t => t.languages_code?.split('-')[0] === languageCode
-	);
+	const translation = translations.find(t => t.languages_code?.split('-')[0] === languageCode);
 	return translation?.text || translation?.name || translation?.content || '';
 };
 
-export const getIntroDescriptionTranslation = (
-	translations: Array<any>,
-	languageCode: string
-): string => {
+export const getIntroDescriptionTranslation = (translations: Array<any>, languageCode: string): string => {
 	if (!translations || translations.length === 0) return '';
-	const translation = translations.find(
-		t => t.languages_code?.split('-')[0] === languageCode
-	);
+	const translation = translations.find(t => t.languages_code?.split('-')[0] === languageCode);
 	return translation?.intro_description || '';
 };
 
-export const getDetailedDescriptionTranslation = (
-	translations: Array<any>,
-	languageCode: string
-): string => {
+export const getDetailedDescriptionTranslation = (translations: Array<any>, languageCode: string): string => {
 	if (!translations || translations.length === 0) return '';
-	const translation = translations.find(
-		t => t.languages_code?.split('-')[0] === languageCode
-	);
+	const translation = translations.find(t => t.languages_code?.split('-')[0] === languageCode);
 	return translation?.detailed_description || '';
 };
 
-export const getFromCategoryTranslation = (
-	translations: Array<
-		FormCategoriesTranslations | FormsTranslations | FormFieldsTranslations
-	>,
-	languageCode: string
-): string => {
+export const getFromCategoryTranslation = (translations: Array<FormCategoriesTranslations | FormsTranslations | FormFieldsTranslations>, languageCode: string): string => {
 	if (!translations || translations.length === 0) return '';
-	const translation = translations.find(
-		t => t.languages_code?.split('-')[0] === languageCode
-	);
+	const translation = translations.find(t => t.languages_code?.split('-')[0] === languageCode);
 	return translation?.name || '';
 };
 
-export const getFoodAttributesTranslation = (
-	translations: Array<any>,
-	languageCode: string
-): string => {
+export const getFoodAttributesTranslation = (translations: Array<any>, languageCode: string): string => {
 	if (!translations || translations.length === 0) return '';
-	const translation = translations.find(
-		t => t.languages_code?.split('-')[0] === languageCode
-	);
+	const translation = translations.find(t => t.languages_code?.split('-')[0] === languageCode);
 	return translation?.name || '';
 };
 
-const getFoodCategoryName = (
-	categories: DatabaseTypes.FoodsCategories[],
-	category: string | DatabaseTypes.FoodsCategories | null | undefined,
-	languageCode: string
-): string => {
+const getFoodCategoryName = (categories: DatabaseTypes.FoodsCategories[], category: string | DatabaseTypes.FoodsCategories | null | undefined, languageCode: string): string => {
 	if (!category) return '';
-	const cat =
-		typeof category === 'object'
-			? category
-			: categories.find(c => c.id === category);
+	const cat = typeof category === 'object' ? category : categories.find(c => c.id === category);
 	if (!cat) return '';
 	const translations: any[] = (cat.translations as any[]) || [];
-	const translation = translations.find(
-		t => t.languages_code?.split('-')[0] === languageCode
-	);
+	const translation = translations.find(t => t.languages_code?.split('-')[0] === languageCode);
 	return translation?.name || '';
 };
 
-const getFoodOfferCategoryName = (
-	categories: DatabaseTypes.FoodoffersCategories[],
-	category: string | DatabaseTypes.FoodoffersCategories | null | undefined,
-	languageCode: string
-): string => {
+const getFoodOfferCategoryName = (categories: DatabaseTypes.FoodoffersCategories[], category: string | DatabaseTypes.FoodoffersCategories | null | undefined, languageCode: string): string => {
 	if (!category) return '';
-	const cat =
-		typeof category === 'object'
-			? category
-			: categories.find(c => c.id === category);
+	const cat = typeof category === 'object' ? category : categories.find(c => c.id === category);
 	if (!cat) return '';
 	const translations: any[] = (cat.translations as any[]) || [];
-	const translation = translations.find(
-		t => t.languages_code?.split('-')[0] === languageCode
-	);
+	const translation = translations.find(t => t.languages_code?.split('-')[0] === languageCode);
 	return translation?.name || '';
 };
 
-export const getFromDescriptionTranslation = (
-	translations: Array<FormFieldsTranslations>,
-	languageCode: string
-): string => {
+export const getFromDescriptionTranslation = (translations: Array<FormFieldsTranslations>, languageCode: string): string => {
 	if (!translations || translations.length === 0) return '';
-	const translation = translations.find(
-		t => t.languages_code?.split('-')[0] === languageCode
-	);
+	const translation = translations.find(t => t.languages_code?.split('-')[0] === languageCode);
 	return translation?.description || '';
 };
 
-export const getTitleFromTranslation = (
-	translations: Array<Translation | WikisTranslations>,
-	languageCode: string
-): string => {
+export const getTitleFromTranslation = (translations: Array<Translation | WikisTranslations>, languageCode: string): string => {
 	if (!translations || translations.length === 0) return '';
-	const translation = translations.find(
-		t => t.languages_code?.toString()?.split('-')[0] === languageCode
-	);
+	const translation = translations.find(t => t.languages_code?.toString()?.split('-')[0] === languageCode);
 	return translation?.title || '';
 };
 
-const getDescriptionFromTranslation = (
-	translations: Array<Translation | MarkingsTranslations>,
-	languageCode: string
-): string => {
+const getDescriptionFromTranslation = (translations: Array<Translation | MarkingsTranslations>, languageCode: string): string => {
 	if (!translations || translations.length === 0) return '';
 
-	const prioritizedTranslation = translations.find(
-		t =>
-			t.languages_code?.toString()?.split('-')[0] === languageCode && t.description
-	);
+	const prioritizedTranslation = translations.find(t => t.languages_code?.toString()?.split('-')[0] === languageCode && t.description);
 
 	// Fall back to any translation matching the language code
-	const fallbackTranslation = translations.find(
-		t => t.languages_code?.toString()?.split('-')[0] === languageCode
-	);
+	const fallbackTranslation = translations.find(t => t.languages_code?.toString()?.split('-')[0] === languageCode);
 
 	const translation = prioritizedTranslation || fallbackTranslation;
 	return translation?.description || '';
 };
 
 const extractFoodDetails = (food: DatabaseTypes.Foodoffers) => {
-	const {
-		fat_g,
-		protein_g,
-		saturated_fat_g,
-		sugar_g,
-		carbohydrate_g,
-		calories_kcal,
-		fiber_g,
-		salt_g,
-	} = food;
+	const { fat_g, protein_g, saturated_fat_g, sugar_g, carbohydrate_g, calories_kcal, fiber_g, salt_g } = food;
 
 	return {
 		fat_g,
@@ -207,13 +126,7 @@ const DEFAULT_LANGUAGE_CODE_GERMAN = 'de';
 const FALLBACK_LANGUAGE_CODE_ENGLISH = 'en';
 const MISSING_TRANSLATION = 'Missing translation';
 
-export function getDirectusTranslation(
-	params: any,
-	translations: TranslationEntry[],
-	field: string,
-	ignoreFallbackLanguage?: boolean,
-	fallback_text?: string | null
-): string {
+export function getDirectusTranslation(params: any, translations: TranslationEntry[], field: string, ignoreFallbackLanguage?: boolean, fallback_text?: string | null): string {
 	const languageCode = params?.languageCode || FALLBACK_LANGUAGE_CODE_ENGLISH;
 
 	const translationDict = translations.reduce(
@@ -224,11 +137,7 @@ export function getDirectusTranslation(
 		{} as { [key: string]: TranslationEntry }
 	);
 
-	const getTranslation = (
-		dict: { [key: string]: TranslationEntry },
-		langCode: string,
-		params?: any
-	) => {
+	const getTranslation = (dict: { [key: string]: TranslationEntry }, langCode: string, params?: any) => {
 		const translationEntry = dict[langCode];
 		if (!translationEntry) return null;
 
@@ -246,20 +155,12 @@ export function getDirectusTranslation(
 	if (translation) return translation;
 
 	// If not found, fallback to English (en)
-	translation = getTranslation(
-		translationDict,
-		FALLBACK_LANGUAGE_CODE_ENGLISH,
-		params
-	);
+	translation = getTranslation(translationDict, FALLBACK_LANGUAGE_CODE_ENGLISH, params);
 	if (translation) return translation;
 
 	// Optionally fallback to German (de) if needed
 	if (!ignoreFallbackLanguage) {
-		translation = getTranslation(
-			translationDict,
-			DEFAULT_LANGUAGE_CODE_GERMAN,
-			params
-		);
+		translation = getTranslation(translationDict, DEFAULT_LANGUAGE_CODE_GERMAN, params);
 		if (translation) return translation;
 	}
 
@@ -272,32 +173,17 @@ const MIN_RATING = 1;
 const MINIMUM_RATING_AS_FAVORITE = (MAX_RATING + MIN_RATING) / 2;
 
 export function isRatingPositive(rating: number | null | undefined): boolean {
-	return (
-		rating !== null &&
-		rating !== undefined &&
-		rating >= MINIMUM_RATING_AS_FAVORITE
-	);
+	return rating !== null && rating !== undefined && rating >= MINIMUM_RATING_AS_FAVORITE;
 }
 
 export function isRatingNegative(rating: number | null | undefined): boolean {
-	return (
-		rating !== null && rating !== undefined && rating < MINIMUM_RATING_AS_FAVORITE
-	);
+	return rating !== null && rating !== undefined && rating < MINIMUM_RATING_AS_FAVORITE;
 }
 
-export function getFoodName(
-	food: string | DatabaseTypes.Foods | null | undefined,
-	languageCode: string
-) {
+export function getFoodName(food: string | DatabaseTypes.Foods | null | undefined, languageCode: string) {
 	if (typeof food === 'object' && food !== null) {
 		const translations = food.translations as TranslationEntry[];
-		const translation = getDirectusTranslation(
-			{ languageCode },
-			translations,
-			'name',
-			false,
-			food.alias
-		);
+		const translation = getDirectusTranslation({ languageCode }, translations, 'name', false, food.alias);
 		if (translation) {
 			return translation.charAt(0).toUpperCase() + translation.slice(1);
 		}
@@ -308,15 +194,10 @@ export function getFoodName(
 	return null;
 }
 
-export const getNewsTranslationByLanguageCode = (
-	translations: NewsTranslations[],
-	languageCode: string
-): any => {
+export const getNewsTranslationByLanguageCode = (translations: NewsTranslations[], languageCode: string): any => {
 	if (!translations || translations.length === 0) return '';
 
-	const translation = translations?.find(
-		item => item.languages_code?.toString().split('-')[0] === languageCode
-	);
+	const translation = translations?.find(item => item.languages_code?.toString().split('-')[0] === languageCode);
 
 	if (translation) {
 		return {
@@ -326,30 +207,20 @@ export const getNewsTranslationByLanguageCode = (
 	}
 };
 
-export const getBuildingTranslationByLanguageCode = (
-	translations: BuildingsTranslations[],
-	languageCode: string
-) => {
+export const getBuildingTranslationByLanguageCode = (translations: BuildingsTranslations[], languageCode: string) => {
 	if (!translations || translations.length === 0) return '';
 
-	const translation = translations?.find(
-		item => item.languages_code?.toString().split('-')[0] === languageCode
-	);
+	const translation = translations?.find(item => item.languages_code?.toString().split('-')[0] === languageCode);
 
 	if (translation?.content) {
 		return translation?.content || '';
 	}
 };
 
-export const getAppElementTranslation = (
-	translations: any[],
-	languageCode: string
-): any => {
+export const getAppElementTranslation = (translations: any[], languageCode: string): any => {
 	if (!translations || translations.length === 0) return '';
 
-	const translation = translations?.find(
-		item => item.languages_code?.toString().split('-')[0] === languageCode
-	);
+	const translation = translations?.find(item => item.languages_code?.toString().split('-')[0] === languageCode);
 
 	if (translation) {
 		return {
@@ -360,11 +231,4 @@ export const getAppElementTranslation = (
 	}
 };
 
-export {
-	getIconComponent,
-	getTextFromTranslation,
-	extractFoodDetails,
-	getDescriptionFromTranslation,
-	getFoodCategoryName,
-	getFoodOfferCategoryName,
-};
+export { getIconComponent, getTextFromTranslation, extractFoodDetails, getDescriptionFromTranslation, getFoodCategoryName, getFoodOfferCategoryName };

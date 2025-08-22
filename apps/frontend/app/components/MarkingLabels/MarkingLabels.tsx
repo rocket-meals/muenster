@@ -1,12 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import {
-	ActivityIndicator,
-	Image,
-	Pressable,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { MarkingLabelProps } from './types';
@@ -27,11 +20,7 @@ import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
-const MarkingLabels: React.FC<MarkingLabelProps> = ({
-	markingId,
-	handleMenuSheet,
-	size = 30,
-}) => {
+const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet, size = 30 }) => {
 	const { theme } = useTheme();
 	const dispatch = useDispatch();
 	const { translate } = useLanguage();
@@ -40,22 +29,13 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({
 	const [showTooltip, setShowTooltip] = useState(false);
 	const [likeLoading, setLikeLoading] = useState(false);
 	const [dislikeLoading, setDislikeLoading] = useState(false);
-	const {
-		primaryColor,
-		language,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
 	const { user, profile } = useSelector((state: RootState) => state.authReducer);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
 	const { markings } = useSelector((state: RootState) => state.food);
 	const marking = markings?.find((mark: any) => mark.id === markingId);
-	const ownMarking = profile?.markings?.find(
-		(mark: any) => mark.markings_id === markingId
-	);
+	const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId);
 
 	const openMarkingLabel = (marking: DatabaseTypes.Markings) => {
 		if (handleMenuSheet) {
@@ -70,10 +50,7 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({
 	// Fetch profile function
 	const fetchProfile = async () => {
 		try {
-			const profile = (await profileHelper.fetchProfileById(
-				user?.profile,
-				{}
-			)) as DatabaseTypes.Profiles;
+			const profile = (await profileHelper.fetchProfileById(user?.profile, {})) as DatabaseTypes.Profiles;
 			if (profile) {
 				dispatch({ type: UPDATE_PROFILE, payload: profile });
 			}
@@ -161,9 +138,7 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({
 				dispatch({ type: UPDATE_PROFILE, payload: profileData });
 
 				// Update profile on the server
-				const result = (await profileHelper.updateProfile(
-					profileData
-				)) as DatabaseTypes.Profiles;
+				const result = (await profileHelper.updateProfile(profileData)) as DatabaseTypes.Profiles;
 				if (result) {
 					fetchProfile();
 					if (like) {
@@ -182,32 +157,18 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({
 				}
 			}
 		},
-		[
-			user?.id,
-			profile,
-			ownMarking,
-			markingId,
-			dispatch,
-			profileHelper,
-			fetchProfile,
-		]
+		[user?.id, profile, ownMarking, markingId, dispatch, profileHelper, fetchProfile]
 	);
 
 	if (!marking) return null; // Early return if the marking doesn't exist
 
-	const markingImage = marking?.image_remote_url
-		? { uri: marking?.image_remote_url }
-		: { uri: getImageUrl(String(marking?.image)) };
+	const markingImage = marking?.image_remote_url ? { uri: marking?.image_remote_url } : { uri: getImageUrl(String(marking?.image)) };
 
 	const markingText = getTextFromTranslation(marking?.translations, language);
 	const iconSize = isWeb ? 24 : 22;
 
 	const MarkingBackgroundColor = marking?.background_color;
-	const MarkingColor = useMyContrastColor(
-		marking?.background_color,
-		theme,
-		mode === 'dark'
-	);
+	const MarkingColor = useMyContrastColor(marking?.background_color, theme, mode === 'dark');
 
 	return (
 		<View style={styles.row}>
@@ -216,12 +177,7 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({
 					<Tooltip
 						placement="top"
 						trigger={triggerProps => (
-							<Pressable
-								{...triggerProps}
-								onPress={() => openMarkingLabel(marking)}
-								onHoverIn={() => setShowTooltip(true)}
-								onHoverOut={() => setShowTooltip(false)}
-							>
+							<Pressable {...triggerProps} onPress={() => openMarkingLabel(marking)} onHoverIn={() => setShowTooltip(true)} onHoverOut={() => setShowTooltip(false)}>
 								<MarkingIcon marking={marking} size={size} />
 							</Pressable>
 						)}
@@ -239,12 +195,7 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({
 					placement="top"
 					isOpen={showTooltip}
 					trigger={triggerProps => (
-						<Pressable
-							{...triggerProps}
-							onHoverIn={() => setShowTooltip(true)}
-							onHoverOut={() => setShowTooltip(false)}
-							style={styles.labelContainer}
-						>
+						<Pressable {...triggerProps} onHoverIn={() => setShowTooltip(true)} onHoverOut={() => setShowTooltip(false)} style={styles.labelContainer}>
 							<Text
 								style={{
 									...styles.label,
@@ -277,65 +228,28 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({
 				<Tooltip
 					placement="top"
 					trigger={triggerProps => (
-						<Pressable
-							onHoverIn={() => setShowTooltip(true)}
-							onHoverOut={() => setShowTooltip(false)}
-							style={styles.likeButton}
-							{...triggerProps}
-							onPress={() => handleUpdateMarking(true)}
-						>
-							{likeLoading ? (
-								<ActivityIndicator size={25} color={foods_area_color} />
-							) : (
-								<MaterialCommunityIcons
-									name={ownMarking?.like ? 'thumb-up' : 'thumb-up-outline'}
-									size={iconSize}
-									color={ownMarking?.like ? foods_area_color : theme.screen.icon}
-								/>
-							)}
+						<Pressable onHoverIn={() => setShowTooltip(true)} onHoverOut={() => setShowTooltip(false)} style={styles.likeButton} {...triggerProps} onPress={() => handleUpdateMarking(true)}>
+							{likeLoading ? <ActivityIndicator size={25} color={foods_area_color} /> : <MaterialCommunityIcons name={ownMarking?.like ? 'thumb-up' : 'thumb-up-outline'} size={iconSize} color={ownMarking?.like ? foods_area_color : theme.screen.icon} />}
 						</Pressable>
 					)}
 				>
 					<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 						<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-							{`${translate(TranslationKeys.i_like_that)}: ${translate(
-								ownMarking?.like ? TranslationKeys.active : TranslationKeys.inactive
-							)}: ${translate(TranslationKeys.markings)}: ${markingText}`}
+							{`${translate(TranslationKeys.i_like_that)}: ${translate(ownMarking?.like ? TranslationKeys.active : TranslationKeys.inactive)}: ${translate(TranslationKeys.markings)}: ${markingText}`}
 						</TooltipText>
 					</TooltipContent>
 				</Tooltip>
 				<Tooltip
 					placement="top"
 					trigger={triggerProps => (
-						<Pressable
-							onHoverIn={() => setShowTooltip(true)}
-							onHoverOut={() => setShowTooltip(false)}
-							{...triggerProps}
-							style={styles.dislikeButton}
-							{...triggerProps}
-							onPress={() => handleUpdateMarking(false)}
-						>
-							{dislikeLoading ? (
-								<ActivityIndicator size={25} color={foods_area_color} />
-							) : (
-								<MaterialCommunityIcons
-									name={ownMarking?.like === false ? 'thumb-down' : 'thumb-down-outline'}
-									size={iconSize}
-									color={
-										ownMarking?.like === false ? foods_area_color : theme.screen.icon
-									}
-								/>
-							)}
+						<Pressable onHoverIn={() => setShowTooltip(true)} onHoverOut={() => setShowTooltip(false)} {...triggerProps} style={styles.dislikeButton} {...triggerProps} onPress={() => handleUpdateMarking(false)}>
+							{dislikeLoading ? <ActivityIndicator size={25} color={foods_area_color} /> : <MaterialCommunityIcons name={ownMarking?.like === false ? 'thumb-down' : 'thumb-down-outline'} size={iconSize} color={ownMarking?.like === false ? foods_area_color : theme.screen.icon} />}
 						</Pressable>
 					)}
 				>
 					<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 						<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-							{`${translate(TranslationKeys.i_dislike_that)}: ${translate(
-								ownMarking?.like === false
-									? TranslationKeys.active
-									: TranslationKeys.inactive
-							)}: ${translate(TranslationKeys.markings)}: ${markingText}`}
+							{`${translate(TranslationKeys.i_dislike_that)}: ${translate(ownMarking?.like === false ? TranslationKeys.active : TranslationKeys.inactive)}: ${translate(TranslationKeys.markings)}: ${markingText}`}
 						</TooltipText>
 					</TooltipContent>
 				</Tooltip>

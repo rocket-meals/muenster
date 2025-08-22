@@ -1,12 +1,6 @@
-import {
-  MarkingParserInterface,
-  MarkingsTypeForParser,
-} from './MarkingParserInterface';
+import { MarkingParserInterface, MarkingsTypeForParser } from './MarkingParserInterface';
 import { CSVExportParser } from './CSVExportParser';
-import {
-  TranslationHelper,
-  TranslationsFromParsingType,
-} from '../helpers/TranslationHelper';
+import { TranslationHelper, TranslationsFromParsingType } from '../helpers/TranslationHelper';
 import { SystemFileHelper } from '../helpers/SystemFileHelper';
 import { EventContext } from '@directus/types';
 
@@ -26,19 +20,11 @@ export class MarkingTL1Parser implements MarkingParserInterface {
   async createNeededData() {
     this.parsedReport = [];
     let rawExport = await this.getRawReport();
-    this.parsedReport = CSVExportParser.getListOfLineObjectsWithParams(
-      rawExport,
-      CSVExportParser.NEW_LINE_DELIMITER,
-      CSVExportParser.INLINE_DELIMITER_SEMICOLON,
-      true
-    );
+    this.parsedReport = CSVExportParser.getListOfLineObjectsWithParams(rawExport, CSVExportParser.NEW_LINE_DELIMITER, CSVExportParser.INLINE_DELIMITER_SEMICOLON, true);
   }
 
   async getRawReport(): Promise<string | undefined> {
-    return SystemFileHelper.readFileSync(
-      this.path_to_tl1_export,
-      this.encoding
-    );
+    return SystemFileHelper.readFileSync(this.path_to_tl1_export, this.encoding);
   }
 
   async getMarkingsJSONList(): Promise<MarkingsTypeForParser[]> {
@@ -46,8 +32,7 @@ export class MarkingTL1Parser implements MarkingParserInterface {
     for (let i = 0; i < this.parsedReport.length; i++) {
       let parsedLineObject = this.parsedReport[i];
       if (!!parsedLineObject) {
-        let marking =
-          MarkingTL1Parser.getMarkingJSONFromRawMarking(parsedLineObject);
+        let marking = MarkingTL1Parser.getMarkingJSONFromRawMarking(parsedLineObject);
         if (!!marking) {
           markings.push(marking);
         }
@@ -56,26 +41,16 @@ export class MarkingTL1Parser implements MarkingParserInterface {
     return markings;
   }
 
-  private static getMarkingJSONFromRawMarking(rawMarking: {
-    [p: string]: string;
-  }): MarkingsTypeForParser | null {
+  private static getMarkingJSONFromRawMarking(rawMarking: { [p: string]: string }): MarkingsTypeForParser | null {
     let id = rawMarking['ID'];
     let name = rawMarking['BESCHREIBUNG'];
     let hint = rawMarking['HINWEISE'];
     let short = rawMarking['KUERZEL'];
 
-    let external_identifier = MarkingTL1Parser.getMarkingExternalIdentifier(
-      id,
-      short
-    );
+    let external_identifier = MarkingTL1Parser.getMarkingExternalIdentifier(id, short);
     if (!external_identifier) {
-      console.log(
-        'MarkingTL1Parser: getMarkingJSONFromRawMarking: externalIdentifier is null. Skip this marking.'
-      );
-      console.log(
-        'MarkingTL1Parser: getMarkingJSONFromRawMarking: rawMarking: ' +
-          JSON.stringify(rawMarking, null, 2)
-      );
+      console.log('MarkingTL1Parser: getMarkingJSONFromRawMarking: externalIdentifier is null. Skip this marking.');
+      console.log('MarkingTL1Parser: getMarkingJSONFromRawMarking: rawMarking: ' + JSON.stringify(rawMarking, null, 2));
       return null;
     }
 
@@ -105,9 +80,7 @@ export class MarkingTL1Parser implements MarkingParserInterface {
     return marking;
   }
 
-  private static getMarkingNameDe(
-    name: string | undefined
-  ): string | undefined {
+  private static getMarkingNameDe(name: string | undefined): string | undefined {
     /**
      *          " 104";"Gesund&Munter";"";"m"
      *          " 100";"nachhaltige Fischerei / sustainable fishery";"";"f"
@@ -127,9 +100,7 @@ export class MarkingTL1Parser implements MarkingParserInterface {
     }
   }
 
-  private static getMarkingNameEn(
-    name: string | undefined
-  ): string | undefined {
+  private static getMarkingNameEn(name: string | undefined): string | undefined {
     /**
      *          " 104";"Gesund&Munter";"";"m"
      *          " 100";"nachhaltige Fischerei / sustainable fishery";"";"f"
@@ -149,10 +120,7 @@ export class MarkingTL1Parser implements MarkingParserInterface {
     }
   }
 
-  private static getMarkingExternalIdentifier(
-    id: string | undefined,
-    short: string | undefined
-  ): string | null {
+  private static getMarkingExternalIdentifier(id: string | undefined, short: string | undefined): string | null {
     // Hannover Mail to Mister Wiebesiek 15.05.2024 um 03:51 Uhr. Confirm the following:
     // The external identifier is, the short or if the short is empty the id without leading spaces and leading zeros.
     // id e.g. " 103" -> "103" or " 098" -> "98"

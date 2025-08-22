@@ -1,9 +1,4 @@
-import {
-	CLEAR_FOOD_ATTRIBUTES,
-	SET_FOOD_ATTRIBUTE_GROUPS,
-	SET_FOOD_ATTRIBUTES,
-	SET_FOOD_ATTRIBUTES_DICT,
-} from '@/redux/Types/types';
+import { CLEAR_FOOD_ATTRIBUTES, SET_FOOD_ATTRIBUTE_GROUPS, SET_FOOD_ATTRIBUTES, SET_FOOD_ATTRIBUTES_DICT } from '@/redux/Types/types';
 
 const initialState = {
 	foodAttributeGroups: [],

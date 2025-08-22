@@ -1,13 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-	View,
-	Text,
-	ScrollView,
-	ActivityIndicator,
-	TouchableOpacity,
-	Linking,
-	Image,
-} from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, Linking, Image } from 'react-native';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 
@@ -27,20 +19,12 @@ const parseFeed = (xml: string) => {
 	let match;
 	while ((match = itemRegex.exec(xml))) {
 		const itemXml = match[1];
-		const titleMatch =
-			itemXml.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) ||
-			itemXml.match(/<title>(.*?)<\/title>/);
+		const titleMatch = itemXml.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) || itemXml.match(/<title>(.*?)<\/title>/);
 		const linkMatch = itemXml.match(/<link>(.*?)<\/link>/);
-		const descMatch =
-			itemXml.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/) ||
-			itemXml.match(/<description>(.*?)<\/description>/);
-		const contentEncodedMatch =
-			itemXml.match(/<content:encoded><!\[CDATA\[(.*?)\]\]><\/content:encoded>/) ||
-			itemXml.match(/<content:encoded>([\s\S]*?)<\/content:encoded>/);
+		const descMatch = itemXml.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/) || itemXml.match(/<description>(.*?)<\/description>/);
+		const contentEncodedMatch = itemXml.match(/<content:encoded><!\[CDATA\[(.*?)\]\]><\/content:encoded>/) || itemXml.match(/<content:encoded>([\s\S]*?)<\/content:encoded>/);
 		const enclosureMatch = itemXml.match(/<enclosure[^>]*url=['"](.*?)['"]/);
-		const htmlContent =
-			(contentEncodedMatch ? contentEncodedMatch[1] : '') ||
-			(descMatch ? descMatch[1] : '');
+		const htmlContent = (contentEncodedMatch ? contentEncodedMatch[1] : '') || (descMatch ? descMatch[1] : '');
 		const imageMatch = htmlContent.match(/<img[^>]*src=['"]([^'"]+)['"]/);
 		items.push({
 			title: titleMatch ? titleMatch[1] : '',
@@ -130,28 +114,11 @@ const RssFeed: React.FC<RssFeedProps> = ({ urls, switchIntervalInSeconds }) => {
 	}
 
 	return (
-		<ScrollView
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-			contentContainerStyle={styles.contentContainer}
-		>
-			<TouchableOpacity
-				onPress={() => currentItem.link && Linking.openURL(currentItem.link)}
-			>
-				<Text style={[styles.title, { color: theme.screen.text }]}>
-					{currentItem.title}
-				</Text>
-				{currentItem.image && (
-					<Image
-						source={{ uri: currentItem.image }}
-						style={styles.image}
-						resizeMode="cover"
-					/>
-				)}
-				{currentItem.content && (
-					<Text style={[styles.body, { color: theme.screen.text }]}>
-						{currentItem.content}
-					</Text>
-				)}
+		<ScrollView style={[styles.container, { backgroundColor: theme.screen.background }]} contentContainerStyle={styles.contentContainer}>
+			<TouchableOpacity onPress={() => currentItem.link && Linking.openURL(currentItem.link)}>
+				<Text style={[styles.title, { color: theme.screen.text }]}>{currentItem.title}</Text>
+				{currentItem.image && <Image source={{ uri: currentItem.image }} style={styles.image} resizeMode="cover" />}
+				{currentItem.content && <Text style={[styles.body, { color: theme.screen.text }]}>{currentItem.content}</Text>}
 			</TouchableOpacity>
 		</ScrollView>
 	);

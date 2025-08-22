@@ -6,25 +6,13 @@ export class AvatarHelper {
    * @param userId the userId
    * @returns {Promise<void>}
    */
-  static async deleteAvatarOfUser(
-    services: any,
-    database: any,
-    schema: any,
-    accountability: any,
-    userId: string
-  ) {
-    const filesService = await AvatarHelper.getAdminFileServiceInstance(
-      schema,
-      accountability,
-      services
-    );
+  static async deleteAvatarOfUser(services: any, database: any, schema: any, accountability: any, userId: string) {
+    const filesService = await AvatarHelper.getAdminFileServiceInstance(schema, accountability, services);
     if (!userId) {
       throw new Error('deleteAvatarOfUser: No userId provided: ');
     }
 
-    const existingUser = await database('directus_users')
-      .where({ id: userId })
-      .first(); //get user
+    const existingUser = await database('directus_users').where({ id: userId }).first(); //get user
     if (!existingUser) {
       //handle no user found error
       throw new Error('deleteAvatarOfUser: No user found with id: ' + userId);
@@ -41,16 +29,11 @@ export class AvatarHelper {
    * get a fileService with admin permission
    * @returns {*}
    */
-  static async getAdminFileServiceInstance(
-    schema: any,
-    accountability: any,
-    services: any
-  ) {
+  static async getAdminFileServiceInstance(schema: any, accountability: any, services: any) {
     // TODO: Replace with MyDatabaseHelper.getFilesHelper()
 
     const { FilesService } = services;
-    const adminAccountAbility =
-      AccountHelper.getAdminAccountability(accountability);
+    const adminAccountAbility = AccountHelper.getAdminAccountability(accountability);
     return new FilesService({ schema, accountability: adminAccountAbility });
   }
 }

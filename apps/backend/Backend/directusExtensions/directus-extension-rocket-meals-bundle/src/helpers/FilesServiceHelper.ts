@@ -1,10 +1,4 @@
-import {
-  FileServiceCreator,
-  FileServiceFileStream,
-  FileServiceSteamType,
-  FilesService,
-  MutationOptions,
-} from './ItemsServiceCreator';
+import { FileServiceCreator, FileServiceFileStream, FileServiceSteamType, FilesService, MutationOptions } from './ItemsServiceCreator';
 import { ItemsServiceHelper } from './ItemsServiceHelper';
 import { CollectionNames } from 'repo-depkit-common';
 import { PrimaryKey } from '@directus/types';
@@ -12,11 +6,7 @@ import { DatabaseTypes } from 'repo-depkit-common';
 import { Readable } from 'node:stream';
 import type { Stat } from '@directus/storage';
 import { AssetsService } from './MyServiceClassHelpers';
-import {
-  CreateShareLinkOptionForDirectusFiles,
-  ShareDirectusFileMethod,
-  ShareServiceHelper,
-} from './ShareServiceHelper';
+import { CreateShareLinkOptionForDirectusFiles, ShareDirectusFileMethod, ShareServiceHelper } from './ShareServiceHelper';
 import { Buffer } from 'node:buffer';
 import { MyDatabaseHelperInterface } from './MyDatabaseHelperInterface';
 
@@ -30,19 +20,13 @@ export enum MyFileTypes {
   TXT = 'text/plain',
 }
 
-export class FilesServiceHelper
-  extends ItemsServiceHelper<DatabaseTypes.DirectusFiles>
-  implements FilesService, ShareDirectusFileMethod
-{
+export class FilesServiceHelper extends ItemsServiceHelper<DatabaseTypes.DirectusFiles> implements FilesService, ShareDirectusFileMethod {
   constructor(myDatabaseHelper: MyDatabaseHelperInterface) {
     super(myDatabaseHelper, CollectionNames.DIRECTUS_FILES);
   }
 
   protected override async getItemsService() {
-    const filesServiceCreator = new FileServiceCreator(
-      this.apiContext,
-      this.eventContext
-    );
+    const filesServiceCreator = new FileServiceCreator(this.apiContext, this.eventContext);
     let filesService = await filesServiceCreator.getFileService();
     return filesService;
   }
@@ -71,13 +55,7 @@ export class FilesServiceHelper
    * @param directus_folder_id   Optional folder id where the file should be stored
    * @returns The id of the created file
    */
-  async uploadOneFromBuffer(
-    buffer: Buffer,
-    filename: string,
-    fileType: MyFileTypes,
-    myDatabaseHelper: MyDatabaseHelperInterface,
-    directus_folder_id?: string
-  ): Promise<PrimaryKey> {
+  async uploadOneFromBuffer(buffer: Buffer, filename: string, fileType: MyFileTypes, myDatabaseHelper: MyDatabaseHelperInterface, directus_folder_id?: string): Promise<PrimaryKey> {
     const filesHelper = new FilesServiceHelper(myDatabaseHelper);
 
     // Convert Buffer to a Readable Stream
@@ -116,12 +94,7 @@ export class FilesServiceHelper
    * @param primaryKey   Optional file id to update instead of creating
    * @param opts         Additional Directus mutation options
    */
-  async uploadOne(
-    stream: FileServiceSteamType,
-    data: FileServiceFileStream,
-    primaryKey?: PrimaryKey,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey> {
+  async uploadOne(stream: FileServiceSteamType, data: FileServiceFileStream, primaryKey?: PrimaryKey, opts?: MutationOptions): Promise<PrimaryKey> {
     let filesService = await this.getItemsService();
     return filesService.uploadOne(stream, data, primaryKey, opts);
   }
@@ -132,10 +105,7 @@ export class FilesServiceHelper
    * @param importURL   Remote URL to fetch the file from
    * @param body        Additional metadata for the file
    */
-  async importOne(
-    importURL: string,
-    body: Partial<DatabaseTypes.DirectusFiles>
-  ): Promise<PrimaryKey> {
+  async importOne(importURL: string, body: Partial<DatabaseTypes.DirectusFiles>): Promise<PrimaryKey> {
     let filesService = await this.getItemsService();
     return filesService.importOne(importURL, body);
   }
@@ -168,12 +138,7 @@ export class FilesServiceHelper
     let chunks: Buffer[] = [];
     return new Promise<Buffer>((resolve, reject) => {
       file.stream.on('data', (chunk: Buffer<ArrayBufferLike>) => {
-        console.log(
-          'Chunk type:',
-          typeof chunk,
-          'instanceof Buffer:',
-          chunk instanceof Buffer
-        );
+        console.log('Chunk type:', typeof chunk, 'instanceof Buffer:', chunk instanceof Buffer);
         chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
       });
       file.stream.on('end', () => {
@@ -194,9 +159,7 @@ export class FilesServiceHelper
    * @param options Options used for creating the share entry
    * @returns URL of the share link or null if creation failed
    */
-  createDirectusFilesShareLink(
-    options: CreateShareLinkOptionForDirectusFiles
-  ): Promise<string | null> {
+  createDirectusFilesShareLink(options: CreateShareLinkOptionForDirectusFiles): Promise<string | null> {
     let shareServiceHelper = new ShareServiceHelper(this.myDatabaseHelper);
     return shareServiceHelper.createDirectusFilesShareLink(options);
   }

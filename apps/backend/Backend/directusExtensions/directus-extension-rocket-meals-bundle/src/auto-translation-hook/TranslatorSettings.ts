@@ -11,8 +11,7 @@ export class TranslatorSettings {
     this.myDatabaseHelper = myDatabaseHelper;
     this.apiKey = undefined; // To hold the API key in memory
     this.apiKey = EnvVariableHelper.getAutoTranslateApiKey();
-    this.translationSettingsService =
-      this.myDatabaseHelper.getAutoTranslationSettingsHelper();
+    this.translationSettingsService = this.myDatabaseHelper.getAutoTranslationSettingsHelper();
   }
 
   async getSettings() {
@@ -25,9 +24,7 @@ export class TranslatorSettings {
   }
 
   async setSettings(newSettings: any) {
-    await this.translationSettingsService.setAutoTranslationSettings(
-      newSettings
-    );
+    await this.translationSettingsService.setAutoTranslationSettings(newSettings);
   }
 
   async getAuthKey() {

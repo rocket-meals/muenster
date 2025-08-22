@@ -1,26 +1,8 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
-import {
-	FontAwesome,
-	FontAwesome6,
-	Ionicons,
-	MaterialIcons,
-} from '@expo/vector-icons';
+import { FontAwesome, FontAwesome6, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useLanguage } from '@/hooks/useLanguage';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,20 +19,12 @@ import MultiLineInput from '@/components/MultiLineInput/MultiLineInput';
 import IBANInput from '@/components/IBANInput/IBANInput';
 import NumberInput from '@/components/NumberInput/NumberInput';
 import EmailInput from '@/components/EmailInput/EmailInput';
-import {
-	DateInput,
-	DateWithTimeInput,
-	PreciseTimestampInput,
-	TimeInput,
-} from '@/components/DateTimeInputs';
+import { DateInput, DateWithTimeInput, PreciseTimestampInput, TimeInput } from '@/components/DateTimeInputs';
 import TriStateCheckbox from '@/components/TriStateCheckbox/TriStateCheckbox';
 import FileUpload from '@/components/FileUpload/FileUpload';
 import ImageUpload from '@/components/ImageUpload/ImageUpload';
 import SignatureInterface from '@/components/SignatureInterface/SignatureInterface';
-import {
-	getFromCategoryTranslation,
-	getFromDescriptionTranslation,
-} from '@/helper/resourceHelper';
+import { getFromCategoryTranslation, getFromDescriptionTranslation } from '@/helper/resourceHelper';
 import { iconLibraries } from '@/components/Drawer/CustomDrawerContent';
 import { DynamicCollectionHelper } from '@/redux/actions/DynamicCollection/DynamicCollection';
 import CollectionSelection from '@/components/CollectionSelection/CollectionSelection';
@@ -58,13 +32,7 @@ import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
 import { filterOptions } from './constants';
 import EditFormSubmissionSheet from '@/components/EditFormSubmissionSheet/EditFormSubmissionSheet';
 import { SET_FORM_SUBMISSION } from '@/redux/Types/types';
-import {
-	excerpt,
-	getFileFromDirectus,
-	getFormValueImageUrl,
-	uploadToDirectus,
-	uploadToDirectusFromMobile,
-} from '@/constants/HelperFunctions';
+import { excerpt, getFileFromDirectus, getFormValueImageUrl, uploadToDirectus, uploadToDirectusFromMobile } from '@/constants/HelperFunctions';
 import SubmissionWarningSheet from '@/components/SubmissionWarningSheet/SubmissionWarningSheet';
 import { format, isValid, parse, parseISO } from 'date-fns';
 import { Buffer } from 'buffer';
@@ -88,9 +56,7 @@ const index = () => {
 	const [loading, setLoading] = useState(false);
 	const [isActive, setIsActive] = useState(false);
 	const [isWarning, setIsWarning] = useState(false);
-	const [formAnswers, setFormAnswers] = useState<DatabaseTypes.FormAnswers[]>(
-		[]
-	);
+	const [formAnswers, setFormAnswers] = useState<DatabaseTypes.FormAnswers[]>([]);
 	const [loadingCollection, setLoadingCollection] = useState(false);
 	const [collectionData, setCollectionData] = useState<any>([]);
 	const [selectedState, setSelectedState] = useState('');
@@ -101,9 +67,7 @@ const index = () => {
 		[key: string]: { value: any; error: string; custom_type: string };
 	}>({});
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-	const { language, drawerPosition, primaryColor } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { language, drawerPosition, primaryColor } = useSelector((state: RootState) => state.settings);
 
 	// Set Page Title
 	useSetPageTitle(formSubmission?.alias || TranslationKeys.form_submission);
@@ -188,9 +152,7 @@ const index = () => {
 				if (!response) return null;
 
 				return {
-					image: response.type.startsWith('image/')
-						? getFormValueImageUrl(response.id)
-						: null,
+					image: response.type.startsWith('image/') ? getFormValueImageUrl(response.id) : null,
 					name: response.filename_download,
 					type: response.type,
 					edit: true,
@@ -206,9 +168,7 @@ const index = () => {
 	};
 
 	const checkValidity = async () => {
-		const result = (await formsSubmissionsHelper.fetchFormubmissionById(
-			String(form_submission_id)
-		)) as DatabaseTypes.FormSubmissions;
+		const result = (await formsSubmissionsHelper.fetchFormubmissionById(String(form_submission_id))) as DatabaseTypes.FormSubmissions;
 		if (result) {
 			dispatch({ type: SET_FORM_SUBMISSION, payload: result });
 			if (result?.user_locked_by && result?.user_locked_by !== user?.id) {
@@ -218,13 +178,10 @@ const index = () => {
 					openWarningSheet();
 				}
 			} else {
-				const update = (await formsSubmissionsHelper.updateFormSubmissionById(
-					String(form_submission_id),
-					{
-						user_locked_by: String(user?.id),
-						date_started: new Date().toISOString(),
-					}
-				)) as DatabaseTypes.FormSubmissions;
+				const update = (await formsSubmissionsHelper.updateFormSubmissionById(String(form_submission_id), {
+					user_locked_by: String(user?.id),
+					date_started: new Date().toISOString(),
+				})) as DatabaseTypes.FormSubmissions;
 			}
 		} else {
 			toast('Please reload the page', 'error');
@@ -272,9 +229,7 @@ const index = () => {
 					value = defaultValue ? String(defaultValue)?.replace('.', ',') : null;
 				} else if (custom_type === 'value_boolean') {
 					value = defaultValue === false ? 0 : defaultValue === true ? 1 : null;
-				} else if (
-					['date_hh_mm', 'date', 'hh_mm', 'timestamp'].includes(custom_id)
-				) {
+				} else if (['date_hh_mm', 'date', 'hh_mm', 'timestamp'].includes(custom_id)) {
 					value = parseDateForEdit(custom_id, defaultValue);
 				} else if (custom_type === 'value_files') {
 					value = defaultValue ? await getDirectusFilesData(defaultValue) : [];
@@ -318,9 +273,7 @@ const index = () => {
 						const buildingsHelper = new BuildingsHelper();
 						const apartmentWithBuilding = await Promise.all(
 							data.map(async (apartment: any) => {
-								const buildingData = (await buildingsHelper.fetchBuildingById(
-									apartment?.building
-								)) as DatabaseTypes.Buildings;
+								const buildingData = (await buildingsHelper.fetchBuildingById(apartment?.building)) as DatabaseTypes.Buildings;
 
 								return {
 									...apartment,
@@ -342,10 +295,7 @@ const index = () => {
 		}
 	};
 
-	const formatDateForSubmission = (
-		custom_id: string,
-		value: string
-	): string | null => {
+	const formatDateForSubmission = (custom_id: string, value: string): string | null => {
 		try {
 			if (!value) return null;
 
@@ -434,9 +384,7 @@ const index = () => {
 		setSubmissionLoading(true);
 		let hasError = false;
 
-		const filteredFormAnswers = formAnswers.filter(answer =>
-			formData.hasOwnProperty(String(answer?.id))
-		);
+		const filteredFormAnswers = formAnswers.filter(answer => formData.hasOwnProperty(String(answer?.id)));
 
 		const updatedFormAnswers = await Promise.all(
 			filteredFormAnswers.map(async answer => {
@@ -450,10 +398,7 @@ const index = () => {
 
 				if (isRequired && (!value || value.trim() === '')) {
 					hasError = true;
-					const fieldName =
-						answer?.form_field?.translations?.length > 0
-							? getFromCategoryTranslation(answer?.form_field?.translations, language)
-							: answer?.form_field?.alias;
+					const fieldName = answer?.form_field?.translations?.length > 0 ? getFromCategoryTranslation(answer?.form_field?.translations, language) : answer?.form_field?.alias;
 					toast(`Field "${fieldName}" is required`, 'error');
 					return null;
 				}
@@ -485,11 +430,7 @@ const index = () => {
 						updatedValueFields = { value_image: directusFileId };
 					}
 				} else if (custom_type === 'value_files' && Array.isArray(value)) {
-					const uploadedFileIds = await Promise.all(
-						value
-							.filter((file: any) => !file?.edit)
-							.map(async (file: any) => await getDirectusUploadId(file))
-					);
+					const uploadedFileIds = await Promise.all(value.filter((file: any) => !file?.edit).map(async (file: any) => await getDirectusUploadId(file)));
 					updatedValueFields = {
 						value_files: {
 							create: uploadedFileIds.filter(Boolean).map(fileId => ({
@@ -513,16 +454,9 @@ const index = () => {
 
 		if (finalAnswers.length > 0) {
 			try {
-				await Promise.all(
-					finalAnswers.map((answer: any) =>
-						formAnswersHelper.updateFormAnswers(answer.id, answer)
-					)
-				);
+				await Promise.all(finalAnswers.map((answer: any) => formAnswersHelper.updateFormAnswers(answer.id, answer)));
 
-				await formsSubmissionsHelper.updateFormSubmissionById(
-					String(form_submission_id),
-					{ state: selectedState }
-				);
+				await formsSubmissionsHelper.updateFormSubmissionById(String(form_submission_id), { state: selectedState });
 
 				setSubmissionLoading(false);
 				setFormData({});
@@ -629,14 +563,7 @@ const index = () => {
 						<TouchableOpacity onPress={() => router.back()} style={{ padding: 10 }}>
 							<Ionicons name="arrow-back" size={26} color={theme.header.text} />
 						</TouchableOpacity>
-						<Text style={{ ...styles.heading, color: theme.header.text }}>
-							{formSubmission
-								? excerpt(
-										formSubmission?.alias,
-										screenWidth > 900 ? 100 : screenWidth > 700 ? 80 : 22
-									)
-								: ''}
-						</Text>
+						<Text style={{ ...styles.heading, color: theme.header.text }}>{formSubmission ? excerpt(formSubmission?.alias, screenWidth > 900 ? 100 : screenWidth > 700 ? 80 : 22) : ''}</Text>
 					</View>
 					<View style={{ ...styles.col2, gap: isWeb ? 30 : 15 }}>
 						<TouchableOpacity onPress={openEditSheet} style={{ padding: 10 }}>
@@ -645,12 +572,7 @@ const index = () => {
 					</View>
 				</View>
 			</View>
-			<ScrollView
-				style={{ flex: 1, width: '100%', marginTop: 10 }}
-				contentContainerStyle={{ alignItems: 'center' }}
-				ref={scrollViewRef}
-				keyboardShouldPersistTaps="handled"
-			>
+			<ScrollView style={{ flex: 1, width: '100%', marginTop: 10 }} contentContainerStyle={{ alignItems: 'center' }} ref={scrollViewRef} keyboardShouldPersistTaps="handled">
 				<View style={{ flex: 1, width: screenWidth > 768 ? '70%' : '90%' }}>
 					{loading ? (
 						<View
@@ -671,9 +593,7 @@ const index = () => {
 									backgroundColor: theme.screen.iconBg,
 								}}
 							>
-								<Text style={{ ...styles.body, color: theme.screen.text }}>
-									{formSubmission ? formSubmission?.id : ''}
-								</Text>
+								<Text style={{ ...styles.body, color: theme.screen.text }}>{formSubmission ? formSubmission?.id : ''}</Text>
 							</View>
 							{formAnswers &&
 								formAnswers.map((answer, index) => {
@@ -683,13 +603,7 @@ const index = () => {
 									const [custom_type, ...idParts] = fieldType.split('-');
 									const custom_id = idParts.join('-');
 									const fieldId = String(answer?.id);
-									const description =
-										answer?.form_field?.translations?.length > 0
-											? getFromDescriptionTranslation(
-													answer?.form_field?.translations,
-													language
-												)
-											: '';
+									const description = answer?.form_field?.translations?.length > 0 ? getFromDescriptionTranslation(answer?.form_field?.translations, language) : '';
 									const showInForm = answer?.form_field?.is_visible_in_form || true;
 									const isDisabled = answer?.form_field?.is_disabled || false;
 									let IconComponent: any = null;
@@ -717,13 +631,7 @@ const index = () => {
 													backgroundColor: theme.screen.iconBg,
 												}}
 											>
-												{IconComponent && (
-													<IconComponent
-														name={iconName}
-														size={20}
-														color={theme.screen.icon}
-													/>
-												)}
+												{IconComponent && <IconComponent name={iconName} size={20} color={theme.screen.icon} />}
 
 												<Text
 													style={{
@@ -732,16 +640,9 @@ const index = () => {
 													}}
 												>
 													{`${index + 1}. `}
-													{answer?.form_field?.translations?.length > 0
-														? getFromCategoryTranslation(
-																answer?.form_field?.translations,
-																language
-															)
-														: answer?.form_field?.alias}
+													{answer?.form_field?.translations?.length > 0 ? getFromCategoryTranslation(answer?.form_field?.translations, language) : answer?.form_field?.alias}
 												</Text>
-												{answer?.form_field?.is_required && (
-													<FontAwesome6 name="star-of-life" size={12} color={'red'} />
-												)}
+												{answer?.form_field?.is_required && <FontAwesome6 name="star-of-life" size={12} color={'red'} />}
 											</View>
 											{description && (
 												<View
@@ -760,170 +661,20 @@ const index = () => {
 													</Text>
 												</View>
 											)}
-											{custom_id === 'string' && showInForm && (
-												<SingleLineInput
-													id={fieldId}
-													value={formData[fieldId]?.value || ''}
-													onChange={handleChange}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-													prefix={prefix}
-													suffix={suffix}
-												/>
-											)}
-											{custom_id === 'multiline' && showInForm && (
-												<MultiLineInput
-													id={fieldId}
-													value={formData[fieldId]?.value || ''}
-													onChange={handleChange}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-												/>
-											)}
-											{custom_id === 'bank_account_number' && showInForm && (
-												<IBANInput
-													id={fieldId}
-													value={formData[fieldId]?.value || ''}
-													onChange={handleChange}
-													onError={handleError}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-													prefix={prefix}
-													suffix={suffix}
-												/>
-											)}
-											{custom_id === 'number' && showInForm && (
-												<NumberInput
-													id={fieldId}
-													value={formData[fieldId]?.value || ''}
-													onChange={handleChange}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-													prefix={prefix}
-													suffix={suffix}
-												/>
-											)}
-											{custom_id === 'email' && showInForm && (
-												<EmailInput
-													id={fieldId}
-													value={formData[fieldId]?.value || ''}
-													onChange={handleChange}
-													onError={handleError}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-													prefix={prefix}
-													suffix={suffix}
-												/>
-											)}
-											{custom_id === 'date_hh_mm' && showInForm && (
-												<DateWithTimeInput
-													id={fieldId}
-													value={formData[fieldId]?.value || ''}
-													onChange={handleChange}
-													onError={handleError}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-													prefix={prefix}
-													suffix={suffix}
-												/>
-											)}
-											{custom_id === 'date' && showInForm && (
-												<DateInput
-													id={fieldId}
-													value={formData[fieldId]?.value || ''}
-													onChange={handleChange}
-													onError={handleError}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-													prefix={prefix}
-													suffix={suffix}
-												/>
-											)}
-											{custom_id === 'hh_mm' && showInForm && (
-												<TimeInput
-													id={fieldId}
-													value={formData[fieldId]?.value || ''}
-													onChange={handleChange}
-													onError={handleError}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-													prefix={prefix}
-													suffix={suffix}
-												/>
-											)}
-											{custom_id === 'timestamp' && showInForm && (
-												<PreciseTimestampInput
-													id={fieldId}
-													value={formData[fieldId]?.value || ''}
-													onChange={handleChange}
-													onError={handleError}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-													prefix={prefix}
-													suffix={suffix}
-												/>
-											)}
-											{custom_id === 'checkbox' && showInForm && (
-												<TriStateCheckbox
-													id={fieldId}
-													value={formData[fieldId]?.value || 0}
-													onChange={handleChange}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-												/>
-											)}
-											{custom_id === 'files' && showInForm && (
-												<FileUpload
-													id={fieldId}
-													value={formData[fieldId]?.value}
-													onChange={handleChange}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-												/>
-											)}
-											{custom_id === 'image' && showInForm && (
-												<ImageUpload
-													id={fieldId}
-													value={formData[fieldId]?.value}
-													onChange={handleChange}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-												/>
-											)}
-											{custom_id === 'signature' && showInForm && (
-												<SignatureInterface
-													id={fieldId}
-													value={formData[fieldId]?.value}
-													onChange={handleChange}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													custom_type={custom_type}
-													scrollViewRef={scrollViewRef}
-												/>
-											)}
-											{custom_type === 'value_custom' && showInForm && (
-												<CollectionSelection
-													id={fieldId}
-													value={formData[fieldId]?.value}
-													onChange={handleChange}
-													error={formData[fieldId]?.error}
-													isDisabled={isDisabled}
-													loading={loadingCollection}
-													data={collectionData}
-													custom_type={custom_type}
-												/>
-											)}
+											{custom_id === 'string' && showInForm && <SingleLineInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
+											{custom_id === 'multiline' && showInForm && <MultiLineInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} />}
+											{custom_id === 'bank_account_number' && showInForm && <IBANInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} onError={handleError} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
+											{custom_id === 'number' && showInForm && <NumberInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
+											{custom_id === 'email' && showInForm && <EmailInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} onError={handleError} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
+											{custom_id === 'date_hh_mm' && showInForm && <DateWithTimeInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} onError={handleError} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
+											{custom_id === 'date' && showInForm && <DateInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} onError={handleError} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
+											{custom_id === 'hh_mm' && showInForm && <TimeInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} onError={handleError} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
+											{custom_id === 'timestamp' && showInForm && <PreciseTimestampInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} onError={handleError} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
+											{custom_id === 'checkbox' && showInForm && <TriStateCheckbox id={fieldId} value={formData[fieldId]?.value || 0} onChange={handleChange} isDisabled={isDisabled} custom_type={custom_type} />}
+											{custom_id === 'files' && showInForm && <FileUpload id={fieldId} value={formData[fieldId]?.value} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} />}
+											{custom_id === 'image' && showInForm && <ImageUpload id={fieldId} value={formData[fieldId]?.value} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} />}
+											{custom_id === 'signature' && showInForm && <SignatureInterface id={fieldId} value={formData[fieldId]?.value} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} scrollViewRef={scrollViewRef} />}
+											{custom_type === 'value_custom' && showInForm && <CollectionSelection id={fieldId} value={formData[fieldId]?.value} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} loading={loadingCollection} data={collectionData} custom_type={custom_type} />}
 										</View>
 									);
 								})}
@@ -954,30 +705,15 @@ const index = () => {
 							}}
 						>
 							<MaterialIcons name="edit" size={20} color={theme.screen.text} />
-							<Text style={{ ...styles.state, color: theme.screen.text }}>
-								{translate(selectedState)}
-							</Text>
+							<Text style={{ ...styles.state, color: theme.screen.text }}>{translate(selectedState)}</Text>
 						</View>
 					</TouchableOpacity>
 				</View>
-				<TouchableOpacity
-					style={{ ...styles.button, backgroundColor: primaryColor }}
-					onPress={handleFormSubmission}
-				>
-					{submissionLoading ? (
-						<ActivityIndicator size={22} color={theme.screen.text} />
-					) : (
-						<Text style={{ ...styles.buttonLabel, color: theme.activeText }}>
-							{translate(TranslationKeys.save)}
-						</Text>
-					)}
+				<TouchableOpacity style={{ ...styles.button, backgroundColor: primaryColor }} onPress={handleFormSubmission}>
+					{submissionLoading ? <ActivityIndicator size={22} color={theme.screen.text} /> : <Text style={{ ...styles.buttonLabel, color: theme.activeText }}>{translate(TranslationKeys.save)}</Text>}
 				</TouchableOpacity>
 			</View>
-			<SubmissionWarningModal
-				isVisible={isWarning}
-				setIsVisible={setIsWarning}
-				id={String(form_submission_id)}
-			/>
+			<SubmissionWarningModal isVisible={isWarning} setIsVisible={setIsWarning} id={String(form_submission_id)} />
 			{isActive && (
 				<BaseBottomSheet
 					ref={editSheetRef}
@@ -990,10 +726,7 @@ const index = () => {
 					handleComponent={null}
 					onClose={closeEditSheet}
 				>
-					<EditFormSubmissionSheet
-						id={String(form_submission_id)}
-						closeSheet={closeEditSheet}
-					/>
+					<EditFormSubmissionSheet id={String(form_submission_id)} closeSheet={closeEditSheet} />
 				</BaseBottomSheet>
 			)}
 			{isActive && (
@@ -1007,10 +740,7 @@ const index = () => {
 					enablePanDownToClose={false}
 					handleComponent={null}
 				>
-					<SubmissionWarningSheet
-						id={String(form_submission_id)}
-						closeSheet={closeWarningSheet}
-					/>
+					<SubmissionWarningSheet id={String(form_submission_id)} closeSheet={closeWarningSheet} />
 				</BaseBottomSheet>
 			)}
 			{isActive && (
@@ -1025,14 +755,7 @@ const index = () => {
 					handleComponent={null}
 					onClose={closeFilterSheet}
 				>
-					<FilterFormSheet
-						closeSheet={closeFilterSheet}
-						isFormSubmission={true}
-						setSelectedOption={setSelectedState}
-						selectedOption={selectedState}
-						options={filterOptions}
-						isEditMode={isEditMode}
-					/>
+					<FilterFormSheet closeSheet={closeFilterSheet} isFormSubmission={true} setSelectedOption={setSelectedState} selectedOption={selectedState} options={filterOptions} isEditMode={isEditMode} />
 				</BaseBottomSheet>
 			)}
 		</View>

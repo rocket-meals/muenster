@@ -18,14 +18,7 @@ const iconLibraries: any = {
 	MaterialCommunityIcons,
 };
 
-const FilterFormSheet: React.FC<FilterFormSheetProps> = ({
-	closeSheet,
-	isFormSubmission,
-	setSelectedOption,
-	selectedOption,
-	options,
-	isEditMode = false,
-}) => {
+const FilterFormSheet: React.FC<FilterFormSheetProps> = ({ closeSheet, isFormSubmission, setSelectedOption, selectedOption, options, isEditMode = false }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
@@ -40,10 +33,7 @@ const FilterFormSheet: React.FC<FilterFormSheetProps> = ({
 	};
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -67,10 +57,7 @@ const FilterFormSheet: React.FC<FilterFormSheetProps> = ({
 					if (isEditMode && option.label === 'syncing') {
 						return null; // hide syncing when in edit mode
 					}
-					const IconComponent =
-						option.icon && iconLibraries[option.icon.library]
-							? iconLibraries[option.icon.library]
-							: null;
+					const IconComponent = option.icon && iconLibraries[option.icon.library] ? iconLibraries[option.icon.library] : null;
 					return (
 						<TouchableOpacity
 							key={option.id + index}
@@ -87,15 +74,7 @@ const FilterFormSheet: React.FC<FilterFormSheetProps> = ({
 							onPress={() => updateSort(option)}
 						>
 							<View style={styles.col}>
-								{IconComponent && (
-									<IconComponent
-										name={option.icon.name}
-										size={22}
-										color={
-											selectedOption === option.id ? theme.activeText : theme.screen.text
-										}
-									/>
-								)}
+								{IconComponent && <IconComponent name={option.icon.name} size={22} color={selectedOption === option.id ? theme.activeText : theme.screen.text} />}
 								<Text
 									style={[
 										styles.label,
@@ -109,11 +88,7 @@ const FilterFormSheet: React.FC<FilterFormSheetProps> = ({
 									{translate(option.label)}
 								</Text>
 							</View>
-							<Checkbox
-								style={styles.checkbox}
-								value={selectedOption === option.id}
-								color={selectedOption === option.id ? '#000000' : undefined}
-							/>
+							<Checkbox style={styles.checkbox} value={selectedOption === option.id} color={selectedOption === option.id ? '#000000' : undefined} />
 						</TouchableOpacity>
 					);
 				})}

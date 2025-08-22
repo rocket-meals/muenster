@@ -1,13 +1,5 @@
 import React, { useRef } from 'react';
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	Dimensions,
-	StyleSheet,
-	NativeSyntheticEvent,
-	NativeScrollEvent,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, StyleSheet, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { AntDesign } from '@expo/vector-icons';
@@ -20,12 +12,7 @@ export interface BaseBottomModalProps {
 	children?: React.ReactNode;
 }
 
-const BaseBottomModal: React.FC<BaseBottomModalProps> = ({
-	visible,
-	onClose,
-	title,
-	children,
-}) => {
+const BaseBottomModal: React.FC<BaseBottomModalProps> = ({ visible, onClose, title, children }) => {
 	const { theme } = useTheme();
 
 	const scrollViewRef = useRef<ScrollView>(null);
@@ -52,40 +39,16 @@ const BaseBottomModal: React.FC<BaseBottomModalProps> = ({
 	};
 
 	return (
-		<Modal
-			isVisible={visible}
-			style={styles.modalContainer}
-			onBackdropPress={onClose}
-			backdropOpacity={0.5}
-			swipeDirection="down"
-			onSwipeComplete={onClose}
-			propagateSwipe
-			scrollTo={handleScrollTo}
-			scrollOffset={scrollOffset.current}
-			scrollOffsetMax={Dimensions.get('window').height}
-		>
+		<Modal isVisible={visible} style={styles.modalContainer} onBackdropPress={onClose} backdropOpacity={0.5} swipeDirection="down" onSwipeComplete={onClose} propagateSwipe scrollTo={handleScrollTo} scrollOffset={scrollOffset.current} scrollOffsetMax={Dimensions.get('window').height}>
 			<View style={[styles.sheet, { backgroundColor: theme.sheet.sheetBg }]}>
-				<TouchableOpacity
-					style={[styles.closeButton, { backgroundColor: theme.sheet.closeBg }]}
-					onPress={onClose}
-				>
+				<TouchableOpacity style={[styles.closeButton, { backgroundColor: theme.sheet.closeBg }]} onPress={onClose}>
 					<AntDesign name="close" size={24} color={theme.sheet.closeIcon} />
 				</TouchableOpacity>
 				<View style={styles.handleRow}>
 					<View style={[styles.handle, { backgroundColor: theme.sheet.closeBg }]} />
 				</View>
-				{title && (
-					<Text style={[styles.title, { color: theme.sheet.text }]}>{title}</Text>
-				)}
-				<ScrollView
-					ref={scrollViewRef}
-					style={styles.scrollView}
-					contentContainerStyle={styles.contentContainer}
-					nestedScrollEnabled
-					showsVerticalScrollIndicator={false}
-					onScroll={handleScroll}
-					scrollEventThrottle={16}
-				>
+				{title && <Text style={[styles.title, { color: theme.sheet.text }]}>{title}</Text>}
+				<ScrollView ref={scrollViewRef} style={styles.scrollView} contentContainerStyle={styles.contentContainer} nestedScrollEnabled showsVerticalScrollIndicator={false} onScroll={handleScroll} scrollEventThrottle={16}>
 					{children}
 				</ScrollView>
 			</View>

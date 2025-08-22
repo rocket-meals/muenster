@@ -12,15 +12,10 @@ import { TranslationKeys } from '@/locales/keys';
 import { myContrastColor } from '@/helper/colorHelper';
 import { RootState } from '@/redux/reducer';
 
-const PermissionModal: React.FC<PermissionModalProps> = ({
-	isVisible,
-	setIsVisible,
-}) => {
+const PermissionModal: React.FC<PermissionModalProps> = ({ isVisible, setIsVisible }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	const router = useRouter();
 	const onLogout = useLogoutCallback();
@@ -31,11 +26,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
 	};
 
 	return (
-		<BaseModal
-			isVisible={isVisible}
-			title={translate(TranslationKeys.access_limited)}
-			onClose={() => setIsVisible(false)}
-		>
+		<BaseModal isVisible={isVisible} title={translate(TranslationKeys.access_limited)} onClose={() => setIsVisible(false)}>
 			<Text
 				style={{
 					...styles.modalSubHeading,
@@ -54,8 +45,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({
 				onPress={handleLogout}
 			>
 				<Text style={{ ...styles.loginLabel, color: contrastColor }}>
-					{translate(TranslationKeys.sign_in)} /{' '}
-					{translate(TranslationKeys.create_account)}
+					{translate(TranslationKeys.sign_in)} / {translate(TranslationKeys.create_account)}
 				</Text>
 			</TouchableOpacity>
 		</BaseModal>

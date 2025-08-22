@@ -12,25 +12,17 @@ export class NotifySchedule {
   private workflowRun: DatabaseTypes.WorkflowsRuns;
   private logger: WorkflowRunLogger;
 
-  constructor(
-    workflowRun: DatabaseTypes.WorkflowsRuns,
-    myDatabaseHelper: MyDatabaseHelper,
-    logger: WorkflowRunLogger
-  ) {
+  constructor(workflowRun: DatabaseTypes.WorkflowsRuns, myDatabaseHelper: MyDatabaseHelper, logger: WorkflowRunLogger) {
     this.myDatabaseHelper = myDatabaseHelper;
     this.workflowRun = workflowRun;
     this.logger = logger;
   }
 
-  async notify(
-    aboutMealsInDays = 1
-  ): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
+  async notify(aboutMealsInDays = 1): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
     let devicesService = this.myDatabaseHelper.getDevicesHelper();
 
     await this.logger.appendLog('Start food notify schedule');
-    await this.logger.appendLog(
-      'Notify about meals in ' + aboutMealsInDays + ' days'
-    );
+    await this.logger.appendLog('Notify about meals in ' + aboutMealsInDays + ' days');
     try {
       // We need to notify all devices, which want to get notified about new food offers which they are interested in
 
@@ -38,40 +30,25 @@ export class NotifySchedule {
       //console.log("Get all food offers at aboutMealsInDays days in the future");
       let date = new Date();
       date.setDate(date.getDate() + aboutMealsInDays);
-      await this.logger.appendLog(
-        'Date to notify about: ' + date.toISOString()
-      );
+      await this.logger.appendLog('Date to notify about: ' + date.toISOString());
       let foodOffers = await this.getFoodOffersForDate(date);
-      await this.logger.appendLog(
-        'Found ' + foodOffers.length + ' food offers for ' + date.toISOString()
-      );
+      await this.logger.appendLog('Found ' + foodOffers.length + ' food offers for ' + date.toISOString());
 
       for (let foodOffer of foodOffers) {
-        await this.logger.appendLog(
-          '- Notify about food offer: ' + foodOffer.id
-        );
+        await this.logger.appendLog('- Notify about food offer: ' + foodOffer.id);
         let food_id = foodOffer.food as string;
         let foodWithTranslations = await this.getFoodWithTranslations(food_id);
 
         let food_offer_in_canteen_id = foodOffer.canteen;
-        await this.logger.appendLog(
-          '- Food offer is in canteen: ' + food_offer_in_canteen_id
-        );
+        await this.logger.appendLog('- Food offer is in canteen: ' + food_offer_in_canteen_id);
 
         // Step 2: Get all food_feedbacks which want to get notified about this food
         let foodFeedbacks = await this.getFoodFeedbacksForFood(food_id);
-        await this.logger.appendLog(
-          '- Found ' +
-            foodFeedbacks.length +
-            ' food feedbacks for food ' +
-            food_id
-        );
+        await this.logger.appendLog('- Found ' + foodFeedbacks.length + ' food feedbacks for food ' + food_id);
 
         for (let foodFeedback of foodFeedbacks) {
           let profile_id = foodFeedback.profile as string;
-          await this.logger.appendLog(
-            '-- Notify profile: ' + profile_id + ' about food: ' + food_id
-          );
+          await this.logger.appendLog('-- Notify profile: ' + profile_id + ' about food: ' + food_id);
           // Step 3: Get the profile and all devices of the profile
           let profile = await this.getProfileAndDevicesForProfile(profile_id);
           let language = profile.language as string;
@@ -83,43 +60,24 @@ export class NotifySchedule {
             continue;
           } else {
             //console.log("Profile is interested in this canteen");
-            await this.logger.appendLog(
-              '-- Profile is interested in this canteen'
-            );
+            await this.logger.appendLog('-- Profile is interested in this canteen');
           }
 
           const profileDevices = profile.devices as DatabaseTypes.Devices[];
 
-          let expoPushTokensDict =
-            this.getExpoPushTokensToDevicesDict(profileDevices);
+          let expoPushTokensDict = this.getExpoPushTokensToDevicesDict(profileDevices);
 
           let expoPushTokens = Object.keys(expoPushTokensDict);
           for (let expoPushToken of expoPushTokens) {
-            let devices = expoPushTokensDict[
-              expoPushToken
-            ] as DatabaseTypes.Devices[];
+            let devices = expoPushTokensDict[expoPushToken] as DatabaseTypes.Devices[];
             //console.log("Notify devices: "+devices.length+" about food: "+food_id);
-            await this.logger.appendLog(
-              '--- Notify devices: ' +
-                devices.length +
-                ' about food: ' +
-                food_id
-            );
+            await this.logger.appendLog('--- Notify devices: ' + devices.length + ' about food: ' + food_id);
             try {
-              await this.notifyExpoPushTokenAboutFoodOffer(
-                expoPushToken,
-                foodOffer,
-                foodWithTranslations,
-                language,
-                aboutMealsInDays,
-                date
-              );
+              await this.notifyExpoPushTokenAboutFoodOffer(expoPushToken, foodOffer, foodWithTranslations, language, aboutMealsInDays, date);
             } catch (err: any) {
               //console.log("Error while creating push notification");
               //console.log(err);
-              await this.logger.appendLog(
-                '--- Error while creating push notification: ' + err.toString()
-              );
+              await this.logger.appendLog('--- Error while creating push notification: ' + err.toString());
               const message = err?.message;
               if (message.includes('Failed to send notification')) {
                 //console.log("Failed to send notification");
@@ -135,22 +93,15 @@ export class NotifySchedule {
             }
 
             if (devices.length > 1) {
-              await this.logger.appendLog(
-                '--- Notify multiple devices with the same push token'
-              );
+              await this.logger.appendLog('--- Notify multiple devices with the same push token');
               // we will remove the pushTokenObj from all but the last updated device
-              await this.logger.appendLog(
-                '--- we will remove the pushTokenObj from all but the last updated device'
-              );
+              await this.logger.appendLog('--- we will remove the pushTokenObj from all but the last updated device');
               let recentDateUpdated: Date | null = null;
               let recentDevice: DatabaseTypes.Devices | null = null;
               for (let device of devices) {
                 if (!!device.date_updated) {
                   let device_date_updated = new Date(device.date_updated);
-                  if (
-                    !recentDateUpdated ||
-                    device_date_updated > recentDateUpdated
-                  ) {
+                  if (!recentDateUpdated || device_date_updated > recentDateUpdated) {
                     recentDateUpdated = device_date_updated;
                     recentDevice = device;
                   }
@@ -159,12 +110,7 @@ export class NotifySchedule {
               // now we have the most recent device, so we will remove the pushTokenObj from all other devices
               for (let device of devices) {
                 if (device.id !== recentDevice?.id) {
-                  await this.logger.appendLog(
-                    '--- Remove pushTokenObj from device.id: ' +
-                      device.id +
-                      ' as it is not the recent updated device: ' +
-                      device.id
-                  );
+                  await this.logger.appendLog('--- Remove pushTokenObj from device.id: ' + device.id + ' as it is not the recent updated device: ' + device.id);
                   await devicesService.updateOne(device.id, {
                     pushTokenObj: null,
                   });
@@ -174,9 +120,7 @@ export class NotifySchedule {
           }
 
           for (let device of profileDevices) {
-            await this.logger.appendLog(
-              '--- Notify device: ' + device.id + ' about food: ' + food_id
-            );
+            await this.logger.appendLog('--- Notify device: ' + device.id + ' about food: ' + food_id);
             // Step 4: Send the notification to the device, where pushTokenObj is not null
             if (device.pushTokenObj !== null) {
               // Step 5: Send the notification to the device
@@ -220,17 +164,9 @@ export class NotifySchedule {
     return expoPushTokensDict;
   }
 
-  async notifyExpoPushTokenAboutFoodOffer(
-    expoPushToken: string,
-    foodOffer: DatabaseTypes.Foodoffers,
-    foodWithTranslations: DatabaseTypes.Foods,
-    language: string,
-    aboutMealsInDays: number,
-    date: Date
-  ) {
+  async notifyExpoPushTokenAboutFoodOffer(expoPushToken: string, foodOffer: DatabaseTypes.Foodoffers, foodWithTranslations: DatabaseTypes.Foods, language: string, aboutMealsInDays: number, date: Date) {
     // Create a new push_notification entry in the database
-    let pushNotificationService =
-      this.myDatabaseHelper.getPushNotificationsHelper();
+    let pushNotificationService = this.myDatabaseHelper.getPushNotificationsHelper();
     /**
          pushTokenObj = {
                 "permission": {
@@ -263,11 +199,7 @@ export class NotifySchedule {
     let project_name = await this.getProjectName();
 
     let foodName = this.getFoodNameTranslation(foodWithTranslations, language);
-    let translationDate = await this.getTranslationDate(
-      language,
-      aboutMealsInDays,
-      date
-    );
+    let translationDate = await this.getTranslationDate(language, aboutMealsInDays, date);
     let emojiFood = '🍽';
     let useEmoji = true;
     let message_body = translationDate + ': ' + foodName;
@@ -282,15 +214,10 @@ export class NotifySchedule {
       message_body: message_body,
     };
 
-    let pushNotification =
-      await pushNotificationService.createOne(pushNotificationObj);
+    let pushNotification = await pushNotificationService.createOne(pushNotificationObj);
   }
 
-  async getTranslationDate(
-    profileLanguage: string,
-    aboutMealsInDays: number,
-    date: Date
-  ) {
+  async getTranslationDate(profileLanguage: string, aboutMealsInDays: number, date: Date) {
     if (aboutMealsInDays === 0) {
       return 'Heute';
     } else if (aboutMealsInDays === 1) {
@@ -300,17 +227,8 @@ export class NotifySchedule {
     return DateHelper.getHumanReadableDate(date, false);
   }
 
-  getFoodNameTranslation(
-    foodWithTranslations: DatabaseTypes.Foods,
-    profileLanguage: string
-  ) {
-    return (
-      TranslationHelper.getTranslation(
-        foodWithTranslations?.translations,
-        profileLanguage,
-        'name'
-      ) || 'ein Gericht'
-    );
+  getFoodNameTranslation(foodWithTranslations: DatabaseTypes.Foods, profileLanguage: string) {
+    return TranslationHelper.getTranslation(foodWithTranslations?.translations, profileLanguage, 'name') || 'ein Gericht';
   }
 
   async getProjectName() {
@@ -358,9 +276,7 @@ export class NotifySchedule {
   }
 
   async getFoodOffersForDate(date: Date) {
-    const directusDateOnlyFormat = DateHelper.foodofferDateTypeToString(
-      DateHelper.getFoodofferDateTypeFromDate(date)
-    );
+    const directusDateOnlyFormat = DateHelper.foodofferDateTypeToString(DateHelper.getFoodofferDateTypeFromDate(date));
     const itemService = this.myDatabaseHelper.getFoodoffersHelper();
     let foodOffers = await itemService.readByQuery({
       filter: {

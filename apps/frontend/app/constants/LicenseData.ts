@@ -25,32 +25,28 @@ const packages = [
 		version: '5.0.6',
 		license: 'MIT',
 		repository: 'https://github.com/gorhom/react-native-bottom-sheet',
-		licenseUrl:
-			'https://github.com/gorhom/react-native-bottom-sheet/blob/main/LICENSE',
+		licenseUrl: 'https://github.com/gorhom/react-native-bottom-sheet/blob/main/LICENSE',
 	},
 	{
 		name: '@react-native-async-storage/async-storage',
 		version: '1.23.1',
 		license: 'MIT',
 		repository: 'https://github.com/react-native-async-storage/async-storage',
-		licenseUrl:
-			'https://github.com/react-native-async-storage/async-storage/blob/master/LICENSE',
+		licenseUrl: 'https://github.com/react-native-async-storage/async-storage/blob/master/LICENSE',
 	},
 	{
 		name: '@react-native-picker/picker',
 		version: '2.9.0',
 		license: 'MIT',
 		repository: 'https://github.com/react-native-picker/picker',
-		licenseUrl:
-			'https://github.com/react-native-picker/picker/blob/master/LICENSE',
+		licenseUrl: 'https://github.com/react-native-picker/picker/blob/master/LICENSE',
 	},
 	{
 		name: '@react-navigation/bottom-tabs',
 		version: '7.0.0',
 		license: 'MIT',
 		repository: 'https://github.com/react-navigation/bottom-tabs',
-		licenseUrl:
-			'https://github.com/react-navigation/bottom-tabs/blob/main/LICENSE',
+		licenseUrl: 'https://github.com/react-navigation/bottom-tabs/blob/main/LICENSE',
 	},
 	{
 		name: '@react-navigation/drawer',
@@ -148,8 +144,7 @@ const packages = [
 		version: '12.0.5',
 		license: 'MIT',
 		repository: 'https://github.com/expo/expo-image-manipulator',
-		licenseUrl:
-			'https://github.com/expo/expo-image-manipulator/blob/main/LICENSE',
+		licenseUrl: 'https://github.com/expo/expo-image-manipulator/blob/main/LICENSE',
 	},
 	{
 		name: 'expo-image-picker',
@@ -289,89 +284,77 @@ const packages = [
 		version: '^1.1307.0',
 		license: 'MIT',
 		repository: 'https://github.com/wix/react-native-calendars',
-		licenseUrl:
-			'https://github.com/wix/react-native-calendars/blob/master/LICENSE',
+		licenseUrl: 'https://github.com/wix/react-native-calendars/blob/master/LICENSE',
 	},
 	{
 		name: 'react-native-chart-kit',
 		version: '^6.12.0',
 		license: 'MIT',
 		repository: 'https://github.com/indiespirit/react-native-chart-kit',
-		licenseUrl:
-			'https://github.com/indiespirit/react-native-chart-kit/blob/master/LICENSE',
+		licenseUrl: 'https://github.com/indiespirit/react-native-chart-kit/blob/master/LICENSE',
 	},
 	{
 		name: 'react-native-collapsible',
 		version: '^1.6.2',
 		license: 'MIT',
 		repository: 'https://github.com/oblador/react-native-collapsible',
-		licenseUrl:
-			'https://github.com/oblador/react-native-collapsible/blob/master/LICENSE',
+		licenseUrl: 'https://github.com/oblador/react-native-collapsible/blob/master/LICENSE',
 	},
 	{
 		name: 'react-native-gesture-handler',
 		version: '~2.20.2',
 		license: 'MIT',
-		repository:
-			'https://github.com/software-mansion/react-native-gesture-handler',
-		licenseUrl:
-			'https://github.com/software-mansion/react-native-gesture-handler/blob/main/LICENSE',
+		repository: 'https://github.com/software-mansion/react-native-gesture-handler',
+		licenseUrl: 'https://github.com/software-mansion/react-native-gesture-handler/blob/main/LICENSE',
 	},
 	{
 		name: 'react-native-modal',
 		version: '^13.0.1',
 		license: 'MIT',
 		repository: 'https://github.com/react-native-modal/react-native-modal',
-		licenseUrl:
-			'https://github.com/react-native-modal/react-native-modal/blob/main/LICENSE',
+		licenseUrl: 'https://github.com/react-native-modal/react-native-modal/blob/main/LICENSE',
 	},
 	{
 		name: 'react-native-reanimated',
 		version: '~3.16.1',
 		license: 'MIT',
 		repository: 'https://github.com/software-mansion/react-native-reanimated',
-		licenseUrl:
-			'https://github.com/software-mansion/react-native-reanimated/blob/main/LICENSE',
+		licenseUrl: 'https://github.com/software-mansion/react-native-reanimated/blob/main/LICENSE',
 	},
 	{
 		name: 'react-native-root-toast',
 		version: '^3.6.0',
 		license: 'MIT',
 		repository: 'https://github.com/magicismight/react-native-root-toast',
-		licenseUrl:
-			'https://github.com/magicismight/react-native-root-toast/blob/master/LICENSE',
+		licenseUrl: 'https://github.com/magicismight/react-native-root-toast/blob/master/LICENSE',
 	},
 	{
 		name: 'react-native-safe-area-context',
 		version: '4.12.0',
 		license: 'MIT',
 		repository: 'https://github.com/th3rdwave/react-native-safe-area-context',
-		licenseUrl:
-			'https://github.com/th3rdwave/react-native-safe-area-context/blob/main/LICENSE',
+		licenseUrl: 'https://github.com/th3rdwave/react-native-safe-area-context/blob/main/LICENSE',
 	},
 	{
 		name: 'react-native-screens',
 		version: '~4.1.0',
 		license: 'MIT',
 		repository: 'https://github.com/software-mansion/react-native-screens',
-		licenseUrl:
-			'https://github.com/software-mansion/react-native-screens/blob/main/LICENSE',
+		licenseUrl: 'https://github.com/software-mansion/react-native-screens/blob/main/LICENSE',
 	},
 	{
 		name: 'react-native-svg',
 		version: '15.8.0',
 		license: 'MIT',
 		repository: 'https://github.com/react-native-svg/react-native-svg',
-		licenseUrl:
-			'https://github.com/react-native-svg/react-native-svg/blob/main/LICENSE',
+		licenseUrl: 'https://github.com/react-native-svg/react-native-svg/blob/main/LICENSE',
 	},
 	{
 		name: 'react-native-svg-transformer',
 		version: '^1.5.0',
 		license: 'MIT',
 		repository: 'https://github.com/jesstelford/react-native-svg-transformer',
-		licenseUrl:
-			'https://github.com/jesstelford/react-native-svg-transformer/blob/master/LICENSE',
+		licenseUrl: 'https://github.com/jesstelford/react-native-svg-transformer/blob/master/LICENSE',
 	},
 	{
 		name: 'react-native-web',
@@ -385,8 +368,7 @@ const packages = [
 		version: '13.12.2',
 		license: 'MIT',
 		repository: 'https://github.com/react-native-webview/react-native-webview',
-		licenseUrl:
-			'https://github.com/react-native-webview/react-native-webview/blob/main/LICENSE',
+		licenseUrl: 'https://github.com/react-native-webview/react-native-webview/blob/main/LICENSE',
 	},
 	{
 		name: 'react-redux',
@@ -414,8 +396,7 @@ const packages = [
 		version: '^0.6.0',
 		license: 'MIT',
 		repository: 'https://github.com/redux-promise/redux-promise',
-		licenseUrl:
-			'https://github.com/redux-promise/redux-promise/blob/master/LICENSE',
+		licenseUrl: 'https://github.com/redux-promise/redux-promise/blob/master/LICENSE',
 	},
 	{
 		name: 'redux-thunk',

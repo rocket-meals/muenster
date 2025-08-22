@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-	View,
-	Text,
-	FlatList,
-	TextInput,
-	TouchableOpacity,
-} from 'react-native';
+import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
 import SupportFAQ from '../../../../components/SupportFAQ/SupportFAQ';
 import { useTheme } from '@/hooks/useTheme';
@@ -26,9 +20,7 @@ const ChatDetailsScreen = () => {
 	useSetPageTitle(TranslationKeys.chat);
 	const { theme } = useTheme();
 	const { chat_id } = useLocalSearchParams<{ chat_id?: string }>();
-	const { primaryColor: projectColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor: projectColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
 	const { chats } = useSelector((state: RootState) => state.chats);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
@@ -42,9 +34,7 @@ const ChatDetailsScreen = () => {
 			if (chat_id) {
 				try {
 					const helper = new ChatMessagesHelper();
-					const result = (await helper.fetchMessagesByChat(
-						chat_id
-					)) as DatabaseTypes.ChatMessages[];
+					const result = (await helper.fetchMessagesByChat(chat_id)) as DatabaseTypes.ChatMessages[];
 					if (result) {
 						setMessages(result);
 					}
@@ -64,16 +54,10 @@ const ChatDetailsScreen = () => {
 		return da < db ? 1 : -1;
 	});
 
-	const lastMessageDate =
-		sortedMessages[0]?.date_created || sortedMessages[0]?.date_updated;
+	const lastMessageDate = sortedMessages[0]?.date_created || sortedMessages[0]?.date_updated;
 	let amountDaysForOldMessages = 7; // Default to 7 days
 
-	const showOldMessageNotice = lastMessageDate
-		? DateHelper.isDateOlderThan(
-				new Date(lastMessageDate),
-				amountDaysForOldMessages
-			)
-		: false;
+	const showOldMessageNotice = lastMessageDate ? DateHelper.isDateOlderThan(new Date(lastMessageDate), amountDaysForOldMessages) : false;
 
 	const handleSendMessage = async () => {
 		if (!newMessage.trim() || !chat_id || !profile?.id) {
@@ -99,8 +83,7 @@ const ChatDetailsScreen = () => {
 	};
 
 	const renderItem = ({ item }: { item: DatabaseTypes.ChatMessages }) => {
-		const profileId =
-			typeof item.profile === 'object' ? item.profile?.id : item.profile;
+		const profileId = typeof item.profile === 'object' ? item.profile?.id : item.profile;
 		const isMe = profileId === profile?.id;
 		const bgColor = isMe ? projectColor : theme.card.background;
 		const textColor = myContrastColor(bgColor, theme, mode === 'dark');
@@ -110,12 +93,7 @@ const ChatDetailsScreen = () => {
 		}
 
 		return (
-			<View
-				style={[
-					styles.messageItem,
-					{ alignSelf: isMe ? 'flex-end' : 'flex-start' },
-				]}
-			>
+			<View style={[styles.messageItem, { alignSelf: isMe ? 'flex-end' : 'flex-start' }]}>
 				<View style={[styles.bubble, { backgroundColor: bgColor }]}>
 					<MyMarkdown content={item.message} textColor={textColor} />
 				</View>
@@ -133,39 +111,16 @@ const ChatDetailsScreen = () => {
 	};
 
 	return (
-		<View
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-		>
-			<FlatList
-				data={sortedMessages}
-				keyExtractor={item => item.id}
-				renderItem={renderItem}
-				contentContainerStyle={styles.list}
-				inverted
-			/>
+		<View style={[styles.container, { backgroundColor: theme.screen.background }]}>
+			<FlatList data={sortedMessages} keyExtractor={item => item.id} renderItem={renderItem} contentContainerStyle={styles.list} inverted />
 			{showOldMessageNotice && (
 				<View style={styles.oldMessageContainer}>
-					<Text style={[styles.oldMessageText, { color: theme.screen.text }]}>
-						{translate(TranslationKeys.chat_last_message_unanswered)}
-					</Text>
-					<SupportFAQ
-						label={translate(TranslationKeys.feedback_support_faq)}
-						onPress={() => router.navigate('/support-FAQ')}
-					/>
+					<Text style={[styles.oldMessageText, { color: theme.screen.text }]}>{translate(TranslationKeys.chat_last_message_unanswered)}</Text>
+					<SupportFAQ label={translate(TranslationKeys.feedback_support_faq)} onPress={() => router.navigate('/support-FAQ')} />
 				</View>
 			)}
 			<View style={styles.inputContainer}>
-				<TextInput
-					style={[
-						styles.textInput,
-						{ color: theme.screen.text, borderColor: theme.screen.placeholder },
-					]}
-					placeholder={translate(TranslationKeys.type_here)}
-					placeholderTextColor={theme.screen.placeholder}
-					multiline
-					value={newMessage}
-					onChangeText={setNewMessage}
-				/>
+				<TextInput style={[styles.textInput, { color: theme.screen.text, borderColor: theme.screen.placeholder }]} placeholder={translate(TranslationKeys.type_here)} placeholderTextColor={theme.screen.placeholder} multiline value={newMessage} onChangeText={setNewMessage} />
 				<TouchableOpacity
 					onPress={handleSendMessage}
 					disabled={!newMessage.trim() || sending}
@@ -177,11 +132,7 @@ const ChatDetailsScreen = () => {
 						},
 					]}
 				>
-					<MaterialCommunityIcons
-						name="send"
-						size={24}
-						color={myContrastColor(projectColor, theme, mode === 'dark')}
-					/>
+					<MaterialCommunityIcons name="send" size={24} color={myContrastColor(projectColor, theme, mode === 'dark')} />
 				</TouchableOpacity>
 			</View>
 		</View>

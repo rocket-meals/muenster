@@ -28,10 +28,7 @@ export class FoodRatingCalculator {
     return Object.keys(food_id_dict);
   }
 
-  recalculateFoodIdsRatingsNonBlocking(
-    food_ids: string[],
-    ignore_food_feedback_ids?: string[]
-  ) {
+  recalculateFoodIdsRatingsNonBlocking(food_ids: string[], ignore_food_feedback_ids?: string[]) {
     for (let food_id of food_ids) {
       // await // we do not want to block the deletion of the food_feedbacks
       this.recalculateFoodRating(food_id, ignore_food_feedback_ids).then(r => {
@@ -49,25 +46,18 @@ export class FoodRatingCalculator {
     if (value === null || value === undefined) {
       return null;
     }
-    if (
-      FoodRatingCalculator.MIN_RATING_VALUE <= value &&
-      value <= FoodRatingCalculator.MAX_RATING_VALUE
-    ) {
+    if (FoodRatingCalculator.MIN_RATING_VALUE <= value && value <= FoodRatingCalculator.MAX_RATING_VALUE) {
       return value;
     }
     return null;
   }
 
-  static calculateFoodRating(
-    food: Partial<DatabaseTypes.Foods>,
-    food_feedbacks: Partial<DatabaseTypes.FoodsFeedbacks>[]
-  ) {
+  static calculateFoodRating(food: Partial<DatabaseTypes.Foods>, food_feedbacks: Partial<DatabaseTypes.FoodsFeedbacks>[]) {
     let sum_rating_values = 0;
     let rating_amount = 0;
     for (let food_feedback of food_feedbacks) {
       let rating = food_feedback?.rating;
-      const valid_rating =
-        FoodRatingCalculator.getNumberIfValueInRatingRange(rating);
+      const valid_rating = FoodRatingCalculator.getNumberIfValueInRatingRange(rating);
       if (valid_rating !== null) {
         sum_rating_values += valid_rating;
         rating_amount++;
@@ -80,9 +70,7 @@ export class FoodRatingCalculator {
     let combined_rating_amount = rating_amount + rating_amount_legacy;
 
     if (combined_rating_amount > 0) {
-      let combined_rating_average =
-        (sum_rating_values + rating_average_legacy * rating_amount_legacy) /
-        combined_rating_amount;
+      let combined_rating_average = (sum_rating_values + rating_average_legacy * rating_amount_legacy) / combined_rating_amount;
 
       //console.log("recalculateFoodRating: food_id: "+food_id+" | sum: "+sum+" | rating_amount: "+rating_amount+" | rating_average: "+rating_average+" | food_feedbacks.length: "+food_feedbacks.length);
 
@@ -119,17 +107,12 @@ export class FoodRatingCalculator {
     return food_feedbacks;
   }
 
-  private async recalculateFoodRating(
-    food_id: string,
-    ignore_food_feedback_ids?: string[]
-  ) {
+  private async recalculateFoodRating(food_id: string, ignore_food_feedback_ids?: string[]) {
     //console.log("recalculateFoodRating: food_id: "+food_id);
 
     const food = await this.getFoodFromId(food_id);
     if (!food) {
-      console.error(
-        'recalculateFoodRating: food_id: ' + food_id + ' | food not found'
-      );
+      console.error('recalculateFoodRating: food_id: ' + food_id + ' | food not found');
       return;
     }
 
@@ -140,22 +123,14 @@ export class FoodRatingCalculator {
       }
     }
 
-    let food_feedbacks: DatabaseTypes.FoodsFeedbacks[] =
-      await this.getFoodFeedbacksForFood(food_id);
-    let filtered_food_feedbacks = food_feedbacks.filter(
-      food_feedback => !ignore_food_feedbacks_ids_dict[food_feedback.id]
-    );
+    let food_feedbacks: DatabaseTypes.FoodsFeedbacks[] = await this.getFoodFeedbacksForFood(food_id);
+    let filtered_food_feedbacks = food_feedbacks.filter(food_feedback => !ignore_food_feedbacks_ids_dict[food_feedback.id]);
 
-    let { rating_average, rating_amount } =
-      FoodRatingCalculator.calculateFoodRating(food, filtered_food_feedbacks);
+    let { rating_average, rating_amount } = FoodRatingCalculator.calculateFoodRating(food, filtered_food_feedbacks);
     await this.updateFoodRating(food, rating_average, rating_amount);
   }
 
-  private async updateFoodRating(
-    food: DatabaseTypes.Foods,
-    rating_average: number | null,
-    rating_amount: number
-  ) {
+  private async updateFoodRating(food: DatabaseTypes.Foods, rating_average: number | null, rating_amount: number) {
     let foodsService = this.myDatabaseHelper.getFoodsHelper();
 
     await foodsService.updateOne(food.id, {

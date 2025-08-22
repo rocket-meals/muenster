@@ -3,17 +3,7 @@ import { View, Image } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import { QrCodeProps, QrCodeEcl } from './types';
 
-const QrCode: React.FC<QrCodeProps> = ({
-	value,
-	size = 200,
-	image,
-	imageUrl,
-	innerSize = 21,
-	ecl,
-	backgroundColor = 'white',
-	margin = 0,
-	quietZone = 5,
-}) => {
+const QrCode: React.FC<QrCodeProps> = ({ value, size = 200, image, imageUrl, innerSize = 21, ecl, backgroundColor = 'white', margin = 0, quietZone = 5 }) => {
 	const imageSource = image ? image : imageUrl ? { uri: imageUrl } : undefined;
 
 	const clampedInnerSize = Math.max(0, Math.min(30, innerSize));
@@ -53,10 +43,7 @@ const QrCode: React.FC<QrCodeProps> = ({
 						borderRadius: 2,
 					}}
 				>
-					<Image
-						source={imageSource}
-						style={{ width: innerSizePx, height: innerSizePx, resizeMode: 'contain' }}
-					/>
+					<Image source={imageSource} style={{ width: innerSizePx, height: innerSizePx, resizeMode: 'contain' }} />
 				</View>
 			)}
 		</View>

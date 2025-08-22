@@ -12,9 +12,6 @@ export interface LLMResponse<T = any> {
 
 export interface LLMInterface {
   init(): Promise<void>;
-  sendRequest<T = any>(options: {
-    messages: LLMMessage[];
-    sessionId?: string;
-  }): Promise<LLMResponse<T>>;
+  sendRequest<T = any>(options: { messages: LLMMessage[]; sessionId?: string }): Promise<LLMResponse<T>>;
   getUsageCost?(): number;
 }

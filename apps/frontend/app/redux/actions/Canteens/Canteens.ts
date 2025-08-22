@@ -11,9 +11,7 @@ export class CanteenHelper extends CollectionHelper<DatabaseTypes.Canteens> {
 	// Fetch all canteens with optional query overrides
 	async fetchCanteens(queryOverride: any = {}) {
 		const defaultQuery = {
-			fields: [
-				' * , foodservice_hours.*, foodservice_hours_during_semester_break.*',
-			],
+			fields: [' * , foodservice_hours.*, foodservice_hours_during_semester_break.*'],
 			limit: -1, // Fetch all
 		};
 

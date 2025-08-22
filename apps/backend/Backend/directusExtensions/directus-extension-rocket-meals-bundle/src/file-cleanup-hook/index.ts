@@ -2,11 +2,7 @@ import { defineHook } from '@directus/extensions-sdk';
 import { RegisterFunctions } from '@directus/extensions';
 import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
 import { WorkflowScheduleHelper } from '../workflows-runs-hook';
-import {
-  SingleWorkflowRun,
-  WorkflowEnum,
-  WorkflowRunLogger,
-} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import { SingleWorkflowRun, WorkflowEnum, WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import { CollectionNames } from 'repo-depkit-common';
@@ -22,10 +18,8 @@ type FileCleanupWorkflowConfig = {
 };
 
 export class FileCleanupWorkflow extends SingleWorkflowRun {
-  private static PARAM_DELETE_UNREFERENCED_FILES_WHEN_OLDER_THAN_MS_DONT_DELETE =
-    -1;
-  private static PARAM_DELETE_UNREFERENCED_FILES_WHEN_OLDER_THAN_MS_30_DAYS =
-    30 * 24 * 60 * 60 * 1000; // 30 days
+  private static PARAM_DELETE_UNREFERENCED_FILES_WHEN_OLDER_THAN_MS_DONT_DELETE = -1;
+  private static PARAM_DELETE_UNREFERENCED_FILES_WHEN_OLDER_THAN_MS_30_DAYS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
   private config: FileCleanupWorkflowConfig;
 
@@ -42,8 +36,7 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
   constructor() {
     super();
     this.config = {
-      [FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms]:
-        FileCleanupWorkflow.PARAM_DELETE_UNREFERENCED_FILES_WHEN_OLDER_THAN_MS_DONT_DELETE,
+      [FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms]: FileCleanupWorkflow.PARAM_DELETE_UNREFERENCED_FILES_WHEN_OLDER_THAN_MS_DONT_DELETE,
     };
   }
 
@@ -51,39 +44,19 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
     return WorkflowEnum.fileCleanup;
   }
 
-  async runJob(
-    workflowRun: DatabaseTypes.WorkflowsRuns,
-    myDatabaseHelper: MyDatabaseHelper,
-    logger: WorkflowRunLogger
-  ): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
+  async runJob(workflowRun: DatabaseTypes.WorkflowsRuns, myDatabaseHelper: MyDatabaseHelper, logger: WorkflowRunLogger): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
     await logger.appendLog('Starting file cleanup job.');
 
     if (!!workflowRun.input) {
-      let input = JSON.parse(
-        workflowRun.input || '{}'
-      ) as FileCleanupWorkflowConfig;
-      if (
-        !!input[
-          FileCleanupWorkflowConfigEnum
-            .delete_unreferenced_files_when_older_than_ms
-        ]
-      ) {
-        this.config[
-          FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms
-        ] =
-          input[
-            FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms
-          ];
+      let input = JSON.parse(workflowRun.input || '{}') as FileCleanupWorkflowConfig;
+      if (!!input[FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms]) {
+        this.config[FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms] = input[FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms];
       }
     }
 
     await logger.appendLog('Current configuration:');
     await logger.appendLog(JSON.stringify(this.config, null, 2));
-    await logger.appendLog(
-      '- ' +
-        FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms +
-        ': time in ms to delete unreferenced files. -1 to disable.'
-    );
+    await logger.appendLog('- ' + FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms + ': time in ms to delete unreferenced files. -1 to disable.');
 
     const directusFiles_fieldname_is_unreferenced = 'is_unreferenced';
 
@@ -93,9 +66,7 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
 
     if (!!schema) {
       await logger.appendLog('Schema is defined.');
-      await logger.appendLog(
-        'Searching for files that are used in the database.'
-      );
+      await logger.appendLog('Searching for files that are used in the database.');
       let dictFileIdsUsedInDatabase: { [key: string]: boolean } = {};
       let dictFileIdsDiskSpace: { [key: string]: number } = {};
 
@@ -112,9 +83,7 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
         dictFileIdsUsedInDatabase[file.id] = false;
       }
 
-      await logger.appendLog(
-        'Searching for items that are using files and marking them as used.'
-      );
+      await logger.appendLog('Searching for items that are using files and marking them as used.');
       let schemaRelations = schema.relations;
       let amountRelations = Object.keys(schemaRelations).length;
       for (let relation in schemaRelations) {
@@ -122,33 +91,20 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
         if (!!relationObj) {
           let collectionName = relationObj.collection;
           let fieldForDirectusFileId = relationObj.field;
-          await logger.appendLog(
-            `Checking relation progress: ${relation}/${amountRelations} - ${collectionName} - field ${fieldForDirectusFileId}`
-          );
+          await logger.appendLog(`Checking relation progress: ${relation}/${amountRelations} - ${collectionName} - field ${fieldForDirectusFileId}`);
           // search for related_collection is directus_files
           if (relationObj.related_collection === 'directus_files') {
             let collectionObj = schema.collections[collectionName];
             if (!!collectionObj) {
               let isSingleton = collectionObj.singleton;
-              await logger.appendLog(
-                '- Found relation to directus_files in collection: ' +
-                  collectionName +
-                  ' (singleton: ' +
-                  isSingleton +
-                  ', field: ' +
-                  fieldForDirectusFileId +
-                  ')'
-              );
+              await logger.appendLog('- Found relation to directus_files in collection: ' + collectionName + ' (singleton: ' + isSingleton + ', field: ' + fieldForDirectusFileId + ')');
               // define the SpecificCollection type
               type SpecificCollection = {
                 // the fieldForDirectusFileId is a string
                 [key: string]: string | DatabaseTypes.DirectusFiles;
               };
 
-              let collectionHelper =
-                myDatabaseHelper.getItemsServiceHelper<SpecificCollection>(
-                  collectionName as CollectionNames
-                );
+              let collectionHelper = myDatabaseHelper.getItemsServiceHelper<SpecificCollection>(collectionName as CollectionNames);
               if (isSingleton) {
                 this.statistics.itemsCheckedAmount++;
                 await logger.appendLog('- Reading singleton item.');
@@ -177,16 +133,12 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
                 };
                 let amountItems = await collectionHelper.countItems(query);
                 this.statistics.itemsCheckedAmount += amountItems;
-                await logger.appendLog(
-                  `- Found ${amountItems} items in collection ${collectionName}.`
-                );
+                await logger.appendLog(`- Found ${amountItems} items in collection ${collectionName}.`);
 
                 let limit = 1000;
                 let offset = 0;
                 while (offset < amountItems) {
-                  await logger.appendLog(
-                    `- Reading items progress: ${offset}/${amountItems}`
-                  );
+                  await logger.appendLog(`- Reading items progress: ${offset}/${amountItems}`);
 
                   let items = await collectionHelper.readByQuery({
                     ...query,
@@ -254,14 +206,10 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
           }
         }
         if (fileIdsNoLongerUnreferenced.length > 0) {
-          await logger.appendLog(
-            `Found ${fileIdsNoLongerUnreferenced.length} files that are no longer unereferenced.`
-          );
+          await logger.appendLog(`Found ${fileIdsNoLongerUnreferenced.length} files that are no longer unereferenced.`);
         }
       } else {
-        await logger.appendLog(
-          `The directus_files collection does not have the field "${directusFiles_fieldname_is_unreferenced}". Otherwise, we would have updated the field, to mark the files that are no longer orphaned.`
-        );
+        await logger.appendLog(`The directus_files collection does not have the field "${directusFiles_fieldname_is_unreferenced}". Otherwise, we would have updated the field, to mark the files that are no longer orphaned.`);
       }
 
       // now we need to look for all directusFiles that exist and then compare which are not used
@@ -291,23 +239,12 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
         await filesHelper.updateOne(fileId, {
           [directusFiles_fieldname_is_unreferenced]: true,
         });
-        if (
-          this.config[
-            FileCleanupWorkflowConfigEnum
-              .delete_unreferenced_files_when_older_than_ms
-          ] >= 0
-        ) {
+        if (this.config[FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms] >= 0) {
           let file = await filesHelper.readOne(fileId);
           if (!!file) {
             let fileCreatedAt = file.created_on;
             let fileAge = Date.now() - new Date(fileCreatedAt).getTime();
-            if (
-              fileAge >=
-              this.config[
-                FileCleanupWorkflowConfigEnum
-                  .delete_unreferenced_files_when_older_than_ms
-              ]
-            ) {
+            if (fileAge >= this.config[FileCleanupWorkflowConfigEnum.delete_unreferenced_files_when_older_than_ms]) {
               await logger.appendLog('Deleting file: ' + fileId);
               await filesHelper.deleteOne(fileId);
               this.statistics.filesDeletedAmount++;
@@ -319,27 +256,13 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
 
       await logger.appendLog(JSON.stringify(this.statistics, null, 2));
       await logger.appendLog(`Summary:`);
-      await logger.appendLog(
-        `- Items checked: ${this.statistics.itemsCheckedAmount}`
-      );
-      await logger.appendLog(
-        `- Files total: ${this.statistics.filesTotalAmount}`
-      );
-      await logger.appendLog(
-        `- Files total disk space: ${ByteSizeHelper.convertBytesToReadableFormat(this.statistics.filesTotalDiskSpace)}`
-      );
-      await logger.appendLog(
-        `- Files unreferenced: ${this.statistics.filesUnreferencedAmount}`
-      );
-      await logger.appendLog(
-        `- Files unreferenced disk space: ${ByteSizeHelper.convertBytesToReadableFormat(this.statistics.filesUnreferencedDiskSpace)}`
-      );
-      await logger.appendLog(
-        `- Files deleted: ${this.statistics.filesDeletedAmount}`
-      );
-      await logger.appendLog(
-        `- Files deleted disk space: ${ByteSizeHelper.convertBytesToReadableFormat(this.statistics.filesDeletedDiskSpace)}`
-      );
+      await logger.appendLog(`- Items checked: ${this.statistics.itemsCheckedAmount}`);
+      await logger.appendLog(`- Files total: ${this.statistics.filesTotalAmount}`);
+      await logger.appendLog(`- Files total disk space: ${ByteSizeHelper.convertBytesToReadableFormat(this.statistics.filesTotalDiskSpace)}`);
+      await logger.appendLog(`- Files unreferenced: ${this.statistics.filesUnreferencedAmount}`);
+      await logger.appendLog(`- Files unreferenced disk space: ${ByteSizeHelper.convertBytesToReadableFormat(this.statistics.filesUnreferencedDiskSpace)}`);
+      await logger.appendLog(`- Files deleted: ${this.statistics.filesDeletedAmount}`);
+      await logger.appendLog(`- Files deleted disk space: ${ByteSizeHelper.convertBytesToReadableFormat(this.statistics.filesDeletedDiskSpace)}`);
       await logger.appendLog(`- Finished file cleanup job.`);
 
       return logger.getFinalLogWithStateAndParams({
@@ -355,16 +278,14 @@ export class FileCleanupWorkflow extends SingleWorkflowRun {
   }
 }
 
-export default defineHook(
-  async (registerFunctions: RegisterFunctions, apiContext) => {
-    const myDatabaseHelper = new MyDatabaseHelper(apiContext);
+export default defineHook(async (registerFunctions: RegisterFunctions, apiContext) => {
+  const myDatabaseHelper = new MyDatabaseHelper(apiContext);
 
-    // Schedule to create new form_submissions based on the provided CSV file
-    WorkflowScheduleHelper.registerScheduleToRunWorkflowRuns({
-      workflowRunInterface: new FileCleanupWorkflow(),
-      myDatabaseHelper: myDatabaseHelper,
-      schedule: registerFunctions.schedule,
-      cronOject: WorkflowScheduleHelper.EVERY_MONTH_AT_1AM,
-    });
-  }
-);
+  // Schedule to create new form_submissions based on the provided CSV file
+  WorkflowScheduleHelper.registerScheduleToRunWorkflowRuns({
+    workflowRunInterface: new FileCleanupWorkflow(),
+    myDatabaseHelper: myDatabaseHelper,
+    schedule: registerFunctions.schedule,
+    cronOject: WorkflowScheduleHelper.EVERY_MONTH_AT_1AM,
+  });
+});

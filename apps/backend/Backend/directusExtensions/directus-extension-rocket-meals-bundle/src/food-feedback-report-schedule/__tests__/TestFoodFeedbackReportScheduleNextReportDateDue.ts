@@ -9,20 +9,19 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 0,
-        period_days_amount: 7,
-        send_on_mondays: true,
-        send_on_tuesdays: true,
-        send_on_wednesdays: true,
-        send_on_thursdays: true,
-        send_on_fridays: true,
-        send_on_saturdays: true,
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 0,
+      period_days_amount: 7,
+      send_on_mondays: true,
+      send_on_tuesdays: true,
+      send_on_wednesdays: true,
+      send_on_thursdays: true,
+      send_on_fridays: true,
+      send_on_saturdays: true,
+      send_on_sundays: true,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -45,11 +44,7 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     });
     const expectedNextReportDueString = expectedNextReportDue.toISOString();
 
-    const nextReportDue =
-      ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(
-        recipientEntry,
-        now_simulated
-      );
+    const nextReportDue = ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(recipientEntry, now_simulated);
     expect(nextReportDue).not.toBeNull();
     if (nextReportDue) {
       const nextReportDueString = nextReportDue.toISOString();
@@ -61,21 +56,20 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 3, // although this is not 0, we expect the report to be due today
-        period_days_amount: 7,
-        // We want to send the report 3 days before the offer date. The offer date is today (Monday) plus 3 days is Thursday.
-        send_on_mondays: true,
-        send_on_tuesdays: true,
-        send_on_wednesdays: true,
-        send_on_thursdays: true, // As the offer date is Thursday and enabled, we expect the report to be due today
-        send_on_fridays: true,
-        send_on_saturdays: true,
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 3, // although this is not 0, we expect the report to be due today
+      period_days_amount: 7,
+      // We want to send the report 3 days before the offer date. The offer date is today (Monday) plus 3 days is Thursday.
+      send_on_mondays: true,
+      send_on_tuesdays: true,
+      send_on_wednesdays: true,
+      send_on_thursdays: true, // As the offer date is Thursday and enabled, we expect the report to be due today
+      send_on_fridays: true,
+      send_on_saturdays: true,
+      send_on_sundays: true,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -98,11 +92,7 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     });
     const expectedNextReportDueString = expectedNextReportDue.toISOString();
 
-    const nextReportDue =
-      ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(
-        recipientEntry,
-        now_simulated
-      );
+    const nextReportDue = ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(recipientEntry, now_simulated);
     expect(nextReportDue).not.toBeNull();
     if (nextReportDue) {
       const nextReportDueString = nextReportDue.toISOString();
@@ -114,20 +104,19 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 0,
-        period_days_amount: 7,
-        send_on_mondays: true,
-        send_on_tuesdays: true,
-        send_on_wednesdays: true,
-        send_on_thursdays: true,
-        send_on_fridays: true,
-        send_on_saturdays: true,
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 0,
+      period_days_amount: 7,
+      send_on_mondays: true,
+      send_on_tuesdays: true,
+      send_on_wednesdays: true,
+      send_on_thursdays: true,
+      send_on_fridays: true,
+      send_on_saturdays: true,
+      send_on_sundays: true,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -150,11 +139,7 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     });
     const expectedNextReportDueString = expectedNextReportDue.toISOString();
 
-    const nextReportDue =
-      ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(
-        recipientEntry,
-        now_simulated
-      );
+    const nextReportDue = ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(recipientEntry, now_simulated);
     expect(nextReportDue).not.toBeNull();
     if (nextReportDue) {
       const nextReportDueString = nextReportDue.toISOString();
@@ -166,20 +151,19 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 0,
-        period_days_amount: 7,
-        send_on_mondays: false,
-        send_on_tuesdays: false,
-        send_on_wednesdays: false,
-        send_on_thursdays: false,
-        send_on_fridays: true, // only Friday is enabled
-        send_on_saturdays: false,
-        send_on_sundays: false,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 0,
+      period_days_amount: 7,
+      send_on_mondays: false,
+      send_on_tuesdays: false,
+      send_on_wednesdays: false,
+      send_on_thursdays: false,
+      send_on_fridays: true, // only Friday is enabled
+      send_on_saturdays: false,
+      send_on_sundays: false,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -202,11 +186,7 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     });
     const expectedNextReportDueString = expectedNextReportDue.toISOString();
 
-    const nextReportDue =
-      ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(
-        recipientEntry,
-        now_simulated
-      );
+    const nextReportDue = ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(recipientEntry, now_simulated);
     expect(nextReportDue).not.toBeNull();
     if (nextReportDue) {
       const nextReportDueString = nextReportDue.toISOString();
@@ -218,21 +198,20 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 4, // we want to send the report 4 days before the offer date
-        period_days_amount: 7,
-        // So the offer date is Monday, plus 4 days is Friday. But Friday is not enabled, so we cant generate the report for Friday
-        send_on_mondays: true,
-        send_on_tuesdays: false,
-        send_on_wednesdays: true,
-        send_on_thursdays: true,
-        send_on_fridays: true, // Friday is not enabled
-        send_on_saturdays: true, // but Saturday is enabled
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 4, // we want to send the report 4 days before the offer date
+      period_days_amount: 7,
+      // So the offer date is Monday, plus 4 days is Friday. But Friday is not enabled, so we cant generate the report for Friday
+      send_on_mondays: true,
+      send_on_tuesdays: false,
+      send_on_wednesdays: true,
+      send_on_thursdays: true,
+      send_on_fridays: true, // Friday is not enabled
+      send_on_saturdays: true, // but Saturday is enabled
+      send_on_sundays: true,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -257,11 +236,7 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     });
     const expectedNextReportDueString = expectedNextReportDue.toISOString();
 
-    const nextReportDue =
-      ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(
-        recipientEntry,
-        now_simulated
-      );
+    const nextReportDue = ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(recipientEntry, now_simulated);
     expect(nextReportDue).not.toBeNull();
     if (nextReportDue) {
       const nextReportDueString = nextReportDue.toISOString();
@@ -273,20 +248,19 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: true,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 0,
-        period_days_amount: 7,
-        send_on_mondays: false,
-        send_on_tuesdays: false,
-        send_on_wednesdays: false,
-        send_on_thursdays: false,
-        send_on_fridays: false,
-        send_on_saturdays: false,
-        send_on_sundays: false,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: true,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 0,
+      period_days_amount: 7,
+      send_on_mondays: false,
+      send_on_tuesdays: false,
+      send_on_wednesdays: false,
+      send_on_thursdays: false,
+      send_on_fridays: false,
+      send_on_saturdays: false,
+      send_on_sundays: false,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -298,11 +272,7 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
       milliseconds: 0,
     });
 
-    const nextReportDue =
-      ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(
-        recipientEntry,
-        now_simulated
-      );
+    const nextReportDue = ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(recipientEntry, now_simulated);
     expect(nextReportDue).toBeNull();
   });
 
@@ -310,20 +280,19 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
     const sendReportAtHour = 6;
     const sendReportAtMinute = 0;
     const sendReportAtHhMmPadded = `${sendReportAtHour.toString().padStart(2, '0')}:${sendReportAtMinute.toString().padStart(2, '0')}`;
-    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> =
-      {
-        enabled: false,
-        send_report_at_hh_mm: sendReportAtHhMmPadded,
-        period_days_offset: 0,
-        period_days_amount: 7,
-        send_on_mondays: true,
-        send_on_tuesdays: true,
-        send_on_wednesdays: true,
-        send_on_thursdays: true,
-        send_on_fridays: true,
-        send_on_saturdays: true,
-        send_on_sundays: true,
-      };
+    let recipientEntry: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules> = {
+      enabled: false,
+      send_report_at_hh_mm: sendReportAtHhMmPadded,
+      period_days_offset: 0,
+      period_days_amount: 7,
+      send_on_mondays: true,
+      send_on_tuesdays: true,
+      send_on_wednesdays: true,
+      send_on_thursdays: true,
+      send_on_fridays: true,
+      send_on_saturdays: true,
+      send_on_sundays: true,
+    };
 
     const now_simulated = DateHelper.getDate({
       year: 2024,
@@ -335,11 +304,7 @@ describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
       milliseconds: 0,
     });
 
-    const nextReportDue =
-      ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(
-        recipientEntry,
-        now_simulated
-      );
+    const nextReportDue = ReportSchedule.getNextReportIsDueToBeGeneratedDateOrNull(recipientEntry, now_simulated);
     expect(nextReportDue).toBeNull();
   });
 });

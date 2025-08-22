@@ -1,11 +1,4 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -25,9 +18,7 @@ const index = () => {
 	const { theme } = useTheme();
 	const [loading, setLoading] = useState(false);
 	const { language } = useSelector((state: RootState) => state.settings);
-	const [formCategories, setFormCategories] = useState<
-		DatabaseTypes.FormCategories[]
-	>([]);
+	const [formCategories, setFormCategories] = useState<DatabaseTypes.FormCategories[]>([]);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const formCategoriesHelper = new FormCategoriesHelper();
 
@@ -58,10 +49,7 @@ const index = () => {
 	}, []);
 
 	return (
-		<ScrollView
-			style={{ ...styles.container, backgroundColor: theme.screen.background }}
-			contentContainerStyle={{ ...styles.contentContainer }}
-		>
+		<ScrollView style={{ ...styles.container, backgroundColor: theme.screen.background }} contentContainerStyle={{ ...styles.contentContainer }}>
 			<View
 				style={{
 					...styles.formCategories,
@@ -107,24 +95,10 @@ const index = () => {
 										}}
 									>
 										<View style={styles.col}>
-											{IconComponent && (
-												<IconComponent
-													name={iconName}
-													size={20}
-													color={theme.screen.icon}
-												/>
-											)}
-											<Text style={{ ...styles.body, color: theme.screen.text }}>
-												{category?.translations
-													? getFromCategoryTranslation(category?.translations, language)
-													: category?.alias}
-											</Text>
+											{IconComponent && <IconComponent name={iconName} size={20} color={theme.screen.icon} />}
+											<Text style={{ ...styles.body, color: theme.screen.text }}>{category?.translations ? getFromCategoryTranslation(category?.translations, language) : category?.alias}</Text>
 										</View>
-										<Entypo
-											name="chevron-small-right"
-											color={theme.screen.icon}
-											size={24}
-										/>
+										<Entypo name="chevron-small-right" color={theme.screen.icon} size={24} />
 									</TouchableOpacity>
 								);
 							})}

@@ -50,10 +50,7 @@ export class MarkingGroupsHelper extends CollectionHelper<DatabaseTypes.Markings
 	}
 
 	// Update an existing marking groups entry by ID
-	async updateMarkingGroupsById(
-		id: string,
-		updatedData: DatabaseTypes.Markings
-	) {
+	async updateMarkingGroupsById(id: string, updatedData: DatabaseTypes.Markings) {
 		return await this.updateItem(id, updatedData);
 	}
 

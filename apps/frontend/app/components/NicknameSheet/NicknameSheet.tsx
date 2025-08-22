@@ -10,29 +10,17 @@ import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 import { myContrastColor } from '@/helper/colorHelper';
 
-const NicknameSheet: React.FC<NicknameSheetProps> = ({
-	closeSheet,
-	value,
-	onChange,
-	onSave,
-	disableSave,
-}) => {
+const NicknameSheet: React.FC<NicknameSheetProps> = ({ closeSheet, value, onChange, onSave, disableSave }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 
 	return (
-		<BottomSheetView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-		>
+		<BottomSheetView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}>
 			<View style={styles.sheetHeader}>
 				<View />
-				<Text style={{ ...styles.sheetHeading, color: theme.sheet.text }}>
-					{translate(TranslationKeys.nickname)}
-				</Text>
+				<Text style={{ ...styles.sheetHeading, color: theme.sheet.text }}>{translate(TranslationKeys.nickname)}</Text>
 			</View>
 			<TextInput
 				style={{
@@ -49,22 +37,11 @@ const NicknameSheet: React.FC<NicknameSheetProps> = ({
 				onChangeText={onChange}
 			/>
 			<View style={styles.buttonContainer}>
-				<TouchableOpacity
-					onPress={closeSheet}
-					style={{ ...styles.cancelButton, borderColor: primaryColor }}
-				>
-					<Text style={[styles.buttonText, { color: theme.screen.text }]}>
-						{translate(TranslationKeys.cancel)}
-					</Text>
+				<TouchableOpacity onPress={closeSheet} style={{ ...styles.cancelButton, borderColor: primaryColor }}>
+					<Text style={[styles.buttonText, { color: theme.screen.text }]}>{translate(TranslationKeys.cancel)}</Text>
 				</TouchableOpacity>
-				<TouchableOpacity
-					onPress={onSave}
-					disabled={disableSave}
-					style={{ ...styles.saveButton, backgroundColor: primaryColor }}
-				>
-					<Text style={[styles.buttonText, { color: contrastColor }]}>
-						{translate(TranslationKeys.save)}
-					</Text>
+				<TouchableOpacity onPress={onSave} disabled={disableSave} style={{ ...styles.saveButton, backgroundColor: primaryColor }}>
+					<Text style={[styles.buttonText, { color: contrastColor }]}>{translate(TranslationKeys.save)}</Text>
 				</TouchableOpacity>
 			</View>
 		</BottomSheetView>

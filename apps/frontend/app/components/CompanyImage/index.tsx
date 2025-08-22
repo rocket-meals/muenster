@@ -10,18 +10,10 @@ interface CompanyImageProps {
 	resizeMode?: ImageResizeMode;
 }
 
-const CompanyImage: React.FC<CompanyImageProps> = ({
-	appSettings,
-	style,
-	resizeMode = 'contain',
-}) => {
-	const imageUri =
-		appSettings?.company_image &&
-		getImageUrl(String(appSettings.company_image))?.split('?')[0];
+const CompanyImage: React.FC<CompanyImageProps> = ({ appSettings, style, resizeMode = 'contain' }) => {
+	const imageUri = appSettings?.company_image && getImageUrl(String(appSettings.company_image))?.split('?')[0];
 
-	const source = imageUri
-		? { uri: imageUri }
-		: require('@/assets/images/company.png');
+	const source = imageUri ? { uri: imageUri } : require('@/assets/images/company.png');
 
 	return <MyImage source={source} style={style} resizeMode={resizeMode} />;
 };

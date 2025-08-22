@@ -1,24 +1,4 @@
-import {
-	CLEAR_FOODS,
-	DELETE_FOOD_FEEDBACK_LOCAL,
-	DELETE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES_LOCAL,
-	SET_FOOD_CATEGORIES,
-	SET_FOOD_COLLECTION,
-	SET_FOOD_OFFERS_CATEGORIES,
-	SET_FOODOFFERS_INFO_ITEMS,
-	SET_MARKING_DETAILS,
-	SET_MOST_DISLIKED_FOODS,
-	SET_MOST_LIKED_FOODS,
-	SET_POPUP_EVENTS,
-	SET_SELECTED_DATE,
-	SET_SELECTED_FOOD_MARKINGS,
-	UPDATE_FOOD_FEEDBACK_LABELS,
-	UPDATE_FOOD_FEEDBACK_LOCAL,
-	UPDATE_MARKINGS,
-	UPDATE_OWN_FOOD_FEEDBACK,
-	UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES,
-	UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES_LOCAL,
-} from '@/redux/Types/types';
+import { CLEAR_FOODS, DELETE_FOOD_FEEDBACK_LOCAL, DELETE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES_LOCAL, SET_FOOD_CATEGORIES, SET_FOOD_COLLECTION, SET_FOOD_OFFERS_CATEGORIES, SET_FOODOFFERS_INFO_ITEMS, SET_MARKING_DETAILS, SET_MOST_DISLIKED_FOODS, SET_MOST_LIKED_FOODS, SET_POPUP_EVENTS, SET_SELECTED_DATE, SET_SELECTED_FOOD_MARKINGS, UPDATE_FOOD_FEEDBACK_LABELS, UPDATE_FOOD_FEEDBACK_LOCAL, UPDATE_MARKINGS, UPDATE_OWN_FOOD_FEEDBACK, UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES, UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES_LOCAL } from '@/redux/Types/types';
 
 const initialState = {
 	foodFeedbackLabels: [],
@@ -105,9 +85,7 @@ const foodReducer = (state = initialState, actions: any) => {
 			};
 		}
 		case DELETE_FOOD_FEEDBACK_LOCAL: {
-			const feedbacks = state.ownFoodFeedbacks.filter(
-				(feedback: any) => feedback.id !== actions.payload
-			);
+			const feedbacks = state.ownFoodFeedbacks.filter((feedback: any) => feedback.id !== actions.payload);
 			return {
 				...state,
 				ownFoodFeedbacks: feedbacks,
@@ -137,9 +115,7 @@ const foodReducer = (state = initialState, actions: any) => {
 			};
 		}
 		case DELETE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES_LOCAL: {
-			const entries = state.ownfoodFeedbackLabelEntries.filter(
-				(feedback: any) => feedback.id !== actions.payload
-			);
+			const entries = state.ownfoodFeedbackLabelEntries.filter((feedback: any) => feedback.id !== actions.payload);
 			return {
 				...state,
 				ownfoodFeedbackLabelEntries: entries,

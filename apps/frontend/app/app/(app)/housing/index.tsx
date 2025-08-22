@@ -1,41 +1,17 @@
-import {
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-	RefreshControl,
-	ActivityIndicator,
-	Dimensions,
-} from 'react-native';
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import { SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View, RefreshControl, ActivityIndicator, Dimensions } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ApartmentSortOption } from 'repo-depkit-common';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import {
-	DrawerContentComponentProps,
-	DrawerNavigationProp,
-} from '@react-navigation/drawer';
+import { DrawerContentComponentProps, DrawerNavigationProp } from '@react-navigation/drawer';
 import { RootDrawerParamList } from './types';
 import { useFocusEffect, useNavigation } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { DatabaseTypes } from 'repo-depkit-common';
-import {
-	SET_APARTMENTS,
-	SET_APARTMENTS_DICT,
-	SET_APARTMENTS_LOCAL,
-	SET_UNSORTED_APARTMENTS,
-} from '@/redux/Types/types';
+import { SET_APARTMENTS, SET_APARTMENTS_DICT, SET_APARTMENTS_LOCAL, SET_UNSORTED_APARTMENTS } from '@/redux/Types/types';
 import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
 import { calculateDistanceInMeter } from '@/helper/distanceHelper';
 import { ApartmentsHelper } from '@/redux/actions/Apartments/Apartments';
@@ -72,28 +48,16 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const [apartmentsDispatched, setApartmentsDispatched] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
 	const [distanceAdded, setDistanceAdded] = useState(false);
-	const [selectedBuilding, setSelectedBuilding] =
-		useState<DatabaseTypes.Buildings | null>();
+	const [selectedBuilding, setSelectedBuilding] = useState<DatabaseTypes.Buildings | null>();
 	const [selectedApartmentId, setSelectedApartementId] = useState<string>('');
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const selectedCanteen = useSelectedCanteen();
-	const {
-		drawerPosition,
-		apartmentsSortBy,
-		primaryColor: projectColor,
-		appSettings,
-		language,
-	} = useSelector((state: RootState) => state.settings);
-	const { apartments, apartmentsLocal, unSortedApartments } = useSelector(
-		(state: RootState) => state.apartment
-	);
+	const { drawerPosition, apartmentsSortBy, primaryColor: projectColor, appSettings, language } = useSelector((state: RootState) => state.settings);
+	const { apartments, apartmentsLocal, unSortedApartments } = useSelector((state: RootState) => state.apartment);
 
-	const housing_area_color = appSettings?.housing_area_color
-		? appSettings?.housing_area_color
-		: projectColor;
+	const housing_area_color = appSettings?.housing_area_color ? appSettings?.housing_area_color : projectColor;
 
-	const drawerNavigation =
-		useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
+	const drawerNavigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
 
 	const openSortSheet = () => {
 		sortSheetRef.current?.expand();
@@ -139,17 +103,13 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		setLoading(true);
 		try {
 			// Fetch all apartments
-			const apartmentData = (await apartmentsHelper.fetchApartments(
-				{}
-			)) as DatabaseTypes.Apartments[];
+			const apartmentData = (await apartmentsHelper.fetchApartments({})) as DatabaseTypes.Apartments[];
 			const apartments = apartmentData || [];
 
 			if (apartments && apartments?.length > 0) {
 				const apartmentWithBuilding = await Promise.all(
 					apartments.map(async apartment => {
-						const buildingData = (await buildingsHelper.fetchBuildingById(
-							String(apartment?.building)
-						)) as DatabaseTypes.Buildings;
+						const buildingData = (await buildingsHelper.fetchBuildingById(String(apartment?.building))) as DatabaseTypes.Buildings;
 
 						return {
 							...apartment,
@@ -203,12 +163,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		let campusWithDistance: Array<DatabaseTypes.Buildings> = [];
 		if (apartments) {
 			apartments?.forEach((apartment: any) => {
-				const distance = Number(
-					calculateDistanceInMeter(
-						selectedBuilding?.coordinates?.coordinates,
-						apartment?.coordinates?.coordinates
-					)
-				);
+				const distance = Number(calculateDistanceInMeter(selectedBuilding?.coordinates?.coordinates, apartment?.coordinates?.coordinates));
 				campusWithDistance.push({ ...apartment, distance });
 			});
 			if (campusWithDistance?.length === 0) {
@@ -220,9 +175,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
 	const fetchSelectedBuilding = async () => {
 		if (selectedCanteen?.building) {
-			const buildingData = (await buildingsHelper.fetchBuildingById(
-				selectedCanteen.building
-			)) as DatabaseTypes.Buildings;
+			const buildingData = (await buildingsHelper.fetchBuildingById(selectedCanteen.building)) as DatabaseTypes.Buildings;
 			const building = buildingData || [];
 			if (building) {
 				setSelectedBuilding(building);
@@ -254,10 +207,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		fetchAllApartments();
 	}, []);
 
-	const updateSort = (
-		id: ApartmentSortOption,
-		apartments: DatabaseTypes.Apartments[]
-	) => {
+	const updateSort = (id: ApartmentSortOption, apartments: DatabaseTypes.Apartments[]) => {
 		// Copy food offers to avoid mutation
 		setLoading(true);
 		let copiedApartments = [...apartments];
@@ -309,9 +259,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		});
 	};
 
-	const sortApartmentsWithDistance = (
-		apartments: DatabaseTypes.Apartments[]
-	) => {
+	const sortApartmentsWithDistance = (apartments: DatabaseTypes.Apartments[]) => {
 		if (apartments) {
 			return apartments?.sort((a: any, b: any) => a.distance - b.distance);
 		} else {
@@ -319,9 +267,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		}
 	};
 
-	const sortApartmentsAlphabetically = (
-		apartments: DatabaseTypes.Apartments[]
-	) => {
+	const sortApartmentsAlphabetically = (apartments: DatabaseTypes.Apartments[]) => {
 		if (apartments) {
 			return apartments?.sort((a: any, b: any) => a.alias.localeCompare(b.alias));
 		} else {
@@ -329,9 +275,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		}
 	};
 
-	const sortApartmentsByAvailableDate = (
-		apartments: DatabaseTypes.Apartments[]
-	) => {
+	const sortApartmentsByAvailableDate = (apartments: DatabaseTypes.Apartments[]) => {
 		if (!apartments) return apartments;
 
 		return apartments.sort((a, b) => {
@@ -363,9 +307,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 					payload: apartmentsLocal,
 				});
 			} else {
-				const filteredApartments = apartments?.filter(apartment =>
-					apartment?.alias?.toLowerCase()?.includes(query?.toLowerCase())
-				);
+				const filteredApartments = apartments?.filter(apartment => apartment?.alias?.toLowerCase()?.includes(query?.toLowerCase()));
 				dispatch({
 					type: SET_APARTMENTS,
 					payload: filteredApartments,
@@ -415,11 +357,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 							<Tooltip
 								placement="top"
 								trigger={triggerProps => (
-									<TouchableOpacity
-										{...triggerProps}
-										onPress={() => drawerNavigation.toggleDrawer()}
-										style={{ padding: 10 }}
-									>
+									<TouchableOpacity {...triggerProps} onPress={() => drawerNavigation.toggleDrawer()} style={{ padding: 10 }}>
 										<Ionicons name="menu" size={24} color={theme.header.text} />
 									</TouchableOpacity>
 								)}
@@ -431,28 +369,20 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								</TooltipContent>
 							</Tooltip>
 
-							<Text style={{ ...styles.heading, color: theme.header.text }}>
-								{translate(TranslationKeys.housing)}
-							</Text>
+							<Text style={{ ...styles.heading, color: theme.header.text }}>{translate(TranslationKeys.housing)}</Text>
 						</View>
 						<View style={{ ...styles.col2, gap: isWeb ? 30 : 15 }}>
 							<Tooltip
 								placement="top"
 								trigger={triggerProps => (
-									<TouchableOpacity
-										{...triggerProps}
-										onPress={openSortSheet}
-										style={{ padding: 10 }}
-									>
+									<TouchableOpacity {...triggerProps} onPress={openSortSheet} style={{ padding: 10 }}>
 										<MaterialIcons name="sort" size={24} color={theme.header.text} />
 									</TouchableOpacity>
 								)}
 							>
 								<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 									<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-										{`${translate(TranslationKeys.sort)}: ${translate(
-											TranslationKeys.apartments
-										)}`}
+										{`${translate(TranslationKeys.sort)}: ${translate(TranslationKeys.apartments)}`}
 									</TooltipText>
 								</TooltipContent>
 							</Tooltip>
@@ -468,23 +398,9 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 						...styles.compusContentContainer,
 						paddingHorizontal: isWeb ? 5 : 5,
 					}}
-					refreshControl={
-						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-					}
+					refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
 				>
-					<View style={{ width: '100%', padding: screenWidth > 600 ? 20 : 5 }}>
-						{appSettings && appSettings?.housing_translations && (
-							<CustomMarkdown
-								content={
-									getTextFromTranslation(appSettings?.housing_translations, language) ||
-									''
-								}
-								backgroundColor={housing_area_color}
-								imageWidth={'100%'}
-								imageHeight={400}
-							/>
-						)}
-					</View>
+					<View style={{ width: '100%', padding: screenWidth > 600 ? 20 : 5 }}>{appSettings && appSettings?.housing_translations && <CustomMarkdown content={getTextFromTranslation(appSettings?.housing_translations, language) || ''} backgroundColor={housing_area_color} imageWidth={'100%'} imageHeight={400} />}</View>
 					<View
 						style={{
 							...styles.searchContainer,
@@ -492,14 +408,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 							paddingHorizontal: screenWidth > 600 ? 20 : 5,
 						}}
 					>
-						<TextInput
-							style={[styles.searchInput, { color: theme.screen.text }]}
-							cursorColor={theme.screen.text}
-							placeholderTextColor={theme.screen.placeholder}
-							onChangeText={setQuery}
-							value={query}
-							placeholder={translate(TranslationKeys.search_apartment_here)}
-						/>
+						<TextInput style={[styles.searchInput, { color: theme.screen.text }]} cursorColor={theme.screen.text} placeholderTextColor={theme.screen.placeholder} onChangeText={setQuery} value={query} placeholder={translate(TranslationKeys.search_apartment_here)} />
 					</View>
 					<View style={{ ...styles.campusContainer, gap: isWeb ? 10 : 10 }}>
 						{loading ? (
@@ -514,15 +423,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								<ActivityIndicator size={30} color={theme.screen.text} />
 							</View>
 						) : apartments && apartments?.length > 0 ? (
-							apartments?.map((apartment: any) => (
-								<ApartmentItem
-									key={apartment.id}
-									apartment={apartment}
-									setSelectedApartementId={setSelectedApartementId}
-									openImageManagementSheet={openImageManagementSheet}
-									openDistanceSheet={openDistanceSheet}
-								/>
-							))
+							apartments?.map((apartment: any) => <ApartmentItem key={apartment.id} apartment={apartment} setSelectedApartementId={setSelectedApartementId} openImageManagementSheet={openImageManagementSheet} openDistanceSheet={openDistanceSheet} />)
 						) : (
 							<View
 								style={{
@@ -587,13 +488,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 					</BaseBottomSheet>
 				)}
 
-				{isActive && (
-					<DistanceModal
-						visible={distanceModalVisible}
-						onClose={closeDistanceSheet}
-						onUseCurrentPosition={useCurrentLocationForDistance}
-					/>
-				)}
+				{isActive && <DistanceModal visible={distanceModalVisible} onClose={closeDistanceSheet} onUseCurrentPosition={useCurrentLocationForDistance} />}
 			</View>
 		</SafeAreaView>
 	);

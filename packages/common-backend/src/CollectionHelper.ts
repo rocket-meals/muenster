@@ -4,13 +4,7 @@ import { CollectionNames } from 'repo-depkit-common';
 import { DatabaseTypes } from 'repo-depkit-common';
 
 const pathToCommon = require.resolve('repo-depkit-common');
-const pathToDatabaseTypes = resolve(
-  pathToCommon,
-  '..',
-  'src',
-  'databaseTypes',
-  'types.ts'
-);
+const pathToDatabaseTypes = resolve(pathToCommon, '..', 'src', 'databaseTypes', 'types.ts');
 
 // Initialize a ts-morph project
 const project = new Project();
@@ -39,12 +33,9 @@ export class CollectionHelper {
   static getCollectionPropertyDetails(collection: CollectionNames) {
     // Transform the collection name to the type alias name
     // From "form_answers" to "FormAnswers"
-    const collectionTypeAlias =
-      CollectionHelper.getCollectionTypeAlias(collection);
+    const collectionTypeAlias = CollectionHelper.getCollectionTypeAlias(collection);
     if (!collectionTypeAlias) {
-      throw new Error(
-        `Type alias ${collection} not found in ${pathToDatabaseTypes}`
-      );
+      throw new Error(`Type alias ${collection} not found in ${pathToDatabaseTypes}`);
     }
 
     // Extract properties from the type alias
@@ -67,8 +58,6 @@ export class CollectionHelper {
    * @param collection: CollectionNames
    */
   static getCollectionPropertyNames(collection: CollectionNames) {
-    return CollectionHelper.getCollectionPropertyDetails(collection).map(
-      property => property.name
-    );
+    return CollectionHelper.getCollectionPropertyDetails(collection).map(property => property.name);
   }
 }

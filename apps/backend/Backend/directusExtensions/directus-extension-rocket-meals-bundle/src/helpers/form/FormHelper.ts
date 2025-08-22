@@ -1,28 +1,10 @@
-import {
-  FormExtractFormAnswer,
-  FormExtractFormAnswerValueFileSingle,
-  FormExtractFormAnswerValueFileSingleOrString,
-  FormExtractRelevantInformation,
-  FormExtractRelevantInformationSingle,
-} from '../../forms-sync-hook';
-import {
-  BaseGermanMarkdownTemplateHelper,
-  DEFAULT_HTML_TEMPLATE,
-  HtmlGenerator,
-  HtmlGeneratorOptions,
-} from '../html/HtmlGenerator';
-import {
-  PdfGeneratorHelper,
-  PdfGeneratorOptions,
-  RequestOptions,
-} from '../pdf/PdfGeneratorHelper';
+import { FormExtractFormAnswer, FormExtractFormAnswerValueFileSingle, FormExtractFormAnswerValueFileSingleOrString, FormExtractRelevantInformation, FormExtractRelevantInformationSingle } from '../../forms-sync-hook';
+import { BaseGermanMarkdownTemplateHelper, DEFAULT_HTML_TEMPLATE, HtmlGenerator, HtmlGeneratorOptions } from '../html/HtmlGenerator';
+import { PdfGeneratorHelper, PdfGeneratorOptions, RequestOptions } from '../pdf/PdfGeneratorHelper';
 import { DirectusFilesAssetHelper } from '../DirectusFilesAssetHelper';
 import { MarkdownHelper } from '../html/MarkdownHelper';
 import { MyDatabaseTestableHelperInterface } from '../MyDatabaseHelperInterface';
-import {
-  TranslationBackendKeys,
-  TranslationsBackend,
-} from '../TranslationsBackend';
+import { TranslationBackendKeys, TranslationsBackend } from '../TranslationsBackend';
 import { DateHelper, DateHelperTimezone } from 'repo-depkit-common';
 import { EnvVariableHelper } from '../EnvVariableHelper';
 import { HashHelper } from '../HashHelper';
@@ -39,54 +21,18 @@ type FormFieldExampleData = {
 };
 
 export class FormHelper {
-  private static FORM_IMAGE_TRANSFORM_OPTIONS =
-    DirectusFilesAssetHelper.PRESET_FILE_TRANSFORMATION_IMAGE_HD;
+  private static FORM_IMAGE_TRANSFORM_OPTIONS = DirectusFilesAssetHelper.PRESET_FILE_TRANSFORMATION_IMAGE_HD;
 
   public static getExampleFormExtractRelevantInformation(): FormExtractRelevantInformation {
     let formExtractRelevantInformation: FormExtractRelevantInformation = [];
     let form_submission_id = Math.random().toString();
 
     let index = 0;
-    formExtractRelevantInformation.push(
-      this.addFormField(
-        'Text Field',
-        { value_string: 'This is a long text example' },
-        form_submission_id,
-        index++
-      )
-    );
-    formExtractRelevantInformation.push(
-      this.addFormField(
-        'Text Field 2',
-        { value_string: 'This is a long text example' },
-        form_submission_id,
-        index++
-      )
-    );
-    formExtractRelevantInformation.push(
-      this.addFormField(
-        'Number Field',
-        { value_number: 123 },
-        form_submission_id,
-        index++
-      )
-    );
-    formExtractRelevantInformation.push(
-      this.addFormField(
-        'Boolean Field',
-        { value_boolean: true },
-        form_submission_id,
-        index++
-      )
-    );
-    formExtractRelevantInformation.push(
-      this.addFormField(
-        'Date Field',
-        { value_date: '2021-09-01T00:00:00.000Z' },
-        form_submission_id,
-        index++
-      )
-    );
+    formExtractRelevantInformation.push(this.addFormField('Text Field', { value_string: 'This is a long text example' }, form_submission_id, index++));
+    formExtractRelevantInformation.push(this.addFormField('Text Field 2', { value_string: 'This is a long text example' }, form_submission_id, index++));
+    formExtractRelevantInformation.push(this.addFormField('Number Field', { value_number: 123 }, form_submission_id, index++));
+    formExtractRelevantInformation.push(this.addFormField('Boolean Field', { value_boolean: true }, form_submission_id, index++));
+    formExtractRelevantInformation.push(this.addFormField('Date Field', { value_date: '2021-09-01T00:00:00.000Z' }, form_submission_id, index++));
 
     let sizes = [200, 400, 800, 1600];
     let images: string[] = [];
@@ -96,42 +42,19 @@ export class FormHelper {
       images.push(imageUrl);
     }
 
-    formExtractRelevantInformation.push(
-      this.addFormField(
-        'Image Field',
-        { value_image: images[0] },
-        form_submission_id,
-        index++
-      )
-    );
-    formExtractRelevantInformation.push(
-      this.addFormField(
-        'Files Field',
-        { value_files: images },
-        form_submission_id,
-        index++
-      )
-    );
+    formExtractRelevantInformation.push(this.addFormField('Image Field', { value_image: images[0] }, form_submission_id, index++));
+    formExtractRelevantInformation.push(this.addFormField('Files Field', { value_files: images }, form_submission_id, index++));
 
     return formExtractRelevantInformation;
   }
 
-  private static addFormField(
-    alias: string,
-    data: FormFieldExampleData,
-    form_submission_id: string,
-    index: number
-  ): FormExtractRelevantInformationSingle {
+  private static addFormField(alias: string, data: FormFieldExampleData, form_submission_id: string, index: number): FormExtractRelevantInformationSingle {
     let form_field = this.getExampleFormField(alias);
     return {
       form_field_id: form_field.id,
       sort: index,
       form_field: form_field,
-      form_answer: this.getExampleFormExtractFormAnswer(
-        form_field.id,
-        form_submission_id,
-        data
-      ),
+      form_answer: this.getExampleFormExtractFormAnswer(form_field.id, form_submission_id, data),
     };
   }
 
@@ -187,8 +110,7 @@ export class FormHelper {
   ): FormExtractFormAnswer {
     let value_files: FormExtractFormAnswerValueFileSingleOrString[] = [];
     if (data.value_files) {
-      value_files =
-        data.value_files as FormExtractFormAnswerValueFileSingleOrString[];
+      value_files = data.value_files as FormExtractFormAnswerValueFileSingleOrString[];
     }
     let value_image = null;
     if (data.value_image) {
@@ -216,9 +138,7 @@ export class FormHelper {
     };
   }
 
-  private static generateMarkdownForTypeStringValue(
-    value: string | null | undefined
-  ): string {
+  private static generateMarkdownForTypeStringValue(value: string | null | undefined): string {
     let markdownContent = '';
     if (value) {
       markdownContent += `${value}`;
@@ -227,9 +147,7 @@ export class FormHelper {
     return markdownContent;
   }
 
-  private static generateMarkdownForTypeNumberValue(
-    value: number | null | undefined
-  ): string {
+  private static generateMarkdownForTypeNumberValue(value: number | null | undefined): string {
     let markdownContent = '';
     if (value) {
       markdownContent += `${value}`;
@@ -238,43 +156,27 @@ export class FormHelper {
     return markdownContent;
   }
 
-  private static generateMarkdownForTypeBooleanValue(
-    value: boolean | null | undefined
-  ): string {
+  private static generateMarkdownForTypeBooleanValue(value: boolean | null | undefined): string {
     let markdownContent = '';
     if (value === true || value === false) {
-      let booleanValueString = value
-        ? TranslationsBackend.getTranslation(
-            TranslationBackendKeys.FORM_VALUE_BOOLEAN_TRUE
-          )
-        : TranslationsBackend.getTranslation(
-            TranslationBackendKeys.FORM_VALUE_BOOLEAN_FALSE
-          );
+      let booleanValueString = value ? TranslationsBackend.getTranslation(TranslationBackendKeys.FORM_VALUE_BOOLEAN_TRUE) : TranslationsBackend.getTranslation(TranslationBackendKeys.FORM_VALUE_BOOLEAN_FALSE);
       markdownContent += `${booleanValueString}`;
       markdownContent += MarkdownHelper.getMarkdownNewLine();
     }
     return markdownContent;
   }
 
-  private static generateMarkdownForTypeDateValue(
-    value: string | null | undefined
-  ): string {
+  private static generateMarkdownForTypeDateValue(value: string | null | undefined): string {
     let markdownContent = '';
     if (value) {
-      let dateString = DateHelper.formatDateToTimeZoneReadable(
-        new Date(value),
-        EnvVariableHelper.getTimeZoneString()
-      );
+      let dateString = DateHelper.formatDateToTimeZoneReadable(new Date(value), EnvVariableHelper.getTimeZoneString());
       markdownContent += `${dateString}`;
       markdownContent += MarkdownHelper.getMarkdownNewLine();
     }
     return markdownContent;
   }
 
-  private static generateMarkdownForTypeImageUrl(
-    fieldName: string,
-    imageUrl: string | undefined
-  ): string {
+  private static generateMarkdownForTypeImageUrl(fieldName: string, imageUrl: string | undefined): string {
     let markdownContent = '';
     if (imageUrl) {
       markdownContent += `![${fieldName}](${imageUrl})`;
@@ -283,31 +185,19 @@ export class FormHelper {
     return markdownContent;
   }
 
-  private static generateMarkdownForTypeImageValue(
-    fieldName: string,
-    value_image: DatabaseTypes.DirectusFiles | string | null | undefined,
-    myDatabaseHelperInterface: MyDatabaseTestableHelperInterface
-  ): string {
+  private static generateMarkdownForTypeImageValue(fieldName: string, value_image: DatabaseTypes.DirectusFiles | string | null | undefined, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface): string {
     let assetUrl: undefined | string = undefined;
     if (value_image) {
       if (typeof value_image === 'string' && value_image.startsWith('http')) {
         assetUrl = value_image;
       } else {
-        assetUrl = DirectusFilesAssetHelper.getDirectAssetUrlByObjectOrId(
-          value_image,
-          myDatabaseHelperInterface,
-          FormHelper.FORM_IMAGE_TRANSFORM_OPTIONS
-        );
+        assetUrl = DirectusFilesAssetHelper.getDirectAssetUrlByObjectOrId(value_image, myDatabaseHelperInterface, FormHelper.FORM_IMAGE_TRANSFORM_OPTIONS);
       }
     }
     return this.generateMarkdownForTypeImageUrl(fieldName, assetUrl);
   }
 
-  private static generateMarkdownForTypeFilesValue(
-    fieldName: string,
-    value_file: FormExtractFormAnswerValueFileSingleOrString | null | undefined,
-    myDatabaseHelperInterface: MyDatabaseTestableHelperInterface
-  ): string {
+  private static generateMarkdownForTypeFilesValue(fieldName: string, value_file: FormExtractFormAnswerValueFileSingleOrString | null | undefined, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface): string {
     let assetUrl: undefined | string = undefined;
     //console.log("generateMarkdownForTypeFilesValue");
     //console.log(JSON.stringify(value_file, null, 2));
@@ -315,13 +205,8 @@ export class FormHelper {
       if (typeof value_file === 'string' && value_file.startsWith('http')) {
         assetUrl = value_file;
       } else {
-        let valueFileAsObject: FormExtractFormAnswerValueFileSingle =
-          value_file as FormExtractFormAnswerValueFileSingle;
-        assetUrl = DirectusFilesAssetHelper.getDirectAssetUrlByObjectOrId(
-          valueFileAsObject.directus_files_id,
-          myDatabaseHelperInterface,
-          FormHelper.FORM_IMAGE_TRANSFORM_OPTIONS
-        );
+        let valueFileAsObject: FormExtractFormAnswerValueFileSingle = value_file as FormExtractFormAnswerValueFileSingle;
+        assetUrl = DirectusFilesAssetHelper.getDirectAssetUrlByObjectOrId(valueFileAsObject.directus_files_id, myDatabaseHelperInterface, FormHelper.FORM_IMAGE_TRANSFORM_OPTIONS);
       }
     }
 
@@ -329,10 +214,7 @@ export class FormHelper {
     return this.generateMarkdownForTypeImageUrl(fieldName, assetUrl);
   }
 
-  public static async generateMarkdownContentFromForm(
-    formExtractRelevantInformation: FormExtractRelevantInformationSingle[],
-    myDatabaseHelperInterface: MyDatabaseTestableHelperInterface
-  ): Promise<string> {
+  public static async generateMarkdownContentFromForm(formExtractRelevantInformation: FormExtractRelevantInformationSingle[], myDatabaseHelperInterface: MyDatabaseTestableHelperInterface): Promise<string> {
     let markdownContent = '';
 
     markdownContent += ``;
@@ -345,36 +227,17 @@ export class FormHelper {
 
     // export type FormExtractRelevantInformationSingle = {form_field_id: string, sort: number | null | undefined, form_field: FormFields, form_answer: FormAnswers }
     for (let formExtractRelevantInformationSingle of formExtractRelevantInformation) {
-      let fieldName =
-        formExtractRelevantInformationSingle.form_field.alias ||
-        formExtractRelevantInformationSingle.form_field.id;
+      let fieldName = formExtractRelevantInformationSingle.form_field.alias || formExtractRelevantInformationSingle.form_field.id;
       markdownContent += `### ${fieldName}`;
       markdownContent += markdownNewLine;
 
-      markdownContent += this.generateMarkdownForTypeStringValue(
-        formExtractRelevantInformationSingle.form_answer.value_string
-      );
-      markdownContent += this.generateMarkdownForTypeNumberValue(
-        formExtractRelevantInformationSingle.form_answer.value_number
-      );
-      markdownContent += this.generateMarkdownForTypeBooleanValue(
-        formExtractRelevantInformationSingle.form_answer.value_boolean
-      );
-      markdownContent += this.generateMarkdownForTypeDateValue(
-        formExtractRelevantInformationSingle.form_answer.value_date
-      );
-      markdownContent += this.generateMarkdownForTypeImageValue(
-        fieldName,
-        formExtractRelevantInformationSingle.form_answer.value_image,
-        myDatabaseHelperInterface
-      );
-      for (let formAnswerValueFile of formExtractRelevantInformationSingle
-        .form_answer.value_files || []) {
-        markdownContent += this.generateMarkdownForTypeFilesValue(
-          fieldName,
-          formAnswerValueFile,
-          myDatabaseHelperInterface
-        );
+      markdownContent += this.generateMarkdownForTypeStringValue(formExtractRelevantInformationSingle.form_answer.value_string);
+      markdownContent += this.generateMarkdownForTypeNumberValue(formExtractRelevantInformationSingle.form_answer.value_number);
+      markdownContent += this.generateMarkdownForTypeBooleanValue(formExtractRelevantInformationSingle.form_answer.value_boolean);
+      markdownContent += this.generateMarkdownForTypeDateValue(formExtractRelevantInformationSingle.form_answer.value_date);
+      markdownContent += this.generateMarkdownForTypeImageValue(fieldName, formExtractRelevantInformationSingle.form_answer.value_image, myDatabaseHelperInterface);
+      for (let formAnswerValueFile of formExtractRelevantInformationSingle.form_answer.value_files || []) {
+        markdownContent += this.generateMarkdownForTypeFilesValue(fieldName, formAnswerValueFile, myDatabaseHelperInterface);
       }
     }
 
@@ -382,32 +245,22 @@ export class FormHelper {
     markdownContent += `-----------------` + markdownNewLine;
 
     // add a generated at date
-    let generatedAtDateString = DateHelper.formatDateToTimeZoneReadable(
-      new Date(),
-      DateHelperTimezone.GERMANY
-    );
+    let generatedAtDateString = DateHelper.formatDateToTimeZoneReadable(new Date(), DateHelperTimezone.GERMANY);
     markdownContent += `Generiert am ${generatedAtDateString}`;
     markdownContent += markdownNewLine;
 
-    let hashValue = HashHelper.getHashFromObject(
-      formExtractRelevantInformation
-    );
+    let hashValue = HashHelper.getHashFromObject(formExtractRelevantInformation);
     markdownContent += `Hash: ${hashValue}`;
     markdownContent += markdownNewLine;
 
     return markdownContent;
   }
 
-  public static async generatePdfFromHtml(
-    html: string,
-    myDatabaseHelperInterface: MyDatabaseTestableHelperInterface,
-    requestOptions?: RequestOptions
-  ): Promise<Buffer> {
+  public static async generatePdfFromHtml(html: string, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface, requestOptions?: RequestOptions): Promise<Buffer> {
     if (!requestOptions) {
       requestOptions = {};
     }
-    let adminBearerToken =
-      await myDatabaseHelperInterface.getAdminBearerToken();
+    let adminBearerToken = await myDatabaseHelperInterface.getAdminBearerToken();
     if (adminBearerToken) {
       requestOptions.bearerToken = adminBearerToken;
     }
@@ -415,47 +268,21 @@ export class FormHelper {
     //console.log("Generating PDF from HTML with length:", html.length);
     //console.log("Using request options:", requestOptions);
 
-    let pdfBuffer = await PdfGeneratorHelper.generatePdfFromHtml(
-      html,
-      requestOptions
-    );
+    let pdfBuffer = await PdfGeneratorHelper.generatePdfFromHtml(html, requestOptions);
     return pdfBuffer;
   }
 
-  public static async generateHtmlFromForm(
-    formExtractRelevantInformation: FormExtractRelevantInformation,
-    myDatabaseHelperInterface: MyDatabaseTestableHelperInterface
-  ): Promise<string> {
-    let markdownContent = await this.generateMarkdownContentFromForm(
-      formExtractRelevantInformation,
-      myDatabaseHelperInterface
-    );
+  public static async generateHtmlFromForm(formExtractRelevantInformation: FormExtractRelevantInformation, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface): Promise<string> {
+    let markdownContent = await this.generateMarkdownContentFromForm(formExtractRelevantInformation, myDatabaseHelperInterface);
     let template = DEFAULT_HTML_TEMPLATE;
-    let html = await HtmlGenerator.generateHtml(
-      BaseGermanMarkdownTemplateHelper.getTemplateDataForMarkdownContent(
-        markdownContent
-      ),
-      myDatabaseHelperInterface,
-      template
-    );
+    let html = await HtmlGenerator.generateHtml(BaseGermanMarkdownTemplateHelper.getTemplateDataForMarkdownContent(markdownContent), myDatabaseHelperInterface, template);
 
     return html;
   }
 
-  public static async generatePdfFromForm(
-    formExtractRelevantInformation: FormExtractRelevantInformation,
-    myDatabaseHelperInterface: MyDatabaseTestableHelperInterface,
-    requestOptions?: RequestOptions
-  ): Promise<Buffer> {
-    let html = await this.generateHtmlFromForm(
-      formExtractRelevantInformation,
-      myDatabaseHelperInterface
-    );
-    let pdfBuffer = await this.generatePdfFromHtml(
-      html,
-      myDatabaseHelperInterface,
-      requestOptions
-    );
+  public static async generatePdfFromForm(formExtractRelevantInformation: FormExtractRelevantInformation, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface, requestOptions?: RequestOptions): Promise<Buffer> {
+    let html = await this.generateHtmlFromForm(formExtractRelevantInformation, myDatabaseHelperInterface);
+    let pdfBuffer = await this.generatePdfFromHtml(html, myDatabaseHelperInterface, requestOptions);
     return pdfBuffer;
   }
 }

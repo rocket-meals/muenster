@@ -42,11 +42,7 @@ const CustomMenuHeader: React.FC<CustomMenuHeaderProps> = ({ label }) => {
 					<Tooltip
 						placement="top"
 						trigger={triggerProps => (
-							<TouchableOpacity
-								{...triggerProps}
-								onPress={() => navigation.toggleDrawer()}
-								style={{ padding: 10 }}
-							>
+							<TouchableOpacity {...triggerProps} onPress={() => navigation.toggleDrawer()} style={{ padding: 10 }}>
 								<Ionicons name="menu" size={24} color={theme.header.text} />
 							</TouchableOpacity>
 						)}
@@ -58,9 +54,7 @@ const CustomMenuHeader: React.FC<CustomMenuHeaderProps> = ({ label }) => {
 						</TooltipContent>
 					</Tooltip>
 
-					<Text style={{ ...styles.heading, color: theme.header.text }}>
-						{label}
-					</Text>
+					<Text style={{ ...styles.heading, color: theme.header.text }}>{label}</Text>
 				</View>
 			</View>
 		</View>

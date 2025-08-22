@@ -63,8 +63,7 @@ export class MyDatabaseHelper implements MyDatabaseHelperInterface {
     }
 
     const refreshToken = await NanoidHelper.getNanoid(64);
-    const msRefreshTokenTTL: number =
-      ms(String(EnvVariableHelper.getRefreshTTL())) || 0;
+    const msRefreshTokenTTL: number = ms(String(EnvVariableHelper.getRefreshTTL())) || 0;
     const refreshTokenExpiration = new Date(Date.now() + msRefreshTokenTTL);
 
     let knex = this.apiContext.database;
@@ -134,10 +133,7 @@ export class MyDatabaseHelper implements MyDatabaseHelperInterface {
   }
 
   getAppFeedbacksHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.AppFeedbacks>(
-      this,
-      CollectionNames.APP_FEEDBACKS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.AppFeedbacks>(this, CollectionNames.APP_FEEDBACKS);
   }
 
   getCashregisterHelper() {
@@ -145,192 +141,111 @@ export class MyDatabaseHelper implements MyDatabaseHelperInterface {
   }
 
   getCollectionDatesLastUpdateHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.CollectionsDatesLastUpdate>(
-      this,
-      CollectionNames.COLLECTIONS_DATES_LAST_UPDATE
-    );
+    return new ItemsServiceHelper<DatabaseTypes.CollectionsDatesLastUpdate>(this, CollectionNames.COLLECTIONS_DATES_LAST_UPDATE);
   }
 
   getFoodFeedbacksHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FoodsFeedbacks>(
-      this,
-      CollectionNames.FOODS_FEEDBACKS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FoodsFeedbacks>(this, CollectionNames.FOODS_FEEDBACKS);
   }
 
   getFoodsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Foods>(
-      this,
-      CollectionNames.FOODS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Foods>(this, CollectionNames.FOODS);
   }
 
   getFoodFeedbackLabelsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FoodsFeedbacksLabels>(
-      this,
-      CollectionNames.FOODS_FEEDBACK_LABELS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FoodsFeedbacksLabels>(this, CollectionNames.FOODS_FEEDBACK_LABELS);
   }
 
   getFoodsCategoriesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FoodsCategories>(
-      this,
-      CollectionNames.FOODS_CATEGORIES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FoodsCategories>(this, CollectionNames.FOODS_CATEGORIES);
   }
 
   getFoodsAttributesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FoodsAttributes>(
-      this,
-      CollectionNames.FOODS_ATTRIBUTES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FoodsAttributes>(this, CollectionNames.FOODS_ATTRIBUTES);
   }
 
   getFoodFeedbackLabelEntriesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FoodsFeedbacksLabelsEntries>(
-      this,
-      CollectionNames.FOODS_FEEDBACKS_LABELS_ENTRIES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FoodsFeedbacksLabelsEntries>(this, CollectionNames.FOODS_FEEDBACKS_LABELS_ENTRIES);
   }
 
   getCanteenFeedbackLabelsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.CanteensFeedbacksLabels>(
-      this,
-      CollectionNames.CANTEENS_FEEDBACK_LABELS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.CanteensFeedbacksLabels>(this, CollectionNames.CANTEENS_FEEDBACK_LABELS);
   }
 
   getCanteenFeedbackLabelsEntriesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.CanteensFeedbacksLabelsEntries>(
-      this,
-      CollectionNames.CANTEENS_FEEDBACKS_LABELS_ENTRIES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.CanteensFeedbacksLabelsEntries>(this, CollectionNames.CANTEENS_FEEDBACKS_LABELS_ENTRIES);
   }
 
   getFormsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Forms>(
-      this,
-      CollectionNames.FORMS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Forms>(this, CollectionNames.FORMS);
   }
 
   getFormExtractsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FormExtracts>(
-      this,
-      CollectionNames.FORM_EXTRACTS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FormExtracts>(this, CollectionNames.FORM_EXTRACTS);
   }
 
   getFormExtractFormFieldsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FormExtractsFormFields>(
-      this,
-      CollectionNames.FORM_EXTRACTS_FORM_FIELDS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FormExtractsFormFields>(this, CollectionNames.FORM_EXTRACTS_FORM_FIELDS);
   }
 
   getFormsFieldsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FormFields>(
-      this,
-      CollectionNames.FORM_FIELDS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FormFields>(this, CollectionNames.FORM_FIELDS);
   }
 
   getFormsSubmissionsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FormSubmissions>(
-      this,
-      CollectionNames.FORM_SUBMISSIONS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FormSubmissions>(this, CollectionNames.FORM_SUBMISSIONS);
   }
 
   getFormsAnswersHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FormAnswers>(
-      this,
-      CollectionNames.FORM_ANSWERS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FormAnswers>(this, CollectionNames.FORM_ANSWERS);
   }
 
   getFoodoffersHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Foodoffers>(
-      this,
-      CollectionNames.FOODOFFERS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Foodoffers>(this, CollectionNames.FOODOFFERS);
   }
 
   getFoodofferCategoriesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.FoodoffersCategories>(
-      this,
-      CollectionNames.FOODOFFER_CATEGORIES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.FoodoffersCategories>(this, CollectionNames.FOODOFFER_CATEGORIES);
   }
 
   getDevicesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Devices>(
-      this,
-      CollectionNames.DEVICES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Devices>(this, CollectionNames.DEVICES);
   }
 
   getPushNotificationsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.PushNotifications>(
-      this,
-      CollectionNames.PUSH_NOTIFICATIONS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.PushNotifications>(this, CollectionNames.PUSH_NOTIFICATIONS);
   }
 
   getProfilesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Profiles>(
-      this,
-      CollectionNames.PROFILES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Profiles>(this, CollectionNames.PROFILES);
   }
 
   getMarkingsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Markings>(
-      this,
-      CollectionNames.MARKINGS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Markings>(this, CollectionNames.MARKINGS);
   }
 
   getMarkingsExclusionsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.MarkingsExclusions>(
-      this,
-      CollectionNames.MARKINGS_EXCLUSIONS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.MarkingsExclusions>(this, CollectionNames.MARKINGS_EXCLUSIONS);
   }
 
   getCanteensHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Canteens>(
-      this,
-      CollectionNames.CANTEENS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Canteens>(this, CollectionNames.CANTEENS);
   }
 
   getApartmentsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Apartments>(
-      this,
-      CollectionNames.APARTMENTS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Apartments>(this, CollectionNames.APARTMENTS);
   }
 
   getBuildingsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Buildings>(
-      this,
-      CollectionNames.BUILDINGS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Buildings>(this, CollectionNames.BUILDINGS);
   }
 
   getNewsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.News>(
-      this,
-      CollectionNames.NEWS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.News>(this, CollectionNames.NEWS);
   }
 
   getUsersHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.DirectusUsers>(
-      this,
-      CollectionNames.USERS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.DirectusUsers>(this, CollectionNames.USERS);
   }
 
   getShareServiceHelper() {
@@ -338,38 +253,23 @@ export class MyDatabaseHelper implements MyDatabaseHelperInterface {
   }
 
   getUtilizationEntriesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.UtilizationsEntries>(
-      this,
-      CollectionNames.UTILIZATION_ENTRIES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.UtilizationsEntries>(this, CollectionNames.UTILIZATION_ENTRIES);
   }
 
   getUtilizationGroupsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.UtilizationsGroups>(
-      this,
-      CollectionNames.UTILIZATION_GROUPS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.UtilizationsGroups>(this, CollectionNames.UTILIZATION_GROUPS);
   }
 
   getWashingmachinesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Washingmachines>(
-      this,
-      CollectionNames.WASHINGMACHINES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Washingmachines>(this, CollectionNames.WASHINGMACHINES);
   }
 
   getWashingmachinesJobsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.WashingmachinesJobs>(
-      this,
-      CollectionNames.WASHINGMACHINES_JOBS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.WashingmachinesJobs>(this, CollectionNames.WASHINGMACHINES_JOBS);
   }
 
   getWorkflowsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Workflows>(
-      this,
-      CollectionNames.WORKFLOWS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Workflows>(this, CollectionNames.WORKFLOWS);
   }
 
   getWorkflowsRunsHelper() {
@@ -386,17 +286,11 @@ export class MyDatabaseHelper implements MyDatabaseHelperInterface {
   }
 
   getMailsHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Mails>(
-      this,
-      CollectionNames.MAILS
-    );
+    return new ItemsServiceHelper<DatabaseTypes.Mails>(this, CollectionNames.MAILS);
   }
 
   getMailsFilesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.MailsFiles>(
-      this,
-      CollectionNames.MAILS_FILES
-    );
+    return new ItemsServiceHelper<DatabaseTypes.MailsFiles>(this, CollectionNames.MAILS_FILES);
   }
 
   getFilesHelper() {

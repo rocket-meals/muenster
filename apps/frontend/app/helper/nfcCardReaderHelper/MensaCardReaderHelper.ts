@@ -6,16 +6,10 @@ import CardResponse from './CardResponse';
  * MensaCardReaderHelper for easy reading of the mensacard
  */
 export default class MensaCardReaderHelper {
-	static async readMensaCardInformations(
-		cardReader: CardReader,
-		message: string
-	) {
+	static async readMensaCardInformations(cardReader: CardReader, message: string) {
 		let answer;
 		try {
-			answer = await MensaCardReaderHelper.private_getMensaCardInformations(
-				cardReader,
-				message
-			);
+			answer = await MensaCardReaderHelper.private_getMensaCardInformations(cardReader, message);
 		} catch (err) {
 			console.warn(err);
 		}
@@ -26,16 +20,10 @@ export default class MensaCardReaderHelper {
 	/**
 	 * read the balance and the last Transaction from the Mensacard
 	 */
-	private static async private_getMensaCardInformations(
-		cardReader: CardReader,
-		message: string
-	): Promise<CardResponse | undefined> {
+	private static async private_getMensaCardInformations(cardReader: CardReader, message: string): Promise<CardResponse | undefined> {
 		//request Mifare Technology
 		console.log('MiFare Technology: ');
-		const respTech = await MensaCardReaderHelper.private_requestTechnology(
-			cardReader,
-			message
-		);
+		const respTech = await MensaCardReaderHelper.private_requestTechnology(cardReader, message);
 		console.log(JSON.stringify(respTech, null, 2));
 		if (!respTech) {
 			return undefined;
@@ -48,18 +36,13 @@ export default class MensaCardReaderHelper {
 
 		//sending APDU Command ChooseApplication for reading File containing the balance and last transaction
 		console.log('Choose Application: ');
-		const chooseAppResponse =
-			await MensaCardReaderHelper.private_sendCommandToMensaCard(
-				cardReader,
-				APDUCommands.chooseApplication
-			);
+		const chooseAppResponse = await MensaCardReaderHelper.private_sendCommandToMensaCard(cardReader, APDUCommands.chooseApplication);
 		console.log(JSON.stringify(chooseAppResponse, null, 2));
 
 		//if the response is Valid the current Balance APDU Command will be send
 		if (MensaCardReaderHelper.private_isValidResponse(chooseAppResponse)) {
 			console.log('Read Current Balance: ');
-			const currentBalanceObj =
-				await MensaCardReaderHelper.getCurrentBalance(cardReader);
+			const currentBalanceObj = await MensaCardReaderHelper.getCurrentBalance(cardReader);
 			//if the response is Valid the lastTransaction APDU command is send
 			if (currentBalanceObj) {
 				const answer: CardResponse = {
@@ -72,8 +55,7 @@ export default class MensaCardReaderHelper {
 					readTime: new Date(),
 				};
 				console.log('Read Last Transaction: ');
-				const lastTransactionObj =
-					await MensaCardReaderHelper.getLastTransaction(cardReader);
+				const lastTransactionObj = await MensaCardReaderHelper.getLastTransaction(cardReader);
 				//if the response is Valid the cardinformation is stored in a JSON Object and returned
 				if (lastTransactionObj) {
 					answer.lastTransaction = lastTransactionObj.lastTransaction;
@@ -90,18 +72,12 @@ export default class MensaCardReaderHelper {
 	}
 
 	private static async getCurrentBalance(cardReader: CardReader) {
-		const currentBalanceResponse =
-			await MensaCardReaderHelper.private_sendCommandToMensaCard(
-				cardReader,
-				APDUCommands.readCurrentBalance
-			);
+		const currentBalanceResponse = await MensaCardReaderHelper.private_sendCommandToMensaCard(cardReader, APDUCommands.readCurrentBalance);
 		console.log(JSON.stringify(currentBalanceResponse, null, 2));
 
 		//if the response is Valid the lastTransaction APDU command is send
 		if (MensaCardReaderHelper.private_isValidResponse(currentBalanceResponse)) {
-			const currentBalance = MensaCardReaderHelper.getValueFromBytes(
-				currentBalanceResponse.slice(0, 4).reverse()
-			).toString();
+			const currentBalance = MensaCardReaderHelper.getValueFromBytes(currentBalanceResponse.slice(0, 4).reverse()).toString();
 			return {
 				currentBalance: currentBalance,
 				currentBalanceRaw: currentBalanceResponse,
@@ -112,19 +88,13 @@ export default class MensaCardReaderHelper {
 	}
 
 	private static async getLastTransaction(cardReader: CardReader) {
-		const lastTransactionResponse =
-			await MensaCardReaderHelper.private_sendCommandToMensaCard(
-				cardReader,
-				APDUCommands.readLastTransaction
-			);
+		const lastTransactionResponse = await MensaCardReaderHelper.private_sendCommandToMensaCard(cardReader, APDUCommands.readLastTransaction);
 		console.log(JSON.stringify(lastTransactionResponse, null, 2));
 
 		//if the response is Valid the cardinformation is stored in a JSON Object and returned
 		if (MensaCardReaderHelper.private_isValidResponse(lastTransactionResponse)) {
 			console.log('Get Value from Bytes: ');
-			const lastTransaction = MensaCardReaderHelper.getValueFromBytes(
-				lastTransactionResponse.slice(12, 14).reverse()
-			).toString();
+			const lastTransaction = MensaCardReaderHelper.getValueFromBytes(lastTransactionResponse.slice(12, 14).reverse()).toString();
 			return {
 				lastTransaction: lastTransaction,
 				lastTransactionRaw: lastTransactionResponse,
@@ -139,26 +109,18 @@ export default class MensaCardReaderHelper {
 	 * @returns {string}
 	 */
 	static private_getTechnology(cardReader: CardReader) {
-		return cardReader.Platform.OS === 'ios'
-			? cardReader.NfcTech.MifareIOS
-			: cardReader.NfcTech.IsoDep;
+		return cardReader.Platform.OS === 'ios' ? cardReader.NfcTech.MifareIOS : cardReader.NfcTech.IsoDep;
 	}
 
 	/**
 	 * function for Requesting the Permission to use the Technology
 	 * @returns {Promise<NfcTech|*|undefined>}
 	 */
-	private static async private_requestTechnology(
-		cardReader: CardReader,
-		message: string
-	) {
+	private static async private_requestTechnology(cardReader: CardReader, message: string) {
 		try {
-			const resp = await cardReader.NfcManager.requestTechnology(
-				MensaCardReaderHelper.private_getTechnology(cardReader),
-				{
-					alertMessage: message,
-				}
-			);
+			const resp = await cardReader.NfcManager.requestTechnology(MensaCardReaderHelper.private_getTechnology(cardReader), {
+				alertMessage: message,
+			});
 			return resp;
 		} catch (err) {
 			console.warn('request NFC Technology failed');
@@ -172,10 +134,7 @@ export default class MensaCardReaderHelper {
 	 * @param command the APDU Command
 	 * @returns {Promise<number[]|undefined>}
 	 */
-	static async private_sendCommandToMensaCard(
-		cardReader: CardReader,
-		command: any
-	) {
+	static async private_sendCommandToMensaCard(cardReader: CardReader, command: any) {
 		try {
 			if (cardReader.Platform.OS === 'ios') {
 				return await cardReader.NfcManager.sendMifareCommandIOS(command);

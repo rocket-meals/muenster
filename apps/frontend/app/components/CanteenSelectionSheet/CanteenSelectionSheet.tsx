@@ -6,11 +6,7 @@ import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { CanteenSelectionSheetProps } from './types';
 import { isWeb } from '@/constants/Constants';
-import {
-	SET_BUILDINGS,
-	SET_CANTEENS,
-	SET_SELECTED_CANTEEN,
-} from '@/redux/Types/types';
+import { SET_BUILDINGS, SET_CANTEENS, SET_SELECTED_CANTEEN } from '@/redux/Types/types';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import { useLanguage } from '@/hooks/useLanguage';
 import { DatabaseTypes } from 'repo-depkit-common';
@@ -20,23 +16,17 @@ import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 import CanteenSelection from '../CanteenSelection/CanteenSelection';
 
-const CanteenSelectionSheet: React.FC<CanteenSelectionSheetProps> = ({
-	closeSheet,
-}) => {
+const CanteenSelectionSheet: React.FC<CanteenSelectionSheetProps> = ({ closeSheet }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
 	const canteenHelper = new CanteenHelper();
 	const buildingsHelper = new BuildingsHelper();
-	const { serverInfo, appSettings, primaryColor } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { serverInfo, appSettings, primaryColor } = useSelector((state: RootState) => state.settings);
 	const { isManagement } = useSelector((state: RootState) => state.authReducer);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const defaultImage = getImageUrl(serverInfo?.info?.project?.project_logo);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
 
 	const handleSelectCanteen = (canteen: DatabaseTypes.Canteens) => {
 		dispatch({ type: SET_SELECTED_CANTEEN, payload: canteen });
@@ -45,24 +35,17 @@ const CanteenSelectionSheet: React.FC<CanteenSelectionSheetProps> = ({
 
 	const getCanteensWithBuildings = async () => {
 		try {
-			const buildingsData = (await buildingsHelper.fetchBuildings(
-				{}
-			)) as DatabaseTypes.Buildings[];
+			const buildingsData = (await buildingsHelper.fetchBuildings({})) as DatabaseTypes.Buildings[];
 			const buildings = buildingsData || [];
 
-			const buildingsDict = buildings.reduce(
-				(acc: Record<string, any>, building: any) => {
-					acc[building.id] = building;
-					return acc;
-				},
-				{}
-			);
+			const buildingsDict = buildings.reduce((acc: Record<string, any>, building: any) => {
+				acc[building.id] = building;
+				return acc;
+			}, {});
 
 			dispatch({ type: SET_BUILDINGS, payload: buildings });
 
-			const canteensData = (await canteenHelper.fetchCanteens(
-				{}
-			)) as DatabaseTypes.Canteens[];
+			const canteensData = (await canteenHelper.fetchCanteens({})) as DatabaseTypes.Canteens[];
 
 			const filteredCanteens = canteensData.filter(canteen => {
 				const status = canteen.status || '';

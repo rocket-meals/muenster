@@ -17,15 +17,13 @@ export class IconNames {
 	static monitorDayPlan_icon = 'view-list';
 	static foodweekplan_icon = 'calendar';
 	static map_icon = 'map';
-	static campus_icon =
-		IconFamily.FontAwesome5 + IconParseDelimeter + 'university';
+	static campus_icon = IconFamily.FontAwesome5 + IconParseDelimeter + 'university';
 	static apartments_icon = 'home-account';
 	static news_icon = 'newspaper';
 	static course_timetable_icon = 'calendar-clock';
 	static eating_habit_icon = 'medical-bag';
 	static settings_icon = 'cog';
-	static amount_columns_icon =
-		IconFamily.FontAwesome5 + IconParseDelimeter + 'columns';
+	static amount_columns_icon = IconFamily.FontAwesome5 + IconParseDelimeter + 'columns';
 	static drawer_position_icon = 'menu';
 	static drawer_position_left_icon = 'format-horizontal-align-left';
 	static drawer_position_right_icon = 'format-horizontal-align-right';
@@ -55,15 +53,13 @@ export class IconNames {
 
 	static account_balance_icon = 'credit-card';
 	static account_balance_last_transaction_icon = 'transfer';
-	static account_balance_last_transaction_date_update_icon =
-		IconNames.calendar_icon;
+	static account_balance_last_transaction_date_update_icon = IconNames.calendar_icon;
 	static nfc_icon = 'credit-card-wireless';
 
 	static utilization_icon = 'human-queue';
 	static businesshours_icon = 'clock-time-eight';
 
-	static support_icon =
-		IconFamily.MaterialIcons + IconParseDelimeter + 'support-agent';
+	static support_icon = IconFamily.MaterialIcons + IconParseDelimeter + 'support-agent';
 	static license_information_icon = 'license';
 
 	static data_access_icon = 'database-eye';
@@ -105,11 +101,9 @@ export class IconNames {
 
 	static trash_icon = 'delete';
 
-	static food_data_list_icon =
-		IconFamily.MaterialCommunityIcons + IconParseDelimeter + 'nutrition';
+	static food_data_list_icon = IconFamily.MaterialCommunityIcons + IconParseDelimeter + 'nutrition';
 	static nutrition_calories = 'fire';
-	static nutrition_carbohydrate =
-		IconFamily.FontAwesome6 + IconParseDelimeter + 'wheat-awn';
+	static nutrition_carbohydrate = IconFamily.FontAwesome6 + IconParseDelimeter + 'wheat-awn';
 	static nutrition_fat = 'water';
 	static nutrition_fiber = 'leaf';
 	static nutrition_protein = 'fish';
@@ -117,8 +111,7 @@ export class IconNames {
 	static nutrition_salt = 'grain';
 	static nutrition_sugar = 'cupcake';
 
-	static environmental_impact_co2_icon =
-		IconFamily.MaterialCommunityIcons + IconParseDelimeter + 'cloud';
+	static environmental_impact_co2_icon = IconFamily.MaterialCommunityIcons + IconParseDelimeter + 'cloud';
 
 	static price_group_icon = 'currency-eur';
 	static price_group_student = 'school';
@@ -170,10 +163,7 @@ export class IconNames {
 	static collapse_icon = 'chevron-up';
 
 	// Phone mock
-	static phone_mock_iphone_battery_full_icon =
-		IconFamily.FontAwesome + IconParseDelimeter + 'battery-full';
-	static phone_mock_iphone_wifi_icon =
-		IconFamily.FontAwesome + IconParseDelimeter + 'wifi';
-	static phone_mock_iphone_signal_icon =
-		IconFamily.MaterialCommunityIcons + IconParseDelimeter + 'signal';
+	static phone_mock_iphone_battery_full_icon = IconFamily.FontAwesome + IconParseDelimeter + 'battery-full';
+	static phone_mock_iphone_wifi_icon = IconFamily.FontAwesome + IconParseDelimeter + 'wifi';
+	static phone_mock_iphone_signal_icon = IconFamily.MaterialCommunityIcons + IconParseDelimeter + 'signal';
 }

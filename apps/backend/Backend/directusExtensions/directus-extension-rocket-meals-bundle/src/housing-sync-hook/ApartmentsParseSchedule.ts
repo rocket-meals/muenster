@@ -1,7 +1,4 @@
-import {
-  ApartmentParserInterface,
-  ApartmentsForParser,
-} from './ApartmentParserInterface';
+import { ApartmentParserInterface, ApartmentsForParser } from './ApartmentParserInterface';
 import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
@@ -13,12 +10,7 @@ export class ApartmentsParseSchedule {
   private workflowRun: DatabaseTypes.WorkflowsRuns;
   private logger: WorkflowRunLogger;
 
-  constructor(
-    workflowRun: DatabaseTypes.WorkflowsRuns,
-    myDatabaseHelper: MyDatabaseHelper,
-    logger: WorkflowRunLogger,
-    parser: ApartmentParserInterface
-  ) {
+  constructor(workflowRun: DatabaseTypes.WorkflowsRuns, myDatabaseHelper: MyDatabaseHelper, logger: WorkflowRunLogger, parser: ApartmentParserInterface) {
     this.parser = parser;
     this.myDatabaseHelper = myDatabaseHelper;
     this.workflowRun = workflowRun;
@@ -48,8 +40,7 @@ export class ApartmentsParseSchedule {
 
   async findOrCreateApartment(apartmentForParser: ApartmentsForParser) {
     const itemService = this.myDatabaseHelper.getApartmentsHelper();
-    const external_idenfifier =
-      apartmentForParser.basicData.external_identifier;
+    const external_idenfifier = apartmentForParser.basicData.external_identifier;
 
     const searchObject = {
       external_identifier: external_idenfifier,
@@ -67,10 +58,7 @@ export class ApartmentsParseSchedule {
     }
   }
 
-  async updateApartment(
-    apartmentId: string,
-    apartmentForParser: ApartmentsForParser
-  ) {
+  async updateApartment(apartmentId: string, apartmentForParser: ApartmentsForParser) {
     const itemService = this.myDatabaseHelper.getApartmentsHelper();
     await itemService.updateOne(apartmentId, apartmentForParser.basicData);
 
@@ -80,10 +68,7 @@ export class ApartmentsParseSchedule {
       external_identifier: buildingExternalIdentifier,
     };
     const buildingService = this.myDatabaseHelper.getBuildingsHelper();
-    const building = await buildingService.findOrCreateItem(
-      searchObject,
-      building_data
-    );
+    const building = await buildingService.findOrCreateItem(searchObject, building_data);
     if (building) {
       const building_id = building.id;
       if (building_id) {

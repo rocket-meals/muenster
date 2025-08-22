@@ -1,10 +1,4 @@
-import {
-	SafeAreaView,
-	ScrollView,
-	View,
-	RefreshControl,
-	ActivityIndicator,
-} from 'react-native';
+import { SafeAreaView, ScrollView, View, RefreshControl, ActivityIndicator } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTheme } from '@/hooks/useTheme';
 import styles from './styles';
@@ -76,9 +70,7 @@ const index = () => {
 					...styles.newsContentContainer,
 					paddingHorizontal: isWeb ? 30 : 5,
 				}}
-				refreshControl={
-					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-				}
+				refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
 			>
 				<View style={styles.newsListContainer}>
 					{loading ? (

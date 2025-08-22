@@ -17,30 +17,13 @@ import { RootState } from '@/redux/reducer';
 import CardWithText from '../CardWithText/CardWithText';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 
-const BuildingItem: React.FC<BuildingItemProps> = ({
-	campus,
-	openImageManagementSheet,
-	setSelectedApartementId,
-	openDistanceSheet,
-}) => {
+const BuildingItem: React.FC<BuildingItemProps> = ({ campus, openImageManagementSheet, setSelectedApartementId, openDistanceSheet }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
-	const {
-		amountColumnsForcard,
-		primaryColor,
-		serverInfo,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { amountColumnsForcard, primaryColor, serverInfo, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const defaultImage = getImageUrl(serverInfo?.info?.project?.project_logo);
-	const campus_area_color = appSettings?.campus_area_color
-		? appSettings?.campus_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		campus_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const campus_area_color = appSettings?.campus_area_color ? appSettings?.campus_area_color : primaryColor;
+	const contrastColor = myContrastColor(campus_area_color, theme, mode === 'dark');
 	const { isManagement } = useSelector((state: RootState) => state.authReducer);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
@@ -61,17 +44,12 @@ const BuildingItem: React.FC<BuildingItemProps> = ({
 		return () => subscription?.remove();
 	}, []);
 
-	const getCardDimension = () =>
-		CardDimensionHelper.getCardDimension(screenWidth);
+	const getCardDimension = () => CardDimensionHelper.getCardDimension(screenWidth);
 
-	const getCardWidth = () =>
-		CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
+	const getCardWidth = () => CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
 
 	useEffect(() => {
-		const cardWidth = CardDimensionHelper.getCardWidth(
-			screenWidth,
-			amountColumnsForcard
-		);
+		const cardWidth = CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
 		console.log(cardWidth, 'cardWidth');
 	}, [amountColumnsForcard, screenWidth]);
 
@@ -90,17 +68,11 @@ const BuildingItem: React.FC<BuildingItemProps> = ({
 							: { uri: defaultImage }
 					}
 					containerStyle={{
-						width:
-							amountColumnsForcard === 0
-								? CardDimensionHelper.getCardDimension(screenWidth)
-								: CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard),
+						width: amountColumnsForcard === 0 ? CardDimensionHelper.getCardDimension(screenWidth) : CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard),
 						backgroundColor: theme.card.background,
 					}}
 					imageContainerStyle={{
-						height:
-							amountColumnsForcard === 0
-								? CardDimensionHelper.getCardDimension(screenWidth)
-								: CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard),
+						height: amountColumnsForcard === 0 ? CardDimensionHelper.getCardDimension(screenWidth) : CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard),
 					}}
 					contentStyle={{
 						paddingHorizontal: 5,
@@ -120,19 +92,13 @@ const BuildingItem: React.FC<BuildingItemProps> = ({
 												openImageManagementSheet();
 											}}
 										>
-											<MaterialCommunityIcons
-												name="image-edit"
-												size={20}
-												color={'white'}
-											/>
+											<MaterialCommunityIcons name="image-edit" size={20} color={'white'} />
 										</TouchableOpacity>
 									)}
 								>
 									<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 										<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-											{`${translate(TranslationKeys.edit)}: ${translate(
-												TranslationKeys.image
-											)}`}
+											{`${translate(TranslationKeys.edit)}: ${translate(TranslationKeys.image)}`}
 										</TooltipText>
 									</TooltipContent>
 								</Tooltip>
@@ -146,21 +112,13 @@ const BuildingItem: React.FC<BuildingItemProps> = ({
 								}}
 								onPress={openDistanceSheet}
 							>
-								<MaterialCommunityIcons
-									name="map-marker-distance"
-									size={20}
-									color={contrastColor}
-								/>
-								<Text style={{ ...styles.distance, color: contrastColor }}>
-									{getDistanceUnit(campus?.distance)}
-								</Text>
+								<MaterialCommunityIcons name="map-marker-distance" size={20} color={contrastColor} />
+								<Text style={{ ...styles.distance, color: contrastColor }}>{getDistanceUnit(campus?.distance)}</Text>
 							</TouchableOpacity>
 						</View>
 					}
 				>
-					<Text style={{ ...styles.campusName, color: theme.screen.text }}>
-						{isWeb ? excerpt(campus?.alias, 70) : excerpt(campus?.alias, 40)}
-					</Text>
+					<Text style={{ ...styles.campusName, color: theme.screen.text }}>{isWeb ? excerpt(campus?.alias, 70) : excerpt(campus?.alias, 40)}</Text>
 				</CardWithText>
 			)}
 		>

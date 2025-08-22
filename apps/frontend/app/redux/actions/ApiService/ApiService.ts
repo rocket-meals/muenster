@@ -23,12 +23,7 @@ export const fetchToken = async (codeVerifier: string, code: string) => {
 };
 
 // Authorization Request
-export const fetchAuthorizationUrl = async (payload: {
-	provider: string;
-	redirect_url: string;
-	code_challenge_method: string;
-	code_challenge: string;
-}) => {
+export const fetchAuthorizationUrl = async (payload: { provider: string; redirect_url: string; code_challenge_method: string; code_challenge: string }) => {
 	const endpoint = '/proof-key-code-exchange/authorize';
 	const { data } = await api.post(endpoint, payload);
 	return data;

@@ -10,38 +10,18 @@ import { PopupEventSheetProps } from './types';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import CustomCollapsible from '../CustomCollapsible/CustomCollapsible';
 import { myContrastColor } from '@/helper/colorHelper';
-import {
-	getTextFromTranslation,
-	getTitleFromTranslation,
-} from '@/helper/resourceHelper';
+import { getTextFromTranslation, getTitleFromTranslation } from '@/helper/resourceHelper';
 import RedirectButton from '../RedirectButton';
 import ProjectButton from '../ProjectButton';
 import { RootState } from '@/redux/reducer';
 
-const PopupEventSheet: React.FC<PopupEventSheetProps> = ({
-	closeSheet,
-	eventData,
-}) => {
+const PopupEventSheet: React.FC<PopupEventSheetProps> = ({ closeSheet, eventData }) => {
 	const { theme } = useTheme();
-	const {
-		primaryColor,
-		language,
-		appSettings,
-		serverInfo,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor, language, appSettings, serverInfo, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const defaultImage = getImageUrl(serverInfo?.info?.project?.project_logo);
-	const title = eventData?.translations
-		? getTitleFromTranslation(eventData?.translations, language)
-		: '';
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const title = eventData?.translations ? getTitleFromTranslation(eventData?.translations, language) : '';
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
 	const getContent = () => {
 		// Regex patterns for different content types
@@ -150,15 +130,7 @@ const PopupEventSheet: React.FC<PopupEventSheetProps> = ({
 			);
 
 			// Component for rendering images
-			const ImageContent = ({
-				url,
-				altText,
-				level,
-			}: {
-				url: string;
-				altText: string;
-				level: number;
-			}) => (
+			const ImageContent = ({ url, altText, level }: { url: string; altText: string; level: number }) => (
 				<View
 					style={{
 						marginLeft: level * 16,
@@ -196,66 +168,29 @@ const PopupEventSheet: React.FC<PopupEventSheetProps> = ({
 			const renderContentItem = (item: any, level: number, index: number) => {
 				switch (item.type) {
 					case 'text':
-						return (
-							<TextContent
-								key={`text-${level}-${index}`}
-								text={item.content}
-								level={level}
-							/>
-						);
+						return <TextContent key={`text-${level}-${index}`} text={item.content} level={level} />;
 
 					case 'email':
 						return (
-							<View
-								key={`email-${level}-${index}`}
-								style={{ marginLeft: level * 16, marginBottom: 10 }}
-							>
-								<RedirectButton
-									type="email"
-									label={item.displayText}
-									onClick={() => Linking.openURL(`mailto:${item.email}`)}
-									backgroundColor={foods_area_color}
-									color={contrastColor}
-								/>
+							<View key={`email-${level}-${index}`} style={{ marginLeft: level * 16, marginBottom: 10 }}>
+								<RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`mailto:${item.email}`)} backgroundColor={foods_area_color} color={contrastColor} />
 							</View>
 						);
 
 					case 'link':
 						return (
-							<View
-								key={`link-${level}-${index}`}
-								style={{ marginLeft: level * 16, marginBottom: 10 }}
-							>
-								<RedirectButton
-									type="link"
-									label={item.displayText}
-									onClick={() => Linking.openURL(item.url)}
-									backgroundColor={foods_area_color}
-									color={contrastColor}
-								/>
+							<View key={`link-${level}-${index}`} style={{ marginLeft: level * 16, marginBottom: 10 }}>
+								<RedirectButton type="link" label={item.displayText} onClick={() => Linking.openURL(item.url)} backgroundColor={foods_area_color} color={contrastColor} />
 							</View>
 						);
 
 					case 'image':
-						return (
-							<MyImageContent
-								key={`image-${level}-${index}`}
-								url={item.url}
-								altText={item.altText}
-								level={level}
-							/>
-						);
+						return <MyImageContent key={`image-${level}-${index}`} url={item.url} altText={item.altText} level={level} />;
 
 					case 'collapsible':
 						return (
-							<View
-								key={`collapsible-${level}-${index}`}
-								style={{ marginTop: level > 0 ? 5 : 10 }}
-							>
-								<CustomCollapsible
-									headerText={item.header}
-									customColor={foods_area_color}
-								>
+							<View key={`collapsible-${level}-${index}`} style={{ marginTop: level > 0 ? 5 : 10 }}>
+								<CustomCollapsible headerText={item.header} customColor={foods_area_color}>
 									{renderContent(item.items, level + 1)}
 								</CustomCollapsible>
 							</View>
@@ -272,21 +207,14 @@ const PopupEventSheet: React.FC<PopupEventSheetProps> = ({
 			};
 
 			const hierarchicalContent = processContent(lines);
-			return (
-				<View style={{ paddingBottom: 20 }}>
-					{renderContent(hierarchicalContent)}
-				</View>
-			);
+			return <View style={{ paddingBottom: 20 }}>{renderContent(hierarchicalContent)}</View>;
 		}
 
 		return null;
 	};
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeaderClose,
@@ -295,12 +223,7 @@ const PopupEventSheet: React.FC<PopupEventSheetProps> = ({
 					alignItems: 'center',
 				}}
 			>
-				{closeSheet && (
-					<ProjectButton
-						text="Schließen und nicht erneut anzeigen"
-						onPress={closeSheet}
-					/>
-				)}
+				{closeSheet && <ProjectButton text="Schließen und nicht erneut anzeigen" onPress={closeSheet} />}
 			</View>
 			<View
 				style={{
@@ -324,8 +247,7 @@ const PopupEventSheet: React.FC<PopupEventSheetProps> = ({
 						<MyImage
 							style={styles.image}
 							source={{
-								uri:
-									eventData?.image_remote_url || getImageUrl(String(eventData?.image)),
+								uri: eventData?.image_remote_url || getImageUrl(String(eventData?.image)),
 							}}
 						/>
 					</View>

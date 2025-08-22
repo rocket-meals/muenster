@@ -4,9 +4,7 @@ import { lightTheme, darkTheme } from '@/styles/themes';
 import { configureStore } from '@/redux/store';
 
 export const useTheme = () => {
-	const [theme, setTheme] = useState(
-		configureStore.getState().settings.selectedTheme
-	);
+	const [theme, setTheme] = useState(configureStore.getState().settings.selectedTheme);
 
 	const changeTheme = (mode: 'light' | 'dark' | 'systematic') => ({
 		type: 'CHANGE_THEME',

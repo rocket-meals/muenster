@@ -1,11 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from '@jest/globals';
-import {
-  authentication,
-  createDirectus,
-  readMe,
-  readUsers,
-  rest,
-} from '@directus/sdk';
+import { authentication, createDirectus, readMe, readUsers, rest } from '@directus/sdk';
 import { exec, spawn } from 'child_process';
 import { FetchHelper } from '../helpers/FetchHelper';
 import * as os from 'node:os';
@@ -21,10 +15,7 @@ const serverStartCheckDelay = 1000; // 1 Sekunde
 const serverStartTimeout = serverStartMaxAttempts * serverStartCheckDelay;
 
 const directusUrl = 'http://0.0.0.0:8055';
-const dbFile = path.join(
-  os.tmpdir(),
-  `directus-memory-test-${process.pid}.sqlite`
-);
+const dbFile = path.join(os.tmpdir(), `directus-memory-test-${process.pid}.sqlite`);
 const DB_CLIENT = 'sqlite3';
 const DB_FILENAME = dbFile;
 const SECRET = 'Ihr-langer-zufälliger-geheimer-Schlüssel-für-Tests';
@@ -138,9 +129,7 @@ beforeAll(async () => {
   }
 
   if (!serverReady) {
-    throw new Error(
-      'Directus-Server konnte nicht rechtzeitig gestartet werden.'
-    );
+    throw new Error('Directus-Server konnte nicht rechtzeitig gestartet werden.');
   }
 
   // 5. Directus SDK-Client initialisieren, um mit dem laufenden Server zu interagieren
@@ -177,9 +166,7 @@ afterAll(async () => {
 describe('in-memory database with ItemService', () => {
   it('creates and reads a user', async () => {
     // Der Directus-Server wird jetzt im 'beforeAll'-Block gestartet.
-    let directus = createDirectus(directusUrl)
-      .with(rest())
-      .with(authentication());
+    let directus = createDirectus(directusUrl).with(rest()).with(authentication());
 
     // Login als Admin (ENV-Werte hast du ja oben definiert)
     let authResponse = await directus.login(ADMIN_EMAIL, ADMIN_PASSWORD);

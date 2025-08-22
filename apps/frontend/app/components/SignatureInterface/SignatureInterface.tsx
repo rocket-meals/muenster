@@ -1,12 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-	View,
-	TouchableOpacity,
-	Text,
-	Platform,
-	Dimensions,
-	Image,
-} from 'react-native';
+import { View, TouchableOpacity, Text, Platform, Dimensions, Image } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
@@ -19,28 +12,9 @@ import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
 // Import libraries based on platform
-const SignatureCanvas =
-	Platform.OS === 'web'
-		? require('react-signature-canvas').default
-		: require('react-native-signature-canvas').default;
+const SignatureCanvas = Platform.OS === 'web' ? require('react-signature-canvas').default : require('react-native-signature-canvas').default;
 
-const SignatureInterface = ({
-	id,
-	value,
-	onChange,
-	error,
-	isDisabled,
-	custom_type,
-	scrollViewRef,
-}: {
-	id: string;
-	value: any;
-	onChange: (id: string, value: any, custom_type: string) => void;
-	error: string;
-	isDisabled: boolean;
-	custom_type: string;
-	scrollViewRef?: any;
-}) => {
+const SignatureInterface = ({ id, value, onChange, error, isDisabled, custom_type, scrollViewRef }: { id: string; value: any; onChange: (id: string, value: any, custom_type: string) => void; error: string; isDisabled: boolean; custom_type: string; scrollViewRef?: any }) => {
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
@@ -173,15 +147,9 @@ const SignatureInterface = ({
 			)}
 
 			<View style={{ ...styles.buttonContainer }}>
-				<TouchableOpacity
-					style={{ ...styles.button, backgroundColor: primaryColor }}
-					onPress={handleClear}
-					activeOpacity={0.7}
-				>
+				<TouchableOpacity style={{ ...styles.button, backgroundColor: primaryColor }} onPress={handleClear} activeOpacity={0.7}>
 					<MaterialIcons name="clear" size={24} color={theme.screen.text} />
-					<Text style={{ ...styles.buttonText, color: theme.screen.text }}>
-						{translate(TranslationKeys.clear)}
-					</Text>
+					<Text style={{ ...styles.buttonText, color: theme.screen.text }}>{translate(TranslationKeys.clear)}</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

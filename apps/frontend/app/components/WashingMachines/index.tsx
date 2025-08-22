@@ -20,13 +20,9 @@ const WashingMachines: React.FC<any> = ({ campusDetails }) => {
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
 	const apartmentsHelper = new ApartmentsHelper();
-	const [washingMachines, setWashingMachines] = useState<
-		DatabaseTypes.Washingmachines[] | any[]
-	>();
+	const [washingMachines, setWashingMachines] = useState<DatabaseTypes.Washingmachines[] | any[]>();
 	const [loading, setLoading] = useState(false);
-	const { primaryColor, appSettings } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, appSettings } = useSelector((state: RootState) => state.settings);
 	const [autoPlay, setAutoPlay] = useState(appSettings?.animations_auto_start);
 	const animationRef = useRef<LottieView>(null);
 	const [animationJson, setAmimationJson] = useState<any>(null);
@@ -57,14 +53,10 @@ const WashingMachines: React.FC<any> = ({ campusDetails }) => {
 		}
 	}, [animationJson, autoPlay]);
 
-	const loadApartmentWithWashingMachinesFromServer = async (
-		apartmentId: string
-	) => {
+	const loadApartmentWithWashingMachinesFromServer = async (apartmentId: string) => {
 		setLoading(true);
 
-		const response = (await apartmentsHelper.fetchApartmentWithWashingMachines(
-			apartmentId
-		)) as DatabaseTypes.Apartments;
+		const response = (await apartmentsHelper.fetchApartmentWithWashingMachines(apartmentId)) as DatabaseTypes.Apartments;
 		if (response.washingmachines) {
 			setWashingMachines(response?.washingmachines);
 		}
@@ -106,10 +98,7 @@ const WashingMachines: React.FC<any> = ({ campusDetails }) => {
 					await Notifications.scheduleNotificationAsync({
 						content: {
 							title: `Washing Machine ${alias}`,
-							body: `Your washing will finish at ${format(
-								finishDate,
-								'dd.MM.yyyy HH:mm'
-							)}.`,
+							body: `Your washing will finish at ${format(finishDate, 'dd.MM.yyyy HH:mm')}.`,
 						},
 						trigger: {
 							type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
@@ -154,9 +143,7 @@ const WashingMachines: React.FC<any> = ({ campusDetails }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={{ ...styles.heading, color: theme.screen.text }}>
-				{translate(TranslationKeys.washing_machines)}
-			</Text>
+			<Text style={{ ...styles.heading, color: theme.screen.text }}>{translate(TranslationKeys.washing_machines)}</Text>
 			<View style={styles.washingMachines}>
 				{loading ? (
 					<View
@@ -174,14 +161,9 @@ const WashingMachines: React.FC<any> = ({ campusDetails }) => {
 					washingMachines?.map((item: any) => {
 						if (item?.status === 'published') {
 							const isStatusUnknown = !item?.date_finished;
-							const isWashingFinished = item?.date_finished
-								? isBefore(new Date(item.date_finished), new Date())
-								: false;
+							const isWashingFinished = item?.date_finished ? isBefore(new Date(item.date_finished), new Date()) : false;
 
-							const animationSource =
-								isStatusUnknown || isWashingFinished
-									? washingmachineEmpty
-									: washingmachine;
+							const animationSource = isStatusUnknown || isWashingFinished ? washingmachineEmpty : washingmachine;
 							return (
 								<View style={{ ...styles.card }} key={item?.id}>
 									<View
@@ -192,18 +174,10 @@ const WashingMachines: React.FC<any> = ({ campusDetails }) => {
 											alignItems: 'center',
 										}}
 									>
-										<LottieView
-											source={replaceLottieColors(animationSource, primaryColor)}
-											autoPlay={autoPlay}
-											loop={!isWashingFinished}
-											resizeMode="contain"
-											style={{ width: '100%', height: '100%' }}
-										/>
+										<LottieView source={replaceLottieColors(animationSource, primaryColor)} autoPlay={autoPlay} loop={!isWashingFinished} resizeMode="contain" style={{ width: '100%', height: '100%' }} />
 									</View>
 									<View style={styles.details}>
-										<Text style={{ ...styles.title, color: theme.screen.text }}>
-											{item?.alias}
-										</Text>
+										<Text style={{ ...styles.title, color: theme.screen.text }}>{item?.alias}</Text>
 										<Text
 											style={{
 												...styles.description,

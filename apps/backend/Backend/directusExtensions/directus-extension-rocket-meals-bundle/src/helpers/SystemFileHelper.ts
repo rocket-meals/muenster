@@ -2,10 +2,7 @@ import path from 'path';
 import fs from 'fs';
 
 export class SystemFileHelper {
-  static async readFileSync(
-    path_to_file: string,
-    encoding: BufferEncoding
-  ): Promise<string | undefined> {
+  static async readFileSync(path_to_file: string, encoding: BufferEncoding): Promise<string | undefined> {
     if (path_to_file) {
       try {
         //const absolutePath = path.resolve(path_to_file)

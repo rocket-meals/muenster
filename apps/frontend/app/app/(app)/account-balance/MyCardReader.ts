@@ -7,12 +7,7 @@ import MyUnsupportedCardReader from './MyUnsupportedCardReader';
 export interface MyCardReaderInterface {
 	isNfcSupported: () => Promise<boolean>;
 	isNfcEnabled: () => Promise<boolean>;
-	readCard: (
-		callBack: (answer: CardResponse | undefined) => Promise<void>,
-		showInstruction: () => void,
-		hideInstruction: () => void,
-		nfcInstruction: string
-	) => Promise<void>;
+	readCard: (callBack: (answer: CardResponse | undefined) => Promise<void>, showInstruction: () => void, hideInstruction: () => void, nfcInstruction: string) => Promise<void>;
 }
 
 export default function useMyCardReader(): MyCardReaderInterface {

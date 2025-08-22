@@ -17,41 +17,26 @@ export class NumberHelper {
   }
 
   // Improved version of formatNumber with clear logic and less redundancy
-  static formatNumber(
-    value: number | null | undefined,
-    unit: string | null | undefined,
-    roundUpOrDown: boolean,
-    fractionsSeparator: string = ',',
-    thousandsSeparator: string | null = null,
-    amountDecimals: number = 2
-  ): string {
+  static formatNumber(value: number | null | undefined, unit: string | null | undefined, roundUpOrDown: boolean, fractionsSeparator: string = ',', thousandsSeparator: string | null = null, amountDecimals: number = 2): string {
     // Return early if value is null or undefined
     if (value == null) {
       return `?${unit ? StringHelper.NONBREAKING_SPACE + unit : ''}`;
     }
 
     // Handle rounding based on roundUpOrDown flag
-    let formattedValue = roundUpOrDown
-      ? value.toFixed(amountDecimals)
-      : NumberHelper.toFixedNoRounding(value, amountDecimals);
+    let formattedValue = roundUpOrDown ? value.toFixed(amountDecimals) : NumberHelper.toFixedNoRounding(value, amountDecimals);
 
     // Replace dot with fractions separator
     formattedValue = formattedValue.replace('.', fractionsSeparator);
 
     // Format thousands separators if necessary
     if (thousandsSeparator) {
-      const [integerPart, fractionPart] =
-        formattedValue.split(fractionsSeparator);
+      const [integerPart, fractionPart] = formattedValue.split(fractionsSeparator);
       if (!integerPart) {
         formattedValue = `0${fractionsSeparator}${fractionPart || ''}`;
       } else {
-        const formattedInteger = integerPart.replace(
-          /\B(?=(\d{3})+(?!\d))/g,
-          thousandsSeparator
-        );
-        formattedValue = fractionPart
-          ? `${formattedInteger}${fractionsSeparator}${fractionPart}`
-          : formattedInteger;
+        const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator);
+        formattedValue = fractionPart ? `${formattedInteger}${fractionsSeparator}${fractionPart}` : formattedInteger;
       }
     }
 

@@ -11,17 +11,12 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const EatingHabitsSheet: React.FC<EatingHabitsSheetProps> = ({
-	closeSheet,
-}) => {
+const EatingHabitsSheet: React.FC<EatingHabitsSheetProps> = ({ closeSheet }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const { selectedFoodMarkings } = useSelector((state: RootState) => state.food);
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -43,10 +38,7 @@ const EatingHabitsSheet: React.FC<EatingHabitsSheetProps> = ({
 			<View style={styles.eatingHabitsList}>
 				{selectedFoodMarkings?.map((marking: any, index: number) => (
 					<View key={index}>
-						<MarkingLabels
-							key={marking?.id + index}
-							markingId={marking.markings_id}
-						/>
+						<MarkingLabels key={marking?.id + index} markingId={marking.markings_id} />
 						<View style={styles.divider} />
 					</View>
 				))}

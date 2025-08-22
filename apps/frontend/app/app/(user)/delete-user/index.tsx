@@ -1,21 +1,5 @@
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import {
-	ScrollView,
-	Dimensions,
-	View,
-	Image,
-	Platform,
-	Linking,
-	Text,
-	TouchableOpacity,
-	ActivityIndicator,
-} from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ScrollView, Dimensions, View, Image, Platform, Linking, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { router, useFocusEffect } from 'expo-router';
 import SupportFAQ from '../../../components/SupportFAQ/SupportFAQ';
@@ -42,9 +26,7 @@ const index = () => {
 	const { profile, user } = useSelector((state: RootState) => state.authReducer);
 	const [projectName, setProjectName] = useState('');
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-	const { serverInfo, appSettings, primaryColor } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { serverInfo, appSettings, primaryColor } = useSelector((state: RootState) => state.settings);
 	const [animationJson, setAmimationJson] = useState<any>(null);
 	const [autoPlay, setAutoPlay] = useState(appSettings?.animations_auto_start);
 	const animationRef = useRef<LottieView>(null);
@@ -85,16 +67,7 @@ const index = () => {
 
 	const renderLottie = useMemo(() => {
 		if (animationJson) {
-			return (
-				<LottieView
-					ref={animationRef}
-					source={animationJson}
-					resizeMode="contain"
-					style={{ width: '100%', height: '100%' }}
-					autoPlay={autoPlay}
-					loop={false}
-				/>
-			);
+			return <LottieView ref={animationRef} source={animationJson} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay={autoPlay} loop={false} />;
 		}
 	}, [autoPlay, animationJson]);
 
@@ -155,13 +128,9 @@ const index = () => {
 				<View style={{ alignItems: 'center', marginBottom: 20 }}>
 					<View style={styles.imageContainer}>{renderLottie}</View>
 					<View style={{ width: windowWidth > 600 ? '85%' : '95%' }}>
-						<Text style={{ ...styles.deleteInfo, color: theme.screen.text }}>
-							{translate(TranslationKeys.account_deletion_info)}
-						</Text>
+						<Text style={{ ...styles.deleteInfo, color: theme.screen.text }}>{translate(TranslationKeys.account_deletion_info)}</Text>
 					</View>
-					<View
-						style={[styles.section, { width: windowWidth > 600 ? '85%' : '95%' }]}
-					>
+					<View style={[styles.section, { width: windowWidth > 600 ? '85%' : '95%' }]}>
 						<View
 							style={{
 								...styles.list,
@@ -170,14 +139,8 @@ const index = () => {
 							}}
 						>
 							<View style={{ ...styles.col }}>
-								<MaterialCommunityIcons
-									name="clipboard-account"
-									size={24}
-									color={theme.screen.icon}
-								/>
-								<Text style={{ ...styles.label, color: theme.screen.text }}>
-									{translate(TranslationKeys.account)}
-								</Text>
+								<MaterialCommunityIcons name="clipboard-account" size={24} color={theme.screen.icon} />
+								<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.account)}</Text>
 							</View>
 							<View style={{ ...styles.col, maxWidth: '60%' }}>
 								<Text
@@ -193,9 +156,7 @@ const index = () => {
 							</View>
 						</View>
 					</View>
-					<View
-						style={[styles.section, { width: windowWidth > 600 ? '85%' : '95%' }]}
-					>
+					<View style={[styles.section, { width: windowWidth > 600 ? '85%' : '95%' }]}>
 						<TouchableOpacity
 							style={{
 								...styles.list,
@@ -207,16 +168,12 @@ const index = () => {
 						>
 							<View style={{ ...styles.col }}>
 								<AntDesign name="deleteuser" size={24} color={theme.screen.icon} />
-								<Text style={{ ...styles.label, color: theme.screen.text }}>
-									{translate(TranslationKeys.account_delete)}
-								</Text>
+								<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.account_delete)}</Text>
 							</View>
 						</TouchableOpacity>
 					</View>
 
-					<View
-						style={[styles.section, { width: windowWidth > 600 ? '85%' : '95%' }]}
-					>
+					<View style={[styles.section, { width: windowWidth > 600 ? '85%' : '95%' }]}>
 						<View style={{ ...styles.row, backgroundColor: theme.screen.iconBg }}>
 							<View style={styles.leftView}>
 								<Text
@@ -265,13 +222,7 @@ const index = () => {
 					</View>
 				</View>
 			</ScrollView>
-			<ModalComponent
-				isVisible={isDeleteAccount}
-				onClose={closeDeleteAccountModal}
-				title={translate(TranslationKeys.attention)}
-				onSave={() => {}}
-				showButtons={false}
-			>
+			<ModalComponent isVisible={isDeleteAccount} onClose={closeDeleteAccountModal} title={translate(TranslationKeys.attention)} onSave={() => {}} showButtons={false}>
 				{/*  delete account */}
 				<View style={styles.deleteAccountContent}>
 					<View style={styles.gifContainer}>{renderLottie}</View>
@@ -284,25 +235,11 @@ const index = () => {
 						{translate(TranslationKeys.are_you_sure_to_delete_your_account)}
 					</Text>
 					<View style={styles.attentionActions}>
-						<TouchableOpacity
-							style={[styles.confirmButton, { backgroundColor: primaryColor }]}
-							onPress={handleDeleteAccount}
-						>
-							{loading ? (
-								<ActivityIndicator size={24} color={theme.screen.text} />
-							) : (
-								<Text style={[styles.confirmLabel, { color: theme.light }]}>
-									{translate(TranslationKeys.confirm)}
-								</Text>
-							)}
+						<TouchableOpacity style={[styles.confirmButton, { backgroundColor: primaryColor }]} onPress={handleDeleteAccount}>
+							{loading ? <ActivityIndicator size={24} color={theme.screen.text} /> : <Text style={[styles.confirmLabel, { color: theme.light }]}>{translate(TranslationKeys.confirm)}</Text>}
 						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.cancleButton}
-							onPress={closeDeleteAccountModal}
-						>
-							<Text style={styles.confirmLabel}>
-								{translate(TranslationKeys.cancel)}
-							</Text>
+						<TouchableOpacity style={styles.cancleButton} onPress={closeDeleteAccountModal}>
+							<Text style={styles.confirmLabel}>{translate(TranslationKeys.cancel)}</Text>
 						</TouchableOpacity>
 					</View>
 				</View>

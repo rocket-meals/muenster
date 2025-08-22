@@ -1,25 +1,12 @@
 // small jest test
 import { describe, expect, it } from '@jest/globals';
-import {
-  hannoverHousingContractExamplePath,
-  HannoverTL1HousingTestFileReader,
-} from '../HannoverTL1HousingTestFileReader';
-import {
-  HANNOVER_TL1_EXTERNAL_HOUSING_CONTRACT_FIELDS,
-  HannoverTL1HousingFileReader,
-  ImportHousingContract,
-  ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS,
-} from '../HannoverTL1HousingFileReader';
+import { hannoverHousingContractExamplePath, HannoverTL1HousingTestFileReader } from '../HannoverTL1HousingTestFileReader';
+import { HANNOVER_TL1_EXTERNAL_HOUSING_CONTRACT_FIELDS, HannoverTL1HousingFileReader, ImportHousingContract, ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS } from '../HannoverTL1HousingFileReader';
 import { FormHousingContractsWorkflowHannover } from '../FormHousingContractsWorkflowHannover';
-import {
-  FIELD_VALUE_KEY_PREFIX,
-  KeyOfFormAnswersValueFieldsType,
-} from '../../../FormImportTypes';
+import { FIELD_VALUE_KEY_PREFIX, KeyOfFormAnswersValueFieldsType } from '../../../FormImportTypes';
 
 const testFileReader = new HannoverTL1HousingTestFileReader();
-const testWorkflow = new FormHousingContractsWorkflowHannover(
-  hannoverHousingContractExamplePath
-);
+const testWorkflow = new FormHousingContractsWorkflowHannover(hannoverHousingContractExamplePath);
 
 describe('Hannover Housing Form Test', () => {
   async function getData() {
@@ -63,16 +50,12 @@ describe('Hannover Housing Form Test', () => {
   });
 
   it('all composite keys are required', async () => {
-    let sortedKeysForHousingContractCompositeId =
-      HannoverTL1HousingFileReader.getSortedKeysForHousingContractCompositeId();
+    let sortedKeysForHousingContractCompositeId = HannoverTL1HousingFileReader.getSortedKeysForHousingContractCompositeId();
     for (let key of sortedKeysForHousingContractCompositeId) {
-      let valueShouldNotBeEmpty =
-        HannoverTL1HousingFileReader.isValueRequiredNotEmpty(key);
+      let valueShouldNotBeEmpty = HannoverTL1HousingFileReader.isValueRequiredNotEmpty(key);
       if (!valueShouldNotBeEmpty) {
         console.log('Composite key should be required: ', key);
-        console.log(
-          'Please check: HANNOVER_TL1_EXTERNAL_HOUSING_CONTRACT_FIELDS_REQUIRED'
-        );
+        console.log('Please check: HANNOVER_TL1_EXTERNAL_HOUSING_CONTRACT_FIELDS_REQUIRED');
       }
       expect(valueShouldNotBeEmpty).toBe(true);
     }
@@ -81,27 +64,18 @@ describe('Hannover Housing Form Test', () => {
   it('all entries should have a form answer with external_import_id and at least one value field', async () => {
     const housingContracts = await getData();
     for (let housingContract of housingContracts) {
-      let internalCustomId =
-        testFileReader.getHousingContractInternalCustomId(housingContract);
-      let housingContractFields = Object.values(
-        ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS
-      );
+      let internalCustomId = testFileReader.getHousingContractInternalCustomId(housingContract);
+      let housingContractFields = Object.values(ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS);
 
       for (let housingContractField of housingContractFields) {
-        let formAnswer =
-          FormHousingContractsWorkflowHannover.getFormImportSyncFormAnswer(
-            housingContract,
-            housingContractField
-          );
+        let formAnswer = FormHousingContractsWorkflowHannover.getFormImportSyncFormAnswer(housingContract, housingContractField);
         //console.log("Form answer: ");
         //console.log(JSON.stringify(formAnswer, null, 2));
         expect(formAnswer).toBeDefined();
         expect(formAnswer.external_import_id).toBeDefined();
         // and at least one value field should be set
         let keys = Object.keys(formAnswer);
-        let valueFieldsNames = keys.filter(key =>
-          key.startsWith(FIELD_VALUE_KEY_PREFIX)
-        );
+        let valueFieldsNames = keys.filter(key => key.startsWith(FIELD_VALUE_KEY_PREFIX));
         expect(valueFieldsNames.length).toBeGreaterThan(0);
         // and the value field should be set
         for (let valueFieldName of valueFieldsNames as KeyOfFormAnswersValueFieldsType[]) {
@@ -122,22 +96,15 @@ describe('Hannover Housing Form Test', () => {
     const data = await getData();
     for (let entry of data) {
       // `keys` are the logical field names used by developers, while values are the actual field keys in the data.
-      const keys = Object.values(
-        ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS
-      );
+      const keys = Object.values(ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS);
 
       for (let key of keys) {
         let hasKey = Object.keys(entry).includes(key);
         if (hasKey) {
           const entryValue = entry[key];
-          let valueShouldNotBeEmpty =
-            HannoverTL1HousingFileReader.isValueRequiredNotEmpty(key);
+          let valueShouldNotBeEmpty = HannoverTL1HousingFileReader.isValueRequiredNotEmpty(key);
           if (valueShouldNotBeEmpty) {
-            let entryValueDefined =
-              entryValue !== undefined &&
-              entryValue !== null &&
-              entryValue !== '' &&
-              entryValue.length > 0;
+            let entryValueDefined = entryValue !== undefined && entryValue !== null && entryValue !== '' && entryValue.length > 0;
             if (entryValueDefined) {
               expect(entryValue).not.toBeNull();
               expect(entryValue).not.toBeUndefined();
@@ -167,8 +134,7 @@ describe('Hannover Housing Form Test', () => {
     const data = await getData();
     const externalIds: { [key: string]: ImportHousingContract } = {};
     for (let entry of data) {
-      const externalId =
-        testFileReader.getHousingContractInternalCustomId(entry);
+      const externalId = testFileReader.getHousingContractInternalCustomId(entry);
       if (!externalId) {
         console.log('Entry does not have an external id: ');
         console.log(JSON.stringify(entry, null, 2));

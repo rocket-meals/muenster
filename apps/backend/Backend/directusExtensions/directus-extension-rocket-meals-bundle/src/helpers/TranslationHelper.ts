@@ -26,8 +26,7 @@ export class LanguageCodes {
   static readonly EN = LanguageCodes._codes.en;
 }
 
-export type LanguageCodesType =
-  (typeof LanguageCodes._codes)[keyof typeof LanguageCodes._codes];
+export type LanguageCodesType = (typeof LanguageCodes._codes)[keyof typeof LanguageCodes._codes];
 
 export type TranslationBaseFields = {
   be_source_for_translations?: boolean | null;
@@ -36,8 +35,7 @@ export type TranslationBaseFields = {
 export type TranslationDynamicFields = {
   [key: string]: string | boolean | null;
 };
-export type TranslationFields = TranslationBaseFields &
-  TranslationDynamicFields;
+export type TranslationFields = TranslationBaseFields & TranslationDynamicFields;
 
 export type TranslationsFromParsingType = {
   [key in LanguageCodesType]?: TranslationFields;
@@ -49,18 +47,11 @@ export type ItemWithExistingTranslations = {
 };
 
 export const NonRelationFieldsArrayFieldId = 'id';
-const NonRelationFieldsArray = [
-  NonRelationFieldsArrayFieldId,
-  'be_source_for_translations',
-  'let_be_translated',
-  'languages_code',
-  'translation_settings',
-] as const;
+const NonRelationFieldsArray = [NonRelationFieldsArrayFieldId, 'be_source_for_translations', 'let_be_translated', 'languages_code', 'translation_settings'] as const;
 
 type NonRelationFields = (typeof NonRelationFieldsArray)[number];
 
-export type TranslationRelationField<E> = Exclude<keyof E, NonRelationFields> &
-  string;
+export type TranslationRelationField<E> = Exclude<keyof E, NonRelationFields> & string;
 
 export class TranslationHelper {
   static LANGUAGE_CODE_DE: LanguageCodesType = LanguageCodes.DE;
@@ -69,32 +60,15 @@ export class TranslationHelper {
   static DefaultLanguage = TranslationHelper.LANGUAGE_CODE_DE;
   static FallBackLanguage = TranslationHelper.LANGUAGE_CODE_EN;
 
-  static getTranslation(
-    translationsList: ExistingTranslation[],
-    profileLanguage: string,
-    fieldName: string
-  ) {
+  static getTranslation(translationsList: ExistingTranslation[], profileLanguage: string, fieldName: string) {
     translationsList = translationsList || [];
-    let translation = translationsList.find(
-      t => t.languages_code === profileLanguage
-    );
-    let translationDefault = translationsList.find(
-      t => t.languages_code === TranslationHelper.DefaultLanguage
-    );
-    let translationFallBack = translationsList.find(
-      t => t.languages_code === TranslationHelper.FallBackLanguage
-    );
-    return (
-      translation?.[fieldName] ||
-      translationDefault?.[fieldName] ||
-      translationFallBack?.[fieldName]
-    );
+    let translation = translationsList.find(t => t.languages_code === profileLanguage);
+    let translationDefault = translationsList.find(t => t.languages_code === TranslationHelper.DefaultLanguage);
+    let translationFallBack = translationsList.find(t => t.languages_code === TranslationHelper.FallBackLanguage);
+    return translation?.[fieldName] || translationDefault?.[fieldName] || translationFallBack?.[fieldName];
   }
 
-  static hasSignificantTranslationChange<E extends Record<string, any>>(
-    existingTranslation: E,
-    translationFromParsing: Partial<E>
-  ): boolean {
+  static hasSignificantTranslationChange<E extends Record<string, any>>(existingTranslation: E, translationFromParsing: Partial<E>): boolean {
     for (const key in existingTranslation) {
       if (!existingTranslation.hasOwnProperty(key)) continue;
 
@@ -104,10 +78,7 @@ export class TranslationHelper {
       }
 
       // Check if the key is present in translationFromParsing and if the values differ
-      if (
-        key in translationFromParsing &&
-        existingTranslation[key] !== translationFromParsing[key]
-      ) {
+      if (key in translationFromParsing && existingTranslation[key] !== translationFromParsing[key]) {
         return true;
       }
     }
@@ -124,16 +95,9 @@ export class TranslationHelper {
     itemsTablename: CollectionNames, // the name of the table of our item
     myDatabaseHelper: MyDatabaseHelper
   ) {
-    const specificItemServiceReader =
-      await myDatabaseHelper.getItemsServiceHelper<T>(itemsTablename);
+    const specificItemServiceReader = await myDatabaseHelper.getItemsServiceHelper<T>(itemsTablename);
     if (!!itemWithTranslations) {
-      const { updateObject: updateObject, updateNeeded: updateNeeded } =
-        await TranslationHelper._getUpdateInformationForTranslations(
-          itemWithTranslations,
-          itemWithTranslations,
-          translationsFromParsing,
-          items_primary_field_in_translation_table
-        );
+      const { updateObject: updateObject, updateNeeded: updateNeeded } = await TranslationHelper._getUpdateInformationForTranslations(itemWithTranslations, itemWithTranslations, translationsFromParsing, items_primary_field_in_translation_table);
 
       if (updateNeeded) {
         //const createTranslations = updateObject.translations.create;
@@ -182,21 +146,11 @@ export class TranslationHelper {
     itemsTablename: CollectionNames, // the name of the table of our item
     myDatabaseHelper: MyDatabaseHelper
   ) {
-    const specificItemServiceReader =
-      await myDatabaseHelper.getItemsServiceHelper<T>(itemsTablename);
-    let itemWithTranslations = await specificItemServiceReader.readOne(
-      item?.id,
-      {
-        ...TranslationHelper.QUERY_FIELDS_FOR_ALL_FIELDS_AND_FOR_TRANSLATION_FETCHING,
-      }
-    ); // Bottleneck HERE. Takes on average 1.0s
-    return TranslationHelper.updateItemTranslationsForItemWithTranslationsFetched(
-      itemWithTranslations,
-      translationsFromParsing,
-      items_primary_field_in_translation_table,
-      itemsTablename,
-      myDatabaseHelper
-    );
+    const specificItemServiceReader = await myDatabaseHelper.getItemsServiceHelper<T>(itemsTablename);
+    let itemWithTranslations = await specificItemServiceReader.readOne(item?.id, {
+      ...TranslationHelper.QUERY_FIELDS_FOR_ALL_FIELDS_AND_FOR_TRANSLATION_FETCHING,
+    }); // Bottleneck HERE. Takes on average 1.0s
+    return TranslationHelper.updateItemTranslationsForItemWithTranslationsFetched(itemWithTranslations, translationsFromParsing, items_primary_field_in_translation_table, itemsTablename, myDatabaseHelper);
   }
 
   static async _getUpdateInformationForTranslations<
@@ -218,9 +172,7 @@ export class TranslationHelper {
          }
          }
          */
-    let remaining_translationsFromParsing = JSON.parse(
-      JSON.stringify(translationsFromParsing)
-    ); //make a work copy
+    let remaining_translationsFromParsing = JSON.parse(JSON.stringify(translationsFromParsing)); //make a work copy
     /** remaining_translationsFromParsing is an object with the following structure:
          {
          [TranslationHelper.]: {name ....},
@@ -237,50 +189,34 @@ export class TranslationHelper {
     let newTranslationsFromParsing = false;
 
     // find the existing language which is source for translations
-    let defaultLanguageCodeForSourceTranslation: LanguageCodesType =
-      TranslationHelper.LANGUAGE_CODE_DE;
-    let usedLanguageCodeForSourceTranslation: LanguageCodesType =
-      defaultLanguageCodeForSourceTranslation;
+    let defaultLanguageCodeForSourceTranslation: LanguageCodesType = TranslationHelper.LANGUAGE_CODE_DE;
+    let usedLanguageCodeForSourceTranslation: LanguageCodesType = defaultLanguageCodeForSourceTranslation;
     for (let existingTranslation of existingTranslations) {
       if (existingTranslation?.be_source_for_translations) {
-        if (
-          !existingTranslation?.languages_code ||
-          typeof existingTranslation?.languages_code !== 'string'
-        ) {
+        if (!existingTranslation?.languages_code || typeof existingTranslation?.languages_code !== 'string') {
           // if the language code is not a string, we use the default language code
         } else {
-          usedLanguageCodeForSourceTranslation =
-            existingTranslation?.languages_code as LanguageCodesType;
+          usedLanguageCodeForSourceTranslation = existingTranslation?.languages_code as LanguageCodesType;
         }
       }
     }
 
     for (let existingTranslation of existingTranslations) {
       //check all existing translations
-      let existingLanguageCode =
-        existingTranslation?.[FIELD_TRANSLATION_LANGUAGE_CODE];
+      let existingLanguageCode = existingTranslation?.[FIELD_TRANSLATION_LANGUAGE_CODE];
       if (!existingLanguageCode || typeof existingLanguageCode !== 'string') {
         continue;
       }
-      const existingLanguageCodeAsString =
-        existingLanguageCode as LanguageCodesType;
+      const existingLanguageCodeAsString = existingLanguageCode as LanguageCodesType;
 
-      const translationFromParsing =
-        translationsFromParsing[existingLanguageCodeAsString];
+      const translationFromParsing = translationsFromParsing[existingLanguageCodeAsString];
       if (!!translationFromParsing) {
         //we also got a translation from the parse
         /* Update translation */
-        const translationFromParsingCopy = JSON.parse(
-          JSON.stringify(translationFromParsing)
-        ); //make a copy
+        const translationFromParsingCopy = JSON.parse(JSON.stringify(translationFromParsing)); //make a copy
         delete remaining_translationsFromParsing[existingLanguageCode]; // dont create a new translation for this language
 
-        if (
-          TranslationHelper.hasSignificantTranslationChange(
-            existingTranslation,
-            translationFromParsingCopy
-          )
-        ) {
+        if (TranslationHelper.hasSignificantTranslationChange(existingTranslation, translationFromParsingCopy)) {
           existingTranslationsDifferentFromParsing = true;
           //console.log("existingTranslation is different from parsing")
           //console.log("existingTranslation: "+JSON.stringify(existingTranslation, null, 2))
@@ -314,12 +250,9 @@ export class TranslationHelper {
     //check remaining translationsFromParsing, then put into createTranslations
     let remaining_languageKeys = Object.keys(remaining_translationsFromParsing);
     for (let i = 0; i < remaining_languageKeys?.length; i++) {
-      let remaining_languageKey = remaining_languageKeys[i] as
-        | LanguageCodesType
-        | undefined;
+      let remaining_languageKey = remaining_languageKeys[i] as LanguageCodesType | undefined;
       if (!!remaining_languageKey) {
-        let translationFromParsing =
-          translationsFromParsing[remaining_languageKey];
+        let translationFromParsing = translationsFromParsing[remaining_languageKey];
         if (!!translationFromParsing) {
           newTranslationsFromParsing = true;
 
@@ -350,8 +283,7 @@ export class TranslationHelper {
       },
     };
 
-    let updateNeeded =
-      existingTranslationsDifferentFromParsing || newTranslationsFromParsing;
+    let updateNeeded = existingTranslationsDifferentFromParsing || newTranslationsFromParsing;
 
     return {
       updateObject: updateObject,

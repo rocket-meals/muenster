@@ -19,9 +19,7 @@ export default function FoodOfferLayout() {
 				name="index"
 				options={{
 					title: 'list-week-screen',
-					header: () => (
-						<CustomStackHeader label={translate(TranslationKeys.Food_Plan_Week)} />
-					),
+					header: () => <CustomStackHeader label={translate(TranslationKeys.Food_Plan_Week)} />,
 				}}
 			/>
 			<Stack.Screen

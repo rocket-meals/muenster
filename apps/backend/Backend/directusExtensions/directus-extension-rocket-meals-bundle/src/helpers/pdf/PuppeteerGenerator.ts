@@ -25,11 +25,7 @@ export class PuppeteerGenerator {
    * rocket-meals-directus-2         |     at async Promise.all (index 1)
    */
 
-  static async generatePdfFromHtmlPuppeteer(
-    html: string,
-    requestOptions: RequestOptions,
-    options: PdfGeneratorOptions
-  ): Promise<Buffer> {
+  static async generatePdfFromHtmlPuppeteer(html: string, requestOptions: RequestOptions, options: PdfGeneratorOptions): Promise<Buffer> {
     let browser;
     let puppeteer = PuppeteerGenerator.getPuppeteerLib();
 
@@ -94,10 +90,7 @@ export class PuppeteerGenerator {
               }
             : request.headers();
 
-          if (
-            requestOptions.mockImageResolution &&
-            request.resourceType() === 'image'
-          ) {
+          if (requestOptions.mockImageResolution && request.resourceType() === 'image') {
             console.log('Mocking image resolution for:', request.url());
 
             // Aus URL evtl. Breite/Höhe extrahieren

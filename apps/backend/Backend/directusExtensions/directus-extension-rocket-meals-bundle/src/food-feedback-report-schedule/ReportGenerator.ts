@@ -3,10 +3,7 @@ import { DatabaseTypes } from 'repo-depkit-common';
 import { DateHelper } from 'repo-depkit-common';
 import { ApiContext } from '../helpers/ApiContext';
 import { FieldFilter, Filter } from '@directus/types/dist/filter';
-import {
-  AssetHelperDirectusBackend,
-  AssetHelperTransformOptions,
-} from '../helpers/AssetHelperDirectusBackend';
+import { AssetHelperDirectusBackend, AssetHelperTransformOptions } from '../helpers/AssetHelperDirectusBackend';
 import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
 import { DictHelper } from '../helpers/DictHelper';
 import { ItemsServiceHelper } from '../helpers/ItemsServiceHelper';
@@ -14,15 +11,9 @@ import { FoodRatingCalculator } from '../food-feedback-rating-calculate-hook/Foo
 import { EmojiHelper } from '../helpers/EmojiHelper';
 
 export class ReportStatusTrafficLightValues {
-  static RED = EmojiHelper.getEmojiDivHTML(
-    EmojiHelper.EmojiFileNames.RED_CIRCLE
-  );
-  static YELLOW = EmojiHelper.getEmojiDivHTML(
-    EmojiHelper.EmojiFileNames.YELLOW_CIRCLE
-  );
-  static GREEN = EmojiHelper.getEmojiDivHTML(
-    EmojiHelper.EmojiFileNames.GREEN_CIRCLE
-  );
+  static RED = EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.RED_CIRCLE);
+  static YELLOW = EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.YELLOW_CIRCLE);
+  static GREEN = EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.GREEN_CIRCLE);
 }
 
 // NA = Not Available
@@ -104,9 +95,7 @@ export class ReportGenerator {
     this.myDatabaseHelper = new MyDatabaseHelper(apiContext);
   }
 
-  static getCanteenAliasList(
-    canteenEntries: Record<string, DatabaseTypes.Canteens>
-  ) {
+  static getCanteenAliasList(canteenEntries: Record<string, DatabaseTypes.Canteens>) {
     let canteen_alias_list = [];
     for (let canteenKey in canteenEntries) {
       let canteen = canteenEntries[canteenKey];
@@ -118,30 +107,18 @@ export class ReportGenerator {
   }
 
   async getAverageRatingForAllFoods() {
-    return await this.myDatabaseHelper
-      .getFoodsHelper()
-      .calculateAverage('rating_average');
+    return await this.myDatabaseHelper.getFoodsHelper().calculateAverage('rating_average');
   }
 
   static getFoodRatingBadAndGoodThresholds(foodAverageRating: number) {
-    if (
-      foodAverageRating == 0 ||
-      foodAverageRating == null ||
-      foodAverageRating == undefined
-    ) {
+    if (foodAverageRating == 0 || foodAverageRating == null || foodAverageRating == undefined) {
       return {
         threshold_bad: 0,
         threshold_good: 0,
       };
     }
-    let threshold_bad =
-      foodAverageRating -
-      FoodRatingCalculator.MAX_RATING_VALUE *
-        ReportGenerator.THRESHOLD_PERCENTAGE;
-    let threshold_good =
-      foodAverageRating +
-      FoodRatingCalculator.MAX_RATING_VALUE *
-        ReportGenerator.THRESHOLD_PERCENTAGE;
+    let threshold_bad = foodAverageRating - FoodRatingCalculator.MAX_RATING_VALUE * ReportGenerator.THRESHOLD_PERCENTAGE;
+    let threshold_good = foodAverageRating + FoodRatingCalculator.MAX_RATING_VALUE * ReportGenerator.THRESHOLD_PERCENTAGE;
     return {
       threshold_bad: threshold_bad,
       threshold_good: threshold_good,
@@ -156,23 +133,13 @@ export class ReportGenerator {
    * @param canteenEntries
    * @return {Promise<{report_feedback_period_days: *, foods: {}}>}
    */
-  async generateReportJSON(
-    reportSchedule: DatabaseTypes.CanteenFoodFeedbackReportSchedules,
-    startDate: Date,
-    endDate: Date,
-    canteenEntries: Record<string, DatabaseTypes.Canteens>
-  ): Promise<ReportType> {
-    let dateStartHumanReadable = DateHelper.getHumanReadableDate(
-      startDate,
-      true
-    );
+  async generateReportJSON(reportSchedule: DatabaseTypes.CanteenFoodFeedbackReportSchedules, startDate: Date, endDate: Date, canteenEntries: Record<string, DatabaseTypes.Canteens>): Promise<ReportType> {
+    let dateStartHumanReadable = DateHelper.getHumanReadableDate(startDate, true);
     let dateEndHumanReadable = DateHelper.getHumanReadableDate(endDate, true);
-    const dateHumanReadable =
-      '[' + dateStartHumanReadable + ' - ' + dateEndHumanReadable + ']';
+    const dateHumanReadable = '[' + dateStartHumanReadable + ' - ' + dateEndHumanReadable + ']';
     //console.log("Generate report for date: "+dateHumanReadable);
 
-    let canteen_alias_list =
-      ReportGenerator.getCanteenAliasList(canteenEntries);
+    let canteen_alias_list = ReportGenerator.getCanteenAliasList(canteenEntries);
     const canteen_alias = canteen_alias_list.join(', ');
 
     let show_images = reportSchedule.show_images;
@@ -180,125 +147,70 @@ export class ReportGenerator {
       show_images = true;
     }
 
-    let show_food_feedback_labels_for_all_time =
-      reportSchedule.show_food_feedback_labels_for_all_time;
-    if (
-      show_food_feedback_labels_for_all_time === null ||
-      show_food_feedback_labels_for_all_time === undefined
-    ) {
+    let show_food_feedback_labels_for_all_time = reportSchedule.show_food_feedback_labels_for_all_time;
+    if (show_food_feedback_labels_for_all_time === null || show_food_feedback_labels_for_all_time === undefined) {
       show_food_feedback_labels_for_all_time = true;
     }
-    let show_food_feedback_labels_for_selected_period =
-      reportSchedule.show_food_feedback_labels_for_selected_period;
-    if (
-      show_food_feedback_labels_for_selected_period === null ||
-      show_food_feedback_labels_for_selected_period === undefined
-    ) {
+    let show_food_feedback_labels_for_selected_period = reportSchedule.show_food_feedback_labels_for_selected_period;
+    if (show_food_feedback_labels_for_selected_period === null || show_food_feedback_labels_for_selected_period === undefined) {
       show_food_feedback_labels_for_selected_period = true;
     }
 
-    let show_food_comments_for_all_time =
-      reportSchedule.show_food_comments_for_all_time;
-    if (
-      show_food_comments_for_all_time === null ||
-      show_food_comments_for_all_time === undefined
-    ) {
+    let show_food_comments_for_all_time = reportSchedule.show_food_comments_for_all_time;
+    if (show_food_comments_for_all_time === null || show_food_comments_for_all_time === undefined) {
       show_food_comments_for_all_time = true;
     }
-    let show_food_comments_for_selected_period =
-      reportSchedule.show_food_comments_for_selected_period;
-    if (
-      show_food_comments_for_selected_period === null ||
-      show_food_comments_for_selected_period === undefined
-    ) {
+    let show_food_comments_for_selected_period = reportSchedule.show_food_comments_for_selected_period;
+    if (show_food_comments_for_selected_period === null || show_food_comments_for_selected_period === undefined) {
       show_food_comments_for_selected_period = true;
     }
 
-    let show_canteen_feedbacks_for_all_time =
-      reportSchedule.show_canteen_feedbacks_for_all_time;
-    if (
-      show_canteen_feedbacks_for_all_time === null ||
-      show_canteen_feedbacks_for_all_time === undefined
-    ) {
+    let show_canteen_feedbacks_for_all_time = reportSchedule.show_canteen_feedbacks_for_all_time;
+    if (show_canteen_feedbacks_for_all_time === null || show_canteen_feedbacks_for_all_time === undefined) {
       show_canteen_feedbacks_for_all_time = true;
     }
-    let show_canteen_feedbacks_for_selected_period =
-      reportSchedule.show_canteen_feedbacks_for_selected_period;
-    if (
-      show_canteen_feedbacks_for_selected_period === null ||
-      show_canteen_feedbacks_for_selected_period === undefined
-    ) {
+    let show_canteen_feedbacks_for_selected_period = reportSchedule.show_canteen_feedbacks_for_selected_period;
+    if (show_canteen_feedbacks_for_selected_period === null || show_canteen_feedbacks_for_selected_period === undefined) {
       show_canteen_feedbacks_for_selected_period = true;
     }
 
     const food_rating_average = (await this.getAverageRatingForAllFoods()) || 0;
-    const foodAverageRatingThresholds =
-      ReportGenerator.getFoodRatingBadAndGoodThresholds(food_rating_average);
+    const foodAverageRatingThresholds = ReportGenerator.getFoodRatingBadAndGoodThresholds(food_rating_average);
 
     let report: ReportType = {
       canteen_alias: canteen_alias,
       dateHumanReadable: dateHumanReadable,
       //status_explanation: "Der Status zeigt "+ReportStatusTrafficLightValues.GREEN+" (Positiv), "+ReportStatusTrafficLightValues.RED+" (Negativ) und "+ReportStatusTrafficLightValues.YELLOW+" (Neutral) an. Der Status ändert bei einer Abweichung von mehr als "+(ReportGenerator.THRESHOLD_PERCENTAGE*100)+"%. Bei den Rückmeldungen mit Labels zeigt der Status in Klammern die Änderung in diesem Zeitraum an. Bei den Bewertungen der Speisen werden diese Verglichen mit der Durchschnittlichen Bewertung von "+foodAverageRatingString+".",
       show_images: show_images,
-      show_food_feedback_labels_for_all_time:
-        show_food_feedback_labels_for_all_time,
-      show_food_feedback_labels_for_selected_period:
-        show_food_feedback_labels_for_selected_period,
+      show_food_feedback_labels_for_all_time: show_food_feedback_labels_for_all_time,
+      show_food_feedback_labels_for_selected_period: show_food_feedback_labels_for_selected_period,
       show_food_comments_for_all_time: show_food_comments_for_all_time,
-      show_food_comments_for_selected_period:
-        show_food_comments_for_selected_period,
+      show_food_comments_for_selected_period: show_food_comments_for_selected_period,
       show_canteen_feedbacks_for_all_time: show_canteen_feedbacks_for_all_time,
-      show_canteen_feedbacks_for_selected_period:
-        show_canteen_feedbacks_for_selected_period,
+      show_canteen_feedbacks_for_selected_period: show_canteen_feedbacks_for_selected_period,
       food_rating_average: food_rating_average,
       food_rating_threshold_bad: foodAverageRatingThresholds.threshold_bad,
       food_rating_threshold_good: foodAverageRatingThresholds.threshold_good,
       foods: [],
       canteen_feedbacks: [],
-      icon_thumbs_up: EmojiHelper.getEmojiDivHTML(
-        EmojiHelper.EmojiFileNames.THUMBS_UP,
-        EmojiHelper.DivTextSize.MEDIUM
-      ),
-      icon_thumbs_down: EmojiHelper.getEmojiDivHTML(
-        EmojiHelper.EmojiFileNames.THUMBS_DOWN,
-        EmojiHelper.DivTextSize.MEDIUM
-      ),
-      icon_comment: EmojiHelper.getEmojiDivHTML(
-        EmojiHelper.EmojiFileNames.SPEECH_BUBBLE,
-        EmojiHelper.DivTextSize.SMALL
-      ),
+      icon_thumbs_up: EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.THUMBS_UP, EmojiHelper.DivTextSize.MEDIUM),
+      icon_thumbs_down: EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.THUMBS_DOWN, EmojiHelper.DivTextSize.MEDIUM),
+      icon_comment: EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.SPEECH_BUBBLE, EmojiHelper.DivTextSize.SMALL),
       icon_traffic_light_red: ReportStatusTrafficLightValues.RED,
       icon_traffic_light_yellow: ReportStatusTrafficLightValues.YELLOW,
       icon_traffic_light_green: ReportStatusTrafficLightValues.GREEN,
-      icon_star: EmojiHelper.getEmojiDivHTML(
-        EmojiHelper.EmojiFileNames.STAR,
-        EmojiHelper.DivTextSize.SMALL
-      ),
+      icon_star: EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.STAR, EmojiHelper.DivTextSize.SMALL),
     };
 
-    report.foods = await this.getReportForFoodFeedbacks(
-      reportSchedule,
-      startDate,
-      endDate,
-      canteenEntries,
-      food_rating_average
-    );
-    report.canteen_feedbacks = await this.getReportForCanteenFeedbacks(
-      reportSchedule,
-      startDate,
-      endDate,
-      canteenEntries
-    );
+    report.foods = await this.getReportForFoodFeedbacks(reportSchedule, startDate, endDate, canteenEntries, food_rating_average);
+    report.canteen_feedbacks = await this.getReportForCanteenFeedbacks(reportSchedule, startDate, endDate, canteenEntries);
 
     return report;
   }
 
   static THRESHOLD_PERCENTAGE = 0.1;
 
-  calculateTrafficLightStatus(
-    amount_positive: number,
-    amount_negative: number
-  ): ReportStatusTrafficLightType {
+  calculateTrafficLightStatus(amount_positive: number, amount_negative: number): ReportStatusTrafficLightType {
     // if there are no feedbacks, the status is orange
     let threshold_percentage = ReportGenerator.THRESHOLD_PERCENTAGE;
     // if the amount of positive is more than 10% of the amount of negative feedbacks, the status is green
@@ -307,10 +219,8 @@ export class ReportGenerator {
     if (amount_positive === 0 && amount_negative === 0) {
       return ReportStatusTrafficLightValues.YELLOW;
     }
-    let percentage_positive =
-      amount_positive / (amount_positive + amount_negative);
-    let percentage_negative =
-      amount_negative / (amount_positive + amount_negative);
+    let percentage_positive = amount_positive / (amount_positive + amount_negative);
+    let percentage_negative = amount_negative / (amount_positive + amount_negative);
     if (percentage_positive > threshold_percentage) {
       return ReportStatusTrafficLightValues.GREEN;
     }
@@ -320,29 +230,22 @@ export class ReportGenerator {
     return ReportStatusTrafficLightValues.YELLOW;
   }
 
-  async getReportForCanteenFeedbacks(
-    reportSchedule: DatabaseTypes.CanteenFoodFeedbackReportSchedules,
-    startDate: Date,
-    endDate: Date,
-    canteenEntries: Record<string, DatabaseTypes.Canteens>
-  ) {
+  async getReportForCanteenFeedbacks(reportSchedule: DatabaseTypes.CanteenFoodFeedbackReportSchedules, startDate: Date, endDate: Date, canteenEntries: Record<string, DatabaseTypes.Canteens>) {
     let canteens_feedbacks: ReportCanteenEntryType[] = [];
 
-    let canteenFeedbackLabelsWithTranslations = await this.myDatabaseHelper
-      .getCanteenFeedbackLabelsHelper()
-      .readByQuery({
-        limit: -1,
-        filter: {
-          _and: [
-            {
-              [ItemsServiceHelper.FIELD_STATUS]: {
-                _eq: ItemsServiceHelper.FIELD_STATUS_PUBLISHED, // get only published feedback labels
-              },
+    let canteenFeedbackLabelsWithTranslations = await this.myDatabaseHelper.getCanteenFeedbackLabelsHelper().readByQuery({
+      limit: -1,
+      filter: {
+        _and: [
+          {
+            [ItemsServiceHelper.FIELD_STATUS]: {
+              _eq: ItemsServiceHelper.FIELD_STATUS_PUBLISHED, // get only published feedback labels
             },
-          ],
-        },
-        fields: ['*', 'translations.*'],
-      });
+          },
+        ],
+      },
+      fields: ['*', 'translations.*'],
+    });
 
     const filterLikes = {
       like: {
@@ -356,11 +259,7 @@ export class ReportGenerator {
       },
     };
 
-    const filterDateUpdatedFeedbackLabelEntries: Filter[] =
-      ReportGenerator.getFilterDateUpdatedForReportFeedbackPeriodDays(
-        startDate,
-        endDate
-      );
+    const filterDateUpdatedFeedbackLabelEntries: Filter[] = ReportGenerator.getFilterDateUpdatedForReportFeedbackPeriodDays(startDate, endDate);
 
     let canteen_feedback_all: ReportCanteenEntryType = {
       id: 'all',
@@ -387,9 +286,7 @@ export class ReportGenerator {
     }
 
     for (let canteenFeedbackLabelsWithTranslation of canteenFeedbackLabelsWithTranslations) {
-      let alias = this.getTranslationOfFeedbackLabel(
-        canteenFeedbackLabelsWithTranslation
-      );
+      let alias = this.getTranslationOfFeedbackLabel(canteenFeedbackLabelsWithTranslation);
 
       const filterLabel = {
         label: {
@@ -398,13 +295,7 @@ export class ReportGenerator {
       };
 
       // Get the counts for all canteens
-      const countsAllCanteens = await this.getCanteenFeedbackCounts(
-        filterLabel,
-        filterLikes,
-        filterDislikes,
-        filterDateUpdatedFeedbackLabelEntries,
-        null
-      );
+      const countsAllCanteens = await this.getCanteenFeedbackCounts(filterLabel, filterLikes, filterDislikes, filterDateUpdatedFeedbackLabelEntries, null);
 
       canteen_feedback_all.labels.push({
         label_alias: alias,
@@ -414,14 +305,8 @@ export class ReportGenerator {
         amount_positive: countsAllCanteens.amount_positive,
         amount_negative: countsAllCanteens.amount_negative,
         amount_total: countsAllCanteens.amount_total,
-        status_total: this.calculateTrafficLightStatus(
-          countsAllCanteens.amount_positive,
-          countsAllCanteens.amount_negative
-        ),
-        status_new: this.calculateTrafficLightStatus(
-          countsAllCanteens.amount_positive_new,
-          countsAllCanteens.amount_negative_new
-        ),
+        status_total: this.calculateTrafficLightStatus(countsAllCanteens.amount_positive, countsAllCanteens.amount_negative),
+        status_new: this.calculateTrafficLightStatus(countsAllCanteens.amount_positive_new, countsAllCanteens.amount_negative_new),
       });
 
       // If per-canteen feedbacks are to be shown
@@ -429,13 +314,7 @@ export class ReportGenerator {
         for (let canteenKey of canteenKeys) {
           let canteen = canteenEntries[canteenKey];
           if (!!canteen) {
-            const countsForCanteen = await this.getCanteenFeedbackCounts(
-              filterLabel,
-              filterLikes,
-              filterDislikes,
-              filterDateUpdatedFeedbackLabelEntries,
-              canteen
-            );
+            const countsForCanteen = await this.getCanteenFeedbackCounts(filterLabel, filterLikes, filterDislikes, filterDateUpdatedFeedbackLabelEntries, canteen);
 
             canteen_feedback_dict[canteen.id]?.labels.push({
               label_alias: alias,
@@ -445,14 +324,8 @@ export class ReportGenerator {
               amount_positive: countsForCanteen.amount_positive,
               amount_negative: countsForCanteen.amount_negative,
               amount_total: countsForCanteen.amount_total,
-              status_total: this.calculateTrafficLightStatus(
-                countsForCanteen.amount_positive,
-                countsForCanteen.amount_negative
-              ),
-              status_new: this.calculateTrafficLightStatus(
-                countsForCanteen.amount_positive_new,
-                countsForCanteen.amount_negative_new
-              ),
+              status_total: this.calculateTrafficLightStatus(countsForCanteen.amount_positive, countsForCanteen.amount_negative),
+              status_new: this.calculateTrafficLightStatus(countsForCanteen.amount_positive_new, countsForCanteen.amount_negative_new),
             });
           }
         }
@@ -471,58 +344,32 @@ export class ReportGenerator {
     return canteens_feedbacks;
   }
 
-  async getCanteenFeedbackCounts(
-    filterLabel: FieldFilter,
-    filterLikes: FieldFilter,
-    filterDislikes: FieldFilter,
-    filterDateUpdatedFeedbackLabelEntries: Filter[],
-    canteen: DatabaseTypes.Canteens | null = null
-  ) {
-    const canteenFilter: FieldFilter = canteen
-      ? { canteen: { _eq: canteen.id } }
-      : {};
+  async getCanteenFeedbackCounts(filterLabel: FieldFilter, filterLikes: FieldFilter, filterDislikes: FieldFilter, filterDateUpdatedFeedbackLabelEntries: Filter[], canteen: DatabaseTypes.Canteens | null = null) {
+    const canteenFilter: FieldFilter = canteen ? { canteen: { _eq: canteen.id } } : {};
 
-    const amount_positive_new = await this.myDatabaseHelper
-      .getCanteenFeedbackLabelsEntriesHelper()
-      .countItems({
-        filter: {
-          _and: [
-            filterLabel,
-            filterLikes,
-            ...filterDateUpdatedFeedbackLabelEntries,
-            canteenFilter,
-          ],
-        },
-      });
+    const amount_positive_new = await this.myDatabaseHelper.getCanteenFeedbackLabelsEntriesHelper().countItems({
+      filter: {
+        _and: [filterLabel, filterLikes, ...filterDateUpdatedFeedbackLabelEntries, canteenFilter],
+      },
+    });
 
-    const amount_negative_new = await this.myDatabaseHelper
-      .getCanteenFeedbackLabelsEntriesHelper()
-      .countItems({
-        filter: {
-          _and: [
-            filterLabel,
-            filterDislikes,
-            ...filterDateUpdatedFeedbackLabelEntries,
-            canteenFilter,
-          ],
-        },
-      });
+    const amount_negative_new = await this.myDatabaseHelper.getCanteenFeedbackLabelsEntriesHelper().countItems({
+      filter: {
+        _and: [filterLabel, filterDislikes, ...filterDateUpdatedFeedbackLabelEntries, canteenFilter],
+      },
+    });
 
-    const amount_positive = await this.myDatabaseHelper
-      .getCanteenFeedbackLabelsEntriesHelper()
-      .countItems({
-        filter: {
-          _and: [filterLabel, filterLikes, canteenFilter],
-        },
-      });
+    const amount_positive = await this.myDatabaseHelper.getCanteenFeedbackLabelsEntriesHelper().countItems({
+      filter: {
+        _and: [filterLabel, filterLikes, canteenFilter],
+      },
+    });
 
-    const amount_negative = await this.myDatabaseHelper
-      .getCanteenFeedbackLabelsEntriesHelper()
-      .countItems({
-        filter: {
-          _and: [filterLabel, filterDislikes, canteenFilter],
-        },
-      });
+    const amount_negative = await this.myDatabaseHelper.getCanteenFeedbackLabelsEntriesHelper().countItems({
+      filter: {
+        _and: [filterLabel, filterDislikes, canteenFilter],
+      },
+    });
 
     const amount_total = amount_positive + amount_negative;
     const amount_total_new = amount_positive_new + amount_negative_new;
@@ -537,13 +384,7 @@ export class ReportGenerator {
     };
   }
 
-  async getReportForFoodFeedbacks(
-    reportSchedule: DatabaseTypes.CanteenFoodFeedbackReportSchedules,
-    startDate: Date,
-    endDate: Date,
-    canteenEntries: Record<string, DatabaseTypes.Canteens>,
-    foodAverageRating: number | undefined
-  ) {
+  async getReportForFoodFeedbacks(reportSchedule: DatabaseTypes.CanteenFoodFeedbackReportSchedules, startDate: Date, endDate: Date, canteenEntries: Record<string, DatabaseTypes.Canteens>, foodAverageRating: number | undefined) {
     let foods: ReportFoodEntryType[] = [];
 
     let foodDict: { [key: string]: DatabaseTypes.Foods } = {};
@@ -551,12 +392,7 @@ export class ReportGenerator {
     for (let canteenKey of canteenKeys) {
       let canteenEntry = canteenEntries[canteenKey];
       if (!!canteenEntry) {
-        let foodOffersWithFood =
-          await this.getFoodOffersWithFoodAtDateInCanteen(
-            startDate,
-            endDate,
-            canteenEntry?.id
-          );
+        let foodOffersWithFood = await this.getFoodOffersWithFoodAtDateInCanteen(startDate, endDate, canteenEntry?.id);
         for (let foodOfferWithFood of foodOffersWithFood) {
           let food = foodOfferWithFood?.food;
           if (!!food && typeof food !== 'string') {
@@ -566,25 +402,20 @@ export class ReportGenerator {
       }
     }
 
-    let feedbackLabelsWithTranslations = await this.myDatabaseHelper
-      .getFoodFeedbackLabelsHelper()
-      .readByQuery({
-        limit: -1,
-        filter: {
-          _and: [
-            {
-              [ItemsServiceHelper.FIELD_STATUS]: {
-                _eq: ItemsServiceHelper.FIELD_STATUS_PUBLISHED, // get only published feedback labels
-              },
+    let feedbackLabelsWithTranslations = await this.myDatabaseHelper.getFoodFeedbackLabelsHelper().readByQuery({
+      limit: -1,
+      filter: {
+        _and: [
+          {
+            [ItemsServiceHelper.FIELD_STATUS]: {
+              _eq: ItemsServiceHelper.FIELD_STATUS_PUBLISHED, // get only published feedback labels
             },
-          ],
-        },
-        fields: ['*', 'translations.*'],
-      });
-    const dictFeedbackLabelsWithTranslation = DictHelper.transformListToDict(
-      feedbackLabelsWithTranslations,
-      item => item.id
-    );
+          },
+        ],
+      },
+      fields: ['*', 'translations.*'],
+    });
+    const dictFeedbackLabelsWithTranslation = DictHelper.transformListToDict(feedbackLabelsWithTranslations, item => item.id);
 
     for (let food of Object.values(foodDict)) {
       const food_id = food?.id;
@@ -596,29 +427,15 @@ export class ReportGenerator {
       let comments_new: string[] = [];
 
       if (reportSchedule.show_food_comments_for_selected_period) {
-        comments_new = await this.getAllFoodFeedbacksWithCommentsForFood(
-          food_id,
-          startDate,
-          endDate
-        );
+        comments_new = await this.getAllFoodFeedbacksWithCommentsForFood(food_id, startDate, endDate);
       }
 
       if (reportSchedule.show_food_comments_for_all_time) {
-        comments = await this.getAllFoodFeedbacksWithCommentsForFood(
-          food_id,
-          null,
-          null
-        );
+        comments = await this.getAllFoodFeedbacksWithCommentsForFood(food_id, null, null);
       }
 
       let labels: ReportFoodEntryLabelType[] = [];
-      labels = await this.getReportFeedbackLabelsList(
-        reportSchedule,
-        food_id,
-        dictFeedbackLabelsWithTranslation,
-        startDate,
-        endDate
-      );
+      labels = await this.getReportFeedbackLabelsList(reportSchedule, food_id, dictFeedbackLabelsWithTranslation, startDate, endDate);
 
       let image_url = null;
       if (food?.image) {
@@ -626,10 +443,7 @@ export class ReportGenerator {
         let publicUrl = process.env.PUBLIC_URL;
         if (publicUrl) {
           //image_url = publicUrl+'/assets/'+file_id
-          image_url = AssetHelperDirectusBackend.getAssetImageURL(
-            file_id,
-            AssetHelperTransformOptions.SMALL_IMAGE_TRANSFORM
-          );
+          image_url = AssetHelperDirectusBackend.getAssetImageURL(file_id, AssetHelperTransformOptions.SMALL_IMAGE_TRANSFORM);
         }
       }
       if (food?.image_remote_url) {
@@ -649,9 +463,7 @@ export class ReportGenerator {
 
       let status_rating = ReportStatusTrafficLightValues.YELLOW;
       if (food?.rating_average && foodAverageRating) {
-        const epsilon =
-          FoodRatingCalculator.MAX_RATING_VALUE *
-          ReportGenerator.THRESHOLD_PERCENTAGE;
+        const epsilon = FoodRatingCalculator.MAX_RATING_VALUE * ReportGenerator.THRESHOLD_PERCENTAGE;
         if (food.rating_average > foodAverageRating + epsilon) {
           status_rating = ReportStatusTrafficLightValues.GREEN;
         } else if (food.rating_average < foodAverageRating - epsilon) {
@@ -676,30 +488,14 @@ export class ReportGenerator {
     return foods;
   }
 
-  getTranslationOfFeedbackLabel(
-    feedbackLabelWithTranslation:
-      | DatabaseTypes.FoodsFeedbacksLabels
-      | DatabaseTypes.CanteensFeedbacksLabels
-  ): string {
+  getTranslationOfFeedbackLabel(feedbackLabelWithTranslation: DatabaseTypes.FoodsFeedbacksLabels | DatabaseTypes.CanteensFeedbacksLabels): string {
     // TODO: Read FoodsFeedbacksLabelsTranslations and return the text
     // TODO: Maybe create a translation helper for the backend similar to the one in the frontend
-    return (
-      feedbackLabelWithTranslation?.alias || feedbackLabelWithTranslation.id
-    );
+    return feedbackLabelWithTranslation?.alias || feedbackLabelWithTranslation.id;
   }
 
-  async getReportFeedbackLabelsList(
-    reportSchedule: DatabaseTypes.CanteenFoodFeedbackReportSchedules,
-    food_id: string,
-    dictFeedbackLabelsWithTranslation: Record<
-      string,
-      DatabaseTypes.FoodsFeedbacksLabels
-    >,
-    startDate: Date,
-    endDate: Date
-  ): Promise<ReportFoodEntryLabelType[]> {
-    const foodFeedbackLabelEntriesService =
-      this.myDatabaseHelper.getFoodFeedbackLabelEntriesHelper();
+  async getReportFeedbackLabelsList(reportSchedule: DatabaseTypes.CanteenFoodFeedbackReportSchedules, food_id: string, dictFeedbackLabelsWithTranslation: Record<string, DatabaseTypes.FoodsFeedbacksLabels>, startDate: Date, endDate: Date): Promise<ReportFoodEntryLabelType[]> {
+    const foodFeedbackLabelEntriesService = this.myDatabaseHelper.getFoodFeedbackLabelEntriesHelper();
 
     const filterLikes = {
       like: {
@@ -719,18 +515,13 @@ export class ReportGenerator {
       },
     };
 
-    let filterDateUpdatedFeedbackLabelEntries: Filter[] =
-      ReportGenerator.getFilterDateUpdatedForReportFeedbackPeriodDays(
-        startDate,
-        endDate
-      );
+    let filterDateUpdatedFeedbackLabelEntries: Filter[] = ReportGenerator.getFilterDateUpdatedForReportFeedbackPeriodDays(startDate, endDate);
 
     let labels_counted_as_list: ReportFoodEntryLabelType[] = [];
 
     let feedbackLabelKeys = Object.keys(dictFeedbackLabelsWithTranslation);
     for (let feedbackLabelKey of feedbackLabelKeys) {
-      let feedbackLabelWithTranslation =
-        dictFeedbackLabelsWithTranslation[feedbackLabelKey];
+      let feedbackLabelWithTranslation = dictFeedbackLabelsWithTranslation[feedbackLabelKey];
       if (!!feedbackLabelWithTranslation) {
         let feedbackLabelId = feedbackLabelWithTranslation?.id;
 
@@ -740,55 +531,33 @@ export class ReportGenerator {
           },
         };
 
-        let amount_positive_new =
-          await foodFeedbackLabelEntriesService.countItems({
-            filter: {
-              _and: [
-                filterFeedbackLabelEntriesFoodEquals,
-                filterFeedbackLabelEntriesFeedbackLabelEquals,
-                ...filterDateUpdatedFeedbackLabelEntries,
-                filterLikes,
-              ],
-            },
-          });
-        let amount_negative_new =
-          await foodFeedbackLabelEntriesService.countItems({
-            filter: {
-              _and: [
-                filterFeedbackLabelEntriesFoodEquals,
-                filterFeedbackLabelEntriesFeedbackLabelEquals,
-                ...filterDateUpdatedFeedbackLabelEntries,
-                filterDislikes,
-              ],
-            },
-          });
+        let amount_positive_new = await foodFeedbackLabelEntriesService.countItems({
+          filter: {
+            _and: [filterFeedbackLabelEntriesFoodEquals, filterFeedbackLabelEntriesFeedbackLabelEquals, ...filterDateUpdatedFeedbackLabelEntries, filterLikes],
+          },
+        });
+        let amount_negative_new = await foodFeedbackLabelEntriesService.countItems({
+          filter: {
+            _and: [filterFeedbackLabelEntriesFoodEquals, filterFeedbackLabelEntriesFeedbackLabelEquals, ...filterDateUpdatedFeedbackLabelEntries, filterDislikes],
+          },
+        });
 
         let amount_positive = await foodFeedbackLabelEntriesService.countItems({
           filter: {
-            _and: [
-              filterFeedbackLabelEntriesFoodEquals,
-              filterFeedbackLabelEntriesFeedbackLabelEquals,
-              filterLikes,
-            ],
+            _and: [filterFeedbackLabelEntriesFoodEquals, filterFeedbackLabelEntriesFeedbackLabelEquals, filterLikes],
           },
         });
 
         let amount_negative = await foodFeedbackLabelEntriesService.countItems({
           filter: {
-            _and: [
-              filterFeedbackLabelEntriesFoodEquals,
-              filterFeedbackLabelEntriesFeedbackLabelEquals,
-              filterDislikes,
-            ],
+            _and: [filterFeedbackLabelEntriesFoodEquals, filterFeedbackLabelEntriesFeedbackLabelEquals, filterDislikes],
           },
         });
 
         let amount_total = amount_positive + amount_negative;
         let amount_total_new = amount_positive_new + amount_negative_new;
 
-        let alias = this.getTranslationOfFeedbackLabel(
-          feedbackLabelWithTranslation
-        );
+        let alias = this.getTranslationOfFeedbackLabel(feedbackLabelWithTranslation);
 
         let labelEntry: ReportFoodEntryLabelType = {
           id: feedbackLabelId,
@@ -799,14 +568,8 @@ export class ReportGenerator {
           amount_positive: amount_positive,
           amount_negative: amount_negative,
           amount_total: amount_total,
-          status_total: this.calculateTrafficLightStatus(
-            amount_positive,
-            amount_negative
-          ),
-          status_new: this.calculateTrafficLightStatus(
-            amount_positive_new,
-            amount_negative_new
-          ),
+          status_total: this.calculateTrafficLightStatus(amount_positive, amount_negative),
+          status_new: this.calculateTrafficLightStatus(amount_positive_new, amount_negative_new),
         };
 
         labels_counted_as_list.push(labelEntry);
@@ -816,36 +579,25 @@ export class ReportGenerator {
     return labels_counted_as_list;
   }
 
-  public static getFilterDateUpdatedForReportFeedbackPeriodDays(
-    startDate: Date,
-    endDate: Date
-  ): Filter[] {
+  public static getFilterDateUpdatedForReportFeedbackPeriodDays(startDate: Date, endDate: Date): Filter[] {
     let endDatePlusOneDay = new Date(endDate);
     endDatePlusOneDay.setDate(endDatePlusOneDay.getDate() + 1);
 
     return [
       {
         date_updated: {
-          _gte: DateHelper.foodofferDateTypeToString(
-            DateHelper.getFoodofferDateTypeFromDate(startDate)
-          ),
+          _gte: DateHelper.foodofferDateTypeToString(DateHelper.getFoodofferDateTypeFromDate(startDate)),
         },
       },
       {
         date_updated: {
-          _lt: DateHelper.foodofferDateTypeToString(
-            DateHelper.getFoodofferDateTypeFromDate(endDatePlusOneDay)
-          ),
+          _lt: DateHelper.foodofferDateTypeToString(DateHelper.getFoodofferDateTypeFromDate(endDatePlusOneDay)),
         },
       },
     ];
   }
 
-  async getAllFoodFeedbacksWithCommentsForFood(
-    food_id: string,
-    startDate: Date | null,
-    endDate: Date | null
-  ) {
+  async getAllFoodFeedbacksWithCommentsForFood(food_id: string, startDate: Date | null, endDate: Date | null) {
     let itemService = this.myDatabaseHelper.getFoodFeedbacksHelper();
 
     const filter: Filter[] = [
@@ -862,11 +614,7 @@ export class ReportGenerator {
     ];
 
     if (startDate && endDate) {
-      let filterDateUpdated =
-        ReportGenerator.getFilterDateUpdatedForReportFeedbackPeriodDays(
-          startDate,
-          endDate
-        );
+      let filterDateUpdated = ReportGenerator.getFilterDateUpdatedForReportFeedbackPeriodDays(startDate, endDate);
       if (filterDateUpdated) {
         filter.push(...filterDateUpdated);
       }
@@ -901,17 +649,9 @@ export class ReportGenerator {
     return comments;
   }
 
-  async getFoodOffersWithFoodAtDateInCanteen(
-    startDate: Date,
-    endDate: Date,
-    canteen_id: string
-  ) {
-    const startFoodofferDateString = DateHelper.foodofferDateTypeToString(
-      DateHelper.getFoodofferDateTypeFromDate(startDate)
-    );
-    const endFoodofferDateString = DateHelper.foodofferDateTypeToString(
-      DateHelper.getFoodofferDateTypeFromDate(endDate)
-    );
+  async getFoodOffersWithFoodAtDateInCanteen(startDate: Date, endDate: Date, canteen_id: string) {
+    const startFoodofferDateString = DateHelper.foodofferDateTypeToString(DateHelper.getFoodofferDateTypeFromDate(startDate));
+    const endFoodofferDateString = DateHelper.foodofferDateTypeToString(DateHelper.getFoodofferDateTypeFromDate(endDate));
 
     let itemService = this.myDatabaseHelper.getFoodoffersHelper();
 

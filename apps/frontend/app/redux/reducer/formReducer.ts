@@ -1,8 +1,4 @@
-import {
-	CLEAR_FORM,
-	SET_FORM_FILTER,
-	SET_FORM_SUBMISSION,
-} from '@/redux/Types/types';
+import { CLEAR_FORM, SET_FORM_FILTER, SET_FORM_SUBMISSION } from '@/redux/Types/types';
 
 const initialState = {
 	filterBy: 'draft',

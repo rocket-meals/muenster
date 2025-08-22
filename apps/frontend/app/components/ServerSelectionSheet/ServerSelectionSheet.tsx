@@ -6,12 +6,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { isWeb } from '@/constants/Constants';
 import styles from './styles';
 import ServerOption from '@/components/ServerOption/ServerOption';
-import {
-	devConfig,
-	swosyConfig,
-	studiFutterConfig,
-	CustomerConfig,
-} from '@/config';
+import { devConfig, swosyConfig, studiFutterConfig, CustomerConfig } from '@/config';
 import { TranslationKeys } from '@/locales/keys';
 
 export interface ServerSelectionSheetProps {
@@ -20,20 +15,13 @@ export interface ServerSelectionSheetProps {
 	onSelect: (config: CustomerConfig) => void;
 }
 
-const ServerSelectionSheet: React.FC<ServerSelectionSheetProps> = ({
-	closeSheet,
-	selectedServer,
-	onSelect,
-}) => {
+const ServerSelectionSheet: React.FC<ServerSelectionSheetProps> = ({ closeSheet, selectedServer, onSelect }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const servers: CustomerConfig[] = [devConfig, swosyConfig, studiFutterConfig];
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,

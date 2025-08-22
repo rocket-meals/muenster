@@ -1,19 +1,11 @@
 import { ApartmentsParseSchedule } from './ApartmentsParseSchedule';
 import { StudentenwerkHannoverApartments_Parser } from './hannover/StudentenwerkHannoverApartments_Parser';
 import { defineHook } from '@directus/extensions-sdk';
-import {
-  EnvVariableHelper,
-  SyncForCustomerEnum,
-} from '../helpers/EnvVariableHelper';
+import { EnvVariableHelper, SyncForCustomerEnum } from '../helpers/EnvVariableHelper';
 import { ApartmentParserInterface } from './ApartmentParserInterface';
 import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
 import { WorkflowScheduleHelper } from '../workflows-runs-hook';
-import {
-  ResultHandleWorkflowRunsWantToRun,
-  SingleWorkflowRun,
-  WorkflowRunJobInterface,
-  WorkflowRunLogger,
-} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import { ResultHandleWorkflowRunsWantToRun, SingleWorkflowRun, WorkflowRunJobInterface, WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 
@@ -29,19 +21,10 @@ class HousingSyncWorkflow extends SingleWorkflowRun {
     return 'housing-sync';
   }
 
-  async runJob(
-    workflowRun: DatabaseTypes.WorkflowsRuns,
-    myDatabaseHelper: MyDatabaseHelper,
-    logger: WorkflowRunLogger
-  ): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
+  async runJob(workflowRun: DatabaseTypes.WorkflowsRuns, myDatabaseHelper: MyDatabaseHelper, logger: WorkflowRunLogger): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
     await logger.appendLog('Starting sync housing parsing');
     try {
-      const parseSchedule = new ApartmentsParseSchedule(
-        workflowRun,
-        myDatabaseHelper,
-        logger,
-        this.parserInterface
-      );
+      const parseSchedule = new ApartmentsParseSchedule(workflowRun, myDatabaseHelper, logger, this.parserInterface);
       return await parseSchedule.parse();
     } catch (err: any) {
       await logger.appendLog('Error: ' + err.toString());

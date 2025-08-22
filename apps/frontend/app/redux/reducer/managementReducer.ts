@@ -1,9 +1,4 @@
-import {
-	CLEAR_MANAGEMENT,
-	SET_DAY_PLAN,
-	SET_FOOD_PLAN,
-	SET_WEEK_PLAN,
-} from '../Types/types';
+import { CLEAR_MANAGEMENT, SET_DAY_PLAN, SET_FOOD_PLAN, SET_WEEK_PLAN } from '../Types/types';
 
 const initialState = {
 	dayPlan: {

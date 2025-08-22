@@ -13,15 +13,9 @@ describe('Pdf Generator Test', () => {
     let requestOptions = {
       mockImageResolution: true, // mock image resolution to avoid loading real images
     };
-    let pdfBuffer = await PdfGeneratorHelper.generatePdfFromHtml(
-      html,
-      requestOptions
-    );
+    let pdfBuffer = await PdfGeneratorHelper.generatePdfFromHtml(html, requestOptions);
     expect(pdfBuffer).toBeTruthy();
-    let savePath = TestArtifacts.saveTestArtifact(
-      pdfBuffer,
-      'pdf/' + HtmlTemplatesEnum.BASE_GERMAN_MARKDOWN_CONTENT + '.pdf'
-    );
+    let savePath = TestArtifacts.saveTestArtifact(pdfBuffer, 'pdf/' + HtmlTemplatesEnum.BASE_GERMAN_MARKDOWN_CONTENT + '.pdf');
 
     expect(true).toBeTruthy();
   });

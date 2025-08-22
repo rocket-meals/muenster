@@ -12,10 +12,7 @@ export default defineHook(async ({ init }, apiContext) => {
   let envAdminPassword = EnvVariableHelper.getAdminPassword();
 
   if (!envAdminEmail || !envAdminPassword) {
-    console.log(
-      SCHEDULE_NAME +
-        ': Admin email or password not set in environment variables. Skipping reset of admin password.'
-    );
+    console.log(SCHEDULE_NAME + ': Admin email or password not set in environment variables. Skipping reset of admin password.');
   }
 
   const userHelper = myDatabaseHelper.getUsersHelper();
@@ -38,31 +35,16 @@ export default defineHook(async ({ init }, apiContext) => {
       },
     });
     if (usersWithAdminEmail.length == 0) {
-      console.log(
-        SCHEDULE_NAME +
-          ': Admin user with email ' +
-          envAdminEmail +
-          ' not found. Skipping reset of admin password.'
-      );
+      console.log(SCHEDULE_NAME + ': Admin user with email ' + envAdminEmail + ' not found. Skipping reset of admin password.');
       return;
     }
     if (usersWithAdminEmail.length > 1) {
-      console.log(
-        SCHEDULE_NAME +
-          ': Found multiple users with email ' +
-          envAdminEmail +
-          '. Skipping reset of admin password.'
-      );
+      console.log(SCHEDULE_NAME + ': Found multiple users with email ' + envAdminEmail + '. Skipping reset of admin password.');
       return;
     }
     let adminUser = usersWithAdminEmail[0];
     if (!adminUser) {
-      console.log(
-        SCHEDULE_NAME +
-          ': Admin user with email ' +
-          envAdminEmail +
-          ' not found. Skipping reset of admin password.'
-      );
+      console.log(SCHEDULE_NAME + ': Admin user with email ' + envAdminEmail + ' not found. Skipping reset of admin password.');
       return;
     }
     await userHelper.updateOne(adminUser.id, {

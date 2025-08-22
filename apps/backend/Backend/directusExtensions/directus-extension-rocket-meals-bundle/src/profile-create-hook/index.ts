@@ -7,11 +7,7 @@ import { CollectionNames } from 'repo-depkit-common';
 const SCHEDULE_NAME = 'profile_create';
 
 export default defineHook(async ({ filter, schedule }, apiContext) => {
-  let allTablesExist =
-    await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(
-      SCHEDULE_NAME,
-      apiContext
-    );
+  let allTablesExist = await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(SCHEDULE_NAME, apiContext);
   if (!allTablesExist) {
     return;
   }
@@ -45,10 +41,7 @@ export default defineHook(async ({ filter, schedule }, apiContext) => {
             });
           }
         } catch (e) {
-          console.log(
-            'profileCreateHook: Error while creating profile for user: ' +
-              user.id
-          );
+          console.log('profileCreateHook: Error while creating profile for user: ' + user.id);
           console.log(e);
         }
       }
@@ -92,10 +85,7 @@ export default defineHook(async ({ filter, schedule }, apiContext) => {
             return input;
           }
         } catch (e) {
-          console.log(
-            'profileCreateHook: Error while creating profile for user: ' +
-              userId
-          );
+          console.log('profileCreateHook: Error while creating profile for user: ' + userId);
           console.log(e);
           return input;
         }

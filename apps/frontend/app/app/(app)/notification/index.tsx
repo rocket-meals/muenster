@@ -1,17 +1,5 @@
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import {
-	View,
-	Text,
-	Dimensions,
-	TouchableOpacity,
-	ScrollView,
-} from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, Text, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -23,10 +11,7 @@ import { fetchFoodDetailsById } from '@/redux/actions/FoodOffers/FoodOffers';
 import { excerpt } from '@/constants/HelperFunctions';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
 import { DatabaseTypes } from 'repo-depkit-common';
-import {
-	DELETE_FOOD_FEEDBACK_LOCAL,
-	UPDATE_FOOD_FEEDBACK_LOCAL,
-} from '@/redux/Types/types';
+import { DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL } from '@/redux/Types/types';
 import animation from '@/assets/animations/notificationBell.json';
 import LottieView from 'lottie-react-native';
 import { useFocusEffect } from 'expo-router';
@@ -40,9 +25,7 @@ const NotificationScreen = () => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
-	const { language, primaryColor, appSettings } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { language, primaryColor, appSettings } = useSelector((state: RootState) => state.settings);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
 	const [foodWithFeedback, setFoodWithFeedback] = useState<any[]>([]);
@@ -50,9 +33,7 @@ const NotificationScreen = () => {
 	const animationRef = useRef<LottieView>(null);
 	const [animationJson, setAmimationJson] = useState<any>(null);
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-	const foodFeedbacks = useSelector(
-		(state: RootState) => state.food.ownFoodFeedbacks
-	);
+	const foodFeedbacks = useSelector((state: RootState) => state.food.ownFoodFeedbacks);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -82,16 +63,7 @@ const NotificationScreen = () => {
 
 	const renderLottie = useMemo(() => {
 		if (animationJson) {
-			return (
-				<LottieView
-					ref={animationRef}
-					source={animationJson}
-					resizeMode="contain"
-					style={{ width: '100%', height: '100%' }}
-					autoPlay={autoPlay || false}
-					loop={false}
-				/>
-			);
+			return <LottieView ref={animationRef} source={animationJson} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay={autoPlay || false} loop={false} />;
 		}
 	}, [autoPlay, animationJson]);
 
@@ -114,19 +86,13 @@ const NotificationScreen = () => {
 	};
 
 	// Update notification status
-	const updateFoodFeedbackNotification = async (
-		feedbackData: DatabaseTypes.FoodsFeedbacks
-	) => {
+	const updateFoodFeedbackNotification = async (feedbackData: DatabaseTypes.FoodsFeedbacks) => {
 		try {
 			const payload = {
 				...feedbackData,
 				notify: feedbackData?.notify ? null : true,
 			};
-			const updateFeedbackResult = (await foodFeedbackHelper.updateFoodFeedback(
-				String(feedbackData?.food),
-				profile?.id,
-				payload
-			)) as DatabaseTypes.FoodsFeedbacks;
+			const updateFeedbackResult = (await foodFeedbackHelper.updateFoodFeedback(String(feedbackData?.food), profile?.id, payload)) as DatabaseTypes.FoodsFeedbacks;
 			if (updateFeedbackResult?.id) {
 				dispatch({
 					type: UPDATE_FOOD_FEEDBACK_LOCAL,
@@ -150,8 +116,7 @@ const NotificationScreen = () => {
 	}, [foodFeedbacks]);
 
 	useEffect(() => {
-		const onChange = ({ window }: { window: { width: number } }) =>
-			setWindowWidth(window.width);
+		const onChange = ({ window }: { window: { width: number } }) => setWindowWidth(window.width);
 		const subscription = Dimensions.addEventListener('change', onChange);
 
 		return () => subscription.remove();
@@ -166,12 +131,7 @@ const NotificationScreen = () => {
 				}}
 			>
 				<View style={styles.imageContainer}>{renderLottie}</View>
-				<View
-					style={[
-						styles.infoContainer,
-						{ width: windowWidth > 600 ? '90%' : '100%' },
-					]}
-				>
+				<View style={[styles.infoContainer, { width: windowWidth > 600 ? '90%' : '100%' }]}>
 					<Text
 						style={{
 							...styles.label,
@@ -208,10 +168,7 @@ const NotificationScreen = () => {
 											fontSize: windowWidth < 500 ? 16 : 18,
 										}}
 									>
-										{excerpt(
-											getTextFromTranslation(item.data?.translations, language),
-											90
-										)}
+										{excerpt(getTextFromTranslation(item.data?.translations, language), 90)}
 									</Text>
 								</View>
 								{item?.feedback?.notify ? (
@@ -223,11 +180,7 @@ const NotificationScreen = () => {
 										}}
 										onPress={() => updateFoodFeedbackNotification(item.feedback)}
 									>
-										<MaterialIcons
-											name="notifications-active"
-											size={24}
-											color={theme.light}
-										/>
+										<MaterialIcons name="notifications-active" size={24} color={theme.light} />
 									</TouchableOpacity>
 								) : (
 									<TouchableOpacity
@@ -238,11 +191,7 @@ const NotificationScreen = () => {
 										}}
 										onPress={() => updateFoodFeedbackNotification(item.feedback)}
 									>
-										<MaterialIcons
-											name="notifications"
-											size={24}
-											color={theme.screen.icon}
-										/>
+										<MaterialIcons name="notifications" size={24} color={theme.screen.icon} />
 									</TouchableOpacity>
 								)}
 							</View>

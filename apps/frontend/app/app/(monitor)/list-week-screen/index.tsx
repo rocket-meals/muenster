@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	ScrollView,
-	useWindowDimensions,
-} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native';
 import { FontAwesome6, Ionicons } from '@expo/vector-icons';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -24,35 +18,17 @@ const index = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const { width } = useWindowDimensions();
-	const [years, setYears] = useState<number[]>([
-		currentYear - 1,
-		currentYear,
-		currentYear + 1,
-	]);
+	const [years, setYears] = useState<number[]>([currentYear - 1, currentYear, currentYear + 1]);
 	const [selectedYear, setSelectedYear] = useState<number>(currentYear);
 	const { weekPlan } = useSelector((state: RootState) => state.management);
-	const [weeks, setWeeks] = useState<
-		{ weekNumber: number; dateRange: string }[]
-	>(generateWeeks(currentYear));
+	const [weeks, setWeeks] = useState<{ weekNumber: number; dateRange: string }[]>(generateWeeks(currentYear));
 	const [selectedWeek, setSelectedWeek] = useState<number>(moment().isoWeek());
-	const {
-		primaryColor: projectColor,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: projectColor;
+	const { primaryColor: projectColor, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
 
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
-	function generateWeeks(
-		year: number
-	): { weekNumber: number; dateRange: string }[] {
+	function generateWeeks(year: number): { weekNumber: number; dateRange: string }[] {
 		const weeksData: { weekNumber: number; dateRange: string }[] = [];
 		const totalWeeks: number = moment(`${year}-12-31`).isoWeeksInYear();
 
@@ -66,10 +42,7 @@ const index = () => {
 	}
 
 	function getDateRangeForWeek(weekNumber: number, year: number): string {
-		const startOfWeek: moment.Moment = moment()
-			.year(year)
-			.isoWeek(weekNumber)
-			.startOf('isoWeek');
+		const startOfWeek: moment.Moment = moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
 		const endOfWeek: moment.Moment = startOfWeek.clone().endOf('isoWeek');
 
 		return `${startOfWeek.format('DD.MM.')} - ${endOfWeek.format('DD.MM.')}`;
@@ -77,10 +50,7 @@ const index = () => {
 
 	const handleWeekPress = (type: string, weekNumber: number): void => {
 		setSelectedWeek(weekNumber);
-		const startOfWeek: moment.Moment = moment()
-			.year(selectedYear)
-			.isoWeek(weekNumber)
-			.startOf('isoWeek');
+		const startOfWeek: moment.Moment = moment().year(selectedYear).isoWeek(weekNumber).startOf('isoWeek');
 		const dateIso = startOfWeek.toISOString();
 		const formattedDates: { [key: string]: { date: string } }[] = [];
 		const weekDays: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -137,9 +107,7 @@ const index = () => {
 	};
 
 	return (
-		<View
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-		>
+		<View style={[styles.container, { backgroundColor: theme.screen.background }]}>
 			<View style={[styles.header, { backgroundColor: theme.screen.background }]}>
 				<TouchableOpacity
 					style={{
@@ -157,11 +125,7 @@ const index = () => {
 					>
 						Immer Aktuelle Woche
 					</Text>
-					<FontAwesome6
-						name="arrow-up-right-from-square"
-						size={16}
-						color={contrastColor}
-					/>
+					<FontAwesome6 name="arrow-up-right-from-square" size={16} color={contrastColor} />
 				</TouchableOpacity>
 			</View>
 
@@ -176,20 +140,11 @@ const index = () => {
 						}}
 					>
 						<Ionicons name="chevron-back" size={20} color={theme.screen.text} />
-						<Text style={{ ...styles.yearText, color: theme.screen.text }}>
-							{selectedYear - 1}
-						</Text>
+						<Text style={{ ...styles.yearText, color: theme.screen.text }}>{selectedYear - 1}</Text>
 					</TouchableOpacity>
 
-					<View
-						style={[
-							styles.yearButton,
-							[styles.selectedYear, { backgroundColor: foods_area_color }],
-						]}
-					>
-						<Text style={{ ...styles.selectedYearText, color: contrastColor }}>
-							{selectedYear}
-						</Text>
+					<View style={[styles.yearButton, [styles.selectedYear, { backgroundColor: foods_area_color }]]}>
+						<Text style={{ ...styles.selectedYearText, color: contrastColor }}>{selectedYear}</Text>
 					</View>
 
 					<TouchableOpacity
@@ -200,21 +155,14 @@ const index = () => {
 							borderColor: theme.screen.icon,
 						}}
 					>
-						<Text style={{ ...styles.yearText, color: theme.screen.text }}>
-							{selectedYear + 1}
-						</Text>
+						<Text style={{ ...styles.yearText, color: theme.screen.text }}>{selectedYear + 1}</Text>
 						<Ionicons name="chevron-forward" size={20} color={theme.screen.text} />
 					</TouchableOpacity>
 				</View>
 			</View>
 
 			<ScrollView contentContainerStyle={styles.weeksContainer}>
-				<View
-					style={[
-						styles.weeksGrid,
-						{ justifyContent: 'center', alignItems: 'center', gap: 10 },
-					]}
-				>
+				<View style={[styles.weeksGrid, { justifyContent: 'center', alignItems: 'center', gap: 10 }]}>
 					{weeks.map(week => (
 						<TouchableOpacity
 							key={week.weekNumber}
@@ -240,24 +188,10 @@ const index = () => {
 							]}
 							onPress={() => handleWeekPress('any', week.weekNumber)}
 						>
-							<Text
-								style={[
-									styles.weekText,
-									selectedWeek === week.weekNumber
-										? { ...styles.selectedWeekText, color: contrastColor }
-										: { ...styles.selectedWeekText, color: theme.screen.text },
-									{ fontSize: width < 450 ? 10 : 14 },
-								]}
-							>
+							<Text style={[styles.weekText, selectedWeek === week.weekNumber ? { ...styles.selectedWeekText, color: contrastColor } : { ...styles.selectedWeekText, color: theme.screen.text }, { fontSize: width < 450 ? 10 : 14 }]}>
 								Week {week.weekNumber} ({week.dateRange})
 							</Text>
-							<FontAwesome6
-								name="arrow-up-right-from-square"
-								size={width < 450 ? 14 : 16}
-								color={
-									selectedWeek === week.weekNumber ? contrastColor : theme.screen.text
-								}
-							/>
+							<FontAwesome6 name="arrow-up-right-from-square" size={width < 450 ? 14 : 16} color={selectedWeek === week.weekNumber ? contrastColor : theme.screen.text} />
 						</TouchableOpacity>
 					))}
 				</View>

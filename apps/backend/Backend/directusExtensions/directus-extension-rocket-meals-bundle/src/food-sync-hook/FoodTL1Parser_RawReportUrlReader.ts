@@ -1,9 +1,7 @@
 import { FoodTL1Parser_GetRawReportInterface } from './FoodTL1Parser_GetRawReportInterface';
 import axios from 'axios';
 
-export class FoodTL1Parser_RawReportUrlReader
-  implements FoodTL1Parser_GetRawReportInterface
-{
+export class FoodTL1Parser_RawReportUrlReader implements FoodTL1Parser_GetRawReportInterface {
   private readonly api_url: string;
 
   constructor(api_url: string) {

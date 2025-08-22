@@ -1,12 +1,4 @@
-import {
-	Text,
-	View,
-	Image,
-	TouchableOpacity,
-	ScrollView,
-	SafeAreaView,
-	Platform,
-} from 'react-native';
+import { Text, View, Image, TouchableOpacity, ScrollView, SafeAreaView, Platform } from 'react-native';
 import React, { useEffect } from 'react';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
@@ -18,21 +10,7 @@ import { styles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import {
-	CLEAR_ANONYMOUSLY,
-	CLEAR_APARTMENTS,
-	CLEAR_CAMPUSES,
-	CLEAR_CANTEENS,
-	CLEAR_COLLECTION_DATES_LAST_UPDATED,
-	CLEAR_FOODS,
-	CLEAR_MANAGEMENT,
-	CLEAR_NEWS,
-	CLEAR_CHATS,
-	CLEAR_SETTINGS,
-	CLEAR_POPUP_EVENTS_HASH,
-	ON_LOGOUT,
-	SET_WIKIS,
-} from '@/redux/Types/types';
+import { CLEAR_ANONYMOUSLY, CLEAR_APARTMENTS, CLEAR_CAMPUSES, CLEAR_CANTEENS, CLEAR_COLLECTION_DATES_LAST_UPDATED, CLEAR_FOODS, CLEAR_MANAGEMENT, CLEAR_NEWS, CLEAR_CHATS, CLEAR_SETTINGS, CLEAR_POPUP_EVENTS_HASH, ON_LOGOUT, SET_WIKIS } from '@/redux/Types/types';
 import { performLogout } from '@/helper/logoutHelper';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -80,10 +58,7 @@ interface MenuItemProps {
 	position: number;
 }
 
-const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({
-	navigation,
-	state,
-}) => {
+const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation, state }) => {
 	const { translate } = useLanguage();
 	const toast = useToast();
 	const { theme } = useTheme();
@@ -91,37 +66,16 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({
 	const router = useRouter();
 	const wikisHelper = new WikisHelper();
 	const activeIndex = state.index;
-	const { user, isManagement, isDevMode } = useSelector(
-		(state: RootState) => state.authReducer
-	);
+	const { user, isManagement, isDevMode } = useSelector((state: RootState) => state.authReducer);
 	const { chats } = useSelector((state: RootState) => state.chats);
-	const {
-		serverInfo,
-		primaryColor: projectColor,
-		language,
-		appSettings,
-		wikis,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { serverInfo, primaryColor: projectColor, language, appSettings, wikis, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
-	const balance_area_color = appSettings?.balance_area_color
-		? appSettings?.balance_area_color
-		: projectColor;
-	const course_timetable_area_color = appSettings?.course_timetable_area_color
-		? appSettings?.course_timetable_area_color
-		: projectColor;
-	const campus_area_color = appSettings?.campus_area_color
-		? appSettings?.campus_area_color
-		: projectColor;
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: projectColor;
-	const housing_area_color = appSettings?.housing_area_color
-		? appSettings?.housing_area_color
-		: projectColor;
-	const news_area_color = appSettings?.news_area_color
-		? appSettings?.news_area_color
-		: projectColor;
+	const balance_area_color = appSettings?.balance_area_color ? appSettings?.balance_area_color : projectColor;
+	const course_timetable_area_color = appSettings?.course_timetable_area_color ? appSettings?.course_timetable_area_color : projectColor;
+	const campus_area_color = appSettings?.campus_area_color ? appSettings?.campus_area_color : projectColor;
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
+	const housing_area_color = appSettings?.housing_area_color ? appSettings?.housing_area_color : projectColor;
+	const news_area_color = appSettings?.news_area_color ? appSettings?.news_area_color : projectColor;
 
 	const getContrastColor = (routeName: string) => {
 		let backgroundColor = projectColor;
@@ -350,9 +304,7 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({
 							: () =>
 									router.push({
 										pathname: '/wikis',
-										params: wiki?.custom_id
-											? { custom_id: wiki?.custom_id }
-											: { id: wiki?.id },
+										params: wiki?.custom_id ? { custom_id: wiki?.custom_id } : { id: wiki?.id },
 									}),
 					};
 				});
@@ -379,15 +331,9 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({
 
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.iconBg }}>
-			<ScrollView
-				style={{ ...styles.container, backgroundColor: theme.drawerBg }}
-				contentContainerStyle={styles.contentContainer}
-			>
+			<ScrollView style={{ ...styles.container, backgroundColor: theme.drawerBg }} contentContainerStyle={styles.contentContainer}>
 				<View style={styles.content}>
-					<TouchableOpacity
-						style={styles.header}
-						onPress={() => navigation.navigate('foodoffers')}
-					>
+					<TouchableOpacity style={styles.header} onPress={() => navigation.navigate('foodoffers')}>
 						<View style={styles.logoContainer}>
 							<Image
 								source={{
@@ -396,48 +342,19 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({
 								style={styles.logo}
 							/>
 						</View>
-						<Text style={{ ...styles.heading, color: theme.drawerHeading }}>
-							{serverInfo?.info?.project?.project_name || 'SWOSY 2.0'}
-						</Text>
+						<Text style={{ ...styles.heading, color: theme.drawerHeading }}>{serverInfo?.info?.project?.project_name || 'SWOSY 2.0'}</Text>
 					</TouchableOpacity>
 					<View style={styles.menuContainer}>
 						{generateMenuItems().map((item, index) => (
-							<TouchableOpacity
-								key={index}
-								style={getMenuItemStyle(item.activeKey)}
-								onPress={() =>
-									item.route ? navigation.navigate(item.route) : item.action?.()
-								}
-							>
-								<item.iconLibName
-									name={item.iconName}
-									size={24}
-									color={
-										isActive(item.activeKey)
-											? getContrastColor(item.activeKey)
-											: theme.inactiveIcon
-									}
-								/>
+							<TouchableOpacity key={index} style={getMenuItemStyle(item.activeKey)} onPress={() => (item.route ? navigation.navigate(item.route) : item.action?.())}>
+								<item.iconLibName name={item.iconName} size={24} color={isActive(item.activeKey) ? getContrastColor(item.activeKey) : theme.inactiveIcon} />
 								<Text style={getMenuLabelStyle(item.activeKey)}>{item.label}</Text>
 							</TouchableOpacity>
 						))}
 						<View style={styles.divider} />
-						<TouchableOpacity
-							style={getMenuItemStyle('settings/index')}
-							onPress={() => navigation.navigate('settings/index')}
-						>
-							<Ionicons
-								name="settings-outline"
-								size={28}
-								color={
-									isActive('settings/index')
-										? getContrastColor('settings/index')
-										: theme.inactiveIcon
-								}
-							/>
-							<Text style={getMenuLabelStyle('settings/index')}>
-								{translate(TranslationKeys.settings)}
-							</Text>
+						<TouchableOpacity style={getMenuItemStyle('settings/index')} onPress={() => navigation.navigate('settings/index')}>
+							<Ionicons name="settings-outline" size={28} color={isActive('settings/index') ? getContrastColor('settings/index') : theme.inactiveIcon} />
+							<Text style={getMenuLabelStyle('settings/index')}>{translate(TranslationKeys.settings)}</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={getMenuItemStyle('faq-living/index')}
@@ -449,14 +366,8 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({
 								}
 							}}
 						>
-							<MaterialCommunityIcons
-								name="logout"
-								size={28}
-								color={theme.inactiveIcon}
-							/>
-							<Text style={getMenuLabelStyle('faq-living/index')}>
-								{translate(TranslationKeys.logout)}
-							</Text>
+							<MaterialCommunityIcons name="logout" size={28} color={theme.inactiveIcon} />
+							<Text style={getMenuLabelStyle('faq-living/index')}>{translate(TranslationKeys.logout)}</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -464,11 +375,7 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({
 				<View style={styles.footer}>
 					{wikis &&
 						wikis?.map((wiki: any, index: number) => {
-							if (
-								wiki?.custom_id &&
-								!wiki?.url &&
-								wiki?.show_in_drawer_as_bottom_item
-							) {
+							if (wiki?.custom_id && !wiki?.url && wiki?.show_in_drawer_as_bottom_item) {
 								return (
 									<>
 										<TouchableOpacity
@@ -479,13 +386,9 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({
 												})
 											}
 										>
-											<Text style={{ ...styles.link, color: theme.drawer.link }}>
-												{getTitleFromTranslation(wiki?.translations, language)}
-											</Text>
+											<Text style={{ ...styles.link, color: theme.drawer.link }}>{getTitleFromTranslation(wiki?.translations, language)}</Text>
 										</TouchableOpacity>
-										{index + 1 < wikis?.length - 1 && (
-											<Text style={{ ...styles.bar, color: theme.drawer.link }}>|</Text>
-										)}
+										{index + 1 < wikis?.length - 1 && <Text style={{ ...styles.bar, color: theme.drawer.link }}>|</Text>}
 									</>
 								);
 							}

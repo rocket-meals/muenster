@@ -7,9 +7,7 @@ import { RootState } from '@/redux/reducer';
 export default function useSelectedCanteen() {
 	const kioskMode = useKioskMode();
 	const { canteens_id } = useGlobalSearchParams<{ canteens_id?: string }>();
-	const { canteens, selectedCanteen } = useSelector(
-		(state: RootState) => state.canteenReducer
-	);
+	const { canteens, selectedCanteen } = useSelector((state: RootState) => state.canteenReducer);
 
 	return useMemo(() => {
 		if (canteens_id) {
@@ -27,9 +25,7 @@ export default function useSelectedCanteen() {
 		}
 
 		if (selectedCanteen) {
-			const exists = canteens.find(
-				c => String(c.id) === String(selectedCanteen.id)
-			);
+			const exists = canteens.find(c => String(c.id) === String(selectedCanteen.id));
 			if (exists) {
 				return exists;
 			}

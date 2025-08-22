@@ -13,21 +13,7 @@ import { deleteDirectusFile } from '@/constants/HelperFunctions';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const ImageUpload = ({
-	id,
-	value,
-	onChange,
-	error,
-	isDisabled,
-	custom_type,
-}: {
-	id: string;
-	value: any;
-	onChange: (id: string, value: any, custom_type: string) => void;
-	error: string;
-	isDisabled: boolean;
-	custom_type: string;
-}) => {
+const ImageUpload = ({ id, value, onChange, error, isDisabled, custom_type }: { id: string; value: any; onChange: (id: string, value: any, custom_type: string) => void; error: string; isDisabled: boolean; custom_type: string }) => {
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
 	const formAnswersHelper = new FormAnswersHelper();
@@ -37,8 +23,7 @@ const ImageUpload = ({
 		let result;
 
 		const cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
-		const mediaPermission =
-			await ImagePicker.requestMediaLibraryPermissionsAsync();
+		const mediaPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
 		// If permission is not granted for Camera
 		if (fromCamera && cameraPermission.status !== 'granted') {
@@ -91,9 +76,7 @@ const ImageUpload = ({
 				})) as DatabaseTypes.FormAnswers;
 
 				if (formAnswer && formAnswer?.value_image) {
-					const isFileDeleted = await deleteDirectusFile(
-						String(formAnswer.value_image)
-					);
+					const isFileDeleted = await deleteDirectusFile(String(formAnswer.value_image));
 					if (isFileDeleted) {
 						const deleteResponse = (await formAnswersHelper.updateFormAnswers(id, {
 							value_image: null,
@@ -130,20 +113,12 @@ const ImageUpload = ({
 					disabled={isDisabled}
 				>
 					<MaterialIcons name="image" size={24} color={theme.screen.text} />
-					<Text style={{ ...styles.uploadText, color: theme.screen.text }}>
-						{translate(TranslationKeys.upload_image)}
-					</Text>
+					<Text style={{ ...styles.uploadText, color: theme.screen.text }}>{translate(TranslationKeys.upload_image)}</Text>
 				</TouchableOpacity>
 				{!isWeb && (
-					<TouchableOpacity
-						style={{ ...styles.uploadButton, backgroundColor: primaryColor }}
-						onPress={() => pickImage(true)}
-						disabled={isDisabled}
-					>
+					<TouchableOpacity style={{ ...styles.uploadButton, backgroundColor: primaryColor }} onPress={() => pickImage(true)} disabled={isDisabled}>
 						<Ionicons name="camera" size={24} color={theme.screen.text} />
-						<Text style={{ ...styles.uploadText, color: theme.screen.text }}>
-							{translate(TranslationKeys.camera)}
-						</Text>
+						<Text style={{ ...styles.uploadText, color: theme.screen.text }}>{translate(TranslationKeys.camera)}</Text>
 					</TouchableOpacity>
 				)}
 			</View>
@@ -162,10 +137,7 @@ const ImageUpload = ({
 					>
 						<Ionicons name="close" size={18} color={'red'} />
 					</TouchableOpacity>
-					<Image
-						source={{ uri: value?.image ? value?.image : value }}
-						style={styles.filePreview}
-					/>
+					<Image source={{ uri: value?.image ? value?.image : value }} style={styles.filePreview} />
 				</View>
 			)}
 		</View>

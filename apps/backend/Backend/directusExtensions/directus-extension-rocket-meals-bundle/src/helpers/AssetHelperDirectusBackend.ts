@@ -43,10 +43,7 @@ export class BackendHelperDirectus {
 }
 
 export class AssetHelperDirectusBackend {
-  static getAssetImageURL(
-    imageID: string | null | undefined | DatabaseTypes.DirectusFiles,
-    imageTransform: ImageTransform = AssetHelperTransformOptions.DEFAULT_IMAGE_TRANSFORM
-  ): string | null {
+  static getAssetImageURL(imageID: string | null | undefined | DatabaseTypes.DirectusFiles, imageTransform: ImageTransform = AssetHelperTransformOptions.DEFAULT_IMAGE_TRANSFORM): string | null {
     let usedImageId;
 
     // maybe imageID is a http:// or https:// url that we can use directly
@@ -73,16 +70,12 @@ export class AssetHelperDirectusBackend {
       // https://docs.directus.io/reference/files.html#requesting-a-thumbnail
       let paramFit = FIT_MODE_DEFAULT ? 'fit=' + FIT_MODE_DEFAULT : null;
       let paramWidth = RESOLUTION_WIDTH ? 'width=' + RESOLUTION_WIDTH : null;
-      let paramHeight = RESOLUTION_HEIGHT
-        ? 'height=' + RESOLUTION_HEIGHT
-        : null;
+      let paramHeight = RESOLUTION_HEIGHT ? 'height=' + RESOLUTION_HEIGHT : null;
       let paramQuality = QUALITY ? 'quality=' + QUALITY : null;
       let paramAdd = undefined;
       if (paramFit || paramWidth || paramHeight || paramQuality) {
         paramAdd = '?';
-        let paramsJoined = [paramFit, paramWidth, paramHeight, paramQuality]
-          .filter(param => param !== null)
-          .join('&');
+        let paramsJoined = [paramFit, paramWidth, paramHeight, paramQuality].filter(param => param !== null).join('&');
         paramAdd += paramsJoined;
       }
 

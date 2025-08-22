@@ -15,12 +15,7 @@
     "interface": "list-o2m",
     "note": null,
     "options": {
-      "fields": [
-        "alias",
-        "external_identifier",
-        "date_stated",
-        "date_finished"
-      ],
+      "fields": ["alias", "external_identifier", "date_stated", "date_finished"],
       "layout": "table",
       "template": "{{alias}}({{external_identifier}})-finish:{{date_finished}}"
     },

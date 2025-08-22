@@ -26,9 +26,7 @@ const Footer = () => {
 										})
 									}
 								>
-									<Text style={{ ...styles.link, color: theme.screen.text }}>
-										{getTitleFromTranslation(wiki?.translations, language)}
-									</Text>
+									<Text style={{ ...styles.link, color: theme.screen.text }}>{getTitleFromTranslation(wiki?.translations, language)}</Text>
 								</TouchableOpacity>
 								<Text style={{ ...styles.divider, color: theme.screen.text }}>|</Text>
 							</React.Fragment>

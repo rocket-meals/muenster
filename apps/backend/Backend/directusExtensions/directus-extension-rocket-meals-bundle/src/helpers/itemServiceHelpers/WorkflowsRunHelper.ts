@@ -18,9 +18,7 @@ export class WorkflowResultHash {
     return this.result_hash;
   }
 
-  public static isError(
-    resultHash: WorkflowResultHash | Error
-  ): resultHash is Error {
+  public static isError(resultHash: WorkflowResultHash | Error): resultHash is Error {
     return resultHash instanceof Error;
   }
 }
@@ -29,10 +27,7 @@ export class WorkflowsRunHelper extends ItemsServiceHelper<DatabaseTypes.Workflo
   /**
    * @throws {Error}
    */
-  async getPreviousResultHash(
-    workflowRun: DatabaseTypes.WorkflowsRuns,
-    logger: WorkflowRunLogger
-  ): Promise<WorkflowResultHash | Error> {
+  async getPreviousResultHash(workflowRun: DatabaseTypes.WorkflowsRuns, logger: WorkflowRunLogger): Promise<WorkflowResultHash | Error> {
     //console.log("getPreviousResultHash");
     // we need to search in workflowruns for the last successful run of this schedule and get the result_hash
     // if there is no successful run, we return null
@@ -80,12 +75,8 @@ export class WorkflowsRunHelper extends ItemsServiceHelper<DatabaseTypes.Workflo
       .catch(async (exception: any) => {
         //console.log("getPreviousResultHash workflowRuns readByQuery Error");
         //console.log(exception.message);
-        await logger.appendLog(
-          'Error while getting previous result hash: ' + exception?.toString()
-        );
-        return new Error(
-          'Error while getting previous result hash: ' + exception?.toString()
-        );
+        await logger.appendLog('Error while getting previous result hash: ' + exception?.toString());
+        return new Error('Error while getting previous result hash: ' + exception?.toString());
       });
   }
 }

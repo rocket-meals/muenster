@@ -1,10 +1,7 @@
 import axios from 'axios';
 import { load as cheerioLoad } from 'cheerio';
 import { TranslationHelper } from '../../helpers/TranslationHelper';
-import {
-  NewsParserInterface,
-  NewsTypeForParser,
-} from './../NewsParserInterface';
+import { NewsParserInterface, NewsTypeForParser } from './../NewsParserInterface';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WorkflowRunLogger } from '../../workflows-runs-hook/WorkflowRunJobInterface';
 
@@ -15,24 +12,18 @@ type ArticleDetails = {
 export class StudentenwerkOsnabrueckNews_Parser implements NewsParserInterface {
   static baseUrl = 'https://www.studentenwerk-osnabrueck.de/';
   static newsUrl = `https://www.studentenwerk-osnabrueck.de/de/nachrichten.html`;
-  static newsArticleUrl =
-    'https://www.studentenwerk-osnabrueck.de//de/nachrichten/artikel-details';
+  static newsArticleUrl = 'https://www.studentenwerk-osnabrueck.de//de/nachrichten/artikel-details';
 
   constructor() {}
 
-  async getNewsItems(
-    workflowRun?: DatabaseTypes.WorkflowsRuns,
-    logger?: WorkflowRunLogger
-  ): Promise<NewsTypeForParser[]> {
+  async getNewsItems(workflowRun?: DatabaseTypes.WorkflowsRuns, logger?: WorkflowRunLogger): Promise<NewsTypeForParser[]> {
     let realNewsItems = await this.getRealNewsItems();
     return [...realNewsItems];
   }
 
   async getRealNewsItems(): Promise<NewsTypeForParser[]> {
     try {
-      let response = await axios.get(
-        StudentenwerkOsnabrueckNews_Parser.newsUrl
-      );
+      let response = await axios.get(StudentenwerkOsnabrueckNews_Parser.newsUrl);
       let $ = cheerioLoad(response.data); // Load the HTML into cheerio
       let articles = $('div.article');
 
@@ -41,16 +32,10 @@ export class StudentenwerkOsnabrueckNews_Parser implements NewsParserInterface {
       for (let i = 0; i < articles.length; i++) {
         let article = articles[i];
         let imageElement = $(article).find('img');
-        let imageUrl = imageElement.length
-          ? StudentenwerkOsnabrueckNews_Parser.baseUrl +
-            imageElement.attr('src')
-          : '';
+        let imageUrl = imageElement.length ? StudentenwerkOsnabrueckNews_Parser.baseUrl + imageElement.attr('src') : '';
 
         let linkElement = $(article).find('a');
-        let articleUrl = linkElement.length
-          ? StudentenwerkOsnabrueckNews_Parser.baseUrl +
-            linkElement.attr('href')
-          : '';
+        let articleUrl = linkElement.length ? StudentenwerkOsnabrueckNews_Parser.baseUrl + linkElement.attr('href') : '';
 
         let articleDetails = await this.getArticleDetails(articleUrl);
 
@@ -71,9 +56,7 @@ export class StudentenwerkOsnabrueckNews_Parser implements NewsParserInterface {
             external_identifier: 'news_' + header.replace(/\W+/g, '_'),
             image_remote_url: imageUrl,
             alias: header,
-            date: articleDetails?.date
-              ? articleDetails.date.toISOString()
-              : null,
+            date: articleDetails?.date ? articleDetails.date.toISOString() : null,
             url: articleUrl,
             categories: {}, // Assuming no category data; fill in as needed
           },
@@ -121,9 +104,7 @@ export class StudentenwerkOsnabrueckNews_Parser implements NewsParserInterface {
           let year: number | undefined = undefined;
           if (yearSingle < 100) {
             let currentYearWithCentury = new Date().getFullYear();
-            let currentYear = parseInt(
-              ('' + currentYearWithCentury).substring(0, 2)
-            );
+            let currentYear = parseInt(('' + currentYearWithCentury).substring(0, 2));
             year = parseInt(currentYear + '' + yearSingle);
           } else {
             year = yearSingle;

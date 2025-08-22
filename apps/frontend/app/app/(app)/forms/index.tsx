@@ -1,11 +1,4 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -57,10 +50,7 @@ const index = () => {
 	}, []);
 
 	return (
-		<ScrollView
-			style={{ ...styles.container, backgroundColor: theme.screen.background }}
-			contentContainerStyle={{ ...styles.contentContainer }}
-		>
+		<ScrollView style={{ ...styles.container, backgroundColor: theme.screen.background }} contentContainerStyle={{ ...styles.contentContainer }}>
 			<View
 				style={{
 					...styles.formCategories,
@@ -106,24 +96,10 @@ const index = () => {
 										}}
 									>
 										<View style={styles.col}>
-											{IconComponent && (
-												<IconComponent
-													name={iconName}
-													size={20}
-													color={theme.screen.icon}
-												/>
-											)}
-											<Text style={{ ...styles.body, color: theme.screen.text }}>
-												{form?.translations
-													? getFromCategoryTranslation(form?.translations, language)
-													: form?.alias}
-											</Text>
+											{IconComponent && <IconComponent name={iconName} size={20} color={theme.screen.icon} />}
+											<Text style={{ ...styles.body, color: theme.screen.text }}>{form?.translations ? getFromCategoryTranslation(form?.translations, language) : form?.alias}</Text>
 										</View>
-										<Entypo
-											name="chevron-small-right"
-											color={theme.screen.icon}
-											size={24}
-										/>
+										<Entypo name="chevron-small-right" color={theme.screen.icon} size={24} />
 									</TouchableOpacity>
 								);
 							})}

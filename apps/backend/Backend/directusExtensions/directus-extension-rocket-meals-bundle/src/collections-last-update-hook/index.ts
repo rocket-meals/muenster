@@ -6,11 +6,7 @@ import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
 const SCHEDULE_NAME = 'collections_dates_last_update';
 
 export default defineHook(async ({ action, init }, apiContext) => {
-  let allTablesExist =
-    await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(
-      SCHEDULE_NAME,
-      apiContext
-    );
+  let allTablesExist = await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(SCHEDULE_NAME, apiContext);
   if (!allTablesExist) {
     return;
   }
@@ -21,8 +17,7 @@ export default defineHook(async ({ action, init }, apiContext) => {
   // create a function which will be called after any update, create or delete of a collection, except the collection "collections_dates_last_update"
   // this function will update the collection "collections_dates_last_update" with the current date for the collection which was updated, created or deleted
 
-  let collectionsDatesLastUpdateService =
-    myDatabaseHelper.getCollectionDatesLastUpdateHelper();
+  let collectionsDatesLastUpdateService = myDatabaseHelper.getCollectionDatesLastUpdateHelper();
 
   //console.log("collection-last-update-hook: register hook")
 
@@ -33,25 +28,15 @@ export default defineHook(async ({ action, init }, apiContext) => {
    * If a collection is not existing anymore, we need to delete it from the "collections_dates_last_update" collection.
    */
   async function cleanupNonExistingCollectionsAndCreateMissingCollections() {
-    let allTableNamesInDatabase =
-      await DatabaseInitializedCheck.getTableNamesFromApiContext(apiContext);
-    let allTableNamesWithoutExcludeCollections = allTableNamesInDatabase.filter(
-      tableName => !excludeCollections.includes(tableName)
-    );
+    let allTableNamesInDatabase = await DatabaseInitializedCheck.getTableNamesFromApiContext(apiContext);
+    let allTableNamesWithoutExcludeCollections = allTableNamesInDatabase.filter(tableName => !excludeCollections.includes(tableName));
 
-    let allItemsInLastUpdatesTables =
-      await collectionsDatesLastUpdateService.readAllItems();
+    let allItemsInLastUpdatesTables = await collectionsDatesLastUpdateService.readAllItems();
 
-    let tableNamesInLastUpdatesTable = allItemsInLastUpdatesTables.map(
-      (item: any) => item.id
-    );
+    let tableNamesInLastUpdatesTable = allItemsInLastUpdatesTables.map((item: any) => item.id);
 
-    let missingTableNames = allTableNamesWithoutExcludeCollections.filter(
-      tableName => !tableNamesInLastUpdatesTable.includes(tableName)
-    );
-    let tableNamesToDelete = tableNamesInLastUpdatesTable.filter(
-      tableName => !allTableNamesWithoutExcludeCollections.includes(tableName)
-    );
+    let missingTableNames = allTableNamesWithoutExcludeCollections.filter(tableName => !tableNamesInLastUpdatesTable.includes(tableName));
+    let tableNamesToDelete = tableNamesInLastUpdatesTable.filter(tableName => !allTableNamesWithoutExcludeCollections.includes(tableName));
 
     for (let tableNameToDelete of tableNamesToDelete) {
       await collectionsDatesLastUpdateService.deleteOne(tableNameToDelete);

@@ -14,10 +14,7 @@ export const fetchFoodOffers = async () => {
 	}
 };
 
-export const fetchFoodOffersByCanteen = async (
-	canteenId: string,
-	selected: string
-) => {
+export const fetchFoodOffersByCanteen = async (canteenId: string, selected: string) => {
 	try {
 		// Date format should be YYYY-MM-DD
 		const paramDateStart = new Date(selected).toISOString().split('T')[0];
@@ -25,8 +22,7 @@ export const fetchFoodOffersByCanteen = async (
 
 		const response = await axios.get('/items/foodoffers', {
 			params: {
-				fields:
-					'*, markings.*,food.*,food.translations.*, attribute_values.*, attribute_values.food_attribute.*,attribute_values.food_attribute.group.*, attribute_values.food_attribute.translations.*, foods_attributes_values.*', // Fetch all fields, including related ones
+				fields: '*, markings.*,food.*,food.translations.*, attribute_values.*, attribute_values.food_attribute.*,attribute_values.food_attribute.group.*, attribute_values.food_attribute.translations.*, foods_attributes_values.*', // Fetch all fields, including related ones
 				limit: -1, // Remove limit to fetch all results
 				filter: {
 					_and: [
@@ -68,18 +64,11 @@ export const fetchFoodOffersByCanteen = async (
 	}
 };
 
-export const fetchFoodsByCanteen = async (
-	canteenId: string,
-	selected?: string
-) => {
+export const fetchFoodsByCanteen = async (canteenId: string, selected?: string) => {
 	try {
 		// Initialize date filter variables only if `selected` is provided
-		const paramDateStart = selected
-			? new Date(selected).toISOString().split('T')[0]
-			: null;
-		const paramDateEnd = selected
-			? new Date(selected).toISOString().split('T')[0]
-			: null;
+		const paramDateStart = selected ? new Date(selected).toISOString().split('T')[0] : null;
+		const paramDateEnd = selected ? new Date(selected).toISOString().split('T')[0] : null;
 
 		// Construct the base filter
 		const baseFilter: any[] = [
@@ -119,8 +108,7 @@ export const fetchFoodsByCanteen = async (
 
 		const response = await axios.get('/items/foodoffers', {
 			params: {
-				fields:
-					'*,food.*,!food.feedbacks,food.translations.*,markings.*, attribute_values.*, attribute_values.food_attribute.*,attribute_values.food_attribute.group.*, attribute_values.food_attribute.translations.*, foods_attributes_values.*', // Exclude food.feedbacks field as per the API call
+				fields: '*,food.*,!food.feedbacks,food.translations.*,markings.*, attribute_values.*, attribute_values.food_attribute.*,attribute_values.food_attribute.group.*, attribute_values.food_attribute.translations.*, foods_attributes_values.*', // Exclude food.feedbacks field as per the API call
 				limit: -1, // Fetch all results
 				filter: { _and: baseFilter },
 			},
@@ -136,8 +124,7 @@ export const fetchFoodOffersDetailsById = async (id: string) => {
 	try {
 		const response = await axios.get(`/items/foodoffers/${id}`, {
 			params: {
-				fields:
-					'*, markings.*,feedbacks.*,food.*,food.translations.*,food.food_category.*,food.food_category.translations.*,foodoffer_category.*,foodoffer_category.translations.*,attribute_values.*, attribute_values.food_attribute.*, attribute_values.food_attribute.translations.*, foods_attributes_values.*',
+				fields: '*, markings.*,feedbacks.*,food.*,food.translations.*,food.food_category.*,food.food_category.translations.*,foodoffer_category.*,foodoffer_category.translations.*,attribute_values.*, attribute_values.food_attribute.*, attribute_values.food_attribute.translations.*, foods_attributes_values.*',
 				limit: -1,
 				deep: {
 					feedbacks: {
@@ -178,10 +165,7 @@ export const fetchFoodDetailsById = async (id: string) => {
 };
 
 // Fetch foods feedbacks, labels, and entries with specific filters, aggregation, and grouping
-export const fetchFoodsFeedbacksLabelsEntries = async (
-	foodId: string,
-	labelId: string
-) => {
+export const fetchFoodsFeedbacksLabelsEntries = async (foodId: string, labelId: string) => {
 	try {
 		const response = await axios.get('/items/foods_feedbacks_labels_entries', {
 			params: {

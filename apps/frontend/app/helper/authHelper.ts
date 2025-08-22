@@ -2,12 +2,7 @@ import { Platform } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import usePlatformHelper from './platformHelper';
 
-export const handleWebLogin = async (
-	loginUrl: string,
-	redirectUrl: string,
-	codeVerifier: string,
-	getToken: (codeVerifier: string, code: string) => void
-) => {
+export const handleWebLogin = async (loginUrl: string, redirectUrl: string, codeVerifier: string, getToken: (codeVerifier: string, code: string) => void) => {
 	const WEB_CHECK_INTERVAL = 25;
 
 	return new Promise<void>(resolve => {
@@ -36,12 +31,7 @@ export const handleWebLogin = async (
 	});
 };
 
-export const handleNativeLogin = async (
-	loginUrl: string,
-	redirectUrl: string,
-	codeVerifier: string,
-	getToken: (codeVerifier: string, code: string) => void
-) => {
+export const handleNativeLogin = async (loginUrl: string, redirectUrl: string, codeVerifier: string, getToken: (codeVerifier: string, code: string) => void) => {
 	const { getAndroidPreferredBrowserPackageOption } = usePlatformHelper();
 	const isAndroid = Platform.OS === 'android';
 	let result = null;

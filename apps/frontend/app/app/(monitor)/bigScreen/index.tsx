@@ -1,22 +1,10 @@
-import {
-	Animated,
-	Dimensions,
-	Easing,
-	Image,
-	ScrollView,
-	Text,
-	View,
-} from 'react-native';
+import { Animated, Dimensions, Easing, Image, ScrollView, Text, View } from 'react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoodsByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
-import {
-	getImageUrl,
-	showDayPlanPrice,
-	showFormatedPrice,
-} from '@/constants/HelperFunctions';
+import { getImageUrl, showDayPlanPrice, showFormatedPrice } from '@/constants/HelperFunctions';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
 import { myContrastColor } from '@/helper/colorHelper';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -30,10 +18,7 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 import { FoodCategoriesHelper } from '@/redux/actions/FoodCategories/FoodCategories';
 import { DatabaseTypes } from 'repo-depkit-common';
-import {
-	SET_FOOD_CATEGORIES,
-	SET_FOOD_OFFERS_CATEGORIES,
-} from '@/redux/Types/types';
+import { SET_FOOD_CATEGORIES, SET_FOOD_OFFERS_CATEGORIES } from '@/redux/Types/types';
 import { FoodOffersCategoriesHelper } from '@/redux/actions/FoodOffersCategories/FoodOffersCategories';
 
 const Index = () => {
@@ -47,38 +32,24 @@ const Index = () => {
 	const { width, height } = Dimensions.get('window');
 	const imageSize = width / 2;
 	const [currentTime, setCurrentTime] = useState('');
-	const { markings, foodCategories, foodOfferCategories } = useSelector(
-		(state: RootState) => state.food
-	);
+	const { markings, foodCategories, foodOfferCategories } = useSelector((state: RootState) => state.food);
 	const [logoStyle, setLogoStyle] = useState(styles.logo);
-	const {
-		language,
-		primaryColor: projectColor,
-		appSettings,
-		serverInfo,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { language, primaryColor: projectColor, appSettings, serverInfo, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const [foods, setFoods] = useState([]);
 	const [currentFoodIndex, setCurrentFoodIndex] = useState(0);
 	const [currentFood, setCurrentFood] = useState<any>(null);
 	const [currentMarking, setCurrentMarking] = useState([]);
 	const [currentFoodCategory, setCurrentFoodCategory] = useState<any>(null);
-	const [currentFoodOfferCategory, setCurrentFoodOfferCategory] =
-		useState<any>(null);
+	const [currentFoodOfferCategory, setCurrentFoodOfferCategory] = useState<any>(null);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const [isConnected, setIsConnected] = useState(true);
 	const progressAnim = useRef(new Animated.Value(0)).current;
 	const refreshIntervalRef = useRef<NodeJS.Timeout | null>(null);
 	const { canteens } = useSelector((state: RootState) => state.canteenReducer);
 	const [selectedCanteen, setSelectedCanteen] = useState<any>(null);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: projectColor;
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
 
-	const defaultImage =
-		getImageUrl(String(appSettings.foods_placeholder_image)) ||
-		appSettings.foods_placeholder_image_remote_url ||
-		getImageUrl(serverInfo?.info?.project?.project_logo);
+	const defaultImage = getImageUrl(String(appSettings.foods_placeholder_image)) || appSettings.foods_placeholder_image_remote_url || getImageUrl(serverInfo?.info?.project?.project_logo);
 
 	useEffect(() => {
 		const unsubscribe = NetInfo.addEventListener(state => {
@@ -90,9 +61,7 @@ const Index = () => {
 
 	const getFoodCategories = async () => {
 		try {
-			const result = (await foodCategoriesHelper.fetchFoodCategories(
-				{}
-			)) as DatabaseTypes.FoodsCategories[];
+			const result = (await foodCategoriesHelper.fetchFoodCategories({})) as DatabaseTypes.FoodsCategories[];
 			if (result) {
 				dispatch({ type: SET_FOOD_CATEGORIES, payload: result });
 			}
@@ -103,9 +72,7 @@ const Index = () => {
 
 	const getFoodOffersCategories = async () => {
 		try {
-			const result = (await foodOffersCategoriesHelper.fetchFoodOffersCategories(
-				{}
-			)) as DatabaseTypes.FoodoffersCategories[];
+			const result = (await foodOffersCategoriesHelper.fetchFoodOffersCategories({})) as DatabaseTypes.FoodoffersCategories[];
 			if (result) {
 				dispatch({ type: SET_FOOD_OFFERS_CATEGORIES, payload: result });
 			}
@@ -126,9 +93,7 @@ const Index = () => {
 	const fetchSelectedCanteen = useCallback(() => {
 		if (!params?.canteens_id || !canteens || canteens.length === 0) return;
 
-		const foundCanteen = canteens?.find(
-			(canteen: any) => canteen.id === params?.canteens_id
-		);
+		const foundCanteen = canteens?.find((canteen: any) => canteen.id === params?.canteens_id);
 
 		if (foundCanteen) {
 			setSelectedCanteen(foundCanteen);
@@ -144,25 +109,18 @@ const Index = () => {
 	const fetchFoods = async () => {
 		try {
 			const todayDate = new Date().toISOString().split('T')[0];
-			const foodData = await fetchFoodsByCanteen(
-				String(params?.canteens_id),
-				todayDate
-			);
+			const foodData = await fetchFoodsByCanteen(String(params?.canteens_id), todayDate);
 
 			let filteredData = foodData?.data || [];
 
 			// First filter by foodCategoryIds if exists
 			if (params?.foodCategoryIds) {
-				filteredData = filteredData.filter(
-					(food: any) => food?.foodoffer_category === params.foodCategoryIds
-				);
+				filteredData = filteredData.filter((food: any) => food?.foodoffer_category === params.foodCategoryIds);
 			}
 
 			// Then filter by foodOfferCategoryIds if exists (using previous filtered results)
 			if (params?.foodOfferCategoryIds) {
-				const offerFiltered = filteredData.filter(
-					(food: any) => food?.food?.food_category === params.foodOfferCategoryIds
-				);
+				const offerFiltered = filteredData.filter((food: any) => food?.food?.food_category === params.foodOfferCategoryIds);
 				// Only overwrite if we have results from both filters
 				filteredData = offerFiltered.length > 0 ? offerFiltered : [];
 			}
@@ -247,9 +205,7 @@ const Index = () => {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const now = new Date();
-			const formattedTime = `${now
-				.toLocaleDateString('en-GB')
-				.replace(/\//g, '.')} - ${now.toLocaleTimeString('en-US', {
+			const formattedTime = `${now.toLocaleDateString('en-GB').replace(/\//g, '.')} - ${now.toLocaleTimeString('en-US', {
 				hour12: false,
 			})}`;
 			setCurrentTime(formattedTime);
@@ -261,14 +217,10 @@ const Index = () => {
 	const fetchCurrentFoodCategory = async () => {
 		try {
 			if (params?.foodCategoryIds) {
-				const currentCategory = foodOfferCategories?.filter(
-					(category: any) => category?.id === params?.foodCategoryIds
-				);
+				const currentCategory = foodOfferCategories?.filter((category: any) => category?.id === params?.foodCategoryIds);
 				setCurrentFoodCategory(currentCategory[0]);
 			} else {
-				const currentCategory = foodOfferCategories?.filter(
-					(category: any) => category?.id === currentFood?.foodoffer_category
-				);
+				const currentCategory = foodOfferCategories?.filter((category: any) => category?.id === currentFood?.foodoffer_category);
 				setCurrentFoodCategory(currentCategory[0]);
 			}
 		} catch (error) {
@@ -279,14 +231,10 @@ const Index = () => {
 	const fetchCurrentFoodOfferCategory = async () => {
 		try {
 			if (params?.foodOfferCategoryIds) {
-				const currentCategory = foodCategories?.filter(
-					(category: any) => category?.id === params?.foodOfferCategoryIds
-				);
+				const currentCategory = foodCategories?.filter((category: any) => category?.id === params?.foodOfferCategoryIds);
 				setCurrentFoodOfferCategory(currentCategory[0]);
 			} else {
-				const currentCategory = foodCategories?.filter(
-					(category: any) => category?.id === currentFood?.food?.food_category
-				);
+				const currentCategory = foodCategories?.filter((category: any) => category?.id === currentFood?.food?.food_category);
 				setCurrentFoodOfferCategory(currentCategory[0]);
 			}
 		} catch (error) {
@@ -297,27 +245,17 @@ const Index = () => {
 	const fetchMarkingLabels = useCallback(() => {
 		if (!currentFood?.markings || !markings) return;
 
-		const markingIds = currentFood?.markings?.map(
-			(mark: any) => mark.markings_id
-		);
+		const markingIds = currentFood?.markings?.map((mark: any) => mark.markings_id);
 
-		const filteredMarkings = markings?.filter((mark: any) =>
-			markingIds?.includes(mark.id)
-		);
+		const filteredMarkings = markings?.filter((mark: any) => markingIds?.includes(mark.id));
 
 		let dummyMarkings: any = [];
 		if (filteredMarkings) {
 			filteredMarkings?.forEach((item: any) => {
-				const markingImage = item?.image_remote_url
-					? { uri: item?.image_remote_url }
-					: { uri: getImageUrl(item?.image) };
+				const markingImage = item?.image_remote_url ? { uri: item?.image_remote_url } : { uri: getImageUrl(item?.image) };
 
 				const backgroundColor = item?.background_color;
-				const MarkingColor = myContrastColor(
-					item?.background_color,
-					theme,
-					mode === 'dark'
-				);
+				const MarkingColor = myContrastColor(item?.background_color, theme, mode === 'dark');
 				dummyMarkings.push({
 					image: markingImage,
 					bgColor: backgroundColor,
@@ -368,8 +306,7 @@ const Index = () => {
 				backgroundColor: theme.screen.background,
 			}}
 			contentContainerStyle={{
-				flexDirection:
-					foods && foods?.length < 1 ? 'column' : width > height ? 'row' : 'column',
+				flexDirection: foods && foods?.length < 1 ? 'column' : width > height ? 'row' : 'column',
 			}}
 		>
 			<View style={[foods && foods?.length > 0 && { flex: 1 }]}>
@@ -425,11 +362,7 @@ const Index = () => {
 										fontSize: screenWidth > 600 ? 14 : 12,
 									}}
 								>
-									{foods?.length > 0
-										? `${currentFoodIndex + 1} / ${foods?.length} ${translate(
-												TranslationKeys.foods
-											)}`
-										: ''}
+									{foods?.length > 0 ? `${currentFoodIndex + 1} / ${foods?.length} ${translate(TranslationKeys.foods)}` : ''}
 								</Text>
 							</View>
 						</View>
@@ -455,12 +388,9 @@ const Index = () => {
 							<View style={{ ...styles.col2 }}>
 								<Image
 									source={
-										currentFood?.food?.image_remote_url ||
-										getImageUrl(currentFood?.food?.image)
+										currentFood?.food?.image_remote_url || getImageUrl(currentFood?.food?.image)
 											? {
-													uri:
-														currentFood?.food?.image_remote_url ||
-														getImageUrl(currentFood?.food?.image),
+													uri: currentFood?.food?.image_remote_url || getImageUrl(currentFood?.food?.image),
 												}
 											: { uri: defaultImage }
 									}
@@ -487,9 +417,7 @@ const Index = () => {
 											fontSize: screenWidth > 600 ? 24 : 16,
 										}}
 									>
-										{currentFoodCategory && currentFoodCategory?.translations?.length > 0
-											? getTextFromTranslation(currentFoodCategory?.translations, language)
-											: currentFoodCategory?.alias || ''}
+										{currentFoodCategory && currentFoodCategory?.translations?.length > 0 ? getTextFromTranslation(currentFoodCategory?.translations, language) : currentFoodCategory?.alias || ''}
 									</Text>
 								)}
 								{params?.showFoodofferCategoryName === 'true' && (
@@ -500,13 +428,7 @@ const Index = () => {
 											fontSize: screenWidth > 600 ? 24 : 16,
 										}}
 									>
-										{currentFoodOfferCategory &&
-										currentFoodOfferCategory?.translations?.length > 0
-											? getTextFromTranslation(
-													currentFoodOfferCategory?.translations,
-													language
-												)
-											: currentFoodOfferCategory?.alias || ''}
+										{currentFoodOfferCategory && currentFoodOfferCategory?.translations?.length > 0 ? getTextFromTranslation(currentFoodOfferCategory?.translations, language) : currentFoodOfferCategory?.alias || ''}
 									</Text>
 								)}
 
@@ -579,14 +501,7 @@ const Index = () => {
 												background_color: item.bgColor,
 												hide_border: item.hide_border,
 											} as any;
-											return (
-												<MarkingIcon
-													key={idx}
-													marking={marking}
-													size={30}
-													color={item.color}
-												/>
-											);
+											return <MarkingIcon key={idx} marking={marking} size={30} color={item.color} />;
 										})}
 								</View>
 							</View>
@@ -600,12 +515,9 @@ const Index = () => {
 						<View style={{ ...styles.col2 }}>
 							<Image
 								source={
-									currentFood?.food?.image_remote_url ||
-									getImageUrl(currentFood?.food?.image)
+									currentFood?.food?.image_remote_url || getImageUrl(currentFood?.food?.image)
 										? {
-												uri:
-													currentFood?.food?.image_remote_url ||
-													getImageUrl(currentFood?.food?.image),
+												uri: currentFood?.food?.image_remote_url || getImageUrl(currentFood?.food?.image),
 											}
 										: { uri: defaultImage }
 								}

@@ -1,10 +1,4 @@
-import {
-	ActivityIndicator,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import styles from './styles';
@@ -24,9 +18,7 @@ const EditFormSubmissionSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
 	const { formSubmission } = useSelector((state: RootState) => state.form);
-	const [alias, setAlias] = useState(
-		formSubmission ? formSubmission?.alias : ''
-	);
+	const [alias, setAlias] = useState(formSubmission ? formSubmission?.alias : '');
 	const [loading, setLoading] = useState(false);
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
 	const formsSubmissionsHelper = new FormsSubmissionsHelper();
@@ -34,12 +26,9 @@ const EditFormSubmissionSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 	const handleChangeAlias = async () => {
 		if (id && alias) {
 			setLoading(true);
-			const update = (await formsSubmissionsHelper.updateFormSubmissionById(
-				String(id),
-				{
-					alias: alias,
-				}
-			)) as DatabaseTypes.FormSubmissions;
+			const update = (await formsSubmissionsHelper.updateFormSubmissionById(String(id), {
+				alias: alias,
+			})) as DatabaseTypes.FormSubmissions;
 			if (update) {
 				dispatch({ type: SET_FORM_SUBMISSION, payload: update });
 				setLoading(false);
@@ -52,10 +41,7 @@ const EditFormSubmissionSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 	};
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -80,14 +66,7 @@ const EditFormSubmissionSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 						...styles.inputContainer,
 					}}
 				>
-					<TextInput
-						style={[styles.input, { color: theme.screen.text }]}
-						cursorColor={theme.screen.text}
-						placeholderTextColor={theme.screen.placeholder}
-						onChangeText={setAlias}
-						value={alias}
-						placeholder="Type here..."
-					/>
+					<TextInput style={[styles.input, { color: theme.screen.text }]} cursorColor={theme.screen.text} placeholderTextColor={theme.screen.placeholder} onChangeText={setAlias} value={alias} placeholder="Type here..." />
 				</View>
 				<View style={styles.actionContainer}>
 					<TouchableOpacity
@@ -98,9 +77,7 @@ const EditFormSubmissionSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 						}}
 						onPress={closeSheet}
 					>
-						<Text style={{ ...styles.buttonLabel, color: theme.screen.text }}>
-							{translate(TranslationKeys.cancel)}
-						</Text>
+						<Text style={{ ...styles.buttonLabel, color: theme.screen.text }}>{translate(TranslationKeys.cancel)}</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={{
@@ -110,13 +87,7 @@ const EditFormSubmissionSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 						}}
 						onPress={handleChangeAlias}
 					>
-						{loading ? (
-							<ActivityIndicator size={22} color={theme.screen.text} />
-						) : (
-							<Text style={{ ...styles.buttonLabel, color: theme.activeText }}>
-								{translate(TranslationKeys.save)}
-							</Text>
-						)}
+						{loading ? <ActivityIndicator size={22} color={theme.screen.text} /> : <Text style={{ ...styles.buttonLabel, color: theme.activeText }}>{translate(TranslationKeys.save)}</Text>}
 					</TouchableOpacity>
 				</View>
 			</View>

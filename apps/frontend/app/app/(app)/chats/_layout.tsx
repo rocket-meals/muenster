@@ -18,17 +18,13 @@ export default function ChatsLayout() {
 			<Stack.Screen
 				name="index"
 				options={{
-					header: () => (
-						<CustomStackHeader label={translate(TranslationKeys.chats)} />
-					),
+					header: () => <CustomStackHeader label={translate(TranslationKeys.chats)} />,
 				}}
 			/>
 			<Stack.Screen
 				name="details/index"
 				options={{
-					header: () => (
-						<CustomStackHeader label={translate(TranslationKeys.chat)} />
-					),
+					header: () => <CustomStackHeader label={translate(TranslationKeys.chat)} />,
 				}}
 			/>
 		</Stack>

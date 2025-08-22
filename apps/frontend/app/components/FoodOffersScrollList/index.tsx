@@ -1,12 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-	FlatList,
-	View,
-	Text,
-	RefreshControl,
-	ActivityIndicator,
-	Dimensions,
-} from 'react-native';
+import { FlatList, View, Text, RefreshControl, ActivityIndicator, Dimensions } from 'react-native';
 import { addDays, format } from 'date-fns';
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
@@ -35,41 +28,27 @@ interface DayData {
 	offers: DatabaseTypes.Foodoffers[];
 }
 
-const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({
-	canteenId,
-	startDate,
-}) => {
+const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({ canteenId, startDate }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
-	const { canteenFeedbackLabels, canteens } = useSelector(
-		(state: RootState) => state.canteenReducer
-	);
+	const { canteenFeedbackLabels, canteens } = useSelector((state: RootState) => state.canteenReducer);
 	const { sortBy, language } = useSelector((state: RootState) => state.settings);
-	const { ownFoodFeedbacks, foodCategories, foodOfferCategories } = useSelector(
-		(state: RootState) => state.food
-	);
+	const { ownFoodFeedbacks, foodCategories, foodOfferCategories } = useSelector((state: RootState) => state.food);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
-	const selectedCanteen = canteens?.find(c => c.id === canteenId) as
-		| DatabaseTypes.Canteens
-		| undefined;
+	const selectedCanteen = canteens?.find(c => c.id === canteenId) as DatabaseTypes.Canteens | undefined;
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const [days, setDays] = useState<DayData[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
-	const [selectedSheet, setSelectedSheet] = useState<
-		'menu' | keyof typeof SHEET_COMPONENTS | null
-	>(null);
+	const [selectedSheet, setSelectedSheet] = useState<'menu' | keyof typeof SHEET_COMPONENTS | null>(null);
 	const [sheetProps, setSheetProps] = useState<Record<string, any>>({});
 	const [selectedFoodId, setSelectedFoodId] = useState('');
 	const bottomSheetRef = useRef<BottomSheet>(null);
 
-	const openSheet = useCallback(
-		(sheet: 'menu' | keyof typeof SHEET_COMPONENTS, props = {}) => {
-			setSelectedSheet(sheet);
-			setSheetProps(props);
-		},
-		[]
-	);
+	const openSheet = useCallback((sheet: 'menu' | keyof typeof SHEET_COMPONENTS, props = {}) => {
+		setSelectedSheet(sheet);
+		setSheetProps(props);
+	}, []);
 
 	const closeSheet = useCallback(() => {
 		bottomSheetRef.current?.snapToIndex(-1);
@@ -99,10 +78,7 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({
 		}
 	}, [selectedSheet]);
 
-	const SheetComponent =
-		selectedSheet && selectedSheet !== 'menu'
-			? SHEET_COMPONENTS[selectedSheet]
-			: null;
+	const SheetComponent = selectedSheet && selectedSheet !== 'menu' ? SHEET_COMPONENTS[selectedSheet] : null;
 
 	const sortOffers = useCallback(
 		(foodOffers: DatabaseTypes.Foodoffers[]) =>
@@ -114,14 +90,7 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({
 				foodOfferCategories,
 				useFoodOfferCategoryOnly: true,
 			}),
-		[
-			sortBy,
-			language,
-			ownFoodFeedbacks,
-			profile,
-			foodCategories,
-			foodOfferCategories,
-		]
+		[sortBy, language, ownFoodFeedbacks, profile, foodCategories, foodOfferCategories]
 	);
 
 	useEffect(() => {
@@ -185,16 +154,11 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({
 	};
 
 	const renderDay = ({ item }: { item: DayData }) => {
-		const feedbacks = canteenFeedbackLabels?.map((label, idx) => (
-			<CanteenFeedbackLabels key={`fl-${idx}`} label={label} date={item.date} />
-		));
+		const feedbacks = canteenFeedbackLabels?.map((label, idx) => <CanteenFeedbackLabels key={`fl-${idx}`} label={label} date={item.date} />);
 
 		return (
 			<View style={styles.dayContainer}>
-				<Text style={[styles.dateHeader, { color: theme.screen.text }]}>
-					{' '}
-					{format(new Date(item.date), 'dd.MM.yyyy')}{' '}
-				</Text>
+				<Text style={[styles.dateHeader, { color: theme.screen.text }]}> {format(new Date(item.date), 'dd.MM.yyyy')} </Text>
 				<View
 					style={{
 						...styles.foodContainer,
@@ -203,25 +167,11 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({
 					}}
 				>
 					{item.offers.map(offer => (
-						<FoodItem
-							key={offer.id}
-							item={offer}
-							canteen={selectedCanteen as DatabaseTypes.Canteens}
-							handleMenuSheet={openSheet}
-							handleImageSheet={openManagementSheet}
-							handleEatingHabitsSheet={openSheet}
-							setSelectedFoodId={setSelectedFoodId}
-						/>
+						<FoodItem key={offer.id} item={offer} canteen={selectedCanteen as DatabaseTypes.Canteens} handleMenuSheet={openSheet} handleImageSheet={openManagementSheet} handleEatingHabitsSheet={openSheet} setSelectedFoodId={setSelectedFoodId} />
 					))}
-					{item.offers.length === 0 && (
-						<Text style={{ color: theme.screen.text }}>
-							{translate(TranslationKeys.no_foodoffers_found_for_selection)}
-						</Text>
-					)}
+					{item.offers.length === 0 && <Text style={{ color: theme.screen.text }}>{translate(TranslationKeys.no_foodoffers_found_for_selection)}</Text>}
 				</View>
-				{feedbacks && feedbacks.length > 0 && (
-					<View style={styles.feebackContainer}>{feedbacks}</View>
-				)}
+				{feedbacks && feedbacks.length > 0 && <View style={styles.feebackContainer}>{feedbacks}</View>}
 			</View>
 		);
 	};
@@ -236,33 +186,13 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({
 
 	return (
 		<>
-			<FlatList
-				data={days}
-				keyExtractor={item => item.date}
-				renderItem={renderDay}
-				onEndReached={onEndReached}
-				onEndReachedThreshold={0.5}
-				refreshControl={
-					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-				}
-				scrollEventThrottle={16}
-				style={{ flex: 1 }}
-				contentContainerStyle={{ backgroundColor: theme.screen.background }}
-			/>
+			<FlatList data={days} keyExtractor={item => item.date} renderItem={renderDay} onEndReached={onEndReached} onEndReachedThreshold={0.5} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} scrollEventThrottle={16} style={{ flex: 1 }} contentContainerStyle={{ backgroundColor: theme.screen.background }} />
 			{selectedSheet &&
 				(selectedSheet === 'menu' ? (
 					<MarkingBottomSheet ref={bottomSheetRef} onClose={closeSheet} />
 				) : (
-					<BaseBottomSheet
-						key={selectedSheet}
-						ref={bottomSheetRef}
-						backgroundStyle={{ backgroundColor: theme.sheet.sheetBg }}
-						handleComponent={null}
-						onClose={closeSheet}
-					>
-						{SheetComponent && (
-							<SheetComponent closeSheet={closeSheet} {...sheetProps} />
-						)}
+					<BaseBottomSheet key={selectedSheet} ref={bottomSheetRef} backgroundStyle={{ backgroundColor: theme.sheet.sheetBg }} handleComponent={null} onClose={closeSheet}>
+						{SheetComponent && <SheetComponent closeSheet={closeSheet} {...sheetProps} />}
 					</BaseBottomSheet>
 				))}
 		</>

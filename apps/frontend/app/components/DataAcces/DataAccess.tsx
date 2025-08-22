@@ -21,19 +21,13 @@ const parseMarkdown = (text: string, theme: any) => {
 			);
 		} else if (line.startsWith('### ')) {
 			return (
-				<Text
-					key={index}
-					style={[styles.labelParagraph, { color: theme.header.text }]}
-				>
+				<Text key={index} style={[styles.labelParagraph, { color: theme.header.text }]}>
 					{line.replace('### ', '')}
 				</Text>
 			);
 		} else {
 			return (
-				<Text
-					key={index}
-					style={[styles.titleHeading, { color: theme.header.text }]}
-				>
+				<Text key={index} style={[styles.titleHeading, { color: theme.header.text }]}>
 					{line}
 				</Text>
 			);
@@ -46,26 +40,9 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
 	const { translate } = useLanguage();
 	const { user, profile } = useSelector((state: RootState) => state.authReducer);
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
-	const {
-		canteens,
-		buildings,
-		selectedCanteenFoodOffers,
-		canteenFoodOffers,
-		businessHours,
-		canteenFeedbackLabels,
-		ownCanteenFeedBackLabelEntries,
-	} = useSelector((state: RootState) => state.canteenReducer);
+	const { canteens, buildings, selectedCanteenFoodOffers, canteenFoodOffers, businessHours, canteenFeedbackLabels, ownCanteenFeedBackLabelEntries } = useSelector((state: RootState) => state.canteenReducer);
 
-	const {
-		foodFeedbackLabels,
-		ownFoodFeedbacks,
-		ownfoodFeedbackLabelEntries,
-		markings,
-		selectedFoodMarkings,
-		foodCategories,
-		foodOfferCategories,
-		markingDetails,
-	} = useSelector((state: RootState) => state.food);
+	const { foodFeedbackLabels, ownFoodFeedbacks, ownfoodFeedbackLabelEntries, markings, selectedFoodMarkings, foodCategories, foodOfferCategories, markingDetails } = useSelector((state: RootState) => state.food);
 
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
@@ -113,9 +90,7 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
 	];
 
 	return (
-		<View
-			style={{ ...styles.container, backgroundColor: theme.screen.background }}
-		>
+		<View style={{ ...styles.container, backgroundColor: theme.screen.background }}>
 			<ScrollView
 				contentContainerStyle={{
 					...styles.contentContainer,
@@ -124,16 +99,11 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
 			>
 				<View style={{ alignItems: 'center' }}>
 					<View style={styles.imageContainer}>
-						<Image
-							source={require('../../assets/images/dataAccess.png')}
-							style={styles.image}
-						/>
+						<Image source={require('../../assets/images/dataAccess.png')} style={styles.image} />
 					</View>
 					<View>{parseMarkdown(dataAccessText, theme)}</View>
 				</View>
-				<SettingsGroupTitle>
-					{translate(TranslationKeys.your_data_which_we_know_if_you_have_a_profile)}
-				</SettingsGroupTitle>
+				<SettingsGroupTitle>{translate(TranslationKeys.your_data_which_we_know_if_you_have_a_profile)}</SettingsGroupTitle>
 				{/* Info Items List */}
 				<View
 					style={{
@@ -143,78 +113,18 @@ const DataAccess = ({ onOpenBottomSheet }: any) => {
 					{infoItems.map((item, index) => {
 						const last = index === infoItems.length - 1;
 						const first = index === 0;
-						const groupPosition =
-							infoItems.length === 1
-								? 'single'
-								: first
-									? 'top'
-									: last
-										? 'bottom'
-										: 'middle';
-						return (
-							<SettingsList
-								key={index}
-								iconBgColor={primaryColor}
-								leftIcon={
-									<MaterialCommunityIcons
-										name="database-eye"
-										size={24}
-										color={theme.screen.icon}
-									/>
-								}
-								label={item.label}
-								rightIcon={
-									<Entypo
-										name="chevron-small-right"
-										size={24}
-										color={theme.screen.icon}
-									/>
-								}
-								handleFunction={() => onOpenBottomSheet(item)}
-								groupPosition={groupPosition as any}
-							/>
-						);
+						const groupPosition = infoItems.length === 1 ? 'single' : first ? 'top' : last ? 'bottom' : 'middle';
+						return <SettingsList key={index} iconBgColor={primaryColor} leftIcon={<MaterialCommunityIcons name="database-eye" size={24} color={theme.screen.icon} />} label={item.label} rightIcon={<Entypo name="chevron-small-right" size={24} color={theme.screen.icon} />} handleFunction={() => onOpenBottomSheet(item)} groupPosition={groupPosition as any} />;
 					})}
 
 					{/* Device Data List */}
-					<SettingsGroupTitle>
-						{translate(TranslationKeys.translation_all_on_device_saved_data)}
-					</SettingsGroupTitle>
+					<SettingsGroupTitle>{translate(TranslationKeys.translation_all_on_device_saved_data)}</SettingsGroupTitle>
 					{dataDevice.map((data, index) => {
 						if (!data?.value) return null;
 						const last = index === dataDevice.length - 1;
 						const first = index === 0;
-						const groupPosition =
-							dataDevice.length === 1
-								? 'single'
-								: first
-									? 'top'
-									: last
-										? 'bottom'
-										: 'middle';
-						return (
-							<SettingsList
-								key={index}
-								iconBgColor={primaryColor}
-								leftIcon={
-									<MaterialCommunityIcons
-										name="database-eye"
-										size={24}
-										color={theme.screen.icon}
-									/>
-								}
-								label={data.label}
-								rightIcon={
-									<Entypo
-										name="chevron-small-right"
-										size={24}
-										color={theme.screen.icon}
-									/>
-								}
-								handleFunction={() => onOpenBottomSheet(data)}
-								groupPosition={groupPosition as any}
-							/>
-						);
+						const groupPosition = dataDevice.length === 1 ? 'single' : first ? 'top' : last ? 'bottom' : 'middle';
+						return <SettingsList key={index} iconBgColor={primaryColor} leftIcon={<MaterialCommunityIcons name="database-eye" size={24} color={theme.screen.icon} />} label={data.label} rightIcon={<Entypo name="chevron-small-right" size={24} color={theme.screen.icon} />} handleFunction={() => onOpenBottomSheet(data)} groupPosition={groupPosition as any} />;
 					})}
 				</View>
 			</ScrollView>

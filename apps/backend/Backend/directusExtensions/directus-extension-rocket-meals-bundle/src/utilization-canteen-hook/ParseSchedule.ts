@@ -10,11 +10,7 @@ export class ParseSchedule {
   private workflowRun: DatabaseTypes.WorkflowsRuns;
   private logger: WorkflowRunLogger;
 
-  constructor(
-    workflowRun: DatabaseTypes.WorkflowsRuns,
-    myDatabaseHelper: MyDatabaseHelper,
-    logger: WorkflowRunLogger
-  ) {
+  constructor(workflowRun: DatabaseTypes.WorkflowsRuns, myDatabaseHelper: MyDatabaseHelper, logger: WorkflowRunLogger) {
     this.myDatabaseHelper = myDatabaseHelper;
     this.workflowRun = workflowRun;
     this.logger = logger;
@@ -22,10 +18,7 @@ export class ParseSchedule {
 
   async parse(): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
     await this.logger.appendLog('Starting');
-    await this.logger.appendLog(
-      'this.myDatabaseHelper.apiContext exists: ' +
-        !!this.myDatabaseHelper.apiContext
-    );
+    await this.logger.appendLog('this.myDatabaseHelper.apiContext exists: ' + !!this.myDatabaseHelper.apiContext);
 
     try {
       // Get all Canteens
@@ -51,29 +44,20 @@ export class ParseSchedule {
 
   async calcForecastForCanteen(canteen: DatabaseTypes.Canteens) {
     //console.log("UtilizationSchedule: calc for canteen - label: "+canteen?.alias);
-    await this.logger.appendLog(
-      'Calculating forecast for canteen - label: ' + canteen?.alias
-    );
+    await this.logger.appendLog('Calculating forecast for canteen - label: ' + canteen?.alias);
     //console.log(canteen);
 
     // for every canteen create a utilization group or find it
-    await this.logger.appendLog(
-      '- Finding or creating utilization group for canteen: ' + canteen?.alias
-    );
-    let utilization_group_for_canteen =
-      await this.findOrCreateOrUpdateUtilizationGroupForCanteen(canteen);
+    await this.logger.appendLog('- Finding or creating utilization group for canteen: ' + canteen?.alias);
+    let utilization_group_for_canteen = await this.findOrCreateOrUpdateUtilizationGroupForCanteen(canteen);
 
-    await this.logger.appendLog(
-      '- utilization_group_for_canteen: ' + utilization_group_for_canteen?.id
-    );
+    await this.logger.appendLog('- utilization_group_for_canteen: ' + utilization_group_for_canteen?.id);
     if (utilization_group_for_canteen) {
       // delete all future utilization forecast entries for the canteen group
       //await this.deleteAllFutureUtilizationForecastEntries(utilization_group_for_canteen); Why should we delete all future entries? We should just update the existing ones
 
       // Have a list of all transactions
-      await this.logger.appendLog(
-        '- Getting all cashregisters for canteen: ' + canteen?.alias
-      );
+      await this.logger.appendLog('- Getting all cashregisters for canteen: ' + canteen?.alias);
       let cashregisters = await this.getAllCashregistersForCanteen(canteen);
 
       // calculate the prediction using as input: the transactions in the last x days, the canteen business hours
@@ -90,28 +74,16 @@ export class ParseSchedule {
       }
 
       for (let date of dates) {
-        await this.logger.appendLog(
-          '- Calculating forecast for date: ' + date.toISOString()
-        );
+        await this.logger.appendLog('- Calculating forecast for date: ' + date.toISOString());
 
-        await this.updateUtilizationEntryForCanteenAtDate(
-          canteen,
-          utilization_group_for_canteen,
-          cashregisters,
-          date,
-          intervalMinutes
-        );
+        await this.updateUtilizationEntryForCanteenAtDate(canteen, utilization_group_for_canteen, cashregisters, date, intervalMinutes);
       }
     } else {
       console.log('Houston we got a problem at calcForecastForCanteen');
     }
   }
 
-  async createUtilizationEntry(
-    utilization_group: DatabaseTypes.UtilizationsGroups,
-    date_start: Date,
-    date_end: Date
-  ) {
+  async createUtilizationEntry(utilization_group: DatabaseTypes.UtilizationsGroups, date_start: Date, date_end: Date) {
     let itemService = this.myDatabaseHelper.getUtilizationEntriesHelper();
     await itemService.createOne({
       utilization_group: utilization_group?.id,
@@ -120,11 +92,7 @@ export class ParseSchedule {
     });
   }
 
-  async getUtilizationEntry(
-    utilization_group: DatabaseTypes.UtilizationsGroups,
-    date_start: Date,
-    date_end: Date
-  ) {
+  async getUtilizationEntry(utilization_group: DatabaseTypes.UtilizationsGroups, date_start: Date, date_end: Date) {
     //console.log("getUtilizationEntry");
     let itemService = this.myDatabaseHelper.getUtilizationEntriesHelper();
 
@@ -172,11 +140,7 @@ export class ParseSchedule {
          */
   }
 
-  async countCashRegistersTransactionsForInterval(
-    cashregisters: DatabaseTypes.Cashregisters[],
-    date_start: Date,
-    date_end: Date
-  ) {
+  async countCashRegistersTransactionsForInterval(cashregisters: DatabaseTypes.Cashregisters[], date_start: Date, date_end: Date) {
     let transactions = 0;
     //console.log("")
     //console.log("countCashRegistersTransactionsForInterval")
@@ -191,16 +155,9 @@ export class ParseSchedule {
       //console.log("cashregister_id: "+cashregister.id);
 
       // Instead we need to use the itemServiceCreator
-      let transactions_ids_for_cashregister =
-        await cashregisterHelper.getTransactionIdsForCashregister(
-          cashregister.id,
-          date_start,
-          date_end,
-          assumedMaxLimit
-        );
+      let transactions_ids_for_cashregister = await cashregisterHelper.getTransactionIdsForCashregister(cashregister.id, date_start, date_end, assumedMaxLimit);
 
-      let amount_transactions_for_cashregister =
-        transactions_ids_for_cashregister.length;
+      let amount_transactions_for_cashregister = transactions_ids_for_cashregister.length;
       //console.log("-- in timeslot: "+amount_transactions_for_cashregister)
       transactions += amount_transactions_for_cashregister;
     }
@@ -209,13 +166,7 @@ export class ParseSchedule {
     return transactions;
   }
 
-  async updateUtilizationEntryForCanteenAtDate(
-    canteen: DatabaseTypes.Canteens,
-    utilization_group: DatabaseTypes.UtilizationsGroups,
-    cashregisters: DatabaseTypes.Cashregisters[],
-    date: Date,
-    intervalMinutes: number
-  ) {
+  async updateUtilizationEntryForCanteenAtDate(canteen: DatabaseTypes.Canteens, utilization_group: DatabaseTypes.UtilizationsGroups, cashregisters: DatabaseTypes.Cashregisters[], date: Date, intervalMinutes: number) {
     let now = new Date();
 
     let interval = await this.getInterval(intervalMinutes, date);
@@ -224,23 +175,11 @@ export class ParseSchedule {
       let date_start = interval_entry.date_start;
       let date_end = interval_entry.date_end;
 
-      let utilizationEntryCurrent = await this.getUtilizationEntry(
-        utilization_group,
-        date_start,
-        date_end
-      );
+      let utilizationEntryCurrent = await this.getUtilizationEntry(utilization_group, date_start, date_end);
       if (!utilizationEntryCurrent) {
         // when we update an existing entry
-        await this.createUtilizationEntry(
-          utilization_group,
-          date_start,
-          date_end
-        );
-        utilizationEntryCurrent = await this.getUtilizationEntry(
-          utilization_group,
-          date_start,
-          date_end
-        );
+        await this.createUtilizationEntry(utilization_group, date_start, date_end);
+        utilizationEntryCurrent = await this.getUtilizationEntry(utilization_group, date_start, date_end);
       }
       //console.log("utilizationEntryCurrent");
       //console.log(utilizationEntryCurrent);
@@ -255,33 +194,18 @@ export class ParseSchedule {
         //console.log("isEntryInPast: "+isEntryInPast);
 
         if (!isEntryInPast) {
-          utilizationEntryCurrent.value_forecast_current =
-            await this.predictUtilizationForInterval(
-              utilization_group,
-              cashregisters,
-              canteen,
-              date_start,
-              date_end
-            );
+          utilizationEntryCurrent.value_forecast_current = await this.predictUtilizationForInterval(utilization_group, cashregisters, canteen, date_start, date_end);
         }
         if (isEntryInPast) {
           // we need just to count the cash register actions
-          let value_real = await this.countCashRegistersTransactionsForInterval(
-            cashregisters,
-            date_start,
-            date_end
-          );
+          let value_real = await this.countCashRegistersTransactionsForInterval(cashregisters, date_start, date_end);
           //console.log("value_real: "+value_real);
           utilizationEntryCurrent.value_real = value_real;
 
-          if (
-            !utilization_group.all_time_high ||
-            (value_real > utilization_group.all_time_high && value_real !== 0)
-          ) {
+          if (!utilization_group.all_time_high || (value_real > utilization_group.all_time_high && value_real !== 0)) {
             //console.log("new all_time_high: "+value_real)
             utilization_group.all_time_high = value_real;
-            let itemService =
-              this.myDatabaseHelper.getUtilizationGroupsHelper();
+            let itemService = this.myDatabaseHelper.getUtilizationGroupsHelper();
             await itemService.updateOne(utilization_group.id, {
               all_time_high: value_real,
             });
@@ -289,10 +213,7 @@ export class ParseSchedule {
         }
 
         let itemService = this.myDatabaseHelper.getUtilizationEntriesHelper();
-        await itemService.updateOne(
-          utilizationEntryCurrent.id,
-          utilizationEntryCurrent
-        );
+        await itemService.updateOne(utilizationEntryCurrent.id, utilizationEntryCurrent);
       } else {
         console.log('Houston we got a problem');
       }
@@ -308,13 +229,7 @@ export class ParseSchedule {
    * @param date_start
    * @param date_end
    */
-  async predictUtilizationForInterval(
-    utilization_group: DatabaseTypes.UtilizationsGroups,
-    cashregisters: DatabaseTypes.Cashregisters[],
-    canteen: DatabaseTypes.Canteens,
-    date_start: Date,
-    date_end: Date
-  ) {
+  async predictUtilizationForInterval(utilization_group: DatabaseTypes.UtilizationsGroups, cashregisters: DatabaseTypes.Cashregisters[], canteen: DatabaseTypes.Canteens, date_start: Date, date_end: Date) {
     // calc forecast - kept very simple
     let date_start_last_week = new Date(date_start);
     date_start_last_week.setDate(date_start.getDate() - 7);
@@ -322,16 +237,10 @@ export class ParseSchedule {
     let date_end_last_week = new Date(date_end);
     date_end_last_week.setDate(date_end.getDate() - 7);
 
-    let utilizationEntryLastWeek = await this.getUtilizationEntry(
-      utilization_group,
-      date_start_last_week,
-      date_end_last_week
-    );
-    let last_week_forecast_value =
-      utilizationEntryLastWeek?.value_forecast_current; // if we want to predict beyond 7 days we need to predict using predicted values, better than displaying 0
+    let utilizationEntryLastWeek = await this.getUtilizationEntry(utilization_group, date_start_last_week, date_end_last_week);
+    let last_week_forecast_value = utilizationEntryLastWeek?.value_forecast_current; // if we want to predict beyond 7 days we need to predict using predicted values, better than displaying 0
 
-    let value_forecast_current =
-      utilizationEntryLastWeek?.value_real || last_week_forecast_value;
+    let value_forecast_current = utilizationEntryLastWeek?.value_real || last_week_forecast_value;
     return value_forecast_current;
   }
 
@@ -374,14 +283,10 @@ export class ParseSchedule {
   }
 
   async getAllCashregistersForCanteen(canteen: DatabaseTypes.Canteens) {
-    return await this.myDatabaseHelper
-      .getCashregisterHelper()
-      .getCashregistersForCanteen(canteen.id);
+    return await this.myDatabaseHelper.getCashregisterHelper().getCashregistersForCanteen(canteen.id);
   }
 
-  async findOrCreateOrUpdateUtilizationGroupForCanteen(
-    canteen: DatabaseTypes.Canteens
-  ) {
+  async findOrCreateOrUpdateUtilizationGroupForCanteen(canteen: DatabaseTypes.Canteens) {
     //console.log("findOrCreateOrUpdateUtilizationGroupForCanteen")
     const canteenItemService = this.myDatabaseHelper.getCanteensHelper();
     let utilization_group_id = canteen?.utilization_group;

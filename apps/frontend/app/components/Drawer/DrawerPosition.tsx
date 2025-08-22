@@ -22,15 +22,9 @@ type DrawerPositionProps = {
 	onPress: () => void;
 };
 
-const DrawerPosition: React.FC<DrawerPositionProps> = ({
-	position,
-	isSelected,
-	onPress,
-}) => {
+const DrawerPosition: React.FC<DrawerPositionProps> = ({ position, isSelected, onPress }) => {
 	const { theme } = useTheme();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	const { translate } = useLanguage();
 	return (
@@ -44,12 +38,7 @@ const DrawerPosition: React.FC<DrawerPositionProps> = ({
 			onPress={onPress}
 		>
 			{/* Theme Icon */}
-			<MaterialCommunityIcons
-				name={position.icon}
-				size={24}
-				color={isSelected ? contrastColor : theme.screen.icon}
-				style={styles.icon}
-			/>
+			<MaterialCommunityIcons name={position.icon} size={24} color={isSelected ? contrastColor : theme.screen.icon} style={styles.icon} />
 
 			{/* Theme Text */}
 			<Text
@@ -62,12 +51,7 @@ const DrawerPosition: React.FC<DrawerPositionProps> = ({
 			</Text>
 
 			{/* Radio Button */}
-			<MaterialCommunityIcons
-				name={isSelected ? 'checkbox-marked' : 'checkbox-blank'}
-				size={24}
-				color={isSelected ? contrastColor : theme.screen.icon}
-				style={styles.radioButton}
-			/>
+			<MaterialCommunityIcons name={isSelected ? 'checkbox-marked' : 'checkbox-blank'} size={24} color={isSelected ? contrastColor : theme.screen.icon} style={styles.radioButton} />
 		</TouchableOpacity>
 	);
 };

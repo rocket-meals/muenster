@@ -14,11 +14,7 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
 		: null;
 }
 
-function rgbToHsl(
-	r: number,
-	g: number,
-	b: number
-): { h: number; s: number; l: number } {
+function rgbToHsl(r: number, g: number, b: number): { h: number; s: number; l: number } {
 	r /= 255;
 	g /= 255;
 	b /= 255;
@@ -48,11 +44,7 @@ function rgbToHsl(
 	return { h, s, l };
 }
 
-function hslToRgb(
-	h: number,
-	s: number,
-	l: number
-): { r: number; g: number; b: number } {
+function hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
 	let r: number, g: number, b: number;
 
 	if (s === 0) {
@@ -82,10 +74,7 @@ function hslToRgb(
 }
 
 function rgbToHex(r: number, g: number, b: number): string {
-	return (
-		'#' +
-		((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()
-	);
+	return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
 }
 
 export function getLighterAndDarkerColors(projectColor: string): {
@@ -115,10 +104,7 @@ export function getLighterAndDarkerColors(projectColor: string): {
 	};
 }
 
-export function replaceLottieColors(
-	lottieJSON: any,
-	primaryColor: string
-): any {
+export function replaceLottieColors(lottieJSON: any, primaryColor: string): any {
 	if (!lottieJSON || typeof lottieJSON !== 'object') {
 		console.error('Invalid Lottie JSON provided.');
 		return lottieJSON;
@@ -152,20 +138,13 @@ export function replaceLottieColors(
 	const usedColorReplaceMapAfter: { [key: string]: number[] } = {};
 	for (const defaultColor in colorReplaceMap) {
 		// Ensure both the default and replacement colors are valid hex strings.
-		if (
-			/^#[0-9A-F]{6}$/i.test(defaultColor) &&
-			/^#[0-9A-F]{6}$/i.test(colorReplaceMap[defaultColor])
-		) {
-			usedColorReplaceMapAfter[hexToLottieColor(defaultColor).toString()] =
-				hexToLottieColor(colorReplaceMap[defaultColor]);
+		if (/^#[0-9A-F]{6}$/i.test(defaultColor) && /^#[0-9A-F]{6}$/i.test(colorReplaceMap[defaultColor])) {
+			usedColorReplaceMapAfter[hexToLottieColor(defaultColor).toString()] = hexToLottieColor(colorReplaceMap[defaultColor]);
 		}
 	}
 
 	// Recursively traverse the Lottie JSON and replace colors.
-	function replaceColorsInLottie(
-		obj: any,
-		colorMap: { [key: string]: number[] }
-	): any {
+	function replaceColorsInLottie(obj: any, colorMap: { [key: string]: number[] }): any {
 		if (Array.isArray(obj)) {
 			return obj.map(item => replaceColorsInLottie(item, colorMap));
 		} else if (typeof obj === 'object' && obj !== null) {

@@ -8,54 +8,27 @@ import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { BuildingSortSheetProps } from './types';
 import Checkbox from 'expo-checkbox';
-import {
-	SET_APARTMENTS_SORTING,
-	SET_CAMPUSES_SORTING,
-} from '@/redux/Types/types';
-import {
-	CampusSortOption,
-	ApartmentSortOption,
-	BuildingSortOption,
-} from 'repo-depkit-common';
+import { SET_APARTMENTS_SORTING, SET_CAMPUSES_SORTING } from '@/redux/Types/types';
+import { CampusSortOption, ApartmentSortOption, BuildingSortOption } from 'repo-depkit-common';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLanguage } from '@/hooks/useLanguage';
 import { myContrastColor } from '@/helper/colorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({
-	closeSheet,
-	freeRooms,
-}) => {
+const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({ closeSheet, freeRooms }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
-	const {
-		campusesSortBy,
-		apartmentsSortBy,
-		primaryColor: projectColor,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
-	const [selectedOption, setSelectedOption] =
-		useState<BuildingSortOption | null>(null);
-	const housing_area_color = appSettings?.housing_area_color
-		? appSettings?.housing_area_color
-		: projectColor;
-	const campus_area_color = appSettings?.campus_area_color
-		? appSettings?.campus_area_color
-		: projectColor;
-	const contrastColor = myContrastColor(
-		freeRooms ? housing_area_color : campus_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const { campusesSortBy, apartmentsSortBy, primaryColor: projectColor, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+	const [selectedOption, setSelectedOption] = useState<BuildingSortOption | null>(null);
+	const housing_area_color = appSettings?.housing_area_color ? appSettings?.housing_area_color : projectColor;
+	const campus_area_color = appSettings?.campus_area_color ? appSettings?.campus_area_color : projectColor;
+	const contrastColor = myContrastColor(freeRooms ? housing_area_color : campus_area_color, theme, mode === 'dark');
 
 	const sortingOptions = [
 		{
-			id: freeRooms
-				? ApartmentSortOption.INTELLIGENT
-				: CampusSortOption.INTELLIGENT,
+			id: freeRooms ? ApartmentSortOption.INTELLIGENT : CampusSortOption.INTELLIGENT,
 			label: 'sort_option_intelligent',
 			icon: <MaterialCommunityIcons name="brain" size={24} />,
 		},
@@ -71,9 +44,7 @@ const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({
 		},
 
 		{
-			id: freeRooms
-				? ApartmentSortOption.ALPHABETICAL
-				: CampusSortOption.ALPHABETICAL,
+			id: freeRooms ? ApartmentSortOption.ALPHABETICAL : CampusSortOption.ALPHABETICAL,
 			label: 'sort_option_alphabetical',
 			icon: <FontAwesome5 name="sort-alpha-down" size={24} />,
 		},
@@ -84,11 +55,7 @@ const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({
 		},
 	];
 
-	const filteredSortingOptions = freeRooms
-		? sortingOptions
-		: sortingOptions.filter(
-				option => option.id !== ApartmentSortOption.FREE_ROOMS
-			);
+	const filteredSortingOptions = freeRooms ? sortingOptions : sortingOptions.filter(option => option.id !== ApartmentSortOption.FREE_ROOMS);
 
 	const updateSort = (option: { id: BuildingSortOption }) => {
 		setSelectedOption(option.id);
@@ -109,10 +76,7 @@ const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({
 	}, [campusesSortBy, apartmentsSortBy]);
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -170,11 +134,7 @@ const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({
 									{translate(option.label)}
 								</Text>
 							</View>
-							<Checkbox
-								style={styles.checkbox}
-								value={selectedOption === option.id}
-								color={selectedOption === option.id ? '#000000' : undefined}
-							/>
+							<Checkbox style={styles.checkbox} value={selectedOption === option.id} color={selectedOption === option.id ? '#000000' : undefined} />
 						</TouchableOpacity>
 					);
 				})}

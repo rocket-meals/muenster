@@ -1,12 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	TouchableOpacity,
-	ActivityIndicator,
-	Image,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import * as Updates from 'expo-updates';
 import usePlatformHelper from '@/helper/platformHelper';
 import { TranslationKeys } from '@/locales/keys';
@@ -22,9 +15,7 @@ const ExpoUpdateLoader: React.FC<ExpoUpdateLoaderProps> = ({ children }) => {
 	const { isSmartPhone } = usePlatformHelper();
 	const { translate } = useLanguage();
 	const [loading, setLoading] = useState<boolean>(isSmartPhone());
-	const [status, setStatus] = useState<TranslationKeys>(
-		TranslationKeys.CHECK_FOR_APP_UPDATES
-	);
+	const [status, setStatus] = useState<TranslationKeys>(TranslationKeys.CHECK_FOR_APP_UPDATES);
 	const [showCancel, setShowCancel] = useState<boolean>(false);
 	const cancelUpdateRef = useRef(false);
 
@@ -35,16 +26,11 @@ const ExpoUpdateLoader: React.FC<ExpoUpdateLoaderProps> = ({ children }) => {
 				return;
 			}
 
-			const timeoutPromise = new Promise<null>(resolve =>
-				setTimeout(() => resolve(null), TIMEOUT_MS)
-			);
+			const timeoutPromise = new Promise<null>(resolve => setTimeout(() => resolve(null), TIMEOUT_MS));
 
 			try {
 				setStatus(TranslationKeys.CHECK_FOR_APP_UPDATES);
-				const update = (await Promise.race([
-					Updates.checkForUpdateAsync(),
-					timeoutPromise,
-				])) as Updates.CheckForUpdateResult | null;
+				const update = (await Promise.race([Updates.checkForUpdateAsync(), timeoutPromise])) as Updates.CheckForUpdateResult | null;
 
 				if (cancelUpdateRef.current) {
 					return;
@@ -56,10 +42,7 @@ const ExpoUpdateLoader: React.FC<ExpoUpdateLoaderProps> = ({ children }) => {
 				}
 
 				setStatus(TranslationKeys.DOWNLOAD_NEW_APP_UPDATE);
-				const fetchResult = await Promise.race([
-					Updates.fetchUpdateAsync(),
-					timeoutPromise,
-				]);
+				const fetchResult = await Promise.race([Updates.fetchUpdateAsync(), timeoutPromise]);
 
 				if (cancelUpdateRef.current) {
 					return;
@@ -94,17 +77,11 @@ const ExpoUpdateLoader: React.FC<ExpoUpdateLoaderProps> = ({ children }) => {
 
 	return (
 		<View style={styles.container}>
-			<Image
-				source={require('@/assets/images/company.png')}
-				style={styles.logo}
-				resizeMode="contain"
-			/>
+			<Image source={require('@/assets/images/company.png')} style={styles.logo} resizeMode="contain" />
 			<View style={styles.bottomContainer}>
 				{showCancel && (
 					<TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-						<Text style={styles.cancelLabel}>
-							{translate(TranslationKeys.cancel)}
-						</Text>
+						<Text style={styles.cancelLabel}>{translate(TranslationKeys.cancel)}</Text>
 					</TouchableOpacity>
 				)}
 				<Text style={styles.title}>{translate(status)}</Text>

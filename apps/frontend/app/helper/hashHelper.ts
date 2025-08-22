@@ -7,8 +7,7 @@ export class HashHelper {
 	static md5(str: string): string {
 		let xl: number;
 
-		const rotateLeft = (lValue: number, iShiftBits: number) =>
-			(lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
+		const rotateLeft = (lValue: number, iShiftBits: number) => (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
 
 		const addUnsigned = (lX: number, lY: number) => {
 			const lX8 = lX & 0x80000000;
@@ -35,82 +34,30 @@ export class HashHelper {
 		const _H = (x: number, y: number, z: number) => x ^ y ^ z;
 		const _I = (x: number, y: number, z: number) => y ^ (x | ~z);
 
-		const _FF = (
-			a: number,
-			b: number,
-			c: number,
-			d: number,
-			x: number,
-			s: number,
-			ac: number
-		) =>
-			addUnsigned(
-				rotateLeft(addUnsigned(addUnsigned(a, _F(b, c, d)), addUnsigned(x, ac)), s),
-				b
-			);
+		const _FF = (a: number, b: number, c: number, d: number, x: number, s: number, ac: number) => addUnsigned(rotateLeft(addUnsigned(addUnsigned(a, _F(b, c, d)), addUnsigned(x, ac)), s), b);
 
-		const _GG = (
-			a: number,
-			b: number,
-			c: number,
-			d: number,
-			x: number,
-			s: number,
-			ac: number
-		) =>
-			addUnsigned(
-				rotateLeft(addUnsigned(addUnsigned(a, _G(b, c, d)), addUnsigned(x, ac)), s),
-				b
-			);
+		const _GG = (a: number, b: number, c: number, d: number, x: number, s: number, ac: number) => addUnsigned(rotateLeft(addUnsigned(addUnsigned(a, _G(b, c, d)), addUnsigned(x, ac)), s), b);
 
-		const _HH = (
-			a: number,
-			b: number,
-			c: number,
-			d: number,
-			x: number,
-			s: number,
-			ac: number
-		) =>
-			addUnsigned(
-				rotateLeft(addUnsigned(addUnsigned(a, _H(b, c, d)), addUnsigned(x, ac)), s),
-				b
-			);
+		const _HH = (a: number, b: number, c: number, d: number, x: number, s: number, ac: number) => addUnsigned(rotateLeft(addUnsigned(addUnsigned(a, _H(b, c, d)), addUnsigned(x, ac)), s), b);
 
-		const _II = (
-			a: number,
-			b: number,
-			c: number,
-			d: number,
-			x: number,
-			s: number,
-			ac: number
-		) =>
-			addUnsigned(
-				rotateLeft(addUnsigned(addUnsigned(a, _I(b, c, d)), addUnsigned(x, ac)), s),
-				b
-			);
+		const _II = (a: number, b: number, c: number, d: number, x: number, s: number, ac: number) => addUnsigned(rotateLeft(addUnsigned(addUnsigned(a, _I(b, c, d)), addUnsigned(x, ac)), s), b);
 
 		const convertToWordArray = (str: string) => {
 			let lWordCount: number;
 			const lMessageLength = str.length;
 			const lNumberOfWords_temp1 = lMessageLength + 8;
-			const lNumberOfWords_temp2 =
-				((lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64) | 0;
+			const lNumberOfWords_temp2 = ((lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64) | 0;
 			const lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;
 			const lWordArray = new Array<number>(lNumberOfWords - 1);
 			let lBytePosition = 0;
 			let lByteCount = 0;
 			while (lByteCount < lMessageLength) {
 				lWordCount = (lByteCount - (lByteCount % 4)) / 4;
-				lWordArray[lWordCount] =
-					lWordArray[lWordCount] |
-					(str.charCodeAt(lByteCount) << ((lByteCount % 4) * 8));
+				lWordArray[lWordCount] = lWordArray[lWordCount] | (str.charCodeAt(lByteCount) << ((lByteCount % 4) * 8));
 				lByteCount++;
 			}
 			lWordCount = (lByteCount - (lByteCount % 4)) / 4;
-			lWordArray[lWordCount] =
-				lWordArray[lWordCount] | (0x80 << ((lByteCount % 4) * 8));
+			lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << ((lByteCount % 4) * 8));
 			lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
 			lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
 			return lWordArray;
@@ -122,10 +69,7 @@ export class HashHelper {
 			for (let lCount = 0; lCount <= 3; lCount++) {
 				const lByte = (lValue >>> (lCount * 8)) & 255;
 				wordToHexValue_temp = '0' + lByte.toString(16);
-				wordToHexValue += wordToHexValue_temp.substr(
-					wordToHexValue_temp.length - 2,
-					2
-				);
+				wordToHexValue += wordToHexValue_temp.substr(wordToHexValue_temp.length - 2, 2);
 			}
 			return wordToHexValue;
 		};
@@ -211,11 +155,6 @@ export class HashHelper {
 			d = addUnsigned(d, DD);
 		}
 
-		return (
-			wordToHex(a) +
-			wordToHex(b) +
-			wordToHex(c) +
-			wordToHex(d)
-		).toLowerCase();
+		return (wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d)).toLowerCase();
 	}
 }

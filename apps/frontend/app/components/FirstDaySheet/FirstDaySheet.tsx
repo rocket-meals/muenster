@@ -10,19 +10,12 @@ import styles from './styles';
 import { FirstDaySheetProps } from './types';
 import { TranslationKeys } from '@/locales/keys';
 
-const FirstDaySheet: React.FC<FirstDaySheetProps> = ({
-	closeSheet,
-	selectedDay,
-	onSelect,
-}) => {
+const FirstDaySheet: React.FC<FirstDaySheetProps> = ({ closeSheet, selectedDay, onSelect }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,

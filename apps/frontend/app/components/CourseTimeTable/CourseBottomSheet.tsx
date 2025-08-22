@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	Dimensions,
-	TextInput,
-	ActivityIndicator,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, TextInput, ActivityIndicator } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import {
-	AntDesign,
-	FontAwesome5,
-	MaterialCommunityIcons,
-} from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { days } from '../../constants/SettingData';
 import FirstDayOfWeek from '../../components/FirstDay/FirstDayOfWeek';
@@ -32,12 +21,7 @@ import { TranslationKeys } from '@/locales/keys';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';
 
-const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
-	timeTableData,
-	closeSheet,
-	isUpdate,
-	selectedEventId,
-}) => {
+const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({ timeTableData, closeSheet, isUpdate, selectedEventId }) => {
 	const { theme } = useTheme();
 	const toast = useToast();
 	const dispatch = useDispatch();
@@ -46,19 +30,13 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const [loading, setLoading] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
-	const {
-		primaryColor,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
 	const [selectedFirstDay, setSelectedFirstDay] = useState({
 		id: 'Monday',
 		name: 'Mon',
 	});
-	const [windowWidth, setWindowWidth] = useState<number>(
-		Dimensions.get('window').width
-	);
+	const [windowWidth, setWindowWidth] = useState<number>(Dimensions.get('window').width);
 	const [selectedItem, setSelectedItem] = useState<any | null>(null);
 	const [data, setData] = useState<any[]>(timeTableData);
 	const [inputValue, setInputValue] = useState<string>('');
@@ -81,14 +59,8 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 		};
 	}, []);
 
-	const course_timetable_area_color = appSettings?.course_timetable_area_color
-		? appSettings?.course_timetable_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		course_timetable_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const course_timetable_area_color = appSettings?.course_timetable_area_color ? appSettings?.course_timetable_area_color : primaryColor;
+	const contrastColor = myContrastColor(course_timetable_area_color, theme, mode === 'dark');
 	const SheetClose = () => {
 		closeSheet();
 		setSelectedItem(null);
@@ -116,11 +88,7 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 			}
 
 			// Update the data if time is valid
-			setData(prevData =>
-				prevData.map(item =>
-					item.id === selectedItem.id ? { ...item, value: inputValue } : item
-				)
-			);
+			setData(prevData => prevData.map(item => (item.id === selectedItem.id ? { ...item, value: inputValue } : item)));
 			setSelectedItem(null);
 			setInputValue('');
 		}
@@ -134,24 +102,14 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 	const handleDaySelect = (selectedDayId: string, selectedDayName: string) => {
 		setSelectedFirstDay({ id: selectedDayId, name: selectedDayName });
 
-		setData(prevData =>
-			prevData.map(item =>
-				item.label === 'weekday'
-					? { ...item, value: { id: selectedDayId, name: selectedDayName } }
-					: item
-			)
-		);
+		setData(prevData => prevData.map(item => (item.label === 'weekday' ? { ...item, value: { id: selectedDayId, name: selectedDayName } } : item)));
 		setSelectedItem(null);
 	};
 
 	const handleColorPress = (selectedColor: string) => {
 		setSelectedColor(selectedColor);
 
-		setData(prevData =>
-			prevData.map(item =>
-				item.label === 'color' ? { ...item, value: selectedColor } : item
-			)
-		);
+		setData(prevData => prevData.map(item => (item.label === 'color' ? { ...item, value: selectedColor } : item)));
 		setSelectedItem(null);
 	};
 
@@ -171,23 +129,15 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 		const endTimeParsed = parseTime(endTime);
 
 		// Check if start time is greater than or equal to end time
-		if (
-			!isBefore(startTimeParsed, endTimeParsed) ||
-			isEqual(startTimeParsed, endTimeParsed)
-		) {
+		if (!isBefore(startTimeParsed, endTimeParsed) || isEqual(startTimeParsed, endTimeParsed)) {
 			toast('Start time must be earlier than End time.', 'error');
 
 			setLoading(false);
 			return; // Prevent saving if times are invalid
 		}
 
-		let courseTimetable = profile?.course_timetable
-			? profile?.course_timetable
-			: {};
-		const id =
-			Object.keys(courseTimetable)?.length > 0
-				? (Object.keys(courseTimetable).length + 1).toString()
-				: '1';
+		let courseTimetable = profile?.course_timetable ? profile?.course_timetable : {};
+		const id = Object.keys(courseTimetable)?.length > 0 ? (Object.keys(courseTimetable).length + 1).toString() : '1';
 		const newTimetable: BaseCourseTimetableEvent = {
 			id: id,
 			title: data?.find(item => item.label === 'title')?.value,
@@ -272,10 +222,7 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 		const endTimeParsed = parseTime(endTime);
 
 		// Check if start time is greater than or equal to end time
-		if (
-			!isBefore(startTimeParsed, endTimeParsed) ||
-			isEqual(startTimeParsed, endTimeParsed)
-		) {
+		if (!isBefore(startTimeParsed, endTimeParsed) || isEqual(startTimeParsed, endTimeParsed)) {
 			toast('Start time must be earlier than End time.', 'error');
 
 			setLoading(false);
@@ -340,22 +287,11 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 						color: theme.sheet.text,
 					}}
 				>
-					{selectedItem
-						? selectedItem.label
-						: isUpdate
-							? `${translate(TranslationKeys.event)}: ${translate(
-									TranslationKeys.edit
-								)}`
-							: `${translate(TranslationKeys.event)}: ${translate(
-									TranslationKeys.create
-								)}`}
+					{selectedItem ? selectedItem.label : isUpdate ? `${translate(TranslationKeys.event)}: ${translate(TranslationKeys.edit)}` : `${translate(TranslationKeys.event)}: ${translate(TranslationKeys.create)}`}
 				</Text>
 			</View>
 
-			<BottomSheetScrollView
-				style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-				contentContainerStyle={styles.contentContainer}
-			>
+			<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 				{selectedItem ? (
 					selectedItem.label === 'color' ? (
 						<View
@@ -385,23 +321,12 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 					) : selectedItem.label === 'weekday' ? (
 						<View style={styles.languageContainer}>
 							{days.map(firstDay => (
-								<FirstDayOfWeek
-									key={firstDay.id}
-									position={firstDay}
-									isSelected={selectedFirstDay.name === firstDay.name}
-									onPress={() => handleDaySelect(firstDay.id, firstDay.name)}
-								/>
+								<FirstDayOfWeek key={firstDay.id} position={firstDay} isSelected={selectedFirstDay.name === firstDay.name} onPress={() => handleDaySelect(firstDay.id, firstDay.name)} />
 							))}
 						</View>
 					) : (
 						<View style={styles.titleBt}>
-							<TextInput
-								style={styles.input}
-								value={inputValue}
-								onChangeText={setInputValue}
-								placeholder={'Enter a value'}
-								autoFocus
-							/>
+							<TextInput style={styles.input} value={inputValue} onChangeText={setInputValue} placeholder={'Enter a value'} autoFocus />
 
 							<View style={[styles.buttonContainer]}>
 								<TouchableOpacity
@@ -411,9 +336,7 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 										borderColor: course_timetable_area_color,
 									}}
 								>
-									<Text style={[styles.buttonText, { color: theme.screen.text }]}>
-										{translate(TranslationKeys.cancel)}
-									</Text>
+									<Text style={[styles.buttonText, { color: theme.screen.text }]}>{translate(TranslationKeys.cancel)}</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
 									onPress={handleSavePress}
@@ -422,9 +345,7 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 										backgroundColor: course_timetable_area_color,
 									}}
 								>
-									<Text style={[styles.buttonText, { color: contrastColor }]}>
-										{translate(TranslationKeys.save)}
-									</Text>
+									<Text style={[styles.buttonText, { color: contrastColor }]}>{translate(TranslationKeys.save)}</Text>
 								</TouchableOpacity>
 							</View>
 						</View>
@@ -472,9 +393,7 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 												marginTop: isWeb ? 0 : 2,
 											}}
 										>
-											{item.label === 'weekday'
-												? translate(item?.value?.name)
-												: item.value}
+											{item.label === 'weekday' ? translate(item?.value?.name) : item.value}
 										</Text>
 									)}
 									{React.cloneElement(item.rightIcon, {
@@ -496,11 +415,7 @@ const CourseBottomSheet: React.FC<CourseBottomSheetProps> = ({
 										<ActivityIndicator size="small" color={theme.screen.text} />
 									) : (
 										<>
-											<MaterialCommunityIcons
-												name="delete"
-												size={20}
-												color={theme.activeText}
-											/>
+											<MaterialCommunityIcons name="delete" size={20} color={theme.activeText} />
 											<View>
 												<Text
 													style={{

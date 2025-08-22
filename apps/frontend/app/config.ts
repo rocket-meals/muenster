@@ -98,10 +98,8 @@ export function getFinalConfig(config?: any) {
 				bundleIdentifier: customerConfig.bundleIdIos,
 				buildNumber: getIosBuildNumber(),
 				infoPlist: {
-					NSPhotoLibraryUsageDescription:
-						'We need access to your photo library to select files',
-					NSDocumentDirectoryUsageDescription:
-						'We need access to your document directory to select files',
+					NSPhotoLibraryUsageDescription: 'We need access to your photo library to select files',
+					NSDocumentDirectoryUsageDescription: 'We need access to your document directory to select files',
 				},
 				config: {
 					usesNonExemptEncryption: false,
@@ -115,45 +113,31 @@ export function getFinalConfig(config?: any) {
 							NSPrivacyCollectedDataType: 'NSPrivacyCollectedDataTypePreciseLocation',
 							NSPrivacyCollectedDataTypeLinked: false,
 							NSPrivacyCollectedDataTypeTracking: false,
-							NSPrivacyCollectedDataTypePurposes: [
-								'NSPrivacyCollectedDataTypePurposeProductPersonalization',
-								'NSPrivacyCollectedDataTypePurposeAppFunctionality',
-								'NSPrivacyCollectedDataTypePurposeOther',
-							],
+							NSPrivacyCollectedDataTypePurposes: ['NSPrivacyCollectedDataTypePurposeProductPersonalization', 'NSPrivacyCollectedDataTypePurposeAppFunctionality', 'NSPrivacyCollectedDataTypePurposeOther'],
 						},
 						{
-							NSPrivacyCollectedDataType:
-								'NSPrivacyCollectedDataTypeEmailsOrTextMessages',
+							NSPrivacyCollectedDataType: 'NSPrivacyCollectedDataTypeEmailsOrTextMessages',
 							NSPrivacyCollectedDataTypeLinked: true,
 							NSPrivacyCollectedDataTypeTracking: false,
-							NSPrivacyCollectedDataTypePurposes: [
-								'NSPrivacyCollectedDataTypePurposeProductPersonalization',
-								'NSPrivacyCollectedDataTypePurposeAppFunctionality',
-							],
+							NSPrivacyCollectedDataTypePurposes: ['NSPrivacyCollectedDataTypePurposeProductPersonalization', 'NSPrivacyCollectedDataTypePurposeAppFunctionality'],
 						},
 						{
 							NSPrivacyCollectedDataType: 'NSPrivacyCollectedDataTypePhotosorVideos',
 							NSPrivacyCollectedDataTypeLinked: true,
 							NSPrivacyCollectedDataTypeTracking: false,
-							NSPrivacyCollectedDataTypePurposes: [
-								'NSPrivacyCollectedDataTypePurposeAppFunctionality',
-							],
+							NSPrivacyCollectedDataTypePurposes: ['NSPrivacyCollectedDataTypePurposeAppFunctionality'],
 						},
 						{
 							NSPrivacyCollectedDataType: 'NSPrivacyCollectedDataTypeOtherUserContent',
 							NSPrivacyCollectedDataTypeLinked: true,
 							NSPrivacyCollectedDataTypeTracking: false,
-							NSPrivacyCollectedDataTypePurposes: [
-								'NSPrivacyCollectedDataTypePurposeAppFunctionality',
-							],
+							NSPrivacyCollectedDataTypePurposes: ['NSPrivacyCollectedDataTypePurposeAppFunctionality'],
 						},
 						{
 							NSPrivacyCollectedDataType: 'NSPrivacyCollectedDataTypeEmailAddress',
 							NSPrivacyCollectedDataTypeLinked: true,
 							NSPrivacyCollectedDataTypeTracking: false,
-							NSPrivacyCollectedDataTypePurposes: [
-								'NSPrivacyCollectedDataTypePurposeAppFunctionality',
-							],
+							NSPrivacyCollectedDataTypePurposes: ['NSPrivacyCollectedDataTypePurposeAppFunctionality'],
 						},
 					],
 					NSPrivacyAccessedAPITypes: [
@@ -182,10 +166,7 @@ export function getFinalConfig(config?: any) {
 					backgroundColor: '#ffffff',
 				},
 				package: customerConfig.bundleIdAndroid,
-				blockedPermissions: [
-					'android.permission.READ_MEDIA_IMAGES',
-					'android.permission.READ_MEDIA_VIDEO',
-				],
+				blockedPermissions: ['android.permission.READ_MEDIA_IMAGES', 'android.permission.READ_MEDIA_VIDEO'],
 				versionCode: getBuildNumber(),
 			},
 			web: {
@@ -219,10 +200,8 @@ export function getFinalConfig(config?: any) {
 				[
 					'expo-image-picker',
 					{
-						photosPermission:
-							'This app needs access to your photo library to capture and manage meal photos as part of the core digital meal plan functionality. Photos are essential for documenting meals in our canteen and restaurant management system.',
-						cameraPermission:
-							'This app needs camera access to take photos of meals for the digital meal plan management system. Camera functionality is core to documenting and tracking meals in canteens and restaurants.',
+						photosPermission: 'This app needs access to your photo library to capture and manage meal photos as part of the core digital meal plan functionality. Photos are essential for documenting meals in our canteen and restaurant management system.',
+						cameraPermission: 'This app needs camera access to take photos of meals for the digital meal plan management system. Camera functionality is core to documenting and tracking meals in canteens and restaurants.',
 						'//': 'Disables the microphone permission',
 						microphonePermission: false,
 					},

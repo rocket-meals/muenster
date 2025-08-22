@@ -3,12 +3,7 @@ export class CSVExportParser {
   static INLINE_DELIMITER_TAB = '\t';
   static INLINE_DELIMITER_SEMICOLON = ';';
 
-  static getListOfLineObjectsWithParams(
-    text: string | Buffer | undefined,
-    newLineDelimiter: string,
-    inlineDelimiter: string,
-    removeTailoringQuotes = true
-  ) {
+  static getListOfLineObjectsWithParams(text: string | Buffer | undefined, newLineDelimiter: string, inlineDelimiter: string, removeTailoringQuotes = true) {
     return CSVExportParser.getListOfLineObjects(text, {
       newLineDelimiter,
       inlineDelimiter,
@@ -24,21 +19,11 @@ export class CSVExportParser {
       removeTailoringQuotes: boolean;
     }
   ) {
-    let lines = CSVExportParser.splitTextIntoLines(
-      text,
-      options.newLineDelimiter
-    );
-    return CSVExportParser.parseFileLinesToJSONList(
-      lines,
-      options.inlineDelimiter,
-      options.removeTailoringQuotes
-    );
+    let lines = CSVExportParser.splitTextIntoLines(text, options.newLineDelimiter);
+    return CSVExportParser.parseFileLinesToJSONList(lines, options.inlineDelimiter, options.removeTailoringQuotes);
   }
 
-  private static splitTextIntoLines(
-    text: string | Buffer | undefined,
-    delimiter = CSVExportParser.NEW_LINE_DELIMITER
-  ) {
+  private static splitTextIntoLines(text: string | Buffer | undefined, delimiter = CSVExportParser.NEW_LINE_DELIMITER) {
     if (!text) {
       return [];
     }
@@ -46,11 +31,7 @@ export class CSVExportParser {
     return text.split(delimiter);
   }
 
-  private static splitLineByDelimiter(
-    line: string,
-    delimiter = CSVExportParser.INLINE_DELIMITER_TAB,
-    removeTailoringQuotes: boolean
-  ) {
+  private static splitLineByDelimiter(line: string, delimiter = CSVExportParser.INLINE_DELIMITER_TAB, removeTailoringQuotes: boolean) {
     // raw line: '" 040";"enthält Schalenfrüchte: Mandeln";"";"27J"'
     let lineItemsList = line.split(delimiter);
     if (removeTailoringQuotes) {
@@ -84,32 +65,17 @@ export class CSVExportParser {
     return lineItemsList;
   }
 
-  private static parseFileLinesToJSONList(
-    lines: string[],
-    inlineDelimiter: string,
-    removeTailoringQuotes: boolean
-  ) {
+  private static parseFileLinesToJSONList(lines: string[], inlineDelimiter: string, removeTailoringQuotes: boolean) {
     let output: { [p: string]: string }[] = [];
     let identifierLineRaw = lines[0];
     if (!!identifierLineRaw) {
       let identifierLine = identifierLineRaw.trim();
-      let identifierList = CSVExportParser.splitLineByDelimiter(
-        identifierLine,
-        inlineDelimiter,
-        removeTailoringQuotes
-      );
+      let identifierList = CSVExportParser.splitLineByDelimiter(identifierLine, inlineDelimiter, removeTailoringQuotes);
       for (let i = 1; i < lines.length; i++) {
         let line = lines[i];
         if (!!line && line !== '') {
-          let lineItemList = CSVExportParser.splitLineByDelimiter(
-            line,
-            inlineDelimiter,
-            removeTailoringQuotes
-          );
-          let lineObject = CSVExportParser.parseLineToJSON(
-            lineItemList,
-            identifierList
-          );
+          let lineItemList = CSVExportParser.splitLineByDelimiter(line, inlineDelimiter, removeTailoringQuotes);
+          let lineObject = CSVExportParser.parseLineToJSON(lineItemList, identifierList);
           output.push(lineObject);
         }
       }
@@ -117,10 +83,7 @@ export class CSVExportParser {
     return output;
   }
 
-  private static parseLineToJSON(
-    lineItemList: string[],
-    identifierList: string[]
-  ) {
+  private static parseLineToJSON(lineItemList: string[], identifierList: string[]) {
     let output: {
       [key: string]: string;
     } = {};

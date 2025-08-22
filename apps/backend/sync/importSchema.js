@@ -21,17 +21,11 @@ const httpsAgent = new https.Agent({
 /**
  * Configuration for collections and modules
  */
-const requiredModules = [
-  'flow-manager',
-  'schema-management-module',
-  'generate-types',
-];
+const requiredModules = ['flow-manager', 'schema-management-module', 'generate-types'];
 const collectionsToSkip = ['2-wikis.json'];
 
 // Load directus .env file
-const currentPackageJson = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, './package.json'), 'utf8')
-);
+const currentPackageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, './package.json'), 'utf8'));
 console.log('Current package.json: ');
 console.log(JSON.stringify(currentPackageJson, null, 4));
 const DirectusSyncVersion = currentPackageJson.dependencies['directus-sync'];
@@ -58,10 +52,7 @@ function parseEnvFile(content) {
       let value = valueParts.join('=').trim();
 
       // Remove surrounding quotes if they exist
-      if (
-        (value.startsWith('"') && value.endsWith('"')) ||
-        (value.startsWith("'") && value.endsWith("'"))
-      ) {
+      if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
         value = value.slice(1, -1);
       }
 
@@ -83,10 +74,8 @@ let admin_email = parsedEnvFile.ADMIN_EMAIL;
 let admin_password = parsedEnvFile.ADMIN_PASSWORD;
 
 const configurationPath = './configuration';
-const directusConfigCollectionsPath =
-  './configuration/directus-config/collections';
-const directusConfigOverwriteCollectionsPath =
-  './configuration/directus-config-overwrite/collections';
+const directusConfigCollectionsPath = './configuration/directus-config/collections';
+const directusConfigOverwriteCollectionsPath = './configuration/directus-config-overwrite/collections';
 
 const configurationPathRolesPermissions = `${configurationPath}/roles-permissions`;
 const configurationPathCollections = `${configurationPath}/collections`;
@@ -265,9 +254,7 @@ const enableRequiredSettings = async headers => {
   });
 
   if (!response.ok) {
-    throw new Error(
-      `HTTP error! status: ${response.status} message: ${response.statusText}`
-    );
+    throw new Error(`HTTP error! status: ${response.status} message: ${response.statusText}`);
   }
 
   console.log(' -  Enabled required settings');
@@ -275,21 +262,9 @@ const enableRequiredSettings = async headers => {
 
 const getDirectusSyncParams = () => {
   // Properly escape the password for shell command
-  const preserverIds =
-    'dashboards,operations,panels,policies,roles,translations';
+  const preserverIds = 'dashboards,operations,panels,policies,roles,translations';
   const preserveOption = '--preserve-ids ' + preserverIds;
-  return (
-    '--directus-url ' +
-    directus_url +
-    ' --directus-email ' +
-    admin_email +
-    ' --directus-password "' +
-    admin_password +
-    '" --dump-path ' +
-    dumpPath +
-    ' ' +
-    preserveOption
-  );
+  return '--directus-url ' + directus_url + ' --directus-email ' + admin_email + ' --directus-password "' + admin_password + '" --dump-path ' + dumpPath + ' ' + preserveOption;
 };
 
 const execWithOutput = async command => {
@@ -379,10 +354,7 @@ const uploadSchema = async (headers, file) => {
   const displayName = name.split('-').pop();
 
   // Check if collection already exists
-  const firstElement = await fetchGetResponseJson(
-    `${getUrlItems()}/${displayName}?limit=1`,
-    headers
-  );
+  const firstElement = await fetchGetResponseJson(`${getUrlItems()}/${displayName}?limit=1`, headers);
 
   if (firstElement.data.length > 0) {
     console.log(` -  ${displayName} already exists`);
@@ -399,9 +371,7 @@ const uploadSchema = async (headers, file) => {
   });
 
   if (!response.ok) {
-    console.error(
-      ` -  HTTP error! status: ${response.status} message: ${response.statusText} at ${file}`
-    );
+    console.error(` -  HTTP error! status: ${response.status} message: ${response.statusText} at ${file}`);
   }
 };
 
@@ -413,10 +383,7 @@ const getCollection = async (headers, name) => {
 
   // Retrieve collection data
   console.log(' -  Fetching collection data');
-  const data = await fetchGetResponseJson(
-    `${getUrlItems()}/${displayName}?limit=-1`,
-    headers
-  );
+  const data = await fetchGetResponseJson(`${getUrlItems()}/${displayName}?limit=-1`, headers);
 
   return data.data;
 };
@@ -436,28 +403,20 @@ const mainPull = async () => {
   await copyFromDirectusConfigOverwriteFolderIntoDirectusConfigFolder();
 };
 
-const copyFromDirectusConfigOverwriteFolderIntoDirectusConfigFolder =
-  async () => {
-    // copy all files except .DS_Store from directusConfigOverwriteCollectionsPath to directusConfigCollectionsPath
+const copyFromDirectusConfigOverwriteFolderIntoDirectusConfigFolder = async () => {
+  // copy all files except .DS_Store from directusConfigOverwriteCollectionsPath to directusConfigCollectionsPath
 
-    const absolutePathCollections = path.resolve(
-      __dirname,
-      directusConfigOverwriteCollectionsPath
-    );
-    const files = fs.readdirSync(absolutePathCollections);
-    for (const file of files) {
-      if (file.endsWith('.DS_Store')) {
-        continue;
-      }
-      const source = path.resolve(absolutePathCollections, file);
-      const destination = path.resolve(
-        __dirname,
-        directusConfigCollectionsPath,
-        file
-      );
-      fs.copyFileSync(source, destination);
+  const absolutePathCollections = path.resolve(__dirname, directusConfigOverwriteCollectionsPath);
+  const files = fs.readdirSync(absolutePathCollections);
+  for (const file of files) {
+    if (file.endsWith('.DS_Store')) {
+      continue;
     }
-  };
+    const source = path.resolve(absolutePathCollections, file);
+    const destination = path.resolve(__dirname, directusConfigCollectionsPath, file);
+    fs.copyFileSync(source, destination);
+  }
+};
 
 // Function to save collections
 const saveCollections = async headers => {
@@ -522,11 +481,7 @@ const waitForDirectusToBeReady = async () => {
     }
   }
   if (!ready) {
-    console.log(
-      'Directus is not ready after ' +
-        retries +
-        ' retries, please make sure Directus is running'
-    );
+    console.log('Directus is not ready after ' + retries + ' retries, please make sure Directus is running');
     throw new Error('Directus is not ready');
   }
   return ready;

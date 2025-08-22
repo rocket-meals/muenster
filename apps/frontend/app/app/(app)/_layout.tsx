@@ -8,30 +8,7 @@ import { Redirect, useGlobalSearchParams } from 'expo-router';
 import useKioskMode from '@/hooks/useKioskMode';
 import { ProfileHelper } from '@/redux/actions/Profile/Profile';
 import { DatabaseTypes, AppLinks, AppScreens } from 'repo-depkit-common';
-import {
-	SET_APP_ELEMENTS,
-	SET_APP_SETTINGS,
-	SET_BUSINESS_HOURS,
-	SET_BUSINESS_HOURS_GROUPS,
-	SET_COLLECTION_DATES_LAST_UPDATED,
-	SET_FOOD_ATTRIBUTE_GROUPS,
-	SET_FOOD_ATTRIBUTES,
-	SET_FOOD_ATTRIBUTES_DICT,
-	SET_FOOD_CATEGORIES,
-	SET_FOOD_COLLECTION,
-	SET_FOOD_OFFERS_CATEGORIES,
-	SET_FOODOFFERS_INFO_ITEMS,
-	SET_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
-	SET_POPUP_EVENTS,
-	SET_POPUP_EVENTS_HASH,
-	SET_SELECTED_DATE,
-	SET_WIKIS,
-	UPDATE_FOOD_FEEDBACK_LABELS,
-	UPDATE_MARKINGS,
-	UPDATE_OWN_FOOD_FEEDBACK,
-	UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES,
-	UPDATE_PROFILE,
-} from '@/redux/Types/types';
+import { SET_APP_ELEMENTS, SET_APP_SETTINGS, SET_BUSINESS_HOURS, SET_BUSINESS_HOURS_GROUPS, SET_COLLECTION_DATES_LAST_UPDATED, SET_FOOD_ATTRIBUTE_GROUPS, SET_FOOD_ATTRIBUTES, SET_FOOD_ATTRIBUTES_DICT, SET_FOOD_CATEGORIES, SET_FOOD_COLLECTION, SET_FOOD_OFFERS_CATEGORIES, SET_FOODOFFERS_INFO_ITEMS, SET_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES, SET_POPUP_EVENTS, SET_POPUP_EVENTS_HASH, SET_SELECTED_DATE, SET_WIKIS, UPDATE_FOOD_FEEDBACK_LABELS, UPDATE_MARKINGS, UPDATE_OWN_FOOD_FEEDBACK, UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES, UPDATE_PROFILE } from '@/redux/Types/types';
 import { FoodFeedbackLabelHelper } from '@/redux/actions/FoodFeedbacksLabel/FoodFeedbacksLabel';
 import { FoodFeedbackHelper } from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
 import { FoodFeedbackLabelEntryHelper } from '@/redux/actions/FoodFeeedbackLabelEntries/FoodFeedbackLabelEntries';
@@ -65,11 +42,7 @@ import { shouldFetch } from '@/helper/shouldFetch';
 import { updateLoginStatus } from '@/constants/HelperFunctions';
 import { format } from 'date-fns';
 import { CanteenHelper } from '@/redux/actions/Canteens/Canteens';
-import {
-	SET_CANTEENS,
-	SET_SELECTED_CANTEEN,
-	UPDATE_PRIVACY_POLICY_DATE,
-} from '@/redux/Types/types';
+import { SET_CANTEENS, SET_SELECTED_CANTEEN, UPDATE_PRIVACY_POLICY_DATE } from '@/redux/Types/types';
 // TODO: replace HashHelper with expo-crypto once packages can be installed
 import { HashHelper } from '@/helper/hashHelper';
 import { CollectionKeys } from '@/constants/collectionKeys';
@@ -106,16 +79,10 @@ export default function Layout() {
 	const foodFeedbackLabelEntryHelper = new FoodFeedbackLabelEntryHelper();
 	const canteenFeedbackLabelEntryHelper = new CanteenFeedbackLabelEntryHelper();
 	const { popupEvents } = useSelector((state: RootState) => state.food);
-	const { hashValue } = useSelector(
-		(state: RootState) => state.popup_events_hash
-	);
-	const { lastUpdatedMap } = useSelector(
-		(state: RootState) => state.lastUpdated
-	);
+	const { hashValue } = useSelector((state: RootState) => state.popup_events_hash);
+	const { lastUpdatedMap } = useSelector((state: RootState) => state.lastUpdated);
 	const { drawerPosition } = useSelector((state: RootState) => state.settings);
-	const { loggedIn, user } = useSelector(
-		(state: RootState) => state.authReducer
-	);
+	const { loggedIn, user } = useSelector((state: RootState) => state.authReducer);
 	const { canteens } = useSelector((state: RootState) => state.canteenReducer);
 	const selectedCanteen = useSelectedCanteen();
 
@@ -147,9 +114,7 @@ export default function Layout() {
 			if (kioskMode && !selectedCanteen) {
 				try {
 					const helper = new CanteenHelper();
-					const result = (await helper.fetchCanteens(
-						{}
-					)) as DatabaseTypes.Canteens[];
+					const result = (await helper.fetchCanteens({})) as DatabaseTypes.Canteens[];
 					const published = result.filter(c => c.status === 'published');
 					if (published.length > 0) {
 						dispatch({ type: SET_CANTEENS, payload: published });
@@ -185,10 +150,7 @@ export default function Layout() {
 
 	const getFoodFeedBackLabels = async () => {
 		try {
-			const foodFeedbackLabels =
-				(await foodfeedbackLabelHelper.fetchFoodFeedbackLabels(
-					{}
-				)) as DatabaseTypes.FoodsFeedbacksLabels[];
+			const foodFeedbackLabels = (await foodfeedbackLabelHelper.fetchFoodFeedbackLabels({})) as DatabaseTypes.FoodsFeedbacksLabels[];
 			if (foodFeedbackLabels) {
 				dispatch({
 					type: UPDATE_FOOD_FEEDBACK_LABELS,
@@ -204,10 +166,7 @@ export default function Layout() {
 
 	const fetchProfile = async () => {
 		try {
-			const profile = (await profileHelper.fetchProfileById(
-				user?.profile,
-				{}
-			)) as DatabaseTypes.Profiles;
+			const profile = (await profileHelper.fetchProfileById(user?.profile, {})) as DatabaseTypes.Profiles;
 			if (profile?.id) {
 				getOwnFeedback(profile?.id);
 				getFeedbackEntries(profile?.id);
@@ -223,9 +182,7 @@ export default function Layout() {
 	const fetchChats = async () => {
 		try {
 			if (user?.profile) {
-				const result = (await chatsHelper.fetchChatsByProfile(
-					user.profile
-				)) as DatabaseTypes.Chats[];
+				const result = (await chatsHelper.fetchChatsByProfile(user.profile)) as DatabaseTypes.Chats[];
 				if (result) {
 					dispatch({ type: SET_CHATS, payload: result });
 				}
@@ -238,9 +195,7 @@ export default function Layout() {
 	const getOwnFeedback = async (id: string) => {
 		try {
 			// Fetch own feedback
-			const result = (await foodFeedbackHelper.fetchFoodFeedbackByProfileId(
-				id
-			)) as DatabaseTypes.FoodsFeedbacks[];
+			const result = (await foodFeedbackHelper.fetchFoodFeedbackByProfileId(id)) as DatabaseTypes.FoodsFeedbacks[];
 			if (result) {
 				dispatch({ type: UPDATE_OWN_FOOD_FEEDBACK, payload: result });
 			}
@@ -251,10 +206,7 @@ export default function Layout() {
 
 	const getFeedbackEntries = async (id: string) => {
 		try {
-			const result =
-				(await foodFeedbackLabelEntryHelper.fetchFoodFeedbackLabelEntriesByProfile(
-					id
-				)) as DatabaseTypes.FoodsFeedbacksLabelsEntries[];
+			const result = (await foodFeedbackLabelEntryHelper.fetchFoodFeedbackLabelEntriesByProfile(id)) as DatabaseTypes.FoodsFeedbacksLabelsEntries[];
 			if (result) {
 				dispatch({
 					type: UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES,
@@ -268,10 +220,7 @@ export default function Layout() {
 
 	const getCanteenFeedbackEntries = async (id: string) => {
 		try {
-			const result =
-				(await canteenFeedbackLabelEntryHelper.fetchCanteenFeedbackLabelEntriesByProfile(
-					id
-				)) as DatabaseTypes.CanteensFeedbacksLabelsEntries[];
+			const result = (await canteenFeedbackLabelEntryHelper.fetchCanteenFeedbackLabelEntriesByProfile(id)) as DatabaseTypes.CanteensFeedbacksLabelsEntries[];
 			if (result) {
 				dispatch({
 					type: SET_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
@@ -285,18 +234,11 @@ export default function Layout() {
 
 	const getMarkings = async () => {
 		try {
-			const markingResult = (await markingHelper.fetchMarkings(
-				{}
-			)) as DatabaseTypes.Markings[];
-			const markingGroupResult = (await markingGroupsHelper.fetchMarkingGroups(
-				{}
-			)) as DatabaseTypes.MarkingsGroups[];
+			const markingResult = (await markingHelper.fetchMarkings({})) as DatabaseTypes.Markings[];
+			const markingGroupResult = (await markingGroupsHelper.fetchMarkingGroups({})) as DatabaseTypes.MarkingsGroups[];
 
 			// Use the sortMarkingsByGroup function to sort markings
-			const sortedMarkings = sortMarkingsByGroup(
-				markingResult,
-				markingGroupResult
-			);
+			const sortedMarkings = sortMarkingsByGroup(markingResult, markingGroupResult);
 
 			dispatch({ type: UPDATE_MARKINGS, payload: sortedMarkings });
 		} catch (error) {
@@ -334,9 +276,7 @@ export default function Layout() {
 
 	const getFoodCategories = async () => {
 		try {
-			const result = (await foodCategoriesHelper.fetchFoodCategories(
-				{}
-			)) as DatabaseTypes.FoodsCategories[];
+			const result = (await foodCategoriesHelper.fetchFoodCategories({})) as DatabaseTypes.FoodsCategories[];
 			if (result) {
 				dispatch({ type: SET_FOOD_CATEGORIES, payload: sortBySortField(result) });
 			}
@@ -347,9 +287,7 @@ export default function Layout() {
 
 	const getFoodOffersCategories = async () => {
 		try {
-			const result = (await foodOffersCategoriesHelper.fetchFoodOffersCategories(
-				{}
-			)) as DatabaseTypes.FoodoffersCategories[];
+			const result = (await foodOffersCategoriesHelper.fetchFoodOffersCategories({})) as DatabaseTypes.FoodoffersCategories[];
 			if (result) {
 				dispatch({
 					type: SET_FOOD_OFFERS_CATEGORIES,
@@ -363,9 +301,7 @@ export default function Layout() {
 
 	const getFoodOffersInfoItems = async () => {
 		try {
-			const result = (await foodOffersInfoItemsHelper.fetchFoodOffersInfoItems(
-				{}
-			)) as DatabaseTypes.FoodoffersInfoItems[];
+			const result = (await foodOffersInfoItemsHelper.fetchFoodOffersInfoItems({})) as DatabaseTypes.FoodoffersInfoItems[];
 			if (result) {
 				dispatch({
 					type: SET_FOODOFFERS_INFO_ITEMS,
@@ -379,8 +315,7 @@ export default function Layout() {
 
 	const getAllFoodAttributes = async () => {
 		try {
-			const result =
-				(await foodAttributesHelper.fetchAllFoodAttributes()) as DatabaseTypes.FoodsAttributes[];
+			const result = (await foodAttributesHelper.fetchAllFoodAttributes()) as DatabaseTypes.FoodsAttributes[];
 			if (result) {
 				const attributesDict = result.reduce(
 					(acc, attr) => {
@@ -401,9 +336,7 @@ export default function Layout() {
 
 	const getAllFoodAttributesGroups = async () => {
 		try {
-			const result = (await foodAttributeGroupHelper.fetchAllFoodAttributeGroups(
-				{}
-			)) as DatabaseTypes.FoodsAttributesGroups[];
+			const result = (await foodAttributeGroupHelper.fetchAllFoodAttributeGroups({})) as DatabaseTypes.FoodsAttributesGroups[];
 			if (result) {
 				dispatch({ type: SET_FOOD_ATTRIBUTE_GROUPS, payload: result });
 			}
@@ -414,9 +347,7 @@ export default function Layout() {
 
 	const getAllBusinessHoursGroups = async () => {
 		try {
-			const result = (await businessHoursGroupsHelper.fetchBusinessHoursGroups(
-				{}
-			)) as DatabaseTypes.BusinesshoursGroups[];
+			const result = (await businessHoursGroupsHelper.fetchBusinessHoursGroups({})) as DatabaseTypes.BusinesshoursGroups[];
 			if (result) {
 				dispatch({ type: SET_BUSINESS_HOURS_GROUPS, payload: result });
 			}
@@ -427,9 +358,7 @@ export default function Layout() {
 
 	const getBusinessHours = async () => {
 		try {
-			const businessHours = (await businessHoursHelper.fetchBusinessHours(
-				{}
-			)) as DatabaseTypes.Businesshours[];
+			const businessHours = (await businessHoursHelper.fetchBusinessHours({})) as DatabaseTypes.Businesshours[];
 			dispatch({ type: SET_BUSINESS_HOURS, payload: businessHours });
 		} catch (error) {
 			console.error('Error fetching business hours:', error);
@@ -449,9 +378,7 @@ export default function Layout() {
 
 	const getAppSettings = async () => {
 		try {
-			const result = (await appSettingsHelper.fetchAppSettings(
-				{}
-			)) as DatabaseTypes.AppSettings;
+			const result = (await appSettingsHelper.fetchAppSettings({})) as DatabaseTypes.AppSettings;
 			if (result) {
 				dispatch({ type: SET_APP_SETTINGS, payload: result });
 			}
@@ -465,27 +392,18 @@ export default function Layout() {
 			return;
 		}
 		try {
-			const response =
-				(await popupEventsHelper.fetchAllPopupEvents()) as DatabaseTypes.PopupEvents[];
+			const response = (await popupEventsHelper.fetchAllPopupEvents()) as DatabaseTypes.PopupEvents[];
 			if (response) {
 				const currentDate = new Date();
 
-				const platformKey =
-					Platform.OS === 'ios'
-						? 'show_on_ios'
-						: Platform.OS === 'android'
-							? 'show_on_android'
-							: 'show_on_web';
+				const platformKey = Platform.OS === 'ios' ? 'show_on_ios' : Platform.OS === 'android' ? 'show_on_android' : 'show_on_web';
 
 				const filteredEvents = response
 					.filter((event: DatabaseTypes.PopupEvents) => {
 						const start = event.date_start ? new Date(event.date_start) : null;
 						const end = event.date_end ? new Date(event.date_end) : null;
 
-						const isDateValid =
-							(!start && !end) ||
-							(start && !end && currentDate >= start) ||
-							(start && end && currentDate >= start && currentDate <= end);
+						const isDateValid = (!start && !end) || (start && !end && currentDate >= start) || (start && end && currentDate >= start && currentDate <= end);
 
 						const isPlatformValid = event[platformKey];
 
@@ -509,9 +427,7 @@ export default function Layout() {
 
 	const getAllAppElements = async () => {
 		try {
-			const result = (await appElementsHelper.fetchAllAppElements(
-				{}
-			)) as DatabaseTypes.AppElements[];
+			const result = (await appElementsHelper.fetchAllAppElements({})) as DatabaseTypes.AppElements[];
 			if (result) {
 				dispatch({ type: SET_APP_ELEMENTS, payload: result });
 			}
@@ -520,71 +436,50 @@ export default function Layout() {
 		}
 	};
 
-	const fetchConfig: { key: string | string[]; action: () => Promise<void> }[] =
-		[
-			{ key: CollectionKeys.APP_ELEMENTS, action: getAllAppElements },
-			// refresh markings when any of the related tables change
-			{
-				key: [
-					CollectionKeys.MARKINGS,
-					CollectionKeys.MARKINGS_TRANSLATIONS,
-					CollectionKeys.MARKINGS_GROUPS,
-				],
-				action: getMarkings,
-			},
-			{
-				key: [
-					CollectionKeys.FOODS_CATEGORIES,
-					CollectionKeys.FOODS_CATEGORIES_TRANSLATIONS,
-				],
-				action: getFoodCategories,
-			},
-			{
-				key: [
-					CollectionKeys.FOODOFFERS_CATEGORIES,
-					CollectionKeys.FOODOFFERS_CATEGORIES_TRANSLATIONS,
-				],
-				action: getFoodOffersCategories,
-			},
-			{
-				key: CollectionKeys.FOODOFFERS_INFO_ITEMS,
-				action: getFoodOffersInfoItems,
-			},
-			{
-				key: CollectionKeys.FOODS_FEEDBACKS_LABELS,
-				action: getFoodFeedBackLabels,
-			},
-			{ key: CollectionKeys.NEWS, action: getNews },
-			{ key: CollectionKeys.BUSINESSHOURS, action: getBusinessHours },
-			{
-				key: CollectionKeys.BUSINESSHOURS_GROUPS,
-				action: getAllBusinessHoursGroups,
-			},
-			{ key: CollectionKeys.WIKIS, action: getWikis },
-			{ key: CollectionKeys.APP_SETTINGS, action: getAppSettings },
-			{
-				key: CollectionKeys.FOODS_ATTRIBUTES_GROUPS,
-				action: getAllFoodAttributesGroups,
-			},
-			{ key: CollectionKeys.FOODS_ATTRIBUTES, action: getAllFoodAttributes },
-		];
+	const fetchConfig: { key: string | string[]; action: () => Promise<void> }[] = [
+		{ key: CollectionKeys.APP_ELEMENTS, action: getAllAppElements },
+		// refresh markings when any of the related tables change
+		{
+			key: [CollectionKeys.MARKINGS, CollectionKeys.MARKINGS_TRANSLATIONS, CollectionKeys.MARKINGS_GROUPS],
+			action: getMarkings,
+		},
+		{
+			key: [CollectionKeys.FOODS_CATEGORIES, CollectionKeys.FOODS_CATEGORIES_TRANSLATIONS],
+			action: getFoodCategories,
+		},
+		{
+			key: [CollectionKeys.FOODOFFERS_CATEGORIES, CollectionKeys.FOODOFFERS_CATEGORIES_TRANSLATIONS],
+			action: getFoodOffersCategories,
+		},
+		{
+			key: CollectionKeys.FOODOFFERS_INFO_ITEMS,
+			action: getFoodOffersInfoItems,
+		},
+		{
+			key: CollectionKeys.FOODS_FEEDBACKS_LABELS,
+			action: getFoodFeedBackLabels,
+		},
+		{ key: CollectionKeys.NEWS, action: getNews },
+		{ key: CollectionKeys.BUSINESSHOURS, action: getBusinessHours },
+		{
+			key: CollectionKeys.BUSINESSHOURS_GROUPS,
+			action: getAllBusinessHoursGroups,
+		},
+		{ key: CollectionKeys.WIKIS, action: getWikis },
+		{ key: CollectionKeys.APP_SETTINGS, action: getAppSettings },
+		{
+			key: CollectionKeys.FOODS_ATTRIBUTES_GROUPS,
+			action: getAllFoodAttributesGroups,
+		},
+		{ key: CollectionKeys.FOODS_ATTRIBUTES, action: getAllFoodAttributes },
+	];
 
 	const getAllCollectionDatesLastUpdate = async () => {
 		try {
-			const result =
-				(await collectionLastUpdateHelper.fetchCollectionDatesLastUpdate(
-					{}
-				)) as DatabaseTypes.CollectionsDatesLastUpdate[];
+			const result = (await collectionLastUpdateHelper.fetchCollectionDatesLastUpdate({})) as DatabaseTypes.CollectionsDatesLastUpdate[];
 			if (result) {
 				const serverMap = transformUpdateDatesToMap(result);
-				if (
-					!kioskMode &&
-					shouldFetch(
-						[CollectionKeys.POPUP_EVENTS, CollectionKeys.POPUP_EVENTS_TRANSLATIONS],
-						serverMap,
-						lastUpdatedMap
-					)
-				) {
+				if (!kioskMode && shouldFetch([CollectionKeys.POPUP_EVENTS, CollectionKeys.POPUP_EVENTS_TRANSLATIONS], serverMap, lastUpdatedMap)) {
 					getAllEvents();
 				}
 				await Promise.all(
@@ -655,12 +550,7 @@ export default function Layout() {
 				<Drawer.Screen
 					name="account-balance/index"
 					options={{
-						header: () => (
-							<CustomMenuHeader
-								label={translate(TranslationKeys.accountbalance)}
-								key={'Account-Balance'}
-							/>
-						),
+						header: () => <CustomMenuHeader label={translate(TranslationKeys.accountbalance)} key={'Account-Balance'} />,
 						title: translate(TranslationKeys.accountbalance),
 					}}
 				/>
@@ -682,20 +572,13 @@ export default function Layout() {
 					name="news/index"
 					options={{
 						title: 'News',
-						header: () => (
-							<CustomMenuHeader label={translate(TranslationKeys.news)} key={'News'} />
-						),
+						header: () => <CustomMenuHeader label={translate(TranslationKeys.news)} key={'News'} />,
 					}}
 				/>
 				<Drawer.Screen
 					name="course-timetable/index"
 					options={{
-						header: () => (
-							<CustomMenuHeader
-								label={translate(TranslationKeys.course_timetable)}
-								key={'course_timetable'}
-							/>
-						),
+						header: () => <CustomMenuHeader label={translate(TranslationKeys.course_timetable)} key={'course_timetable'} />,
 						title: 'Course Timetable',
 					}}
 				/>
@@ -703,12 +586,7 @@ export default function Layout() {
 					name="settings/index"
 					options={{
 						title: 'Settings',
-						header: () => (
-							<CustomMenuHeader
-								label={translate(TranslationKeys.settings)}
-								key={'settings'}
-							/>
-						),
+						header: () => <CustomMenuHeader label={translate(TranslationKeys.settings)} key={'settings'} />,
 					}}
 				/>
 				<Drawer.Screen
@@ -727,48 +605,28 @@ export default function Layout() {
 				<Drawer.Screen
 					name="management/index"
 					options={{
-						header: () => (
-							<CustomMenuHeader
-								label={translate(TranslationKeys.role_management)}
-								key={'Management'}
-							/>
-						),
+						header: () => <CustomMenuHeader label={translate(TranslationKeys.role_management)} key={'Management'} />,
 						title: 'Management',
 					}}
 				/>
 				<Drawer.Screen
 					name="experimentell/index"
 					options={{
-						header: () => (
-							<CustomMenuHeader
-								label={translate(TranslationKeys.experimentell)}
-								key={'Experimentell'}
-							/>
-						),
+						header: () => <CustomMenuHeader label={translate(TranslationKeys.experimentell)} key={'Experimentell'} />,
 						title: translate(TranslationKeys.experimentell),
 					}}
 				/>
 				<Drawer.Screen
 					name="leaflet-map/index"
 					options={{
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.leaflet_map)}
-								key={'LeafletMap'}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.leaflet_map)} key={'LeafletMap'} />,
 						title: translate(TranslationKeys.leaflet_map),
 					}}
 				/>
 				<Drawer.Screen
 					name="vertical-image-scroll/index"
 					options={{
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.vertical_image_scroll)}
-								key={'vertical_image_scroll'}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.vertical_image_scroll)} key={'vertical_image_scroll'} />,
 						title: translate(TranslationKeys.vertical_image_scroll),
 					}}
 				/>
@@ -792,24 +650,14 @@ export default function Layout() {
 				<Drawer.Screen
 					name="notification/index"
 					options={{
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.notification)}
-								key={'notification'}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.notification)} key={'notification'} />,
 						title: translate(TranslationKeys.notification),
 					}}
 				/>
 				<Drawer.Screen
 					name="events/index"
 					options={{
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.events)}
-								key={'events'}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.events)} key={'events'} />,
 						title: translate(TranslationKeys.events),
 					}}
 				/>
@@ -817,12 +665,7 @@ export default function Layout() {
 					name="support-FAQ/index"
 					options={{
 						title: translate(TranslationKeys.feedback_support_faq),
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.feedback_support_faq)}
-								key={'Feedback Support Faq'}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.feedback_support_faq)} key={'Feedback Support Faq'} />,
 					}}
 				/>
 
@@ -830,14 +673,7 @@ export default function Layout() {
 					name="feedback-support/index"
 					options={{
 						title: 'Feedback & Support',
-						header: () => (
-							<CustomStackHeader
-								label={`${translate(TranslationKeys.feedback)} & ${translate(
-									TranslationKeys.support
-								)}`}
-								key={'Feedback & Support'}
-							/>
-						),
+						header: () => <CustomStackHeader label={`${translate(TranslationKeys.feedback)} & ${translate(TranslationKeys.support)}`} key={'Feedback & Support'} />,
 					}}
 				/>
 
@@ -852,12 +688,7 @@ export default function Layout() {
 				<Drawer.Screen
 					name="licenseInformation/index"
 					options={{
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.license_information)}
-								key={'license_information'}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.license_information)} key={'license_information'} />,
 						title: 'License Information',
 					}}
 				/>
@@ -866,12 +697,7 @@ export default function Layout() {
 					name="data-access/index"
 					options={{
 						title: 'Data Access',
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.dataAccess)}
-								key={'Data Access'}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.dataAccess)} key={'Data Access'} />,
 					}}
 				/>
 
@@ -879,43 +705,27 @@ export default function Layout() {
 					name="eating-habits/index"
 					options={{
 						title: 'Eating Habits',
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.eating_habits)}
-								key={'Eating Habits'}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.eating_habits)} key={'Eating Habits'} />,
 					}}
 				/>
 				<Drawer.Screen
 					name="price-group/index"
 					options={{
 						title: 'Price Group',
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.price_group)}
-								key={'Price Group'}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.price_group)} key={'Price Group'} />,
 					}}
 				/>
 
 				<Drawer.Screen
 					name="form-categories/index"
 					options={{
-						header: () => (
-							<CustomStackHeader
-								label={translate(TranslationKeys.select_a_form_category)}
-							/>
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.select_a_form_category)} />,
 					}}
 				/>
 				<Drawer.Screen
 					name="forms/index"
 					options={{
-						header: () => (
-							<CustomStackHeader label={translate(TranslationKeys.select_a_form)} />
-						),
+						header: () => <CustomStackHeader label={translate(TranslationKeys.select_a_form)} />,
 					}}
 				/>
 				<Drawer.Screen

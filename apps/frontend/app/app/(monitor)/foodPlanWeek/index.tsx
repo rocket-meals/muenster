@@ -1,17 +1,5 @@
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import {
-	View,
-	ScrollView,
-	TouchableOpacity,
-	Dimensions,
-	Text,
-} from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, ScrollView, TouchableOpacity, Dimensions, Text } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { router, useFocusEffect } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,16 +21,12 @@ const Index = () => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
-	const { primaryColor: projectColor, appSettings } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor: projectColor, appSettings } = useSelector((state: RootState) => state.settings);
 	const { weekPlan } = useSelector((state: RootState) => state.management);
 	const [isActive, setIsActive] = useState(false);
 	const canteenSheetRef = useRef<BottomSheet>(null);
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: projectColor;
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
 
 	const openCanteenSheet = () => {
 		canteenSheetRef?.current?.expand();
@@ -109,27 +93,11 @@ const Index = () => {
 				>
 					<View style={styles.col1}>
 						<Ionicons name="restaurant-sharp" size={24} color={theme.screen.icon} />
-						{windowWidth < 600 && weekPlan?.selectedCanteen?.alias ? (
-							<Text style={{ ...styles.label, color: theme.screen.text }}>
-								{weekPlan?.selectedCanteen?.alias}
-							</Text>
-						) : (
-							<Text style={{ ...styles.label, color: theme.screen.text }}>
-								{translate(TranslationKeys.canteen)}
-							</Text>
-						)}
+						{windowWidth < 600 && weekPlan?.selectedCanteen?.alias ? <Text style={{ ...styles.label, color: theme.screen.text }}>{weekPlan?.selectedCanteen?.alias}</Text> : <Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.canteen)}</Text>}
 					</View>
 					<View style={styles.col2}>
-						{windowWidth > 600 && (
-							<Text style={{ ...styles.label, color: theme.screen.text }}>
-								{weekPlan?.selectedCanteen?.alias}
-							</Text>
-						)}
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						{windowWidth > 600 && <Text style={{ ...styles.label, color: theme.screen.text }}>{weekPlan?.selectedCanteen?.alias}</Text>}
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 				<View
@@ -140,9 +108,7 @@ const Index = () => {
 					}}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Allergene Anzeigen
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Allergene Anzeigen</Text>
 					</View>
 					<View style={styles.col2}>
 						<Switch
@@ -171,9 +137,7 @@ const Index = () => {
 					}}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							BigScreen
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>BigScreen</Text>
 					</View>
 					<View style={styles.col2}>
 						<Entypo name="chevron-small-right" size={22} color={theme.screen.icon} />
@@ -192,10 +156,7 @@ const Index = () => {
 					handleComponent={null}
 					onClose={closeCanteenSheet}
 				>
-					<ManagementCanteensSheet
-						closeSheet={closeCanteenSheet}
-						handleSelectCanteen={handleSelectCanteen}
-					/>
+					<ManagementCanteensSheet closeSheet={closeCanteenSheet} handleSelectCanteen={handleSelectCanteen} />
 				</BaseBottomSheet>
 			)}
 		</>

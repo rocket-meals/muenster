@@ -1,10 +1,4 @@
-import {
-	ActivityIndicator,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
@@ -13,25 +7,7 @@ import { useSelector } from 'react-redux';
 import { isWeb } from '@/constants/Constants';
 import { RootState } from '@/redux/reducer';
 
-const CollectionSelection = ({
-	id,
-	value,
-	onChange,
-	error,
-	isDisabled,
-	loading,
-	data,
-	custom_type,
-}: {
-	id: string;
-	value: any;
-	onChange: (id: string, value: any, custom_type: string) => void;
-	error: string;
-	isDisabled: boolean;
-	loading: boolean;
-	data: any;
-	custom_type: string;
-}) => {
+const CollectionSelection = ({ id, value, onChange, error, isDisabled, loading, data, custom_type }: { id: string; value: any; onChange: (id: string, value: any, custom_type: string) => void; error: string; isDisabled: boolean; loading: boolean; data: any; custom_type: string }) => {
 	const { theme } = useTheme();
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
 	const parseValue = value ? value : null;
@@ -51,12 +27,7 @@ const CollectionSelection = ({
 					<ActivityIndicator size={30} color={theme.screen.text} />
 				</View>
 			) : (
-				<ScrollView
-					nestedScrollEnabled={true}
-					keyboardShouldPersistTaps="handled"
-					scrollEventThrottle={16}
-					contentContainerStyle={styles.scrollViewContent}
-				>
+				<ScrollView nestedScrollEnabled={true} keyboardShouldPersistTaps="handled" scrollEventThrottle={16} contentContainerStyle={styles.scrollViewContent}>
 					{data &&
 						data?.length > 0 &&
 						data.map((item: any) => {
@@ -86,12 +57,7 @@ const CollectionSelection = ({
 										{item?.alias ? item?.alias : '-'}
 									</Text>
 
-									<MaterialCommunityIcons
-										name={isSelected ? 'checkbox-marked' : 'checkbox-blank'}
-										size={24}
-										color={isSelected ? '#ffffff' : '#ffffff'}
-										style={styles.radioButton}
-									/>
+									<MaterialCommunityIcons name={isSelected ? 'checkbox-marked' : 'checkbox-blank'} size={24} color={isSelected ? '#ffffff' : '#ffffff'} style={styles.radioButton} />
 								</TouchableOpacity>
 							);
 						})}

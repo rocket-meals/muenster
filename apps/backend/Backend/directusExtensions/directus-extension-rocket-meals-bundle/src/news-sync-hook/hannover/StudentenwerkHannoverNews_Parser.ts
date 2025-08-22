@@ -2,12 +2,9 @@
 import { CheerioAPI, load as cheerioLoad } from 'cheerio';
 import type { Element as CheerioElement } from 'domhandler';
 import { TranslationHelper } from '../../helpers/TranslationHelper';
-import {
-  NewsParserInterface,
-  NewsTypeForParser,
-} from './../NewsParserInterface';
+import { NewsParserInterface, NewsTypeForParser } from './../NewsParserInterface';
 //import undici, {Agent} from 'undici';
-import {DatabaseTypes, DateHelper} from 'repo-depkit-common';
+import { DatabaseTypes, DateHelper } from 'repo-depkit-common';
 import { WorkflowRunLogger } from '../../workflows-runs-hook/WorkflowRunJobInterface';
 import { FetchHelper } from '../../helpers/FetchHelper';
 
@@ -20,58 +17,37 @@ export class StudentenwerkHannoverNews_Parser implements NewsParserInterface {
 
   constructor() {}
 
-  async getNewsItems(
-    workflowRun?: DatabaseTypes.WorkflowsRuns,
-    logger?: WorkflowRunLogger,
-    limitAmountNews?: number
-  ): Promise<NewsTypeForParser[]> {
+  async getNewsItems(workflowRun?: DatabaseTypes.WorkflowsRuns, logger?: WorkflowRunLogger, limitAmountNews?: number): Promise<NewsTypeForParser[]> {
     let realNewsItems = await this.getRealNewsItems(logger, limitAmountNews);
     return [...realNewsItems];
   }
 
-  async getRealNewsItems(
-    logger?: WorkflowRunLogger,
-    limitAmountNews?: number
-  ): Promise<NewsTypeForParser[]> {
+  async getRealNewsItems(logger?: WorkflowRunLogger, limitAmountNews?: number): Promise<NewsTypeForParser[]> {
     if (logger) {
       logger.appendLog('Fetching news from Studentenwerk Hannover');
     }
 
     try {
       let response = await this.fetchNewsPage();
-      return StudentenwerkHannoverNews_Parser.parseNewsItems(
-        response,
-        logger,
-        limitAmountNews
-      );
+      return StudentenwerkHannoverNews_Parser.parseNewsItems(response, logger, limitAmountNews);
     } catch (error: any) {
       if (logger) {
-        logger.appendLog(
-          'Error fetching or parsing news page: ' + error.toString()
-        );
+        logger.appendLog('Error fetching or parsing news page: ' + error.toString());
       }
       console.error('Error fetching or parsing news page:', error);
-      throw new Error(
-        `Failed to fetch or parse news page: ${error.toString()}`
-      );
+      throw new Error(`Failed to fetch or parse news page: ${error.toString()}`);
     }
   }
 
   async fetchNewsPage() {
-    return await FetchHelper.fetchPage(
-      StudentenwerkHannoverNews_Parser.newsUrl
-    );
+    return await FetchHelper.fetchPage(StudentenwerkHannoverNews_Parser.newsUrl);
   }
 
   static async fetchArticlePage(articleUrl: string) {
     return await FetchHelper.fetchPage(articleUrl);
   }
 
-  static async parseNewsItems(
-    html: string,
-    logger?: WorkflowRunLogger,
-    limitAmountNews?: number
-  ): Promise<NewsTypeForParser[]> {
+  static async parseNewsItems(html: string, logger?: WorkflowRunLogger, limitAmountNews?: number): Promise<NewsTypeForParser[]> {
     if (logger) {
       logger.appendLog('Parsing news items from HTML');
     }
@@ -80,14 +56,10 @@ export class StudentenwerkHannoverNews_Parser implements NewsParserInterface {
 
     let data: NewsTypeForParser[] = [];
     let articleItems = $newsIndexArticle('div.article');
-    let limit = limitAmountNews
-      ? Math.min(limitAmountNews, articleItems.length)
-      : articleItems.length;
+    let limit = limitAmountNews ? Math.min(limitAmountNews, articleItems.length) : articleItems.length;
 
     if (logger) {
-      logger.appendLog(
-        `Found ${articleItems.length} articles, limiting to ${limit}`
-      );
+      logger.appendLog(`Found ${articleItems.length} articles, limiting to ${limit}`);
     }
 
     for (let index = 0; index < articleItems.length && index < limit; index++) {
@@ -97,37 +69,22 @@ export class StudentenwerkHannoverNews_Parser implements NewsParserInterface {
 
       let element: CheerioElement | undefined = articleItems[index];
 
-      let imageUrl = StudentenwerkHannoverNews_Parser.extractImageUrl(
-        $newsIndexArticle,
-        element
-      );
+      let imageUrl = StudentenwerkHannoverNews_Parser.extractImageUrl($newsIndexArticle, element);
       let header = $newsIndexArticle(element).find('h3').text().trim();
 
       if (!header) {
         if (logger) {
-          logger.appendLog(
-            `Skipping article at index ${index} due to missing header`
-          );
+          logger.appendLog(`Skipping article at index ${index} due to missing header`);
         }
         continue; // Skip this article if header is missing
       }
 
-      let content = $newsIndexArticle(element)
-        .find('div.news_slider-content_teaser')
-        .text()
-        .trim();
-      let articleUrl = StudentenwerkHannoverNews_Parser.extractArticleUrl(
-        $newsIndexArticle,
-        element
-      );
+      let content = $newsIndexArticle(element).find('div.news_slider-content_teaser').text().trim();
+      let articleUrl = StudentenwerkHannoverNews_Parser.extractArticleUrl($newsIndexArticle, element);
 
-      let date =
-        await StudentenwerkHannoverNews_Parser.fetchArticleDate(articleUrl);
+      let date = await StudentenwerkHannoverNews_Parser.fetchArticleDate(articleUrl);
 
-      let categories = StudentenwerkHannoverNews_Parser.extractCategories(
-        $newsIndexArticle,
-        element
-      );
+      let categories = StudentenwerkHannoverNews_Parser.extractCategories($newsIndexArticle, element);
 
       data.push({
         basicNews: {
@@ -157,30 +114,15 @@ export class StudentenwerkHannoverNews_Parser implements NewsParserInterface {
     return data;
   }
 
-  static extractImageUrl(
-    $: CheerioAPI,
-    element: CheerioElement | undefined
-  ): string {
+  static extractImageUrl($: CheerioAPI, element: CheerioElement | undefined): string {
     let imageStyle = $(element).find('div.news-slider-image').attr('style');
-    let imageUrlMatch = imageStyle
-      ? imageStyle.match(/url\(['"]?(.*?)['"]?\)/)
-      : null;
-    return imageUrlMatch
-      ? StudentenwerkHannoverNews_Parser.baseUrl + imageUrlMatch[1]
-      : '';
+    let imageUrlMatch = imageStyle ? imageStyle.match(/url\(['"]?(.*?)['"]?\)/) : null;
+    return imageUrlMatch ? StudentenwerkHannoverNews_Parser.baseUrl + imageUrlMatch[1] : '';
   }
 
-  static extractArticleUrl(
-    $: CheerioAPI,
-    element: CheerioElement | undefined
-  ): string | undefined {
+  static extractArticleUrl($: CheerioAPI, element: CheerioElement | undefined): string | undefined {
     let articleUrl = $(element).find('a.articleLink').attr('href');
-    if (
-      articleUrl &&
-      articleUrl.startsWith(
-        StudentenwerkHannoverNews_Parser.newsDetailArticleUrlStart
-      )
-    ) {
+    if (articleUrl && articleUrl.startsWith(StudentenwerkHannoverNews_Parser.newsDetailArticleUrlStart)) {
       return StudentenwerkHannoverNews_Parser.baseUrl + articleUrl;
     }
     return undefined;
@@ -203,10 +145,7 @@ export class StudentenwerkHannoverNews_Parser implements NewsParserInterface {
     }
   }
 
-  static extractCategories(
-    $: CheerioAPI,
-    element: CheerioElement | undefined
-  ): { [key: string]: string } {
+  static extractCategories($: CheerioAPI, element: CheerioElement | undefined): { [key: string]: string } {
     let categories: { [key: string]: string } = {};
     $(element)
       .find('div.news_slider-content_categorie')

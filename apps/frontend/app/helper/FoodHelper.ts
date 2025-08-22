@@ -1,12 +1,7 @@
 import { DatabaseTypes } from 'repo-depkit-common';
 import { CollectionHelper } from './collectionHelper';
 
-export async function loadMostLikedOrDislikedFoods(
-	limit: number,
-	offset: number,
-	minRatingAmount: number | undefined,
-	bestFirst: boolean
-) {
+export async function loadMostLikedOrDislikedFoods(limit: number, offset: number, minRatingAmount: number | undefined, bestFirst: boolean) {
 	const collectionHelper = new CollectionHelper<DatabaseTypes.Foods>('foods');
 	if (!minRatingAmount) {
 		minRatingAmount = 1;
@@ -40,10 +35,7 @@ export async function loadMostLikedOrDislikedFoods(
 	return await collectionHelper.readItems(query);
 }
 
-export async function loadBestRatedFoodsWithImage(
-	limit: number,
-	offset: number
-) {
+export async function loadBestRatedFoodsWithImage(limit: number, offset: number) {
 	const collectionHelper = new CollectionHelper<DatabaseTypes.Foods>('foods');
 	const query = {
 		limit,

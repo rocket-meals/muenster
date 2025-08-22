@@ -1,24 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-	TouchableOpacity,
-	ScrollView,
-	View,
-	Dimensions,
-	Text,
-	TextInput,
-	Platform,
-	PixelRatio,
-	ActivityIndicator,
-} from 'react-native';
+import { TouchableOpacity, ScrollView, View, Dimensions, Text, TextInput, Platform, PixelRatio, ActivityIndicator } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import FeedbackItem from '../../../components/FeedbackSupport/FeedbackSupport';
 import styles from './styles';
 import { isWeb } from '@/constants/Constants';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import {
-	feedbackData,
-	deviceData,
-} from '../../../constants/FeedbackSupportData';
+import { feedbackData, deviceData } from '../../../constants/FeedbackSupportData';
 import ModalComponent from '../../../components/ModalSetting/ModalComponent';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useSelector } from 'react-redux';
@@ -41,9 +28,7 @@ const FeedbackScreen = () => {
 	const appFeedback = new AppFeedback();
 	const { app_feedbacks_id } = useLocalSearchParams();
 	const { profile } = useSelector((state: RootState) => state.authReducer);
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	const [isModalVisible, setModalVisible] = useState(false);
 	const [selectedTitle, setSelectedTitle] = useState('');
@@ -63,9 +48,7 @@ const FeedbackScreen = () => {
 	);
 
 	const fetchFeedbackById = async () => {
-		const response = (await appFeedback.fetchAppFeedbackById(
-			String(app_feedbacks_id)
-		)) as DatabaseTypes.AppFeedbacks;
+		const response = (await appFeedback.fetchAppFeedbackById(String(app_feedbacks_id))) as DatabaseTypes.AppFeedbacks;
 		if (response) {
 			setInputValues({
 				title: response?.title,
@@ -111,8 +94,7 @@ const FeedbackScreen = () => {
 		const isSimulator = !DeviceInfo.isDevice;
 		const isTablet = DeviceInfo.deviceType === DeviceInfo.DeviceType.TABLET;
 		const brand = DeviceInfo.brand;
-		const platform =
-			Platform.OS === 'web' ? 'Web' : Platform.OS === 'ios' ? 'iOS' : 'Android';
+		const platform = Platform.OS === 'web' ? 'Web' : Platform.OS === 'ios' ? 'iOS' : 'Android';
 		const systemVersion = DeviceInfo.osVersion;
 		let isLandscape = getIsLandScape();
 
@@ -187,10 +169,7 @@ const FeedbackScreen = () => {
 				console.log('Set loading to false finished');
 				await fetchDeviceInfo();
 				console.log('Fetched device info after creating feedback');
-				toast(
-					'Feedback submitted successfully! Thank you for your input.',
-					'success'
-				);
+				toast('Feedback submitted successfully! Thank you for your input.', 'success');
 				console.log('Navigating to support ticket or FAQ');
 				if (profile?.id) {
 					router.navigate('/support-ticket');
@@ -226,16 +205,10 @@ const FeedbackScreen = () => {
 				})
 			);
 			try {
-				await appFeedback.updateAppFeedback(
-					String(app_feedbacks_id),
-					sanitizedInput
-				);
+				await appFeedback.updateAppFeedback(String(app_feedbacks_id), sanitizedInput);
 				setLoading(false);
 				fetchDeviceInfo();
-				toast(
-					'Feedback updated successfully! Thank you for your input.',
-					'success'
-				);
+				toast('Feedback updated successfully! Thank you for your input.', 'success');
 				router.navigate('/support-ticket');
 			} catch (e: any) {
 				setLoading(false);
@@ -260,9 +233,7 @@ const FeedbackScreen = () => {
 		>
 			<ScrollView>
 				<View style={{ alignItems: 'center' }}>
-					<View
-						style={[styles.section, { width: windowWidth > 600 ? '85%' : '100%' }]}
-					>
+					<View style={[styles.section, { width: windowWidth > 600 ? '85%' : '100%' }]}>
 						<Text
 							style={{
 								fontSize: windowWidth > 600 ? (isWeb ? 20 : 24) : 24,
@@ -299,16 +270,12 @@ const FeedbackScreen = () => {
 									padding: 15,
 								}}
 							>
-								{translate(
-									TranslationKeys.support_warning_no_account_or_mail_provided_therefore_we_cannot_answer_your_request
-								)}
+								{translate(TranslationKeys.support_warning_no_account_or_mail_provided_therefore_we_cannot_answer_your_request)}
 							</Text>
 						)}
 					</View>
 
-					<View
-						style={[styles.section, { width: windowWidth > 600 ? '85%' : '100%' }]}
-					>
+					<View style={[styles.section, { width: windowWidth > 600 ? '85%' : '100%' }]}>
 						<TouchableOpacity
 							style={[
 								styles.row,
@@ -316,10 +283,7 @@ const FeedbackScreen = () => {
 									padding: 15,
 									borderRadius: 10,
 									backgroundColor: primaryColor,
-									opacity:
-										inputValues?.title?.length === 0 || inputValues?.content?.length === 0
-											? 0.5
-											: 1,
+									opacity: inputValues?.title?.length === 0 || inputValues?.content?.length === 0 ? 0.5 : 1,
 								},
 							]}
 							onPress={() => {
@@ -329,9 +293,7 @@ const FeedbackScreen = () => {
 									handleCreateAppFeedback();
 								}
 							}}
-							disabled={
-								inputValues?.title?.length === 0 || inputValues?.content?.length === 0
-							}
+							disabled={inputValues?.title?.length === 0 || inputValues?.content?.length === 0}
 						>
 							{loading ? (
 								<View style={{ width: '100%' }}>
@@ -349,30 +311,16 @@ const FeedbackScreen = () => {
 												},
 											]}
 										>
-											{app_feedbacks_id
-												? translate(TranslationKeys.to_update)
-												: translate(TranslationKeys.send)}
+											{app_feedbacks_id ? translate(TranslationKeys.to_update) : translate(TranslationKeys.send)}
 										</Text>
 									</View>
-									<View>
-										{app_feedbacks_id ? (
-											<FontAwesome5 name="save" size={24} color={contrastColor} />
-										) : (
-											<MaterialCommunityIcons
-												name="plus"
-												size={24}
-												color={contrastColor}
-											/>
-										)}
-									</View>
+									<View>{app_feedbacks_id ? <FontAwesome5 name="save" size={24} color={contrastColor} /> : <MaterialCommunityIcons name="plus" size={24} color={contrastColor} />}</View>
 								</>
 							)}
 						</TouchableOpacity>
 					</View>
 
-					<View
-						style={[styles.section, { width: windowWidth > 600 ? '85%' : '100%' }]}
-					>
+					<View style={[styles.section, { width: windowWidth > 600 ? '85%' : '100%' }]}>
 						{!app_feedbacks_id && profile?.id && (
 							<View
 								style={{
@@ -452,29 +400,12 @@ const FeedbackScreen = () => {
 						)}
 						{deviceData.map((item, index) => (
 							<TouchableOpacity key={index}>
-								<FeedbackItem
-									key={index}
-									title={item.title}
-									value={
-										item?.key === 'device_brand'
-											? inputValues[item.key]
-												? inputValues[item.key]
-												: translate(TranslationKeys.unknown)
-											: inputValues[item.key] || ''
-									}
-									theme={theme}
-									windowWidth={windowWidth}
-									onPress={() => openModal(item.key, item.title)}
-								/>
+								<FeedbackItem key={index} title={item.title} value={item?.key === 'device_brand' ? (inputValues[item.key] ? inputValues[item.key] : translate(TranslationKeys.unknown)) : inputValues[item.key] || ''} theme={theme} windowWidth={windowWidth} onPress={() => openModal(item.key, item.title)} />
 							</TouchableOpacity>
 						))}
 
-						{errorJson && (
-							<Text style={{ color: 'red', marginVertical: 10 }}>{errorJson}</Text>
-						)}
-						{errorMessage && (
-							<Text style={{ color: 'red', marginBottom: 10 }}>{errorMessage}</Text>
-						)}
+						{errorJson && <Text style={{ color: 'red', marginVertical: 10 }}>{errorJson}</Text>}
+						{errorMessage && <Text style={{ color: 'red', marginBottom: 10 }}>{errorMessage}</Text>}
 					</View>
 
 					<ModalComponent

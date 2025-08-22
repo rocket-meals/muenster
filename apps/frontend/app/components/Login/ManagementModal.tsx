@@ -1,11 +1,4 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
 import { styles } from './styles';
@@ -17,12 +10,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const ManagementModal: React.FC<ManagementModalProps> = ({
-	isVisible,
-	setIsVisible,
-	handleLogin,
-	loading,
-}) => {
+const ManagementModal: React.FC<ManagementModalProps> = ({ isVisible, setIsVisible, handleLogin, loading }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
@@ -86,11 +74,7 @@ const ManagementModal: React.FC<ManagementModalProps> = ({
 	}, []);
 
 	return (
-		<Modal
-			isVisible={isVisible}
-			style={styles.modalContainer}
-			onClose={() => setIsVisible(false)}
-		>
+		<Modal isVisible={isVisible} style={styles.modalContainer} onClose={() => setIsVisible(false)}>
 			<View
 				style={{
 					...styles.modalView,
@@ -110,11 +94,7 @@ const ManagementModal: React.FC<ManagementModalProps> = ({
 						}}
 						onPress={() => setIsVisible(false)}
 					>
-						<AntDesign
-							name="close"
-							size={isLargeScreen ? 22 : 28}
-							color={theme.modal.closeIcon}
-						/>
+						<AntDesign name="close" size={isLargeScreen ? 22 : 28} color={theme.modal.closeIcon} />
 					</TouchableOpacity>
 				</View>
 				<Text
@@ -124,9 +104,7 @@ const ManagementModal: React.FC<ManagementModalProps> = ({
 						fontSize: Dimensions.get('window').width < 500 ? 23 : 28,
 					}}
 				>
-					{translate(
-						TranslationKeys.show_login_for_management_with_email_and_password
-					)}
+					{translate(TranslationKeys.show_login_for_management_with_email_and_password)}
 				</Text>
 				<Text
 					style={{
@@ -142,9 +120,7 @@ const ManagementModal: React.FC<ManagementModalProps> = ({
 						...styles.input,
 						color: theme.modal.text,
 						backgroundColor: theme.modal.inputBg,
-						borderColor: formState.isEmailValid
-							? theme.modal.inputBorderValid
-							: theme.modal.inputBorderInvalid,
+						borderColor: formState.isEmailValid ? theme.modal.inputBorderValid : theme.modal.inputBorderInvalid,
 						borderWidth: 1,
 						width: Dimensions.get('window').width < 700 ? '100%' : '80%',
 					}}
@@ -159,9 +135,7 @@ const ManagementModal: React.FC<ManagementModalProps> = ({
 						...styles.input,
 						color: theme.modal.text,
 						backgroundColor: theme.modal.inputBg,
-						borderColor: formState.isPasswordValid
-							? theme.modal.inputBorderValid
-							: theme.modal.inputBorderInvalid,
+						borderColor: formState.isPasswordValid ? theme.modal.inputBorderValid : theme.modal.inputBorderInvalid,
 						borderWidth: 1,
 						width: Dimensions.get('window').width < 700 ? '100%' : '80%',
 					}}

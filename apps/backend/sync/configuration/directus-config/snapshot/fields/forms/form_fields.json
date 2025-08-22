@@ -15,13 +15,7 @@
     "options": {
       "enableLink": true,
       "enableSearchFilter": true,
-      "fields": [
-        "sort",
-        "alias",
-        "field_type",
-        "external_import_id",
-        "external_export_id"
-      ],
+      "fields": ["sort", "alias", "field_type", "external_import_id", "external_export_id"],
       "layout": "table",
       "limit": 30,
       "sort": "sort",

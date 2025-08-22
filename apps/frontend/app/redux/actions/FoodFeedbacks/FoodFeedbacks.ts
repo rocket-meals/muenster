@@ -53,10 +53,7 @@ export class FoodFeedbackHelper extends CollectionHelper<DatabaseTypes.FoodsFeed
 	}
 
 	// Update an existing food feedback By Profile ID
-	async fetchFoodFeedbackByProfileId(
-		profileId: string,
-		queryOverride: any = {}
-	) {
+	async fetchFoodFeedbackByProfileId(profileId: string, queryOverride: any = {}) {
 		const defaultQuery = {
 			fields: ['*'],
 			limit: -1, // Fetch all
@@ -109,8 +106,7 @@ export class FoodFeedbackHelper extends CollectionHelper<DatabaseTypes.FoodsFeed
 		}
 
 		// Determine if feedback should be deleted
-		const shouldDelete =
-			!foodFeedback.rating && !foodFeedback.comment && !foodFeedback.notify;
+		const shouldDelete = !foodFeedback.rating && !foodFeedback.comment && !foodFeedback.notify;
 
 		if (shouldDelete) {
 			if (foodFeedback.id) {

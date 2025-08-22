@@ -19,12 +19,7 @@ export default function Layout() {
 				name="index"
 				options={{
 					title: 'Support Ticket',
-					header: () => (
-						<CustomStackHeader
-							label={translate(TranslationKeys.my_support_tickets)}
-							key={'Support Ticket'}
-						/>
-					),
+					header: () => <CustomStackHeader label={translate(TranslationKeys.my_support_tickets)} key={'Support Ticket'} />,
 				}}
 			/>
 		</Stack>

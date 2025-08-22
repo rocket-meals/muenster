@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-	ActivityIndicator,
-	Dimensions,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, Text, TouchableOpacity, View } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
@@ -21,9 +15,7 @@ import { getTextFromTranslation } from '@/helper/resourceHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const getSortedBusinessHoursGroups = (
-	groups: { id: string; sort?: number | null }[]
-) => {
+const getSortedBusinessHoursGroups = (groups: { id: string; sort?: number | null }[]) => {
 	return [...groups].sort((a, b) => {
 		const sortA = a.sort;
 		const sortB = b.sort;
@@ -59,34 +51,19 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 
 	const [hours, setHours] = useState<GroupedHours | null>(null);
 	const [loading, setLoading] = useState(false);
-	const { language, firstDayOfTheWeek } = useSelector(
-		(state: RootState) => state.settings
-	);
-	const { businessHoursGroups } = useSelector(
-		(state: RootState) => state.canteenReducer
-	);
+	const { language, firstDayOfTheWeek } = useSelector((state: RootState) => state.settings);
+	const { businessHoursGroups } = useSelector((state: RootState) => state.canteenReducer);
 	const selectedCanteen = useSelectedCanteen();
 	const ScreenWidth = Dimensions.get('window').width;
 	const buildingsHelper = new BuildingsHelper();
 	const businessHoursHelper = new BusinessHoursHelper();
 
 	const getSortedWeekdayKeys = () => {
-		let dayKeys = [
-			'monday',
-			'tuesday',
-			'wednesday',
-			'thursday',
-			'friday',
-			'saturday',
-			'sunday',
-		];
+		let dayKeys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 		// rotate the day keys based on the first day of the week
 		let firstDayOfTheWeekKey = firstDayOfTheWeek?.id || 'monday';
 		const firstDayIndex = dayKeys.indexOf(firstDayOfTheWeekKey);
-		dayKeys = [
-			...dayKeys.slice(firstDayIndex),
-			...dayKeys.slice(0, firstDayIndex),
-		];
+		dayKeys = [...dayKeys.slice(firstDayIndex), ...dayKeys.slice(0, firstDayIndex)];
 		return dayKeys;
 	};
 
@@ -95,9 +72,7 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 
 		try {
 			setLoading(true);
-			const buildingData = (await buildingsHelper.fetchBuildingById(
-				selectedCanteen.building as string
-			)) as DatabaseTypes.Buildings;
+			const buildingData = (await buildingsHelper.fetchBuildingById(selectedCanteen.building as string)) as DatabaseTypes.Buildings;
 
 			if (!buildingData?.businesshours?.length) {
 				setHours(null);
@@ -107,23 +82,16 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 
 			const hoursPromises = buildingData.businesshours.map(async bh => {
 				try {
-					return (await businessHoursHelper.fetchBusinessHoursById(
-						bh.businesshours_id
-					)) as BusinessHour;
+					return (await businessHoursHelper.fetchBusinessHoursById(bh.businesshours_id)) as BusinessHour;
 				} catch (error) {
-					console.error(
-						`Error fetching business hour ID ${bh.businesshours_id}`,
-						error
-					);
+					console.error(`Error fetching business hour ID ${bh.businesshours_id}`, error);
 					setLoading(false);
 					return null;
 				}
 			});
 
 			const hoursResults = await Promise.all(hoursPromises);
-			const matchedHours = hoursResults.filter(
-				hour => hour && Object.values(hour).some(val => val !== null)
-			);
+			const matchedHours = hoursResults.filter(hour => hour && Object.values(hour).some(val => val !== null));
 
 			// Filter by valid dates
 			const currentDate = new Date().toISOString().split('T')[0];
@@ -137,23 +105,16 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 			> = {};
 
 			getSortedBusinessHoursGroups(businessHoursGroups).forEach((group: any) => {
-				const groupName = group.translations
-					? getTextFromTranslation(group.translations, language)
-					: '';
+				const groupName = group.translations ? getTextFromTranslation(group.translations, language) : '';
 
 				// First filter for the group
-				const groupHours = matchedHours.filter(
-					(hour: any) => hour.group === group.id
-				);
+				const groupHours = matchedHours.filter((hour: any) => hour.group === group.id);
 				if (!groupHours.length) return;
 
 				// check if the hours have a filter for active
 				const groupHoursWithDateFilter = groupHours.filter((hour: any) => {
 					if (hour.date_valid_from && hour.date_valid_till) {
-						return (
-							currentDate >= hour.date_valid_from &&
-							currentDate <= hour.date_valid_till
-						);
+						return currentDate >= hour.date_valid_from && currentDate <= hour.date_valid_till;
 					}
 					return false;
 				});
@@ -180,10 +141,7 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 
 			Object.entries(groupedByGroupName).forEach(([groupId, groupData]) => {
 				const { name: groupName, hours: hoursList } = groupData;
-				const dayStartAndEndTimeDict: Record<
-					string,
-					{ day: string; time_start: number | null; time_end: number | null }[]
-				> = {};
+				const dayStartAndEndTimeDict: Record<string, { day: string; time_start: number | null; time_end: number | null }[]> = {};
 
 				hoursList.forEach((entry: any) => {
 					sortedDayKeys.forEach(day => {
@@ -199,12 +157,8 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 									time_end: null,
 								});
 							} else {
-								let time_start_as_seconds =
-									parseInt(time_start_as_string.split(':')[0]) * 3600 +
-									parseInt(time_start_as_string.split(':')[1]) * 60;
-								let time_end_as_seconds =
-									parseInt(time_end_as_string.split(':')[0]) * 3600 +
-									parseInt(time_end_as_string.split(':')[1]) * 60;
+								let time_start_as_seconds = parseInt(time_start_as_string.split(':')[0]) * 3600 + parseInt(time_start_as_string.split(':')[1]) * 60;
+								let time_end_as_seconds = parseInt(time_end_as_string.split(':')[0]) * 3600 + parseInt(time_end_as_string.split(':')[1]) * 60;
 
 								timesForDay.push({
 									day,
@@ -219,10 +173,7 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 
 				// Step 2: Group by same time_start and time_end
 				// e.g. Monday: 08:00-12:00, 11:00-14:00, 14:00-20:00 ==> 08:00-20:00
-				const dayConsecutiveRanges: Record<
-					string,
-					{ time_start: number | null; time_end: number | null }[]
-				> = {};
+				const dayConsecutiveRanges: Record<string, { time_start: number | null; time_end: number | null }[]> = {};
 				// Iterate over each day and its corresponding time ranges
 				sortedDayKeys.forEach(day => {
 					const timeRanges = dayStartAndEndTimeDict[day];
@@ -247,35 +198,22 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 						} | null = null;
 						timeRanges.forEach(timeRange => {
 							const { time_start, time_end } = timeRange;
-							if (
-								!currentRange ||
-								currentRange.time_start === null ||
-								currentRange.time_end === null
-							) {
+							if (!currentRange || currentRange.time_start === null || currentRange.time_end === null) {
 								currentRange = { time_start, time_end };
 							} else {
 								let isSame = false;
 								let isBetween = false;
 								let isExtending = false;
 								let isOutside = false;
-								if (
-									time_start === currentRange.time_start &&
-									time_end === currentRange.time_end
-								) {
+								if (time_start === currentRange.time_start && time_end === currentRange.time_end) {
 									isSame = true;
 									// do nothing
 								} else if (time_start === null || time_end === null) {
 									// do nothing
-								} else if (
-									time_start >= currentRange.time_start &&
-									time_end <= currentRange.time_end
-								) {
+								} else if (time_start >= currentRange.time_start && time_end <= currentRange.time_end) {
 									isBetween = true;
 									// do nothing
-								} else if (
-									time_start < currentRange.time_end &&
-									time_end > currentRange.time_end
-								) {
+								} else if (time_start < currentRange.time_end && time_end > currentRange.time_end) {
 									isExtending = true;
 									currentRange.time_end = time_end;
 								} else if (time_start > currentRange.time_end) {
@@ -309,20 +247,13 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 					if (!currentTimeRanges || currentTimeRanges.length === 0) {
 						// if we have no time ranges for this day, we can skip it
 						// but we need to check if we have a previous day with time ranges and if so, we need to add it to the groupedTimes
-						if (
-							previousDaysForTimeRange.length > 0 &&
-							previousSavedTimeRanges.length > 0
-						) {
+						if (previousDaysForTimeRange.length > 0 && previousSavedTimeRanges.length > 0) {
 							// we have a previous day with time ranges
 							previousSavedTimeRanges.forEach(timeRange => {
 								groupedTimes.push({
 									day: previousDaysForTimeRange,
-									time_start:
-										timeRange.time_start === null
-											? null
-											: timeRange.time_start.toString(),
-									time_end:
-										timeRange.time_end === null ? null : timeRange.time_end.toString(),
+									time_start: timeRange.time_start === null ? null : timeRange.time_start.toString(),
+									time_end: timeRange.time_end === null ? null : timeRange.time_end.toString(),
 								});
 							});
 							previousSavedTimeRanges = [];
@@ -339,10 +270,7 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 						if (currentTimeRanges.length === previousSavedTimeRanges.length) {
 							currentTimeRanges.forEach(timeRange => {
 								previousSavedTimeRanges.forEach(previousTimeRange => {
-									if (
-										timeRange.time_start === previousTimeRange.time_start &&
-										timeRange.time_end === previousTimeRange.time_end
-									) {
+									if (timeRange.time_start === previousTimeRange.time_start && timeRange.time_end === previousTimeRange.time_end) {
 										isSameTimeRange = true;
 									}
 								});
@@ -357,12 +285,8 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 							previousSavedTimeRanges.forEach(timeRange => {
 								groupedTimes.push({
 									day: previousDaysForTimeRange,
-									time_start:
-										timeRange.time_start === null
-											? null
-											: timeRange.time_start.toString(),
-									time_end:
-										timeRange.time_end === null ? null : timeRange.time_end.toString(),
+									time_start: timeRange.time_start === null ? null : timeRange.time_start.toString(),
+									time_end: timeRange.time_end === null ? null : timeRange.time_end.toString(),
 								});
 							});
 							previousDaysForTimeRange = [currentDay];
@@ -374,12 +298,8 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 							previousSavedTimeRanges.forEach(timeRange => {
 								groupedTimes.push({
 									day: previousDaysForTimeRange,
-									time_start:
-										timeRange.time_start === null
-											? null
-											: timeRange.time_start.toString(),
-									time_end:
-										timeRange.time_end === null ? null : timeRange.time_end.toString(),
+									time_start: timeRange.time_start === null ? null : timeRange.time_start.toString(),
+									time_end: timeRange.time_end === null ? null : timeRange.time_end.toString(),
 								});
 							});
 						}
@@ -401,31 +321,11 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 					let time_end_hours = Math.floor(time_end_in_seconds / 3600);
 					let time_end_minutes = Math.floor((time_end_in_seconds % 3600) / 60);
 					let time_end_seconds = time_end_in_seconds % 60;
-					timeRange.time_start = `${String(time_start_hours).padStart(
-						2,
-						'0'
-					)}:${String(time_start_minutes).padStart(2, '0')}:${String(
-						time_start_seconds
-					).padStart(2, '0')}`;
-					timeRange.time_end = `${String(time_end_hours).padStart(
-						2,
-						'0'
-					)}:${String(time_end_minutes).padStart(2, '0')}:${String(
-						time_end_seconds
-					).padStart(2, '0')}`;
+					timeRange.time_start = `${String(time_start_hours).padStart(2, '0')}:${String(time_start_minutes).padStart(2, '0')}:${String(time_start_seconds).padStart(2, '0')}`;
+					timeRange.time_end = `${String(time_end_hours).padStart(2, '0')}:${String(time_end_minutes).padStart(2, '0')}:${String(time_end_seconds).padStart(2, '0')}`;
 
-					timeRange.time_start = `${String(time_start_hours).padStart(
-						2,
-						'0'
-					)}:${String(time_start_minutes).padStart(2, '0')}:${String(
-						time_start_seconds
-					).padStart(2, '0')}`;
-					timeRange.time_end = `${String(time_end_hours).padStart(
-						2,
-						'0'
-					)}:${String(time_end_minutes).padStart(2, '0')}:${String(
-						time_end_seconds
-					).padStart(2, '0')}`;
+					timeRange.time_start = `${String(time_start_hours).padStart(2, '0')}:${String(time_start_minutes).padStart(2, '0')}:${String(time_start_seconds).padStart(2, '0')}`;
+					timeRange.time_end = `${String(time_end_hours).padStart(2, '0')}:${String(time_end_minutes).padStart(2, '0')}:${String(time_end_seconds).padStart(2, '0')}`;
 				});
 
 				// Step 3: Convert grouped object back to array
@@ -460,11 +360,7 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 		}[]
 	) => {
 		if (!hoursData.length) {
-			return (
-				<Text style={{ ...styles.body, color: theme.screen.text }}>
-					{translate(TranslationKeys.no_business_hours_available)}
-				</Text>
-			);
+			return <Text style={{ ...styles.body, color: theme.screen.text }}>{translate(TranslationKeys.no_business_hours_available)}</Text>;
 		}
 
 		const daysOfWeek = [
@@ -487,14 +383,11 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 			if (firstDayKey !== lastDayKey) {
 				label += ` - ${lastDay?.name}`;
 			}
-			let hoursDataKey =
-				groupId + range.day.join('-') + range.time_start + range.time_end;
+			let hoursDataKey = groupId + range.day.join('-') + range.time_start + range.time_end;
 
 			let timeText = translate(TranslationKeys.closed_hours);
 			if (range.time_start && range.time_end) {
-				timeText = `${formatTime(range.time_start)} - ${formatTime(
-					range.time_end
-				)}`;
+				timeText = `${formatTime(range.time_start)} - ${formatTime(range.time_end)}`;
 				if (range.time_start === range.time_end) {
 					timeText = `${formatTime(range.time_start)}`;
 				}
@@ -503,9 +396,7 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 			renderedOuput.push(
 				<View key={hoursDataKey} style={styles.row}>
 					<Text style={{ ...styles.body, color: theme.screen.text }}>{label}</Text>
-					<Text style={{ ...styles.body, color: theme.screen.text }}>
-						{timeText}
-					</Text>
+					<Text style={{ ...styles.body, color: theme.screen.text }}>{timeText}</Text>
 				</View>
 			);
 		});
@@ -514,10 +405,7 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 	};
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -590,9 +478,7 @@ const HourSheet: React.FC<HourSheetProps> = ({ closeSheet }) => {
 								alignItems: 'center',
 							}}
 						>
-							<Text style={{ ...styles.empty, color: theme.screen.text }}>
-								{translate(TranslationKeys.no_business_hours_available)}
-							</Text>
+							<Text style={{ ...styles.empty, color: theme.screen.text }}>{translate(TranslationKeys.no_business_hours_available)}</Text>
 						</View>
 					)}
 				</View>

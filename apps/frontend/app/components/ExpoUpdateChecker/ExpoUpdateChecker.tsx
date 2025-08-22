@@ -1,20 +1,5 @@
-import React, {
-	useEffect,
-	useRef,
-	useState,
-	createContext,
-	useContext,
-	ReactNode,
-} from 'react';
-import {
-	AppState,
-	AppStateStatus,
-	View,
-	Text,
-	TouchableOpacity,
-	ActivityIndicator,
-	StyleSheet,
-} from 'react-native';
+import React, { useEffect, useRef, useState, createContext, useContext, ReactNode } from 'react';
+import { AppState, AppStateStatus, View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
 import * as Updates from 'expo-updates';
 import { AntDesign } from '@expo/vector-icons';
 import ModalSheet from '../BaseBottomModal';
@@ -35,29 +20,21 @@ interface UpdateCheckerContextType {
 	manualCheck: () => void;
 }
 
-const UpdateCheckerContext = createContext<UpdateCheckerContextType | null>(
-	null
-);
+const UpdateCheckerContext = createContext<UpdateCheckerContextType | null>(null);
 
 const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
 	const appState = useRef<AppStateStatus>(AppState.currentState);
 	const { isSmartPhone } = usePlatformHelper();
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 
 	const [modalVisible, setModalVisible] = useState(false);
 	const [updating, setUpdating] = useState(false);
 	const [updateAvailable, setUpdateAvailable] = useState(false);
-	const [titleKey, setTitleKey] = useState<TranslationKeys>(
-		TranslationKeys.update_available
-	);
-	const [messageKey, setMessageKey] = useState<TranslationKeys>(
-		TranslationKeys.update_available_message
-	);
+	const [titleKey, setTitleKey] = useState<TranslationKeys>(TranslationKeys.update_available);
+	const [messageKey, setMessageKey] = useState<TranslationKeys>(TranslationKeys.update_available_message);
 
 	const checkForUpdates = async (showUpToDate = false) => {
 		if (!isSmartPhone()) return;
@@ -82,10 +59,7 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
 	useEffect(() => {
 		if (!isSmartPhone()) return;
 		const subscription = AppState.addEventListener('change', nextState => {
-			if (
-				appState.current.match(/inactive|background/) &&
-				nextState === 'active'
-			) {
+			if (appState.current.match(/inactive|background/) && nextState === 'active') {
 				checkForUpdates();
 			}
 			appState.current = nextState;
@@ -106,44 +80,20 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
 	};
 
 	return (
-		<UpdateCheckerContext.Provider
-			value={{ manualCheck: () => checkForUpdates(true) }}
-		>
+		<UpdateCheckerContext.Provider value={{ manualCheck: () => checkForUpdates(true) }}>
 			{children}
 			{modalVisible && (
-				<ModalSheet
-					visible={modalVisible}
-					onClose={() => setModalVisible(false)}
-					title={translate(titleKey)}
-				>
+				<ModalSheet visible={modalVisible} onClose={() => setModalVisible(false)} title={translate(titleKey)}>
 					<View style={{ padding: 20 }}>
-						<Text style={{ color: theme.screen.text, textAlign: 'center' }}>
-							{translate(messageKey)}
-						</Text>
+						<Text style={{ color: theme.screen.text, textAlign: 'center' }}>{translate(messageKey)}</Text>
 					</View>
 					<View style={modalStyles.buttonContainer}>
-						<TouchableOpacity
-							onPress={() => setModalVisible(false)}
-							style={[modalStyles.cancelButton, { borderColor: primaryColor }]}
-						>
-							<Text style={[modalStyles.buttonText, { color: theme.screen.text }]}>
-								{translate(
-									updateAvailable ? TranslationKeys.cancel : TranslationKeys.okay
-								)}
-							</Text>
+						<TouchableOpacity onPress={() => setModalVisible(false)} style={[modalStyles.cancelButton, { borderColor: primaryColor }]}>
+							<Text style={[modalStyles.buttonText, { color: theme.screen.text }]}>{translate(updateAvailable ? TranslationKeys.cancel : TranslationKeys.okay)}</Text>
 						</TouchableOpacity>
 						{updateAvailable && (
-							<TouchableOpacity
-								onPress={applyUpdate}
-								style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}
-							>
-								{updating ? (
-									<ActivityIndicator color={contrastColor} />
-								) : (
-									<Text style={[modalStyles.buttonText, { color: contrastColor }]}>
-										{translate(TranslationKeys.to_update)}
-									</Text>
-								)}
+							<TouchableOpacity onPress={applyUpdate} style={[modalStyles.saveButton, { backgroundColor: primaryColor }]}>
+								{updating ? <ActivityIndicator color={contrastColor} /> : <Text style={[modalStyles.buttonText, { color: contrastColor }]}>{translate(TranslationKeys.to_update)}</Text>}
 							</TouchableOpacity>
 						)}
 					</View>
@@ -155,8 +105,7 @@ const ExpoUpdateChecker: React.FC<ExpoUpdateCheckerProps> = ({ children }) => {
 
 export const useExpoUpdateChecker = () => {
 	const ctx = useContext(UpdateCheckerContext);
-	if (!ctx)
-		throw new Error('useExpoUpdateChecker must be used within ExpoUpdateChecker');
+	if (!ctx) throw new Error('useExpoUpdateChecker must be used within ExpoUpdateChecker');
 	return ctx;
 };
 

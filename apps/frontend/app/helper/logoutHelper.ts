@@ -1,26 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Dispatch } from 'redux';
-import {
-	CLEAR_APARTMENTS,
-	CLEAR_CAMPUSES,
-	CLEAR_CANTEENS,
-	CLEAR_COLLECTION_DATES_LAST_UPDATED,
-	CLEAR_FOODS,
-	CLEAR_MANAGEMENT,
-	CLEAR_NEWS,
-	CLEAR_CHATS,
-	CLEAR_SETTINGS,
-	CLEAR_POPUP_EVENTS_HASH,
-} from '@/redux/Types/types';
+import { CLEAR_APARTMENTS, CLEAR_CAMPUSES, CLEAR_CANTEENS, CLEAR_COLLECTION_DATES_LAST_UPDATED, CLEAR_FOODS, CLEAR_MANAGEMENT, CLEAR_NEWS, CLEAR_CHATS, CLEAR_SETTINGS, CLEAR_POPUP_EVENTS_HASH } from '@/redux/Types/types';
 import { persistor } from '@/redux/store';
 
 export const performLogout = async (
 	dispatch: Dispatch,
 	router: {
-		replace: (args: {
-			pathname: string;
-			params?: Record<string, string>;
-		}) => void;
+		replace: (args: { pathname: string; params?: Record<string, string> }) => void;
 	},
 	asGuest: boolean = false
 ) => {

@@ -1,8 +1,4 @@
-import deepl, {
-  SourceLanguageCode,
-  TargetLanguageCode,
-  Translator,
-} from 'deepl-node';
+import deepl, { SourceLanguageCode, TargetLanguageCode, Translator } from 'deepl-node';
 import { MyTranslatorInterface } from './MyTranslatorInterface';
 
 export class DeepLTranslator implements MyTranslatorInterface {
@@ -32,37 +28,20 @@ export class DeepLTranslator implements MyTranslatorInterface {
          */
   }
 
-  async translate(
-    text: string,
-    source_language: string,
-    destination_language: string
-  ) {
+  async translate(text: string, source_language: string, destination_language: string) {
     let translationResponse = null;
     let sourceLanguageCode = this.getDeepLLanguageCodeSource(source_language);
-    let destinationLanguageCode =
-      this.getDeepLLanguageCodeTarget(destination_language);
+    let destinationLanguageCode = this.getDeepLLanguageCodeTarget(destination_language);
 
     try {
-      translationResponse = await this.translateRaw(
-        text,
-        sourceLanguageCode,
-        destinationLanguageCode
-      );
+      translationResponse = await this.translateRaw(text, sourceLanguageCode, destinationLanguageCode);
     } catch (error: any) {
       let errorMessage = error.toString();
-      if (
-        errorMessage.includes('targetLang') &&
-        errorMessage.includes('deprecated')
-      ) {
+      if (errorMessage.includes('targetLang') && errorMessage.includes('deprecated')) {
         //console.log("Target language is deprecated");
         try {
-          let backupDestinationLanguageCode =
-            destination_language as TargetLanguageCode;
-          translationResponse = await this.translateRaw(
-            text,
-            sourceLanguageCode,
-            backupDestinationLanguageCode
-          );
+          let backupDestinationLanguageCode = destination_language as TargetLanguageCode;
+          translationResponse = await this.translateRaw(text, sourceLanguageCode, backupDestinationLanguageCode);
         } catch (error) {
           console.log(error);
         }
@@ -77,17 +56,10 @@ export class DeepLTranslator implements MyTranslatorInterface {
   private replaceAll(str: string, find: string, replace: string) {
     // use regex where find is replaced with replace globally and multiple times
     // find could be a special character like * which needs to be escaped
-    return str.replace(
-      new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'),
-      replace
-    );
+    return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
   }
 
-  async translateRaw(
-    text: string,
-    source_language_code: SourceLanguageCode,
-    destination_language_code: TargetLanguageCode
-  ) {
+  async translateRaw(text: string, source_language_code: SourceLanguageCode, destination_language_code: TargetLanguageCode) {
     //copy text string to another variable
     let textToTranslate: string = text;
 
@@ -107,11 +79,7 @@ export class DeepLTranslator implements MyTranslatorInterface {
     //console.log("source_language_code: "+source_language_code)
     //console.log("destination_language_code: "+destination_language_code)
 
-    let translationResponse = await this.translator.translateText(
-      textToTranslate,
-      source_language_code,
-      destination_language_code
-    );
+    let translationResponse = await this.translator.translateText(textToTranslate, source_language_code, destination_language_code);
     let translation = translationResponse?.text;
 
     //replace all values in dictWithReplacement with their keys
@@ -158,15 +126,11 @@ export class DeepLTranslator implements MyTranslatorInterface {
    */
 
   getDeepLLanguageCodeSource(directus_language_code: string) {
-    return this.getDeepLLanguageCode(
-      directus_language_code
-    ) as SourceLanguageCode;
+    return this.getDeepLLanguageCode(directus_language_code) as SourceLanguageCode;
   }
 
   getDeepLLanguageCodeTarget(directus_language_code: string) {
-    return this.getDeepLLanguageCode(
-      directus_language_code
-    ) as TargetLanguageCode;
+    return this.getDeepLLanguageCode(directus_language_code) as TargetLanguageCode;
   }
 
   getDeepLLanguageCode(directus_language_code: string) {

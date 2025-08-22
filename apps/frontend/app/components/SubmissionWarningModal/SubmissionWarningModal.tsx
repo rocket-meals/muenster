@@ -1,10 +1,4 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
 import { styles } from './styles';
@@ -19,11 +13,7 @@ import { DatabaseTypes } from 'repo-depkit-common';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const SubmissionWarningModal: React.FC<SubmissionWarningModalProps> = ({
-	isVisible,
-	setIsVisible,
-	id,
-}) => {
+const SubmissionWarningModal: React.FC<SubmissionWarningModalProps> = ({ isVisible, setIsVisible, id }) => {
 	const router = useRouter();
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
@@ -35,13 +25,10 @@ const SubmissionWarningModal: React.FC<SubmissionWarningModalProps> = ({
 
 	const handleProceed = async () => {
 		setLoading(true);
-		const update = (await formsSubmissionsHelper.updateFormSubmissionById(
-			String(id),
-			{
-				user_locked_by: String(user?.id),
-				date_started: new Date().toISOString(),
-			}
-		)) as DatabaseTypes.FormSubmissions;
+		const update = (await formsSubmissionsHelper.updateFormSubmissionById(String(id), {
+			user_locked_by: String(user?.id),
+			date_started: new Date().toISOString(),
+		})) as DatabaseTypes.FormSubmissions;
 		if (update) {
 			setIsVisible(false);
 			setLoading(false);
@@ -61,10 +48,7 @@ const SubmissionWarningModal: React.FC<SubmissionWarningModalProps> = ({
 	return (
 		<Modal
 			isVisible={isVisible}
-			style={[
-				styles.modalContainer,
-				screenWidth > 600 && { alignItems: 'center' },
-			]}
+			style={[styles.modalContainer, screenWidth > 600 && { alignItems: 'center' }]}
 			onClose={() => {
 				setIsVisible(false);
 				router.navigate('/form-submissions');
@@ -122,11 +106,7 @@ const SubmissionWarningModal: React.FC<SubmissionWarningModalProps> = ({
 						}}
 						onPress={() => router.navigate('/form-submissions')}
 					>
-						{
-							<Text style={{ ...styles.loginLabel, color: theme.screen.text }}>
-								{translate(TranslationKeys.cancel)}
-							</Text>
-						}
+						{<Text style={{ ...styles.loginLabel, color: theme.screen.text }}>{translate(TranslationKeys.cancel)}</Text>}
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={{
@@ -136,13 +116,7 @@ const SubmissionWarningModal: React.FC<SubmissionWarningModalProps> = ({
 						}}
 						onPress={handleProceed}
 					>
-						{loading ? (
-							<ActivityIndicator size={22} color={theme.background} />
-						) : (
-							<Text style={{ ...styles.loginLabel, color: theme.activeText }}>
-								{translate(TranslationKeys.proceed)}
-							</Text>
-						)}
+						{loading ? <ActivityIndicator size={22} color={theme.background} /> : <Text style={{ ...styles.loginLabel, color: theme.activeText }}>{translate(TranslationKeys.proceed)}</Text>}
 					</TouchableOpacity>
 				</View>
 			</View>

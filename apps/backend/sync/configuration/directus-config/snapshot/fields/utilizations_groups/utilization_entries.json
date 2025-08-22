@@ -15,12 +15,7 @@
     "options": {
       "enableLink": true,
       "enableSearchFilter": true,
-      "fields": [
-        "date_start",
-        "date_end",
-        "value_forecast_current",
-        "value_real"
-      ],
+      "fields": ["date_start", "date_end", "value_forecast_current", "value_real"],
       "layout": "table",
       "limit": 100,
       "sort": "date_start",

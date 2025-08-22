@@ -1,16 +1,5 @@
-import type {
-	DivIcon,
-	LatLngBoundsLiteral,
-	LatLngLiteral,
-	PointTuple,
-} from 'leaflet';
-import {
-	CircleMarkerProps,
-	CircleProps,
-	PolygonProps,
-	PolylineProps,
-	RectangleProps,
-} from 'react-leaflet';
+import type { DivIcon, LatLngBoundsLiteral, LatLngLiteral, PointTuple } from 'leaflet';
+import { CircleMarkerProps, CircleProps, PolygonProps, PolylineProps, RectangleProps } from 'react-leaflet';
 
 export type Dimensions = [width: number, height: number];
 
@@ -25,33 +14,9 @@ export type MapMarkerClickedEvent = {
 	mapMarkerId: string;
 };
 
-export type LeafletWebViewEvent =
-	| { tag: 'DebugMessage'; message: string }
-	| { tag: 'DocumentEventListenerAdded' }
-	| { tag: 'DocumentEventListenerRemoved' }
-	| { tag: 'Error'; error: any }
-	| { tag: 'WindowEventListenerAdded' }
-	| { tag: 'WindowEventListenerRemoved' }
-	| { tag: 'MapReady'; version: string }
-	| { tag: 'MapComponentMounted'; version: string }
-	| { tag: 'onMapClicked'; location: LatLngLiteral }
-	| MapMarkerClickedEvent
-	| ({ tag: 'onMove' } & Payload)
-	| ({ tag: 'onMoveEnd' } & Payload)
-	| ({ tag: 'onMoveStart' } & Payload)
-	| ({ tag: 'onResize' } & Payload)
-	| ({ tag: 'onUnload' } & Payload)
-	| ({ tag: 'onZoom' } & Payload)
-	| ({ tag: 'onZoomEnd' } & Payload)
-	| ({ tag: 'onZoomLevelsChange' } & Payload)
-	| ({ tag: 'onZoomStart' } & Payload);
+export type LeafletWebViewEvent = { tag: 'DebugMessage'; message: string } | { tag: 'DocumentEventListenerAdded' } | { tag: 'DocumentEventListenerRemoved' } | { tag: 'Error'; error: any } | { tag: 'WindowEventListenerAdded' } | { tag: 'WindowEventListenerRemoved' } | { tag: 'MapReady'; version: string } | { tag: 'MapComponentMounted'; version: string } | { tag: 'onMapClicked'; location: LatLngLiteral } | MapMarkerClickedEvent | ({ tag: 'onMove' } & Payload) | ({ tag: 'onMoveEnd' } & Payload) | ({ tag: 'onMoveStart' } & Payload) | ({ tag: 'onResize' } & Payload) | ({ tag: 'onUnload' } & Payload) | ({ tag: 'onZoom' } & Payload) | ({ tag: 'onZoomEnd' } & Payload) | ({ tag: 'onZoomLevelsChange' } & Payload) | ({ tag: 'onZoomStart' } & Payload);
 
-export type MapLayerType =
-	| 'ImageOverlay'
-	| 'TileLayer'
-	| 'VectorLayer'
-	| 'VideoOverlay'
-	| 'WMSTileLayer';
+export type MapLayerType = 'ImageOverlay' | 'TileLayer' | 'VectorLayer' | 'VideoOverlay' | 'WMSTileLayer';
 
 export type MapMarker = {
 	icon?: string;
@@ -98,10 +63,4 @@ type RectangleShape = {
 	shapeType: 'rectangle';
 } & RectangleProps;
 
-export type MapShape = { id?: string } & (
-	| CircleShape
-	| CircleMarkerShape
-	| PolygonShape
-	| PolylineShape
-	| RectangleShape
-);
+export type MapShape = { id?: string } & (CircleShape | CircleMarkerShape | PolygonShape | PolylineShape | RectangleShape);

@@ -26,45 +26,13 @@ const ChatsScreen = () => {
 	const renderItem = ({ item, index }: { item: any; index: number }) => {
 		const last = index === sortedChats.length - 1;
 		const first = index === 0;
-		const groupPosition =
-			sortedChats.length === 1
-				? 'single'
-				: first
-					? 'top'
-					: last
-						? 'bottom'
-						: 'middle';
-		return (
-			<SettingsList
-				leftIcon={
-					<MaterialCommunityIcons name="chat" size={24} color={theme.screen.icon} />
-				}
-				title={item.alias || item.id}
-				rightIcon={
-					<MaterialCommunityIcons
-						name="chevron-right"
-						size={24}
-						color={theme.screen.icon}
-					/>
-				}
-				onPress={() =>
-					router.push({ pathname: '/chats/details', params: { chat_id: item.id } })
-				}
-				groupPosition={groupPosition as any}
-			/>
-		);
+		const groupPosition = sortedChats.length === 1 ? 'single' : first ? 'top' : last ? 'bottom' : 'middle';
+		return <SettingsList leftIcon={<MaterialCommunityIcons name="chat" size={24} color={theme.screen.icon} />} title={item.alias || item.id} rightIcon={<MaterialCommunityIcons name="chevron-right" size={24} color={theme.screen.icon} />} onPress={() => router.push({ pathname: '/chats/details', params: { chat_id: item.id } })} groupPosition={groupPosition as any} />;
 	};
 
 	return (
-		<View
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-		>
-			<FlatList
-				data={sortedChats}
-				keyExtractor={item => item.id}
-				renderItem={renderItem}
-				contentContainerStyle={styles.list}
-			/>
+		<View style={[styles.container, { backgroundColor: theme.screen.background }]}>
+			<FlatList data={sortedChats} keyExtractor={item => item.id} renderItem={renderItem} contentContainerStyle={styles.list} />
 		</View>
 	);
 };

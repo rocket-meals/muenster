@@ -6,15 +6,9 @@ import { useTheme } from '@/hooks/useTheme';
 import { UrlHelper } from '@/constants/UrlHelper';
 import { styles } from './styles';
 import { FormProps } from './types';
-import {
-	generateCodeChallenge,
-	generateCodeVerifier,
-} from '@/constants/HelperFunctions';
+import { generateCodeChallenge, generateCodeVerifier } from '@/constants/HelperFunctions';
 import usePlatformHelper from '@/helper/platformHelper';
-import {
-	fetchAuthorizationUrl,
-	fetchToken,
-} from '@/redux/actions/ApiService/ApiService';
+import { fetchAuthorizationUrl, fetchToken } from '@/redux/actions/ApiService/ApiService';
 import { handleNativeLogin, handleWebLogin } from '@/helper/authHelper';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,25 +18,14 @@ import { myContrastColor } from '@/helper/colorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const LoginForm: React.FC<FormProps> = ({
-	openSheet,
-	onSuccess,
-	openAttentionSheet,
-	providers,
-}) => {
+const LoginForm: React.FC<FormProps> = ({ openSheet, onSuccess, openAttentionSheet, providers }) => {
 	const [isChecked, setChecked] = useState(false);
 	const { theme } = useTheme();
 	const dispatch = useDispatch();
 	const { isWeb } = usePlatformHelper();
 	const { translate } = useLanguage();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
-	const contrastColor = myContrastColor(
-		primaryColor || theme.login.linkButton,
-		theme,
-		mode === 'dark'
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+	const contrastColor = myContrastColor(primaryColor || theme.login.linkButton, theme, mode === 'dark');
 
 	const getToken = async (codeVerifier: string, code: string) => {
 		try {
@@ -73,19 +56,9 @@ const LoginForm: React.FC<FormProps> = ({
 			const { urlToProviderLogin } = await fetchAuthorizationUrl(payload);
 
 			if (isWeb()) {
-				await handleWebLogin(
-					urlToProviderLogin,
-					desiredRedirectURL,
-					codeVerifier,
-					getToken
-				);
+				await handleWebLogin(urlToProviderLogin, desiredRedirectURL, codeVerifier, getToken);
 			} else {
-				await handleNativeLogin(
-					urlToProviderLogin,
-					desiredRedirectURL,
-					codeVerifier,
-					getToken
-				);
+				await handleNativeLogin(urlToProviderLogin, desiredRedirectURL, codeVerifier, getToken);
 			}
 
 			dispatch({
@@ -110,9 +83,7 @@ const LoginForm: React.FC<FormProps> = ({
 				alignItems: isWeb() ? 'flex-start' : 'center',
 			}}
 		>
-			<Text style={{ ...styles.heading, color: theme.login.text }}>
-				{translate(TranslationKeys.sign_in)}
-			</Text>
+			<Text style={{ ...styles.heading, color: theme.login.text }}>{translate(TranslationKeys.sign_in)}</Text>
 			<View>
 				<TouchableOpacity
 					onPress={() => {
@@ -120,12 +91,7 @@ const LoginForm: React.FC<FormProps> = ({
 					}}
 					style={styles.section}
 				>
-					<Checkbox
-						style={styles.checkbox}
-						value={isChecked}
-						onValueChange={setChecked}
-						color={isChecked ? '#000000' : undefined}
-					/>
+					<Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} color={isChecked ? '#000000' : undefined} />
 					<Text
 						style={{
 							...styles.checkboxLabel,
@@ -151,18 +117,9 @@ const LoginForm: React.FC<FormProps> = ({
 								onPress={() => onPressLogin(provider?.name)}
 							>
 								<View style={{ ...styles.leftIcon, backgroundColor: primaryColor }}>
-									<MaterialCommunityIcons
-										name={provider?.icon}
-										size={22}
-										color={contrastColor}
-									/>
+									<MaterialCommunityIcons name={provider?.icon} size={22} color={contrastColor} />
 								</View>
-								<Text style={{ ...styles.buttonLabel, color: theme.login.text }}>
-									{`${translate(TranslationKeys.sign_in_with)}: ${
-										provider?.name?.charAt(0)?.toUpperCase() +
-										provider?.name?.slice(1)?.toLowerCase()
-									}`}
-								</Text>
+								<Text style={{ ...styles.buttonLabel, color: theme.login.text }}>{`${translate(TranslationKeys.sign_in_with)}: ${provider?.name?.charAt(0)?.toUpperCase() + provider?.name?.slice(1)?.toLowerCase()}`}</Text>
 								<View style={{ width: 58 }} />
 							</TouchableOpacity>
 						))}
@@ -177,31 +134,21 @@ const LoginForm: React.FC<FormProps> = ({
 					onPress={openAttentionSheet}
 				>
 					<View style={{ ...styles.leftIcon, backgroundColor: primaryColor }}>
-						<MaterialCommunityIcons
-							name="incognito"
-							size={28}
-							color={contrastColor}
-						/>
+						<MaterialCommunityIcons name="incognito" size={28} color={contrastColor} />
 					</View>
-					<Text style={{ ...styles.buttonLabel, color: theme.login.text }}>
-						{translate(TranslationKeys.continue_without_account)}
-					</Text>
+					<Text style={{ ...styles.buttonLabel, color: theme.login.text }}>{translate(TranslationKeys.continue_without_account)}</Text>
 					<View style={{ width: 58 }} />
 				</TouchableOpacity>
 			</View>
 
 			<View style={styles.managementLogin}>
-				<Text style={{ ...styles.fromManagement, color: theme.login.text }}>
-					{`${translate(TranslationKeys.for_management)}?`}
-				</Text>
+				<Text style={{ ...styles.fromManagement, color: theme.login.text }}>{`${translate(TranslationKeys.for_management)}?`}</Text>
 				<TouchableOpacity
 					onPress={() => {
 						openSheet();
 					}}
 				>
-					<Text style={{ ...styles.loginText, color: theme.screen.text }}>
-						{translate(TranslationKeys.sign_in)}
-					</Text>
+					<Text style={{ ...styles.loginText, color: theme.screen.text }}>{translate(TranslationKeys.sign_in)}</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

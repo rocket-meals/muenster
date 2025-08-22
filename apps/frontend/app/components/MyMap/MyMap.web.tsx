@@ -6,15 +6,7 @@ import type { MapMarker, LeafletWebViewEvent } from './model';
 import BaseModal from '@/components/BaseModal';
 import { MyMapProps } from '@/components/MyMap/MyMapHelper';
 
-const MyMap: React.FC<MyMapProps> = ({
-	mapCenterPosition,
-	zoom,
-	mapMarkers,
-	onMarkerClick,
-	onMapEvent,
-	renderMarkerModal,
-	onMarkerSelectionChange,
-}) => {
+const MyMap: React.FC<MyMapProps> = ({ mapCenterPosition, zoom, mapMarkers, onMarkerClick, onMapEvent, renderMarkerModal, onMarkerSelectionChange }) => {
 	const { theme } = useTheme();
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 	const html = require('@/assets/leaflet/index.html');
@@ -63,25 +55,11 @@ const MyMap: React.FC<MyMapProps> = ({
 		};
 		window.addEventListener('message', handler);
 		return () => window.removeEventListener('message', handler);
-	}, [
-		sendCoordinates,
-		onMarkerClick,
-		onMapEvent,
-		renderMarkerModal,
-		onMarkerSelectionChange,
-	]);
+	}, [sendCoordinates, onMarkerClick, onMapEvent, renderMarkerModal, onMarkerSelectionChange]);
 
 	return (
-		<View
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-		>
-			<iframe
-				ref={iframeRef}
-				src={html}
-				style={{ width: '100%', height: '100%', border: 'none' }}
-				onLoad={sendCoordinates}
-				title="map"
-			/>
+		<View style={[styles.container, { backgroundColor: theme.screen.background }]}>
+			<iframe ref={iframeRef} src={html} style={{ width: '100%', height: '100%', border: 'none' }} onLoad={sendCoordinates} title="map" />
 			{renderMarkerModal && selectedMarker && (
 				<BaseModal isVisible={true} onClose={() => setSelectedMarker(null)}>
 					{renderMarkerModal(selectedMarker, () => setSelectedMarker(null))}

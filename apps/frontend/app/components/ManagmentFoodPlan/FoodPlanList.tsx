@@ -1,19 +1,5 @@
-import {
-	Dimensions,
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-	Switch,
-} from 'react-native';
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View, Switch } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTheme } from '@/hooks/useTheme';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import styles from './styles';
@@ -39,9 +25,7 @@ const FoodPlanList = ({
 
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
-	const [toggleStates, setToggleStates] = useState(
-		data.map(item => item.switchState || false)
-	);
+	const [toggleStates, setToggleStates] = useState(data.map(item => item.switchState || false));
 
 	useEffect(() => {
 		const onChange = ({ window }: { window: any }) => {
@@ -63,9 +47,7 @@ const FoodPlanList = ({
 	const selectedCanteen = useSelectedCanteen();
 
 	return (
-		<View
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-		>
+		<View style={[styles.container, { backgroundColor: theme.screen.background }]}>
 			{data.map((item, index) => (
 				<TouchableOpacity
 					key={index}
@@ -80,14 +62,7 @@ const FoodPlanList = ({
 					}}
 				>
 					<View style={styles.iconTextContainer}>
-						{item.showFeedIcon && (
-							<MaterialCommunityIcons
-								name="silverware-variant"
-								size={20}
-								color={theme.screen.icon}
-								style={{ marginRight: 10 }}
-							/>
-						)}
+						{item.showFeedIcon && <MaterialCommunityIcons name="silverware-variant" size={20} color={theme.screen.icon} style={{ marginRight: 10 }} />}
 						<Text
 							style={{
 								color: theme.screen.text,
@@ -161,22 +136,14 @@ const FoodPlanList = ({
 									/>
 								)}
 
-								<MaterialCommunityIcons
-									name="pencil"
-									size={22}
-									color={theme.screen.icon}
-									style={{ marginHorizontal: 5 }}
-								/>
+								<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} style={{ marginHorizontal: 5 }} />
 							</>
 						)}
 					</View>
 				</TouchableOpacity>
 			))}
 
-			<TouchableOpacity
-				style={[styles.mainContainer, { backgroundColor: theme.screen.iconBg }]}
-				onPress={() => router.navigate('/list-day-screen')}
-			>
+			<TouchableOpacity style={[styles.mainContainer, { backgroundColor: theme.screen.iconBg }]} onPress={() => router.navigate('/list-day-screen')}>
 				<Text
 					style={{
 						color: theme.screen.text,
@@ -185,12 +152,7 @@ const FoodPlanList = ({
 				>
 					DayScreen
 				</Text>
-				<MaterialCommunityIcons
-					name="chevron-right"
-					size={20}
-					color={theme.screen.icon}
-					style={{ marginRight: 10 }}
-				/>
+				<MaterialCommunityIcons name="chevron-right" size={20} color={theme.screen.icon} style={{ marginRight: 10 }} />
 			</TouchableOpacity>
 		</View>
 	);

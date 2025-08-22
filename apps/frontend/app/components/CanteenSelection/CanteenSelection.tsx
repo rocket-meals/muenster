@@ -14,22 +14,14 @@ interface CanteenSelectionProps {
 	onSelectCanteen: (canteen: DatabaseTypes.Canteens) => void;
 }
 
-const CanteenSelection: React.FC<CanteenSelectionProps> = ({
-	onSelectCanteen,
-}) => {
+const CanteenSelection: React.FC<CanteenSelectionProps> = ({ onSelectCanteen }) => {
 	const { theme } = useTheme();
-	const { serverInfo, appSettings, primaryColor } = useSelector(
-		(state: RootState) => state.settings
-	);
-	const { canteens, selectedCanteen } = useSelector(
-		(state: RootState) => state.canteenReducer
-	);
+	const { serverInfo, appSettings, primaryColor } = useSelector((state: RootState) => state.settings);
+	const { canteens, selectedCanteen } = useSelector((state: RootState) => state.canteenReducer);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
 	const defaultImage = getImageUrl(serverInfo?.info?.project?.project_logo);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -51,8 +43,7 @@ const CanteenSelection: React.FC<CanteenSelectionProps> = ({
 			}}
 		>
 			{canteens.map((canteen, index: number) => {
-				const isSelected =
-					selectedCanteen && String(selectedCanteen.id) === String(canteen.id);
+				const isSelected = selectedCanteen && String(selectedCanteen.id) === String(canteen.id);
 				return (
 					<CardWithText
 						key={canteen.id + canteen.alias}
@@ -79,18 +70,10 @@ const CanteenSelection: React.FC<CanteenSelectionProps> = ({
 					>
 						{canteen.status === 'archived' && (
 							<View style={styles.archiveContainer}>
-								<MaterialCommunityIcons
-									name="archive"
-									size={18}
-									color={theme.screen.text}
-								/>
+								<MaterialCommunityIcons name="archive" size={18} color={theme.screen.text} />
 							</View>
 						)}
-						<Text
-							style={{ ...styles.foodName, color: theme.screen.text }}
-							numberOfLines={3}
-							ellipsizeMode="tail"
-						>
+						<Text style={{ ...styles.foodName, color: theme.screen.text }} numberOfLines={3} ellipsizeMode="tail">
 							{excerpt(String(canteen.alias), 20)}
 						</Text>
 					</CardWithText>

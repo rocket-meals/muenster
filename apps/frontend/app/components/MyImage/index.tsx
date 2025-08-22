@@ -5,9 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 
 const MyImage: React.FC<RNImageProps> = props => {
-	const useWebp = useSelector(
-		(state: RootState) => state.settings.useWebpForAssets
-	);
+	const useWebp = useSelector((state: RootState) => state.settings.useWebpForAssets);
 	const ImageComponent = useWebp ? ExpoImage : RNImage;
 	return <ImageComponent {...props} />;
 };

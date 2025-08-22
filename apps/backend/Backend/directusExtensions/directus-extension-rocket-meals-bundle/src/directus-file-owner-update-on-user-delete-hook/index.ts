@@ -40,24 +40,16 @@ export default defineHook(async ({ action, filter }, apiContext) => {
       },
     };
 
-    const partialDirectusFileUploadedBy: Partial<DatabaseTypes.DirectusFiles> =
-      {
-        uploaded_by: userWhoDeletes,
-      };
-    const partialDirectusFileModifiedBy: Partial<DatabaseTypes.DirectusFiles> =
-      {
-        modified_by: userWhoDeletes,
-      };
+    const partialDirectusFileUploadedBy: Partial<DatabaseTypes.DirectusFiles> = {
+      uploaded_by: userWhoDeletes,
+    };
+    const partialDirectusFileModifiedBy: Partial<DatabaseTypes.DirectusFiles> = {
+      modified_by: userWhoDeletes,
+    };
 
-    await filesService.updateByQuery(
-      queryUploadedBy,
-      partialDirectusFileUploadedBy
-    );
+    await filesService.updateByQuery(queryUploadedBy, partialDirectusFileUploadedBy);
 
-    await filesService.updateByQuery(
-      queryModifiedBy,
-      partialDirectusFileModifiedBy
-    );
+    await filesService.updateByQuery(queryModifiedBy, partialDirectusFileModifiedBy);
 
     return input;
   });

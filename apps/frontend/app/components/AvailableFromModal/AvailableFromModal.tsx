@@ -11,21 +11,13 @@ export interface AvailableFromModalProps {
 	availableFrom: string;
 }
 
-const AvailableFromModal: React.FC<AvailableFromModalProps> = ({
-	visible,
-	onClose,
-	availableFrom,
-}) => {
+const AvailableFromModal: React.FC<AvailableFromModalProps> = ({ visible, onClose, availableFrom }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const formatted = new Date(availableFrom).toLocaleDateString();
 
 	return (
-		<BaseBottomModal
-			visible={visible}
-			onClose={onClose}
-			title={translate(TranslationKeys.free_rooms)}
-		>
+		<BaseBottomModal visible={visible} onClose={onClose} title={translate(TranslationKeys.free_rooms)}>
 			<Text style={{ color: theme.screen.text, textAlign: 'center' }}>
 				{translate(TranslationKeys.free_from)}: {formatted}
 			</Text>

@@ -4,10 +4,7 @@ import { DatabaseTypes } from 'repo-depkit-common';
 import { FoodRatingCalculator } from '../FoodRatingCalculator';
 
 describe('FoodRatingCalculator Test', () => {
-  const RATING_VALUE_AVG =
-    (FoodRatingCalculator.MAX_RATING_VALUE +
-      FoodRatingCalculator.MIN_RATING_VALUE) /
-    2;
+  const RATING_VALUE_AVG = (FoodRatingCalculator.MAX_RATING_VALUE + FoodRatingCalculator.MIN_RATING_VALUE) / 2;
   const RATING_VALUE_LOW = FoodRatingCalculator.MIN_RATING_VALUE;
   const RATING_VALUE_HIGH = FoodRatingCalculator.MAX_RATING_VALUE;
   const RATING_VALUE_INVALID_LOW = FoodRatingCalculator.MIN_RATING_VALUE - 1;
@@ -193,11 +190,8 @@ describe('FoodRatingCalculator Test', () => {
       rating_amount_legacy: rating_amount_legacy,
     };
 
-    const expected_rating_amount =
-      amount_feedbacks_new_system + rating_amount_legacy;
-    const expected_rating_average =
-      (rating_sum_new_system + rating_value_legacy * rating_amount_legacy) /
-      expected_rating_amount;
+    const expected_rating_amount = amount_feedbacks_new_system + rating_amount_legacy;
+    const expected_rating_average = (rating_sum_new_system + rating_value_legacy * rating_amount_legacy) / expected_rating_amount;
 
     let result = FoodRatingCalculator.calculateFoodRating(food, foodfeedbacks);
     expect(result.rating_average).toBe(expected_rating_average);
@@ -206,27 +200,16 @@ describe('FoodRatingCalculator Test', () => {
 
   // check valid rating values
   it('valid rating values', async () => {
-    for (
-      let i = FoodRatingCalculator.MIN_RATING_VALUE;
-      i <= FoodRatingCalculator.MAX_RATING_VALUE;
-      i++
-    ) {
-      const valid_rating =
-        FoodRatingCalculator.getNumberIfValueInRatingRange(i);
+    for (let i = FoodRatingCalculator.MIN_RATING_VALUE; i <= FoodRatingCalculator.MAX_RATING_VALUE; i++) {
+      const valid_rating = FoodRatingCalculator.getNumberIfValueInRatingRange(i);
       expect(valid_rating).toBe(i);
     }
   });
 
   // check invalid rating values
   it('invalid rating values', async () => {
-    const invalid_rating_low =
-      FoodRatingCalculator.getNumberIfValueInRatingRange(
-        FoodRatingCalculator.MIN_RATING_VALUE - 1
-      );
-    const invalid_rating_high =
-      FoodRatingCalculator.getNumberIfValueInRatingRange(
-        FoodRatingCalculator.MAX_RATING_VALUE + 1
-      );
+    const invalid_rating_low = FoodRatingCalculator.getNumberIfValueInRatingRange(FoodRatingCalculator.MIN_RATING_VALUE - 1);
+    const invalid_rating_high = FoodRatingCalculator.getNumberIfValueInRatingRange(FoodRatingCalculator.MAX_RATING_VALUE + 1);
     expect(invalid_rating_low).toBe(null);
     expect(invalid_rating_high).toBe(null);
   });
@@ -235,11 +218,7 @@ describe('FoodRatingCalculator Test', () => {
   it('randomized feedback ratings', async () => {
     const amount_feedbacks = 100;
     const rating_values_valid_and_invalid: number[] = [];
-    for (
-      let i = FoodRatingCalculator.MIN_RATING_VALUE - 5;
-      i <= FoodRatingCalculator.MAX_RATING_VALUE + 5;
-      i++
-    ) {
+    for (let i = FoodRatingCalculator.MIN_RATING_VALUE - 5; i <= FoodRatingCalculator.MAX_RATING_VALUE + 5; i++) {
       rating_values_valid_and_invalid.push(i);
     }
 
@@ -247,16 +226,13 @@ describe('FoodRatingCalculator Test', () => {
     let valid_rating_amount = 0;
     let foodfeedbacks: Partial<DatabaseTypes.FoodsFeedbacks>[] = [];
     for (let i = 0; i < amount_feedbacks; i++) {
-      const random_index = Math.floor(
-        Math.random() * rating_values_valid_and_invalid.length
-      );
+      const random_index = Math.floor(Math.random() * rating_values_valid_and_invalid.length);
       const rating_value = rating_values_valid_and_invalid[random_index];
       foodfeedbacks.push({
         rating: rating_value,
       });
 
-      const valid_rating =
-        FoodRatingCalculator.getNumberIfValueInRatingRange(rating_value);
+      const valid_rating = FoodRatingCalculator.getNumberIfValueInRatingRange(rating_value);
       if (valid_rating !== null) {
         valid_rating_sum += valid_rating;
         valid_rating_amount++;
@@ -266,9 +242,7 @@ describe('FoodRatingCalculator Test', () => {
     let food: Partial<DatabaseTypes.Foods> = {};
 
     let result = FoodRatingCalculator.calculateFoodRating(food, foodfeedbacks);
-    expect(result.rating_average).toBe(
-      valid_rating_amount > 0 ? valid_rating_sum / valid_rating_amount : null
-    );
+    expect(result.rating_average).toBe(valid_rating_amount > 0 ? valid_rating_sum / valid_rating_amount : null);
     expect(result.rating_amount).toBe(valid_rating_amount);
   });
 });

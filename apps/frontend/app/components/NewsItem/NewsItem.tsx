@@ -1,12 +1,4 @@
-import {
-	Dimensions,
-	Image,
-	Linking,
-	Platform,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { Dimensions, Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import styles from './styles';
 import { FontAwesome6 } from '@expo/vector-icons';
@@ -25,24 +17,12 @@ const NewsItem: React.FC<any> = ({ news }) => {
 	const { theme } = useTheme();
 	const toast = useToast();
 	const { translate } = useLanguage();
-	const {
-		primaryColor,
-		language,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-	const { title, content } = getNewsTranslationByLanguageCode(
-		news?.translations,
-		language
-	);
-	const news_area_color = appSettings?.news_area_color
-		? appSettings?.news_area_color
-		: primaryColor;
+	const { title, content } = getNewsTranslationByLanguageCode(news?.translations, language);
+	const news_area_color = appSettings?.news_area_color ? appSettings?.news_area_color : primaryColor;
 	const contrastColor = myContrastColor(news_area_color, theme, mode === 'dark');
-	const formattedDate = news?.date
-		? format(parseISO(news.date), 'dd.MM.yyyy hh:mm')
-		: 'Invalid Date';
+	const formattedDate = news?.date ? format(parseISO(news.date), 'dd.MM.yyyy hh:mm') : 'Invalid Date';
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -130,9 +110,7 @@ const NewsItem: React.FC<any> = ({ news }) => {
 							{formattedDate}
 						</Text>
 					</View>
-					<Text style={{ ...styles.newsBody, color: theme.screen.text }}>
-						{content}
-					</Text>
+					<Text style={{ ...styles.newsBody, color: theme.screen.text }}>{content}</Text>
 				</View>
 				<View
 					style={{
@@ -152,14 +130,8 @@ const NewsItem: React.FC<any> = ({ news }) => {
 								}}
 								onPress={handleNewsDetails}
 							>
-								<Text style={{ ...styles.readMore, color: contrastColor }}>
-									{translate(TranslationKeys.read_more)}
-								</Text>
-								<FontAwesome6
-									name="arrow-up-right-from-square"
-									size={20}
-									color={contrastColor}
-								/>
+								<Text style={{ ...styles.readMore, color: contrastColor }}>{translate(TranslationKeys.read_more)}</Text>
+								<FontAwesome6 name="arrow-up-right-from-square" size={20} color={contrastColor} />
 							</TouchableOpacity>
 						)}
 					>

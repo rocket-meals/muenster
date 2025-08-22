@@ -9,19 +9,10 @@ import { getImageUrl } from '@/constants/HelperFunctions';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 
-const StatisticsCard: React.FC<StatisticsCardProps> = ({
-	food,
-	handleImageSheet,
-	setSelectedFoodId,
-}) => {
+const StatisticsCard: React.FC<StatisticsCardProps> = ({ food, handleImageSheet, setSelectedFoodId }) => {
 	const { theme } = useTheme();
-	const { serverInfo, appSettings } = useSelector(
-		(state: RootState) => state.settings
-	);
-	const defaultImage =
-		getImageUrl(String(appSettings.foods_placeholder_image)) ||
-		appSettings.foods_placeholder_image_remote_url ||
-		getImageUrl(serverInfo?.info?.project?.project_logo);
+	const { serverInfo, appSettings } = useSelector((state: RootState) => state.settings);
+	const defaultImage = getImageUrl(String(appSettings.foods_placeholder_image)) || appSettings.foods_placeholder_image_remote_url || getImageUrl(serverInfo?.info?.project?.project_logo);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
 	useEffect(() => {
@@ -78,11 +69,7 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
 			>
 				<View style={{ ...styles.row, marginBottom: screenWidth > 950 ? 20 : 10 }}>
 					<View style={{ ...styles.col, gap: screenWidth > 950 ? 10 : 5 }}>
-						<MaterialCommunityIcons
-							name="chart-bar"
-							color={theme.screen.icon}
-							size={screenWidth > 950 ? 24 : 20}
-						/>
+						<MaterialCommunityIcons name="chart-bar" color={theme.screen.icon} size={screenWidth > 950 ? 24 : 20} />
 						<Text
 							style={{
 								...styles.label,
@@ -105,11 +92,7 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
 				</View>
 				<View style={{ ...styles.row, marginBottom: screenWidth > 950 ? 20 : 10 }}>
 					<View style={{ ...styles.col, gap: screenWidth > 950 ? 10 : 5 }}>
-						<MaterialCommunityIcons
-							name="chart-areaspline"
-							color={theme.screen.icon}
-							size={screenWidth > 950 ? 24 : 20}
-						/>
+						<MaterialCommunityIcons name="chart-areaspline" color={theme.screen.icon} size={screenWidth > 950 ? 24 : 20} />
 						<Text
 							style={{
 								...styles.label,

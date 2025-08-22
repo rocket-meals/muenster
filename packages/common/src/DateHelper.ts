@@ -67,15 +67,7 @@ export class DateHelper {
   static getWeekdayEnumsValues(firstDayOfWeek?: Weekday): Weekday[] {
     const useFirstDayOfWeek = firstDayOfWeek || Weekday.MONDAY;
 
-    const weekOrder = [
-      Weekday.SUNDAY,
-      Weekday.MONDAY,
-      Weekday.TUESDAY,
-      Weekday.WEDNESDAY,
-      Weekday.THURSDAY,
-      Weekday.FRIDAY,
-      Weekday.SATURDAY,
-    ];
+    const weekOrder = [Weekday.SUNDAY, Weekday.MONDAY, Weekday.TUESDAY, Weekday.WEDNESDAY, Weekday.THURSDAY, Weekday.FRIDAY, Weekday.SATURDAY];
     let index = DateHelper.getWeekdayIndex(useFirstDayOfWeek);
     const output: Weekday[] = [];
     for (let i = 0; i < 7; i++) {
@@ -111,15 +103,8 @@ export class DateHelper {
     return Weekday.MONDAY;
   }
 
-  static getWeekdayNames(
-    locale?: string,
-    firstDayOfWeek?: Weekday,
-    short?: boolean
-  ) {
-    const currentWeekDates = DateHelper.getCurrentWeekDates(
-      undefined,
-      firstDayOfWeek
-    );
+  static getWeekdayNames(locale?: string, firstDayOfWeek?: Weekday, short?: boolean) {
+    const currentWeekDates = DateHelper.getCurrentWeekDates(undefined, firstDayOfWeek);
     const output = [];
     for (const date of currentWeekDates) {
       output.push(DateHelper.getWeekdayNameByDate(date, locale, short));
@@ -196,15 +181,8 @@ export class DateHelper {
     return indexToWeekdayEnum[weekdayIndex];
   }
 
-  static getWeekdayNamesFirstLetters(
-    locale?: string,
-    firstDayOfWeek?: Weekday
-  ) {
-    const weekdayNames = DateHelper.getWeekdayNames(
-      locale,
-      firstDayOfWeek,
-      true
-    );
+  static getWeekdayNamesFirstLetters(locale?: string, firstDayOfWeek?: Weekday) {
+    const weekdayNames = DateHelper.getWeekdayNames(locale, firstDayOfWeek, true);
     const output = [];
     for (const weekdayName of weekdayNames) {
       output.push(weekdayName[0]);
@@ -213,10 +191,7 @@ export class DateHelper {
   }
 
   static getCurrentWeekDates(date?: Date, firstDayOfWeek?: Weekday) {
-    const firstDateOfWeek = DateHelper.getFirstDateOfWeek(
-      undefined,
-      firstDayOfWeek
-    );
+    const firstDateOfWeek = DateHelper.getFirstDateOfWeek(undefined, firstDayOfWeek);
     const output = [];
     for (let i = 0; i < 7; i++) {
       output.push(new Date(firstDateOfWeek));
@@ -258,10 +233,7 @@ export class DateHelper {
     }
   }
 
-  static getWeekdayTranslationByWeekday(
-    weekdayName: Weekday,
-    locale?: string
-  ): string {
+  static getWeekdayTranslationByWeekday(weekdayName: Weekday, locale?: string): string {
     const date = DateHelper.getDefaultWeekdayDate(weekdayName);
     return DateHelper.getWeekdayNameByDate(date, locale);
   }
@@ -285,10 +257,7 @@ export class DateHelper {
     return date.toLocaleString(locale, { month: 'long' });
   }
 
-  static getAmountDaysFromLastMonthForWeekstart(
-    date: Date,
-    firstDayOfWeek: Weekday
-  ) {
+  static getAmountDaysFromLastMonthForWeekstart(date: Date, firstDayOfWeek: Weekday) {
     const firstDayOfMonth = DateHelper.getFirstDayOfMonth(date);
     const weekDateOfFirstDayOfMonth = firstDayOfMonth.getDay(); // e. G. 6 for thursday
     const firstDayOfWeekIndex = DateHelper.getWeekdayIndex(firstDayOfWeek);
@@ -296,8 +265,7 @@ export class DateHelper {
     // firstDay of month e. G. saturday 01.10.2022
     // weekDateOfFirstDayOfMonth e. G. 6
     // 7+ (6 - 1) = 5
-    const diffToStartWithFirstDayOfWeek =
-      (7 + (weekDateOfFirstDayOfMonth - firstDayOfWeekIndex)) % 7;
+    const diffToStartWithFirstDayOfWeek = (7 + (weekDateOfFirstDayOfMonth - firstDayOfWeekIndex)) % 7;
     return diffToStartWithFirstDayOfWeek;
   }
 
@@ -356,10 +324,7 @@ export class DateHelper {
    * @param startDate
    * @param amountAdditionalDays
    */
-  static getDatesOfAmountNextDaysIncludingToday(
-    startDate: Date,
-    amountAdditionalDays: number
-  ): [Date, Date] {
+  static getDatesOfAmountNextDaysIncludingToday(startDate: Date, amountAdditionalDays: number): [Date, Date] {
     let startOfTheDay = new Date(startDate); // copy the date
     let endOfTheDay = new Date(startDate); // copy the date
 
@@ -409,10 +374,7 @@ export class DateHelper {
     return DateHelper.addMinutes(date, totalMinutesToAdd);
   }
 
-  static formatDateToIso8601WithoutTimezone(
-    date: Date,
-    clearSeconds: boolean = true
-  ): string {
+  static formatDateToIso8601WithoutTimezone(date: Date, clearSeconds: boolean = true): string {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
@@ -483,12 +445,7 @@ export class DateHelper {
     return DateHelper.formatOfferDateToReadable(dateCopy, false, false);
   }
 
-  static formatDateToTime(
-    date: Date,
-    withHours?: boolean,
-    withMinutes?: boolean,
-    withSeconds?: boolean
-  ) {
+  static formatDateToTime(date: Date, withHours?: boolean, withMinutes?: boolean, withSeconds?: boolean) {
     let hours: string = date.getHours().toString();
     hours = hours.length === 1 ? '0' + hours : hours;
     let minutes = date.getMinutes().toString();
@@ -514,12 +471,7 @@ export class DateHelper {
     return output;
   }
 
-  static formatOfferDateToReadable(
-    offerDate: Date,
-    withYear?: boolean,
-    withTime?: boolean,
-    withSeconds?: boolean
-  ) {
+  static formatOfferDateToReadable(offerDate: Date, withYear?: boolean, withTime?: boolean, withSeconds?: boolean) {
     let date = offerDate;
     if (!offerDate) {
       date = new Date();
@@ -560,10 +512,7 @@ export class DateHelper {
   static formatMinutesToReadable(minutes: number) {
     const hours = Math.floor(minutes / 60);
     const minutesLeft = minutes % 60;
-    const readable = DateHelper.formatHoursAndMinutesToHH_MM(
-      hours,
-      minutesLeft
-    );
+    const readable = DateHelper.formatHoursAndMinutesToHH_MM(hours, minutesLeft);
     return readable + ' h';
   }
 
@@ -618,15 +567,7 @@ export class DateHelper {
   // ---- extracted from backend helpers ----
 
   static getWeekdayList(): Weekday[] {
-    return [
-      Weekday.MONDAY,
-      Weekday.TUESDAY,
-      Weekday.WEDNESDAY,
-      Weekday.THURSDAY,
-      Weekday.FRIDAY,
-      Weekday.SATURDAY,
-      Weekday.SUNDAY,
-    ];
+    return [Weekday.MONDAY, Weekday.TUESDAY, Weekday.WEDNESDAY, Weekday.THURSDAY, Weekday.FRIDAY, Weekday.SATURDAY, Weekday.SUNDAY];
   }
 
   static getWeekdayListFromDate(date: Date): Weekday[] {
@@ -709,11 +650,7 @@ export class DateHelper {
     if (parts.length !== 3) {
       throw new Error(`Invalid date string: ${dateString}`);
     }
-    if (
-      parts[0] == undefined ||
-      parts[1] == undefined ||
-      parts[2] == undefined
-    ) {
+    if (parts[0] == undefined || parts[1] == undefined || parts[2] == undefined) {
       throw new Error(`Invalid date string: ${dateString}`);
     }
     const day = parseInt(parts[0]);
@@ -722,31 +659,17 @@ export class DateHelper {
     return new Date(year, month - 1, day);
   }
 
-  static formatDDMMYYYYToDateWithTimeZone(
-    value_raw: string,
-    timezone: DateHelperTimezone
-  ) {
+  static formatDDMMYYYYToDateWithTimeZone(value_raw: string, timezone: DateHelperTimezone) {
     let date_with_timezone = moment.tz(value_raw, 'DD.MM.YYYY', timezone);
     return date_with_timezone.toDate();
   }
 
-  static formatDateToTimeZoneReadable(
-    date: Date,
-    timezone: DateHelperTimezone
-  ): string {
+  static formatDateToTimeZoneReadable(date: Date, timezone: DateHelperTimezone): string {
     const dateWithTimezone = moment.tz(date, timezone);
     return dateWithTimezone.format('DD.MM.YYYY HH:mm:ss');
   }
 
   static getDate(mySimpleDate: MySimpleDate): Date {
-    return new Date(
-      mySimpleDate.year,
-      mySimpleDate.month - 1,
-      mySimpleDate.day,
-      mySimpleDate.hours,
-      mySimpleDate.minutes,
-      mySimpleDate.seconds,
-      mySimpleDate.milliseconds
-    );
+    return new Date(mySimpleDate.year, mySimpleDate.month - 1, mySimpleDate.day, mySimpleDate.hours, mySimpleDate.minutes, mySimpleDate.seconds, mySimpleDate.milliseconds);
   }
 }

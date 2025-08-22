@@ -11,13 +11,7 @@ export class AppSettingsHelper extends CollectionHelper<DatabaseTypes.AppSetting
 	// Fetch all app settings with optional query overrides
 	async fetchAppSettings(queryOverride: any = {}) {
 		const defaultQuery = {
-			fields: [
-				'*',
-				'translations.*',
-				'housing_translations.*',
-				'balance_translations.*',
-				'login_screen_translations.*',
-			],
+			fields: ['*', 'translations.*', 'housing_translations.*', 'balance_translations.*', 'login_screen_translations.*'],
 			limit: -1,
 		};
 

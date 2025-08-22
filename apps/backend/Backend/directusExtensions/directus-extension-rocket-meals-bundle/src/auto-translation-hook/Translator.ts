@@ -9,10 +9,7 @@ export class Translator {
   translatorSettings: TranslatorSettings;
   private translatorImplementation: undefined | MyTranslatorInterface;
 
-  constructor(
-    translatorSettings: TranslatorSettings,
-    myDatabaseHelper: MyDatabaseHelper
-  ) {
+  constructor(translatorSettings: TranslatorSettings, myDatabaseHelper: MyDatabaseHelper) {
     this.logger = myDatabaseHelper?.apiContext?.logger;
     this.translatorSettings = translatorSettings;
   }
@@ -21,9 +18,7 @@ export class Translator {
     //console.log("Initializing Translator");
     let auth_key = await this.getAuthKey();
     if (!auth_key) {
-      const message =
-        'Auth Key not set! Please set the key in .env file: ' +
-        EnvVariableHelper.getEnvFieldNameForAutoTranslateApiKey();
+      const message = 'Auth Key not set! Please set the key in .env file: ' + EnvVariableHelper.getEnvFieldNameForAutoTranslateApiKey();
       await this.setSettings(this.getSettingsAuthKeyErrorObject(message));
       return;
     }
@@ -39,17 +34,9 @@ export class Translator {
     }
   }
 
-  async translate(
-    text: string,
-    source_language: string,
-    destination_language: string
-  ) {
+  async translate(text: string, source_language: string, destination_language: string) {
     if (!this.translatorImplementation) return null;
-    const translation = await this.translatorImplementation.translate(
-      text,
-      source_language,
-      destination_language
-    );
+    const translation = await this.translatorImplementation.translate(text, source_language, destination_language);
     await this.reloadUsage(); //update usage stats
     return translation;
   }

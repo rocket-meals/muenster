@@ -6,10 +6,7 @@ import path from 'path';
 import fs from 'fs';
 
 const html = fs.readFileSync(path.resolve(__dirname, './News.html'), 'utf8');
-const htmlArticlePage = fs.readFileSync(
-  path.resolve(__dirname, './NewsSpecificPage.html'),
-  'utf8'
-);
+const htmlArticlePage = fs.readFileSync(path.resolve(__dirname, './NewsSpecificPage.html'), 'utf8');
 
 describe('NewsTestOsnabrueck', () => {
   async function getNews() {
@@ -18,9 +15,7 @@ describe('NewsTestOsnabrueck', () => {
     jest.spyOn(axios, 'get').mockImplementation(url => {
       if (url === StudentenwerkOsnabrueckNews_Parser.newsUrl) {
         return Promise.resolve({ data: html });
-      } else if (
-        url.startsWith(StudentenwerkOsnabrueckNews_Parser.newsArticleUrl)
-      ) {
+      } else if (url.startsWith(StudentenwerkOsnabrueckNews_Parser.newsArticleUrl)) {
         return Promise.resolve({ data: htmlArticlePage });
       }
       console.log('Unknown URL: ' + url);
@@ -40,8 +35,7 @@ describe('NewsTestOsnabrueck', () => {
   it('should find news with the correct date', async () => {
     let news = await getNews();
     let expectedDateOnly = '08.08.24';
-    let expectedTitle =
-      'Länderwoche in der Mensa: So bunt wie unser Mensateam!';
+    let expectedTitle = 'Länderwoche in der Mensa: So bunt wie unser Mensateam!';
 
     let found = news.find(newsItem => {
       return newsItem.basicNews.alias === expectedTitle;

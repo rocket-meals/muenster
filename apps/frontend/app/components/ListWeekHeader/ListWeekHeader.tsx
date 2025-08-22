@@ -1,19 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '@/hooks/useTheme';
-import {
-	MaterialCommunityIcons,
-	Ionicons,
-	MaterialIcons,
-	Feather,
-} from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons, MaterialIcons, Feather } from '@expo/vector-icons';
 import React from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	TouchableOpacity,
-	Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -54,27 +43,19 @@ const FoodPlanHeader = ({ handlePrint }: any) => {
 			{/* FoodPlanHeader */}
 			{headerVisible && (
 				<View>
-					<View
-						style={[styles.container, { backgroundColor: theme.header.background }]}
-					>
+					<View style={[styles.container, { backgroundColor: theme.header.background }]}>
 						<View style={{ flexDirection: 'row', gap: 20, width: '60%' }}>
 							<TouchableOpacity onPress={() => router.navigate('/list-week-screen')}>
 								<Ionicons name="arrow-back" size={24} color={theme.screen.icon} />
 							</TouchableOpacity>
-							<Text style={[styles.title, { color: theme.header.text }]}>
-								Food Plan: Week
-							</Text>
+							<Text style={[styles.title, { color: theme.header.text }]}>Food Plan: Week</Text>
 						</View>
 						<View style={{ ...styles.icons, gap: isMobile ? 10 : 20 }}>
 							<TouchableOpacity onPress={() => router.navigate('/foodPlanWeek')}>
 								<Ionicons name="restaurant-sharp" size={24} color={theme.screen.icon} />
 							</TouchableOpacity>
 							<TouchableOpacity onPress={() => router.navigate('/list-week-screen')}>
-								<MaterialIcons
-									name="calendar-month"
-									size={24}
-									color={theme.screen.icon}
-								/>
+								<MaterialIcons name="calendar-month" size={24} color={theme.screen.icon} />
 							</TouchableOpacity>
 							{isWeb && (
 								<TouchableOpacity onPress={handlePrint}>
@@ -82,11 +63,7 @@ const FoodPlanHeader = ({ handlePrint }: any) => {
 								</TouchableOpacity>
 							)}
 							<TouchableOpacity onPress={handleScanHelpClick}>
-								<MaterialCommunityIcons
-									name="scan-helper"
-									size={20}
-									color={theme.screen.icon}
-								/>
+								<MaterialCommunityIcons name="scan-helper" size={20} color={theme.screen.icon} />
 							</TouchableOpacity>
 						</View>
 					</View>

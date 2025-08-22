@@ -17,9 +17,7 @@ export class MyTimers<T extends string> {
     for (const alias in this.timers) {
       const timer = this.timers[alias];
       const totalTimeStr = timer.formatTimeToString(timer.totalTime);
-      console.log(
-        `${alias}: totalTime: ${totalTimeStr}, Rounds: ${timer.rounds}, Average: ${timer.formatTimeToString(timer.totalTime / timer.rounds)}`
-      );
+      console.log(`${alias}: totalTime: ${totalTimeStr}, Rounds: ${timer.rounds}, Average: ${timer.formatTimeToString(timer.totalTime / timer.rounds)}`);
     }
   }
 
@@ -33,9 +31,7 @@ export class MyTimers<T extends string> {
         maxTimeAlias = alias;
       }
     }
-    console.log(
-      `Bottleneck: ${maxTimeAlias}: ${MyTimer.formatTimeToString(maxTime)}`
-    );
+    console.log(`Bottleneck: ${maxTimeAlias}: ${MyTimer.formatTimeToString(maxTime)}`);
   }
 }
 
@@ -92,9 +88,7 @@ export class MyTimer {
     prefix = this.alias ? `${this.alias}: ${prefix}` : prefix;
     suffix = suffix ? `: ${suffix}` : '';
     let elapsed = this.getElapsedTime();
-    console.log(
-      prefix + `Elapsed time: ${this.formatTimeToString(elapsed)}` + suffix
-    );
+    console.log(prefix + `Elapsed time: ${this.formatTimeToString(elapsed)}` + suffix);
   }
 
   public getEstimatedTimeRemaining(progress: number, total: number) {
@@ -103,21 +97,14 @@ export class MyTimer {
     return estimatedTime;
   }
 
-  public printEstimatedTimeRemaining(
-    progress: number,
-    total: number,
-    prefix?: string | null,
-    suffix?: string | null
-  ) {
+  public printEstimatedTimeRemaining(progress: number, total: number, prefix?: string | null, suffix?: string | null) {
     let remaining = total - progress;
     let estimatedTime = this.getEstimatedTimeRemaining(progress, total);
     let estimatedTimeStr = this.formatTimeToString(estimatedTime);
     prefix = prefix ? `${prefix}: ` : '';
     prefix = this.alias ? `${this.alias}: ${prefix}` : prefix;
     suffix = suffix ? `: ${suffix}` : '';
-    console.log(
-      prefix + `Estimated time remaining: ${estimatedTimeStr}` + suffix
-    );
+    console.log(prefix + `Estimated time remaining: ${estimatedTimeStr}` + suffix);
   }
 
   public formatProgressAndTotal(progress: number, total: number) {
@@ -127,28 +114,16 @@ export class MyTimer {
     return `${progressStr}/${totalStr}`;
   }
 
-  public printElapsedTimeAndEstimatedTimeRemaining(
-    progress: number,
-    total: number,
-    prefix?: string | null,
-    suffix?: string | null
-  ) {
+  public printElapsedTimeAndEstimatedTimeRemaining(progress: number, total: number, prefix?: string | null, suffix?: string | null) {
     const elapsed = this.getElapsedTime();
     const estimatedTime = this.getEstimatedTimeRemaining(progress, total);
     const elapsedStr = this.formatTimeToString(elapsed);
     const estimatedTimeStr = this.formatTimeToString(estimatedTime);
-    const formattedProgressAndTotal = this.formatProgressAndTotal(
-      progress,
-      total
-    );
+    const formattedProgressAndTotal = this.formatProgressAndTotal(progress, total);
     prefix = prefix ? `${prefix}: ` : '';
     prefix = this.alias ? `${this.alias}: ${prefix}` : prefix;
     suffix = suffix ? `: ${suffix}` : '';
-    console.log(
-      prefix +
-        ` (${formattedProgressAndTotal})  Elapsed time: ${elapsedStr}, Estimated time remaining: ${estimatedTimeStr}` +
-        suffix
-    );
+    console.log(prefix + ` (${formattedProgressAndTotal})  Elapsed time: ${elapsedStr}, Estimated time remaining: ${estimatedTimeStr}` + suffix);
   }
 
   public formatTimeToString(duration: number) {

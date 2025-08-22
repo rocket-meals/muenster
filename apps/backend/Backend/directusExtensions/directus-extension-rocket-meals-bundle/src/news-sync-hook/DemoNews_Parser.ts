@@ -6,23 +6,15 @@ import { WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterfac
 export class DemoNews_Parser implements NewsParserInterface {
   constructor() {}
 
-  async getNewsItems(
-    workflowRun?: DatabaseTypes.WorkflowsRuns,
-    logger?: WorkflowRunLogger
-  ): Promise<NewsTypeForParser[]> {
-    return [
-      this.getDemoNewsItem('1'),
-      this.getDemoNewsItem('2'),
-      this.getDemoNewsItem('3'),
-    ];
+  async getNewsItems(workflowRun?: DatabaseTypes.WorkflowsRuns, logger?: WorkflowRunLogger): Promise<NewsTypeForParser[]> {
+    return [this.getDemoNewsItem('1'), this.getDemoNewsItem('2'), this.getDemoNewsItem('3')];
   }
 
   getDemoNewsItem(external_identifier: string): NewsTypeForParser {
     return {
       basicNews: {
         external_identifier: external_identifier,
-        image_remote_url:
-          'https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+        image_remote_url: 'https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
         url: 'https://www.pexels.com/de-de/foto/frau-die-im-flur-steht-wahrend-buch-halt-1462630/',
       },
       translations: {

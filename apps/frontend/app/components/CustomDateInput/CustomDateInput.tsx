@@ -38,14 +38,7 @@ const CustomDateInput = ({ inputType = 'date' }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.inputContainer}>
-				<TextInput
-					style={[styles.customInput, { color: theme.screen.text }]}
-					cursorColor={theme.screen.text}
-					placeholderTextColor={theme.screen.placeholder}
-					onChangeText={validateAndFormatInput}
-					value={value}
-					placeholder="YYYY-MM-DD HH:MM"
-				/>
+				<TextInput style={[styles.customInput, { color: theme.screen.text }]} cursorColor={theme.screen.text} placeholderTextColor={theme.screen.placeholder} onChangeText={validateAndFormatInput} value={value} placeholder="YYYY-MM-DD HH:MM" />
 			</View>
 		</View>
 	);

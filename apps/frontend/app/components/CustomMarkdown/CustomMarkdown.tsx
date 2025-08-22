@@ -10,16 +10,9 @@ import { useSelector } from 'react-redux';
 import { useTheme } from '@/hooks/useTheme';
 import { RootState } from '@/redux/reducer';
 
-const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
-	content,
-	backgroundColor,
-	imageWidth,
-	imageHeight,
-}) => {
+const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content, backgroundColor, imageWidth, imageHeight }) => {
 	const { theme } = useTheme();
-	const { primaryColor, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
 	const getContent = () => {
 		// Regex patterns for different content types
@@ -32,15 +25,9 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
 
 		if (content) {
 			const rawText = content;
-			const lines = rawText
-				.split('\n')
-				.filter((line: string) => line.trim() !== '');
+			const lines = rawText.split('\n').filter((line: string) => line.trim() !== '');
 
-			const contrastColor = myContrastColor(
-				backgroundColor || primaryColor,
-				theme,
-				mode === 'dark'
-			);
+			const contrastColor = myContrastColor(backgroundColor || primaryColor, theme, mode === 'dark');
 			// Process content into a structured format
 			const processContent = (lines: string[]) => {
 				const result: any[] = [];
@@ -133,15 +120,7 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
 			);
 
 			// Component for rendering images
-			const ImageContent = ({
-				url,
-				altText,
-				level,
-			}: {
-				url: string;
-				altText: string;
-				level: number;
-			}) => {
+			const ImageContent = ({ url, altText, level }: { url: string; altText: string; level: number }) => {
 				const [error, setError] = useState(false);
 
 				return (
@@ -207,66 +186,29 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
 			const renderContentItem = (item: any, level: number, index: number) => {
 				switch (item.type) {
 					case 'text':
-						return (
-							<TextContent
-								key={`text-${level}-${index}`}
-								text={item.content}
-								level={level}
-							/>
-						);
+						return <TextContent key={`text-${level}-${index}`} text={item.content} level={level} />;
 
 					case 'email':
 						return (
-							<View
-								key={`email-${level}-${index}`}
-								style={{ marginLeft: level * 16, marginBottom: 10 }}
-							>
-								<RedirectButton
-									type="email"
-									label={item.displayText}
-									onClick={() => Linking.openURL(`mailto:${item.email}`)}
-									backgroundColor={backgroundColor || ''}
-									color={contrastColor}
-								/>
+							<View key={`email-${level}-${index}`} style={{ marginLeft: level * 16, marginBottom: 10 }}>
+								<RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`mailto:${item.email}`)} backgroundColor={backgroundColor || ''} color={contrastColor} />
 							</View>
 						);
 
 					case 'link':
 						return (
-							<View
-								key={`link-${level}-${index}`}
-								style={{ marginLeft: level * 16, marginBottom: 10 }}
-							>
-								<RedirectButton
-									type="link"
-									label={item.displayText}
-									onClick={() => Linking.openURL(item.url)}
-									backgroundColor={backgroundColor || ''}
-									color={contrastColor}
-								/>
+							<View key={`link-${level}-${index}`} style={{ marginLeft: level * 16, marginBottom: 10 }}>
+								<RedirectButton type="link" label={item.displayText} onClick={() => Linking.openURL(item.url)} backgroundColor={backgroundColor || ''} color={contrastColor} />
 							</View>
 						);
 
 					case 'image':
-						return (
-							<ImageContent
-								key={`image-${level}-${index}`}
-								url={item.url}
-								altText={item.altText}
-								level={level}
-							/>
-						);
+						return <ImageContent key={`image-${level}-${index}`} url={item.url} altText={item.altText} level={level} />;
 
 					case 'collapsible':
 						return (
-							<View
-								key={`collapsible-${level}-${index}`}
-								style={{ marginTop: level > 0 ? 5 : 10 }}
-							>
-								<CustomCollapsible
-									headerText={item.header}
-									customColor={backgroundColor || ''}
-								>
+							<View key={`collapsible-${level}-${index}`} style={{ marginTop: level > 0 ? 5 : 10 }}>
+								<CustomCollapsible headerText={item.header} customColor={backgroundColor || ''}>
 									{renderContent(item.items, level + 1)}
 								</CustomCollapsible>
 							</View>
@@ -283,11 +225,7 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
 			};
 
 			const hierarchicalContent = processContent(lines);
-			return (
-				<View style={{ paddingBottom: 20 }}>
-					{renderContent(hierarchicalContent)}
-				</View>
-			);
+			return <View style={{ paddingBottom: 20 }}>{renderContent(hierarchicalContent)}</View>;
 		}
 
 		return null;

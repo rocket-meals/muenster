@@ -1,9 +1,7 @@
 import { FoodTL1Parser_GetRawReportInterface } from './FoodTL1Parser_GetRawReportInterface';
 import { SystemFileHelper } from '../helpers/SystemFileHelper';
 
-export class FoodTL1Parser_RawReportFtpReader
-  implements FoodTL1Parser_GetRawReportInterface
-{
+export class FoodTL1Parser_RawReportFtpReader implements FoodTL1Parser_GetRawReportInterface {
   private path_to_tl1_export: string;
   private encoding: BufferEncoding;
 
@@ -13,9 +11,6 @@ export class FoodTL1Parser_RawReportFtpReader
   }
 
   async getRawReport(): Promise<string | undefined> {
-    return await SystemFileHelper.readFileSync(
-      this.path_to_tl1_export,
-      this.encoding
-    );
+    return await SystemFileHelper.readFileSync(this.path_to_tl1_export, this.encoding);
   }
 }

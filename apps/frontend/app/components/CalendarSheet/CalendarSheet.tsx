@@ -19,21 +19,10 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet }) => {
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
 	const [currentMonth, setCurrentMonth] = useState(new Date());
-	const {
-		primaryColor,
-		appSettings,
-		selectedTheme: mode,
-		firstDayOfTheWeek,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor, appSettings, selectedTheme: mode, firstDayOfTheWeek } = useSelector((state: RootState) => state.settings);
 	const { selectedDate } = useSelector((state: RootState) => state.food);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
 	const weekStartMap: Record<string, number> = {
 		monday: 1,
@@ -53,61 +42,17 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet }) => {
 	};
 
 	LocaleConfig.locales['custom'] = {
-		monthNames: [
-			translate(TranslationKeys.January),
-			translate(TranslationKeys.February),
-			translate(TranslationKeys.March),
-			translate(TranslationKeys.April),
-			translate(TranslationKeys.May),
-			translate(TranslationKeys.June),
-			translate(TranslationKeys.July),
-			translate(TranslationKeys.August),
-			translate(TranslationKeys.September),
-			translate(TranslationKeys.October),
-			translate(TranslationKeys.November),
-			translate(TranslationKeys.December),
-		],
-		monthNamesShort: [
-			translate(TranslationKeys.Jan),
-			translate(TranslationKeys.Feb),
-			translate(TranslationKeys.Mar),
-			translate(TranslationKeys.Apr),
-			translate(TranslationKeys.MayShort),
-			translate(TranslationKeys.Jun),
-			translate(TranslationKeys.Jul),
-			translate(TranslationKeys.Aug),
-			translate(TranslationKeys.Sep),
-			translate(TranslationKeys.Oct),
-			translate(TranslationKeys.Nov),
-			translate(TranslationKeys.Dec),
-		],
-		dayNames: [
-			translate(TranslationKeys.Sun),
-			translate(TranslationKeys.Mon),
-			translate(TranslationKeys.Tue),
-			translate(TranslationKeys.Wed),
-			translate(TranslationKeys.Thu),
-			translate(TranslationKeys.Fri),
-			translate(TranslationKeys.Sat),
-		],
-		dayNamesShort: [
-			translate(TranslationKeys.Sun_S),
-			translate(TranslationKeys.Mon_S),
-			translate(TranslationKeys.Tue_S),
-			translate(TranslationKeys.Wed_S),
-			translate(TranslationKeys.Thu_S),
-			translate(TranslationKeys.Fri_S),
-			translate(TranslationKeys.Sat_S),
-		],
+		monthNames: [translate(TranslationKeys.January), translate(TranslationKeys.February), translate(TranslationKeys.March), translate(TranslationKeys.April), translate(TranslationKeys.May), translate(TranslationKeys.June), translate(TranslationKeys.July), translate(TranslationKeys.August), translate(TranslationKeys.September), translate(TranslationKeys.October), translate(TranslationKeys.November), translate(TranslationKeys.December)],
+		monthNamesShort: [translate(TranslationKeys.Jan), translate(TranslationKeys.Feb), translate(TranslationKeys.Mar), translate(TranslationKeys.Apr), translate(TranslationKeys.MayShort), translate(TranslationKeys.Jun), translate(TranslationKeys.Jul), translate(TranslationKeys.Aug), translate(TranslationKeys.Sep), translate(TranslationKeys.Oct), translate(TranslationKeys.Nov), translate(TranslationKeys.Dec)],
+		dayNames: [translate(TranslationKeys.Sun), translate(TranslationKeys.Mon), translate(TranslationKeys.Tue), translate(TranslationKeys.Wed), translate(TranslationKeys.Thu), translate(TranslationKeys.Fri), translate(TranslationKeys.Sat)],
+		dayNamesShort: [translate(TranslationKeys.Sun_S), translate(TranslationKeys.Mon_S), translate(TranslationKeys.Tue_S), translate(TranslationKeys.Wed_S), translate(TranslationKeys.Thu_S), translate(TranslationKeys.Fri_S), translate(TranslationKeys.Sat_S)],
 		today: translate(TranslationKeys.today),
 	};
 
 	LocaleConfig.defaultLocale = 'custom';
 
 	return (
-		<BottomSheetView
-			style={{ ...styles.container, backgroundColor: theme.sheet.sheetBg }}
-		>
+		<BottomSheetView style={{ ...styles.container, backgroundColor: theme.sheet.sheetBg }}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -161,11 +106,7 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet }) => {
 							}}
 							onPress={() => navigateMonth(direction === 'left' ? 'prev' : 'next')}
 						>
-							<AntDesign
-								name={direction === 'left' ? 'arrowleft' : 'arrowright'}
-								size={20}
-								color={contrastColor}
-							/>
+							<AntDesign name={direction === 'left' ? 'arrowleft' : 'arrowright'} size={20} color={contrastColor} />
 						</TouchableOpacity>
 					)}
 					onMonthChange={(month: any) => {

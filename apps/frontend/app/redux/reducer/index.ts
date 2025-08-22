@@ -13,22 +13,7 @@ import appElementsReducer from './appElementsReducer';
 import lastUpdatedReducer from './lastUpdatedReducer';
 import popupEventsHashReducer from './popupEventsHashReducer';
 import chatsReducer from './chatsReducer';
-import {
-	ApartmentsState,
-	AppElementState,
-	AuthState,
-	CampusState,
-	CanteensState,
-	FoodAttributesState,
-	FoodState,
-	FormState,
-	LastUpdatedState,
-	ManagementState,
-	NewsState,
-	SettingsState,
-	PopupEventsHashState,
-	ChatsState,
-} from '../Types/stateTypes';
+import { ApartmentsState, AppElementState, AuthState, CampusState, CanteensState, FoodAttributesState, FoodState, FormState, LastUpdatedState, ManagementState, NewsState, SettingsState, PopupEventsHashState, ChatsState } from '../Types/stateTypes';
 
 export const reducer = combineReducers({
 	state: (state = {}) => state,

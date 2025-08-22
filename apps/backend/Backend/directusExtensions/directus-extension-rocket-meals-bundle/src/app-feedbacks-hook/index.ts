@@ -32,11 +32,7 @@ type AppFeedbackMailTemplateVariablesType = {
 };
 
 export default defineHook(async ({ schedule, action }, apiContext) => {
-  let allTablesExist =
-    await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(
-      SCHEDULE_NAME,
-      apiContext
-    );
+  let allTablesExist = await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(SCHEDULE_NAME, apiContext);
   if (!allTablesExist) {
     return;
   }
@@ -67,12 +63,10 @@ export default defineHook(async ({ schedule, action }, apiContext) => {
     const subject = project_name + ' - App Feedbacks - ' + humanReadableDate;
 
     const dateCreated = new Date(app_feedback.date_created || new Date());
-    const dateHumanReadable =
-      DateHelper.getHumanReadableDateAndTime(dateCreated);
+    const dateHumanReadable = DateHelper.getHumanReadableDateAndTime(dateCreated);
 
     // answer to the feedback url: <PUBLIC_URL>/admin/content/app_feedbacks/f2042715-69f2-44fe-87e7-4b329b0cfab6
-    const answer_to_feedback_url =
-      publicUrl + '/admin/content/app_feedbacks/' + app_feedback_id;
+    const answer_to_feedback_url = publicUrl + '/admin/content/app_feedbacks/' + app_feedback_id;
 
     const app_feedback_device = {
       device_platform: app_feedback.device_platform,

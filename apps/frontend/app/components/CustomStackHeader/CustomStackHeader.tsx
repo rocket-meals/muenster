@@ -83,11 +83,7 @@ const CustomStackHeader: React.FC<CustomStackHeaderProps> = ({ label }) => {
 					<Tooltip
 						placement="top"
 						trigger={triggerProps => (
-							<TouchableOpacity
-								{...triggerProps}
-								onPress={handleGoback}
-								style={{ padding: 10 }}
-							>
+							<TouchableOpacity {...triggerProps} onPress={handleGoback} style={{ padding: 10 }}>
 								<Ionicons name="arrow-back" size={26} color={theme.header.text} />
 							</TouchableOpacity>
 						)}
@@ -99,9 +95,7 @@ const CustomStackHeader: React.FC<CustomStackHeaderProps> = ({ label }) => {
 						</TooltipContent>
 					</Tooltip>
 
-					<Text style={{ ...styles.heading, color: theme.header.text }}>
-						{excerpt(label, screenWidth > 900 ? 100 : screenWidth > 700 ? 80 : 22)}
-					</Text>
+					<Text style={{ ...styles.heading, color: theme.header.text }}>{excerpt(label, screenWidth > 900 ? 100 : screenWidth > 700 ? 80 : 22)}</Text>
 				</View>
 			</View>
 		</View>

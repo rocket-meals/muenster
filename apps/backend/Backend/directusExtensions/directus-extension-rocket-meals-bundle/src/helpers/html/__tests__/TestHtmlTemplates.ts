@@ -1,11 +1,6 @@
 // small jest test
 import { describe, expect, it } from '@jest/globals';
-import {
-  BaseGermanMarkdownTemplateHelper,
-  HTML_TEMPLATE_FILE_ENDING,
-  HtmlGenerator,
-  HtmlTemplatesEnum,
-} from '../HtmlGenerator';
+import { BaseGermanMarkdownTemplateHelper, HTML_TEMPLATE_FILE_ENDING, HtmlGenerator, HtmlTemplatesEnum } from '../HtmlGenerator';
 import path from 'path';
 import fse from 'fs-extra';
 import { TestArtifacts } from '../../TestArtifacts';
@@ -18,9 +13,7 @@ export async function getTestHtmlForBaseGermanMarkdownContent() {
 
   let html = await HtmlGenerator.generateHtml(
     {
-      ...BaseGermanMarkdownTemplateHelper.getTemplateDataForMarkdownContent(
-        exampleMarkdown
-      ),
+      ...BaseGermanMarkdownTemplateHelper.getTemplateDataForMarkdownContent(exampleMarkdown),
     },
     myDatabaseTestableHelperInterface,
     HtmlTemplatesEnum.BASE_GERMAN_MARKDOWN_CONTENT
@@ -34,10 +27,7 @@ describe('Html Template Test', () => {
 
     for (let templateName of emailTemplateNamesWithoutEnding) {
       const rootPathHtmlTemplates = HtmlGenerator.getPathToHtmlTemplates();
-      const systemTemplatePath = path.join(
-        rootPathHtmlTemplates,
-        templateName + HTML_TEMPLATE_FILE_ENDING
-      );
+      const systemTemplatePath = path.join(rootPathHtmlTemplates, templateName + HTML_TEMPLATE_FILE_ENDING);
       expect(path).toBeTruthy();
       let exists = await fse.pathExists(systemTemplatePath);
       expect(exists).toBeTruthy();
@@ -46,10 +36,7 @@ describe('Html Template Test', () => {
 
   it('Test html generation of default template', async () => {
     let html = await getTestHtmlForBaseGermanMarkdownContent();
-    let savePath = TestArtifacts.saveTestArtifact(
-      html,
-      'html/' + HtmlTemplatesEnum.BASE_GERMAN_MARKDOWN_CONTENT + '.html'
-    );
+    let savePath = TestArtifacts.saveTestArtifact(html, 'html/' + HtmlTemplatesEnum.BASE_GERMAN_MARKDOWN_CONTENT + '.html');
     expect(html).toBeTruthy();
   });
 });

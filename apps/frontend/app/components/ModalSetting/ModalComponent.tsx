@@ -19,21 +19,11 @@ interface ModalComponentProps {
 	disableSave?: boolean;
 }
 
-const ModalComponent: React.FC<ModalComponentProps> = ({
-	isVisible,
-	title = 'Modal Title',
-	onClose,
-	onSave,
-	children,
-	showButtons = true,
-	disableSave,
-}) => {
+const ModalComponent: React.FC<ModalComponentProps> = ({ isVisible, title = 'Modal Title', onClose, onSave, children, showButtons = true, disableSave }) => {
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
-	const [isLargeScreen, setIsLargeScreen] = useState(
-		Dimensions.get('window').width
-	);
+	const [isLargeScreen, setIsLargeScreen] = useState(Dimensions.get('window').width);
 	const [backdropOpacity, setBackdropOpacity] = useState(0.7);
 	useEffect(() => {
 		const onChange = ({ window }: { window: any }) => {
@@ -49,14 +39,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
 	}, []);
 
 	return (
-		<Modal
-			isVisible={isVisible}
-			onClose={onClose}
-			animationIn="slideInUp"
-			animationOut="slideOutDown"
-			backdropOpacity={backdropOpacity}
-			style={{ margin: 0 }}
-		>
+		<Modal isVisible={isVisible} onClose={onClose} animationIn="slideInUp" animationOut="slideOutDown" backdropOpacity={backdropOpacity} style={{ margin: 0 }}>
 			<View
 				style={[
 					styles.modalContainer,
@@ -87,11 +70,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
 						}}
 						onPress={onClose}
 					>
-						<AntDesign
-							name="close"
-							size={isLargeScreen ? 20 : 26}
-							color={theme.modal.closeIcon}
-						/>
+						<AntDesign name="close" size={isLargeScreen ? 20 : 26} color={theme.modal.closeIcon} />
 					</TouchableOpacity>
 				</View>
 
@@ -101,22 +80,11 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
 				{/* Action Buttons */}
 				{showButtons && (
 					<View style={[styles.buttonContainer, { width: '60%' }]}>
-						<TouchableOpacity
-							onPress={onClose}
-							style={{ ...styles.cancelButton, borderColor: primaryColor }}
-						>
-							<Text style={[styles.buttonText, { color: theme.screen.text }]}>
-								{translate(TranslationKeys.cancel)}
-							</Text>
+						<TouchableOpacity onPress={onClose} style={{ ...styles.cancelButton, borderColor: primaryColor }}>
+							<Text style={[styles.buttonText, { color: theme.screen.text }]}>{translate(TranslationKeys.cancel)}</Text>
 						</TouchableOpacity>
-						<TouchableOpacity
-							onPress={onSave}
-							disabled={disableSave}
-							style={{ ...styles.saveButton, backgroundColor: primaryColor }}
-						>
-							<Text style={[styles.buttonText, { color: theme.activeText }]}>
-								{translate(TranslationKeys.save)}
-							</Text>
+						<TouchableOpacity onPress={onSave} disabled={disableSave} style={{ ...styles.saveButton, backgroundColor: primaryColor }}>
+							<Text style={[styles.buttonText, { color: theme.activeText }]}>{translate(TranslationKeys.save)}</Text>
 						</TouchableOpacity>
 					</View>
 				)}

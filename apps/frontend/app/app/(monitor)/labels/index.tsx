@@ -32,9 +32,7 @@ const index = () => {
 	};
 
 	const { markings } = useSelector((state: RootState) => state.food);
-	const { language, selectedTheme: mode } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { language, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
 	const chunkedMarkings = [];
 	for (let i = 0; i < markings?.length; i += 7) {
@@ -55,16 +53,9 @@ const index = () => {
 					chunkedMarkings?.map((chunk, chunkIndex) => (
 						<View key={chunkIndex} style={styles.mainContainer}>
 							{chunk.map((marking, index) => {
-								const markingText = getTextFromTranslation(
-									marking?.translations,
-									language
-								);
+								const markingText = getTextFromTranslation(marking?.translations, language);
 								const MarkingBackgroundColor = marking?.background_color;
-								const MarkingColor = useMyContrastColor(
-									marking?.background_color,
-									theme,
-									mode === 'dark'
-								);
+								const MarkingColor = useMyContrastColor(marking?.background_color, theme, mode === 'dark');
 								return (
 									<TouchableOpacity
 										key={index}

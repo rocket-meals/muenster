@@ -8,9 +8,7 @@ import { useTheme } from '@/hooks/useTheme';
 
 export const useFoodCard = (borderWidth: number = 0) => {
 	const { theme } = useTheme();
-	const { amountColumnsForcard } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { amountColumnsForcard } = useSelector((state: RootState) => state.settings);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
 	useEffect(() => {
@@ -23,10 +21,7 @@ export const useFoodCard = (borderWidth: number = 0) => {
 		CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
 	}, [amountColumnsForcard, screenWidth]);
 
-	const dimension =
-		amountColumnsForcard === 0
-			? CardDimensionHelper.getCardDimension(screenWidth)
-			: CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
+	const dimension = amountColumnsForcard === 0 ? CardDimensionHelper.getCardDimension(screenWidth) : CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
 
 	const containerStyle: ViewStyle = {
 		width: dimension,
@@ -41,13 +36,7 @@ export const useFoodCard = (borderWidth: number = 0) => {
 
 	const contentStyle: ViewStyle = {
 		gap: isWeb ? 15 : 5,
-		paddingHorizontal: isWeb
-			? screenWidth > 550
-				? 5
-				: screenWidth > 360
-					? 5
-					: 5
-			: 5,
+		paddingHorizontal: isWeb ? (screenWidth > 550 ? 5 : screenWidth > 360 ? 5 : 5) : 5,
 	};
 
 	return { screenWidth, containerStyle, imageContainerStyle, contentStyle };

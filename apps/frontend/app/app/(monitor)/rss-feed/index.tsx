@@ -7,9 +7,7 @@ const RssFeedScreen = () => {
 		urls?: string | string[];
 		switchIntervalInSeconds?: string;
 	}>();
-	return (
-		<RssFeed urls={urls} switchIntervalInSeconds={switchIntervalInSeconds} />
-	);
+	return <RssFeed urls={urls} switchIntervalInSeconds={switchIntervalInSeconds} />;
 };
 
 export default RssFeedScreen;

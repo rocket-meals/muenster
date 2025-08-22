@@ -1,8 +1,5 @@
 import axios from 'axios';
-import {
-  CashregistersTransactionsForParser,
-  CashregisterTransactionParserInterface,
-} from './CashregisterTransactionParserInterface';
+import { CashregistersTransactionsForParser, CashregisterTransactionParserInterface } from './CashregisterTransactionParserInterface';
 import { DateHelper } from 'repo-depkit-common';
 
 const BUCHUNGSNUMMER = 'BUCHUNGSNUMMER';
@@ -22,9 +19,7 @@ interface Transaction {
   Kasse_ID: string;
 }
 
-export class Cashregisters_SWOSY
-  implements CashregisterTransactionParserInterface
-{
+export class Cashregisters_SWOSY implements CashregisterTransactionParserInterface {
   password: string = '';
   api_url: string = '';
 
@@ -74,10 +69,7 @@ export class Cashregisters_SWOSY
     return text;
   }
 
-  async getAsJSON(
-    url: string,
-    password: string
-  ): Promise<Record<string, Transaction>> {
+  async getAsJSON(url: string, password: string): Promise<Record<string, Transaction>> {
     const text = await this.loadFromRemote(url, password);
 
     const lineSeparator = text.includes('\r') ? '\r' : '\n';
@@ -118,8 +110,7 @@ export class Cashregisters_SWOSY
 
           switch (bez) {
             case BUCHUNGSNUMMER:
-              parsedPart.BUCHUNGSNUMMER =
-                Cashregisters_SWOSY.transformBuchungsnummer(value);
+              parsedPart.BUCHUNGSNUMMER = Cashregisters_SWOSY.transformBuchungsnummer(value);
               break;
             case Datum:
               let transformedDate = Cashregisters_SWOSY.transformDate(value);
@@ -145,14 +136,7 @@ export class Cashregisters_SWOSY
         }
 
         // check if parsedPart has all required fields of Transaction
-        if (
-          parsedPart.Datum &&
-          parsedPart.Kasse_ID &&
-          parsedPart.Menge &&
-          parsedPart.Name &&
-          parsedPart.Verbrauchergruppe_ID &&
-          parsedPart.BUCHUNGSNUMMER
-        ) {
+        if (parsedPart.Datum && parsedPart.Kasse_ID && parsedPart.Menge && parsedPart.Name && parsedPart.Verbrauchergruppe_ID && parsedPart.BUCHUNGSNUMMER) {
           data[parsedPart.BUCHUNGSNUMMER] = {
             BUCHUNGSNUMMER: parsedPart.BUCHUNGSNUMMER,
             Datum: parsedPart.Datum,

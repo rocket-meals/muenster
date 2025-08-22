@@ -10,19 +10,12 @@ import styles from './styles';
 import { AmountColumnSheetProps } from './types';
 import { TranslationKeys } from '@/locales/keys';
 
-const AmountColumnSheet: React.FC<AmountColumnSheetProps> = ({
-	closeSheet,
-	selectedAmount,
-	onSelect,
-}) => {
+const AmountColumnSheet: React.FC<AmountColumnSheetProps> = ({ closeSheet, selectedAmount, onSelect }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,

@@ -1,17 +1,4 @@
-import {
-	CLEAR_CANTEENS,
-	DELETE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
-	SET_BUILDINGS,
-	SET_BUSINESS_HOURS,
-	SET_BUSINESS_HOURS_GROUPS,
-	SET_CANTEENS,
-	SET_CANTEEN_FEEDBACK_LABELS,
-	SET_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
-	SET_SELECTED_CANTEEN,
-	SET_SELECTED_CANTEEN_FOOD_OFFERS,
-	SET_SELECTED_CANTEEN_FOOD_OFFERS_LOCAL,
-	UPDATE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
-} from '@/redux/Types/types';
+import { CLEAR_CANTEENS, DELETE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES, SET_BUILDINGS, SET_BUSINESS_HOURS, SET_BUSINESS_HOURS_GROUPS, SET_CANTEENS, SET_CANTEEN_FEEDBACK_LABELS, SET_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES, SET_SELECTED_CANTEEN, SET_SELECTED_CANTEEN_FOOD_OFFERS, SET_SELECTED_CANTEEN_FOOD_OFFERS_LOCAL, UPDATE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES } from '@/redux/Types/types';
 
 const initialState = {
 	canteens: [],
@@ -99,9 +86,7 @@ const canteensReducer = (state = initialState, actions: any) => {
 			};
 		}
 		case DELETE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES: {
-			const entries = state.ownCanteenFeedBackLabelEntries.filter(
-				(feedback: any) => feedback.id !== actions.payload
-			);
+			const entries = state.ownCanteenFeedBackLabelEntries.filter((feedback: any) => feedback.id !== actions.payload);
 			return {
 				...state,
 				ownCanteenFeedBackLabelEntries: entries,

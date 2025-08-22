@@ -1,18 +1,5 @@
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import {
-	View,
-	ScrollView,
-	TouchableOpacity,
-	Dimensions,
-	Text,
-	TextInput,
-} from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, ScrollView, TouchableOpacity, Dimensions, Text, TextInput } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { router, useFocusEffect } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,19 +7,10 @@ import styles from './styles';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
-import {
-	AntDesign,
-	Entypo,
-	Ionicons,
-	MaterialCommunityIcons,
-} from '@expo/vector-icons';
+import { AntDesign, Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLanguage } from '@/hooks/useLanguage';
 import ManagementCanteensSheet from '@/components/ManagementCanteensSheet/ManagementCanteensSheet';
-import {
-	SET_FOOD_ATTRIBUTES,
-	SET_FOOD_ATTRIBUTES_DICT,
-	SET_FOOD_PLAN,
-} from '@/redux/Types/types';
+import { SET_FOOD_ATTRIBUTES, SET_FOOD_ATTRIBUTES_DICT, SET_FOOD_PLAN } from '@/redux/Types/types';
 import { CanteenProps } from '@/components/CanteenSelectionSheet/types';
 import CustomCollapsible from '@/components/CustomCollapsible/CustomCollapsible';
 import { isWeb } from '@/constants/Constants';
@@ -58,16 +36,9 @@ const Index = () => {
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
 	const foodAttributesHelper = new FoodAttributesHelper();
-	const { foodAttributes: initialFoodAttributes } = useSelector(
-		(state: RootState) => state.foodAttributes
-	);
+	const { foodAttributes: initialFoodAttributes } = useSelector((state: RootState) => state.foodAttributes);
 	const [foodAttributes, setFoodAttributes] = useState<FoodAttribute[]>();
-	const {
-		primaryColor: projectColor,
-		language,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor: projectColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const { foodPlan } = useSelector((state: RootState) => state.management);
 	const [isActive, setIsActive] = useState(false);
 	const [value, setValue] = useState('');
@@ -75,15 +46,9 @@ const Index = () => {
 	const canteenSheetRef = useRef<BottomSheet>(null);
 	const intervalSheetRef = useRef<BottomSheet>(null);
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: projectColor;
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
 
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 	const [selectedInterval, setSelectedInterval] = useState({
 		key: '',
 		label: '',
@@ -91,8 +56,7 @@ const Index = () => {
 
 	const getAllFoodAttributes = async () => {
 		try {
-			const result =
-				(await foodAttributesHelper.fetchAllFoodAttributes()) as DatabaseTypes.FoodsAttributes[];
+			const result = (await foodAttributesHelper.fetchAllFoodAttributes()) as DatabaseTypes.FoodsAttributes[];
 			if (result) {
 				const attributesDict = result.reduce(
 					(acc, attr) => {
@@ -115,9 +79,7 @@ const Index = () => {
 		if (initialFoodAttributes.length > 0) {
 			setFoodAttributes(
 				initialFoodAttributes.map((attr: any, index: number) => {
-					const title = attr?.translations
-						? getFoodAttributesTranslation(attr?.translations, language)
-						: '';
+					const title = attr?.translations ? getFoodAttributesTranslation(attr?.translations, language) : '';
 					return {
 						id: attr?.id,
 						alias: title ? title : attr?.alias,
@@ -135,27 +97,15 @@ const Index = () => {
 	const handleSortChange = (id: string, newValue: string) => {
 		const parsed = parseInt(newValue, 10);
 		if (!newValue || parsed === 0) {
-			setFoodAttributes((prev: any) =>
-				prev.map((attr: any) =>
-					attr.id === id ? { ...attr, manualSort: undefined } : attr
-				)
-			);
+			setFoodAttributes((prev: any) => prev.map((attr: any) => (attr.id === id ? { ...attr, manualSort: undefined } : attr)));
 			return;
 		}
 		const numericValue = Math.max(1, Math.min(99, parsed));
-		setFoodAttributes((prev: any) =>
-			prev.map((attr: any) =>
-				attr.id === id ? { ...attr, manualSort: numericValue } : attr
-			)
-		);
+		setFoodAttributes((prev: any) => prev.map((attr: any) => (attr.id === id ? { ...attr, manualSort: numericValue } : attr)));
 	};
 
 	const toggleAttributeSelection = (id: string) => {
-		setFoodAttributes((prev: any) =>
-			prev.map((attr: any) =>
-				attr.id === id ? { ...attr, selected: !attr.selected } : attr
-			)
-		);
+		setFoodAttributes((prev: any) => prev.map((attr: any) => (attr.id === id ? { ...attr, selected: !attr.selected } : attr)));
 	};
 
 	const openCanteenSheet = (option: string) => {
@@ -172,9 +122,7 @@ const Index = () => {
 
 		// Set the value based on the selected interval
 		if (intervalKey === 'foodInterval') {
-			setValue(
-				foodPlan?.nextFoodInterval ? String(foodPlan.nextFoodInterval) : ''
-			);
+			setValue(foodPlan?.nextFoodInterval ? String(foodPlan.nextFoodInterval) : '');
 		} else if (intervalKey === 'refreshFoodInterval') {
 			setValue(foodPlan?.refreshInterval ? String(foodPlan.refreshInterval) : '');
 		}
@@ -243,19 +191,11 @@ const Index = () => {
 				>
 					<View style={styles.col1}>
 						<Ionicons name="restaurant-sharp" size={24} color={theme.screen.icon} />
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{translate(TranslationKeys.canteen)}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{translate(TranslationKeys.canteen)}</Text>
 					</View>
 					<View style={styles.col2}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{foodPlan?.selectedCanteen?.alias}
-						</Text>
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{foodPlan?.selectedCanteen?.alias}</Text>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 
@@ -269,19 +209,11 @@ const Index = () => {
 				>
 					<View style={styles.col1}>
 						<Ionicons name="restaurant-sharp" size={24} color={theme.screen.icon} />
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Optional: Zusätzliche Mensa/Cafeteria
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Optional: Zusätzliche Mensa/Cafeteria</Text>
 					</View>
 					<View style={styles.col2}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{foodPlan?.additionalSelectedCanteen?.alias}
-						</Text>
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{foodPlan?.additionalSelectedCanteen?.alias}</Text>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 
@@ -294,19 +226,11 @@ const Index = () => {
 					onPress={() => openIntervalSheet('foodInterval', 'Next Food Interval')}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Next Food Interval
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Next Food Interval</Text>
 					</View>
 					<View style={styles.col2}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{foodPlan?.nextFoodInterval}
-						</Text>
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{foodPlan?.nextFoodInterval}</Text>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 
@@ -316,46 +240,26 @@ const Index = () => {
 						backgroundColor: theme.screen.iconBg,
 						paddingHorizontal: windowWidth > 600 ? 20 : 10,
 					}}
-					onPress={() =>
-						openIntervalSheet('refreshFoodInterval', 'Refresh Food Offers Interval')
-					}
+					onPress={() => openIntervalSheet('refreshFoodInterval', 'Refresh Food Offers Interval')}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							Refresh Data Interval (seconds)
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>Refresh Data Interval (seconds)</Text>
 					</View>
 					<View style={styles.col2}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{foodPlan?.refreshInterval}
-						</Text>
-						<MaterialCommunityIcons
-							name="pencil"
-							size={22}
-							color={theme.screen.icon}
-						/>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{foodPlan?.refreshInterval}</Text>
+						<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} />
 					</View>
 				</TouchableOpacity>
 
 				<View style={{ width: '100%' }}>
-					<CustomCollapsible
-						headerText={translate(TranslationKeys.food_attributes)}
-						customColor={theme.screen.iconBg}
-					>
-						<ScrollView
-							style={styles.attributeListContainer}
-							contentContainerStyle={styles.attributeListContent}
-						>
+					<CustomCollapsible headerText={translate(TranslationKeys.food_attributes)} customColor={theme.screen.iconBg}>
+						<ScrollView style={styles.attributeListContainer} contentContainerStyle={styles.attributeListContent}>
 							{foodAttributes &&
 								foodAttributes?.map((attribute: any) => {
 									return (
 										<View style={styles.attributeContainer} key={attribute?.id}>
 											<TextInput
-												value={
-													attribute?.manualSort !== undefined
-														? String(attribute?.manualSort)
-														: ''
-												}
+												value={attribute?.manualSort !== undefined ? String(attribute?.manualSort) : ''}
 												onChangeText={text => handleSortChange(attribute.id, text)}
 												keyboardType="numeric"
 												maxLength={2}
@@ -370,9 +274,7 @@ const Index = () => {
 													...styles.row,
 													paddingHorizontal: isWeb ? 20 : 10,
 
-													backgroundColor: attribute?.selected
-														? foods_area_color
-														: theme.screen.iconBg,
+													backgroundColor: attribute?.selected ? foods_area_color : theme.screen.iconBg,
 												}}
 												onPress={() => toggleAttributeSelection(attribute.id)}
 											>
@@ -385,12 +287,7 @@ const Index = () => {
 													{attribute?.alias}
 												</Text>
 
-												<MaterialCommunityIcons
-													name={attribute?.selected ? 'checkbox-marked' : 'checkbox-blank'}
-													size={24}
-													color={attribute?.selected ? contrastColor : '#ffffff'}
-													style={styles.radioButton}
-												/>
+												<MaterialCommunityIcons name={attribute?.selected ? 'checkbox-marked' : 'checkbox-blank'} size={24} color={attribute?.selected ? contrastColor : '#ffffff'} style={styles.radioButton} />
 											</TouchableOpacity>
 										</View>
 									);
@@ -430,21 +327,15 @@ const Index = () => {
 									canteens_id: foodPlan?.selectedCanteen?.id,
 									nextPageIntervalInSeconds: foodPlan?.nextFoodInterval,
 									refreshDataIntervalInSeconds: foodPlan?.refreshInterval,
-									monitor_additional_canteens_id: foodPlan?.additionalSelectedCanteen?.id
-										? foodPlan?.additionalSelectedCanteen?.id
-										: '',
-									foodAttributesData: selectedAttributes
-										? JSON.stringify(selectedAttributes)
-										: '',
+									monitor_additional_canteens_id: foodPlan?.additionalSelectedCanteen?.id ? foodPlan?.additionalSelectedCanteen?.id : '',
+									foodAttributesData: selectedAttributes ? JSON.stringify(selectedAttributes) : '',
 								},
 							});
 						}
 					}}
 				>
 					<View style={styles.col1}>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							DayScreen
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>DayScreen</Text>
 					</View>
 					<View style={styles.col2}>
 						<Entypo name="chevron-small-right" size={22} color={theme.screen.icon} />
@@ -464,10 +355,7 @@ const Index = () => {
 					handleComponent={null}
 					onClose={closeCanteenSheet}
 				>
-					<ManagementCanteensSheet
-						closeSheet={closeCanteenSheet}
-						handleSelectCanteen={handleSelectCanteen}
-					/>
+					<ManagementCanteensSheet closeSheet={closeCanteenSheet} handleSelectCanteen={handleSelectCanteen} />
 				</BaseBottomSheet>
 			)}
 			{isActive && (
@@ -512,12 +400,7 @@ const Index = () => {
 								<AntDesign name="close" size={26} color={theme.modal.closeIcon} />
 							</TouchableOpacity>
 						</View>
-						<View
-							style={[
-								styles.modalContent,
-								{ paddingHorizontal: windowWidth < 600 ? 5 : 30 },
-							]}
-						>
+						<View style={[styles.modalContent, { paddingHorizontal: windowWidth < 600 ? 5 : 30 }]}>
 							<TextInput
 								style={{
 									...styles.input,
@@ -553,9 +436,7 @@ const Index = () => {
 										borderColor: foods_area_color,
 									}}
 								>
-									<Text style={[styles.buttonText, { color: contrastColor }]}>
-										cancel
-									</Text>
+									<Text style={[styles.buttonText, { color: contrastColor }]}>cancel</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
 									onPress={() => {

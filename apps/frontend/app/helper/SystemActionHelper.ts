@@ -68,18 +68,11 @@ class PrivateSystemActionHelper extends CommonSystemActionHelper {
 		});
 	}
 
-	static async openActivity(
-		iosURL: string,
-		androidAction: string,
-		androidExtras?: any
-	) {
+	static async openActivity(iosURL: string, androidAction: string, androidExtras?: any) {
 		if (isIOSDevice) {
 			return await Linking.openURL(iosURL);
 		} else if (isAndroidDevice) {
-			return await PrivateSystemActionHelper.androidStartActivityAsync(
-				androidAction,
-				androidExtras
-			);
+			return await PrivateSystemActionHelper.androidStartActivityAsync(androidAction, androidExtras);
 		}
 	}
 }
@@ -92,10 +85,7 @@ class MobileSystemActionHelper extends PrivateSystemActionHelper {
 	}
 
 	static async openSystemSettings() {
-		return await PrivateSystemActionHelper.openActivity(
-			'App-Prefs:',
-			IntentLauncher.ActivityAction.SETTINGS
-		);
+		return await PrivateSystemActionHelper.openActivity('App-Prefs:', IntentLauncher.ActivityAction.SETTINGS);
 	}
 }
 
@@ -103,10 +93,7 @@ class iPhoneSystemActionHelper extends MobileSystemActionHelper {}
 
 class androidSystemActionHelper extends MobileSystemActionHelper {
 	static async openNFCSettings() {
-		return await MobileSystemActionHelper.openActivity(
-			'',
-			IntentLauncher.ActivityAction.NFC_SETTINGS
-		);
+		return await MobileSystemActionHelper.openActivity('', IntentLauncher.ActivityAction.NFC_SETTINGS);
 	}
 }
 

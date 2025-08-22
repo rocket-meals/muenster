@@ -1,20 +1,11 @@
 import { Dimensions, ScrollView, Text, View } from 'react-native';
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import StatisticsCard from '@/components/StatisticsCard/StatisticsCard';
 import { loadMostLikedOrDislikedFoods } from '@/helper/FoodHelper';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	SET_MOST_DISLIKED_FOODS,
-	SET_MOST_LIKED_FOODS,
-} from '@/redux/Types/types';
+import { SET_MOST_DISLIKED_FOODS, SET_MOST_LIKED_FOODS } from '@/redux/Types/types';
 import { DatabaseTypes } from 'repo-depkit-common';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
@@ -32,9 +23,7 @@ const index = () => {
 	const [selectedFoodId, setSelectedFoodId] = useState('');
 	const imageManagementSheetRef = useRef<BottomSheet>(null);
 
-	const { mostLikedFoods, mostDislikedFoods } = useSelector(
-		(state: RootState) => state.food
-	);
+	const { mostLikedFoods, mostDislikedFoods } = useSelector((state: RootState) => state.food);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
 	const openImageManagementSheet = () => {
@@ -46,24 +35,14 @@ const index = () => {
 	};
 
 	const fetchMostLikedFoods = async () => {
-		const mostLikedFoods = await loadMostLikedOrDislikedFoods(
-			10,
-			0,
-			undefined,
-			true
-		);
+		const mostLikedFoods = await loadMostLikedOrDislikedFoods(10, 0, undefined, true);
 		if (mostLikedFoods) {
 			dispatch({ type: SET_MOST_LIKED_FOODS, payload: mostLikedFoods });
 		}
 	};
 
 	const fetchMostDisLikedFoods = async () => {
-		const mostDisLikedFoods = await loadMostLikedOrDislikedFoods(
-			10,
-			0,
-			undefined,
-			false
-		);
+		const mostDisLikedFoods = await loadMostLikedOrDislikedFoods(10, 0, undefined, false);
 		if (mostDisLikedFoods) {
 			dispatch({ type: SET_MOST_DISLIKED_FOODS, payload: mostDisLikedFoods });
 		}
@@ -98,9 +77,7 @@ const index = () => {
 	);
 
 	return (
-		<View
-			style={{ ...styles.container, backgroundColor: theme.screen.background }}
-		>
+		<View style={{ ...styles.container, backgroundColor: theme.screen.background }}>
 			<View
 				style={{
 					...styles.statisticsContainer,
@@ -110,34 +87,12 @@ const index = () => {
 			>
 				<View style={styles.topContainer}>
 					<Text style={{ ...styles.heading, color: theme.screen.text }}>Top 10</Text>
-					<ScrollView>
-						{mostLikedFoods &&
-							mostLikedFoods?.map((item: DatabaseTypes.Foods) => (
-								<StatisticsCard
-									key={item.id}
-									food={item}
-									handleImageSheet={openImageManagementSheet}
-									setSelectedFoodId={setSelectedFoodId}
-								/>
-							))}
-					</ScrollView>
+					<ScrollView>{mostLikedFoods && mostLikedFoods?.map((item: DatabaseTypes.Foods) => <StatisticsCard key={item.id} food={item} handleImageSheet={openImageManagementSheet} setSelectedFoodId={setSelectedFoodId} />)}</ScrollView>
 				</View>
 
 				<View style={styles.worstContainer}>
-					<Text style={{ ...styles.heading, color: theme.screen.text }}>
-						Worst 10
-					</Text>
-					<ScrollView>
-						{mostDislikedFoods &&
-							mostDislikedFoods?.map((item: DatabaseTypes.Foods) => (
-								<StatisticsCard
-									key={item.id}
-									food={item}
-									handleImageSheet={openImageManagementSheet}
-									setSelectedFoodId={setSelectedFoodId}
-								/>
-							))}
-					</ScrollView>
+					<Text style={{ ...styles.heading, color: theme.screen.text }}>Worst 10</Text>
+					<ScrollView>{mostDislikedFoods && mostDislikedFoods?.map((item: DatabaseTypes.Foods) => <StatisticsCard key={item.id} food={item} handleImageSheet={openImageManagementSheet} setSelectedFoodId={setSelectedFoodId} />)}</ScrollView>
 				</View>
 			</View>
 			{isActive && (
@@ -154,12 +109,7 @@ const index = () => {
 					enableContentPanningGesture={false}
 					onClose={closeImageManagementSheet}
 				>
-					<ImageManagementSheet
-						closeSheet={closeImageManagementSheet}
-						selectedFoodId={selectedFoodId}
-						handleFetch={fetchFoods}
-						fileName="foods"
-					/>
+					<ImageManagementSheet closeSheet={closeImageManagementSheet} selectedFoodId={selectedFoodId} handleFetch={fetchFoods} fileName="foods" />
 				</BaseBottomSheet>
 			)}
 		</View>

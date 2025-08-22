@@ -12,10 +12,7 @@ const DataSheet: React.FC<DataSheetProps> = ({ closeSheet, content }) => {
 	const { translate } = useLanguage();
 	console.log('Content Value', content?.value);
 	return (
-		<BottomSheetScrollView
-			style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}
-			contentContainerStyle={styles.contentContainer}
-		>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer}>
 			<View
 				style={{
 					...styles.sheetHeader,
@@ -37,11 +34,7 @@ const DataSheet: React.FC<DataSheetProps> = ({ closeSheet, content }) => {
 				</Text>
 			</View>
 
-			<Text style={{ fontSize: isWeb ? 18 : 16, color: theme.sheet.text }}>
-				{content?.value
-					? JSON.stringify(content.value, null, 2)
-					: JSON.stringify({}, null, 2)}
-			</Text>
+			<Text style={{ fontSize: isWeb ? 18 : 16, color: theme.sheet.text }}>{content?.value ? JSON.stringify(content.value, null, 2) : JSON.stringify({}, null, 2)}</Text>
 		</BottomSheetScrollView>
 	);
 };

@@ -1,10 +1,4 @@
-import React, {
-	useRef,
-	useState,
-	useCallback,
-	useMemo,
-	useEffect,
-} from 'react';
+import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import { Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { useFocusEffect } from 'expo-router';
@@ -36,9 +30,7 @@ const extractTextAndLink = (description: string) => {
 	if (match) {
 		const label = match[1]; // The text inside the square brackets
 		const link = match[2]; // The URL inside the parentheses
-		const textWithoutLinkAndLabel = cleanedDescription
-			.replace(match[0], '')
-			.trim(); // Remove the entire match
+		const textWithoutLinkAndLabel = cleanedDescription.replace(match[0], '').trim(); // Remove the entire match
 		return { text: textWithoutLinkAndLabel, label, link };
 	}
 
@@ -50,34 +42,17 @@ const TimetableScreen = () => {
 	const { theme } = useTheme();
 	const toast = useToast();
 	const { translate } = useLanguage();
-	const {
-		primaryColor,
-		language,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const bottomSheetRef = useRef<BottomSheet>(null);
 	const [events, setEvents] = useState<EventTypes[]>([]);
 	const [isActive, setIsActive] = useState(false);
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [selectedEventId, setSelectedEventId] = useState('');
-	const [timeTableData, setTimeTableData] = useState(() =>
-		TimeTableData(theme).map(item => ({ ...item }))
-	);
-	const course_timetable_area_color = appSettings?.course_timetable_area_color
-		? appSettings?.course_timetable_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		course_timetable_area_color,
-		theme,
-		mode === 'dark'
-	);
-	const { text, label, link } = extractTextAndLink(
-		courseTimetableDescriptionEmpty[
-			language as keyof typeof courseTimetableDescriptionEmpty
-		] || courseTimetableDescriptionEmpty.en
-	);
+	const [timeTableData, setTimeTableData] = useState(() => TimeTableData(theme).map(item => ({ ...item })));
+	const course_timetable_area_color = appSettings?.course_timetable_area_color ? appSettings?.course_timetable_area_color : primaryColor;
+	const contrastColor = myContrastColor(course_timetable_area_color, theme, mode === 'dark');
+	const { text, label, link } = extractTextAndLink(courseTimetableDescriptionEmpty[language as keyof typeof courseTimetableDescriptionEmpty] || courseTimetableDescriptionEmpty.en);
 
 	const openSheet = useCallback(() => {
 		bottomSheetRef?.current?.expand();
@@ -103,9 +78,7 @@ const TimetableScreen = () => {
 
 	useEffect(() => {
 		if (profile?.course_timetable) {
-			let courseTimetable = profile?.course_timetable
-				? profile?.course_timetable
-				: {};
+			let courseTimetable = profile?.course_timetable ? profile?.course_timetable : {};
 			const events = Object.values(courseTimetable).map((item: any) => ({
 				day: capitalizeFirstLetter(item?.weekday?.id) || 'Monday',
 				startTime: item.start,
@@ -163,9 +136,7 @@ const TimetableScreen = () => {
 	};
 
 	return (
-		<View
-			style={{ ...styles.container, backgroundColor: theme.screen.background }}
-		>
+		<View style={{ ...styles.container, backgroundColor: theme.screen.background }}>
 			<TouchableOpacity
 				style={{
 					...styles.createButton,
@@ -175,21 +146,11 @@ const TimetableScreen = () => {
 			>
 				<FontAwesome name="calendar-plus-o" size={20} color={contrastColor} />
 				<View>
-					<Text style={{ ...styles.createButtonText, color: contrastColor }}>
-						{`${translate(TranslationKeys.event)} ${translate(
-							TranslationKeys.create
-						)}`}
-					</Text>
+					<Text style={{ ...styles.createButtonText, color: contrastColor }}>{`${translate(TranslationKeys.event)} ${translate(TranslationKeys.create)}`}</Text>
 				</View>
 			</TouchableOpacity>
 			{events && events?.length > 0 ? (
-				<CourseTimetable
-					events={events}
-					openSheet={openSheet}
-					setIsUpdate={setIsUpdate}
-					setTimeTableData={setTimeTableData}
-					setSelectedEventId={setSelectedEventId}
-				/>
+				<CourseTimetable events={events} openSheet={openSheet} setIsUpdate={setIsUpdate} setTimeTableData={setTimeTableData} setSelectedEventId={setSelectedEventId} />
 			) : (
 				<View style={styles.noEventsContainer}>
 					<Text
@@ -200,15 +161,7 @@ const TimetableScreen = () => {
 					>
 						{parseMarkdown(text)}
 					</Text>
-					{link && (
-						<RedirectButton
-							label={label}
-							type="link"
-							backgroundColor={course_timetable_area_color}
-							color={contrastColor}
-							onClick={() => handleOpenInBrowser(link)}
-						/>
-					)}
+					{link && <RedirectButton label={label} type="link" backgroundColor={course_timetable_area_color} color={contrastColor} onClick={() => handleOpenInBrowser(link)} />}
 				</View>
 			)}
 			{isActive && (
@@ -223,12 +176,7 @@ const TimetableScreen = () => {
 					handleComponent={null}
 					onClose={closeSheet}
 				>
-					<CourseBottomSheet
-						timeTableData={timeTableData}
-						closeSheet={closeSheet}
-						isUpdate={isUpdate}
-						selectedEventId={selectedEventId}
-					/>
+					<CourseBottomSheet timeTableData={timeTableData} closeSheet={closeSheet} isUpdate={isUpdate} selectedEventId={selectedEventId} />
 				</BaseBottomSheet>
 			)}
 		</View>

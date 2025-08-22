@@ -20,18 +20,12 @@ const WILDCARD_REPLACEMENT = 'WILDCARD_REPLACEMENT';
  * @param whitelistStrWithWildcardReplacement  Whitelist entry with wildcards replaced
  * @returns True if the input starts with the expected part of the whitelist entry
  */
-function startsWithUntilWildcardReplacement(
-  inputStr: string,
-  whitelistStrWithWildcardReplacement: string
-): boolean {
+function startsWithUntilWildcardReplacement(inputStr: string, whitelistStrWithWildcardReplacement: string): boolean {
   // redirectUrl could be "/rocket-meals/login/.../"
   // redirect_whitelist_entry_with_possible_wildcard_replacement could be "/rocket-meals/WILDCARD_REPLACEMENT/.../"
   // we need to check if the redirectUrl starts with the redirect_whitelist_entry_with_possible_wildcard_replacement
   let split = whitelistStrWithWildcardReplacement.split(WILDCARD_REPLACEMENT);
-  let first_part: string =
-    split.length > 1
-      ? (split[0] as string)
-      : whitelistStrWithWildcardReplacement;
+  let first_part: string = split.length > 1 ? (split[0] as string) : whitelistStrWithWildcardReplacement;
   // so /rocket-meals/ is the first part and the rest is the second part
   // remove the last char if it is a slash
   if (first_part.endsWith('/')) {
@@ -48,10 +42,7 @@ function startsWithUntilWildcardReplacement(
  * @param redirectUrl              Parsed redirect URL
  * @returns True when the URL is permitted
  */
-function isRedirectUrlAllowedForWhitelistEntry(
-  redirect_whitelist_entry: string | undefined,
-  redirectUrl: URL
-): boolean {
+function isRedirectUrlAllowedForWhitelistEntry(redirect_whitelist_entry: string | undefined, redirectUrl: URL): boolean {
   if (!redirect_whitelist_entry) {
     return false;
   }
@@ -90,14 +81,8 @@ function isRedirectUrlAllowedForWhitelistEntry(
     let redirect_whitelist_entry_http = 'http://' + redirect_whitelist_entry;
     let redirect_whitelist_entry_https = 'https://' + redirect_whitelist_entry;
     // then we recursively call this function with the new URLs
-    let redirect_allowed_http = isRedirectUrlAllowedForWhitelistEntry(
-      redirect_whitelist_entry_http,
-      redirectUrl
-    );
-    let redirect_allowed_https = isRedirectUrlAllowedForWhitelistEntry(
-      redirect_whitelist_entry_https,
-      redirectUrl
-    );
+    let redirect_allowed_http = isRedirectUrlAllowedForWhitelistEntry(redirect_whitelist_entry_http, redirectUrl);
+    let redirect_allowed_https = isRedirectUrlAllowedForWhitelistEntry(redirect_whitelist_entry_https, redirectUrl);
     return redirect_allowed_http || redirect_allowed_https;
   } else {
     // okay we have a protocol which could be http, https, myapp, or a wildcard like *
@@ -110,59 +95,37 @@ function isRedirectUrlAllowedForWhitelistEntry(
       //console.log("redirectUrl seems to be valid")
       // replace all * with WILDCARD_REPLACEMENT
       //console.log("Replace whitelist entry all wildcards with WILDCARD_REPLACEMENT")
-      let replacedRedirect_whitelist_entry = StringHelper.replaceAll(
-        redirect_whitelist_entry,
-        WILDCARD,
-        WILDCARD_REPLACEMENT
-      );
+      let replacedRedirect_whitelist_entry = StringHelper.replaceAll(redirect_whitelist_entry, WILDCARD, WILDCARD_REPLACEMENT);
       // create a new URL from the replaced string
       //console.log("replacedRedirect_whitelist_entry: " + replacedRedirect_whitelist_entry)
-      let replacedRedirect_whitelist_entry_URL = new URL(
-        replacedRedirect_whitelist_entry
-      );
+      let replacedRedirect_whitelist_entry_URL = new URL(replacedRedirect_whitelist_entry);
       //console.log("replacedRedirect_whitelist_entry_URL: " + replacedRedirect_whitelist_entry_URL)
 
-      const replacedRedirect_whitelist_entry_URLProtocol =
-        replacedRedirect_whitelist_entry_URL.protocol;
-      const replacedRedirect_whitelist_entry_URLHost =
-        replacedRedirect_whitelist_entry_URL.host;
-      const replacedRedirect_whitelist_entry_URLPathname =
-        replacedRedirect_whitelist_entry_URL.pathname;
-      const replacedRedirect_whitelist_entry_URLSearch =
-        replacedRedirect_whitelist_entry_URL.search;
+      const replacedRedirect_whitelist_entry_URLProtocol = replacedRedirect_whitelist_entry_URL.protocol;
+      const replacedRedirect_whitelist_entry_URLHost = replacedRedirect_whitelist_entry_URL.host;
+      const replacedRedirect_whitelist_entry_URLPathname = replacedRedirect_whitelist_entry_URL.pathname;
+      const replacedRedirect_whitelist_entry_URLSearch = replacedRedirect_whitelist_entry_URL.search;
 
       // check if the protocol matches
-      const protocolMatches = startsWithUntilWildcardReplacement(
-        redirectUrlProtocol,
-        replacedRedirect_whitelist_entry_URLProtocol
-      );
+      const protocolMatches = startsWithUntilWildcardReplacement(redirectUrlProtocol, replacedRedirect_whitelist_entry_URLProtocol);
       if (!protocolMatches) {
         return false;
       }
 
       // check if the host matches
-      const hostMatches = startsWithUntilWildcardReplacement(
-        redirectUrlHost,
-        replacedRedirect_whitelist_entry_URLHost
-      );
+      const hostMatches = startsWithUntilWildcardReplacement(redirectUrlHost, replacedRedirect_whitelist_entry_URLHost);
       if (!hostMatches) {
         return false;
       }
 
       // check if the pathname matches
-      const pathnameMatches = startsWithUntilWildcardReplacement(
-        redirectUrlPathname,
-        replacedRedirect_whitelist_entry_URLPathname
-      );
+      const pathnameMatches = startsWithUntilWildcardReplacement(redirectUrlPathname, replacedRedirect_whitelist_entry_URLPathname);
       if (!pathnameMatches) {
         return false;
       }
 
       // check if the search matches
-      const searchMatches = startsWithUntilWildcardReplacement(
-        redirectUrlSearch,
-        replacedRedirect_whitelist_entry_URLSearch
-      );
+      const searchMatches = startsWithUntilWildcardReplacement(redirectUrlSearch, replacedRedirect_whitelist_entry_URLSearch);
       if (!searchMatches) {
         return false;
       }
@@ -195,32 +158,19 @@ export default defineEndpoint({
   id: 'redirect-with-token', // this will be the URL at which this endpoint is accessible
   handler: (router, apiContext) => {
     router.get('/', async (req, res) => {
-      let allTablesExist =
-        await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(
-          SCHEDULE_NAME,
-          apiContext
-        );
+      let allTablesExist = await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(SCHEDULE_NAME, apiContext);
       if (!allTablesExist) {
         return;
       }
 
       const referer = req.headers.referer + '';
       console.log('REFERER: ' + referer);
-      const validReferers = [
-        'https://accounts.google.com/',
-        'https://appleid.apple.com/',
-      ];
+      const validReferers = ['https://accounts.google.com/', 'https://appleid.apple.com/'];
 
       if (validReferers.includes(referer)) {
         console.log('redirect comes from valid referer');
       } else {
-        res
-          .status(400)
-          .send(
-            'Invalid referer URL (' +
-              referer +
-              '). Please contact the administrator: info@rocket-meals.de'
-          );
+        res.status(400).send('Invalid referer URL (' + referer + '). Please contact the administrator: info@rocket-meals.de');
         return;
       }
       // REFERER: https://accounts.google.com/
@@ -239,38 +189,25 @@ export default defineEndpoint({
         let redirectUrl = getValidUrl(redirect);
 
         if (!!redirectUrl) {
-          const redirect_whitelist = await myDatabaseHelper
-            .getAppSettingsHelper()
-            .getRedirectWhitelist();
+          const redirect_whitelist = await myDatabaseHelper.getAppSettingsHelper().getRedirectWhitelist();
           if (!!redirect_whitelist) {
             let foundValidRedirect = false;
             if (redirect_whitelist.length === 0) {
               foundValidRedirect = true; // no whitelist means all redirects are allowed
             }
 
-            for (
-              let i = 0;
-              i < redirect_whitelist.length && !foundValidRedirect;
-              i++
-            ) {
+            for (let i = 0; i < redirect_whitelist.length && !foundValidRedirect; i++) {
               // iterate over the whitelist as long as we haven't found a valid redirect
               let redirect_whitelist_entry = redirect_whitelist[i];
               try {
-                if (
-                  isRedirectUrlAllowedForWhitelistEntry(
-                    redirect_whitelist_entry,
-                    redirectUrl
-                  )
-                ) {
+                if (isRedirectUrlAllowedForWhitelistEntry(redirect_whitelist_entry, redirectUrl)) {
                   foundValidRedirect = true;
                   break;
                 }
               } catch (e) {
                 console.log('Error in redirect with token endpoint');
                 console.log('redirectUrl: ' + redirectUrl);
-                console.log(
-                  'redirect_whitelist_entry: ' + redirect_whitelist_entry
-                );
+                console.log('redirect_whitelist_entry: ' + redirect_whitelist_entry);
                 console.log(e);
               }
             }
@@ -285,13 +222,7 @@ export default defineEndpoint({
       }
 
       if (!redirectUrlIsValid) {
-        res
-          .status(400)
-          .send(
-            'Invalid redirect URL (' +
-              redirect +
-              '). Please contact the administrator: info@rocket-meals.de'
-          );
+        res.status(400).send('Invalid redirect URL (' + redirect + '). Please contact the administrator: info@rocket-meals.de');
         return;
       }
 
@@ -315,8 +246,7 @@ export default defineEndpoint({
         // this means the auth provider is using "session" mode.
         // we need to obtain the directus_refresh_token from the directus_session_token
         //console.log("Redirect with token endpoint: directus_session_token: " + directus_session_token)
-        const accountability =
-          AccountabilityHelper.getAccountabilityFromRequest(req);
+        const accountability = AccountabilityHelper.getAccountabilityFromRequest(req);
         const userId = accountability?.user;
         //console.log("Redirect with token endpoint: userId: " + userId)
         if (!userId) {
@@ -330,8 +260,7 @@ export default defineEndpoint({
          * Start of copy: https://github.com/directus/directus/blob/main/api/src/services/authentication.ts Login
          */
         const refreshToken = await NanoidHelper.getNanoid(64);
-        const msRefreshTokenTTL: number =
-          ms(String(env['REFRESH_TOKEN_TTL'])) || 0;
+        const msRefreshTokenTTL: number = ms(String(env['REFRESH_TOKEN_TTL'])) || 0;
         const refreshTokenExpiration = new Date(Date.now() + msRefreshTokenTTL);
 
         await knex('directus_sessions').insert({
@@ -343,9 +272,7 @@ export default defineEndpoint({
           origin: accountability?.origin,
         });
 
-        await knex('directus_sessions')
-          .delete()
-          .where('expires', '<', new Date());
+        await knex('directus_sessions').delete().where('expires', '<', new Date());
 
         // End of copy
 

@@ -8,9 +8,7 @@ type Props = {
 
 const SettingsGroupTitle: React.FC<Props> = ({ children }) => {
 	const { theme } = useTheme();
-	return (
-		<Text style={[styles.heading, { color: theme.screen.text }]}>{children}</Text>
-	);
+	return <Text style={[styles.heading, { color: theme.screen.text }]}>{children}</Text>;
 };
 
 export default SettingsGroupTitle;

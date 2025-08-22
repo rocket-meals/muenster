@@ -1,14 +1,6 @@
 import puppeteer from 'puppeteer';
 import { AppLinks, APP_ROUTES, GlobalParams } from 'repo-depkit-common';
-import {
-  createDirIfNotExists,
-  createScreenshotUncompressed,
-  getFileName,
-  compressScreenshotAndDeleteOld,
-  printEstimatedTime,
-  deleteAllScreenshots,
-  doesFileExist,
-} from './helpers';
+import { createDirIfNotExists, createScreenshotUncompressed, getFileName, compressScreenshotAndDeleteOld, printEstimatedTime, deleteAllScreenshots, doesFileExist } from './helpers';
 import { devices, Device } from './devices';
 
 import yargs from 'yargs';
@@ -59,9 +51,7 @@ const browserLang = argv.browserLang || process.env.BROWSER_LANG || 'de';
 
 // check if all required environment variables are set
 if (!repositoryOwner || !repositoryName || !screenshotDir) {
-  console.error(
-    'Please provide the required environment variables or command-line arguments:'
-  );
+  console.error('Please provide the required environment variables or command-line arguments:');
   console.error('ENV: REPOSITORY_OWNER, REPOSITORY_NAME, SCREENSHOT_DIR');
   console.error('CLI: --repositoryOwner, --repositoryName, --screenshotDir');
   if (!repositoryOwner) console.error('Missing: REPOSITORY_OWNER');
@@ -70,9 +60,7 @@ if (!repositoryOwner || !repositoryName || !screenshotDir) {
   process.exit(1);
 }
 
-const screenshotDirWithSlash = screenshotDir.endsWith('/')
-  ? screenshotDir
-  : screenshotDir + '/';
+const screenshotDirWithSlash = screenshotDir.endsWith('/') ? screenshotDir : screenshotDir + '/';
 
 console.log(`Generating screenshots for ${repositoryOwner}/${repositoryName}`);
 
@@ -93,9 +81,7 @@ const urls = screens.map((screen: string) =>
   });
 
   let totalAmountOfScreenshots = urls.length * devices.length;
-  console.log(
-    `Generating ${totalAmountOfScreenshots} screenshots - Urls: ${urls.length}, Devices: ${devices.length}`
-  );
+  console.log(`Generating ${totalAmountOfScreenshots} screenshots - Urls: ${urls.length}, Devices: ${devices.length}`);
 
   await createDirIfNotExists(screenshotDir);
   if (!skipExisting) {
@@ -110,15 +96,8 @@ const urls = screens.map((screen: string) =>
   for (const url of urls) {
     for (const device of devices) {
       currentScreenshot++;
-      console.log(
-        `Generating screenshot ${currentScreenshot} of ${totalAmountOfScreenshots}`
-      );
-      const fileName = getFileName(
-        url,
-        device,
-        screenshotDirWithSlash,
-        baseUrl
-      );
+      console.log(`Generating screenshot ${currentScreenshot} of ${totalAmountOfScreenshots}`);
+      const fileName = getFileName(url, device, screenshotDirWithSlash, baseUrl);
       const darkMode = false;
       await createDirIfNotExists(fileName);
       if (skipExisting) {
@@ -129,26 +108,14 @@ const urls = screens.map((screen: string) =>
         }
       }
       try {
-        await createScreenshotUncompressed(
-          url,
-          device,
-          fileName,
-          darkMode,
-          browser
-        );
+        await createScreenshotUncompressed(url, device, fileName, darkMode, browser);
         await compressScreenshotAndDeleteOld(fileName);
       } catch (error: any) {
-        console.error(
-          `Error creating screenshot for ${url} with device ${device.name}: ${error.message}`
-        );
+        console.error(`Error creating screenshot for ${url} with device ${device.name}: ${error.message}`);
         listFailedScreenshotsUrls.push(url);
       }
 
-      printEstimatedTime(
-        startDate,
-        currentScreenshot,
-        totalAmountOfScreenshots
-      );
+      printEstimatedTime(startDate, currentScreenshot, totalAmountOfScreenshots);
       console.log('---');
     }
   }

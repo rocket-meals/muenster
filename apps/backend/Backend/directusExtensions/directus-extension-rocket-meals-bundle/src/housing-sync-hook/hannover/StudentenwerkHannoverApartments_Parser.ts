@@ -1,14 +1,9 @@
 import axios from 'axios';
 import { CheerioAPI, load as cheerioLoad } from 'cheerio';
 import type { Element as CheerioElement } from 'domhandler';
-import {
-  ApartmentParserInterface,
-  ApartmentsForParser,
-} from '../ApartmentParserInterface';
+import { ApartmentParserInterface, ApartmentsForParser } from '../ApartmentParserInterface';
 
-export class StudentenwerkHannoverApartments_Parser
-  implements ApartmentParserInterface
-{
+export class StudentenwerkHannoverApartments_Parser implements ApartmentParserInterface {
   static baseUrl = 'https://www.studentenwerk-hannover.de';
   // https://www.studentenwerk-hannover.de/wohnen/wohnhaeuser
   static apartmentsUrl = `${StudentenwerkHannoverApartments_Parser.baseUrl}/wohnen/wohnhaeuser`;
@@ -20,15 +15,12 @@ export class StudentenwerkHannoverApartments_Parser
   }
 
   async getCoordiantesFromAdress(address: string) {
-    const response = await axios.get(
-      `https://nominatim.openstreetmap.org/search`,
-      {
-        params: {
-          q: address,
-          format: 'json',
-        },
-      }
-    );
+    const response = await axios.get(`https://nominatim.openstreetmap.org/search`, {
+      params: {
+        q: address,
+        format: 'json',
+      },
+    });
     if (response.data && response.data.length > 0) {
       return {
         latitude: response.data[0].lat,
@@ -161,9 +153,7 @@ export class StudentenwerkHannoverApartments_Parser
 
   async getRealItems(): Promise<ApartmentsForParser[]> {
     try {
-      let response = await axios.get(
-        StudentenwerkHannoverApartments_Parser.apartmentsUrl
-      );
+      let response = await axios.get(StudentenwerkHannoverApartments_Parser.apartmentsUrl);
       const cheerioAPI = cheerioLoad(response.data);
 
       // Find all apartment divs
@@ -171,9 +161,7 @@ export class StudentenwerkHannoverApartments_Parser
       cheerioAPI('div.wohnheimListView').each((index, element) => {
         let name = cheerioAPI(element).find('h3').text().trim();
         let imageUrl = this.getImageUrlFromElement(cheerioAPI, element);
-        let apartmentUrl =
-          StudentenwerkHannoverApartments_Parser.baseUrl +
-          cheerioAPI(element).find('a').attr('href');
+        let apartmentUrl = StudentenwerkHannoverApartments_Parser.baseUrl + cheerioAPI(element).find('a').attr('href');
 
         data.push({
           basicData: {

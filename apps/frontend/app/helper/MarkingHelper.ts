@@ -1,15 +1,11 @@
 import { DatabaseTypes } from 'repo-depkit-common';
 
 export class MarkingHelper {
-	static getDislikedMarkingIds(
-		foodOffer: DatabaseTypes.Foodoffers,
-		profileMarkingsDict: Record<string, DatabaseTypes.ProfilesMarkings>
-	) {
+	static getDislikedMarkingIds(foodOffer: DatabaseTypes.Foodoffers, profileMarkingsDict: Record<string, DatabaseTypes.ProfilesMarkings>) {
 		const aMarkingsIds = MarkingHelper.getFoodOfferMarkingIds(foodOffer);
 		let dislikedMarkingIds: string[] = [];
 		for (const marking_id of aMarkingsIds) {
-			const profilesMarking: DatabaseTypes.ProfilesMarkings =
-				profileMarkingsDict[marking_id];
+			const profilesMarking: DatabaseTypes.ProfilesMarkings = profileMarkingsDict[marking_id];
 			if (profilesMarking) {
 				const like = profilesMarking.like;
 				if (like !== null && like !== undefined && like === false) {
@@ -20,15 +16,11 @@ export class MarkingHelper {
 		return dislikedMarkingIds;
 	}
 
-	static getLikedMarkingIds(
-		foodOffer: DatabaseTypes.Foodoffers,
-		profileMarkingsDict: Record<string, DatabaseTypes.ProfilesMarkings>
-	) {
+	static getLikedMarkingIds(foodOffer: DatabaseTypes.Foodoffers, profileMarkingsDict: Record<string, DatabaseTypes.ProfilesMarkings>) {
 		const aMarkingsIds = MarkingHelper.getFoodOfferMarkingIds(foodOffer);
 		let likedMarkingIds: string[] = [];
 		for (const marking_id of aMarkingsIds) {
-			const profilesMarking: DatabaseTypes.ProfilesMarkings =
-				profileMarkingsDict[marking_id];
+			const profilesMarking: DatabaseTypes.ProfilesMarkings = profileMarkingsDict[marking_id];
 			if (profilesMarking) {
 				const like = profilesMarking.like;
 				if (like !== null && like !== undefined && like === true) {
@@ -39,33 +31,18 @@ export class MarkingHelper {
 		return likedMarkingIds;
 	}
 
-	static areLikedEatingHabitsFoundInFoodOffer(
-		foodOffer: DatabaseTypes.Foodoffers,
-		profileMarkingsDict: Record<string, DatabaseTypes.ProfilesMarkings>
-	) {
-		const likedMarkingIds = MarkingHelper.getLikedMarkingIds(
-			foodOffer,
-			profileMarkingsDict
-		);
+	static areLikedEatingHabitsFoundInFoodOffer(foodOffer: DatabaseTypes.Foodoffers, profileMarkingsDict: Record<string, DatabaseTypes.ProfilesMarkings>) {
+		const likedMarkingIds = MarkingHelper.getLikedMarkingIds(foodOffer, profileMarkingsDict);
 		return likedMarkingIds.length > 0;
 	}
 
-	static areDislikedEatingHabitsFoundInFoodOffer(
-		foodOffer: DatabaseTypes.Foodoffers,
-		profileMarkingsDict: Record<string, DatabaseTypes.ProfilesMarkings>
-	) {
-		const dislikedMarkingIds = MarkingHelper.getDislikedMarkingIds(
-			foodOffer,
-			profileMarkingsDict
-		);
+	static areDislikedEatingHabitsFoundInFoodOffer(foodOffer: DatabaseTypes.Foodoffers, profileMarkingsDict: Record<string, DatabaseTypes.ProfilesMarkings>) {
+		const dislikedMarkingIds = MarkingHelper.getDislikedMarkingIds(foodOffer, profileMarkingsDict);
 		return dislikedMarkingIds.length > 0;
 	}
 
-	static getFoodOfferMarkingIds(
-		foodOffer: DatabaseTypes.Foodoffers | null | undefined
-	) {
-		const aMarkingsRelation =
-			foodOffer?.markings as DatabaseTypes.FoodoffersMarkings[];
+	static getFoodOfferMarkingIds(foodOffer: DatabaseTypes.Foodoffers | null | undefined) {
+		const aMarkingsRelation = foodOffer?.markings as DatabaseTypes.FoodoffersMarkings[];
 		let aMarkingsIds: string[] = [];
 		if (aMarkingsRelation) {
 			for (const marking of aMarkingsRelation) {

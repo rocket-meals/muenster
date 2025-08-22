@@ -1,16 +1,6 @@
 import { FormImportSyncWorkflow } from '../../FormImportSyncWorkflow';
-import {
-  HANNOVER_TL1_EXTERNAL_HOUSING_CONTRACT_FIELDS,
-  HannoverTL1HousingFileReader,
-  ImportHousingContract,
-  ImportHousingContracts,
-  ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS,
-} from './HannoverTL1HousingFileReader';
-import {
-  FormImportSyncFormAnswer,
-  FormImportSyncFormAnswers,
-  FormImportSyncFormSubmissions,
-} from '../../FormImportTypes';
+import { HANNOVER_TL1_EXTERNAL_HOUSING_CONTRACT_FIELDS, HannoverTL1HousingFileReader, ImportHousingContract, ImportHousingContracts, ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS } from './HannoverTL1HousingFileReader';
+import { FormImportSyncFormAnswer, FormImportSyncFormAnswers, FormImportSyncFormSubmissions } from '../../FormImportTypes';
 import { WorkflowResultHash } from '../../../helpers/itemServiceHelpers/WorkflowsRunHelper';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WorkflowRunLogger } from '../../../workflows-runs-hook/WorkflowRunJobInterface';
@@ -40,10 +30,7 @@ export class FormHousingContractsWorkflowHannover extends FormImportSyncWorkflow
     return new WorkflowResultHash(hash);
   }
 
-  private static getFormImportSyncFormAnswerValue(
-    contract: ImportHousingContract,
-    key: keyof ImportHousingContract
-  ): Partial<DatabaseTypes.FormAnswers> {
+  private static getFormImportSyncFormAnswerValue(contract: ImportHousingContract, key: keyof ImportHousingContract): Partial<DatabaseTypes.FormAnswers> {
     let value_raw = contract[key];
 
     switch (key) {
@@ -62,47 +49,30 @@ export class FormHousingContractsWorkflowHannover extends FormImportSyncWorkflow
     }
   }
 
-  public static getFormImportSyncFormAnswer(
-    contract: ImportHousingContract,
-    key: keyof ImportHousingContract
-  ): FormImportSyncFormAnswer {
+  public static getFormImportSyncFormAnswer(contract: ImportHousingContract, key: keyof ImportHousingContract): FormImportSyncFormAnswer {
     let result: FormImportSyncFormAnswer = {
       external_import_id: key,
-      ...FormHousingContractsWorkflowHannover.getFormImportSyncFormAnswerValue(
-        contract,
-        key
-      ),
+      ...FormHousingContractsWorkflowHannover.getFormImportSyncFormAnswerValue(contract, key),
     };
 
     return result;
   }
 
-  private getFormImportSyncFormAnswers(
-    contract: ImportHousingContract
-  ): FormImportSyncFormAnswers {
+  private getFormImportSyncFormAnswers(contract: ImportHousingContract): FormImportSyncFormAnswers {
     let formAnswers: FormImportSyncFormAnswers = [];
-    let contractKeys = Object.keys(
-      contract
-    ) as ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS[];
+    let contractKeys = Object.keys(contract) as ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS[];
     for (let key of contractKeys) {
-      let formAnswer =
-        FormHousingContractsWorkflowHannover.getFormImportSyncFormAnswer(
-          contract,
-          key
-        );
+      let formAnswer = FormHousingContractsWorkflowHannover.getFormImportSyncFormAnswer(contract, key);
       formAnswers.push(formAnswer);
     }
 
     return formAnswers;
   }
 
-  async getData(
-    logger?: WorkflowRunLogger
-  ): Promise<FormImportSyncFormSubmissions[]> {
+  async getData(logger?: WorkflowRunLogger): Promise<FormImportSyncFormSubmissions[]> {
     let result: FormImportSyncFormSubmissions[] = [];
     for (let contract of this.contracts) {
-      let internal_custom_id =
-        this.reader.getHousingContractInternalCustomId(contract);
+      let internal_custom_id = this.reader.getHousingContractInternalCustomId(contract);
       if (internal_custom_id !== null) {
         // add form interal custom id as prefix
         internal_custom_id = `${this.getFormInternalCustomId()}-${internal_custom_id}`;

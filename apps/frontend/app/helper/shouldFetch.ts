@@ -1,8 +1,4 @@
-export const shouldFetch = (
-	key: string | string[],
-	serverMap: Record<string, string>,
-	localMap: Record<string, string>
-): boolean => {
+export const shouldFetch = (key: string | string[], serverMap: Record<string, string>, localMap: Record<string, string>): boolean => {
 	const keys = Array.isArray(key) ? key : [key];
 
 	return keys.some(k => {

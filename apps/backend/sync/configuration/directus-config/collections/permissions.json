@@ -265,23 +265,7 @@
     "_syncId": "6055162f-0fb0-4498-b889-bd51757b9947"
   },
   {
-    "fields": [
-      "first_name",
-      "last_name",
-      "email",
-      "password",
-      "location",
-      "title",
-      "description",
-      "avatar",
-      "language",
-      "appearance",
-      "theme_light",
-      "theme_dark",
-      "theme_light_overrides",
-      "theme_dark_overrides",
-      "tfa_secret"
-    ],
+    "fields": ["first_name", "last_name", "email", "password", "location", "title", "description", "avatar", "language", "appearance", "theme_light", "theme_dark", "theme_light_overrides", "theme_dark_overrides", "tfa_secret"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -385,18 +369,7 @@
     "_syncId": "b8b1e4f7-2f91-4ebe-953a-e9a171a30c43"
   },
   {
-    "fields": [
-      "housing_settings",
-      "housing_enabled",
-      "housing_parsing_enabled",
-      "housing_parsing_status",
-      "housing_parsing_last_date",
-      "housing_translations",
-      "washingmachine_parsing_status",
-      "washingmachine_parsing_enabled",
-      "washingmachine_parsing_last_date",
-      "id"
-    ],
+    "fields": ["housing_settings", "housing_enabled", "housing_parsing_enabled", "housing_parsing_status", "housing_parsing_last_date", "housing_translations", "washingmachine_parsing_status", "washingmachine_parsing_enabled", "washingmachine_parsing_last_date", "id"],
     "presets": null,
     "validation": null,
     "permissions": null,
@@ -446,26 +419,7 @@
     "_syncId": "f3664e8a-2553-4cd4-bc75-115839398d14"
   },
   {
-    "fields": [
-      "positive",
-      "content",
-      "title",
-      "profile",
-      "contact_email",
-      "device_platform",
-      "device_brand",
-      "display_width",
-      "device_system_version",
-      "display_height",
-      "display_fontscale",
-      "display_scale",
-      "display_pixelratio",
-      "id",
-      "user_created",
-      "date_created",
-      "user_updated",
-      "date_updated"
-    ],
+    "fields": ["positive", "content", "title", "profile", "contact_email", "device_platform", "device_brand", "display_width", "device_system_version", "display_height", "display_fontscale", "display_scale", "display_pixelratio", "id", "user_created", "date_created", "user_updated", "date_updated"],
     "presets": null,
     "validation": {
       "_and": [
@@ -528,22 +482,7 @@
     "_syncId": "c51f50a5-1211-4dc5-8267-0f2c388c0876"
   },
   {
-    "fields": [
-      "content",
-      "positive",
-      "date_updated",
-      "title",
-      "contact_email",
-      "response_read_by_user",
-      "device_brand",
-      "device_platform",
-      "device_system_version",
-      "display_width",
-      "display_fontscale",
-      "display_height",
-      "display_pixelratio",
-      "display_scale"
-    ],
+    "fields": ["content", "positive", "date_updated", "title", "contact_email", "response_read_by_user", "device_brand", "device_platform", "device_system_version", "display_width", "display_fontscale", "display_height", "display_pixelratio", "display_scale"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -561,21 +500,7 @@
     "_syncId": "27bfda66-184c-4131-85c3-c490ca8c6a5c"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_updated",
-      "date_created",
-      "user_created",
-      "date_updated",
-      "profile",
-      "label",
-      "dislike",
-      "date",
-      "canteen",
-      "like"
-    ],
+    "fields": ["id", "status", "sort", "user_updated", "date_created", "user_created", "date_updated", "profile", "label", "dislike", "date", "canteen", "like"],
     "presets": null,
     "validation": {
       "_and": [
@@ -621,21 +546,7 @@
     "_syncId": "c8b99dbf-87dd-494b-b501-643677743fa4"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_updated",
-      "date_created",
-      "user_created",
-      "date_updated",
-      "profile",
-      "label",
-      "dislike",
-      "date",
-      "canteen",
-      "like"
-    ],
+    "fields": ["id", "status", "sort", "user_updated", "date_created", "user_created", "date_updated", "profile", "label", "dislike", "date", "canteen", "like"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -653,20 +564,7 @@
     "_syncId": "b75cde2c-cec5-4f4e-bf72-8dc28e7d5b37"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_created",
-      "date_created",
-      "user_updated",
-      "date_updated",
-      "chat",
-      "profile",
-      "message",
-      "attachment",
-      "image"
-    ],
+    "fields": ["id", "status", "sort", "user_created", "date_created", "user_updated", "date_updated", "chat", "profile", "message", "attachment", "image"],
     "presets": null,
     "validation": {
       "_and": [
@@ -730,18 +628,7 @@
     "_syncId": "91f12b27-8e66-401c-a90b-8a35d93cf668"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_created",
-      "date_created",
-      "user_updated",
-      "date_updated",
-      "message",
-      "attachment",
-      "image"
-    ],
+    "fields": ["id", "status", "sort", "user_created", "date_created", "user_updated", "date_updated", "message", "attachment", "image"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -785,20 +672,7 @@
     "_syncId": "8d168dc4-8157-46d4-a35c-6c13a45d83eb"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_created",
-      "date_created",
-      "user_updated",
-      "date_updated",
-      "participants",
-      "alias",
-      "messages",
-      "foods_feedback",
-      "linked_entities"
-    ],
+    "fields": ["id", "status", "sort", "user_created", "date_created", "user_updated", "date_updated", "participants", "alias", "messages", "foods_feedback", "linked_entities"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -820,34 +694,7 @@
     "_syncId": "6286436a-f502-4408-ad19-18ccdbd6c2d4"
   },
   {
-    "fields": [
-      "status",
-      "user_created",
-      "sort",
-      "id",
-      "date_created",
-      "user_updated",
-      "profile",
-      "date_updated",
-      "display_group",
-      "alias",
-      "display_width",
-      "display_height",
-      "display_pixelratio",
-      "display_scale",
-      "display_fontscale",
-      "system_group",
-      "brand",
-      "platform",
-      "system_version",
-      "is_ios",
-      "is_web",
-      "is_android",
-      "is_tablet",
-      "is_simulator",
-      "pushTokenObj",
-      "is_landscape"
-    ],
+    "fields": ["status", "user_created", "sort", "id", "date_created", "user_updated", "profile", "date_updated", "display_group", "alias", "display_width", "display_height", "display_pixelratio", "display_scale", "display_fontscale", "system_group", "brand", "platform", "system_version", "is_ios", "is_web", "is_android", "is_tablet", "is_simulator", "pushTokenObj", "is_landscape"],
     "presets": null,
     "validation": {
       "_and": [
@@ -885,34 +732,7 @@
     "_syncId": "ba9c8316-cb6c-436c-a1db-f6088fbc4f92"
   },
   {
-    "fields": [
-      "id",
-      "sort",
-      "date_created",
-      "date_updated",
-      "profile",
-      "user_updated",
-      "user_created",
-      "status",
-      "alias",
-      "display_group",
-      "display_height",
-      "display_width",
-      "display_scale",
-      "display_pixelratio",
-      "system_group",
-      "display_fontscale",
-      "platform",
-      "brand",
-      "is_ios",
-      "system_version",
-      "is_android",
-      "is_web",
-      "is_simulator",
-      "is_tablet",
-      "is_landscape",
-      "pushTokenObj"
-    ],
+    "fields": ["id", "sort", "date_created", "date_updated", "profile", "user_updated", "user_created", "status", "alias", "display_group", "display_height", "display_width", "display_scale", "display_pixelratio", "system_group", "display_fontscale", "platform", "brand", "is_ios", "system_version", "is_android", "is_web", "is_simulator", "is_tablet", "is_landscape", "pushTokenObj"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -932,34 +752,7 @@
     "_syncId": "5f20c520-7337-46e0-bd05-4126a8623264"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_created",
-      "user_updated",
-      "date_created",
-      "date_updated",
-      "profile",
-      "alias",
-      "display_group",
-      "display_height",
-      "display_width",
-      "display_scale",
-      "display_pixelratio",
-      "system_group",
-      "display_fontscale",
-      "platform",
-      "brand",
-      "is_ios",
-      "system_version",
-      "is_android",
-      "is_web",
-      "is_simulator",
-      "is_tablet",
-      "is_landscape",
-      "pushTokenObj"
-    ],
+    "fields": ["id", "status", "sort", "user_created", "user_updated", "date_created", "date_updated", "profile", "alias", "display_group", "display_height", "display_width", "display_scale", "display_pixelratio", "system_group", "display_fontscale", "platform", "brand", "is_ios", "system_version", "is_android", "is_web", "is_simulator", "is_tablet", "is_landscape", "pushTokenObj"],
     "presets": null,
     "validation": {
       "_and": [
@@ -1016,38 +809,7 @@
     "_syncId": "340b9998-8ff7-4546-859e-d2d10e0da62f"
   },
   {
-    "fields": [
-      "first_name",
-      "last_name",
-      "profile",
-      "email",
-      "avatar",
-      "password",
-      "location",
-      "title",
-      "tags",
-      "description",
-      "preferences_divider",
-      "language",
-      "email_notifications",
-      "tfa_secret",
-      "theming_divider",
-      "appearance",
-      "theme_light_overrides",
-      "theme_light",
-      "theme_dark",
-      "theme_dark_overrides",
-      "status",
-      "admin_divider",
-      "role",
-      "token",
-      "last_page",
-      "id",
-      "last_access",
-      "provider",
-      "auth_data",
-      "external_identifier"
-    ],
+    "fields": ["first_name", "last_name", "profile", "email", "avatar", "password", "location", "title", "tags", "description", "preferences_divider", "language", "email_notifications", "tfa_secret", "theming_divider", "appearance", "theme_light_overrides", "theme_light", "theme_dark", "theme_dark_overrides", "status", "admin_divider", "role", "token", "last_page", "id", "last_access", "provider", "auth_data", "external_identifier"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -1076,29 +838,7 @@
     "_syncId": "3fed0012-05b4-4902-a34f-ab67d164beb5"
   },
   {
-    "fields": [
-      "first_name",
-      "last_name",
-      "email",
-      "avatar",
-      "password",
-      "location",
-      "title",
-      "description",
-      "tags",
-      "language",
-      "tfa_secret",
-      "email_notifications",
-      "appearance",
-      "theming_divider",
-      "theme_light",
-      "theme_light_overrides",
-      "theme_dark_overrides",
-      "theme_dark",
-      "status",
-      "id",
-      "last_page"
-    ],
+    "fields": ["first_name", "last_name", "email", "avatar", "password", "location", "title", "description", "tags", "language", "tfa_secret", "email_notifications", "appearance", "theming_divider", "theme_light", "theme_light_overrides", "theme_dark_overrides", "theme_dark", "status", "id", "last_page"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -1127,22 +867,7 @@
     "_syncId": "4dd9e997-86c7-4840-9f76-70139a40e8b5"
   },
   {
-    "fields": [
-      "id",
-      "profile",
-      "status",
-      "sort",
-      "user_created",
-      "date_created",
-      "user_updated",
-      "date_updated",
-      "canteen",
-      "foodoffer",
-      "label",
-      "food",
-      "dislike",
-      "like"
-    ],
+    "fields": ["id", "profile", "status", "sort", "user_created", "date_created", "user_updated", "date_updated", "canteen", "foodoffer", "label", "food", "dislike", "like"],
     "presets": null,
     "validation": {
       "_and": [
@@ -1188,22 +913,7 @@
     "_syncId": "a67c05c1-ed38-4d13-8172-55bb1e3c9bc0"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_updated",
-      "date_created",
-      "user_created",
-      "date_updated",
-      "profile",
-      "canteen",
-      "foodoffer",
-      "label",
-      "food",
-      "dislike",
-      "like"
-    ],
+    "fields": ["id", "status", "sort", "user_updated", "date_created", "user_created", "date_updated", "profile", "canteen", "foodoffer", "label", "food", "dislike", "like"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -1221,22 +931,7 @@
     "_syncId": "e0075f6a-f247-44a3-a81a-23078780e2d2"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_updated",
-      "date_created",
-      "user_created",
-      "date_updated",
-      "comment",
-      "notify",
-      "food",
-      "foodoffer",
-      "rating",
-      "profile",
-      "canteen"
-    ],
+    "fields": ["id", "status", "sort", "user_updated", "date_created", "user_created", "date_updated", "comment", "notify", "food", "foodoffer", "rating", "profile", "canteen"],
     "presets": null,
     "validation": {
       "_and": [
@@ -1282,22 +977,7 @@
     "_syncId": "b2a99720-050a-4628-8233-970e0fe31430"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_updated",
-      "date_created",
-      "user_created",
-      "date_updated",
-      "comment",
-      "notify",
-      "food",
-      "foodoffer",
-      "rating",
-      "profile",
-      "canteen"
-    ],
+    "fields": ["id", "status", "sort", "user_updated", "date_created", "user_created", "date_updated", "comment", "notify", "food", "foodoffer", "rating", "profile", "canteen"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -1575,31 +1255,7 @@
     "_syncId": "246d534c-d571-45fd-9f3a-36d964372a51"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_created",
-      "date_created",
-      "user_updated",
-      "date_updated",
-      "credit_balance",
-      "language",
-      "nickname",
-      "foods_feedbacks",
-      "price_group",
-      "date_privacy_policy_accepted",
-      "buildings_favorites",
-      "buildings_last_opened",
-      "markings",
-      "devices",
-      "canteen",
-      "course_timetable",
-      "notifiy_on_free_apartments",
-      "avatar",
-      "credit_balance_last_transaction",
-      "credit_balance_date_updated"
-    ],
+    "fields": ["id", "status", "sort", "user_created", "date_created", "user_updated", "date_updated", "credit_balance", "language", "nickname", "foods_feedbacks", "price_group", "date_privacy_policy_accepted", "buildings_favorites", "buildings_last_opened", "markings", "devices", "canteen", "course_timetable", "notifiy_on_free_apartments", "avatar", "credit_balance_last_transaction", "credit_balance_date_updated"],
     "presets": null,
     "validation": null,
     "permissions": {
@@ -1617,31 +1273,7 @@
     "_syncId": "b06cc6e8-f9b3-46f8-a3a4-132a5f4d1ef0"
   },
   {
-    "fields": [
-      "id",
-      "status",
-      "sort",
-      "user_created",
-      "date_created",
-      "user_updated",
-      "date_updated",
-      "credit_balance",
-      "language",
-      "nickname",
-      "foods_feedbacks",
-      "price_group",
-      "date_privacy_policy_accepted",
-      "buildings_favorites",
-      "buildings_last_opened",
-      "markings",
-      "devices",
-      "canteen",
-      "course_timetable",
-      "notifiy_on_free_apartments",
-      "avatar",
-      "credit_balance_last_transaction",
-      "credit_balance_date_updated"
-    ],
+    "fields": ["id", "status", "sort", "user_created", "date_created", "user_updated", "date_updated", "credit_balance", "language", "nickname", "foods_feedbacks", "price_group", "date_privacy_policy_accepted", "buildings_favorites", "buildings_last_opened", "markings", "devices", "canteen", "course_timetable", "notifiy_on_free_apartments", "avatar", "credit_balance_last_transaction", "credit_balance_date_updated"],
     "presets": null,
     "validation": {
       "_and": [
@@ -1907,25 +1539,7 @@
     "_syncId": "55510588-53a1-452c-b215-441359cb5e13"
   },
   {
-    "fields": [
-      "id",
-      "positive",
-      "title",
-      "content",
-      "profile",
-      "contact_email",
-      "response",
-      "priority",
-      "response_read_by_user",
-      "device_platform",
-      "device_brand",
-      "device_system_version",
-      "display_pixelratio",
-      "display_scale",
-      "display_fontscale",
-      "display_height",
-      "display_width"
-    ],
+    "fields": ["id", "positive", "title", "content", "profile", "contact_email", "response", "priority", "response_read_by_user", "device_platform", "device_brand", "device_system_version", "display_pixelratio", "display_scale", "display_fontscale", "display_height", "display_width"],
     "presets": null,
     "validation": null,
     "permissions": null,

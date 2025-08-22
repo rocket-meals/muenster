@@ -6,27 +6,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { isWeb } from '@/constants/Constants';
 import { TranslationKeys } from '@/locales/keys';
 
-const IBANInput = ({
-	id,
-	value,
-	onChange,
-	onError,
-	error,
-	isDisabled,
-	custom_type,
-	prefix,
-	suffix,
-}: {
-	id: string;
-	value: string;
-	onChange: (id: string, value: string, custom_type: string) => void;
-	onError: (id: string, error: string) => void;
-	error: string;
-	isDisabled: boolean;
-	custom_type: string;
-	prefix: string | null | undefined;
-	suffix: string | null | undefined;
-}) => {
+const IBANInput = ({ id, value, onChange, onError, error, isDisabled, custom_type, prefix, suffix }: { id: string; value: string; onChange: (id: string, value: string, custom_type: string) => void; onError: (id: string, error: string) => void; error: string; isDisabled: boolean; custom_type: string; prefix: string | null | undefined; suffix: string | null | undefined }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const flag = !suffix && !prefix;
@@ -58,9 +38,7 @@ const IBANInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{prefix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{prefix}</Text>
 					</View>
 				)}
 				<TextInput
@@ -95,9 +73,7 @@ const IBANInput = ({
 							backgroundColor: theme.screen.iconBg,
 						}}
 					>
-						<Text style={{ ...styles.label, color: theme.screen.text }}>
-							{suffix}
-						</Text>
+						<Text style={{ ...styles.label, color: theme.screen.text }}>{suffix}</Text>
 					</View>
 				)}
 			</View>

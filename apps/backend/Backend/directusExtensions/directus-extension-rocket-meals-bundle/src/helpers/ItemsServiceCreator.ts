@@ -1,13 +1,4 @@
-import type {
-  Accountability,
-  EventContext,
-  Item as DirectusItem,
-  PermissionsAction,
-  PrimaryKey,
-  Query,
-  BusboyFileStream,
-  SchemaOverview,
-} from '@directus/types';
+import type { Accountability, EventContext, Item as DirectusItem, PermissionsAction, PrimaryKey, Query, BusboyFileStream, SchemaOverview } from '@directus/types';
 import type { Knex } from 'knex';
 import { ApiContext } from './ApiContext';
 import { Readable } from 'node:stream';
@@ -17,9 +8,7 @@ export type MyEventContext = EventContext;
 
 export type FileServiceReadable = Readable;
 export type FileServiceBusboyFileStream = BusboyFileStream;
-export type FileServiceSteamType =
-  | FileServiceReadable
-  | FileServiceBusboyFileStream;
+export type FileServiceSteamType = FileServiceReadable | FileServiceBusboyFileStream;
 export type FileServiceFileStream = Partial<DatabaseTypes.DirectusFiles> & {
   storage: string;
 };
@@ -64,57 +53,26 @@ export interface ItemsService<Item> extends AbstractService<Item> {
   getKeysByQuery(query: Query): Promise<PrimaryKey[]>;
 
   createOne(data: Partial<Item>, opts?: MutationOptions): Promise<PrimaryKey>;
-  createMany(
-    data: Partial<Item>[],
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]>;
+  createMany(data: Partial<Item>[], opts?: MutationOptions): Promise<PrimaryKey[]>;
 
   readByQuery(query: Query, opts?: QueryOptions): Promise<Item[]>;
   readOne(key: PrimaryKey, query?: Query, opts?: QueryOptions): Promise<Item>;
-  readMany(
-    keys: PrimaryKey[],
-    query?: Query,
-    opts?: QueryOptions
-  ): Promise<Item[]>;
+  readMany(keys: PrimaryKey[], query?: Query, opts?: QueryOptions): Promise<Item[]>;
 
-  updateByQuery(
-    query: Query,
-    data: Partial<Item>,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]>;
-  updateOne(
-    key: PrimaryKey,
-    data: Partial<Item>,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey>;
-  updateBatch(
-    data: Partial<Item>[],
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]>;
-  updateMany(
-    keys: PrimaryKey[],
-    data: Partial<Item>,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]>;
+  updateByQuery(query: Query, data: Partial<Item>, opts?: MutationOptions): Promise<PrimaryKey[]>;
+  updateOne(key: PrimaryKey, data: Partial<Item>, opts?: MutationOptions): Promise<PrimaryKey>;
+  updateBatch(data: Partial<Item>[], opts?: MutationOptions): Promise<PrimaryKey[]>;
+  updateMany(keys: PrimaryKey[], data: Partial<Item>, opts?: MutationOptions): Promise<PrimaryKey[]>;
 
-  upsertOne(
-    payload: Partial<Item>,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey>;
-  upsertMany(
-    payloads: Partial<Item>[],
-    opts?: MutationOptions
-  ): Promise<PrimaryKey[]>;
+  upsertOne(payload: Partial<Item>, opts?: MutationOptions): Promise<PrimaryKey>;
+  upsertMany(payloads: Partial<Item>[], opts?: MutationOptions): Promise<PrimaryKey[]>;
 
   deleteByQuery(query: Query, opts?: MutationOptions): Promise<PrimaryKey[]>;
   deleteOne(key: PrimaryKey, opts?: MutationOptions): Promise<PrimaryKey>;
   deleteMany(keys: PrimaryKey[], opts?: MutationOptions): Promise<PrimaryKey[]>;
 
   readSingleton(query: Query, opts?: QueryOptions): Promise<Partial<Item>>;
-  upsertSingleton(
-    data: Partial<Item>,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey>;
+  upsertSingleton(data: Partial<Item>, opts?: MutationOptions): Promise<PrimaryKey>;
 }
 
 class GetItemsService {
@@ -150,28 +108,13 @@ export class ItemsServiceCreator extends GetItemsService {
   }
 }
 
-export interface FilesService
-  extends ItemsService<DatabaseTypes.DirectusFiles> {
-  uploadOne(
-    stream: FileServiceSteamType,
-    data: FileServiceFileStream,
-    primaryKey?: PrimaryKey,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey>;
+export interface FilesService extends ItemsService<DatabaseTypes.DirectusFiles> {
+  uploadOne(stream: FileServiceSteamType, data: FileServiceFileStream, primaryKey?: PrimaryKey, opts?: MutationOptions): Promise<PrimaryKey>;
 
-  importOne(
-    importURL: string,
-    body: Partial<DatabaseTypes.DirectusFiles>
-  ): Promise<PrimaryKey>;
-  createOne(
-    data: Partial<DatabaseTypes.DirectusFiles>,
-    opts?: MutationOptions
-  ): Promise<PrimaryKey>;
+  importOne(importURL: string, body: Partial<DatabaseTypes.DirectusFiles>): Promise<PrimaryKey>;
+  createOne(data: Partial<DatabaseTypes.DirectusFiles>, opts?: MutationOptions): Promise<PrimaryKey>;
   deleteMany(keys: PrimaryKey[]): Promise<PrimaryKey[]>;
-  readByQuery(
-    query: Query,
-    opts?: QueryOptions | undefined
-  ): Promise<DatabaseTypes.DirectusFiles[]>;
+  readByQuery(query: Query, opts?: QueryOptions | undefined): Promise<DatabaseTypes.DirectusFiles[]>;
 }
 
 export class FileServiceCreator extends GetItemsService {
@@ -256,17 +199,14 @@ export class ServerServiceCreator extends GetItemsService {
 
   async getServerInfo() {
     const serverService = await this.getServerService();
-    let directusServerInfo =
-      (await serverService.serverInfo()) || ({} as ServerInfo);
+    let directusServerInfo = (await serverService.serverInfo()) || ({} as ServerInfo);
 
     if (!directusServerInfo.project) {
       directusServerInfo.project = {};
     }
 
-    directusServerInfo.project.project_name =
-      directusServerInfo.project.project_name || 'Rocket Meals';
-    directusServerInfo.project.project_color =
-      directusServerInfo.project.project_color || '#D14610';
+    directusServerInfo.project.project_name = directusServerInfo.project.project_name || 'Rocket Meals';
+    directusServerInfo.project.project_color = directusServerInfo.project.project_color || '#D14610';
 
     return directusServerInfo;
   }

@@ -12,10 +12,7 @@ export class TestArtifacts {
     return path.join(this.getPathToTestArtifacts(), filePath);
   }
 
-  static saveTestArtifact(
-    content: string | NodeJS.ArrayBufferView,
-    relativePath: string
-  ): string {
+  static saveTestArtifact(content: string | NodeJS.ArrayBufferView, relativePath: string): string {
     // iterate over folderAndFileNames and replace "/" into separator
 
     const filePath = this.getPathToTestArtifact(relativePath);

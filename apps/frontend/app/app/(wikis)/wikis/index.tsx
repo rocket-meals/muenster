@@ -1,23 +1,10 @@
-import {
-	ActivityIndicator,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
-import {
-	getTextFromTranslation,
-	getTitleFromTranslation,
-} from '@/helper/resourceHelper';
-import {
-	router,
-	useGlobalSearchParams,
-	useLocalSearchParams,
-} from 'expo-router';
+import { getTextFromTranslation, getTitleFromTranslation } from '@/helper/resourceHelper';
+import { router, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { isWeb } from '@/constants/Constants';
 import DeviceMock from '@/components/DeviceMock/DeviceMock';
@@ -33,15 +20,11 @@ const index = () => {
 	const { translate } = useLanguage();
 	const [wiki, setWiki] = useState<DatabaseTypes.Wikis>();
 	const [loading, setLoading] = useState(true);
-	const { wikis, language, primaryColor } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { wikis, language, primaryColor } = useSelector((state: RootState) => state.settings);
 	const { deviceMock } = useGlobalSearchParams();
 	const { custom_id, id } = useLocalSearchParams();
 	//Set Page Title
-	const title = wiki?.translations
-		? getTitleFromTranslation(wiki?.translations, language)
-		: 'Wikis';
+	const title = wiki?.translations ? getTitleFromTranslation(wiki?.translations, language) : 'Wikis';
 	useSetPageTitle(title);
 
 	const filterWiki = () => {
@@ -69,9 +52,7 @@ const index = () => {
 	}, [wikis, custom_id, id]);
 
 	return (
-		<ScrollView
-			style={{ ...styles.container, backgroundColor: theme.screen.background }}
-		>
+		<ScrollView style={{ ...styles.container, backgroundColor: theme.screen.background }}>
 			{deviceMock && deviceMock === 'iphone' && isWeb && <DeviceMock />}
 			<View
 				style={{
@@ -82,16 +63,10 @@ const index = () => {
 			>
 				<View style={styles.row}>
 					<View style={styles.col1}>
-						<TouchableOpacity
-							onPress={() => router.navigate(AppScreens.FOOD_OFFERS)}
-							style={{ padding: 10 }}
-						>
+						<TouchableOpacity onPress={() => router.navigate(AppScreens.FOOD_OFFERS)} style={{ padding: 10 }}>
 							<Ionicons name="arrow-back" size={24} color={theme.header.text} />
 						</TouchableOpacity>
-						<Text style={{ ...styles.heading, color: theme.header.text }}>
-							{wiki?.translations &&
-								getTitleFromTranslation(wiki?.translations, language)}
-						</Text>
+						<Text style={{ ...styles.heading, color: theme.header.text }}>{wiki?.translations && getTitleFromTranslation(wiki?.translations, language)}</Text>
 					</View>
 				</View>
 			</View>
@@ -107,18 +82,10 @@ const index = () => {
 					>
 						<ActivityIndicator size={30} color={theme.screen.text} />
 					</View>
-				) : wiki?.translations &&
-				  getTextFromTranslation(wiki.translations, language)?.trim() ? (
-					<CustomMarkdown
-						content={getTextFromTranslation(wiki.translations, language)}
-						backgroundColor={wiki?.color || primaryColor}
-						imageWidth={'100%'}
-						imageHeight={400}
-					/>
+				) : wiki?.translations && getTextFromTranslation(wiki.translations, language)?.trim() ? (
+					<CustomMarkdown content={getTextFromTranslation(wiki.translations, language)} backgroundColor={wiki?.color || primaryColor} imageWidth={'100%'} imageHeight={400} />
 				) : (
-					<Text style={{ color: theme.screen.text, padding: 16 }}>
-						{translate(TranslationKeys.no_data_found)}
-					</Text>
+					<Text style={{ color: theme.screen.text, padding: 16 }}>{translate(TranslationKeys.no_data_found)}</Text>
 				)}
 			</View>
 		</ScrollView>

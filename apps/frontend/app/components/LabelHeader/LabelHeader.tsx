@@ -5,10 +5,7 @@ import { useSelector } from 'react-redux';
 import CompanyImage from '@/components/CompanyImage';
 import { RootState } from '@/redux/reducer';
 
-const LabelHeader: React.FC<{ Label: any; isConnected?: Boolean }> = ({
-	Label,
-	isConnected = true,
-}) => {
+const LabelHeader: React.FC<{ Label: any; isConnected?: Boolean }> = ({ Label, isConnected = true }) => {
 	const { theme } = useTheme();
 	const [currentTime, setCurrentTime] = useState('');
 	const [logoStyle, setLogoStyle] = useState(styles.logo);
@@ -34,9 +31,7 @@ const LabelHeader: React.FC<{ Label: any; isConnected?: Boolean }> = ({
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const now = new Date();
-			const formattedTime = `${now
-				.toLocaleDateString('en-GB')
-				.replace(/\//g, '.')} - ${now.toLocaleTimeString('en-US', {
+			const formattedTime = `${now.toLocaleDateString('en-GB').replace(/\//g, '.')} - ${now.toLocaleTimeString('en-US', {
 				hour12: false,
 			})}`;
 			setCurrentTime(formattedTime);
@@ -57,9 +52,7 @@ const LabelHeader: React.FC<{ Label: any; isConnected?: Boolean }> = ({
 			<View style={{ ...styles.row }}>
 				<View style={styles.labelText}>
 					<Text style={{ ...styles.label, color: theme.screen.text }}>{Label}</Text>
-					<Text style={{ ...styles.timestamp, color: theme.screen.text }}>
-						{currentTime}
-					</Text>
+					<Text style={{ ...styles.timestamp, color: theme.screen.text }}>{currentTime}</Text>
 				</View>
 				{!isConnected && (
 					<View style={styles.offlineChip}>

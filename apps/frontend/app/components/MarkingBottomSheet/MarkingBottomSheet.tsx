@@ -8,23 +8,14 @@ export interface MarkingBottomSheetProps {
 	onClose: () => void;
 }
 
-const MarkingBottomSheet = forwardRef<BottomSheet, MarkingBottomSheetProps>(
-	({ onClose }, ref) => {
-		const { theme } = useTheme();
+const MarkingBottomSheet = forwardRef<BottomSheet, MarkingBottomSheetProps>(({ onClose }, ref) => {
+	const { theme } = useTheme();
 
-		return (
-			<BaseBottomSheet
-				ref={ref}
-				index={-1}
-				backgroundStyle={{ backgroundColor: theme.sheet.sheetBg }}
-				enablePanDownToClose
-				handleComponent={null}
-				onClose={onClose}
-			>
-				<MenuSheet closeSheet={onClose} />
-			</BaseBottomSheet>
-		);
-	}
-);
+	return (
+		<BaseBottomSheet ref={ref} index={-1} backgroundStyle={{ backgroundColor: theme.sheet.sheetBg }} enablePanDownToClose handleComponent={null} onClose={onClose}>
+			<MenuSheet closeSheet={onClose} />
+		</BaseBottomSheet>
+	);
+});
 
 export default MarkingBottomSheet;

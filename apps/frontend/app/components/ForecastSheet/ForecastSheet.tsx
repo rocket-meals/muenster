@@ -1,12 +1,4 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-	Platform,
-} from 'react-native';
+import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View, Platform } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from '@/hooks/useTheme';
@@ -25,10 +17,7 @@ import { TranslationKeys } from '@/locales/keys';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';
 
-const ForecastSheet: React.FC<ForecastSheetProps> = ({
-	closeSheet,
-	forDate,
-}) => {
+const ForecastSheet: React.FC<ForecastSheetProps> = ({ closeSheet, forDate }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const utilizationEntryHelper = new UtilizationEntryHelper();
@@ -42,10 +31,7 @@ const ForecastSheet: React.FC<ForecastSheetProps> = ({
 
 	const processData = (data: any) => {
 		const utilizationGroup = data[0]?.utilization_group;
-		const max =
-			utilizationGroup?.threshold_until_max ||
-			utilizationGroup?.all_time_high ||
-			100;
+		const max = utilizationGroup?.threshold_until_max || utilizationGroup?.all_time_high || 100;
 
 		const thresholdUntilMedium = utilizationGroup?.threshold_until_medium || 65; // Default medium threshold
 		const thresholdUntilHigh = utilizationGroup?.threshold_until_high || 80; // Default high threshold
@@ -102,12 +88,7 @@ const ForecastSheet: React.FC<ForecastSheetProps> = ({
 	const getUtilization = async (forDate: string) => {
 		try {
 			setLoading(true);
-			const utilizationData =
-				(await utilizationEntryHelper.fetchUtilizationEntries(
-					{},
-					selectedCanteen?.utilization_group,
-					forDate
-				)) as DatabaseTypes.UtilizationsEntries[];
+			const utilizationData = (await utilizationEntryHelper.fetchUtilizationEntries({}, selectedCanteen?.utilization_group, forDate)) as DatabaseTypes.UtilizationsEntries[];
 			if (utilizationData) {
 				const processedData = processData(utilizationData);
 				setChartData(processedData);
@@ -145,9 +126,7 @@ const ForecastSheet: React.FC<ForecastSheetProps> = ({
 				const now = new Date();
 				const currentIndex = now.getHours() * 4 + Math.floor(now.getMinutes() / 15);
 
-				let targetIndex = data
-					.slice(currentIndex)
-					.findIndex((value: number) => value > 0);
+				let targetIndex = data.slice(currentIndex).findIndex((value: number) => value > 0);
 
 				if (targetIndex !== -1) {
 					targetIndex += currentIndex;
@@ -176,9 +155,7 @@ const ForecastSheet: React.FC<ForecastSheetProps> = ({
 	);
 
 	return (
-		<BottomSheetView
-			style={{ ...styles.container, backgroundColor: theme.sheet.sheetBg }}
-		>
+		<BottomSheetView style={{ ...styles.container, backgroundColor: theme.sheet.sheetBg }}>
 			<View
 				style={{
 					...styles.header,
@@ -188,10 +165,7 @@ const ForecastSheet: React.FC<ForecastSheetProps> = ({
 			>
 				<View style={styles.placeholder} />
 				<View style={[styles.handle, { backgroundColor: theme.sheet.closeBg }]} />
-				<TouchableOpacity
-					style={[styles.closeButton, { backgroundColor: theme.sheet.closeBg }]}
-					onPress={closeSheet}
-				>
+				<TouchableOpacity style={[styles.closeButton, { backgroundColor: theme.sheet.closeBg }]} onPress={closeSheet}>
 					<AntDesign name="close" size={24} color={theme.sheet.closeIcon} />
 				</TouchableOpacity>
 			</View>
@@ -214,9 +188,7 @@ const ForecastSheet: React.FC<ForecastSheetProps> = ({
 				nestedScrollEnabled
 				contentContainerStyle={{
 					paddingHorizontal: isWeb ? 20 : 10,
-					width: chartData
-						? Math.max(chartData.labels.length * 100, Dimensions.get('window').width)
-						: Dimensions.get('window').width,
+					width: chartData ? Math.max(chartData.labels.length * 100, Dimensions.get('window').width) : Dimensions.get('window').width,
 					alignItems: 'center',
 					marginTop: chartData ? 40 : 0,
 				}}
@@ -225,10 +197,7 @@ const ForecastSheet: React.FC<ForecastSheetProps> = ({
 					<BarChart
 						style={{ ...styles.graphStyle, backgroundColor: theme.sheet.sheetBg }}
 						data={chartData}
-						width={Math.max(
-							chartData.labels.length * 100,
-							Dimensions.get('window').width
-						)}
+						width={Math.max(chartData.labels.length * 100, Dimensions.get('window').width)}
 						fromNumber={100}
 						height={400}
 						showBarTops={false}

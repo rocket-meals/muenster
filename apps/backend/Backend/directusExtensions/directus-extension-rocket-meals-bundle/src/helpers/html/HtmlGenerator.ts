@@ -5,10 +5,7 @@ import { PathHelper } from '../PathHelper';
 import { MarkdownHelper } from './MarkdownHelper';
 import { MyDatabaseTestableHelperInterface } from '../MyDatabaseHelperInterface';
 import { ServerInfo } from '../ItemsServiceCreator';
-import {
-  DirectusFilesAssetHelper,
-  DirectusFilesAssetHelperOptions,
-} from '../DirectusFilesAssetHelper';
+import { DirectusFilesAssetHelper, DirectusFilesAssetHelperOptions } from '../DirectusFilesAssetHelper';
 
 export enum HtmlTemplatesEnum {
   BASE_GERMAN = 'base-german',
@@ -31,8 +28,7 @@ export class BaseGermanMarkdownTemplateHelper {
   }
 }
 
-export const DEFAULT_HTML_TEMPLATE =
-  HtmlTemplatesEnum.BASE_GERMAN_MARKDOWN_CONTENT;
+export const DEFAULT_HTML_TEMPLATE = HtmlTemplatesEnum.BASE_GERMAN_MARKDOWN_CONTENT;
 
 export const HTML_TEMPLATE_FILE_ENDING = '.liquid';
 
@@ -43,19 +39,13 @@ export class HtmlGenerator {
     return PathHelper.getPathToLiquidTemplates();
   }
 
-  public static async getDefaultTemplateData(
-    myDatabaseHelperInterface: MyDatabaseTestableHelperInterface
-  ): Promise<{ [key: string]: any }> {
-    let serverInfo: ServerInfo =
-      await myDatabaseHelperInterface.getServerInfo();
+  public static async getDefaultTemplateData(myDatabaseHelperInterface: MyDatabaseTestableHelperInterface): Promise<{ [key: string]: any }> {
+    let serverInfo: ServerInfo = await myDatabaseHelperInterface.getServerInfo();
 
     const projectLogoAssetId = serverInfo?.project?.project_logo;
     let projectLogoImageUrl: string | null = null;
     if (projectLogoAssetId) {
-      projectLogoImageUrl = DirectusFilesAssetHelper.getDirectAssetUrlById(
-        projectLogoAssetId,
-        myDatabaseHelperInterface
-      );
+      projectLogoImageUrl = DirectusFilesAssetHelper.getDirectAssetUrlById(projectLogoAssetId, myDatabaseHelperInterface);
     }
 
     // https://docs.directus.io/guides/extensions/email-template.html#variables-in-templates
@@ -71,20 +61,14 @@ export class HtmlGenerator {
     };
   }
 
-  public static isValidHtmlTemplate(
-    template: string | null | undefined
-  ): boolean {
+  public static isValidHtmlTemplate(template: string | null | undefined): boolean {
     if (!template) {
       return false;
     }
-    return Object.values(HtmlTemplatesEnum).includes(
-      template as HtmlTemplatesEnum
-    );
+    return Object.values(HtmlTemplatesEnum).includes(template as HtmlTemplatesEnum);
   }
 
-  public static getHtmlTemplate(
-    template: string | null | undefined
-  ): HtmlTemplatesEnum {
+  public static getHtmlTemplate(template: string | null | undefined): HtmlTemplatesEnum {
     if (!this.isValidHtmlTemplate(template)) {
       return DEFAULT_HTML_TEMPLATE;
     } else {
@@ -92,11 +76,7 @@ export class HtmlGenerator {
     }
   }
 
-  public static async generateHtml(
-    variables: { [key: string]: any },
-    myDatabaseHelperInterface: MyDatabaseTestableHelperInterface,
-    template?: HtmlTemplatesEnum | null | undefined
-  ): Promise<string> {
+  public static async generateHtml(variables: { [key: string]: any }, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface, template?: HtmlTemplatesEnum | null | undefined): Promise<string> {
     const rootPath = HtmlGenerator.getPathToHtmlTemplates();
 
     const liquidEngine = new Liquid({
@@ -108,26 +88,18 @@ export class HtmlGenerator {
       template = DEFAULT_HTML_TEMPLATE;
     }
 
-    const defaultTemplateData = await this.getDefaultTemplateData(
-      myDatabaseHelperInterface
-    );
+    const defaultTemplateData = await this.getDefaultTemplateData(myDatabaseHelperInterface);
 
     variables = {
       ...defaultTemplateData,
       ...variables,
     };
 
-    const systemTemplatePath = path.join(
-      rootPath,
-      template + HTML_TEMPLATE_FILE_ENDING
-    );
+    const systemTemplatePath = path.join(rootPath, template + HTML_TEMPLATE_FILE_ENDING);
     const templatePath = systemTemplatePath;
 
     const templateString = await fse.readFile(templatePath, 'utf8');
-    const html = (await liquidEngine.parseAndRender(
-      templateString,
-      variables
-    )) as string;
+    const html = (await liquidEngine.parseAndRender(templateString, variables)) as string;
 
     return html;
   }

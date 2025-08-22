@@ -8,16 +8,14 @@ import { FoodTL1Parser_RawReportTestReaderHannover } from '../../hannover/FoodTL
 import { FoodTL1ParserHannover } from '../../hannover/FoodTL1ParserHannover';
 
 async function getFoodoffersJson(reportToReturn?: string | undefined) {
-  let testFileGetter: FoodTL1Parser_GetRawReportInterface =
-    new FoodTL1Parser_RawReportTestReaderOsnabrueck(reportToReturn);
+  let testFileGetter: FoodTL1Parser_GetRawReportInterface = new FoodTL1Parser_RawReportTestReaderOsnabrueck(reportToReturn);
   let foodParser: FoodTL1Parser = new FoodTL1ParserOsnabrueck(testFileGetter);
   await foodParser.createNeededData();
   return await foodParser.getFoodoffersForParser();
 }
 
 describe('FoodTL1ParserOsnabrueck Test', () => {
-  let testFileGetter: FoodTL1Parser_GetRawReportInterface =
-    new FoodTL1Parser_RawReportTestReaderOsnabrueck();
+  let testFileGetter: FoodTL1Parser_GetRawReportInterface = new FoodTL1Parser_RawReportTestReaderOsnabrueck();
   let foodParser: FoodTL1Parser = new FoodTL1ParserOsnabrueck(testFileGetter);
 
   // should find atleast one food
@@ -51,18 +49,13 @@ describe('FoodTL1ParserOsnabrueck Test', () => {
     if (!!mealOffersJson) {
       let mealOffer = mealOffersJson[0];
       if (!!mealOffer) {
-        let marking_external_identifiers =
-          mealOffer.marking_external_identifiers;
+        let marking_external_identifiers = mealOffer.marking_external_identifiers;
 
-        const SEARCH_MENU_LINE_MARKING_EXTERNAL_IDENTIFIER =
-          FoodTL1Parser.MARKING_EXTERNAL_IDENTIFIER_PREFIX_FOR_MENU_LINE + 'g';
+        const SEARCH_MENU_LINE_MARKING_EXTERNAL_IDENTIFIER = FoodTL1Parser.MARKING_EXTERNAL_IDENTIFIER_PREFIX_FOR_MENU_LINE + 'g';
 
         let foundMenuLine = false;
         for (let marking_external_identifier of marking_external_identifiers) {
-          if (
-            marking_external_identifier ===
-            SEARCH_MENU_LINE_MARKING_EXTERNAL_IDENTIFIER
-          ) {
+          if (marking_external_identifier === SEARCH_MENU_LINE_MARKING_EXTERNAL_IDENTIFIER) {
             foundMenuLine = true;
             break;
           }
@@ -77,16 +70,12 @@ describe('FoodTL1ParserOsnabrueck Test', () => {
   });
 
   it('Foodoffer with vegetarian marking shall have vegetarian marking', async () => {
-    let foodOfferJson = await getFoodoffersJson(
-      FoodTL1Parser_RawReportTestReaderOsnabrueck.getSavedRawReportWithVegetarianValues()
-    );
+    let foodOfferJson = await getFoodoffersJson(FoodTL1Parser_RawReportTestReaderOsnabrueck.getSavedRawReportWithVegetarianValues());
     expect(!!foodOfferJson).toBe(true);
     expect(foodOfferJson.length).toBeGreaterThan(0);
     const expectedMarkingExternalIdentifiers = ['20'];
     for (let foodOffer of foodOfferJson) {
-      expect(foodOffer.marking_external_identifiers).toEqual(
-        expect.arrayContaining(expectedMarkingExternalIdentifiers)
-      );
+      expect(foodOffer.marking_external_identifiers).toEqual(expect.arrayContaining(expectedMarkingExternalIdentifiers));
     }
   });
 
@@ -111,36 +100,22 @@ describe('FoodTL1ParserOsnabrueck Test', () => {
   });
 
   it('Food with CO2 rating A and main course should have marking CO2_RATING_A', async () => {
-    let foodOfferJson = await getFoodoffersJson(
-      FoodTL1Parser_RawReportTestReaderOsnabrueck.getSavedRawReportWithCO2RatingValuesMainCourse()
-    );
+    let foodOfferJson = await getFoodoffersJson(FoodTL1Parser_RawReportTestReaderOsnabrueck.getSavedRawReportWithCO2RatingValuesMainCourse());
     expect(!!foodOfferJson).toBe(true);
     expect(foodOfferJson.length).toBeGreaterThan(0);
-    const expectedMarkingExternalIdentifiers = [
-      FoodTL1ParserOsnabrueck.getCO2RatingMarkingExternalIdentifier('A'),
-    ];
+    const expectedMarkingExternalIdentifiers = [FoodTL1ParserOsnabrueck.getCO2RatingMarkingExternalIdentifier('A')];
     for (let foodOffer of foodOfferJson) {
-      expect(foodOffer.marking_external_identifiers).toEqual(
-        expect.arrayContaining(expectedMarkingExternalIdentifiers)
-      );
+      expect(foodOffer.marking_external_identifiers).toEqual(expect.arrayContaining(expectedMarkingExternalIdentifiers));
     }
   });
 
   it('Food with CO2 rating A and main course should not have marking CO2_RATING_A', async () => {
-    let foodOfferJson = await getFoodoffersJson(
-      FoodTL1Parser_RawReportTestReaderOsnabrueck.getSavedRawReportWithCO2RatingValuesButSideCourse()
-    );
+    let foodOfferJson = await getFoodoffersJson(FoodTL1Parser_RawReportTestReaderOsnabrueck.getSavedRawReportWithCO2RatingValuesButSideCourse());
     expect(!!foodOfferJson).toBe(true);
     expect(foodOfferJson.length).toBeGreaterThan(0);
-    let expectedMarkingExternalIdentifiersNotToContain = [
-      FoodTL1ParserOsnabrueck.getCO2RatingMarkingExternalIdentifier('A'),
-    ];
+    let expectedMarkingExternalIdentifiersNotToContain = [FoodTL1ParserOsnabrueck.getCO2RatingMarkingExternalIdentifier('A')];
     for (let foodOffer of foodOfferJson) {
-      expect(foodOffer.marking_external_identifiers).toEqual(
-        expect.not.arrayContaining(
-          expectedMarkingExternalIdentifiersNotToContain
-        )
-      );
+      expect(foodOffer.marking_external_identifiers).toEqual(expect.not.arrayContaining(expectedMarkingExternalIdentifiersNotToContain));
     }
   });
 

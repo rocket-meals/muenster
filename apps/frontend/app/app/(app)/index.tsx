@@ -1,10 +1,4 @@
-import {
-	ActivityIndicator,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
@@ -12,11 +6,7 @@ import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { CanteenHelper } from '@/redux/actions/Canteens/Canteens';
 import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
-import {
-	SET_BUILDINGS,
-	SET_CANTEENS,
-	SET_SELECTED_CANTEEN,
-} from '@/redux/Types/types';
+import { SET_BUILDINGS, SET_CANTEENS, SET_SELECTED_CANTEEN } from '@/redux/Types/types';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useNavigation } from 'expo-router';
 import { getImageUrl } from '@/constants/HelperFunctions';
@@ -31,8 +21,7 @@ import CanteenSelection from '@/components/CanteenSelection/CanteenSelection';
 const Home = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();
-	const drawerNavigation =
-		useNavigation<DrawerNavigationProp<Record<string, object | undefined>>>();
+	const drawerNavigation = useNavigation<DrawerNavigationProp<Record<string, object | undefined>>>();
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const canteenHelper = new CanteenHelper();
@@ -57,24 +46,17 @@ const Home = () => {
 	const getCanteensWithBuildings = async () => {
 		try {
 			setLoading(true);
-			const buildingsData = (await buildingsHelper.fetchBuildings(
-				{}
-			)) as DatabaseTypes.Buildings[];
+			const buildingsData = (await buildingsHelper.fetchBuildings({})) as DatabaseTypes.Buildings[];
 			const buildings = buildingsData || [];
 
-			const buildingsDict = buildings.reduce(
-				(acc: Record<string, any>, building: any) => {
-					acc[building.id] = building;
-					return acc;
-				},
-				{}
-			);
+			const buildingsDict = buildings.reduce((acc: Record<string, any>, building: any) => {
+				acc[building.id] = building;
+				return acc;
+			}, {});
 
 			dispatch({ type: SET_BUILDINGS, payload: buildings });
 
-			const canteensData = (await canteenHelper.fetchCanteens(
-				{}
-			)) as DatabaseTypes.Canteens[];
+			const canteensData = (await canteenHelper.fetchCanteens({})) as DatabaseTypes.Canteens[];
 
 			const filteredCanteens = canteensData.filter(canteen => {
 				const status = canteen.status || '';
@@ -136,9 +118,7 @@ const Home = () => {
 					backgroundColor: theme.screen.background,
 				}}
 			>
-				<Text style={{ color: theme.screen.text }}>
-					{translate(TranslationKeys.no_canteens_found)}
-				</Text>
+				<Text style={{ color: theme.screen.text }}>{translate(TranslationKeys.no_canteens_found)}</Text>
 				<TouchableOpacity
 					style={{
 						...styles.continueButton,
@@ -147,9 +127,7 @@ const Home = () => {
 					onPress={() => drawerNavigation.toggleDrawer()}
 				>
 					<Ionicons name="menu" size={24} color={theme.screen.icon} />
-					<Text style={{ ...styles.continueLabel, color: theme.screen.text }}>
-						{translate(TranslationKeys.open_drawer)}
-					</Text>
+					<Text style={{ ...styles.continueLabel, color: theme.screen.text }}>{translate(TranslationKeys.open_drawer)}</Text>
 				</TouchableOpacity>
 			</View>
 		);

@@ -1,19 +1,5 @@
-import {
-	ActivityIndicator,
-	Dimensions,
-	FlatList,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from 'react-native';
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import { ActivityIndicator, Dimensions, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -43,9 +29,7 @@ const index = () => {
 	const [isActive, setIsActive] = useState(false);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const formsSubmissionsHelper = new FormsSubmissionsHelper();
-	const [formSubmissions, setFormSubmissions] = useState<
-		DatabaseTypes.FormSubmissions[]
-	>([]);
+	const [formSubmissions, setFormSubmissions] = useState<DatabaseTypes.FormSubmissions[]>([]);
 	const [selectedOption, setSelectedOption] = useState<string>('draft');
 	const { drawerPosition } = useSelector((state: RootState) => state.settings);
 
@@ -57,10 +41,7 @@ const index = () => {
 		sheetRef?.current?.close();
 	};
 
-	const loadFormSubmissions = async (
-		pageNumber: number,
-		append: boolean = false
-	) => {
+	const loadFormSubmissions = async (pageNumber: number, append: boolean = false) => {
 		if (!form_id) return;
 		setLoading(true);
 
@@ -136,9 +117,7 @@ const index = () => {
 					});
 				}}
 			>
-				<Text style={{ ...styles.body, color: theme.screen.text }}>
-					{item.alias}
-				</Text>
+				<Text style={{ ...styles.body, color: theme.screen.text }}>{item.alias}</Text>
 				<Entypo name="chevron-small-right" color={theme.screen.icon} size={24} />
 			</TouchableOpacity>
 		);
@@ -182,18 +161,10 @@ const index = () => {
 							},
 						]}
 					>
-						<TouchableOpacity
-							onPress={() => router.navigate('/form-categories')}
-							style={{ padding: 10 }}
-						>
+						<TouchableOpacity onPress={() => router.navigate('/form-categories')} style={{ padding: 10 }}>
 							<Ionicons name="arrow-back" size={26} color={theme.header.text} />
 						</TouchableOpacity>
-						<Text style={{ ...styles.heading, color: theme.header.text }}>
-							{excerpt(
-								translate(TranslationKeys.select_a_form_submission),
-								screenWidth > 900 ? 100 : screenWidth > 700 ? 80 : 22
-							)}
-						</Text>
+						<Text style={{ ...styles.heading, color: theme.header.text }}>{excerpt(translate(TranslationKeys.select_a_form_submission), screenWidth > 900 ? 100 : screenWidth > 700 ? 80 : 22)}</Text>
 					</View>
 					<View style={{ ...styles.col2, gap: isWeb ? 30 : 15 }}>
 						<TouchableOpacity onPress={openFilterSheet} style={{ padding: 10 }}>
@@ -268,17 +239,10 @@ const index = () => {
 							<ActivityIndicator size={30} color={theme.screen.text} />
 						</View>
 					) : formSubmissions?.length > 0 ? (
-						<FlatList
-							data={formSubmissions}
-							keyExtractor={item => item.id.toString()}
-							renderItem={renderItem}
-							contentContainerStyle={{ paddingBottom: 10 }}
-						/>
+						<FlatList data={formSubmissions} keyExtractor={item => item.id.toString()} renderItem={renderItem} contentContainerStyle={{ paddingBottom: 10 }} />
 					) : (
 						<View style={{ padding: 20, alignItems: 'center' }}>
-							<Text style={{ color: theme.screen.text, fontSize: 16 }}>
-								{translate(TranslationKeys.no_data_found)}
-							</Text>
+							<Text style={{ color: theme.screen.text, fontSize: 16 }}>{translate(TranslationKeys.no_data_found)}</Text>
 						</View>
 					)}
 				</View>
@@ -295,13 +259,7 @@ const index = () => {
 					handleComponent={null}
 					onClose={closeFilterSheet}
 				>
-					<FilterFormSheet
-						closeSheet={closeFilterSheet}
-						isFormSubmission={true}
-						setSelectedOption={setSelectedOption}
-						selectedOption={selectedOption}
-						options={filterOptions}
-					/>
+					<FilterFormSheet closeSheet={closeFilterSheet} isFormSubmission={true} setSelectedOption={setSelectedOption} selectedOption={selectedOption} options={filterOptions} />
 				</BaseBottomSheet>
 			)}
 		</View>

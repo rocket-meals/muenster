@@ -9,30 +9,15 @@ import { RootState } from '@/redux/reducer';
 import QrCode from '@/components/QrCode';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 
-const DownloadItem: React.FC<DownloadItemProps> = ({
-	label,
-	imageSource,
-	onPress,
-	containerStyle,
-	qrValue,
-}) => {
+const DownloadItem: React.FC<DownloadItemProps> = ({ label, imageSource, onPress, containerStyle, qrValue }) => {
 	const { theme } = useTheme();
-	const { primaryColor, amountColumnsForcard } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { primaryColor, amountColumnsForcard } = useSelector((state: RootState) => state.settings);
 	const { width: screenWidth } = useWindowDimensions();
-	const size =
-		amountColumnsForcard === 0
-			? CardDimensionHelper.getCardDimension(screenWidth)
-			: CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
+	const size = amountColumnsForcard === 0 ? CardDimensionHelper.getCardDimension(screenWidth) : CardDimensionHelper.getCardWidth(screenWidth, amountColumnsForcard);
 	return (
 		<CardWithText
 			onPress={onPress}
-			containerStyle={[
-				styles.card,
-				{ backgroundColor: theme.card.background, width: size },
-				containerStyle,
-			]}
+			containerStyle={[styles.card, { backgroundColor: theme.card.background, width: size }, containerStyle]}
 			imageContainerStyle={[styles.imageContainer, { height: size }]}
 			contentStyle={{ paddingHorizontal: 5 }}
 			topRadius={0}
@@ -44,9 +29,7 @@ const DownloadItem: React.FC<DownloadItemProps> = ({
 					</View>
 				) : undefined
 			}
-			bottomContent={
-				<Text style={[styles.label, { color: theme.screen.text }]}>{label}</Text>
-			}
+			bottomContent={<Text style={[styles.label, { color: theme.screen.text }]}>{label}</Text>}
 		/>
 	);
 };

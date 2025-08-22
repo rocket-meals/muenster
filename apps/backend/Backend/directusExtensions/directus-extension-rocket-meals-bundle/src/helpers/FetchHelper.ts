@@ -9,9 +9,7 @@ export class FetchHelper {
     });
 
     if (statusCode < 200 || statusCode >= 300) {
-      throw new Error(
-        `Failed to fetch news page. HTTP status ${statusCode} - Error: ${body.toString()}`
-      );
+      throw new Error(`Failed to fetch news page. HTTP status ${statusCode} - Error: ${body.toString()}`);
     }
 
     const text = await body.text();
@@ -25,9 +23,7 @@ export class FetchHelper {
     });
 
     if (!response.ok) {
-      throw new Error(
-        `Failed to fetch from ${url}. HTTP status ${response.status} - Error: ${await response.text()}`
-      );
+      throw new Error(`Failed to fetch from ${url}. HTTP status ${response.status} - Error: ${await response.text()}`);
     }
 
     return response;

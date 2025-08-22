@@ -3,22 +3,13 @@ import { Image, Pressable, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import styles from './styles';
-import {
-	CanteenFeedbackLabelProps,
-	ModifiedCanteensFeedbacksLabelsEntries,
-} from './types';
+import { CanteenFeedbackLabelProps, ModifiedCanteensFeedbacksLabelsEntries } from './types';
 import { isWeb } from '@/constants/Constants';
-import {
-	getIconComponent,
-	getTextFromTranslation,
-} from '@/helper/resourceHelper';
+import { getIconComponent, getTextFromTranslation } from '@/helper/resourceHelper';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import {
-	DELETE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
-	UPDATE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
-} from '@/redux/Types/types';
+import { DELETE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES, UPDATE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES } from '@/redux/Types/types';
 import PermissionModal from '../PermissionModal/PermissionModal';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import { CanteenFeedbackLabelEntryHelper } from '@/redux/actions/CanteenFeedbackLabelEntries/CanteenFeedbackLabelEntries';
@@ -29,47 +20,24 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({
-	label,
-	date,
-}) => {
+const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({ label, date }) => {
 	const { theme } = useTheme();
 	const dispatch = useDispatch();
 	const { translate } = useLanguage();
 	const canteenFeedbackLabelEntryHelper = new CanteenFeedbackLabelEntryHelper();
 	const [warning, setWarning] = useState(false);
 	const [showTooltip, setShowTooltip] = useState(false);
-	const {
-		primaryColor,
-		language,
-		appSettings,
-		selectedTheme: mode,
-	} = useSelector((state: RootState) => state.settings);
+	const { primaryColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const [count, setCount] = useState({ likes: 0, dislikes: 0 });
 	const { user, profile } = useSelector((state: RootState) => state.authReducer);
-	const { ownCanteenFeedBackLabelEntries } = useSelector(
-		(state: RootState) => state.canteenReducer
-	);
+	const { ownCanteenFeedBackLabelEntries } = useSelector((state: RootState) => state.canteenReducer);
 	const selectedCanteen = useSelectedCanteen();
-	const foods_area_color = appSettings?.foods_area_color
-		? appSettings?.foods_area_color
-		: primaryColor;
-	const contrastColor = myContrastColor(
-		foods_area_color,
-		theme,
-		mode === 'dark'
-	);
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
 	// Use useMemo to optimize the filtering processs
 	const labelData = useMemo(() => {
-		return (
-			ownCanteenFeedBackLabelEntries?.find(
-				(entry: DatabaseTypes.CanteensFeedbacksLabelsEntries) =>
-					entry.label === label?.id &&
-					entry.canteen === selectedCanteen?.id &&
-					isSameDay(entry.date, date)
-			) || ({} as DatabaseTypes.FoodsFeedbacksLabelsEntries)
-		);
+		return ownCanteenFeedBackLabelEntries?.find((entry: DatabaseTypes.CanteensFeedbacksLabelsEntries) => entry.label === label?.id && entry.canteen === selectedCanteen?.id && isSameDay(entry.date, date)) || ({} as DatabaseTypes.FoodsFeedbacksLabelsEntries);
 	}, [ownCanteenFeedBackLabelEntries, date]);
 
 	// Function to handle updating the entry
@@ -87,32 +55,16 @@ const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({
 			likeStats = isLike;
 		}
 		// Update the entry
-		const result =
-			(await canteenFeedbackLabelEntryHelper.updateCanteenFeedbackLabelEntry(
-				profile.id,
-				ownCanteenFeedBackLabelEntries,
-				label?.id,
-				likeStats,
-				selectedCanteen.id,
-				date
-			)) as DatabaseTypes.CanteensFeedbacksLabelsEntries;
+		const result = (await canteenFeedbackLabelEntryHelper.updateCanteenFeedbackLabelEntry(profile.id, ownCanteenFeedBackLabelEntries, label?.id, likeStats, selectedCanteen.id, date)) as DatabaseTypes.CanteensFeedbacksLabelsEntries;
 		getLabelEntries(label?.id);
 		dispatch({
-			type: result
-				? UPDATE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES
-				: DELETE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
+			type: result ? UPDATE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES : DELETE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
 			payload: result ? result : labelData.id,
 		});
 	};
 
 	const getLabelEntries = async (labelId: string) => {
-		const result =
-			(await canteenFeedbackLabelEntryHelper.fetchCanteenFeedbackLabelEntries(
-				{},
-				date,
-				selectedCanteen.id,
-				labelId
-			)) as ModifiedCanteensFeedbacksLabelsEntries[];
+		const result = (await canteenFeedbackLabelEntryHelper.fetchCanteenFeedbackLabelEntries({}, date, selectedCanteen.id, labelId)) as ModifiedCanteensFeedbacksLabelsEntries[];
 		if (result) {
 			const likes = result?.find(entry => entry.like === true)?.count || 0;
 			const dislikes = result?.find(entry => entry.like === false)?.count || 0;
@@ -133,12 +85,7 @@ const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({
 				placement="top"
 				isOpen={showTooltip}
 				trigger={triggerProps => (
-					<Pressable
-						style={{ ...styles.col, cursor: 'default' }}
-						{...triggerProps}
-						onHoverIn={() => setShowTooltip(true)}
-						onHoverOut={() => setShowTooltip(false)}
-					>
+					<Pressable style={{ ...styles.col, cursor: 'default' }} {...triggerProps} onHoverIn={() => setShowTooltip(true)} onHoverOut={() => setShowTooltip(false)}>
 						{label?.image_remote_url || label?.image ? (
 							<Image
 								source={{
@@ -190,24 +137,14 @@ const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({
 							}}
 							onPress={() => handleUpdateEntry(true)}
 						>
-							<MaterialCommunityIcons
-								name={labelData?.like ? 'thumb-up' : 'thumb-up-outline'}
-								size={isWeb ? 24 : 22}
-								color={labelData?.like ? contrastColor : theme.screen.icon}
-							/>
-							{count?.likes > 0 && (
-								<Text style={[styles.count, { color: contrastColor }]}>
-									{count.likes}
-								</Text>
-							)}
+							<MaterialCommunityIcons name={labelData?.like ? 'thumb-up' : 'thumb-up-outline'} size={isWeb ? 24 : 22} color={labelData?.like ? contrastColor : theme.screen.icon} />
+							{count?.likes > 0 && <Text style={[styles.count, { color: contrastColor }]}>{count.likes}</Text>}
 						</Pressable>
 					)}
 				>
 					<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 						<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-							{`${translate(TranslationKeys.i_like_that)}: ${translate(
-								labelData?.like ? TranslationKeys.active : TranslationKeys.inactive
-							)}: ${getTextFromTranslation(label?.translations, language)}`}
+							{`${translate(TranslationKeys.i_like_that)}: ${translate(labelData?.like ? TranslationKeys.active : TranslationKeys.inactive)}: ${getTextFromTranslation(label?.translations, language)}`}
 						</TooltipText>
 					</TooltipContent>
 				</Tooltip>
@@ -225,26 +162,14 @@ const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({
 							}}
 							onPress={() => handleUpdateEntry(false)}
 						>
-							<MaterialCommunityIcons
-								name={labelData?.like === false ? 'thumb-down' : 'thumb-down-outline'}
-								size={isWeb ? 24 : 22}
-								color={labelData?.like === false ? contrastColor : theme.screen.icon}
-							/>
-							{count?.dislikes > 0 && (
-								<Text style={[styles.count, { color: contrastColor }]}>
-									{count.dislikes}
-								</Text>
-							)}
+							<MaterialCommunityIcons name={labelData?.like === false ? 'thumb-down' : 'thumb-down-outline'} size={isWeb ? 24 : 22} color={labelData?.like === false ? contrastColor : theme.screen.icon} />
+							{count?.dislikes > 0 && <Text style={[styles.count, { color: contrastColor }]}>{count.dislikes}</Text>}
 						</Pressable>
 					)}
 				>
 					<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 						<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-							{`${translate(TranslationKeys.i_dislike_that)}: ${translate(
-								labelData?.like === false
-									? TranslationKeys.active
-									: TranslationKeys.inactive
-							)}: ${getTextFromTranslation(label?.translations, language)}`}
+							{`${translate(TranslationKeys.i_dislike_that)}: ${translate(labelData?.like === false ? TranslationKeys.active : TranslationKeys.inactive)}: ${getTextFromTranslation(label?.translations, language)}`}
 						</TooltipText>
 					</TooltipContent>
 				</Tooltip>

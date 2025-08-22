@@ -1,11 +1,4 @@
-import {
-	Dimensions,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-	Switch,
-} from 'react-native';
+import { Dimensions, Text, TextInput, TouchableOpacity, View, Switch } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from '@/hooks/useTheme';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -14,32 +7,12 @@ import { useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { RootState } from '@/redux/reducer';
 
-const FoodPlan = ({
-	data,
-	onPressItem,
-	selectedValue,
-	selectedValuNext,
-	nextFoodInterval,
-	foodOffer,
-	intervalNext,
-	refreshData,
-}: {
-	data: any[];
-	onPressItem: (item: any) => void;
-	selectedValue: string;
-	selectedValuNext: string;
-	nextFoodInterval: string;
-	foodOffer: string;
-	intervalNext: string;
-	refreshData: string;
-}) => {
+const FoodPlan = ({ data, onPressItem, selectedValue, selectedValuNext, nextFoodInterval, foodOffer, intervalNext, refreshData }: { data: any[]; onPressItem: (item: any) => void; selectedValue: string; selectedValuNext: string; nextFoodInterval: string; foodOffer: string; intervalNext: string; refreshData: string }) => {
 	const { theme } = useTheme();
 
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 
-	const [toggleStates, setToggleStates] = useState(
-		data.map(item => item.switchState || false)
-	);
+	const [toggleStates, setToggleStates] = useState(data.map(item => item.switchState || false));
 
 	useEffect(() => {
 		const onChange = ({ window }: { window: any }) => {
@@ -61,9 +34,7 @@ const FoodPlan = ({
 	const selectedCanteen = useSelectedCanteen();
 
 	return (
-		<View
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-		>
+		<View style={[styles.container, { backgroundColor: theme.screen.background }]}>
 			{data.map((item, index) => (
 				<TouchableOpacity
 					key={index}
@@ -78,14 +49,7 @@ const FoodPlan = ({
 					}}
 				>
 					<View style={styles.iconTextContainer}>
-						{item.showFeedIcon && (
-							<MaterialCommunityIcons
-								name="silverware-variant"
-								size={20}
-								color={theme.screen.icon}
-								style={{ marginRight: 10 }}
-							/>
-						)}
+						{item.showFeedIcon && <MaterialCommunityIcons name="silverware-variant" size={20} color={theme.screen.icon} style={{ marginRight: 10 }} />}
 						<Text
 							style={{
 								color: theme.screen.text,
@@ -188,12 +152,7 @@ const FoodPlan = ({
 									/>
 								)}
 
-								<MaterialCommunityIcons
-									name="pencil"
-									size={22}
-									color={theme.screen.icon}
-									style={{ marginHorizontal: 5 }}
-								/>
+								<MaterialCommunityIcons name="pencil" size={22} color={theme.screen.icon} style={{ marginHorizontal: 5 }} />
 							</>
 						)}
 					</View>
@@ -211,12 +170,7 @@ const FoodPlan = ({
 				>
 					DayScreen
 				</Text>
-				<MaterialCommunityIcons
-					name="chevron-right"
-					size={20}
-					color={theme.screen.icon}
-					style={{ marginRight: 10 }}
-				/>
+				<MaterialCommunityIcons name="chevron-right" size={20} color={theme.screen.icon} style={{ marginRight: 10 }} />
 			</TouchableOpacity>
 		</View>
 	);

@@ -15,15 +15,10 @@ const MAX_ITEMS = 100;
 
 const VerticalScrollTopFood: React.FC = () => {
 	const { theme } = useTheme();
-	const { amountColumnsForcard } = useSelector(
-		(state: RootState) => state.settings
-	);
+	const { amountColumnsForcard } = useSelector((state: RootState) => state.settings);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
-	const numColumns = CardDimensionHelper.getNumColumns(
-		screenWidth,
-		amountColumnsForcard
-	);
+	const numColumns = CardDimensionHelper.getNumColumns(screenWidth, amountColumnsForcard);
 
 	useEffect(() => {
 		const sub = Dimensions.addEventListener('change', ({ window }) => {
@@ -32,25 +27,15 @@ const VerticalScrollTopFood: React.FC = () => {
 		return () => sub?.remove();
 	}, []);
 
-	const size =
-		amountColumnsForcard === 0
-			? CardDimensionHelper.getCardDimension(screenWidth)
-			: CardDimensionHelper.getCardWidth(screenWidth, numColumns);
+	const size = amountColumnsForcard === 0 ? CardDimensionHelper.getCardDimension(screenWidth) : CardDimensionHelper.getCardWidth(screenWidth, numColumns);
 
 	const [images, setImages] = useState<string[]>([]);
 	const offset = useRef(0);
 
 	const fetchImages = async () => {
 		if (offset.current >= MAX_ITEMS) return;
-		const result = await loadMostLikedOrDislikedFoods(
-			Math.min(PAGE_SIZE, MAX_ITEMS - offset.current),
-			offset.current,
-			undefined,
-			true
-		);
-		const urls = (result ?? [])
-			.map((food: any) => getImageUrl(String((food as any).image)))
-			.filter(Boolean);
+		const result = await loadMostLikedOrDislikedFoods(Math.min(PAGE_SIZE, MAX_ITEMS - offset.current), offset.current, undefined, true);
+		const urls = (result ?? []).map((food: any) => getImageUrl(String((food as any).image))).filter(Boolean);
 		setImages(prev => [...prev, ...urls]);
 		offset.current += urls.length;
 	};
@@ -66,10 +51,7 @@ const VerticalScrollTopFood: React.FC = () => {
 	const [speedPercent, setSpeedPercent] = useState(5);
 
 	return (
-		<View
-			key={amountColumnsForcard}
-			style={[styles.container, { backgroundColor: theme.screen.background }]}
-		>
+		<View key={amountColumnsForcard} style={[styles.container, { backgroundColor: theme.screen.background }]}>
 			<View style={styles.controls}>
 				<TouchableOpacity onPress={() => setSpeedPercent(s => Math.max(1, s - 1))}>
 					<Ionicons name="remove" size={24} color={theme.primary} />
@@ -79,13 +61,7 @@ const VerticalScrollTopFood: React.FC = () => {
 					<Ionicons name="add" size={24} color={theme.primary} />
 				</TouchableOpacity>
 			</View>
-			<AutoImageScroller
-				images={images}
-				numColumns={numColumns}
-				size={size}
-				speedPercent={speedPercent}
-				loadMore={loadMoreImages}
-			/>
+			<AutoImageScroller images={images} numColumns={numColumns} size={size} speedPercent={speedPercent} loadMore={loadMoreImages} />
 		</View>
 	);
 };

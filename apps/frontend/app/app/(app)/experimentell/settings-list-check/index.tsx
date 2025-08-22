@@ -25,22 +25,8 @@ const SettingsListCheck = () => {
 			}}
 		>
 			<View style={{ ...styles.content }}>
-				<Text style={{ ...styles.heading, color: theme.screen.text }}>
-					{translate(TranslationKeys.settings_list_check)}
-				</Text>
-				<SettingsList
-					iconBgColor={primaryColor}
-					leftIcon={
-						<MaterialCommunityIcons
-							name="format-list-text"
-							size={24}
-							color={theme.screen.icon}
-						/>
-					}
-					title="Dies ist ein extrem langer Titel, der in dieser Zeile nicht vollständig angezeigt werden kann."
-					value="Auch dieser sehr lange Wert sollte ordentlich umgebrochen werden, damit alles lesbar bleibt."
-					groupPosition="single"
-				/>
+				<Text style={{ ...styles.heading, color: theme.screen.text }}>{translate(TranslationKeys.settings_list_check)}</Text>
+				<SettingsList iconBgColor={primaryColor} leftIcon={<MaterialCommunityIcons name="format-list-text" size={24} color={theme.screen.icon} />} title="Dies ist ein extrem langer Titel, der in dieser Zeile nicht vollständig angezeigt werden kann." value="Auch dieser sehr lange Wert sollte ordentlich umgebrochen werden, damit alles lesbar bleibt." groupPosition="single" />
 			</View>
 		</ScrollView>
 	);

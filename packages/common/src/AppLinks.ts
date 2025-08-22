@@ -47,12 +47,7 @@ export interface AppLinkParam {
 
 export class AppLinks {
   static build(path: AppScreens | string, params: AppLinkParam[] = []): string {
-    const query = params
-      .map(
-        p =>
-          `${encodeURIComponent(p.key)}=${encodeURIComponent(String(p.value))}`
-      )
-      .join('&');
+    const query = params.map(p => `${encodeURIComponent(p.key)}=${encodeURIComponent(String(p.value))}`).join('&');
     return query ? `${path}?${query}` : path;
   }
 
@@ -64,19 +59,11 @@ export class AppLinks {
     return this.build(AppScreens.CAMPUS, params);
   }
 
-  static getGithubPagesBaseUrl(
-    repositoryOwner: string,
-    repositoryName: string
-  ): string {
+  static getGithubPagesBaseUrl(repositoryOwner: string, repositoryName: string): string {
     return `https://${repositoryOwner}.github.io/${repositoryName}`;
   }
 
-  static getGithubPagesUrl(
-    repositoryOwner: string,
-    repositoryName: string,
-    path: AppScreens | string,
-    params: AppLinkParam[] = []
-  ) {
+  static getGithubPagesUrl(repositoryOwner: string, repositoryName: string, path: AppScreens | string, params: AppLinkParam[] = []) {
     const baseUrl = this.getGithubPagesBaseUrl(repositoryOwner, repositoryName);
     const fullPath = this.build(path, params);
     return `${baseUrl}/${fullPath}`;
