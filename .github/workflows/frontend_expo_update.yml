@@ -1,13 +1,6 @@
 name: 🤖 Expo Update
 
 on:
-  push:
-    branches: [master]
-    paths:
-      - 'apps/frontend/app/**'
-      - 'packages/common/**'
-      - '.github/workflows/**'
-      - 'package.json'
   workflow_run:
     workflows: ["🔧 Auto-Linter"]
     branches: [master]
@@ -18,10 +11,12 @@ jobs:
   update:
     name: 🏗 EAS Update Production
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: 🔄 Checkout Repository
         uses: actions/checkout@v3
+        with:
+          ref: master
 
       - name: 🧰 Setup Node.js, Yarn & Dependencies
         uses: ./.github/actions/setup-and-install
