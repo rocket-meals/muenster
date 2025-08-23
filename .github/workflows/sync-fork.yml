@@ -33,47 +33,26 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: 🔍 Check for Upstream Changes
-        if: steps.check-fork.outputs.is_fork == 'true'
-        id: check-updates
-        run: |
-          git remote add upstream https://github.com/rocket-meals/rocket-meals.git
-          git fetch upstream master
-          LOCAL=$(git rev-parse master)
-          UPSTREAM=$(git rev-parse upstream/master)
-          if [ "$LOCAL" = "$UPSTREAM" ]; then
-            echo "has_updates=false" >> $GITHUB_OUTPUT
-          else
-            echo "has_updates=true" >> $GITHUB_OUTPUT
-          fi
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: 🔧 Setup GitHub CLI
-        if: steps.check-fork.outputs.is_fork == 'true' && steps.check-updates.outputs.has_updates == 'true'
+        if: steps.check-fork.outputs.is_fork == 'true'
         run: |
-          # GitHub CLI is pre-installed on Ubuntu runners
           gh --version
-
-          # Authenticate with GitHub CLI using the token
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+          echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | gh auth login --with-token
 
       - name: 🔄 Sync Fork with Upstream
-        if: steps.check-fork.outputs.is_fork == 'true' && steps.check-updates.outputs.has_updates == 'true'
+        if: steps.check-fork.outputs.is_fork == 'true'
         run: |
           REPO_FULL_NAME="${{ github.repository }}"
           echo "Syncing fork: $REPO_FULL_NAME"
           echo "Upstream repository: rocket-meals/rocket-meals"
           echo "Target branch: master"
-
+          
           # Sync the fork with the upstream repository using --force to handle conflicts
           gh repo sync "$REPO_FULL_NAME" -b master --force
-
+          
           echo "✅ Fork synchronization completed successfully!"
-
-      - name: ⏭️ No changes to synchronize
-        if: steps.check-fork.outputs.is_fork == 'true' && steps.check-updates.outputs.has_updates == 'false'
-        run: |
-          echo "⏭️ No changes detected. Skipping fork synchronization."
 
       - name: ⏭️ Skip Fork Sync
         if: steps.check-fork.outputs.is_fork == 'false'
