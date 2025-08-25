@@ -1,0 +1,25 @@
+name: 🚀 Push Master to Stable
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+
+jobs:
+  push-master-to-stable:
+    name: 🚀 Update Stable Branch
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout master
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: 📤 Push master to stable
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git push origin HEAD:stable --force
