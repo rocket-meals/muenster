@@ -75,7 +75,7 @@ export class DirectusTestServerSetup {
       startupCheckDelay: options.startupCheckDelay ?? 1000,
       debug: options.debug ?? true,
     };
-    
+
     this.directusUrl = `http://${this.options.host}:${this.options.port}`;
   }
 

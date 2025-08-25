@@ -21,15 +21,14 @@ describe('DirectusTestServerSetup', () => {
     }
   });
 
-  it('should create instance with default options', () => {
-    expect(serverSetup).toBeInstanceOf(DirectusTestServerSetup);
-    expect(serverSetup.getDirectusUrl()).toBe('http://127.0.0.1:8055');
+  it('should return true for isReady when server is started', async () => {
+    const isReady = await serverSetup.isReady();
+    expect(isReady).toBe(true);
   });
 
   it('should return false for isReady when server is not started', async () => {
-    serverSetup = new DirectusTestServerSetup();
-    
-    const isReady = await serverSetup.isReady();
+    let freshServer = new DirectusTestServerSetup();
+    const isReady = await freshServer.isReady();
     expect(isReady).toBe(false);
   });
 
