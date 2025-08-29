@@ -1,10 +1,10 @@
 import {defineEndpoint} from '@directus/extensions-sdk';
 import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
 import {ApiContext} from '../helpers/ApiContext';
-import {RssBuilder} from "./RssBuilder";
+import {RssBuilder} from './RssBuilder';
 
 
-const EndpointTopName = 'rss-news';
+const EndpointTopName = 'rss-news.xml';
 
 export default defineEndpoint({
     id: EndpointTopName,
@@ -18,7 +18,7 @@ export default defineEndpoint({
             });
 
             const rss = RssBuilder.buildRss(news, myDatabaseHelper.getServerUrl());
-            res.set('Content-Type', 'application/rss+xml');
+            res.set('Content-Type', 'application/rss+xml; charset=UTF-8');
             res.send(rss);
         });
     }
