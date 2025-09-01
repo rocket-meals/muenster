@@ -9768,7 +9768,7 @@ __metadata:
     "@types/jest": "npm:^29.5.12"
     "@types/node": "npm:^22.5.0"
     jest: "npm:^29.7.0"
-    repo-depkit-common: "npm:*"
+    repo-depkit-common: "workspace:*"
     ts-jest: "npm:^29.2.5"
     tsx: "npm:^4.7.0"
     typescript: "npm:^5.5.4"
@@ -12025,6 +12025,8 @@ __metadata:
     patch-package: "npm:^8.0.0"
     puppeteer: "npm:^24.3.0"
     puppeteer-core: "npm:^24.3.0"
+    repo-depkit-common: "workspace:*"
+    repo-depkit-common-backend: "workspace:*"
     rimraf: "npm:^6.0.1"
     short-unique-id: "npm:^5.2.2"
     spark-md5: "npm:^3.0.2"
@@ -21834,7 +21836,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"repo-depkit-common-backend@workspace:packages/common-backend":
+"repo-depkit-common-backend@workspace:*, repo-depkit-common-backend@workspace:packages/common-backend":
   version: 0.0.0-use.local
   resolution: "repo-depkit-common-backend@workspace:packages/common-backend"
   dependencies:
@@ -21844,7 +21846,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"repo-depkit-common@npm:*, repo-depkit-common@npm:1.0.0, repo-depkit-common@workspace:packages/common":
+"repo-depkit-common@npm:1.0.0, repo-depkit-common@workspace:*, repo-depkit-common@workspace:packages/common":
   version: 0.0.0-use.local
   resolution: "repo-depkit-common@workspace:packages/common"
   dependencies:
@@ -22557,7 +22559,7 @@ __metadata:
     "@types/node": "npm:^22.5.0"
     jest: "npm:^29.7.0"
     puppeteer: "npm:^23.1.1"
-    repo-depkit-common: "npm:*"
+    repo-depkit-common: "workspace:*"
     sharp: "npm:^0.33.5"
     ts-jest: "npm:^29.2.5"
     tsx: "npm:^4.7.0"
