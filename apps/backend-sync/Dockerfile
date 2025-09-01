@@ -27,7 +27,11 @@ COPY packages/common-backend/package.json ./packages/common-backend/
 RUN yarn workspaces focus backend-sync
 
 # Copy the entire project for building
+# The files in "data" are ignored completely except for the directus-sync-data subdirectory
 COPY . .
+
+# Copy only the directus-sync-data subdirectory from data folder
+COPY data/directus-sync-data ./data/directus-sync-data
 
 # Build/prepare the backend-sync application if needed
 # (Currently just copying TypeScript files, but could add build step here)

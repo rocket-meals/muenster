@@ -5,6 +5,7 @@ import {ServerHelper} from "repo-depkit-common";
 import * as path from "path";
 import * as fs from "fs";
 import * as dotenv from 'dotenv';
+import {DockerContainerManager} from "./DockerContainerManager";
 
 const program = new Command();
 
@@ -20,6 +21,7 @@ program
     .option('--pull', 'Pull schema from Directus to local')
     .option('--pull-from-test-system', 'Pull schema from remote test system')
     .option('--docker-push', 'Push inside Docker container')
+    .option('--docker-directus-restart', 'Restart Directus Docker containers after push')
     .option('--directus-url <url>', 'Directus instance URL')
     .option('--admin-email <email>', 'Admin email')
     .option('--admin-password <password>', 'Admin password')
@@ -64,11 +66,17 @@ async function main() {
     let adminPassword = options.adminPassword || process.env.ADMIN_PASSWORD
     let directusInstanceUrl = options.directusUrl;
     let pathToDataDirectusSync = options.pathToDataDirectusSync;
+    let dockerDirectusRestart = options.dockerDirectusRestart || false;
 
     let syncOperation = SyncOperation.NONE;
     if(options.push || options.dockerPush) {
         syncOperation = SyncOperation.PUSH;
     }
+
+    if(options.dockerPush){
+        dockerDirectusRestart = true;
+    }
+
     if(options.pull || options.pullFromTestSystem) {
         syncOperation = SyncOperation.PULL;
     }
@@ -141,6 +149,19 @@ async function main() {
                 // Sollte nie erreicht werden, da oben validiert
                 break;
         }
+
+        if(dockerDirectusRestart){
+            console.log('🔄 Starte Directus Docker Container neu...');
+            const restartSuccess = await DockerContainerManager.restartDirectusContainers(directusInstanceUrl);
+            if(restartSuccess){
+                console.log('✅ Directus Docker Container erfolgreich neu gestartet!');
+            } else {
+                console.error('❌ Fehler: Directus Docker Container Neustart fehlgeschlagen!');
+                process.exit(1);
+            }
+        }
+
+
     } catch (error) {
         console.error("💥 Fehler im Backend Sync Service:", error);
         process.exit(1);

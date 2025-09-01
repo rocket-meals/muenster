@@ -10,7 +10,7 @@ export class DockerDirectusHelper {
   }
 
   public static getDataPathToDirectusSyncData(): string {
-      return "rocket-meals/data/directus-sync-data";
+      return "/rocket-meals/data/directus-sync-data";
   }
 
 }

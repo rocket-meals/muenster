@@ -12,7 +12,7 @@ export class DockerContainerManager {
      * Startet den Directus-Container neu, wenn bsp die Datenbank schema geändert wurde.
      * Funktioniert mit Docker Compose Services (mit Replikas).
      */
-    public static async restartDirectusContainers(): Promise<boolean> {
+    public static async restartDirectusContainers(directusInstanceUrl: string): Promise<boolean> {
         try {
             console.log(`🔄 Starte Neustart von ${this.DIRECTUS_SERVICE_NAME} Service (Docker Compose)...`);
 
@@ -100,7 +100,7 @@ export class DockerContainerManager {
 
             // 5. Health-Check durchführen
             console.log(`🏥 Führe Health-Check für Directus durch...`);
-            const healthCheckSuccess = await DockerDirectusPingHelper.waitForDirectusHealthy(12, 5); // 1 Minute Timeout
+            const healthCheckSuccess = await DockerDirectusPingHelper.waitForDirectusHealthy(directusInstanceUrl); // 1 Minute Timeout
 
             if (healthCheckSuccess) {
                 console.log(`✅ Directus Service erfolgreich neu gestartet und ist verfügbar!`);
@@ -119,7 +119,7 @@ export class DockerContainerManager {
     /**
      * Alternative Methode mit docker-compose restart (falls verfügbar)
      */
-    public static async restartDirectusContainersCompose(): Promise<boolean> {
+    public static async restartDirectusContainersCompose(directusInstanceUrl: string): Promise<boolean> {
         try {
             console.log(`🔄 Versuche docker-compose restart für ${this.DIRECTUS_SERVICE_NAME}...`);
 
@@ -128,7 +128,7 @@ export class DockerContainerManager {
                 await execAsync('docker-compose --version');
             } catch (error) {
                 console.log(`❌ docker-compose nicht verfügbar, verwende Container-basierte Lösung`);
-                return await this.restartDirectusContainers();
+                return await this.restartDirectusContainers(directusInstanceUrl);
             }
 
             // Suche nach docker-compose.yaml Datei im Root oder backend Verzeichnis
@@ -145,7 +145,7 @@ export class DockerContainerManager {
             console.log(`✅ docker-compose restart ausgeführt: ${composeOutput.trim()}`);
 
             // Health-Check durchführen
-            const healthCheckSuccess = await DockerDirectusPingHelper.waitForDirectusHealthy(12, 5);
+            const healthCheckSuccess = await DockerDirectusPingHelper.waitForDirectusHealthy(directusInstanceUrl);
 
             if (healthCheckSuccess) {
                 console.log(`✅ Directus Service mit docker-compose erfolgreich neu gestartet!`);

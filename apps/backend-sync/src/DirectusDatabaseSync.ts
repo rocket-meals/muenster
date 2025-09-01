@@ -1,13 +1,13 @@
 import {DockerDirectusPingHelper} from "./DockerDirectusPingHelper";
-import https from "https";
 import path from "path";
 import fs from "fs";
 import {spawn} from "node:child_process";
-import fetch from 'node-fetch';
-import { CookieJar } from 'cookiejar';
+import {CookieJar} from 'cookiejar';
 import FormData from 'form-data';
 
-import { createRequire } from 'module';
+import {createRequire} from 'module';
+import {FetchIngoreSelfSignedCertHelper} from "./FetchIngoreSelfSignedCertHelper";
+
 const require = createRequire(import.meta.url);
 
 const pkgPath = require.resolve('directus-sync/package.json');
@@ -30,7 +30,6 @@ const collectionsToSkip = ['2-wikis.json'];
 export class DirectusDatabaseSync {
 
     private config: DirectusDatabaseSyncOptions;
-    private httpsAgent: https.Agent;
     private directusConfigOverwriteCollectionsPath: string
     private directusConfigCollectionsPath: string
     private configurationPathCollections: string
@@ -38,9 +37,6 @@ export class DirectusDatabaseSync {
 
     constructor(config: DirectusDatabaseSyncOptions) {
         this.config = config;
-        this.httpsAgent = new https.Agent({
-            rejectUnauthorized: false,
-        });
         this.directusConfigCollectionsPath = path.resolve(this.config.pathToDataDirectusSyncData, "configuration/directus-config/collections");
         this.directusConfigOverwriteCollectionsPath = path.resolve(this.config.pathToDataDirectusSyncData, "configuration/directus-config-overwrite/collections");
         this.configurationPathCollections = path.resolve(this.config.pathToDataDirectusSyncData, "configuration/collections");
@@ -135,8 +131,7 @@ export class DirectusDatabaseSync {
         //console.log("admin_email: "+admin_email);
         //console.log("admin_password: "+admin_password)
 
-        const response = await fetch(`${this.config.directusInstanceUrl}/auth/login`, {
-            agent: this.httpsAgent,
+        const response = await FetchIngoreSelfSignedCertHelper.fetch(`${this.config.directusInstanceUrl}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -175,7 +170,6 @@ export class DirectusDatabaseSync {
 
     private fetchGetOptions(headers: any, method: string){
         return {
-            agent: this.httpsAgent,
             method: method,
             headers: headers,
         };
@@ -187,7 +181,7 @@ export class DirectusDatabaseSync {
             headersObject = { Cookie: headers.get('cookie') };
         }
 
-        return await fetch(url, this.fetchGetOptions(headersObject, 'GET'));
+        return await FetchIngoreSelfSignedCertHelper.fetch(url, this.fetchGetOptions(headersObject, 'GET'));
     };
 
     private async fetchGetResponseJson(url: string, headers: any){
@@ -201,9 +195,8 @@ export class DirectusDatabaseSync {
 
         // Patch settings with an empty object
         console.log(' -  Patching with empty');
-        await fetch(`${this.getUrlSettings()}`, {
+        await FetchIngoreSelfSignedCertHelper.fetch(`${this.getUrlSettings()}`, {
             method: 'PATCH',
-            agent: this.httpsAgent,
             headers: {
                 Cookie: headers.get('cookie'),
                 'Content-Type': 'application/json',
@@ -234,8 +227,7 @@ export class DirectusDatabaseSync {
         }
 
         // Patch updated settings
-        const response = await fetch(`${this.getUrlSettings()}`, {
-            agent: this.httpsAgent,
+        const response = await FetchIngoreSelfSignedCertHelper.fetch(`${this.getUrlSettings()}`, {
             method: 'PATCH',
             headers: {
                 Cookie: headers.get('cookie'),
@@ -372,8 +364,7 @@ export class DirectusDatabaseSync {
 
         // Import collection into Directus
         console.log(` -  Importing ${displayName}`);
-        const response = await fetch(`${this.config.directusInstanceUrl}/utils/import/${displayName}`, {
-            agent: this.httpsAgent,
+        const response = await FetchIngoreSelfSignedCertHelper.fetch(`${this.config.directusInstanceUrl}/utils/import/${displayName}`, {
             method: 'POST',
             headers: { Cookie: headers.get('cookie'), ...formData.getHeaders() },
             body: formData as any,

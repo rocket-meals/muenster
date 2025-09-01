@@ -72,9 +72,9 @@ let directus_url = `https://${MYHOST}/${DOMAIN_PATH}/${BACKEND_PATH}`;
 let admin_email = parsedEnvFile.ADMIN_EMAIL;
 let admin_password = parsedEnvFile.ADMIN_PASSWORD;
 
-const configurationPath = './configuration';
-const directusConfigCollectionsPath = './configuration/directus-config/collections';
-const directusConfigOverwriteCollectionsPath = './configuration/directus-config-overwrite/collections';
+const configurationPath = './../../../data/directus-sync-data/configuration';
+const directusConfigCollectionsPath = './../../../data/directus-sync-data/configuration/directus-config/collections';
+const directusConfigOverwriteCollectionsPath = './../../../data/directus-sync-data/configuration/directus-config-overwrite/collections';
 
 const configurationPathRolesPermissions = `${configurationPath}/roles-permissions`;
 const configurationPathCollections = `${configurationPath}/collections`;

@@ -4,13 +4,16 @@ import fetch from 'node-fetch';
 export class FetchIngoreSelfSignedCertHelper {
 
   public static async fetch(url: string, options: any = {}): Promise<any> {
-    // Agent für SSL-Zertifikatsprüfung deaktivieren
-    const httpsAgent = new https.Agent({
-      rejectUnauthorized: false // Ignoriert selbst-signierte Zertifikate
-    });
+    // Prüfe das Protokoll der URL
+    const isHttps = url.startsWith('https:');
 
-    // Füge den Agenten zu den Optionen hinzu
-    options.agent = httpsAgent;
+    if (isHttps) {
+      // Agent für SSL-Zertifikatsprüfung deaktivieren (nur für HTTPS)
+      options.agent = new https.Agent({
+        rejectUnauthorized: false // Ignoriert selbst-signierte Zertifikate
+      });
+    }
+    // Für HTTP-URLs keinen Agent setzen - node-fetch handhabt dies automatisch
 
     // Führe den Fetch-Aufruf durch
     return fetch(url, options);
