@@ -16,7 +16,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "repo-depkit-common": "*",
+    "repo-depkit-common": "workspace:*",
     "yargs": "^17.7.2"
   }
 }

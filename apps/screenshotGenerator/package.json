@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "puppeteer": "^23.1.1",
-    "repo-depkit-common": "*",
+    "repo-depkit-common": "workspace:*",
     "sharp": "^0.33.5",
     "yargs": "^17.7.2"
   }
