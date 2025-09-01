@@ -12,7 +12,7 @@ import inquirer from 'inquirer';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const dumpPath = './configuration/directus-config';
+const dumpPath = './../../../data/directus-sync-data/configuration/directus-config';
 
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
