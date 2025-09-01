@@ -1,10 +1,10 @@
+import {DockerDirectusHelper} from "./DockerDirectusHelper";
+import {FetchIngoreSelfSignedCertHelper} from "./FetchIngoreSelfSignedCertHelper";
+
 export class DockerDirectusPingHelper {
 
-  static DIRECTUS_CONTAINER_NAME = 'rocket-meals-directus';
-
-  // Health-Check-Funktion für Directus
-  public static async waitForDirectusHealthy(maxRetries: number = -1, retryIntervalSeconds: number = 5): Promise<boolean> {
-    const directusUrl = `http://${DockerDirectusPingHelper.DIRECTUS_CONTAINER_NAME}:${process.env.DIRECTUS_PORT || '8055'}`;
+  // Ping-Check-Funktion für Directus
+  public static async waitForDirectusHealthy(directusUrl = DockerDirectusHelper.getDirectusServerUrl(), maxRetries: number = -1, retryIntervalSeconds: number = 5): Promise<boolean> {
     //const healthCheckUrl = `${directusUrl}/server/health`; // Health prüft auch email connection, welche wenn nicht konfiguriert fehlschlägt
     const pingCheckUrl = `${directusUrl}/server/ping`; // daher als fallback
 
@@ -14,10 +14,10 @@ export class DockerDirectusPingHelper {
     while (maxRetries === -1 || attempt < maxRetries) {
       attempt++;
       try {
-        console.log(`⏳ Prüfe Directus Health Status...`);
+        console.log(`⏳ Prüfe Directus Ping Status...`);
 
         // Versuche zuerst den standard Ping endpoint
-        let response = await fetch(pingCheckUrl, {
+        let response = await FetchIngoreSelfSignedCertHelper.fetch(pingCheckUrl, {
           method: 'GET',
           headers: {
             'Accept': 'application/json'
@@ -30,16 +30,18 @@ export class DockerDirectusPingHelper {
           console.log(`✅ Directus ist reachable!`);
           console.log(`🚀 Directus Ping-Check erfolgreich, fortfahren...`);
           return true;
-        } {
+        } else {
           console.log(`❌ Directus Ping-Check fehlgeschlagen - Status: ${response.status}`);
         }
       } catch (error: any) {
+        console.log(error);
+        // Behandlung spezifischer Fehlertypen
         if (error.name === 'TimeoutError') {
           console.log(`⏱️ Ping-Check Timeout - Directus antwortet nicht schnell genug`);
-        } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        } else if (error.name === 'TypeError' && error.message.includes('fetch failed')) {
           console.log(`🔌 Verbindungsfehler - Directus ist noch nicht erreichbar`);
         } else {
-          console.log(`❌ Fehler beim Ping-Check:`, error.message);
+          console.log(`❌ Unerwarteter Fehler beim Ping-Check:`, error.message);
         }
       }
 

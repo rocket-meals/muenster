@@ -12,7 +12,6 @@ import inquirer from 'inquirer';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const dumpPath = './../../../data/directus-sync-data/configuration/directus-config';
 
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
@@ -79,6 +78,7 @@ const directusConfigOverwriteCollectionsPath = './configuration/directus-config-
 
 const configurationPathRolesPermissions = `${configurationPath}/roles-permissions`;
 const configurationPathCollections = `${configurationPath}/collections`;
+const dumpPath = './../../../data/directus-sync-data/configuration/directus-config';
 
 // Directus API endpoints
 const getUrlPermissions = () => {

@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y docker-ce-cli
 RUN corepack enable && corepack prepare yarn@stable --activate
 
 # Set working directory
-WORKDIR /app
+WORKDIR /rocket-meals
 
 # Copy Yarn configuration and releases first
 COPY .yarnrc.yml ./
@@ -33,7 +33,7 @@ COPY . .
 # (Currently just copying TypeScript files, but could add build step here)
 
 # Set the working directory to backend-sync
-WORKDIR /app/apps/backend-sync
+WORKDIR /rocket-meals/apps/backend-sync
 
 # Start the application directly with tsx
-CMD ["yarn", "start:push"]
+CMD ["yarn", "start:docker-push"]

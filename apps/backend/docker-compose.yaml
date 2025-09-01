@@ -186,8 +186,6 @@ services:
       # Directus Admin user
       ADMIN_EMAIL: "${ADMIN_EMAIL}"
       ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
-      PUBLIC_URL: "https://${MYHOST}/${ROCKET_MEALS_PATH}/${ROCKET_MEALS_BACKEND_PATH}"
-      # Directus Port für Health-Check
       DIRECTUS_PORT: "${DIRECTUS_PORT}"
     networks:
       - directus_network
