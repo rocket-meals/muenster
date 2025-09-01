@@ -20,7 +20,9 @@
     "readonly": false,
     "required": false,
     "sort": 15,
-    "special": ["o2m"],
+    "special": [
+      "o2m"
+    ],
     "translations": [
       {
         "language": "de-DE",

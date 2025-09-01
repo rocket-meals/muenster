@@ -15,7 +15,12 @@
     "interface": "list-o2m",
     "note": null,
     "options": {
-      "fields": ["sort", "short_code", "alias", "external_identifier"],
+      "fields": [
+        "sort",
+        "short_code",
+        "alias",
+        "external_identifier"
+      ],
       "layout": "table",
       "sort": "sort",
       "template": "{{alias}} ({{id}})"
@@ -23,7 +28,9 @@
     "readonly": false,
     "required": false,
     "sort": 11,
-    "special": ["o2m"],
+    "special": [
+      "o2m"
+    ],
     "translations": null,
     "validation": null,
     "validation_message": null,

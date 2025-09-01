@@ -15,7 +15,11 @@
     "options": {
       "enableLink": true,
       "enableSearchFilter": true,
-      "fields": ["comment", "canteen.alias", "date_updated"],
+      "fields": [
+        "comment",
+        "canteen.alias",
+        "date_updated"
+      ],
       "filter": null,
       "layout": "table",
       "sort": "date_updated",
@@ -24,7 +28,9 @@
     "readonly": false,
     "required": false,
     "sort": 17,
-    "special": ["o2m"],
+    "special": [
+      "o2m"
+    ],
     "translations": [
       {
         "language": "de-DE",

@@ -28,7 +28,9 @@
     "readonly": false,
     "required": false,
     "sort": 13,
-    "special": ["m2o"],
+    "special": [
+      "m2o"
+    ],
     "translations": null,
     "validation": null,
     "validation_message": null,

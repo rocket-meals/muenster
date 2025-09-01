@@ -20,7 +20,9 @@
     "readonly": false,
     "required": false,
     "sort": 8,
-    "special": ["m2o"],
+    "special": [
+      "m2o"
+    ],
     "translations": [
       {
         "language": "de-DE",
