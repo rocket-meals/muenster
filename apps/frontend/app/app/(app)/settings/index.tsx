@@ -226,13 +226,13 @@ const Settings = () => {
 	};
 
 	const priceGroups: Record<PriceGroupKey, { label: string }> = {
-		student: {
+		[PriceGroupKey.student]: {
 			label: translate(TranslationKeys.price_group_student),
 		},
-		employee: {
+		[PriceGroupKey.employee]: {
 			label: translate(TranslationKeys.price_group_employee),
 		},
-		guest: {
+		[PriceGroupKey.guest]: {
 			label: translate(TranslationKeys.price_group_guest),
 		},
 	};

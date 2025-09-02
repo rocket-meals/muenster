@@ -20,6 +20,7 @@ import { FoodCategoriesHelper } from '@/redux/actions/FoodCategories/FoodCategor
 import { DatabaseTypes } from 'repo-depkit-common';
 import { SET_FOOD_CATEGORIES, SET_FOOD_OFFERS_CATEGORIES } from '@/redux/Types/types';
 import { FoodOffersCategoriesHelper } from '@/redux/actions/FoodOffersCategories/FoodOffersCategories';
+import {PriceGroupKey} from "@/app/(app)/settings/types";
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.big_screen);
@@ -460,7 +461,7 @@ const Index = () => {
 										fontSize: screenWidth > 600 ? 44 : 18,
 									}}
 								>
-									{showFormatedPrice(showDayPlanPrice(currentFood, 'student'))}
+									{showFormatedPrice(showDayPlanPrice(currentFood, PriceGroupKey.student))}
 								</Text>
 								<Text
 									style={{
@@ -470,7 +471,7 @@ const Index = () => {
 									}}
 								>
 									{`${translate(TranslationKeys.price_group_employee)}: `}
-									{showFormatedPrice(showDayPlanPrice(currentFood, 'employee'))}
+									{showFormatedPrice(showDayPlanPrice(currentFood, PriceGroupKey.employee))}
 								</Text>
 								<Text
 									style={{
@@ -480,7 +481,7 @@ const Index = () => {
 									}}
 								>
 									{`${translate(TranslationKeys.price_group_guest)}: `}
-									{showFormatedPrice(showDayPlanPrice(currentFood, 'guest'))}
+									{showFormatedPrice(showDayPlanPrice(currentFood, PriceGroupKey.guest))}
 								</Text>
 								<Text
 									style={{

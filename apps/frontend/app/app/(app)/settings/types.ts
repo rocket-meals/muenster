@@ -9,4 +9,8 @@ export enum Languages {
 	'ru' = 'Russian (Русский)',
 }
 
-export type PriceGroupKey = 'student' | 'employee' | 'guest';
+export enum PriceGroupKey {
+	"student" = "student",
+	"employee" = "employee",
+	"guest" = "guest",
+}

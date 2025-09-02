@@ -18,6 +18,7 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';
 import { myContrastColor } from '@/helper/colorHelper';
+import {PriceGroupKey} from "@/app/(app)/settings/types";
 
 const index = () => {
 	useSetPageTitle(TranslationKeys.price_group);
@@ -35,17 +36,17 @@ const index = () => {
 	const [selectedOption, setSelectedOption] = useState<string | null>(null);
 	const sortingOptions = [
 		{
-			id: 'student',
+			id: PriceGroupKey.student,
 			label: translate(TranslationKeys.price_group_student),
 			icon: <FontAwesome name="graduation-cap" size={24} />,
 		},
 		{
-			id: 'employee',
+			id: PriceGroupKey.employee,
 			label: translate(TranslationKeys.price_group_employee),
 			icon: <Ionicons name="bag" size={24} />,
 		},
 		{
-			id: 'guest',
+			id: PriceGroupKey.guest,
 			label: translate(TranslationKeys.price_group_guest),
 			icon: <FontAwesome5 name="users" size={24} />,
 		},
@@ -79,6 +80,7 @@ const index = () => {
 
 	const renderLottie = useMemo(() => {
 		if (animationJson) {
+			// @ts-expect-error LottieView type issue - LottieView has autoPlay prop but types don't reflect it
 			return <LottieView ref={animationRef} source={animationJson} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay={autoPlay} loop={false} />;
 		}
 	}, [autoPlay, animationJson]);

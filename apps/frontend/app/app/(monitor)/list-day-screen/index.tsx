@@ -25,6 +25,7 @@ import { FoodOffersCategoriesHelper } from '@/redux/actions/FoodOffersCategories
 import { SET_FOOD_CATEGORIES, SET_FOOD_OFFERS_CATEGORIES } from '@/redux/Types/types';
 import { sortMarkingsByGroup, sortByFoodName, sortByFoodOfferCategoryOnly, sortByFoodCategoryOnly } from 'repo-depkit-common';
 import { MarkingGroupsHelper } from '@/redux/actions/MarkingGroups/MarkingGroups';
+import {PriceGroupKey} from "@/app/(app)/settings/types";
 const index = () => {
 	useSetPageTitle('list-day-screen');
 	const { canteens_id, refreshDataIntervalInSeconds, nextPageIntervalInSeconds, monitor_additional_canteens_id, foodAttributesData } = useLocalSearchParams();
@@ -765,7 +766,7 @@ const index = () => {
 														},
 													]}
 												>
-													{`${showFormatedPrice(showDayPlanPrice(item, 'student'))} / ${showFormatedPrice(showDayPlanPrice(item, 'employee'))} / ${showFormatedPrice(showDayPlanPrice(item, 'guest'))}`}
+													{`${showFormatedPrice(showDayPlanPrice(item, PriceGroupKey.student))} / ${showFormatedPrice(showDayPlanPrice(item, 'employee'))} / ${showFormatedPrice(showDayPlanPrice(item, 'guest'))}`}
 												</Text>
 											</View>
 										);
@@ -905,7 +906,7 @@ const index = () => {
 													},
 												]}
 											>
-												{`${showFormatedPrice(showDayPlanPrice(item, 'student'))} / ${showFormatedPrice(showDayPlanPrice(item, 'employee'))} / ${showFormatedPrice(showDayPlanPrice(item, 'guest'))}`}
+												{`${showFormatedPrice(showDayPlanPrice(item, PriceGroupKey.student))} / ${showFormatedPrice(showDayPlanPrice(item, 'employee'))} / ${showFormatedPrice(showDayPlanPrice(item, 'guest'))}`}
 											</Text>
 										</View>
 									))}

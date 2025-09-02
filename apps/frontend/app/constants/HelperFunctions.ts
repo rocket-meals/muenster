@@ -7,6 +7,7 @@ import { ServerAPI } from '@/redux/actions';
 import { StringHelper } from 'repo-depkit-common';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { configureStore } from '@/redux/store';
+import {PriceGroupKey} from "@/app/(app)/settings/types";
 
 export const generateCodeVerifier = async () => {
 	const bytesMinAmount = 32;
@@ -231,20 +232,20 @@ export const getFoodOffer = (foodOffers: any, offerId: string) => {
 	}
 };
 
-export const showPrice = (item: any, profile: any) => {
-	if (profile?.price_group === 'guest') {
+export const showPrice = (item: any, profile: Partial<DatabaseTypes.Profiles>) => {
+	if (profile?.price_group === PriceGroupKey.guest) {
 		return item?.price_guest?.toFixed(2);
-	} else if (profile?.price_group === 'employee') {
+	} else if (profile?.price_group === PriceGroupKey.employee) {
 		return item?.price_employee?.toFixed(2);
 	} else {
 		return item?.price_student?.toFixed(2);
 	}
 };
 
-export const showDayPlanPrice = (item: any, profile: any) => {
-	if (profile === 'guest') {
+export const showDayPlanPrice = (item: any, priceGroup: PriceGroupKey) => {
+	if (priceGroup === PriceGroupKey.guest) {
 		return item?.price_guest?.toFixed(2);
-	} else if (profile === 'employee') {
+	} else if (priceGroup === PriceGroupKey.employee) {
 		return item?.price_employee?.toFixed(2);
 	} else {
 		return item?.price_student?.toFixed(2);

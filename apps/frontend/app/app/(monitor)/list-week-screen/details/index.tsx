@@ -22,6 +22,7 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 import { sortMarkingsByGroup } from 'repo-depkit-common';
+import {PriceGroupKey} from "@/app/(app)/settings/types";
 
 const fontSize = 10;
 
@@ -206,7 +207,7 @@ const index = () => {
 	}, [foods, categories, isMobile, weekDayNames]); // <-- Dependencies for useCallback
 
 	const getPriceText = (food: any) => {
-		return `${showFormatedPrice(showDayPlanPrice(food, 'student'))} / ${showFormatedPrice(showDayPlanPrice(food, 'employee'))} / ${showFormatedPrice(showDayPlanPrice(food, 'guest'))}`;
+		return `${showFormatedPrice(showDayPlanPrice(food, PriceGroupKey.student))} / ${showFormatedPrice(showDayPlanPrice(food, PriceGroupKey.employee))} / ${showFormatedPrice(showDayPlanPrice(food, PriceGroupKey.guest))}`;
 	};
 
 	const getMarkings = async () => {
