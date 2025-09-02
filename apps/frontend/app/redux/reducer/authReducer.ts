@@ -53,7 +53,6 @@ const authReducer = (state = initialState, actions: any) => {
 			return {
 				...initialState,
 				isDevMode: state.isDevMode,
-
 			};
 		}
 		case ON_LOGOUT: {
