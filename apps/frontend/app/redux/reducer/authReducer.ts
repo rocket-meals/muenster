@@ -1,8 +1,9 @@
 import { CLEAR_ANONYMOUSLY, ON_LOGIN, ON_LOGOUT, UPDATE_DEVELOPER_MODE, UPDATE_LOGIN, UPDATE_MANAGEMENT, UPDATE_PRIVACY_POLICY_DATE, UPDATE_PROFILE } from '@/redux/Types/types';
+import {PriceGroupKey} from "@/app/(app)/settings/types";
 
 const initialState = {
 	user: {},
-	profile: { markings: [] },
+	profile: { markings: [], price_group: PriceGroupKey.student },
 	loggedIn: false,
 	isManagement: false,
 	isDevMode: false,
