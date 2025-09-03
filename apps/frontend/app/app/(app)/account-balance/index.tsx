@@ -57,15 +57,13 @@ const AccountBalanceScreen = () => {
 
 	// Helper function to add errors to debug list
 	const addDebugError = useCallback((error: any, source: string) => {
-		if (isDevMode) {
-			const errorMessage = typeof error === 'string' ? error : JSON.stringify(error);
-			setDebugErrors(prev => [...prev, {
-				timestamp: new Date(),
-				error: errorMessage,
-				source: source
-			}]);
-		}
-	}, [isDevMode]);
+		const errorMessage = typeof error === 'string' ? error : JSON.stringify(error);
+		setDebugErrors(prev => [...prev, {
+			timestamp: new Date(),
+			error: errorMessage,
+			source: source
+		}]);
+	}, []);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -256,7 +254,7 @@ const AccountBalanceScreen = () => {
 			</View>
 			<View style={styles.additionalInfoContainer}>
 				{/* Debug Logs if isDevMode active*/}
-				{isDevMode && debugErrors.length > 0 && (
+				{debugErrors.length > 0 && (
 					<View style={{ marginTop: 20 }}>
 						<Text style={{ ...styles.label, color: theme.header.text }}>{translate(TranslationKeys.debugErrors)}:</Text>
 						{debugErrors.map((errorItem, index) => (
