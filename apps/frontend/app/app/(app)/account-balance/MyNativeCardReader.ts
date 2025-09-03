@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { MyCardReaderInterface } from './MyCardReader';
+import {MyCardReaderInterface, MyCardReaderResponseSupport} from './MyCardReader';
 import { isRunningInExpoGo } from 'expo';
 import CardResponse from '@/helper/nfcCardReaderHelper/CardResponse';
 import CardReader from '@/helper/nfcCardReaderHelper/CardReader';
@@ -18,14 +18,34 @@ if (!isExpoGo) {
 }
 
 export default class MyNativeCardReader implements MyCardReaderInterface {
-	async isNfcEnabled(): Promise<boolean> {
-		if (isExpoGo || !NfcManager) return false;
-		return await NfcManager.isEnabled();
+	async isNfcEnabled(): Promise<MyCardReaderResponseSupport> {
+		try{
+			if(isExpoGo){
+				return {result: false, message: 'NFC is not supported in Expo Go'};
+			}
+			if(!NfcManager){
+				return {result: false, message: 'NFC Manager is not available'};
+			}
+			let isEnabled = await NfcManager.isEnabled();
+			return {result: isEnabled};
+		} catch(e: any){
+			return {result: false, message: 'Error checking NFC status', error: e};
+		}
 	}
 
-	async isNfcSupported(): Promise<boolean> {
-		if (isExpoGo || !NfcManager) return false;
-		return await NfcManager.isSupported();
+	async isNfcSupported(): Promise<MyCardReaderResponseSupport> {
+		try{
+			if(isExpoGo){
+				return {result: false, message: 'NFC is not supported in Expo Go'};
+			}
+			if(!NfcManager){
+				return {result: false, message: 'NFC Manager is not available'};
+			}
+			let isSupported = await NfcManager.isSupported();
+			return {result: isSupported};
+		} catch (e: any){
+			return {result: false, message: 'Error checking NFC support', error: e};
+		}
 	}
 
 	async readCard(callBack: (answer: CardResponse | undefined) => Promise<void>, showInstruction: () => void, hideInstruction: () => void, nfcInstruction: string): Promise<void> {

@@ -16,7 +16,6 @@ import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useFocusEffect } from 'expo-router';
-import { AntDesign } from '@expo/vector-icons';
 import useToast from '@/hooks/useToast';
 import { UPDATE_PROFILE } from '@/redux/Types/types';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
@@ -43,7 +42,7 @@ const AccountBalanceScreen = () => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
-	const { profile } = useSelector((state: RootState) => state.authReducer);
+	const { profile, isDevMode } = useSelector((state: RootState) => state.authReducer);
 	const { appSettings, language, primaryColor } = useSelector((state: RootState) => state.settings);
 	const balance_area_color = appSettings?.balance_area_color ? appSettings?.balance_area_color : primaryColor;
 	const [isNfcSupported, setIsNfcSupported] = useState(false);
@@ -54,6 +53,19 @@ const AccountBalanceScreen = () => {
 	const nfcSheetRef = useRef<BottomSheet>(null);
 	const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
 	const [animationJson, setAmimationJson] = useState<any>(null);
+	const [debugErrors, setDebugErrors] = useState<Array<{ timestamp: Date; error: string; source: string }>>([]);
+
+	// Helper function to add errors to debug list
+	const addDebugError = useCallback((error: any, source: string) => {
+		if (isDevMode) {
+			const errorMessage = typeof error === 'string' ? error : JSON.stringify(error);
+			setDebugErrors(prev => [...prev, {
+				timestamp: new Date(),
+				error: errorMessage,
+				source: source
+			}]);
+		}
+	}, [isDevMode]);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -135,17 +147,26 @@ const AccountBalanceScreen = () => {
 			const checkNfcStatus = async () => {
 				try {
 					const nfcAvailable = await myCardReader.isNfcSupported();
-					setIsNfcSupported(nfcAvailable);
+					setIsNfcSupported(nfcAvailable.result);
+
+					if (!nfcAvailable.result && nfcAvailable.error) {
+						addDebugError(nfcAvailable.error, 'NFC Support Check');
+					}
 
 					const nfcEnabled = await myCardReader.isNfcEnabled();
-					setIsNfcEnabled(nfcEnabled);
+					setIsNfcEnabled(nfcEnabled.result);
+
+					if (!nfcEnabled.result && nfcEnabled.error) {
+						addDebugError(nfcEnabled.error, 'NFC Enabled Check');
+					}
 				} catch (error) {
 					console.error('Error checking NFC status:', error);
+					addDebugError(error, 'NFC Status Check');
 				}
 			};
 
 			checkNfcStatus();
-		}, [])
+		}, [addDebugError])
 	);
 
 	useFocusEffect(
@@ -167,7 +188,7 @@ const AccountBalanceScreen = () => {
 
 	const renderLottie = useMemo(() => {
 		if (animationJson) {
-			return <LottieView ref={animationRef} source={animationJson ? animationJson : {}} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay={autoPlay} loop={false} />;
+			return <LottieView ref={animationRef} source={animationJson ? animationJson : {}} resizeMode="contain" style={{ width: '100%', height: '100%' }} autoPlay={!!autoPlay} loop={false} />;
 		}
 	}, [autoPlay, animationJson]);
 
@@ -189,6 +210,7 @@ const AccountBalanceScreen = () => {
 						} catch (e: any) {
 							toast(`${JSON.stringify(e)}`, 'error');
 							console.error('Error', JSON.stringify(e));
+							addDebugError(e, 'NFC Card Read');
 						}
 					}}
 				>
@@ -231,6 +253,21 @@ const AccountBalanceScreen = () => {
 					<Text style={{ ...styles.value, color: theme.header.text }}>{profile?.credit_balance_date_updated ? format(profile?.credit_balance_date_updated, 'dd.MM.yyyy HH:mm') : ''}</Text>
 				</View>
 				<View style={styles.additionalInfoContainer}>{appSettings && appSettings?.balance_translations && <CustomMarkdown content={getTextFromTranslation(appSettings?.balance_translations, language) || ''} backgroundColor={balance_area_color} imageWidth={'100%'} imageHeight={400} />}</View>
+			</View>
+			<View style={styles.additionalInfoContainer}>
+				{/* Debug Logs if isDevMode active*/}
+				{isDevMode && debugErrors.length > 0 && (
+					<View style={{ marginTop: 20 }}>
+						<Text style={{ ...styles.label, color: theme.header.text }}>{translate(TranslationKeys.debugErrors)}:</Text>
+						{debugErrors.map((errorItem, index) => (
+							<View key={index} style={{ marginVertical: 4 }}>
+								<Text style={{ ...styles.errorText, color: theme.header.text }}>
+									{`${format(errorItem.timestamp, 'dd.MM.yyyy HH:mm:ss')} - ${errorItem.source}: ${errorItem.error}`}
+								</Text>
+							</View>
+						))}
+					</View>
+				)}
 			</View>
 			{isActive && (
 				<BaseBottomSheet

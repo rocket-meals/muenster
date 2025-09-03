@@ -2076,7 +2076,7 @@
   "food_information_disclaimer": {
     "de": "Die Angaben zu den Daten basieren auf den Informationen, die uns zur Verfügung stehen und können von den tatsächlichen Werten abweichen. Änderungen vorbehalten. Weitere Informationen zu den Daten können hier entnommen werden:",
     "en": "The data is based on the information available to us and may differ from the actual values. Subject to change. Further information on the data can be found here:",
-    "ar": "تعتمد البيانات على المعلومات المتاحة لدينا وقد تختلف عن القيم الفعلية. قابل للتغيير. يمكن العثور على مزيد من المعلومات حول البيانات هنا:",
+    "ar": "تستند البيانات على المعلومات المتاحة لدينا وقد تختلف عن القيم الفعلية. قابل للتغيير. يمكن العثور على مزيد من المعلومات حول البيانات هنا:",
     "es": "Los datos se basan en la información disponible para nosotros y pueden diferir de los valores reales. Sujeto a cambios. Puede encontrar más información sobre los datos aquí:",
     "fr": "Les données sont basées sur les informations dont nous disposons et peuvent différer des valeurs réelles. Sous réserve de modifications. Vous trouverez plus d",
     "ru": "Данные основаны на информации, доступной нам, и могут отличаться от фактических значений. Подлежит изменению. Дополнительную информацию о данных можно найти здесь:",
@@ -3768,7 +3768,7 @@
     "en": "The food labeling data is based on available information and may vary. We strive for a correct filter in the app, but technical problems cannot be ruled out. The awards on site apply. Further information on the data can be found here:",
     "ar": "تستند بيانات وضع العلامات الغذائية إلى المعلومات المتاحة وقد تختلف. نحن نسعى للحصول على فلتر صحيح في التطبيق، لكن لا يمكن استبعاد المشاكل التقنية. الجوائز في الموقع تنطبق. يمكن العثور على مزيد من المعلومات حول البيانات هنا:",
     "es": "Los datos de etiquetado de alimentos se basan en información disponible y pueden variar. Nos esforzamos por un filtro correcto en la aplicación, pero no se pueden descartar problemas técnicos. Los premios en el sitio se aplican. Más información sobre los datos se puede encontrar aquí:",
-    "fr": "Les données d'étiquetage des aliments sont basées sur des informations disponibles et peuvent varier. Nous nous efforçons d'avoir un filtre correct dans l'application, mais les problèmes techniques ne peuvent pas être exclus. Les récompenses sur place s'appliquent. Vous pouvez trouver plus d'informations sur les données ici :",
+    "fr": "Les données d'étiquetage des aliments sont basées sur des informations disponibles et peuvent varier. Nous nous efforçons d'avoir un filtre correct dans l'application, mais les problèmes techniques ne peuvent pas être exclus. Les récompenses на месте s'appliquent. Vous pouvez trouver plus d'informations sur les données ici :",
     "ru": "Данные о маркировке продуктов основаны на доступной информации и могут отличаться. Мы стремимся к правильной фильтрации в приложении, но технические проблемы не исключены. Действуют награды на месте. Дополнительную информацию о данных можно найти здесь:",
     "tr": "Gıda etiketleme verileri mevcut bilgilere dayanır ve değişebilir. Uygulamada doğru bir filtre için çabalıyoruz, ancak teknik sorunlar göz ardı edilemez. Yerinde verilen ödüller geçerlidir. Verilerle ilgili daha fazla bilgiye buradan ulaşabilirsiniz:",
     "zh": "食品标签数据基于可用信息，可能会有所不同。我们努力在应用中提供正确的过滤器，但无法排除技术问题。现场的奖项适用。有关数据的更多信息，请参见此处："
@@ -3952,5 +3952,55 @@
     "ru": "Угадай, какое блюдо дороже",
     "tr": "Hangi yemeğin daha pahalı olduğunu tahmin et",
     "zh": "猜哪个菜更贵"
+  },
+  "feedback_and_support": {
+    "de": "Feedback & Support",
+    "en": "Feedback & Support",
+    "ar": "التعليقات والدعم",
+    "es": "Comentarios y soporte",
+    "fr": "Commentaires et support",
+    "ru": "Отзывы и поддержка",
+    "tr": "Geri bildirim ve destek",
+    "zh": "反馈与支持"
+  },
+  "FoodPlan:Week": {
+    "de": "Speiseplan: Woche",
+    "en": "Food Plan: Week",
+    "ar": "خطة الطعام: الأسبوع",
+    "es": "Plan de comida: Semana",
+    "fr": "Plan alimentaire: Semaine",
+    "ru": "План питания: Неделя",
+    "tr": "Yemek planı: Hafta",
+    "zh": "餐饮计划：周"
+  },
+  "foodPlanDay": {
+    "de": "Speiseplan Tag",
+    "en": "Food Plan Day",
+    "ar": "يوم خطة الطعام",
+    "es": "Día del plan de comida",
+    "fr": "Jour du plan alimentaire",
+    "ru": "День плана питания",
+    "tr": "Yemek planı günü",
+    "zh": "餐饮计划日"
+  },
+  "FoodPlan:List": {
+    "de": "Speiseplan: Liste",
+    "en": "Food Plan: List",
+    "ar": "خطة الطعام: القائمة",
+    "es": "Plan de comida: Lista",
+    "fr": "Plan alimentaire: Liste",
+    "ru": "План питания: Список",
+    "tr": "Yemek planı: Liste",
+    "zh": "餐饮计划：列表"
+  },
+  "debugErrors": {
+    "de": "Debug Fehler",
+    "en": "Debug Errors",
+    "ar": "أخطاء التصحيح",
+    "es": "Errores de depuración",
+    "fr": "Erreurs de débogage",
+    "ru": "Ошибки отладки",
+    "tr": "Hata ayıklama hataları",
+    "zh": "调试错误"
   }
 }

@@ -396,8 +396,9 @@ export enum TranslationKeys {
 	food_memory_game = 'food_memory_game',
 	guess_more_expensive_dish = 'guess_more_expensive_dish',
 	// NOT IN TRANSLATION
-	feedback_and_support = 'Feedback & Support',
+	feedback_and_support = 'feedback_and_support',
 	Food_Plan_Week = 'FoodPlan:Week',
 	food_Plan_Day = 'foodPlanDay',
 	Food_Plan_List = 'FoodPlan:List',
+	debugErrors = 'debugErrors',
 }

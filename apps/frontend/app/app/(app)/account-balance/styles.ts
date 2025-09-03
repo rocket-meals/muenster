@@ -121,4 +121,14 @@ export const styles = StyleSheet.create({
 		height: '100%',
 		resizeMode: 'contain',
 	},
+	errorText: {
+		fontSize: 12,
+		fontFamily: 'Poppins_400Regular',
+		marginVertical: 2,
+		padding: 8,
+		backgroundColor: 'rgba(255, 0, 0, 0.1)',
+		borderRadius: 4,
+		borderLeftWidth: 3,
+		borderLeftColor: 'rgba(255, 0, 0, 0.5)',
+	},
 });
