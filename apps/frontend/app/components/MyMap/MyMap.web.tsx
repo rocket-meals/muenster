@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import DEFAULT_TILE_LAYER from './defaultTileLayer';
 import type { MapMarker, LeafletWebViewEvent } from './model';
-import BaseModal from '@/components/BaseModal';
 import { MyMapProps } from '@/components/MyMap/MyMapHelper';
 
 const MyMap: React.FC<MyMapProps> = ({ mapCenterPosition, zoom, mapMarkers, onMarkerClick, onMapEvent, renderMarkerModal, onMarkerSelectionChange }) => {
@@ -60,11 +59,6 @@ const MyMap: React.FC<MyMapProps> = ({ mapCenterPosition, zoom, mapMarkers, onMa
 	return (
 		<View style={[styles.container, { backgroundColor: theme.screen.background }]}>
 			<iframe ref={iframeRef} src={html} style={{ width: '100%', height: '100%', border: 'none' }} onLoad={sendCoordinates} title="map" />
-			{renderMarkerModal && selectedMarker && (
-				<BaseModal isVisible={true} onClose={() => setSelectedMarker(null)}>
-					{renderMarkerModal(selectedMarker, () => setSelectedMarker(null))}
-				</BaseModal>
-			)}
 		</View>
 	);
 };

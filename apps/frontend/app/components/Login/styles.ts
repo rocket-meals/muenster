@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+	contentContainer: {
+		alignItems: 'center',
+	},
 	header: {
 		width: '100%',
 		flexDirection: 'row',
@@ -169,7 +172,6 @@ export const styles = StyleSheet.create({
 	sheetView: {
 		width: '100%',
 		height: '100%',
-		alignItems: 'center',
 		borderTopRightRadius: 28,
 		borderTopLeftRadius: 28,
 		padding: 15,

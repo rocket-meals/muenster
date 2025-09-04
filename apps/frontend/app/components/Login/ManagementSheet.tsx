@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
+import {BottomSheetScrollView, BottomSheetView} from '@gorhom/bottom-sheet';
 import { styles } from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { SheetProps } from './types';
@@ -40,7 +40,7 @@ const ManagementSheet: React.FC<SheetProps> = ({ closeSheet, handleLogin, loadin
 	const isFormValid = formState.isEmailValid && formState.isPasswordValid;
 
 	return (
-		<BottomSheetView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer} >
 			<View style={styles.sheetHeader}></View>
 			<Text style={{ ...styles.sheetHeading, color: theme.sheet.text }}>{translate(TranslationKeys.show_login_for_management_with_email_and_password)}</Text>
 			<Text style={{ ...styles.sheetSubHeading, color: theme.sheet.text }}>{translate(TranslationKeys.management_login_description)}</Text>
@@ -94,7 +94,7 @@ const ManagementSheet: React.FC<SheetProps> = ({ closeSheet, handleLogin, loadin
 					</Text>
 				)}
 			</TouchableOpacity>
-		</BottomSheetView>
+		</BottomSheetScrollView>
 	);
 };
 

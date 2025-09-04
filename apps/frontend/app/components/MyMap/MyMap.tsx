@@ -8,7 +8,6 @@ import { TranslationKeys } from '@/locales/keys';
 import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 import { MyMapProps } from '@/components/MyMap/MyMapHelper';
-import BaseModal from '@/components/BaseModal';
 
 const MyMap: React.FC<MyMapProps> = ({ mapCenterPosition, zoom, mapMarkers, onMarkerClick, onMapEvent, renderMarkerModal, onMarkerSelectionChange }) => {
 	const { theme } = useTheme();
@@ -100,11 +99,6 @@ const MyMap: React.FC<MyMapProps> = ({ mapCenterPosition, zoom, mapMarkers, onMa
 				mapMarkers={finalMapMarkers}
 				webviewStyle={styles.map}
 			/>
-			{renderMarkerModal && selectedMarker && (
-				<BaseModal isVisible={true} onClose={() => setSelectedMarker(null)}>
-					{renderMarkerModal(selectedMarker, () => setSelectedMarker(null))}
-				</BaseModal>
-			)}
 		</View>
 	);
 };

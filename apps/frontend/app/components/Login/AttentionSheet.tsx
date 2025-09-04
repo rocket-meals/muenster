@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useRef, useState } from 'react';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
+import {BottomSheetScrollView, BottomSheetView} from '@gorhom/bottom-sheet';
 import { useTheme } from '@/hooks/useTheme';
 import { AttentionSheetProps } from './types';
 import { styles } from './styles';
@@ -36,7 +36,7 @@ const AttentionSheet: React.FC<AttentionSheetProps> = ({ closeSheet, handleLogin
 	);
 
 	return (
-		<BottomSheetView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}>
+		<BottomSheetScrollView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.contentContainer} >
 			<View style={styles.attentionSheetHeader}>
 				<View />
 			</View>
@@ -61,7 +61,7 @@ const AttentionSheet: React.FC<AttentionSheetProps> = ({ closeSheet, handleLogin
 					</TouchableOpacity>
 				</View>
 			</View>
-		</BottomSheetView>
+		</BottomSheetScrollView>
 	);
 };
 
