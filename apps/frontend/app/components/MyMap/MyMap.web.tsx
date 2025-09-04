@@ -24,7 +24,7 @@ const MyMap: React.FC<MyMapProps> = ({ mapCenterPosition, zoom, mapMarkers, onMa
 				mapLayers: [DEFAULT_TILE_LAYER],
 				mapMarkers: mapMarkers ?? [],
 			};
-			iframeRef.current.contentWindow.postMessage(message, '*');
+			iframeRef.current.contentWindow.postMessage(message, window.location.origin);
 		}
 	}, [mapCenterPosition, zoom, mapMarkers]);
 

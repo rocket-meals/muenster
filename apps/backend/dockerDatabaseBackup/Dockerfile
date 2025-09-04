@@ -13,10 +13,10 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Add the backup scripts to the container
-ADD dump.sh /dump.sh
+COPY dump.sh /dump.sh
 RUN chmod +x /dump.sh
 
-ADD start.sh /start.sh
+COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
 # Set the volume for storing dumps
