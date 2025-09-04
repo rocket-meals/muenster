@@ -34,6 +34,7 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';
+import {ServerInfoHelper} from "@/helper/ServerInfoHelper";
 
 const Settings = () => {
 	useSetPageTitle(TranslationKeys.settings);
@@ -333,7 +334,7 @@ const Settings = () => {
 								style={styles.logo}
 							/>
 						</View>
-						<Text style={{ ...styles.heading, color: theme.drawerHeading }}>{serverInfo?.info?.project?.project_name || 'SWOSY 2.0'}</Text>
+						<Text style={{ ...styles.heading, color: theme.drawerHeading }}>{ServerInfoHelper.getServerName(serverInfo)}</Text>
 					</TouchableOpacity>
 					{isManagement && isDevMode && <Text style={{ ...styles.devModeText, color: theme.screen.text }}>{translate(TranslationKeys.developerModeActive)}</Text>}
 					{isManagement && isDevMode && (

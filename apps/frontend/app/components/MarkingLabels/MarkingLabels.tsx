@@ -20,6 +20,7 @@ import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
+
 const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet, size = 30 }) => {
 	const { theme } = useTheme();
 	const dispatch = useDispatch();
@@ -37,6 +38,9 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 	const marking = markings?.find((mark: any) => mark.id === markingId);
 	const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId);
 
+	// Move all hook calls before any early returns
+	const MarkingColor = marking ? useMyContrastColor(marking?.background_color, theme, mode === 'dark') : null;
+
 	const openMarkingLabel = (marking: DatabaseTypes.Markings) => {
 		if (handleMenuSheet) {
 			dispatch({
@@ -47,128 +51,13 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 		}
 	};
 
-	// Fetch profile function
-	const fetchProfile = async () => {
-		try {
-			const profile = (await profileHelper.fetchProfileById(user?.profile, {})) as DatabaseTypes.Profiles;
-			if (profile) {
-				dispatch({ type: UPDATE_PROFILE, payload: profile });
-			}
-		} catch (error) {
-			console.error('Error fetching profiles:', error);
-		}
-	};
-
-	const handleAnonymousMarking = (like: boolean) => {
-		const profileData = { ...profile };
-		let markingFound = false;
-
-		// Update or remove marking in the profile
-		profileData?.markings?.forEach((profileMarkings: any, index: number) => {
-			if (profileMarkings?.markings_id === markingId) {
-				const likeStats = profileMarkings?.like === like ? null : like;
-				markingFound = true;
-				if (likeStats === null) {
-					profileData?.markings.splice(index, 1); // Remove if unliked
-				} else {
-					profileData.markings[index] = { ...ownMarking, like: like }; // Update like status
-				}
-			}
-		});
-
-		// If the marking doesn't exist, add it
-		if (!markingFound) {
-			profileData?.markings?.push({
-				...ownMarking,
-				like: like,
-				markings_id: markingId,
-				profiles_id: profileData?.id,
-			});
-		}
-
-		dispatch({ type: UPDATE_PROFILE, payload: profileData });
-	};
-
-	// Handle update for liking/unliking the marking
-	const handleUpdateMarking = useCallback(
-		async (like: boolean) => {
-			if (like) {
-				setLikeLoading(true);
-			} else {
-				setDislikeLoading(true);
-			}
-			if (!user?.id) {
-				handleAnonymousMarking(like);
-				if (like) {
-					setLikeLoading(false);
-				} else {
-					setDislikeLoading(false);
-				}
-				return;
-			}
-
-			try {
-				const likeStats = ownMarking?.like === like ? null : like;
-				const updatedMarking = { ...ownMarking, like: likeStats };
-
-				const profileData = { ...profile };
-				let markingFound = false;
-
-				// Update or remove marking in the profile
-				profileData?.markings.forEach((profileMarkings: any, index: number) => {
-					if (profileMarkings.markings_id === updatedMarking?.markings_id) {
-						markingFound = true;
-						if (updatedMarking?.like === null) {
-							profileData.markings.splice(index, 1); // Remove if unliked
-						} else {
-							profileData.markings[index] = updatedMarking; // Update like status
-						}
-					}
-				});
-
-				// If the marking doesn't exist, add it
-				if (!markingFound) {
-					profileData.markings.push({
-						...updatedMarking,
-						markings_id: markingId,
-						profiles_id: profileData?.id,
-					});
-				}
-
-				dispatch({ type: UPDATE_PROFILE, payload: profileData });
-
-				// Update profile on the server
-				const result = (await profileHelper.updateProfile(profileData)) as DatabaseTypes.Profiles;
-				if (result) {
-					fetchProfile();
-					if (like) {
-						setLikeLoading(false);
-					} else {
-						setDislikeLoading(false);
-					}
-				}
-			} catch (error) {
-				console.error('Error updating marking:', error);
-			} finally {
-				if (like) {
-					setLikeLoading(false);
-				} else {
-					setDislikeLoading(false);
-				}
-			}
-		},
-		[user?.id, profile, ownMarking, markingId, dispatch, profileHelper, fetchProfile]
-	);
-
-	if (!marking) return null; // Early return if the marking doesn't exist
+	// Early return AFTER all hooks have been called
+	if (!marking) return null;
 
 	const markingImage = marking?.image_remote_url ? { uri: marking?.image_remote_url } : { uri: getImageUrl(String(marking?.image)) };
-
 	const markingText = getTextFromTranslation(marking?.translations, language);
 	const iconSize = isWeb ? 24 : 22;
-
 	const MarkingBackgroundColor = marking?.background_color;
-	const MarkingColor = useMyContrastColor(marking?.background_color, theme, mode === 'dark');
 
 	return (
 		<View style={styles.row}>

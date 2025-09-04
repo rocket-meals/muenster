@@ -11,6 +11,13 @@ interface Issue {
   line?: number;
 }
 
+// Mapping von Impact Software Qualities zu Report-Namen
+const qualityToReportName: Record<string, string> = {
+  "SECURITY": "security",
+  "RELIABILITY": "reliability",
+  "MAINTAINABILITY": "maintainability"
+};
+
 const argv = yargs(hideBin(process.argv))
     .scriptName("sonar-report")
     .usage("$0 [args]")
@@ -26,18 +33,18 @@ const argv = yargs(hideBin(process.argv))
       demandOption: true,
       describe: "SonarCloud project key",
     })
-    .option("type", {
-      alias: "k",
-      type: "string",
-      choices: ["BUG", "CODE_SMELL", "VULNERABILITY"],
-      default: "BUG",
-      describe: "Issue type to download",
+    .option("qualities", {
+      alias: "q",
+      type: "array",
+      choices: ["SECURITY", "RELIABILITY", "MAINTAINABILITY"],
+      default: ["SECURITY", "RELIABILITY", "MAINTAINABILITY"],
+      describe: "Impact Software Qualities to download (default: all qualities)",
     })
-    .option("output", {
+    .option("output-dir", {
       alias: "o",
       type: "string",
-      default: "./reports/report.csv",
-      describe: "Output file name",
+      default: "./reports",
+      describe: "Output directory for reports",
     })
     .help()
     .alias("h", "help").argv as any;
@@ -45,7 +52,7 @@ const argv = yargs(hideBin(process.argv))
 async function fetchAllIssues(
     token: string,
     project: string,
-    type: string
+    quality: string
 ): Promise<Issue[]> {
   let page = 1;
   const pageSize = 500;
@@ -55,7 +62,7 @@ async function fetchAllIssues(
   do {
     const url = `https://sonarcloud.io/api/issues/search?componentKeys=${encodeURIComponent(
         project
-    )}&types=${type}&p=${page}&ps=${pageSize}`;
+    )}&impactSoftwareQualities=${quality}&issueStatuses=OPEN,CONFIRMED&p=${page}&ps=${pageSize}`;
     const res = await fetch(url, {
       headers: {
         Authorization: `Basic ${Buffer.from(token + ":").toString("base64")}`,
@@ -83,13 +90,19 @@ async function fetchAllIssues(
   return issues;
 }
 
-async function main() {
-  const { token, project, type, output } = argv;
+async function generateReport(
+    token: string,
+    project: string,
+    quality: string,
+    outputDir: string
+): Promise<void> {
+  console.log(`Fetching ${quality} issues for project ${project}...`);
+  const issues = await fetchAllIssues(token, project, quality);
 
-  console.log(`Fetching ${type} issues for project ${project}...`);
-  const issues = await fetchAllIssues(token, project, type);
+  const reportName = qualityToReportName[quality];
+  const outputFile = path.join(outputDir, `report_${reportName}.csv`);
 
-  console.log(`Fetched ${issues.length} issues. Writing to ${output}...`);
+  console.log(`Fetched ${issues.length} ${quality} issues. Writing to ${outputFile}...`);
   const header = "Key,Message,Component,Line\n";
   const rows = issues.map(
       (i) =>
@@ -97,11 +110,26 @@ async function main() {
               i.line ?? ""
           }`
   );
-  // make sure the directory exists
-  fs.mkdirSync(path.dirname(output), { recursive: true });
-  fs.writeFileSync(output, header + rows.join("\n"), "utf-8");
 
-  console.log("Done ✅");
+  // Stelle sicher, dass das Verzeichnis existiert
+  fs.mkdirSync(outputDir, { recursive: true });
+  fs.writeFileSync(outputFile, header + rows.join("\n"), "utf-8");
+
+  console.log(`✅ ${quality} report saved to ${outputFile}`);
+}
+
+async function main() {
+  const { token, project, qualities, "output-dir": outputDir } = argv;
+
+  console.log(`Generating reports for project ${project}...`);
+  console.log(`Impact Software Qualities: ${qualities.join(", ")}`);
+  console.log(`Output directory: ${outputDir}`);
+
+  for (const quality of qualities) {
+    await generateReport(token, project, quality, outputDir);
+  }
+
+  console.log("All reports generated successfully ✅");
 }
 
 main().catch((err) => {

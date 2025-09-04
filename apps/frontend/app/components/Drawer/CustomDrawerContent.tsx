@@ -31,6 +31,7 @@ import { Zocial } from '@expo/vector-icons';
 import { myContrastColor } from '@/helper/colorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
+import {ServerInfoHelper} from "@/helper/ServerInfoHelper";
 
 export const iconLibraries: Record<string, any> = {
 	Ionicons,
@@ -342,7 +343,7 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation
 								style={styles.logo}
 							/>
 						</View>
-						<Text style={{ ...styles.heading, color: theme.drawerHeading }}>{serverInfo?.info?.project?.project_name || 'SWOSY 2.0'}</Text>
+						<Text style={{ ...styles.heading, color: theme.drawerHeading }}>{ServerInfoHelper.getServerName(serverInfo)}</Text>
 					</TouchableOpacity>
 					<View style={styles.menuContainer}>
 						{generateMenuItems().map((item, index) => (

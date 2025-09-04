@@ -76,11 +76,7 @@ const Index = () => {
 	);
 
 	const handleSearchFilter = () => {
-		if (query && query?.trim()?.length > 0) {
 			loadFormSubmissions(1, false);
-		} else {
-			loadFormSubmissions(1, false);
-		}
 	};
 
 	useFocusEffect(
