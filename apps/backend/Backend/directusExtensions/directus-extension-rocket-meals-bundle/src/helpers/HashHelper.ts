@@ -7,7 +7,7 @@ function deepSort(obj: any): any {
     return obj.map(deepSort);
   } else if (obj !== null && typeof obj === 'object') {
     return Object.keys(obj)
-      .sort()
+        .sort((a, b) => a.localeCompare(b))
       .reduce((acc: any, key) => {
         acc[key] = deepSort(obj[key]);
         return acc;

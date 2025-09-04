@@ -15,7 +15,7 @@ export enum HtmlTemplatesEnum {
 }
 
 export class BaseGermanMarkdownTemplateHelper {
-  public static TEMPLATE_MARKDOWN_FIELD = 'mailContentFieldRenderedAsHtml';
+  public static readonly TEMPLATE_MARKDOWN_FIELD = 'mailContentFieldRenderedAsHtml';
 
   public static getTemplateDataForMarkdownContent(markdownContent: string): {
     [key: string]: any;
