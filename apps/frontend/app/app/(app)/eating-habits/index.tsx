@@ -21,7 +21,7 @@ import MarkingBottomSheet from '@/components/MarkingBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { RootState } from '@/redux/reducer';
 
-const index = () => {
+const Index = () => {
 	useSetPageTitle(TranslationKeys.eating_habits);
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
@@ -139,4 +139,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

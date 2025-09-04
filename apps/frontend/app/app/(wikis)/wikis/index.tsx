@@ -15,7 +15,7 @@ import { RootState } from '@/redux/reducer';
 import { TranslationKeys } from '@/locales/keys';
 import { useLanguage } from '@/hooks/useLanguage';
 
-const index = () => {
+const Index = () => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const [wiki, setWiki] = useState<DatabaseTypes.Wikis>();
@@ -92,4 +92,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

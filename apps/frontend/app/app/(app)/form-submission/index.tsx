@@ -41,7 +41,7 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 
-const index = () => {
+const Index = () => {
 	const toast = useToast();
 	const scrollViewRef = useRef(null);
 	const { translate } = useLanguage();
@@ -762,4 +762,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

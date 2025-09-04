@@ -13,7 +13,7 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 
-const index = () => {
+const Index = () => {
 	useSetPageTitle(TranslationKeys.select_a_form);
 	const { theme } = useTheme();
 	const [loading, setLoading] = useState(false);
@@ -110,4 +110,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

@@ -759,7 +759,7 @@ export class ParseSchedule {
     }
 
     const foodoffersToCreate: Partial<DatabaseTypes.Foodoffers>[] = [];
-    foodofferListForParser.map(async (foodofferForParser, index) => {
+    foodofferListForParser.forEach(async (foodofferForParser, index) => {
       const canteen = dictCanteenExternalIdentifierToCanteen[foodofferForParser.canteen_external_identifier];
       const canteenFound = !!canteen;
 

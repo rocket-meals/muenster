@@ -223,7 +223,7 @@ export default function Login() {
 
 	return (
 		<>
-			{deviceMock && deviceMock === 'iphone' && isWeb && <DeviceMock />}
+			{!!(deviceMock && deviceMock === 'iphone' && isWeb) && <DeviceMock />}
 			<ScrollView
 				style={{
 					...styles.mainContainer,

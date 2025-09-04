@@ -11,7 +11,7 @@ import { myContrastColor } from '@/helper/colorHelper';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 
-const index = () => {
+const Index = () => {
 	useSetPageTitle('FoodPlan:Week');
 	const currentYear: number = moment().year();
 	const { theme } = useTheme();
@@ -200,4 +200,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

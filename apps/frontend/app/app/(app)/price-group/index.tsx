@@ -20,7 +20,7 @@ import { RootState } from '@/redux/reducer';
 import { myContrastColor } from '@/helper/colorHelper';
 import {PriceGroupKey} from "@/app/(app)/settings/types";
 
-const index = () => {
+const Index = () => {
 	useSetPageTitle(TranslationKeys.price_group);
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
@@ -155,4 +155,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

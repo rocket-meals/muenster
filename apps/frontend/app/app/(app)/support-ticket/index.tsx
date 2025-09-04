@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import { useLanguage } from '@/hooks/useLanguage';
 
-const index = () => {
+const Index = () => {
 	useSetPageTitle(TranslationKeys.my_support_tickets);
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
@@ -73,4 +73,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

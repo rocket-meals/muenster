@@ -12,7 +12,7 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 
-const supportfaq = () => {
+const SupportFaq = () => {
 	useSetPageTitle(TranslationKeys.feedback_support_faq);
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
@@ -146,4 +146,4 @@ const supportfaq = () => {
 	);
 };
 
-export default supportfaq;
+export default SupportFaq;

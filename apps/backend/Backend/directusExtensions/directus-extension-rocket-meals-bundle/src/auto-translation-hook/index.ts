@@ -31,13 +31,16 @@ async function getCurrentItemForTranslation(tablename: string, meta: any, transl
   let currentItem: any = {}; //For create we don't have a current item
   let primaryKeys = meta?.keys || [];
   const itemsService = myDatabaseHelper.getItemsServiceHelper(tablename as CollectionNames);
-  for (let primaryKey of primaryKeys) {
+
+  // Get the first primary key if available
+  if (primaryKeys.length > 0) {
+    const primaryKey = primaryKeys[0];
     //For update we have a current item
     currentItem = await itemsService.readOne(primaryKey, {
       fields: [translations_field + '.*'],
     });
-    break; //we only need get the first primary key
   }
+
   return currentItem;
 }
 

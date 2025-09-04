@@ -10,7 +10,7 @@ import { useFocusEffect } from 'expo-router';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 
-const index = () => {
+const Index = () => {
 	useSetPageTitle(TranslationKeys.dataAccess);
 	const { theme } = useTheme();
 	const bottomSheetRef = useRef<BottomSheet>(null);
@@ -57,4 +57,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

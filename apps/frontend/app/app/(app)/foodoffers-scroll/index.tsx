@@ -53,7 +53,7 @@ export const SHEET_COMPONENTS = {
 	eatingHabits: EatingHabitsSheet,
 };
 
-const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
+const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
@@ -721,4 +721,4 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	);
 };
 
-export default index;
+export default Index;

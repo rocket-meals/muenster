@@ -102,7 +102,7 @@ export class FoodTL1ParserHannover extends FoodTL1Parser {
   }
 
   static getCombinedSortedMarkingsExternalIdentifiersAsString(total_marking_external_identifier_list: string[]) {
-    let sorted_marking_external_identifiers = total_marking_external_identifier_list.sort();
+    let sorted_marking_external_identifiers = total_marking_external_identifier_list.sort((a, b) => a.localeCompare(b));
     let combined_marking_ids_as_string = sorted_marking_external_identifiers.join('-');
     return combined_marking_ids_as_string;
   }

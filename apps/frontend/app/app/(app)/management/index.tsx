@@ -10,7 +10,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 
-const index = () => {
+const Index = () => {
 	useSetPageTitle(TranslationKeys.role_management);
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
@@ -148,4 +148,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

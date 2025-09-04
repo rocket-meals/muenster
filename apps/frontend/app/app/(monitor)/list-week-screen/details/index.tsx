@@ -26,7 +26,7 @@ import {PriceGroupKey} from "@/app/(app)/settings/types";
 
 const fontSize = 10;
 
-const index = () => {
+const Index = () => {
 	const printRef = useRef<HTMLElement | null>(null);
 	const { translate } = useLanguage();
 	const { theme, setThemeMode } = useTheme();
@@ -688,4 +688,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

@@ -29,7 +29,7 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 
-const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
+const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	useSetPageTitle(TranslationKeys.campus);
 	const { theme } = useTheme();
 	const toast = useToast();
@@ -425,4 +425,4 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	);
 };
 
-export default index;
+export default Index;

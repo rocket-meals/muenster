@@ -17,7 +17,7 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 
-const details = () => {
+const Details = () => {
 	useSetPageTitle(TranslationKeys.apartment_details);
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
@@ -277,4 +277,4 @@ const details = () => {
 	);
 };
 
-export default details;
+export default Details;

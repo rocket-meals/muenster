@@ -64,7 +64,7 @@ interface DayItem {
 	foodofferInfoItem: DatabaseTypes.FoodoffersInfoItems | null;
 }
 
-const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
+const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
@@ -96,7 +96,7 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const { appElements } = useSelector((state: RootState) => state.appElements);
 	const { selectedCanteenFoodOffers, canteenFeedbackLabels } = useSelector((state: RootState) => state.canteenReducer);
 	const selectedCanteen = useSelectedCanteen();
-	const kioskMode = useKioskMode();
+		const kioskMode = useKioskMode();
 	const [prefetchedFoodOffers, setPrefetchedFoodOffers] = useState<Record<string, Record<string, DatabaseTypes.Foodoffers[]>>>({});
 	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
 	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
@@ -882,4 +882,4 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	);
 };
 
-export default index;
+export default Index;

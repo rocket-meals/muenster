@@ -15,7 +15,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { SET_MARKING_DETAILS } from '@/redux/Types/types';
 import { RootState } from '@/redux/reducer';
 
-const index = () => {
+const Index = () => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const dispatch = useDispatch();
@@ -99,4 +99,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

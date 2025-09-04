@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { RootState } from '@/redux/reducer';
 
-const index = () => {
+const Index = () => {
 	useSetPageTitle(TranslationKeys.experimentell);
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
@@ -131,4 +131,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

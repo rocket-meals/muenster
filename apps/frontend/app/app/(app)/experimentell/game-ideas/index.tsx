@@ -72,7 +72,7 @@ const GameIdeas = () => {
 	const [board, setBoard] = useState<(Card | null)[]>(generateMemoryBoard());
 	const [selected, setSelected] = useState<number[]>([]);
 
-	const mostDisliked = useMemo(() => markings.reduce((a, b) => (a.dislikes > b.dislikes ? a : b)), []);
+	const mostDisliked = useMemo(() => markings.reduce((a, b) => (a.dislikes > b.dislikes ? a : b), markings[0] || {}), []);
 
 	const handleRatingGuess = (dish: Dish) => {
 		const other = ratingPair.find(d => d.name !== dish.name)!;

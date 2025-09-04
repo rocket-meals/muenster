@@ -18,7 +18,7 @@ import { performLogout } from '@/helper/logoutHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const index = () => {
+const Index = () => {
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
 	const toast = useToast();
@@ -248,4 +248,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

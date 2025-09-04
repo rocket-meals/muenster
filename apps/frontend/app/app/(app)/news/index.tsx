@@ -12,7 +12,7 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
-const index = () => {
+const Index = () => {
 	useSetPageTitle(TranslationKeys.news);
 	const { theme } = useTheme();
 	const dispatch = useDispatch();
@@ -98,4 +98,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

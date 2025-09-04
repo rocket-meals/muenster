@@ -31,7 +31,7 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import CustomMarkdown from '@/components/CustomMarkdown/CustomMarkdown';
 import { RootState } from '@/redux/reducer';
 
-const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
+const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	useSetPageTitle(TranslationKeys.housing);
 	const toast = useToast();
 	const { translate } = useLanguage();
@@ -494,4 +494,4 @@ const index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	);
 };
 
-export default index;
+export default Index;

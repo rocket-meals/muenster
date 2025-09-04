@@ -26,7 +26,7 @@ import { SET_FOOD_CATEGORIES, SET_FOOD_OFFERS_CATEGORIES } from '@/redux/Types/t
 import { sortMarkingsByGroup, sortByFoodName, sortByFoodOfferCategoryOnly, sortByFoodCategoryOnly } from 'repo-depkit-common';
 import { MarkingGroupsHelper } from '@/redux/actions/MarkingGroups/MarkingGroups';
 import {PriceGroupKey} from "@/app/(app)/settings/types";
-const index = () => {
+const Index = () => {
 	useSetPageTitle('list-day-screen');
 	const { canteens_id, refreshDataIntervalInSeconds, nextPageIntervalInSeconds, monitor_additional_canteens_id, foodAttributesData } = useLocalSearchParams();
 	const dispatch = useDispatch();
@@ -965,4 +965,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;
