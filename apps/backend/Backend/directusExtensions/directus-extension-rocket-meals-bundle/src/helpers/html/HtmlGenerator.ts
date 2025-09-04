@@ -32,7 +32,7 @@ export const DEFAULT_HTML_TEMPLATE = HtmlTemplatesEnum.BASE_GERMAN_MARKDOWN_CONT
 
 export const HTML_TEMPLATE_FILE_ENDING = '.liquid';
 
-export type HtmlGeneratorOptions = {} & DirectusFilesAssetHelperOptions;
+export type HtmlGeneratorOptions = DirectusFilesAssetHelperOptions;
 
 export class HtmlGenerator {
   public static getPathToHtmlTemplates(): string {
