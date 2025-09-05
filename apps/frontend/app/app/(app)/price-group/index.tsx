@@ -19,6 +19,7 @@ import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';
 import { myContrastColor } from '@/helper/colorHelper';
 import {PriceGroupKey} from "@/app/(app)/settings/types";
+import {UserHelper} from "@/helper/UserHelper";
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.price_group);
@@ -27,7 +28,9 @@ const Index = () => {
 	const dispatch = useDispatch();
 	const profileHelper = new ProfileHelper();
 	const [loading, setLoading] = useState(false);
-	const { profile } = useSelector((state: RootState) => state.authReducer);
+	const { user, profile } = useSelector((state: RootState) => state.authReducer);
+	const isRegisteredUser = UserHelper.isRegisteredUser(user);
+
 	const { primaryColor, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	const [autoPlay, setAutoPlay] = useState(appSettings?.animations_auto_start);
@@ -89,7 +92,7 @@ const Index = () => {
 			setLoading(true);
 			setSelectedOption(option);
 			const payload = { ...profile, price_group: option };
-			if (profile.id) {
+			if (isRegisteredUser) {
 				const result = (await profileHelper.updateProfile(payload)) as DatabaseTypes.Profiles;
 				if (result) {
 					dispatch({ type: UPDATE_PROFILE, payload });
@@ -105,7 +108,8 @@ const Index = () => {
 	};
 
 	useEffect(() => {
-		setSelectedOption(profile?.price_group || 'student');
+		console.log('Profile changed, updating selected option:', profile);
+		setSelectedOption(profile?.price_group || PriceGroupKey.student);
 	}, [profile]);
 
 	return (

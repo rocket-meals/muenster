@@ -1,9 +1,23 @@
-import { CLEAR_ANONYMOUSLY, ON_LOGIN, ON_LOGOUT, UPDATE_DEVELOPER_MODE, UPDATE_LOGIN, UPDATE_MANAGEMENT, UPDATE_PRIVACY_POLICY_DATE, UPDATE_PROFILE } from '@/redux/Types/types';
+import {
+	CLEAR_ANONYMOUSLY,
+	CLEAR_PROFILE,
+	ON_LOGIN,
+	ON_LOGOUT,
+	UPDATE_DEVELOPER_MODE,
+	UPDATE_LOGIN,
+	UPDATE_MANAGEMENT,
+	UPDATE_PRIVACY_POLICY_DATE,
+	UPDATE_PROFILE
+} from '@/redux/Types/types';
 import {PriceGroupKey} from "@/app/(app)/settings/types";
+
+export const InitialProfile = {
+	markings: [], price_group: PriceGroupKey.student, id: null
+}
 
 const initialState = {
 	user: {},
-	profile: { markings: [], price_group: PriceGroupKey.student },
+	profile: InitialProfile,
 	loggedIn: false,
 	isManagement: false,
 	isDevMode: false,
@@ -43,6 +57,12 @@ const authReducer = (state = initialState, actions: any) => {
 				...state,
 				profile: actions.payload,
 			};
+		}
+		case CLEAR_PROFILE: {
+			return {
+				...state,
+				profile: InitialProfile,
+			}
 		}
 		case UPDATE_PRIVACY_POLICY_DATE: {
 			return {

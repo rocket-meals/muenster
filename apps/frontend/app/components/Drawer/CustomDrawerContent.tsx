@@ -1,36 +1,38 @@
-import { Text, View, Image, TouchableOpacity, ScrollView, SafeAreaView, Platform } from 'react-native';
-import React, { useEffect } from 'react';
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
-import { FontAwesome6 } from '@expo/vector-icons';
-import { Octicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import { useTheme } from '@/hooks/useTheme';
-import { styles } from './styles';
-import { useDispatch, useSelector } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
-import { CLEAR_ANONYMOUSLY, CLEAR_APARTMENTS, CLEAR_CAMPUSES, CLEAR_CANTEENS, CLEAR_COLLECTION_DATES_LAST_UPDATED, CLEAR_FOODS, CLEAR_MANAGEMENT, CLEAR_NEWS, CLEAR_CHATS, CLEAR_SETTINGS, CLEAR_POPUP_EVENTS_HASH, ON_LOGOUT, SET_WIKIS } from '@/redux/Types/types';
-import { performLogout } from '@/helper/logoutHelper';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { useLanguage } from '@/hooks/useLanguage';
+import {Image, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+	AntDesign,
+	Entypo,
+	EvilIcons,
+	Feather,
+	FontAwesome,
+	FontAwesome5,
+	FontAwesome6,
+	Foundation,
+	Ionicons,
+	MaterialCommunityIcons,
+	Octicons,
+	SimpleLineIcons,
+	Zocial
+} from '@expo/vector-icons';
+import {DrawerContentComponentProps} from '@react-navigation/drawer';
+import {useTheme} from '@/hooks/useTheme';
+import {styles} from './styles';
+import {useDispatch, useSelector} from 'react-redux';
+import {useRouter} from 'expo-router';
+import {SET_WIKIS} from '@/redux/Types/types';
+import {performLogout} from '@/helper/logoutHelper';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {useLanguage} from '@/hooks/useLanguage';
 import * as Linking from 'expo-linking';
 import useToast from '@/hooks/useToast';
-import { getTitleFromTranslation } from '@/helper/resourceHelper';
-import { WikisHelper } from '@/redux/actions/Wikis/Wikis';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { IconProps } from '@expo/vector-icons/build/createIconSet';
-import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { Zocial } from '@expo/vector-icons';
-import { myContrastColor } from '@/helper/colorHelper';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {getTitleFromTranslation} from '@/helper/resourceHelper';
+import {WikisHelper} from '@/redux/actions/Wikis/Wikis';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {IconProps} from '@expo/vector-icons/build/createIconSet';
+import {myContrastColor} from '@/helper/colorHelper';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 import {ServerInfoHelper} from "@/helper/ServerInfoHelper";
 
 export const iconLibraries: Record<string, any> = {

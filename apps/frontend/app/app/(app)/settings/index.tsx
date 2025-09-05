@@ -35,6 +35,7 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';
 import {ServerInfoHelper} from "@/helper/ServerInfoHelper";
+import {UserHelper} from "@/helper/UserHelper";
 
 const Settings = () => {
 	useSetPageTitle(TranslationKeys.settings);
@@ -57,6 +58,7 @@ const Settings = () => {
 	const [disabled, setDisabled] = useState(false);
 	const { manualCheck } = useExpoUpdateChecker();
 	const { user, profile, termsAndPrivacyConsentAcceptedDate, isManagement, isDevMode } = useSelector((state: RootState) => state.authReducer);
+	const isRegisteredUser = UserHelper.isRegisteredUser(user);
 
 	const { primaryColor, drawerPosition, selectedTheme, nickNameLocal, firstDayOfTheWeek, amountColumnsForcard, serverInfo, appSettings, useWebpForAssets } = useSelector((state: RootState) => state.settings);
 	const selectedCanteen = useSelectedCanteen();
@@ -70,7 +72,7 @@ const Settings = () => {
 	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
 
 	const saveNickname = async () => {
-		if (user?.id) {
+		if (isRegisteredUser) {
 			const result = (await profileHelper.updateProfile({
 				...profile,
 				nickname: nickname?.trim(),
@@ -256,7 +258,7 @@ const Settings = () => {
 					<SettingsGroupTitle>{translate(TranslationKeys.group_account_personalization)}</SettingsGroupTitle>
 					{/* Account & Nickname */}
 					<View style={{ gap: 0 }}>
-						<SettingsList iconBgColor={primaryColor} leftIcon={<MaterialCommunityIcons name="clipboard-account" size={24} color={theme.screen.icon} />} label={translate(TranslationKeys.account)} value={user?.id ? user?.id : translate(TranslationKeys.without_account)} handleFunction={() => {}} groupPosition="top" />
+						<SettingsList iconBgColor={primaryColor} leftIcon={<MaterialCommunityIcons name="clipboard-account" size={24} color={theme.screen.icon} />} label={translate(TranslationKeys.account)} value={isRegisteredUser ? user?.id : translate(TranslationKeys.without_account)} handleFunction={() => {}} groupPosition="top" />
 						{/* NickName */}
 						<SettingsList
 							iconBgColor={primaryColor}
@@ -275,7 +277,7 @@ const Settings = () => {
 							}}
 							groupPosition="middle"
 						/>
-						{user?.id ? (
+						{isRegisteredUser ? (
 							<>
 								<SettingsList iconBgColor={primaryColor} leftIcon={<Entypo name="login" size={24} color={theme.screen.icon} />} label={translate(TranslationKeys.logout)} rightIcon={<Entypo name="login" size={24} color={theme.screen.icon} />} handleFunction={handleLogout} groupPosition="middle" />
 								<SettingsList iconBgColor={primaryColor} leftIcon={<AntDesign name="deleteuser" size={24} color={theme.screen.icon} />} label={`${translate(TranslationKeys.account_delete)}`} rightIcon={<Octicons name="chevron-right" size={24} color={theme.screen.icon} />} handleFunction={handleDeleteAccount} groupPosition="middle" />

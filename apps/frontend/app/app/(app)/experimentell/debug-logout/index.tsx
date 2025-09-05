@@ -1,7 +1,21 @@
 import React from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { CLEAR_CANTEENS, CLEAR_CAMPUSES, CLEAR_APARTMENTS, CLEAR_FOODS, CLEAR_MANAGEMENT, CLEAR_NEWS, CLEAR_CHATS, CLEAR_SETTINGS, CLEAR_POPUP_EVENTS_HASH, CLEAR_COLLECTION_DATES_LAST_UPDATED, CLEAR_ANONYMOUSLY, ON_LOGOUT } from '@/redux/Types/types';
+import {
+	CLEAR_CANTEENS,
+	CLEAR_CAMPUSES,
+	CLEAR_APARTMENTS,
+	CLEAR_FOODS,
+	CLEAR_MANAGEMENT,
+	CLEAR_NEWS,
+	CLEAR_CHATS,
+	CLEAR_SETTINGS,
+	CLEAR_POPUP_EVENTS_HASH,
+	CLEAR_COLLECTION_DATES_LAST_UPDATED,
+	CLEAR_ANONYMOUSLY,
+	ON_LOGOUT,
+	CLEAR_PROFILE
+} from '@/redux/Types/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistor } from '@/redux/store';
 import { router } from 'expo-router';
@@ -55,6 +69,10 @@ const DebugLogout = () => {
 		{
 			label: 'CLEAR_COLLECTION_DATES_LAST_UPDATED',
 			action: () => dispatch({ type: CLEAR_COLLECTION_DATES_LAST_UPDATED }),
+		},
+		{
+			label: 'CLEAR_PROFILE',
+			action: () => dispatch({ type: CLEAR_PROFILE }),
 		},
 		{
 			label: 'REMOVE_STORAGE',
