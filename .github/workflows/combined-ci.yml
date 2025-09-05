@@ -60,6 +60,37 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+  sonarcloud-report:
+    name: 📥 Download SonarCloud Report
+    runs-on: ubuntu-latest
+    needs: [sonarqube, check-repository]
+    if: ${{ needs.check-repository.outputs.is-upstream == 'true' }}
+    steps:
+      - name: 🔄 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: 🧰 Setup Node.js, Yarn & Dependencies
+        uses: ./.github/actions/setup-and-install
+        with:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      - name: 📥 Download SonarCloud reports
+        run: |
+          SONAR_PROJECT=$(grep -E '^sonar.projectKey' sonar-project.properties | cut -d= -f2)
+          yarn workspace sonarCloudReportDownloader start --token "$SONAR_TOKEN" --project "$SONAR_PROJECT" --output-dir apps/sonarCloudReportDownloader/reports
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: 💾 Commit reports
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add -f apps/sonarCloudReportDownloader/reports
+          git commit -m "chore: update sonarcloud reports" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   backend-directus:
     name: 🔨 Directus Backend Build
     runs-on: ubuntu-latest
