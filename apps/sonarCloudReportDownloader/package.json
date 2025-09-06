@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "tsx src/index.ts",
-    "debug": "yarn run start"
+    "debug": "yarn run start",
+    "fix:readonly": "tsx src/fixStaticReadonly.ts"
   },
   "author": "",
   "license": "ISC",
