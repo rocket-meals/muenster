@@ -2,7 +2,7 @@ name: 🚀 Unified CI
 
 on:
   push:
-    branches: [main,master,dev]
+    branches: [main, master, dev]
   workflow_dispatch: # Allow manual triggering
 
 jobs:
@@ -19,10 +19,26 @@ jobs:
         with:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
+  lint:
+    name: 🎨 Prettier & ESLint
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: 🔄 Checkout Repository
+        uses: actions/checkout@v4
+      - name: 🧰 Setup Node.js, Yarn & Dependencies
+        uses: ./.github/actions/setup-and-install
+        with:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      - name: 🎨 Prettier
+        run: yarn format
+      - name: ✨ ESLint
+        run: yarn lint
+
   check-build:
     name: 🔍 Check Build Number
     runs-on: ubuntu-latest
-    needs: setup
+    needs: sonarqube
     outputs:
       changed: ${{ steps.check.outputs.changed }}
     steps:
@@ -35,6 +51,7 @@ jobs:
   check-repository:
     name: 🔍 Check Repository
     runs-on: ubuntu-latest
+    needs: lint
     outputs:
       is-upstream: ${{ steps.check.outputs.is-upstream }}
     steps:
@@ -53,7 +70,7 @@ jobs:
       - name: 🔄 Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: 🔍 SonarQube Scan
         if: ${{ env.SONAR_TOKEN != '' }}
         uses: SonarSource/sonarqube-scan-action@1a6d90ebcb0e6a6b1d87e37ba693fe453195ae25 # v5
