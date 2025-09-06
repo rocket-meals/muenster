@@ -38,6 +38,7 @@ apps/backend/Backend/directusExtensions/**/node_modules/
 apps/backend/Backend/directusExtensions/**/dist/
 packages/**/node_modules/
 packages/**/dist/
+**/*.html
 
 # Docker files
 Dockerfile*
