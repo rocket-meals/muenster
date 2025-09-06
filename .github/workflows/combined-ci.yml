@@ -78,7 +78,7 @@ jobs:
       - name: 📥 Download SonarCloud reports
         run: |
           SONAR_PROJECT=$(grep -E '^sonar.projectKey' sonar-project.properties | cut -d= -f2)
-          OUTPUT_DIR=apps/sonarCloudReportDownloader/reports
+          OUTPUT_DIR=reports
           echo "Saving SonarCloud reports to $OUTPUT_DIR"
           yarn workspace sonarCloudReportDownloader start --token "$SONAR_TOKEN" --project "$SONAR_PROJECT" --output-dir "$OUTPUT_DIR"
         env:
