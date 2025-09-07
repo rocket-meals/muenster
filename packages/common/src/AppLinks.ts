@@ -1,5 +1,5 @@
 export enum AppScreens {
-  LOGIN = "login",
+  LOGIN = 'login',
   FOOD_OFFERS = 'foodoffers',
   EATING_HABITS = 'eating-habits',
   ACCOUNT_BALANCE = 'account-balance',
