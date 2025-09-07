@@ -18,20 +18,20 @@ import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
 const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet, size = 30 }) => {
-        const { theme } = useTheme();
-        const dispatch = useDispatch();
-        const { translate } = useLanguage();
-        const [warning, setWarning] = useState(false);
-        const [showTooltip, setShowTooltip] = useState(false);
-        const likeLoading = false;
-        const dislikeLoading = false;
-        const { primaryColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+	const { theme } = useTheme();
+	const dispatch = useDispatch();
+	const { translate } = useLanguage();
+	const [warning, setWarning] = useState(false);
+	const [showTooltip, setShowTooltip] = useState(false);
+	const likeLoading = false;
+	const dislikeLoading = false;
+	const { primaryColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
-        const { profile } = useSelector((state: RootState) => state.authReducer);
+	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
-        const { markings } = useSelector((state: RootState) => state.food);
-        const marking = markings?.find((mark: any) => mark.id === markingId);
-        const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId);
+	const { markings } = useSelector((state: RootState) => state.food);
+	const marking = markings?.find((mark: any) => mark.id === markingId);
+	const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId);
 
 	const openMarkingLabel = (marking: DatabaseTypes.Markings) => {
 		if (handleMenuSheet) {
@@ -46,8 +46,8 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 	// Early return AFTER all hooks have been called
 	if (!marking) return null;
 
-        const markingText = getTextFromTranslation(marking?.translations, language);
-        const iconSize = isWeb ? 24 : 22;
+	const markingText = getTextFromTranslation(marking?.translations, language);
+	const iconSize = isWeb ? 24 : 22;
 
 	return (
 		<View style={styles.row}>
