@@ -98,25 +98,25 @@ jobs:
           yarn workspace sonarCloudReportDownloader start --token "$SONAR_TOKEN" --project "$SONAR_PROJECT" --output-dir "$OUTPUT_DIR"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        - name: "💾 Commit reports"
-          run: |
-            git config user.name "github-actions"
-            git config user.email "github-actions@github.com"
-            git pull --rebase origin "$GITHUB_REF_NAME"
-            if [ -d apps/sonarCloudReportDownloader/reports ]; then
-              echo "Committing reports from apps/sonarCloudReportDownloader/reports"
-              git add -f apps/sonarCloudReportDownloader/reports
-              if git diff --cached --quiet; then
-                echo "No changes to commit"
-              else
-                git commit -m "chore: update sonarcloud reports [skip ci]"
-                git push
-              fi
+      - name: "💾 Commit reports"
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          if [ -d apps/sonarCloudReportDownloader/reports ]; then
+            echo "Committing reports from apps/sonarCloudReportDownloader/reports"
+            git add -f apps/sonarCloudReportDownloader/reports
+            if git diff --cached --quiet; then
+              echo "No changes to commit"
             else
-              echo "No reports generated at apps/sonarCloudReportDownloader/reports, skipping commit"
+              git commit -m "chore: update sonarcloud reports [skip ci]"
+              git push
             fi
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          else
+            echo "No reports generated at apps/sonarCloudReportDownloader/reports, skipping commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   backend-directus:
     name: "🔨 Directus Backend Build"
