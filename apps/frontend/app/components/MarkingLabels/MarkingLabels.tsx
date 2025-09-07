@@ -25,7 +25,7 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 	const [showTooltip, setShowTooltip] = useState(false);
 	const likeLoading = false;
 	const dislikeLoading = false;
-	const { primaryColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+	const { primaryColor, language, appSettings } = useSelector((state: RootState) => state.settings);
 
 	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
