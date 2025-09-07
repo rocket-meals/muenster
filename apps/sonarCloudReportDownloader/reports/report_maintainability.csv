@@ -1,10 +1,9 @@
 Key,Message,Component,Line
-"AZkVQNp4j3QBqU9b5PWk","Remove this unused import of 'UPDATE_PROFILE'.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",9
-"AZkVQNp4j3QBqU9b5PWl","Remove this useless assignment to variable ""profileHelper"".","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",28
-"AZkVQNp4j3QBqU9b5PWm","Remove this useless assignment to variable ""setLikeLoading"".","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",31
-"AZkVQNp4j3QBqU9b5PWn","Remove this useless assignment to variable ""setDislikeLoading"".","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",32
-"AZkVQNp4j3QBqU9b5PWo","Remove this useless assignment to variable ""user"".","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",35
-"AZkVQNp4j3QBqU9b5PWp","Remove this useless assignment to variable ""MarkingColor"".","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",42
+"AZkkyYexcUymLlIeM5gw","Remove this useless assignment to variable ""mode"".","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",28
+"AZkfCEQNZWk3l8lfAOUE","Unnecessary escape character: \"".","rocket-meals_rocket-meals:apps/sonarCloudReportDownloader/src/fixStaticReadonly.ts",32
+"AZkfCEQNZWk3l8lfAOUF","Unnecessary escape character: \"".","rocket-meals_rocket-meals:apps/sonarCloudReportDownloader/src/fixStaticReadonly.ts",32
+"AZkfCEQNZWk3l8lfAOUG","Unnecessary escape character: \"".","rocket-meals_rocket-meals:apps/sonarCloudReportDownloader/src/fixStaticReadonly.ts",32
+"AZkVi5T116IktApHcqVg","Remove this useless assignment to variable ""screenWidth"".","rocket-meals_rocket-meals:apps/frontend/app/components/FoodOffersScrollList/index.tsx",39
 "AZkVA8BnGZIUGyy7Qqym","This file is part of one cycle involving 2 files.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/forms-sync-hook/index.ts",1
 "AZkVA79sGZIUGyy7Qqyk","This file is part of one cycle involving 2 files.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/ApiContext.ts",1
 "AZkVA79iGZIUGyy7Qqyj","This file is part of 2 cycles involving 5 files.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/ItemsServiceHelper.ts",1
@@ -363,9 +362,6 @@ Key,Message,Component,Line
 "AZkUSvEXS4VhJojFFASN","Remove this unused import of 'StyleSheet'.","rocket-meals_rocket-meals:apps/frontend/app/components/ManagmentFoodPlan/FoodPlanWeek.tsx",1
 "AZkUSvJeS4VhJojFFAUH","Refactor this function to reduce its Cognitive Complexity from 22 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingIcon/index.tsx",19
 "AZkUSvJeS4VhJojFFAUI","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingIcon/index.tsx",28
-"AZkUSvFHS4VhJojFFASf","Remove this unused import of 'Image'.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",2
-"AZkUSvFHS4VhJojFFASg","Remove this unused import of 'TouchableOpacity'.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",2
-"AZkUSvFHS4VhJojFFASi","Remove this useless assignment to variable ""markingImage"".","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",57
 "AZkUSvGcS4VhJojFFAS8","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/MenuSheet/MenuSheet.tsx",50
 "AZkUSu7nS4VhJojFFAOq","Remove this unused import of 'DivIcon'.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMap/model.ts",1
 "AZkUSu_tS4VhJojFFAP_","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",35
@@ -654,10 +650,10 @@ Key,Message,Component,Line
 "AZkUSu8iS4VhJojFFAO9","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/Information/index.tsx",66
 "AZkUSu8iS4VhJojFFAO-","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/Information/index.tsx",86
 "AZkUSu8iS4VhJojFFAO_","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/Information/index.tsx",120
-"AZkUSvFHS4VhJojFFASm","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",68
-"AZkUSvFHS4VhJojFFASn","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",86
-"AZkUSvFHS4VhJojFFASo","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",119
-"AZkUSvFHS4VhJojFFASp","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",133
+"AZkUSvFHS4VhJojFFASm","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",58
+"AZkUSvFHS4VhJojFFASn","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",76
+"AZkUSvFHS4VhJojFFASo","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",109
+"AZkUSvFHS4VhJojFFASp","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",123
 "AZkUSu7eS4VhJojFFAOp","Unexpected empty class.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMap/MyMapHelper.tsx",20
 "AZkUSu7WS4VhJojFFAOm","Remove this unused import of 'Platform'.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMap/markerUtils.ts",2
 "AZkUSu7WS4VhJojFFAOn","Remove this unused import of 'PlatformHelper'.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMap/markerUtils.ts",3
@@ -1223,8 +1219,6 @@ Key,Message,Component,Line
 "AZkUSvEXS4VhJojFFASO","Remove this unused import of 'MaterialIcons'.","rocket-meals_rocket-meals:apps/frontend/app/components/ManagmentFoodPlan/FoodPlanWeek.tsx",4
 "AZkUSvEXS4VhJojFFASP","Remove this unused import of 'useSelector'.","rocket-meals_rocket-meals:apps/frontend/app/components/ManagmentFoodPlan/FoodPlanWeek.tsx",6
 "AZkUSvEXS4VhJojFFASR","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/ManagmentFoodPlan/FoodPlanWeek.tsx",41
-"AZkUSvFHS4VhJojFFASh","Remove this unused import of 'iconLibraries'.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",17
-"AZkUSvFHS4VhJojFFASj","Remove this useless assignment to variable ""MarkingBackgroundColor"".","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",60
 "AZkUSvAzS4VhJojFFAQZ","useState call is not destructured into value + setter pair","rocket-meals_rocket-meals:apps/frontend/app/components/NotificationSheet/NotificationSheet.tsx",32
 "AZkUSvAzS4VhJojFFAQa","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/NotificationSheet/NotificationSheet.tsx",114
 "AZkUSvAzS4VhJojFFAQb","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/NotificationSheet/NotificationSheet.tsx",127
