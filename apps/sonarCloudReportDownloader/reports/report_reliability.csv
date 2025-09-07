@@ -1,9 +1,4 @@
 Key,Message,Component,Line
-"AZkVQNw6j3QBqU9b5PWr","React Hook ""useMyContrastColor"" is called conditionally. React Hooks must be called in the exact same order in every component render.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingIcon/index.tsx",24
-"AZkU8RlpaFO0qV2RlEy8","React Hook ""useMyContrastColor"" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function.","rocket-meals_rocket-meals:apps/frontend/app/app/(monitor)/list-day-screen/index.tsx",937
-"AZkUSvkMS4VhJojFFCYN","Expected the Promise rejection reason to be an Error.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/DirectusTestServerSetup.ts",230
-"AZkUSvToS4VhJojFFAhN","Convert the conditional to a boolean to avoid leaked value","rocket-meals_rocket-meals:apps/frontend/app/app/(auth)/login.tsx",219
-"AZkUSvGmS4VhJojFFATB","This conditional operation returns the same value whether the condition is ""true"" or ""false"".","rocket-meals_rocket-meals:apps/frontend/app/components/Details/index.tsx",56
 "AZkUSvGmS4VhJojFFATE","React Hook ""useMyContrastColor"" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function.","rocket-meals_rocket-meals:apps/frontend/app/components/Details/index.tsx",68
 "AZkUSvDUS4VhJojFFAR2","Correct one of the identical sub-expressions on both sides of operator ""&&""","rocket-meals_rocket-meals:apps/frontend/app/components/FoodItem/FoodItem.tsx",242
 "AZkUSvNxS4VhJojFFAZr","Unsafe usage of optional chaining. If it short-circuits with 'undefined' the evaluation will throw TypeError.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submission/index.tsx",612
