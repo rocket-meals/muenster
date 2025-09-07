@@ -1,20 +1,16 @@
-import React, { useState, useCallback } from 'react';
-import { ActivityIndicator, Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { MarkingLabelProps } from './types';
-import { getImageUrl } from '@/constants/HelperFunctions';
 
-import { ProfileHelper } from '@/redux/actions/Profile/Profile';
-import { SET_MARKING_DETAILS, UPDATE_PROFILE } from '@/redux/Types/types';
+import { SET_MARKING_DETAILS } from '@/redux/Types/types';
 import PermissionModal from '../PermissionModal/PermissionModal';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
 import styles from './styles';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
 import { DatabaseTypes } from 'repo-depkit-common';
-import { useMyContrastColor } from '@/helper/colorHelper';
-import { iconLibraries } from '../Drawer/CustomDrawerContent';
 import MarkingIcon from '../MarkingIcon';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -22,24 +18,20 @@ import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 
 const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet, size = 30 }) => {
-	const { theme } = useTheme();
-	const dispatch = useDispatch();
-	const { translate } = useLanguage();
-	const profileHelper = new ProfileHelper();
-	const [warning, setWarning] = useState(false);
-	const [showTooltip, setShowTooltip] = useState(false);
-	const [likeLoading, setLikeLoading] = useState(false);
-	const [dislikeLoading, setDislikeLoading] = useState(false);
-	const { primaryColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+        const { theme } = useTheme();
+        const dispatch = useDispatch();
+        const { translate } = useLanguage();
+        const [warning, setWarning] = useState(false);
+        const [showTooltip, setShowTooltip] = useState(false);
+        const likeLoading = false;
+        const dislikeLoading = false;
+        const { primaryColor, language, appSettings, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
-	const { user, profile } = useSelector((state: RootState) => state.authReducer);
+        const { profile } = useSelector((state: RootState) => state.authReducer);
 	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
-	const { markings } = useSelector((state: RootState) => state.food);
-	const marking = markings?.find((mark: any) => mark.id === markingId);
-	const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId);
-
-	// Move all hook calls before any early returns
-	const MarkingColor = marking ? useMyContrastColor(marking?.background_color, theme, mode === 'dark') : null;
+        const { markings } = useSelector((state: RootState) => state.food);
+        const marking = markings?.find((mark: any) => mark.id === markingId);
+        const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId);
 
 	const openMarkingLabel = (marking: DatabaseTypes.Markings) => {
 		if (handleMenuSheet) {
@@ -54,10 +46,8 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 	// Early return AFTER all hooks have been called
 	if (!marking) return null;
 
-	const markingImage = marking?.image_remote_url ? { uri: marking?.image_remote_url } : { uri: getImageUrl(String(marking?.image)) };
-	const markingText = getTextFromTranslation(marking?.translations, language);
-	const iconSize = isWeb ? 24 : 22;
-	const MarkingBackgroundColor = marking?.background_color;
+        const markingText = getTextFromTranslation(marking?.translations, language);
+        const iconSize = isWeb ? 24 : 22;
 
 	return (
 		<View style={styles.row}>
