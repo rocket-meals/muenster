@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FlatList, View, Text, RefreshControl, ActivityIndicator, Dimensions } from 'react-native';
+import { FlatList, View, Text, RefreshControl, ActivityIndicator } from 'react-native';
 import { addDays, format } from 'date-fns';
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
@@ -36,8 +36,7 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({ canteenId, 
 	const { ownFoodFeedbacks, foodCategories, foodOfferCategories } = useSelector((state: RootState) => state.food);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const selectedCanteen = canteens?.find(c => c.id === canteenId) as DatabaseTypes.Canteens | undefined;
-	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-	const [days, setDays] = useState<DayData[]>([]);
+        const [days, setDays] = useState<DayData[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
 	const [selectedSheet, setSelectedSheet] = useState<'menu' | keyof typeof SHEET_COMPONENTS | null>(null);
@@ -93,12 +92,6 @@ const FoodOffersScrollList: React.FC<FoodOffersScrollListProps> = ({ canteenId, 
 		[sortBy, language, ownFoodFeedbacks, profile, foodCategories, foodOfferCategories]
 	);
 
-	useEffect(() => {
-		const sub = Dimensions.addEventListener('change', ({ window }) => {
-			setScreenWidth(window.width);
-		});
-		return () => sub?.remove();
-	}, []);
 
 	useEffect(() => {
 		setDays(prev => prev.map(d => ({ ...d, offers: sortOffers(d.offers) })));

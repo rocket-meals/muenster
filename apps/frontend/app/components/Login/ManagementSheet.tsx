@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { BottomSheetScrollView, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { styles } from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { SheetProps } from './types';

@@ -253,19 +253,19 @@ const AccountBalanceScreen = () => {
 				</View>
 				<View style={styles.additionalInfoContainer}>{appSettings && appSettings?.balance_translations && <CustomMarkdown content={getTextFromTranslation(appSettings?.balance_translations, language) || ''} backgroundColor={balance_area_color} imageWidth={'100%'} imageHeight={400} />}</View>
 			</View>
-			<View style={styles.additionalInfoContainer}>
-				{/* Debug Logs if isDevMode active*/}
-				{debugErrors.length > 0 && (
-					<View style={{ marginTop: 20 }}>
-						<Text style={{ ...styles.label, color: theme.header.text }}>{translate(TranslationKeys.debugErrors)}:</Text>
-						{debugErrors.map((errorItem, index) => (
-							<View key={index} style={{ marginVertical: 4 }}>
-								<Text style={{ ...styles.errorText, color: theme.header.text }}>{`${format(errorItem.timestamp, 'dd.MM.yyyy HH:mm:ss')} - ${errorItem.source}: ${errorItem.error}`}</Text>
-							</View>
-						))}
-					</View>
-				)}
-			</View>
+                        <View style={styles.additionalInfoContainer}>
+                                {/* Debug Logs if isDevMode active*/}
+                                {isDevMode && debugErrors.length > 0 && (
+                                        <View style={{ marginTop: 20 }}>
+                                                <Text style={{ ...styles.label, color: theme.header.text }}>{translate(TranslationKeys.debugErrors)}:</Text>
+                                                {debugErrors.map((errorItem, index) => (
+                                                        <View key={index} style={{ marginVertical: 4 }}>
+                                                                <Text style={{ ...styles.errorText, color: theme.header.text }}>{`${format(errorItem.timestamp, 'dd.MM.yyyy HH:mm:ss')} - ${errorItem.source}: ${errorItem.error}`}</Text>
+                                                        </View>
+                                                ))}
+                                        </View>
+                                )}
+                        </View>
 			{isActive && (
 				<BaseBottomSheet
 					ref={nfcSheetRef}
