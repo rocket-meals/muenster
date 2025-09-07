@@ -26,6 +26,8 @@ jobs:
     outputs:
       changed: ${{ steps.check.outputs.changed }}
     steps:
+      - name: "🔄 Checkout Repository"
+        uses: actions/checkout@v4
       - name: "🔍 Compare Build Number"
         id: check
         uses: ./.github/actions/check-build-number
