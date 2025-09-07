@@ -1,4 +1,4 @@
-import { CLEAR_APP_ELEMENTS, SET_APP_ELEMENTS } from '@/redux/Types/types';
+import {CLEAR_APP_ELEMENTS, SET_APP_ELEMENTS} from '@/redux/Types/types';
 
 const initialState = {
 	appElements: [],

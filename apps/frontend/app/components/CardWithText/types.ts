@@ -1,4 +1,4 @@
-import { ImageSourcePropType, StyleProp, ViewStyle, ImageStyle, TouchableOpacityProps } from 'react-native';
+import {ImageSourcePropType, ImageStyle, StyleProp, TouchableOpacityProps, ViewStyle} from 'react-native';
 import React from 'react';
 
 export interface CardWithTextProps extends TouchableOpacityProps {

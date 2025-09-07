@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
+import {ScrollView, Text, View} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { TranslationKeys } from '@/locales/keys';
-import { useLanguage } from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {useLanguage} from '@/hooks/useLanguage';
 import QRCode from 'react-native-qrcode-svg';
 import styles from './styles';
 

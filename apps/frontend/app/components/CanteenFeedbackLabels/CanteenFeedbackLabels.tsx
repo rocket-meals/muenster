@@ -1,24 +1,27 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useTheme } from '@/hooks/useTheme';
+import React, {useEffect, useMemo, useState} from 'react';
+import {Image, Pressable, Text, View} from 'react-native';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
-import { CanteenFeedbackLabelProps, ModifiedCanteensFeedbacksLabelsEntries } from './types';
-import { isWeb } from '@/constants/Constants';
-import { getIconComponent, getTextFromTranslation } from '@/helper/resourceHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { useDispatch, useSelector } from 'react-redux';
+import {CanteenFeedbackLabelProps, ModifiedCanteensFeedbacksLabelsEntries} from './types';
+import {isWeb} from '@/constants/Constants';
+import {getIconComponent, getTextFromTranslation} from '@/helper/resourceHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {useDispatch, useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { DELETE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES, UPDATE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES } from '@/redux/Types/types';
+import {
+    DELETE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
+    UPDATE_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES
+} from '@/redux/Types/types';
 import PermissionModal from '../PermissionModal/PermissionModal';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { CanteenFeedbackLabelEntryHelper } from '@/redux/actions/CanteenFeedbackLabelEntries/CanteenFeedbackLabelEntries';
-import { isSameDay } from 'date-fns';
-import { myContrastColor } from '@/helper/colorHelper';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {CanteenFeedbackLabelEntryHelper} from '@/redux/actions/CanteenFeedbackLabelEntries/CanteenFeedbackLabelEntries';
+import {isSameDay} from 'date-fns';
+import {myContrastColor} from '@/helper/colorHelper';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const CanteenFeedbackLabels: React.FC<CanteenFeedbackLabelProps> = ({ label, date }) => {
 	const { theme } = useTheme();

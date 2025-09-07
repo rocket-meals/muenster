@@ -1,20 +1,20 @@
-import { Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {FontAwesome5, MaterialCommunityIcons} from '@expo/vector-icons';
 
-import { BuildingSortSheetProps } from './types';
+import {BuildingSortSheetProps} from './types';
 import Checkbox from 'expo-checkbox';
-import { SET_APARTMENTS_SORTING, SET_CAMPUSES_SORTING } from '@/redux/Types/types';
-import { CampusSortOption, ApartmentSortOption, BuildingSortOption } from 'repo-depkit-common';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {SET_APARTMENTS_SORTING, SET_CAMPUSES_SORTING} from '@/redux/Types/types';
+import {ApartmentSortOption, BuildingSortOption, CampusSortOption} from 'repo-depkit-common';
+import {useDispatch, useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {myContrastColor} from '@/helper/colorHelper';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const BuildingSortSheet: React.FC<BuildingSortSheetProps> = ({ closeSheet, freeRooms }) => {
 	const { theme } = useTheme();

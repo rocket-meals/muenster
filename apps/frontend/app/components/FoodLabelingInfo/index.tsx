@@ -1,11 +1,11 @@
 import React from 'react';
-import { Linking, Text, ViewStyle, TextStyle, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
+import {Linking, Text, TextStyle, View, ViewStyle} from 'react-native';
+import {useSelector} from 'react-redux';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
 import RedirectButton from '../RedirectButton';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 import styles from './styles';
 
 interface FoodLabelingInfoProps {

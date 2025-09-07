@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 import Toast from 'react-native-root-toast';
 
 const useToast = () => {

@@ -1,6 +1,6 @@
-import { describe, it, expect } from '@jest/globals';
-import { createDirectus, rest, authentication, readUsers, readMe } from '@directus/sdk';
-import { DirectusTestServerSetup } from '../helpers/DirectusTestServerSetup';
+import {describe, expect, it} from '@jest/globals';
+import {authentication, createDirectus, readMe, readUsers, rest} from '@directus/sdk';
+import {DirectusTestServerSetup} from '../helpers/DirectusTestServerSetup';
 
 // Single test running all Directus test scenarios sequentially
 

@@ -1,17 +1,17 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import { isWeb } from '@/constants/Constants';
-import { useTheme } from '@/hooks/useTheme';
-import { Ionicons } from '@expo/vector-icons';
+import {isWeb} from '@/constants/Constants';
+import {useTheme} from '@/hooks/useTheme';
+import {Ionicons} from '@expo/vector-icons';
 import styles from './styles';
-import { useNavigation } from 'expo-router';
-import { CustomMenuHeaderProps, DrawerParamList } from './types';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { useSelector } from 'react-redux';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useNavigation} from 'expo-router';
+import {CustomMenuHeaderProps, DrawerParamList} from './types';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
+import {useSelector} from 'react-redux';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const CustomMenuHeader: React.FC<CustomMenuHeaderProps> = ({ label }) => {
 	const { theme } = useTheme();

@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import * as Updates from 'expo-updates';
 import usePlatformHelper from '@/helper/platformHelper';
-import { TranslationKeys } from '@/locales/keys';
-import { useLanguage } from '@/hooks/useLanguage';
-import { isInExpoGo } from '@/helper/DeviceRuntimeHelper';
+import {TranslationKeys} from '@/locales/keys';
+import {useLanguage} from '@/hooks/useLanguage';
+import {isInExpoGo} from '@/helper/DeviceRuntimeHelper';
 
 interface ExpoUpdateLoaderProps {
 	children?: React.ReactNode;

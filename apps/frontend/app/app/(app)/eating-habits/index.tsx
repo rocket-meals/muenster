@@ -1,25 +1,23 @@
-import { Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
 import FoodLabelingInfo from '@/components/FoodLabelingInfo';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import MarkingLabels from '@/components/MarkingLabels/MarkingLabels';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { useLanguage } from '@/hooks/useLanguage';
-import { excerpt } from '@/constants/HelperFunctions';
+import {useLanguage} from '@/hooks/useLanguage';
+import {excerpt} from '@/constants/HelperFunctions';
 import animation from '@/assets/animations/allergist.json';
 import LottieView from 'lottie-react-native';
-import { useFocusEffect } from 'expo-router';
-import { replaceLottieColors } from '@/helper/animationHelper';
-import { myContrastColor } from '@/helper/colorHelper';
-import { TranslationKeys } from '@/locales/keys';
+import {useFocusEffect} from 'expo-router';
+import {replaceLottieColors} from '@/helper/animationHelper';
+import {myContrastColor} from '@/helper/colorHelper';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import BaseBottomSheet from '@/components/BaseBottomSheet';
 import MarkingBottomSheet from '@/components/MarkingBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.eating_habits);

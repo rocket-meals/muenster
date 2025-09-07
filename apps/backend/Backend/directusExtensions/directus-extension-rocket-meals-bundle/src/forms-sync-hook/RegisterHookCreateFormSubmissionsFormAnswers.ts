@@ -1,9 +1,8 @@
-import { CollectionNames } from 'repo-depkit-common';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { PrimaryKey } from '@directus/types';
-import { RegisterFunctions } from '@directus/extensions';
-import { ApiContext } from '../helpers/ApiContext';
+import {CollectionNames, DatabaseTypes} from 'repo-depkit-common';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {PrimaryKey} from '@directus/types';
+import {RegisterFunctions} from '@directus/extensions';
+import {ApiContext} from '../helpers/ApiContext';
 
 /**
  * This function registers a hook to create form_answers for a form_submission before it is created. So that the form_answers are created according to the selected form.

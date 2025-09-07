@@ -1,6 +1,6 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 
 export type ResultHandleWorkflowRunsWantToRun = {
   errorMessage: string | undefined;

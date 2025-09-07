@@ -1,12 +1,11 @@
-import { NewsParserInterface, NewsTypeForParser } from './NewsParserInterface';
-import { TranslationHelper } from '../helpers/TranslationHelper';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { CollectionNames } from 'repo-depkit-common';
-import { WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
-import { WorkflowResultHash } from '../helpers/itemServiceHelpers/WorkflowsRunHelper';
-import { HashHelper } from '../helpers/HashHelper';
+import {NewsParserInterface, NewsTypeForParser} from './NewsParserInterface';
+import {TranslationHelper} from '../helpers/TranslationHelper';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {CollectionNames, DatabaseTypes} from 'repo-depkit-common';
+import {WorkflowRunLogger} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {WorkflowResultHash} from '../helpers/itemServiceHelpers/WorkflowsRunHelper';
+import {HashHelper} from '../helpers/HashHelper';
 
 export class NewsParseSchedule {
   //TODO stringfiy and cache results to reduce dublicate removing from foodOffers and Meals ...

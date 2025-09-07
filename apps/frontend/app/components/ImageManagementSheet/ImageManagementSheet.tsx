@@ -1,21 +1,21 @@
-import { ActivityIndicator, Alert, Dimensions, Platform, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {ActivityIndicator, Alert, Dimensions, Platform, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import styles from './styles';
-import { isWeb } from '@/constants/Constants';
-import { useTheme } from '@/hooks/useTheme';
-import { ImageManagementSheetProps } from './types';
-import { ServerAPI } from '@/redux/actions';
-import { uploadFiles } from '@directus/sdk';
-import { CollectionHelper } from '@/helper/collectionHelper';
-import { useSelector } from 'react-redux';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
-import { ImagePickerMediaTypes } from '@/components/FileUpload/FileUpload';
+import {isWeb} from '@/constants/Constants';
+import {useTheme} from '@/hooks/useTheme';
+import {ImageManagementSheetProps} from './types';
+import {ServerAPI} from '@/redux/actions';
+import {uploadFiles} from '@directus/sdk';
+import {CollectionHelper} from '@/helper/collectionHelper';
+import {useSelector} from 'react-redux';
+import {BottomSheetView} from '@gorhom/bottom-sheet';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
+import {ImagePickerMediaTypes} from '@/components/FileUpload/FileUpload';
 
 const ImageManagementSheet: React.FC<ImageManagementSheetProps> = ({ closeSheet, selectedFoodId, handleFetch, fileName }) => {
 	const { theme } = useTheme();

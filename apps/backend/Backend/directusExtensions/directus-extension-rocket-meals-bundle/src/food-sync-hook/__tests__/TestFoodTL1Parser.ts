@@ -1,6 +1,6 @@
 // small jest test
-import { describe, expect, it } from '@jest/globals';
-import { FoodTL1Parser, RawTL1FoodofferType } from '../FoodTL1Parser';
+import {describe, expect, it} from '@jest/globals';
+import {FoodTL1Parser, RawTL1FoodofferType} from '../FoodTL1Parser';
 
 describe('FoodTL1Parser Test', () => {
   it('Get Marking Labels from foodname', async () => {

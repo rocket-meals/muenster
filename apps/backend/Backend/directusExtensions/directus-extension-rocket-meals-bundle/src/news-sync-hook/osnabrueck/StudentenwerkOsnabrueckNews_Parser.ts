@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { load as cheerioLoad } from 'cheerio';
-import { TranslationHelper } from '../../helpers/TranslationHelper';
-import { NewsParserInterface, NewsTypeForParser } from './../NewsParserInterface';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { WorkflowRunLogger } from '../../workflows-runs-hook/WorkflowRunJobInterface';
+import {load as cheerioLoad} from 'cheerio';
+import {TranslationHelper} from '../../helpers/TranslationHelper';
+import {NewsParserInterface, NewsTypeForParser} from './../NewsParserInterface';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {WorkflowRunLogger} from '../../workflows-runs-hook/WorkflowRunJobInterface';
 
 type ArticleDetails = {
   date?: Date | null;

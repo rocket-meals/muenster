@@ -1,9 +1,9 @@
-import { SET_COLOR, SET_SERVER_INFO } from '@/redux/Types/types';
-import { ServerAPI, ServerInfo } from '@/redux/actions';
-import { RootState } from '@/redux/reducer';
-import { darkTheme, lightTheme } from '@/styles/themes';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {SET_COLOR, SET_SERVER_INFO} from '@/redux/Types/types';
+import {ServerAPI, ServerInfo} from '@/redux/actions';
+import {RootState} from '@/redux/reducer';
+import {darkTheme, lightTheme} from '@/styles/themes';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 export interface ServerStatusFlowLoaderProps {
 	children?: React.ReactNode;

@@ -1,7 +1,6 @@
-import { PdfGeneratorOptions, RequestOptions } from './PdfGeneratorHelper';
-import { default as puppeteerCore } from 'puppeteer-core';
-import { EnvVariableHelper } from '../EnvVariableHelper';
-import path from 'path';
+import {PdfGeneratorOptions, RequestOptions} from './PdfGeneratorHelper';
+import {default as puppeteerCore} from 'puppeteer-core';
+import {EnvVariableHelper} from '../EnvVariableHelper';
 
 export class PuppeteerGenerator {
   public static PuppeteerCore: any = puppeteerCore;

@@ -1,9 +1,8 @@
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
 
-import { DatabaseTypes } from 'repo-depkit-common';
-import { DateHelper } from 'repo-depkit-common';
-import { WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {DatabaseTypes, DateHelper} from 'repo-depkit-common';
+import {WorkflowRunLogger} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 
 export class ParseSchedule {
   private readonly myDatabaseHelper: MyDatabaseHelper;

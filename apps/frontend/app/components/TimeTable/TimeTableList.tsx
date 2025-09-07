@@ -1,11 +1,11 @@
-import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { MaterialCommunityIcons, Octicons, MaterialIcons, FontAwesome5, Feather } from '@expo/vector-icons';
-import { TimeTableListProps } from './types';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {Feather, FontAwesome5, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
+import {TimeTableListProps} from './types';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 
 const TimeTableList: React.FC<TimeTableListProps> = ({ leftIcon, label, rightIcon, value, handleFunction }) => {
 	const { theme } = useTheme();

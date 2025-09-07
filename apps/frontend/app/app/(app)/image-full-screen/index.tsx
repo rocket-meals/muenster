@@ -1,20 +1,35 @@
-import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Platform, Dimensions, Text, Share } from 'react-native';
-import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useSelector } from 'react-redux';
-import Animated, { runOnJS, useSharedValue, useAnimatedStyle, useDerivedValue, withTiming } from 'react-native-reanimated';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { Image } from 'expo-image';
+import React, {useCallback, useState} from 'react';
+import {
+    Dimensions,
+    Platform,
+    Share,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View
+} from 'react-native';
+import {router, useFocusEffect, useLocalSearchParams} from 'expo-router';
+import {Ionicons} from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useSelector} from 'react-redux';
+import Animated, {
+    runOnJS,
+    useAnimatedStyle,
+    useDerivedValue,
+    useSharedValue,
+    withTiming
+} from 'react-native-reanimated';
+import {Gesture, GestureDetector} from 'react-native-gesture-handler';
+import {Image} from 'expo-image';
 import BaseBottomModal from '@/components/BaseBottomModal';
 import SettingsList from '@/components/SettingsList';
 import * as FileSystem from 'expo-file-system';
 import useToast from '@/hooks/useToast';
-import { getHighResImageUrl } from '@/constants/HelperFunctions';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {getHighResImageUrl} from '@/constants/HelperFunctions';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 export default function ImageFullScreen() {
 	const { uri, assetId } = useLocalSearchParams<{

@@ -1,6 +1,6 @@
-import { ServerAPI } from '@/redux/actions/Auth/Auth'; // API client
-import { CollectionHelper } from '@/helper/collectionHelper'; // Reusing the CollectionHelper
-import { DatabaseTypes } from 'repo-depkit-common'; // Assuming DatabaseTypes.Markings is the required type
+import {ServerAPI} from '@/redux/actions/Auth/Auth'; // API client
+import {CollectionHelper} from '@/helper/collectionHelper'; // Reusing the CollectionHelper
+import {DatabaseTypes} from 'repo-depkit-common'; // Assuming DatabaseTypes.Markings is the required type
 
 export class MarkingHelper extends CollectionHelper<DatabaseTypes.Markings> {
 	constructor(client?: any) {

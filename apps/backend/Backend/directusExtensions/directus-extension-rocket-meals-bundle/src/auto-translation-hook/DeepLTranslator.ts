@@ -1,5 +1,5 @@
-import deepl, { SourceLanguageCode, TargetLanguageCode, Translator } from 'deepl-node';
-import { MyTranslatorInterface } from './MyTranslatorInterface';
+import deepl, {SourceLanguageCode, TargetLanguageCode, Translator} from 'deepl-node';
+import {MyTranslatorInterface} from './MyTranslatorInterface';
 
 export class DeepLTranslator implements MyTranslatorInterface {
   private readonly translator: Translator;

@@ -1,6 +1,6 @@
 // small jest test
-import { describe, expect, it } from '@jest/globals';
-import { RedirectWhitelistHelper } from '../RedirectWhitelistHelper';
+import {describe, expect, it} from '@jest/globals';
+import {RedirectWhitelistHelper} from '../RedirectWhitelistHelper';
 
 describe('RedirectWhitelistHelper Test', () => {
   it('Redirect url in simple list', async () => {

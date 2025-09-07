@@ -1,7 +1,5 @@
-import type { PointTuple } from 'leaflet';
-import { Platform } from 'react-native';
-import PlatformHelper from '@/helper/platformHelper';
-import { isWeb } from '@/constants/Constants';
+import type {PointTuple} from 'leaflet';
+import {isWeb} from '@/constants/Constants';
 
 export const MARKER_DEFAULT_SIZE = 48;
 

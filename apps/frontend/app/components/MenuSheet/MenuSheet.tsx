@@ -1,15 +1,15 @@
-import { Image, Text, View } from 'react-native';
+import {Image, Text, View} from 'react-native';
 import React from 'react';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { MenuSheetProps } from './types';
-import { isWeb } from '@/constants/Constants';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { getDescriptionFromTranslation, getTextFromTranslation } from '@/helper/resourceHelper';
+import {MenuSheetProps} from './types';
+import {isWeb} from '@/constants/Constants';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {getDescriptionFromTranslation, getTextFromTranslation} from '@/helper/resourceHelper';
 import MyMarkdown from '../MyMarkdown';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const MenuSheet: React.FC<MenuSheetProps> = ({ closeSheet }) => {
 	const { theme } = useTheme();

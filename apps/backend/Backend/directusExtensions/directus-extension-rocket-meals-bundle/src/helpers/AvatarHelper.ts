@@ -1,4 +1,4 @@
-import { AccountHelper } from './AccountHelper';
+import {AccountHelper} from './AccountHelper';
 
 export class AvatarHelper {
   /**

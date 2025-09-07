@@ -1,21 +1,19 @@
-import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View, Platform } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { BottomSheetScrollView, BottomSheetView } from '@gorhom/bottom-sheet';
+import {ActivityIndicator, Dimensions, Platform, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {AntDesign} from '@expo/vector-icons';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useTheme} from '@/hooks/useTheme';
+import {BottomSheetScrollView, BottomSheetView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { isWeb } from '@/constants/Constants';
-import { ForecastSheetProps } from './types';
-import { BarChart } from 'react-native-chart-kit';
-import { format, parseISO } from 'date-fns';
-import { UtilizationEntryHelper } from '@/redux/actions/UtilizationEntries/UtilizationEntries';
-import { useSelector } from 'react-redux';
+import {isWeb} from '@/constants/Constants';
+import {ForecastSheetProps} from './types';
+import {BarChart} from 'react-native-chart-kit';
+import {format, parseISO} from 'date-fns';
+import {UtilizationEntryHelper} from '@/redux/actions/UtilizationEntries/UtilizationEntries';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { useFocusEffect } from 'expo-router';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { RootState } from '@/redux/reducer';
+import {useFocusEffect} from 'expo-router';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 const ForecastSheet: React.FC<ForecastSheetProps> = ({ closeSheet, forDate }) => {
 	const { theme } = useTheme();

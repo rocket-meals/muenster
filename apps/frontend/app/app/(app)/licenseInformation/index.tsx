@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './styles';
-import { View, Text, TouchableOpacity, Linking, Dimensions, ScrollView } from 'react-native';
+import {Dimensions, Linking, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import packages from '../../../constants/LicenseData';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { Entypo } from '@expo/vector-icons';
-import { TranslationKeys } from '@/locales/keys';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {Entypo} from '@expo/vector-icons';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 
 const LicenseInformation = () => {

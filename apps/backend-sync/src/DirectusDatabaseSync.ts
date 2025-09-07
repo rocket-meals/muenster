@@ -1,12 +1,12 @@
-import { DockerDirectusPingHelper } from './DockerDirectusPingHelper';
+import {DockerDirectusPingHelper} from './DockerDirectusPingHelper';
 import path from 'path';
 import fs from 'fs';
-import { spawn } from 'node:child_process';
-import { CookieJar } from 'cookiejar';
+import {spawn} from 'node:child_process';
+import {CookieJar} from 'cookiejar';
 import FormData from 'form-data';
 
-import { createRequire } from 'module';
-import { FetchIngoreSelfSignedCertHelper } from './FetchIngoreSelfSignedCertHelper';
+import {createRequire} from 'module';
+import {FetchIngoreSelfSignedCertHelper} from './FetchIngoreSelfSignedCertHelper';
 
 const require = createRequire(import.meta.url);
 

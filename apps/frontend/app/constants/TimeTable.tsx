@@ -1,5 +1,5 @@
 import React from 'react';
-import { MaterialCommunityIcons, Octicons, MaterialIcons, FontAwesome5, Feather } from '@expo/vector-icons';
+import {Feather, FontAwesome5, MaterialCommunityIcons, MaterialIcons, Octicons} from '@expo/vector-icons';
 
 const TimeTableData = (theme: any) => [
 	{

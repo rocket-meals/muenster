@@ -1,11 +1,11 @@
 import * as Notifications from 'expo-notifications';
-import { ExpoPushToken } from 'expo-notifications';
-import { Platform } from 'react-native';
+import {ExpoPushToken} from 'expo-notifications';
+import {Platform} from 'react-native';
 import Constants from 'expo-constants';
 import usePlatformHelper from '@/helper/platformHelper';
-import { IosAuthorizationStatus } from 'expo-notifications/src/NotificationPermissions.types';
-import { getDeviceInformationWithoutPushToken } from './DeviceHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {IosAuthorizationStatus} from 'expo-notifications/src/NotificationPermissions.types';
+import {getDeviceInformationWithoutPushToken} from './DeviceHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
 // import {useSynchedDevices} from "@/states/SynchedDevices";
 
 export type NotificationObjType = {

@@ -1,22 +1,26 @@
-import React, { useMemo, useState } from 'react';
-import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useTheme } from '@/hooks/useTheme';
+import React, {useMemo, useState} from 'react';
+import {Image, Pressable, Text, View} from 'react-native';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
-import { FeedbackLabelProps } from './types';
-import { isWeb } from '@/constants/Constants';
-import { getIconComponent, getTextFromTranslation } from '@/helper/resourceHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { FoodFeedbackLabelEntryHelper } from '@/redux/actions/FoodFeeedbackLabelEntries/FoodFeedbackLabelEntries';
-import { useDispatch, useSelector } from 'react-redux';
+import {FeedbackLabelProps} from './types';
+import {isWeb} from '@/constants/Constants';
+import {getIconComponent, getTextFromTranslation} from '@/helper/resourceHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {FoodFeedbackLabelEntryHelper} from '@/redux/actions/FoodFeeedbackLabelEntries/FoodFeedbackLabelEntries';
+import {useDispatch, useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { DELETE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES_LOCAL, UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES_LOCAL } from '@/redux/Types/types';
+import {
+    DELETE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES_LOCAL,
+    UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES_LOCAL
+} from '@/redux/Types/types';
 import PermissionModal from '../PermissionModal/PermissionModal';
-import { myContrastColor } from '@/helper/colorHelper';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {myContrastColor} from '@/helper/colorHelper';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
+
 const FeedbackLabel: React.FC<FeedbackLabelProps> = ({ label, icon, imageUrl, labelEntries, foodId, offerId }) => {
 	const { theme } = useTheme();
 	const dispatch = useDispatch();

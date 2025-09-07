@@ -1,5 +1,5 @@
-import { SHEET_COMPONENTS } from '@/app/(app)/foodoffers';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {SHEET_COMPONENTS} from '@/app/(app)/foodoffers';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 export interface FoodItemProps {
 	item: DatabaseTypes.Foodoffers;

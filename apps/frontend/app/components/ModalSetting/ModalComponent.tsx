@@ -1,13 +1,13 @@
-import React, { ReactNode, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import React, {ReactNode, useEffect, useState} from 'react';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import Modal from 'react-native-modal';
-import { styles } from './styles';
+import {styles} from './styles';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useTheme } from '@/hooks/useTheme';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useTheme} from '@/hooks/useTheme';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 interface ModalComponentProps {
 	isVisible: boolean;

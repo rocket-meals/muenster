@@ -1,33 +1,42 @@
-import { SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View, RefreshControl, ActivityIndicator, Dimensions } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CampusSortOption } from 'repo-depkit-common';
+import {
+    ActivityIndicator,
+    Dimensions,
+    RefreshControl,
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {CampusSortOption, DatabaseTypes} from 'repo-depkit-common';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { DrawerContentComponentProps, DrawerNavigationProp } from '@react-navigation/drawer';
-import { RootDrawerParamList } from './types';
-import { useFocusEffect, useNavigation } from 'expo-router';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {Ionicons, MaterialIcons} from '@expo/vector-icons';
+import {DrawerContentComponentProps, DrawerNavigationProp} from '@react-navigation/drawer';
+import {RootDrawerParamList} from './types';
+import {useFocusEffect, useNavigation} from 'expo-router';
 import BuildingItem from '@/components/BuildingItem/BuildingItem';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { CampusHelper } from '@/redux/actions/Campus/Campus';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { SET_CAMPUSES, SET_CAMPUSES_DICT, SET_CAMPUSES_LOCAL, SET_UNSORTED_CAMPUSES } from '@/redux/Types/types';
-import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
-import { calculateDistanceInMeter } from '@/helper/distanceHelper';
+import {CampusHelper} from '@/redux/actions/Campus/Campus';
+import {SET_CAMPUSES, SET_CAMPUSES_DICT, SET_CAMPUSES_LOCAL, SET_UNSORTED_CAMPUSES} from '@/redux/Types/types';
+import {BuildingsHelper} from '@/redux/actions/Buildings/Buildings';
+import {calculateDistanceInMeter} from '@/helper/distanceHelper';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import DistanceModal from '@/components/DistanceModal';
 import * as Location from 'expo-location';
 import BuildingSortSheet from '@/components/BuildingSortSheet/BuildingSortSheet';
 import useToast from '@/hooks/useToast';
-import { useLanguage } from '@/hooks/useLanguage';
+import {useLanguage} from '@/hooks/useLanguage';
 import ImageManagementSheet from '@/components/ImageManagementSheet/ImageManagementSheet';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { TranslationKeys } from '@/locales/keys';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	useSetPageTitle(TranslationKeys.campus);

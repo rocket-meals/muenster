@@ -1,4 +1,4 @@
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 export class RssBuilder {
   public static buildRss(news: DatabaseTypes.News[], link: string) {

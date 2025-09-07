@@ -1,12 +1,10 @@
-import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View, Switch } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import {Dimensions, Switch, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useTheme} from '@/hooks/useTheme';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import styles from './styles';
-import { useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { router, useFocusEffect } from 'expo-router';
-import { RootState } from '@/redux/reducer';
+import {router} from 'expo-router';
 
 const FoodPlanList = ({
 	data,

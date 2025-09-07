@@ -1,12 +1,12 @@
-import { Dimensions, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { useTheme } from '@/hooks/useTheme';
-import { RootState } from '@/redux/reducer';
-import { isWeb, canteensData } from '@/constants/Constants';
-import { excerpt, getImageUrl } from '@/constants/HelperFunctions';
+import {Dimensions, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {useTheme} from '@/hooks/useTheme';
+import {RootState} from '@/redux/reducer';
+import {canteensData, isWeb} from '@/constants/Constants';
+import {excerpt, getImageUrl} from '@/constants/HelperFunctions';
 import CardWithText from '../CardWithText/CardWithText';
 import styles from '../CanteenSelectionSheet/styles';
 

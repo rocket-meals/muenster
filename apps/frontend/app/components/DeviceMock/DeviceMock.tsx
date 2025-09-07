@@ -1,8 +1,8 @@
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { FontAwesome } from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {FontAwesome} from '@expo/vector-icons';
 
 const DeviceMock = () => {
 	const { theme } = useTheme();

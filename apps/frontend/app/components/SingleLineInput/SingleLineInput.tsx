@@ -1,11 +1,11 @@
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import { TextInput } from 'react-native-gesture-handler';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { isWeb } from '@/constants/Constants';
-import { TranslationKeys } from '@/locales/keys';
+import {TextInput} from 'react-native-gesture-handler';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {isWeb} from '@/constants/Constants';
+import {TranslationKeys} from '@/locales/keys';
 
 const SingleLineInput = ({ id, value, onChange, error, isDisabled, custom_type, prefix, suffix }: { id: string; value: string; onChange: (id: string, value: string, custom_type: string) => void; error: string; isDisabled: boolean; custom_type: string; prefix: string | null | undefined; suffix: string | null | undefined }) => {
 	const { theme } = useTheme();

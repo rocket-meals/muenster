@@ -1,9 +1,9 @@
 // small jest test
-import { describe, expect, it } from '@jest/globals';
-import { TestArtifacts } from '../../TestArtifacts';
-import { FormHelper } from '../FormHelper';
-import { PdfGeneratorForJest } from '../../pdf/PdfGeneratorHelperForJest';
-import { MyDatabaseTestableHelper } from '../../MyDatabaseHelperInterface';
+import {describe, expect, it} from '@jest/globals';
+import {TestArtifacts} from '../../TestArtifacts';
+import {FormHelper} from '../FormHelper';
+import {PdfGeneratorForJest} from '../../pdf/PdfGeneratorHelperForJest';
+import {MyDatabaseTestableHelper} from '../../MyDatabaseHelperInterface';
 
 PdfGeneratorForJest.activateForJest(); // activate puppeteer for jest tests
 describe('Pdf Generator Test', () => {

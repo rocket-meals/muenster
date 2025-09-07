@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { languages } from '@/constants/SettingData';
-import { isWeb } from '@/constants/Constants';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useSelector} from 'react-redux';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {languages} from '@/constants/SettingData';
+import {isWeb} from '@/constants/Constants';
 import styles from './styles';
-import { LanguageSheetProps } from './types';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import {LanguageSheetProps} from './types';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
+import {myContrastColor} from '@/helper/colorHelper';
 import MyImage from '@/components/MyImage';
 
 const LanguageSheet: React.FC<LanguageSheetProps> = ({ closeSheet, selectedLanguage, onSelect }) => {

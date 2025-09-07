@@ -1,10 +1,10 @@
-import { defineEndpoint } from '@directus/extensions-sdk';
+import {defineEndpoint} from '@directus/extensions-sdk';
 import ms from 'ms';
-import { DatabaseInitializedCheck } from '../helpers/DatabaseInitializedCheck';
-import { StringHelper } from 'repo-depkit-common';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { NanoidHelper } from '../helpers/NanoidHelper';
-import { AccountabilityHelper } from '../helpers/AccountabilityHelper';
+import {DatabaseInitializedCheck} from '../helpers/DatabaseInitializedCheck';
+import {StringHelper} from 'repo-depkit-common';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {NanoidHelper} from '../helpers/NanoidHelper';
+import {AccountabilityHelper} from '../helpers/AccountabilityHelper';
 
 const SCHEDULE_NAME = 'redirect_with_token';
 const env = process.env;

@@ -1,16 +1,16 @@
-import { SafeAreaView, ScrollView, View, RefreshControl, ActivityIndicator } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useTheme } from '@/hooks/useTheme';
+import {ActivityIndicator, RefreshControl, SafeAreaView, ScrollView, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
-import { isWeb } from '@/constants/Constants';
+import {isWeb} from '@/constants/Constants';
 import NewsItem from '@/components/NewsItem/NewsItem';
-import { NewsHelper } from '@/redux/actions/News/News';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { useDispatch, useSelector } from 'react-redux';
-import { SET_NEWS } from '@/redux/Types/types';
+import {NewsHelper} from '@/redux/actions/News/News';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {useDispatch, useSelector} from 'react-redux';
+import {SET_NEWS} from '@/redux/Types/types';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.news);

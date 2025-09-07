@@ -1,4 +1,10 @@
-import { CLEAR_APARTMENTS, SET_APARTMENTS, SET_APARTMENTS_DICT, SET_APARTMENTS_LOCAL, SET_UNSORTED_APARTMENTS } from '../Types/types';
+import {
+    CLEAR_APARTMENTS,
+    SET_APARTMENTS,
+    SET_APARTMENTS_DICT,
+    SET_APARTMENTS_LOCAL,
+    SET_UNSORTED_APARTMENTS
+} from '../Types/types';
 
 const initialState = {
 	apartments: [],

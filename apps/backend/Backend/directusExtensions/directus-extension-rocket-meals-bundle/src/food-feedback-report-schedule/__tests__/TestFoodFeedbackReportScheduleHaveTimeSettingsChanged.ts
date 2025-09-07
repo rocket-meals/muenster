@@ -1,7 +1,7 @@
 // small jest test
-import { describe, it } from '@jest/globals';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { ReportSchedule } from '../ReportSchedule';
+import {describe, it} from '@jest/globals';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {ReportSchedule} from '../ReportSchedule';
 
 describe('TestFoodFeedbackReportScheduleHaveTimeSettingsChanged Test', () => {
   it('Payload has no time settings passed', async () => {

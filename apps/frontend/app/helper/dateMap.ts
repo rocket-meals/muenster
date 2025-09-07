@@ -1,4 +1,4 @@
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 export const transformUpdateDatesToMap = (array: DatabaseTypes.CollectionsDatesLastUpdate[]): Record<string, string> => {
 	const map: Record<string, string> = {};

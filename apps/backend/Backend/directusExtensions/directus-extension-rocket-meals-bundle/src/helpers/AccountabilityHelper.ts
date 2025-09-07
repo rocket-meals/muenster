@@ -1,4 +1,4 @@
-import { Accountability } from '@directus/types';
+import {Accountability} from '@directus/types';
 
 /**
  * Helper for Account things

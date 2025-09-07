@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
-import { Appearance } from 'react-native';
-import { lightTheme, darkTheme } from '@/styles/themes';
+import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
+import {Appearance} from 'react-native';
+import {darkTheme, lightTheme} from '@/styles/themes';
 
 export type Theme = typeof lightTheme;
 

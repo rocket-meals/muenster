@@ -1,6 +1,6 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { CollectionHelper } from '@/helper/collectionHelper'; // Reusing the CollectionHelper
-import { ServerAPI } from '@/redux/actions/Auth/Auth'; // API client
+import {DatabaseTypes} from 'repo-depkit-common';
+import {CollectionHelper} from '@/helper/collectionHelper'; // Reusing the CollectionHelper
+import {ServerAPI} from '@/redux/actions/Auth/Auth'; // API client
 
 export class FoodFeedbackHelper extends CollectionHelper<DatabaseTypes.FoodsFeedbacks> {
 	constructor(client?: any) {

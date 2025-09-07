@@ -1,11 +1,10 @@
-import { legacy_createStore as createStore } from 'redux';
 import * as redux from 'redux';
+import {legacy_createStore as createStore} from 'redux';
 import * as thunk from 'redux-thunk';
 import promise from 'redux-promise';
-import logger from 'redux-logger';
-import { persistStore, persistReducer, createMigrate } from 'redux-persist';
+import {createMigrate, persistReducer, persistStore} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { reducer } from '@/redux/reducer';
+import {reducer} from '@/redux/reducer';
 
 const migrations = {
 	1: () => {

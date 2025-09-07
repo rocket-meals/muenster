@@ -1,22 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FlatList, View, Text, RefreshControl, ActivityIndicator } from 'react-native';
-import { addDays, format } from 'date-fns';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
-import { fetchFoodOffersByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
-import { DatabaseTypes } from 'repo-depkit-common';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, FlatList, RefreshControl, Text, View} from 'react-native';
+import {addDays, format} from 'date-fns';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
+import {fetchFoodOffersByCanteen} from '@/redux/actions/FoodOffers/FoodOffers';
+import {DatabaseTypes, FoodSortOption} from 'repo-depkit-common';
 import FoodItem from '@/components/FoodItem/FoodItem';
 import CanteenFeedbackLabels from '@/components/CanteenFeedbackLabels/CanteenFeedbackLabels';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { sortFoodOffers } from '@/helper/foodOfferSortHelper';
-import { FoodSortOption } from 'repo-depkit-common';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {sortFoodOffers} from '@/helper/foodOfferSortHelper';
 import styles from './styles';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import MarkingBottomSheet from '@/components/MarkingBottomSheet';
-import { SHEET_COMPONENTS } from '@/app/(app)/foodoffers';
+import {SHEET_COMPONENTS} from '@/app/(app)/foodoffers';
 
 interface FoodOffersScrollListProps {
 	canteenId: string;

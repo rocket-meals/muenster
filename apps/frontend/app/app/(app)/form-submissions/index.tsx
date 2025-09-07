@@ -1,22 +1,22 @@
-import { ActivityIndicator, Dimensions, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {ActivityIndicator, Dimensions, FlatList, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { Entypo, FontAwesome, Ionicons } from '@expo/vector-icons';
-import { useLanguage } from '@/hooks/useLanguage';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
-import { useSelector } from 'react-redux';
-import { isWeb } from '@/constants/Constants';
-import { FormsSubmissionsHelper } from '@/redux/actions/Forms/FormSubmitions';
+import {useTheme} from '@/hooks/useTheme';
+import {Entypo, FontAwesome, Ionicons} from '@expo/vector-icons';
+import {useLanguage} from '@/hooks/useLanguage';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {router, useFocusEffect, useLocalSearchParams} from 'expo-router';
+import {useSelector} from 'react-redux';
+import {isWeb} from '@/constants/Constants';
+import {FormsSubmissionsHelper} from '@/redux/actions/Forms/FormSubmitions';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import FilterFormSheet from '@/components/FilterFormSheet/FilterFormSheet';
-import { excerpt } from '@/constants/HelperFunctions';
-import { filterOptions } from './constants';
-import { TranslationKeys } from '@/locales/keys';
+import {excerpt} from '@/constants/HelperFunctions';
+import {filterOptions} from './constants';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.select_a_form_submission);

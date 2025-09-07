@@ -1,11 +1,11 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import { styles } from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { router } from 'expo-router';
-import { useSelector } from 'react-redux';
-import { getTitleFromTranslation } from '@/helper/resourceHelper';
-import { RootState } from '@/redux/reducer';
+import {styles} from './styles';
+import {useTheme} from '@/hooks/useTheme';
+import {router} from 'expo-router';
+import {useSelector} from 'react-redux';
+import {getTitleFromTranslation} from '@/helper/resourceHelper';
+import {RootState} from '@/redux/reducer';
 
 const Footer = () => {
 	const { theme } = useTheme();

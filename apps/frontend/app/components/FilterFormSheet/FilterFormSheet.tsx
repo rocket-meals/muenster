@@ -1,17 +1,17 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { FilterFormSheetProps } from './types';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
+import {FilterFormSheetProps} from './types';
 import Checkbox from 'expo-checkbox';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { SET_FORM_FILTER } from '@/redux/Types/types';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {SET_FORM_FILTER} from '@/redux/Types/types';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const iconLibraries: any = {
 	MaterialIcons,

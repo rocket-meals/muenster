@@ -1,20 +1,20 @@
-import { ActivityIndicator, Platform, Text, View } from 'react-native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {ActivityIndicator, Platform, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { differenceInSeconds, format, isAfter, isBefore } from 'date-fns';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {differenceInSeconds, format, isAfter, isBefore} from 'date-fns';
 import washingmachine from '@/assets/animations/washingmachine/washingmachine.json';
 import washingmachineEmpty from '@/assets/animations/washingmachine/washingmachineEmpty.json';
 import * as Notifications from 'expo-notifications';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import LottieView from 'lottie-react-native';
-import { useFocusEffect } from 'expo-router';
-import { replaceLottieColors } from '@/helper/animationHelper';
-import { TranslationKeys } from '@/locales/keys';
-import { ApartmentsHelper } from '@/redux/actions/Apartments/Apartments';
-import { RootState } from '@/redux/reducer';
+import {useFocusEffect} from 'expo-router';
+import {replaceLottieColors} from '@/helper/animationHelper';
+import {TranslationKeys} from '@/locales/keys';
+import {ApartmentsHelper} from '@/redux/actions/Apartments/Apartments';
+import {RootState} from '@/redux/reducer';
 
 const WashingMachines: React.FC<any> = ({ campusDetails }) => {
 	const { translate } = useLanguage();

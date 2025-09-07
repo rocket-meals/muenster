@@ -1,8 +1,8 @@
-import { Dimensions, PixelRatio, useWindowDimensions } from 'react-native';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {Dimensions, PixelRatio, useWindowDimensions} from 'react-native';
+import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {DatabaseTypes} from 'repo-depkit-common';
 import * as DeviceInfo from 'expo-device';
-import { DeviceType } from 'expo-device';
+import {DeviceType} from 'expo-device';
 import usePlatformHelper from '@/helper/platformHelper';
 
 /**

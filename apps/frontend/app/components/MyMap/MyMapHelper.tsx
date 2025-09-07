@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { MapMarker, LeafletWebViewEvent } from './model';
+import type {LeafletWebViewEvent, MapMarker} from './model';
 
 export interface Position {
 	lat: number;

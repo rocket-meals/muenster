@@ -1,7 +1,7 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { CollectionNames } from 'repo-depkit-common';
-import { DatabaseInitializedCheck } from '../helpers/DatabaseInitializedCheck';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
+import {defineHook} from '@directus/extensions-sdk';
+import {CollectionNames} from 'repo-depkit-common';
+import {DatabaseInitializedCheck} from '../helpers/DatabaseInitializedCheck';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
 
 const SCHEDULE_NAME = 'collections_dates_last_update';
 

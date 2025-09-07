@@ -1,6 +1,6 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { DatabaseInitializedCheck } from '../helpers/DatabaseInitializedCheck';
-import { ActivityServiceCreator } from '../helpers/ItemsServiceCreator';
+import {defineHook} from '@directus/extensions-sdk';
+import {DatabaseInitializedCheck} from '../helpers/DatabaseInitializedCheck';
+import {ActivityServiceCreator} from '../helpers/ItemsServiceCreator';
 
 const SCHEDULE_NAME = 'activity_auto_cleanup';
 

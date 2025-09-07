@@ -1,17 +1,17 @@
-import { Dimensions, Image, Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {Dimensions, Image, Linking, Platform, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import styles from './styles';
-import { FontAwesome6 } from '@expo/vector-icons';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { format, parseISO } from 'date-fns';
-import { getNewsTranslationByLanguageCode } from '@/helper/resourceHelper';
+import {FontAwesome6} from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {format, parseISO} from 'date-fns';
+import {getNewsTranslationByLanguageCode} from '@/helper/resourceHelper';
 import useToast from '@/hooks/useToast';
-import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useLanguage} from '@/hooks/useLanguage';
+import {myContrastColor} from '@/helper/colorHelper';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const NewsItem: React.FC<any> = ({ news }) => {
 	const { theme } = useTheme();

@@ -1,19 +1,19 @@
 import React from 'react';
-import { Linking, Text, TouchableOpacity, View } from 'react-native';
+import {Linking, Text, View} from 'react-native';
 import MyImage from '@/components/MyImage';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { useSelector } from 'react-redux';
-import { PopupEventSheetProps } from './types';
-import { getImageUrl } from '@/constants/HelperFunctions';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {useSelector} from 'react-redux';
+import {PopupEventSheetProps} from './types';
+import {getImageUrl} from '@/constants/HelperFunctions';
 import CustomCollapsible from '../CustomCollapsible/CustomCollapsible';
-import { myContrastColor } from '@/helper/colorHelper';
-import { getTextFromTranslation, getTitleFromTranslation } from '@/helper/resourceHelper';
+import {myContrastColor} from '@/helper/colorHelper';
+import {getTextFromTranslation, getTitleFromTranslation} from '@/helper/resourceHelper';
 import RedirectButton from '../RedirectButton';
 import ProjectButton from '../ProjectButton';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const PopupEventSheet: React.FC<PopupEventSheetProps> = ({ closeSheet, eventData }) => {
 	const { theme } = useTheme();

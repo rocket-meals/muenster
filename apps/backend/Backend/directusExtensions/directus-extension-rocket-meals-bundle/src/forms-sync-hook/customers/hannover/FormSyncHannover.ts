@@ -1,8 +1,8 @@
-import { ApiExtensionContext, RegisterFunctions } from '@directus/extensions';
-import { MyDatabaseHelper } from '../../../helpers/MyDatabaseHelper';
-import { WorkflowScheduleHelper } from '../../../workflows-runs-hook';
-import { FormHousingContractsWorkflowHannover } from './FormHousingContractsWorkflowHannover';
-import { EnvVariableHelper } from '../../../helpers/EnvVariableHelper';
+import {ApiExtensionContext, RegisterFunctions} from '@directus/extensions';
+import {MyDatabaseHelper} from '../../../helpers/MyDatabaseHelper';
+import {WorkflowScheduleHelper} from '../../../workflows-runs-hook';
+import {FormHousingContractsWorkflowHannover} from './FormHousingContractsWorkflowHannover';
+import {EnvVariableHelper} from '../../../helpers/EnvVariableHelper';
 
 const DIRECTUS_TL1_HOUSING_EXPORT_PATH = '/directus/tl1/housingContracts.csv'; // This is defined in docker-compose.yaml statically
 

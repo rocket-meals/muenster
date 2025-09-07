@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { isWeb } from '@/constants/Constants';
+import {useTheme} from '@/hooks/useTheme';
+import {Ionicons, MaterialIcons} from '@expo/vector-icons';
+import {useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {isWeb} from '@/constants/Constants';
 import * as ImagePicker from 'expo-image-picker';
-import { FormAnswersHelper } from '@/redux/actions/Forms/FormAnswers';
-import { FileRelation, FormAnswer } from './types';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {FormAnswersHelper} from '@/redux/actions/Forms/FormAnswers';
+import {FileRelation, FormAnswer} from './types';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 /**
  *  "images" | "videos" | "livePhotos"

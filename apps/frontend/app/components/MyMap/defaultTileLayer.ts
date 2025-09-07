@@ -1,4 +1,4 @@
-import { MapLayer } from './model';
+import {MapLayer} from './model';
 
 export const DEFAULT_TILE_LAYER: MapLayer = {
 	layerType: 'TileLayer',

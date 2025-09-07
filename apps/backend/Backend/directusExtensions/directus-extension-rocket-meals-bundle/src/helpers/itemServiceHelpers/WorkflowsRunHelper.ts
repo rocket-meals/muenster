@@ -1,7 +1,7 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { ItemsServiceHelper } from '../ItemsServiceHelper';
-import { WorkflowRunLogger } from '../../workflows-runs-hook/WorkflowRunJobInterface';
-import { WORKFLOW_RUN_STATE } from './WorkflowsRunEnum';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {ItemsServiceHelper} from '../ItemsServiceHelper';
+import {WorkflowRunLogger} from '../../workflows-runs-hook/WorkflowRunJobInterface';
+import {WORKFLOW_RUN_STATE} from './WorkflowsRunEnum';
 
 export class WorkflowResultHash {
   private readonly result_hash: string | null | undefined;

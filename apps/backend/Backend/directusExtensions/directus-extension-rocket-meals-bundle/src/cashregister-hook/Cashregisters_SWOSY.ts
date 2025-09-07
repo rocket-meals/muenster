@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { CashregistersTransactionsForParser, CashregisterTransactionParserInterface } from './CashregisterTransactionParserInterface';
-import { DateHelper } from 'repo-depkit-common';
+import {
+    CashregistersTransactionsForParser,
+    CashregisterTransactionParserInterface
+} from './CashregisterTransactionParserInterface';
 
 const BUCHUNGSNUMMER = 'BUCHUNGSNUMMER';
 const Datum = 'Datum';

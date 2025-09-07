@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Dimensions, ScrollView } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, Image, ScrollView, Text, View} from 'react-native';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { useSelector } from 'react-redux';
-import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {useSelector} from 'react-redux';
+import {Entypo, MaterialCommunityIcons} from '@expo/vector-icons';
 import SettingsList from '@/components/SettingsList';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 import SettingsGroupTitle from '@/components/SettingsGroupTitle';
 
 const parseMarkdown = (text: string, theme: any) => {

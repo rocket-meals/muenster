@@ -1,13 +1,13 @@
-import React, { useRef, useState, useCallback, useMemo } from 'react';
-import { View } from 'react-native';
+import React, {useCallback, useRef, useState} from 'react';
+import {View} from 'react-native';
 import DataAcess from '../../../components/DataAcces/DataAccess';
 import DataSheet from '../../../components/DataAccesheet/DataSheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
+import {useTheme} from '@/hooks/useTheme';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import { useFocusEffect } from 'expo-router';
-import { TranslationKeys } from '@/locales/keys';
+import {useFocusEffect} from 'expo-router';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 
 const Index = () => {

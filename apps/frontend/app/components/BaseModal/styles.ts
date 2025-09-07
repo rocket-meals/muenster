@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 const MAX_HEIGHT = Dimensions.get('window').height * 0.8;
 

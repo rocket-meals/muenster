@@ -1,14 +1,12 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-
-import { DateHelper } from 'repo-depkit-common';
-import { ApiContext } from '../helpers/ApiContext';
-import { FieldFilter, Filter } from '@directus/types/dist/filter';
-import { AssetHelperDirectusBackend, AssetHelperTransformOptions } from '../helpers/AssetHelperDirectusBackend';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { DictHelper } from '../helpers/DictHelper';
-import { ItemsServiceHelper } from '../helpers/ItemsServiceHelper';
-import { FoodRatingCalculator } from '../food-feedback-rating-calculate-hook/FoodRatingCalculator';
-import { EmojiHelper } from '../helpers/EmojiHelper';
+import {DatabaseTypes, DateHelper} from 'repo-depkit-common';
+import {ApiContext} from '../helpers/ApiContext';
+import {FieldFilter, Filter} from '@directus/types/dist/filter';
+import {AssetHelperDirectusBackend, AssetHelperTransformOptions} from '../helpers/AssetHelperDirectusBackend';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {DictHelper} from '../helpers/DictHelper';
+import {ItemsServiceHelper} from '../helpers/ItemsServiceHelper';
+import {FoodRatingCalculator} from '../food-feedback-rating-calculate-hook/FoodRatingCalculator';
+import {EmojiHelper} from '../helpers/EmojiHelper';
 
 export class ReportStatusTrafficLightValues {
   static RED = EmojiHelper.getEmojiDivHTML(EmojiHelper.EmojiFileNames.RED_CIRCLE);

@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { Stack } from 'expo-router';
+import React, {useEffect, useState} from 'react';
+import {useTheme} from '@/hooks/useTheme';
+import {Stack} from 'expo-router';
 import CustomStackHeader from '@/components/CustomStackHeader/CustomStackHeader';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { MarkingGroupsHelper } from '@/redux/actions/MarkingGroups/MarkingGroups';
-import { MarkingHelper } from '@/redux/actions/Markings/Markings';
-import { useDispatch, useSelector } from 'react-redux';
-import { SET_APP_SETTINGS, UPDATE_MARKINGS } from '@/redux/Types/types';
-import { RootState } from '@/redux/reducer';
-import { ActivityIndicator, View } from 'react-native';
-import { AppSettingsHelper } from '@/redux/actions/AppSettings/AppSettings';
-import { sortMarkingsByGroup } from 'repo-depkit-common';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {DatabaseTypes, sortMarkingsByGroup} from 'repo-depkit-common';
+import {MarkingGroupsHelper} from '@/redux/actions/MarkingGroups/MarkingGroups';
+import {MarkingHelper} from '@/redux/actions/Markings/Markings';
+import {useDispatch, useSelector} from 'react-redux';
+import {SET_APP_SETTINGS, UPDATE_MARKINGS} from '@/redux/Types/types';
+import {RootState} from '@/redux/reducer';
+import {ActivityIndicator, View} from 'react-native';
+import {AppSettingsHelper} from '@/redux/actions/AppSettings/AppSettings';
 
 export default function MonitorLayout() {
 	const { theme } = useTheme();

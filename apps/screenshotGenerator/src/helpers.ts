@@ -1,7 +1,7 @@
-import { promises as fs } from 'fs';
+import {promises as fs} from 'fs';
 import sharp from 'sharp';
-import { Browser } from 'puppeteer';
-import { Device } from './devices';
+import {Browser} from 'puppeteer';
+import {Device} from './devices';
 
 export async function createDirIfNotExists(dirOrFilePath: string) {
   const dirPath = dirOrFilePath.endsWith('/') ? dirOrFilePath : dirOrFilePath.substring(0, dirOrFilePath.lastIndexOf('/'));

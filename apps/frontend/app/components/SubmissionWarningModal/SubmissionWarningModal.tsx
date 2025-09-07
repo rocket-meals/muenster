@@ -1,17 +1,17 @@
-import { ActivityIndicator, Dimensions, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {ActivityIndicator, Dimensions, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Modal from 'react-native-modal';
-import { styles } from './styles';
-import { AntDesign } from '@expo/vector-icons';
-import { SubmissionWarningModalProps } from './types';
-import { useRouter } from 'expo-router';
-import { useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useTheme } from '@/hooks/useTheme';
-import { FormsSubmissionsHelper } from '@/redux/actions/Forms/FormSubmitions';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {styles} from './styles';
+import {AntDesign} from '@expo/vector-icons';
+import {SubmissionWarningModalProps} from './types';
+import {useRouter} from 'expo-router';
+import {useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useTheme} from '@/hooks/useTheme';
+import {FormsSubmissionsHelper} from '@/redux/actions/Forms/FormSubmitions';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const SubmissionWarningModal: React.FC<SubmissionWarningModalProps> = ({ isVisible, setIsVisible, id }) => {
 	const router = useRouter();

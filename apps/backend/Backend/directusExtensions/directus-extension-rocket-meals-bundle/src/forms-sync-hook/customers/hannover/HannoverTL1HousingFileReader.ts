@@ -1,11 +1,10 @@
-import fs, { readFileSync } from 'fs';
+import fs, {readFileSync} from 'fs';
 import chardet from 'chardet';
-import { CSVExportParser } from '../../../food-sync-hook/CSVExportParser';
-import { HashHelper } from '../../../helpers/HashHelper';
+import {CSVExportParser} from '../../../food-sync-hook/CSVExportParser';
+import {HashHelper} from '../../../helpers/HashHelper';
 import iconv from 'iconv-lite';
-import { WorkflowRunLogger } from '../../../workflows-runs-hook/WorkflowRunJobInterface';
-import { DateHelper, DateHelperTimezone } from 'repo-depkit-common';
-import { StringHelper } from 'repo-depkit-common';
+import {WorkflowRunLogger} from '../../../workflows-runs-hook/WorkflowRunJobInterface';
+import {DateHelper, DateHelperTimezone, StringHelper} from 'repo-depkit-common';
 
 // VONUMMER: Haus-Wohnung-Wohnungsnummer
 // 420-01-05-51-6

@@ -1,19 +1,19 @@
-import { Dimensions, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {Dimensions, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { CanteenSelectionSheetProps } from './types';
-import { isWeb } from '@/constants/Constants';
-import { SET_BUILDINGS, SET_CANTEENS, SET_SELECTED_CANTEEN } from '@/redux/Types/types';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { useLanguage } from '@/hooks/useLanguage';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { CanteenHelper } from '@/redux/actions';
-import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {CanteenSelectionSheetProps} from './types';
+import {isWeb} from '@/constants/Constants';
+import {SET_BUILDINGS, SET_CANTEENS, SET_SELECTED_CANTEEN} from '@/redux/Types/types';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {useLanguage} from '@/hooks/useLanguage';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {CanteenHelper} from '@/redux/actions';
+import {BuildingsHelper} from '@/redux/actions/Buildings/Buildings';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 import CanteenSelection from '../CanteenSelection/CanteenSelection';
 
 const CanteenSelectionSheet: React.FC<CanteenSelectionSheetProps> = ({ closeSheet }) => {

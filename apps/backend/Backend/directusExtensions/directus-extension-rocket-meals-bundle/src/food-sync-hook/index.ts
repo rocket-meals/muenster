@@ -1,17 +1,17 @@
-import { ParseSchedule } from './ParseSchedule';
-import { defineHook } from '@directus/extensions-sdk';
-import { FoodParserInterface } from './FoodParserInterface';
-import { FoodTL1Parser_RawReportFtpReader } from './FoodTL1Parser_RawReportFtpReader';
-import { FoodTL1Parser_RawReportUrlReader } from './FoodTL1Parser_RawReportUrlReader';
-import { MarkingTL1Parser } from './MarkingTL1Parser';
-import { MarkingParserInterface } from './MarkingParserInterface';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { FoodParserWithCustomerAdaptions } from './FoodParserWithCustomerAdaptions';
-import { EnvVariableHelper } from '../helpers/EnvVariableHelper';
-import { WorkflowScheduleHelper } from '../workflows-runs-hook';
-import { SingleWorkflowRun, WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {ParseSchedule} from './ParseSchedule';
+import {defineHook} from '@directus/extensions-sdk';
+import {FoodParserInterface} from './FoodParserInterface';
+import {FoodTL1Parser_RawReportFtpReader} from './FoodTL1Parser_RawReportFtpReader';
+import {FoodTL1Parser_RawReportUrlReader} from './FoodTL1Parser_RawReportUrlReader';
+import {MarkingTL1Parser} from './MarkingTL1Parser';
+import {MarkingParserInterface} from './MarkingParserInterface';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {FoodParserWithCustomerAdaptions} from './FoodParserWithCustomerAdaptions';
+import {EnvVariableHelper} from '../helpers/EnvVariableHelper';
+import {WorkflowScheduleHelper} from '../workflows-runs-hook';
+import {SingleWorkflowRun, WorkflowRunLogger} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 
 const SCHEDULE_NAME = 'food_parse';
 

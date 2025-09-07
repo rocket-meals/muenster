@@ -1,6 +1,6 @@
-import { EnvVariableHelper } from '../helpers/EnvVariableHelper';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { AutoTranslationSettingsHelper } from '../helpers/itemServiceHelpers/AutoTranslationSettingsHelper';
+import {EnvVariableHelper} from '../helpers/EnvVariableHelper';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {AutoTranslationSettingsHelper} from '../helpers/itemServiceHelpers/AutoTranslationSettingsHelper';
 
 export class TranslatorSettings {
   private readonly apiKey: undefined | string | null;

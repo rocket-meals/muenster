@@ -1,20 +1,31 @@
-import { ActivityIndicator, Dimensions, Image, Linking, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { useTheme } from '@/hooks/useTheme';
+import {
+    ActivityIndicator,
+    Dimensions,
+    Image,
+    Linking,
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
-import { Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
+import {Foundation, MaterialCommunityIcons} from '@expo/vector-icons';
 import Information from '@/components/Information';
 import BuildingDescription from '@/components/BuildingDescription';
-import { useLocalSearchParams } from 'expo-router';
-import { useSelector } from 'react-redux';
-import { myContrastColor } from '@/helper/colorHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
+import {useLocalSearchParams} from 'expo-router';
+import {useSelector} from 'react-redux';
+import {myContrastColor} from '@/helper/colorHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const Details = () => {
 	useSetPageTitle(TranslationKeys.building_details);

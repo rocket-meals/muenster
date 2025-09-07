@@ -1,4 +1,4 @@
-import { Linking } from 'react-native';
+import {Linking} from 'react-native';
 // import {LocationType} from '@/helper/geo/LocationType';
 import usePlatformHelper from '@/helper/platformHelper';
 import * as IntentLauncher from 'expo-intent-launcher';

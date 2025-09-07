@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, TouchableOpacity, Text, Platform, Dimensions, Image } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useRef, useState} from 'react';
+import {Dimensions, Image, Platform, Text, TouchableOpacity, View} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import {MaterialIcons} from '@expo/vector-icons';
+import {useSelector} from 'react-redux';
 import styles from './styles';
 import SignatureScreen from 'react-native-signature-canvas';
-import { isWeb } from '@/constants/Constants';
-import { useLanguage } from '@/hooks/useLanguage';
+import {isWeb} from '@/constants/Constants';
+import {useLanguage} from '@/hooks/useLanguage';
 import * as FileSystem from 'expo-file-system';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 // Import libraries based on platform
 const SignatureCanvas = Platform.OS === 'web' ? require('react-signature-canvas').default : require('react-native-signature-canvas').default;

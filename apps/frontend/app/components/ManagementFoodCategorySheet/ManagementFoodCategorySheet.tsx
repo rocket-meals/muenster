@@ -1,16 +1,16 @@
-import { View, Text, TouchableOpacity, TextInput, Dimensions } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { ManagementFoodCategorySheetProps } from './types';
-import { BottomSheetScrollView, BottomSheetView } from '@gorhom/bottom-sheet';
+import {Dimensions, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ManagementFoodCategorySheetProps} from './types';
+import {BottomSheetScrollView, BottomSheetView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { isWeb } from '@/constants/Constants';
-import { SET_DAY_PLAN } from '@/redux/Types/types';
-import { getTextFromTranslation } from '@/helper/resourceHelper';
-import { RootState } from '@/redux/reducer';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {useTheme} from '@/hooks/useTheme';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useDispatch, useSelector} from 'react-redux';
+import {isWeb} from '@/constants/Constants';
+import {SET_DAY_PLAN} from '@/redux/Types/types';
+import {getTextFromTranslation} from '@/helper/resourceHelper';
+import {RootState} from '@/redux/reducer';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 const ManagementFoodCategorySheet: React.FC<ManagementFoodCategorySheetProps> = ({ closeSheet, selectedFoodCategory }) => {
 	const { theme } = useTheme();

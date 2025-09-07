@@ -1,4 +1,4 @@
-import { StringHelper } from './StringHelper';
+import {StringHelper} from './StringHelper';
 import moment from 'moment-timezone';
 
 export enum Weekday {

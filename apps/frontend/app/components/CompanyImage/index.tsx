@@ -1,8 +1,8 @@
 import React from 'react';
-import { ImageResizeMode, ImageStyle, StyleProp } from 'react-native';
+import {ImageResizeMode, ImageStyle, StyleProp} from 'react-native';
 import MyImage from '@/components/MyImage';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 interface CompanyImageProps {
 	appSettings?: DatabaseTypes.AppSettings | null;

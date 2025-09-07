@@ -1,16 +1,15 @@
-import { WashingmachineParseSchedule } from './WashingmachineParseSchedule';
-import { defineHook } from '@directus/extensions-sdk';
-import { CollectionNames } from 'repo-depkit-common';
-import { DemoWashingmachineParser } from './testParser/DemoWashingmachineParser';
-import { WashingmachineParserInterface } from './WashingmachineParserInterface';
-import { EnvVariableHelper, SyncForCustomerEnum } from '../helpers/EnvVariableHelper';
-import { StudentenwerkOsnabrueckWashingmachineParser } from './osnabrueck/StudentenwerkOsnabrueckWashingmachineParser';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { WorkflowScheduleHelper } from '../workflows-runs-hook';
-import { RegisterFunctions } from '@directus/extensions';
-import { SingleWorkflowRun, WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {WashingmachineParseSchedule} from './WashingmachineParseSchedule';
+import {defineHook} from '@directus/extensions-sdk';
+import {CollectionNames, DatabaseTypes} from 'repo-depkit-common';
+import {DemoWashingmachineParser} from './testParser/DemoWashingmachineParser';
+import {WashingmachineParserInterface} from './WashingmachineParserInterface';
+import {EnvVariableHelper, SyncForCustomerEnum} from '../helpers/EnvVariableHelper';
+import {StudentenwerkOsnabrueckWashingmachineParser} from './osnabrueck/StudentenwerkOsnabrueckWashingmachineParser';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {WorkflowScheduleHelper} from '../workflows-runs-hook';
+import {RegisterFunctions} from '@directus/extensions';
+import {SingleWorkflowRun, WorkflowRunLogger} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 
 function registerWashingmachinesFilterUpdate(apiContext: any, registerFunctions: RegisterFunctions) {
   const { filter } = registerFunctions;

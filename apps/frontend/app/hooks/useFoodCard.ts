@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Dimensions, ViewStyle } from 'react-native';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
-import { isWeb } from '@/constants/Constants';
+import {useEffect, useState} from 'react';
+import {Dimensions, ViewStyle} from 'react-native';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
+import {isWeb} from '@/constants/Constants';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
-import { useTheme } from '@/hooks/useTheme';
+import {useTheme} from '@/hooks/useTheme';
 
 export const useFoodCard = (borderWidth: number = 0) => {
 	const { theme } = useTheme();

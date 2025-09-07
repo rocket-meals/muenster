@@ -1,4 +1,4 @@
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 export type ApartmentsWithFieldsOmited = Omit<DatabaseTypes.Apartments, 'id' | 'created_on' | 'updated_on' | 'user_created' | 'user_updated' | 'washingmachines' | 'building' | 'sort' | 'status'> & {
   external_identifier: string;

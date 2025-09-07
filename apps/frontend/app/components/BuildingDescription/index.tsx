@@ -1,12 +1,12 @@
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { getBuildingTranslationByLanguageCode } from '@/helper/resourceHelper';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {getBuildingTranslationByLanguageCode} from '@/helper/resourceHelper';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const BuildingDescription: React.FC<any> = ({ campusDetails }) => {
 	const { theme } = useTheme();

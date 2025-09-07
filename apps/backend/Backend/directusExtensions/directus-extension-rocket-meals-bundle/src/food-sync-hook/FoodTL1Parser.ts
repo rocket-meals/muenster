@@ -1,11 +1,20 @@
-import { CSVExportParser } from './CSVExportParser';
+import {CSVExportParser} from './CSVExportParser';
 
-import { CanteensTypeForParser, FoodofferDateType, FoodoffersTypeForParser, FoodofferTypeWithBasicData, FoodParseFoodAttributesType, FoodParserInterface, FoodsInformationTypeForParser, FoodWithBasicData, FoodWithBasicDataWithoutIdType } from './FoodParserInterface';
-import { FoodTL1Parser_GetRawReportInterface } from './FoodTL1Parser_GetRawReportInterface';
-import { LanguageCodes, TranslationsFromParsingType } from '../helpers/TranslationHelper';
-import { PriceGroupEnum } from './PriceGroupEnum';
-import { DictHelper } from '../helpers/DictHelper';
-import { MarkingsTypeForParser } from './MarkingParserInterface';
+import {
+    CanteensTypeForParser,
+    FoodofferDateType,
+    FoodoffersTypeForParser,
+    FoodofferTypeWithBasicData,
+    FoodParseFoodAttributesType,
+    FoodParserInterface,
+    FoodsInformationTypeForParser,
+    FoodWithBasicData
+} from './FoodParserInterface';
+import {FoodTL1Parser_GetRawReportInterface} from './FoodTL1Parser_GetRawReportInterface';
+import {LanguageCodes, TranslationsFromParsingType} from '../helpers/TranslationHelper';
+import {PriceGroupEnum} from './PriceGroupEnum';
+import {DictHelper} from '../helpers/DictHelper';
+import {MarkingsTypeForParser} from './MarkingParserInterface';
 
 type FoodofferIdentifierType = string;
 export type RawTL1FoodofferType = { [x: string]: string };

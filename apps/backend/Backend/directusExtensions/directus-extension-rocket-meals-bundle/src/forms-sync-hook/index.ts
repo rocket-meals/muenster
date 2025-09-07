@@ -1,17 +1,16 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { EnvVariableHelper, SyncForCustomerEnum } from '../helpers/EnvVariableHelper';
-import { FormSyncHannover } from './customers/hannover/FormSyncHannover';
-import { registerHookToCreateFormAnswersForFormSubmission } from './RegisterHookCreateFormSubmissionsFormAnswers';
-import { CollectionNames } from 'repo-depkit-common';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { FormSubmissionState } from './FormImportTypes';
-import { RegisterFunctions } from '@directus/extensions';
-import { ApiContext } from '../helpers/ApiContext';
-import { PrimaryKey } from '@directus/types';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { TranslationHelper } from '../helpers/TranslationHelper';
-import { FormHelper } from '../helpers/form/FormHelper';
-import { MyFileTypes } from '../helpers/FilesServiceHelper';
+import {defineHook} from '@directus/extensions-sdk';
+import {EnvVariableHelper, SyncForCustomerEnum} from '../helpers/EnvVariableHelper';
+import {FormSyncHannover} from './customers/hannover/FormSyncHannover';
+import {registerHookToCreateFormAnswersForFormSubmission} from './RegisterHookCreateFormSubmissionsFormAnswers';
+import {CollectionNames, DatabaseTypes} from 'repo-depkit-common';
+import {FormSubmissionState} from './FormImportTypes';
+import {RegisterFunctions} from '@directus/extensions';
+import {ApiContext} from '../helpers/ApiContext';
+import {PrimaryKey} from '@directus/types';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {TranslationHelper} from '../helpers/TranslationHelper';
+import {FormHelper} from '../helpers/form/FormHelper';
+import {MyFileTypes} from '../helpers/FilesServiceHelper';
 
 function registerHookPresentCreateFormSubmissionIllegalState(registerFunctions: RegisterFunctions, apiContext: ApiContext) {
   registerFunctions.filter<Partial<DatabaseTypes.FormSubmissions>>(CollectionNames.FORM_SUBMISSIONS + '.items.create', async (input, meta, eventContext) => {

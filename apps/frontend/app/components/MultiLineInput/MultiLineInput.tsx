@@ -1,9 +1,9 @@
-import { View, TextInput } from 'react-native';
+import {TextInput, View} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
 
 const MultiLineInput = ({ id, value, onChange, error, isDisabled, custom_type }: { id: string; value: string; onChange: (id: string, value: string, custom_type: string) => void; error: string; isDisabled: boolean; custom_type: string }) => {
 	const { theme } = useTheme();

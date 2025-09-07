@@ -1,19 +1,19 @@
-import { Text, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useRef, useState } from 'react';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useTheme } from '@/hooks/useTheme';
-import { AttentionSheetProps } from './types';
-import { styles } from './styles';
-import { isWeb } from '@/constants/Constants';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useSelector } from 'react-redux';
+import {Text, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useRef, useState} from 'react';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useTheme} from '@/hooks/useTheme';
+import {AttentionSheetProps} from './types';
+import {styles} from './styles';
+import {isWeb} from '@/constants/Constants';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useSelector} from 'react-redux';
 import LottieView from 'lottie-react-native';
-import { replaceLottieColors } from '@/helper/animationHelper';
+import {replaceLottieColors} from '@/helper/animationHelper';
 import animationJson from '@/assets/animations/astronaut-computer.json';
-import { useFocusEffect } from 'expo-router';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import {useFocusEffect} from 'expo-router';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
+import {myContrastColor} from '@/helper/colorHelper';
 
 const AttentionSheet: React.FC<AttentionSheetProps> = ({ closeSheet, handleLogin, isBottomSheetVisible }) => {
 	const { translate } = useLanguage();

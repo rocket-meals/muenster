@@ -1,7 +1,7 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { EventHelper } from '../helpers/EventHelper';
-import { AvatarHelper } from '../helpers/AvatarHelper';
-import { DatabaseInitializedCheck } from '../helpers/DatabaseInitializedCheck';
+import {defineHook} from '@directus/extensions-sdk';
+import {EventHelper} from '../helpers/EventHelper';
+import {AvatarHelper} from '../helpers/AvatarHelper';
+import {DatabaseInitializedCheck} from '../helpers/DatabaseInitializedCheck';
 
 const SCHEDULE_NAME = 'users_avatar_delete';
 

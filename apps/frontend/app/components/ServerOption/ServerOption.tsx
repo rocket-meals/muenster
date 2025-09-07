@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { myContrastColor } from '@/helper/colorHelper';
-import type { RootState } from '@/redux/reducer';
-import type { CustomerConfig } from '@/config';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {myContrastColor} from '@/helper/colorHelper';
+import type {RootState} from '@/redux/reducer';
+import type {CustomerConfig} from '@/config';
 
 interface ServerOptionProps {
 	server: CustomerConfig;

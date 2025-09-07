@@ -1,13 +1,11 @@
-import { UPDATE_LOGIN } from '@/redux/Types/types';
+import {UPDATE_LOGIN} from '@/redux/Types/types';
 import * as Crypto from 'expo-crypto';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import Server from './ServerUrl';
-import { NumberHelper } from 'repo-depkit-common';
-import { ServerAPI } from '@/redux/actions';
-import { StringHelper } from 'repo-depkit-common';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { configureStore } from '@/redux/store';
-import { PriceGroupKey } from '@/app/(app)/settings/types';
+import {DatabaseTypes, NumberHelper, StringHelper} from 'repo-depkit-common';
+import {ServerAPI} from '@/redux/actions';
+import {configureStore} from '@/redux/store';
+import {PriceGroupKey} from '@/app/(app)/settings/types';
 
 export const generateCodeVerifier = async () => {
 	const bytesMinAmount = 32;

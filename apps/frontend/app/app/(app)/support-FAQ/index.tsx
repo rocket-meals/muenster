@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, Dimensions, View, Image, Platform, Linking, Text } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { router } from 'expo-router';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, Image, Linking, Platform, ScrollView, Text, View} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import {router} from 'expo-router';
 import SettingsList from '@/components/SettingsList';
-import { MaterialIcons, Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
+import {Ionicons, MaterialCommunityIcons, MaterialIcons, Octicons} from '@expo/vector-icons';
 import styles from './styles';
-import { useLanguage } from '@/hooks/useLanguage';
+import {useLanguage} from '@/hooks/useLanguage';
 import useToast from '@/hooks/useToast';
-import { useSelector } from 'react-redux';
-import { TranslationKeys } from '@/locales/keys';
+import {useSelector} from 'react-redux';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const SupportFaq = () => {
 	useSetPageTitle(TranslationKeys.feedback_support_faq);

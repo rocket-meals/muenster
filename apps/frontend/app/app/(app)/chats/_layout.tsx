@@ -1,9 +1,9 @@
 import React from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { Stack } from 'expo-router';
+import {useTheme} from '@/hooks/useTheme';
+import {Stack} from 'expo-router';
 import CustomStackHeader from '@/components/CustomStackHeader/CustomStackHeader';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
 
 export default function ChatsLayout() {
 	const { theme } = useTheme();

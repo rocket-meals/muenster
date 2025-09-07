@@ -1,16 +1,14 @@
-import { defineHook } from '@directus/extensions-sdk';
+import {defineHook} from '@directus/extensions-sdk';
 
-import { Translator } from './Translator';
-import { TranslatorSettings } from './TranslatorSettings';
-import { DirectusCollectionTranslator } from './DirectusCollectionTranslator.js';
-import { EventHelper } from '../helpers/EventHelper';
-import { DatabaseInitializedCheck } from '../helpers/DatabaseInitializedCheck';
-import { ApiContext } from '../helpers/ApiContext';
-import { ItemsServiceHelper } from '../helpers/ItemsServiceHelper';
-import { AutoTranslationSettingsHelper } from '../helpers/itemServiceHelpers/AutoTranslationSettingsHelper';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { EventContext } from '@directus/types';
-import { CollectionNames } from 'repo-depkit-common';
+import {Translator} from './Translator';
+import {TranslatorSettings} from './TranslatorSettings';
+import {DirectusCollectionTranslator} from './DirectusCollectionTranslator.js';
+import {EventHelper} from '../helpers/EventHelper';
+import {DatabaseInitializedCheck} from '../helpers/DatabaseInitializedCheck';
+import {ApiContext} from '../helpers/ApiContext';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {EventContext} from '@directus/types';
+import {CollectionNames} from 'repo-depkit-common';
 
 export const scheduleNameAutoTranslation = 'auto-translation';
 

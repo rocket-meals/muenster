@@ -1,9 +1,8 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { DatabaseInitializedCheck } from '../helpers/DatabaseInitializedCheck';
-import { CollectionNames } from 'repo-depkit-common';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { DateHelper } from 'repo-depkit-common';
-import { HtmlTemplatesEnum } from '../helpers/html/HtmlGenerator';
+import {defineHook} from '@directus/extensions-sdk';
+import {DatabaseInitializedCheck} from '../helpers/DatabaseInitializedCheck';
+import {CollectionNames, DateHelper} from 'repo-depkit-common';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {HtmlTemplatesEnum} from '../helpers/html/HtmlGenerator';
 
 const SCHEDULE_NAME = 'activity_auto_cleanup';
 

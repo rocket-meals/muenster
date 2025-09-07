@@ -1,7 +1,7 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { FoodFeedbackHelper } from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
-import { DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL } from '@/redux/Types/types';
-import { Dispatch } from 'react';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {FoodFeedbackHelper} from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
+import {DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL} from '@/redux/Types/types';
+import {Dispatch} from 'react';
 
 type FeedbackPayload = {
 	foodId: string;

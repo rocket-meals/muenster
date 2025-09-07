@@ -1,6 +1,6 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { BaseGermanMarkdownTemplateHelper, HtmlGenerator, HtmlGeneratorOptions } from '../html/HtmlGenerator';
-import { MyDatabaseHelperInterface, MyDatabaseTestableHelperInterface } from '../MyDatabaseHelperInterface';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {BaseGermanMarkdownTemplateHelper, HtmlGenerator} from '../html/HtmlGenerator';
+import {MyDatabaseTestableHelperInterface} from '../MyDatabaseHelperInterface';
 
 export class MailHelper {
   public static async renderMailToHtml(mail: Partial<DatabaseTypes.Mails>, myDatabaseHelperInterface: MyDatabaseTestableHelperInterface): Promise<any> {

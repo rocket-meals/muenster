@@ -1,45 +1,51 @@
-import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { FontAwesome, FontAwesome6, Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { useLanguage } from '@/hooks/useLanguage';
-import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { isWeb } from '@/constants/Constants';
+import {useTheme} from '@/hooks/useTheme';
+import {FontAwesome, FontAwesome6, Ionicons, MaterialIcons} from '@expo/vector-icons';
+import {useLanguage} from '@/hooks/useLanguage';
+import {router, useFocusEffect, useLocalSearchParams} from 'expo-router';
+import {useDispatch, useSelector} from 'react-redux';
+import {isWeb} from '@/constants/Constants';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import useToast from '@/hooks/useToast';
-import { FormAnswersHelper } from '@/redux/actions/Forms/FormAnswers';
+import {FormAnswersHelper} from '@/redux/actions/Forms/FormAnswers';
 import SubmissionWarningModal from '@/components/SubmissionWarningModal/SubmissionWarningModal';
-import { FormsSubmissionsHelper } from '@/redux/actions/Forms/FormSubmitions';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {FormsSubmissionsHelper} from '@/redux/actions/Forms/FormSubmitions';
+import {DatabaseTypes} from 'repo-depkit-common';
 import SingleLineInput from '@/components/SingleLineInput/SingleLineInput';
 import MultiLineInput from '@/components/MultiLineInput/MultiLineInput';
 import IBANInput from '@/components/IBANInput/IBANInput';
 import NumberInput from '@/components/NumberInput/NumberInput';
 import EmailInput from '@/components/EmailInput/EmailInput';
-import { DateInput, DateWithTimeInput, PreciseTimestampInput, TimeInput } from '@/components/DateTimeInputs';
+import {DateInput, DateWithTimeInput, PreciseTimestampInput, TimeInput} from '@/components/DateTimeInputs';
 import TriStateCheckbox from '@/components/TriStateCheckbox/TriStateCheckbox';
 import FileUpload from '@/components/FileUpload/FileUpload';
 import ImageUpload from '@/components/ImageUpload/ImageUpload';
 import SignatureInterface from '@/components/SignatureInterface/SignatureInterface';
-import { getFromCategoryTranslation, getFromDescriptionTranslation } from '@/helper/resourceHelper';
-import { iconLibraries } from '@/components/Drawer/CustomDrawerContent';
-import { DynamicCollectionHelper } from '@/redux/actions/DynamicCollection/DynamicCollection';
+import {getFromCategoryTranslation, getFromDescriptionTranslation} from '@/helper/resourceHelper';
+import {iconLibraries} from '@/components/Drawer/CustomDrawerContent';
+import {DynamicCollectionHelper} from '@/redux/actions/DynamicCollection/DynamicCollection';
 import CollectionSelection from '@/components/CollectionSelection/CollectionSelection';
-import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
-import { filterOptions } from './constants';
+import {BuildingsHelper} from '@/redux/actions/Buildings/Buildings';
+import {filterOptions} from './constants';
 import EditFormSubmissionSheet from '@/components/EditFormSubmissionSheet/EditFormSubmissionSheet';
-import { SET_FORM_SUBMISSION } from '@/redux/Types/types';
-import { excerpt, getFileFromDirectus, getFormValueImageUrl, uploadToDirectus, uploadToDirectusFromMobile } from '@/constants/HelperFunctions';
+import {SET_FORM_SUBMISSION} from '@/redux/Types/types';
+import {
+    excerpt,
+    getFileFromDirectus,
+    getFormValueImageUrl,
+    uploadToDirectus,
+    uploadToDirectusFromMobile
+} from '@/constants/HelperFunctions';
 import SubmissionWarningSheet from '@/components/SubmissionWarningSheet/SubmissionWarningSheet';
-import { format, isValid, parse, parseISO } from 'date-fns';
-import { Buffer } from 'buffer';
+import {format, isValid, parse, parseISO} from 'date-fns';
+import {Buffer} from 'buffer';
 import FilterFormSheet from '@/components/FilterFormSheet/FilterFormSheet';
-import { TranslationKeys } from '@/locales/keys';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const Index = () => {
 	const toast = useToast();

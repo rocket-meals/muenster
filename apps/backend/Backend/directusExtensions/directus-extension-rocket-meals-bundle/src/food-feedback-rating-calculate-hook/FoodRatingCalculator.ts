@@ -1,6 +1,6 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { ApiContext } from '../helpers/ApiContext';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {ApiContext} from '../helpers/ApiContext';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
 
 export class FoodRatingCalculator {
   static MAX_RATING_VALUE = 5;

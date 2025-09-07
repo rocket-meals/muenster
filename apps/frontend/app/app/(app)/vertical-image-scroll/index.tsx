@@ -1,6 +1,6 @@
 import React from 'react';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { TranslationKeys } from '@/locales/keys';
+import {TranslationKeys} from '@/locales/keys';
 import VerticalImageScroll from '@/components/VerticalImageScroll';
 
 const VerticalImageScrollScreen = () => {

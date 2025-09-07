@@ -1,24 +1,34 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { TouchableOpacity, ScrollView, View, Dimensions, Text, TextInput, Platform, PixelRatio, ActivityIndicator } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
+import React, {useCallback, useEffect, useState} from 'react';
+import {
+    ActivityIndicator,
+    Dimensions,
+    PixelRatio,
+    Platform,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
 import FeedbackItem from '../../../components/FeedbackSupport/FeedbackSupport';
 import styles from './styles';
-import { isWeb } from '@/constants/Constants';
+import {isWeb} from '@/constants/Constants';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { feedbackData, deviceData } from '../../../constants/FeedbackSupportData';
+import {deviceData, feedbackData} from '../../../constants/FeedbackSupportData';
 import ModalComponent from '../../../components/ModalSetting/ModalComponent';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useSelector } from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useSelector} from 'react-redux';
 import * as DeviceInfo from 'expo-device';
-import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
-import { AppFeedback } from '@/redux/actions/AppFeedback/AppFeedback';
-import { FontAwesome5 } from '@expo/vector-icons';
+import {router, useFocusEffect, useLocalSearchParams} from 'expo-router';
+import {AppFeedback} from '@/redux/actions/AppFeedback/AppFeedback';
+import {FontAwesome5} from '@expo/vector-icons';
 import useToast from '@/hooks/useToast';
-import { TranslationKeys } from '@/locales/keys';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {RootState} from '@/redux/reducer';
+import {myContrastColor} from '@/helper/colorHelper';
 
 const FeedbackScreen = () => {
 	useSetPageTitle(TranslationKeys.feedback_and_support);

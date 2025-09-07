@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import {Image, View} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { QrCodeProps, QrCodeEcl } from './types';
+import {QrCodeEcl, QrCodeProps} from './types';
 
 const QrCode: React.FC<QrCodeProps> = ({ value, size = 200, image, imageUrl, innerSize = 21, ecl, backgroundColor = 'white', margin = 0, quietZone = 5 }) => {
 	const imageSource = image ? image : imageUrl ? { uri: imageUrl } : undefined;

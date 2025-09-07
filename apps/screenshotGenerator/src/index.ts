@@ -1,10 +1,18 @@
 import puppeteer from 'puppeteer';
-import { AppLinks, APP_ROUTES, GlobalParams } from 'repo-depkit-common';
-import { createDirIfNotExists, createScreenshotUncompressed, getFileName, compressScreenshotAndDeleteOld, printEstimatedTime, deleteAllScreenshots, doesFileExist } from './helpers';
-import { devices, Device } from './devices';
+import {APP_ROUTES, AppLinks, GlobalParams} from 'repo-depkit-common';
+import {
+    compressScreenshotAndDeleteOld,
+    createDirIfNotExists,
+    createScreenshotUncompressed,
+    deleteAllScreenshots,
+    doesFileExist,
+    getFileName,
+    printEstimatedTime
+} from './helpers';
+import {devices} from './devices';
 
 import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
+import {hideBin} from 'yargs/helpers';
 
 // Define command-line arguments using yargs
 const argv = yargs(hideBin(process.argv))

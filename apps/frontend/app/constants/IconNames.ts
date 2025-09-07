@@ -1,4 +1,4 @@
-import { IconFamily, IconParseDelimeter } from '@/helper/iconHelper';
+import {IconFamily, IconParseDelimeter} from '@/helper/iconHelper';
 
 export class IconNames {
 	static delete_icon = 'delete';

@@ -1,11 +1,9 @@
-import { Dimensions, Text, TextInput, TouchableOpacity, View, Switch } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {Dimensions, Switch, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useTheme} from '@/hooks/useTheme';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import styles from './styles';
-import { useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { RootState } from '@/redux/reducer';
 
 const FoodPlan = ({ data, onPressItem, selectedValue, selectedValuNext, nextFoodInterval, foodOffer, intervalNext, refreshData }: { data: any[]; onPressItem: (item: any) => void; selectedValue: string; selectedValuNext: string; nextFoodInterval: string; foodOffer: string; intervalNext: string; refreshData: string }) => {
 	const { theme } = useTheme();

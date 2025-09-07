@@ -1,5 +1,5 @@
-import type { DivIcon, LatLngBoundsLiteral, LatLngLiteral, PointTuple } from 'leaflet';
-import { CircleMarkerProps, CircleProps, PolygonProps, PolylineProps, RectangleProps } from 'react-leaflet';
+import type {LatLngBoundsLiteral, LatLngLiteral, PointTuple} from 'leaflet';
+import {CircleMarkerProps, CircleProps, PolygonProps, PolylineProps, RectangleProps} from 'react-leaflet';
 
 export type Dimensions = [width: number, height: number];
 

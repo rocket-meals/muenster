@@ -1,6 +1,6 @@
-import { FoodTL1Parser, RawFoodofferInformationType, RawTL1FoodofferType, TL1AttributeValueType } from '../FoodTL1Parser';
-import { FoodTL1Parser_GetRawReportInterface } from '../FoodTL1Parser_GetRawReportInterface';
-import { FoodParseFoodAttributesType } from '../FoodParserInterface';
+import {FoodTL1Parser, RawFoodofferInformationType, RawTL1FoodofferType, TL1AttributeValueType} from '../FoodTL1Parser';
+import {FoodTL1Parser_GetRawReportInterface} from '../FoodTL1Parser_GetRawReportInterface';
+import {FoodParseFoodAttributesType} from '../FoodParserInterface';
 
 export class FoodTL1ParserOsnabrueck extends FoodTL1Parser {
   static DEFAULT_CO2_GRAMM_FIELD = 'EXTINFO_CO2_WERT';

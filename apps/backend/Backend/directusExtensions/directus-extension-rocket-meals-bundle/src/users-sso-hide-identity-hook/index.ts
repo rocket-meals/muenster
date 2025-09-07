@@ -1,6 +1,6 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { EventHelper } from '../helpers/EventHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {defineHook} from '@directus/extensions-sdk';
+import {EventHelper} from '../helpers/EventHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 function hasDifferentProviderThanDefault(partialUserInput: Partial<DatabaseTypes.DirectusUsers>) {
   const provider = partialUserInput.provider;

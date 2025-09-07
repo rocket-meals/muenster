@@ -1,13 +1,13 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { Entypo, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import { useDispatch } from 'react-redux';
-import { SET_DAY_PLAN, SET_FOOD_PLAN, SET_WEEK_PLAN } from '@/redux/Types/types';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
+import {useTheme} from '@/hooks/useTheme';
+import {Entypo, FontAwesome, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
+import {router} from 'expo-router';
+import {useDispatch} from 'react-redux';
+import {SET_DAY_PLAN, SET_FOOD_PLAN, SET_WEEK_PLAN} from '@/redux/Types/types';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 
 const Index = () => {

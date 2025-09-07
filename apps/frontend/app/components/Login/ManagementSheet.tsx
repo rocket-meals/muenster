@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { styles } from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { SheetProps } from './types';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useSelector } from 'react-redux';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import React, {useState} from 'react';
+import {ActivityIndicator, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {styles} from './styles';
+import {useTheme} from '@/hooks/useTheme';
+import {SheetProps} from './types';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useSelector} from 'react-redux';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const ManagementSheet: React.FC<SheetProps> = ({ closeSheet, handleLogin, loading }) => {
 	const { translate } = useLanguage();

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { Stack } from 'expo-router';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { SET_WIKIS } from '@/redux/Types/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { WikisHelper } from '@/redux/actions/Wikis/Wikis';
-import { RootState } from '@/redux/reducer';
+import React, {useEffect} from 'react';
+import {useTheme} from '@/hooks/useTheme';
+import {Stack} from 'expo-router';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {SET_WIKIS} from '@/redux/Types/types';
+import {useDispatch, useSelector} from 'react-redux';
+import {WikisHelper} from '@/redux/actions/Wikis/Wikis';
+import {RootState} from '@/redux/reducer';
 
 export default function FoodOfferLayout() {
 	const dispatch = useDispatch();

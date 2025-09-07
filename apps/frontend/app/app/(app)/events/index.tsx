@@ -1,20 +1,20 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
+import React, {useCallback, useRef, useState} from 'react';
+import {SafeAreaView, ScrollView} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
 import SettingsList from '@/components/SettingsList';
-import { MaterialIcons, Octicons } from '@expo/vector-icons';
+import {MaterialIcons, Octicons} from '@expo/vector-icons';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import PopupEventSheet from '@/components/PopupEventSheet/PopupEventSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import { useDispatch, useSelector } from 'react-redux';
-import { SET_POPUP_EVENTS } from '@/redux/Types/types';
-import { useFocusEffect } from 'expo-router';
-import { useLanguage } from '@/hooks/useLanguage';
-import { getTitleFromTranslation } from '@/helper/resourceHelper';
+import {useDispatch, useSelector} from 'react-redux';
+import {SET_POPUP_EVENTS} from '@/redux/Types/types';
+import {useFocusEffect} from 'expo-router';
+import {useLanguage} from '@/hooks/useLanguage';
+import {getTitleFromTranslation} from '@/helper/resourceHelper';
 import styles from './styles';
-import { TranslationKeys } from '@/locales/keys';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 import useKioskMode from '@/hooks/useKioskMode';
 
 const EventsScreen = () => {

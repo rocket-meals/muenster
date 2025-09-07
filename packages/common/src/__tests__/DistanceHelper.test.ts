@@ -1,4 +1,4 @@
-import { calculateDistanceInMeter } from 'repo-depkit-common';
+import {calculateDistanceInMeter} from 'repo-depkit-common';
 
 describe('calculateDistanceInMeter', () => {
   it('returns a precise distance for long ranges', () => {

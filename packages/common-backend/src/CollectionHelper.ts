@@ -1,7 +1,6 @@
-import { Project } from 'ts-morph';
-import { resolve } from 'path';
-import { CollectionNames } from 'repo-depkit-common';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {Project} from 'ts-morph';
+import {resolve} from 'path';
+import {CollectionNames} from 'repo-depkit-common';
 
 const pathToCommon = require.resolve('repo-depkit-common');
 const pathToDatabaseTypes = resolve(pathToCommon, '..', 'src', 'databaseTypes', 'types.ts');

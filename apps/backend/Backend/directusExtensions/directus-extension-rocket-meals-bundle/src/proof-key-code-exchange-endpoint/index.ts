@@ -1,13 +1,13 @@
-import { defineEndpoint } from '@directus/extensions-sdk';
+import {defineEndpoint} from '@directus/extensions-sdk';
 import Redis from 'ioredis';
 import ms from 'ms';
 import crypto from 'crypto';
-import { Knex } from 'knex';
-import { RedirectWhitelistHelper } from '../helpers/RedirectWhitelistHelper';
-import { ApiContext } from '../helpers/ApiContext'; // Use Node.js crypto module for secure comparisons
-import { createKv, KvLocal, KvRedis } from '@directus/memory';
-import { EnvVariableHelper } from '../helpers/EnvVariableHelper';
-import { NanoidHelper } from '../helpers/NanoidHelper';
+import {Knex} from 'knex';
+import {RedirectWhitelistHelper} from '../helpers/RedirectWhitelistHelper';
+import {ApiContext} from '../helpers/ApiContext'; // Use Node.js crypto module for secure comparisons
+import {createKv, KvLocal, KvRedis} from '@directus/memory';
+import {EnvVariableHelper} from '../helpers/EnvVariableHelper';
+import {NanoidHelper} from '../helpers/NanoidHelper';
 
 const env = process.env;
 const PUBLIC_URL = env.PUBLIC_URL || ''; // e.g. http://rocket-meals.de/rocket-meals/api or empty string

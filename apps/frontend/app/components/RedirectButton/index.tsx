@@ -1,13 +1,13 @@
-import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
+import {Dimensions, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import { FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
-import { RedirectButtonProps } from './types';
+import {FontAwesome6, MaterialCommunityIcons} from '@expo/vector-icons';
+import {RedirectButtonProps} from './types';
 import usePlatformHelper from '@/helper/platformHelper';
-import { myContrastColor } from '@/helper/colorHelper';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
+import {myContrastColor} from '@/helper/colorHelper';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
 
 const RedirectButton: React.FC<RedirectButtonProps> = ({ type, label, backgroundColor, color, onClick }) => {
 	let containerWidth;

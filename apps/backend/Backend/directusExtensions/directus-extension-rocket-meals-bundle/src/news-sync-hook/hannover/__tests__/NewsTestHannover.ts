@@ -1,6 +1,6 @@
 // small jest test
-import { describe, expect, it } from '@jest/globals';
-import { StudentenwerkHannoverNews_Parser } from '../StudentenwerkHannoverNews_Parser';
+import {describe, expect, it} from '@jest/globals';
+import {StudentenwerkHannoverNews_Parser} from '../StudentenwerkHannoverNews_Parser';
 import path from 'path';
 import fs from 'fs';
 

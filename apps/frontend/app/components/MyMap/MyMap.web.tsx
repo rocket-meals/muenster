@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
 import DEFAULT_TILE_LAYER from './defaultTileLayer';
-import type { MapMarker, LeafletWebViewEvent } from './model';
-import { MyMapProps } from '@/components/MyMap/MyMapHelper';
+import type {LeafletWebViewEvent} from './model';
+import {MyMapProps} from '@/components/MyMap/MyMapHelper';
 
 const MyMap: React.FC<MyMapProps> = ({ mapCenterPosition, zoom, mapMarkers, onMarkerClick, onMapEvent, renderMarkerModal, onMarkerSelectionChange }) => {
 	const { theme } = useTheme();

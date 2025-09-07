@@ -1,4 +1,4 @@
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 export class MarkingHelper {
 	static getDislikedMarkingIds(foodOffer: DatabaseTypes.Foodoffers, profileMarkingsDict: Record<string, DatabaseTypes.ProfilesMarkings>) {

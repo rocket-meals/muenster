@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, Linking, Image } from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, Image, Linking, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
+import {useTheme} from '@/hooks/useTheme';
 
 export type RssFeedProps = {
 	urls?: string | string[];

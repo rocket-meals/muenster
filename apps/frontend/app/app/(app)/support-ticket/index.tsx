@@ -1,18 +1,18 @@
-import { ActivityIndicator, Dimensions, ScrollView, Text, View } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import {ActivityIndicator, Dimensions, ScrollView, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { AppFeedback } from '@/redux/actions/AppFeedback/AppFeedback';
+import {useTheme} from '@/hooks/useTheme';
+import {AppFeedback} from '@/redux/actions/AppFeedback/AppFeedback';
 import SettingsList from '@/components/SettingsList';
-import { Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { format } from 'date-fns';
-import { router, useFocusEffect } from 'expo-router';
-import { TranslationKeys } from '@/locales/keys';
+import {MaterialCommunityIcons, Octicons} from '@expo/vector-icons';
+import {format} from 'date-fns';
+import {router, useFocusEffect} from 'expo-router';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
-import { useLanguage } from '@/hooks/useLanguage';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
+import {useLanguage} from '@/hooks/useLanguage';
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.my_support_tickets);

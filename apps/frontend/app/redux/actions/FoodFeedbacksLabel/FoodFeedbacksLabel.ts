@@ -1,7 +1,7 @@
-import { itemStatus } from '@/constants/Constants';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { CollectionHelper } from '@/helper/collectionHelper'; // Reusing the CollectionHelper
-import { ServerAPI } from '@/redux/actions/Auth/Auth'; // API client
+import {itemStatus} from '@/constants/Constants';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {CollectionHelper} from '@/helper/collectionHelper'; // Reusing the CollectionHelper
+import {ServerAPI} from '@/redux/actions/Auth/Auth'; // API client
 
 export class FoodFeedbackLabelHelper extends CollectionHelper<DatabaseTypes.FoodsFeedbacksLabels> {
 	constructor(client?: any) {

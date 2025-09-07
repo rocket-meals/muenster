@@ -1,11 +1,11 @@
-import { Liquid } from 'liquidjs';
+import {Liquid} from 'liquidjs';
 import path from 'path';
 import fse from 'fs-extra';
-import { PathHelper } from '../PathHelper';
-import { MarkdownHelper } from './MarkdownHelper';
-import { MyDatabaseTestableHelperInterface } from '../MyDatabaseHelperInterface';
-import { ServerInfo } from '../ItemsServiceCreator';
-import { DirectusFilesAssetHelper, DirectusFilesAssetHelperOptions } from '../DirectusFilesAssetHelper';
+import {PathHelper} from '../PathHelper';
+import {MarkdownHelper} from './MarkdownHelper';
+import {MyDatabaseTestableHelperInterface} from '../MyDatabaseHelperInterface';
+import {ServerInfo} from '../ItemsServiceCreator';
+import {DirectusFilesAssetHelper, DirectusFilesAssetHelperOptions} from '../DirectusFilesAssetHelper';
 
 export enum HtmlTemplatesEnum {
   BASE_GERMAN = 'base-german',

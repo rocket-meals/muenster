@@ -1,25 +1,43 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import MyImage from '@/components/MyImage';
-import { useTheme } from '@/hooks/useTheme';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
-import { Languages, PriceGroupKey } from './types';
-import { AntDesign, Entypo, Feather, FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons, Octicons } from '@expo/vector-icons';
-import { isWeb } from '@/constants/Constants';
+import {Languages, PriceGroupKey} from './types';
+import {
+	AntDesign,
+	Entypo,
+	Feather,
+	FontAwesome5,
+	Ionicons,
+	MaterialCommunityIcons,
+	MaterialIcons,
+	Octicons
+} from '@expo/vector-icons';
+import {isWeb} from '@/constants/Constants';
 import SettingsList from '@/components/SettingsList';
-import { useExpoUpdateChecker } from '@/components/ExpoUpdateChecker/ExpoUpdateChecker';
+import {useExpoUpdateChecker} from '@/components/ExpoUpdateChecker/ExpoUpdateChecker';
 import SettingsGroupTitle from '@/components/SettingsGroupTitle';
 import NicknameSheet from '@/components/NicknameSheet/NicknameSheet';
 import ColorSchemeSheet from '@/components/ColorSchemeSheet/ColorSchemeSheet';
 import DrawerPositionSheet from '@/components/DrawerPositionSheet/DrawerPositionSheet';
 import ServerSelectionSheet from '@/components/ServerSelectionSheet/ServerSelectionSheet';
-import { router, useFocusEffect } from 'expo-router';
-import { type CustomerConfig, getVersion } from '@/config';
-import { useDispatch, useSelector } from 'react-redux';
+import {router, useFocusEffect} from 'expo-router';
+import {type CustomerConfig, getVersion} from '@/config';
+import {useDispatch, useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { useLanguage } from '@/hooks/useLanguage';
-import { SET_AMOUNT_COLUMNS_FOR_CARDS, SET_DRAWER_POSITION, SET_FIRST_DAY_OF_THE_WEEK, SET_NICKNAME_LOCAL, SET_USE_WEBP_FOR_ASSETS, UPDATE_DEVELOPER_MODE, UPDATE_MANAGEMENT, UPDATE_PROFILE } from '@/redux/Types/types';
-import { performLogout } from '@/helper/logoutHelper';
+import {useLanguage} from '@/hooks/useLanguage';
+import {
+	SET_AMOUNT_COLUMNS_FOR_CARDS,
+	SET_DRAWER_POSITION,
+	SET_FIRST_DAY_OF_THE_WEEK,
+	SET_NICKNAME_LOCAL,
+	SET_USE_WEBP_FOR_ASSETS,
+	UPDATE_DEVELOPER_MODE,
+	UPDATE_MANAGEMENT,
+	UPDATE_PROFILE
+} from '@/redux/Types/types';
+import {performLogout} from '@/helper/logoutHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
@@ -27,15 +45,15 @@ import CanteenSelectionSheet from '@/components/CanteenSelectionSheet/CanteenSel
 import LanguageSheet from '@/components/LanguageSheet/LanguageSheet';
 import AmountColumnSheet from '@/components/AmountColumnSheet/AmountColumnSheet';
 import FirstDaySheet from '@/components/FirstDaySheet/FirstDaySheet';
-import { excerpt, formatPrice, getImageUrl, showFormatedPrice } from '@/constants/HelperFunctions';
-import { ProfileHelper } from '@/redux/actions/Profile/Profile';
-import { ServerAPI } from '@/redux/actions';
-import { TranslationKeys } from '@/locales/keys';
+import {excerpt, formatPrice, getImageUrl, showFormatedPrice} from '@/constants/HelperFunctions';
+import {ProfileHelper} from '@/redux/actions/Profile/Profile';
+import {ServerAPI} from '@/redux/actions';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { RootState } from '@/redux/reducer';
-import { ServerInfoHelper } from '@/helper/ServerInfoHelper';
-import { UserHelper } from '@/helper/UserHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {RootState} from '@/redux/reducer';
+import {ServerInfoHelper} from '@/helper/ServerInfoHelper';
+import {UserHelper} from '@/helper/UserHelper';
 
 const Settings = () => {
 	useSetPageTitle(TranslationKeys.settings);

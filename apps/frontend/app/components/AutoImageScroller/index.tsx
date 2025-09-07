@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { FlatList, View, Dimensions } from 'react-native';
-import { Image } from 'expo-image';
+import React, {useEffect, useRef} from 'react';
+import {Dimensions, FlatList, View} from 'react-native';
+import {Image} from 'expo-image';
 import styles from './styles';
 
 interface AutoImageScrollerProps {

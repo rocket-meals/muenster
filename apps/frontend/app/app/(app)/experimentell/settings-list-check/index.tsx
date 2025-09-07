@@ -1,12 +1,12 @@
 import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
+import {ScrollView, Text, View} from 'react-native';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { TranslationKeys } from '@/locales/keys';
+import {TranslationKeys} from '@/locales/keys';
 import SettingsList from '@/components/SettingsList';
 import styles from './styles';
 

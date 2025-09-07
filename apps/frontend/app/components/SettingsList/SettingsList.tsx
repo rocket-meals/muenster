@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
-import { SettingsListProps } from './types';
+import {StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
+import {myContrastColor} from '@/helper/colorHelper';
+import {SettingsListProps} from './types';
 
 const padding = 0; // px used for additional padding and border radius
 const borderRadius = 10;

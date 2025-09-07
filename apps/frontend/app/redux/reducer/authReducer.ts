@@ -1,5 +1,15 @@
-import { CLEAR_ANONYMOUSLY, CLEAR_PROFILE, ON_LOGIN, ON_LOGOUT, UPDATE_DEVELOPER_MODE, UPDATE_LOGIN, UPDATE_MANAGEMENT, UPDATE_PRIVACY_POLICY_DATE, UPDATE_PROFILE } from '@/redux/Types/types';
-import { PriceGroupKey } from '@/app/(app)/settings/types';
+import {
+	CLEAR_ANONYMOUSLY,
+	CLEAR_PROFILE,
+	ON_LOGIN,
+	ON_LOGOUT,
+	UPDATE_DEVELOPER_MODE,
+	UPDATE_LOGIN,
+	UPDATE_MANAGEMENT,
+	UPDATE_PRIVACY_POLICY_DATE,
+	UPDATE_PROFILE
+} from '@/redux/Types/types';
+import {PriceGroupKey} from '@/app/(app)/settings/types';
 
 export const InitialProfile = {
 	markings: [],

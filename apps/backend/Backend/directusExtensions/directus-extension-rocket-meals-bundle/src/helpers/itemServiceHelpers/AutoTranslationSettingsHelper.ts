@@ -1,8 +1,7 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { ApiContext } from '../ApiContext';
-import { ItemsServiceCreator } from '../ItemsServiceCreator';
-import { EventContext } from '@directus/types';
-import { CollectionNames } from 'repo-depkit-common';
+import {CollectionNames, DatabaseTypes} from 'repo-depkit-common';
+import {ApiContext} from '../ApiContext';
+import {ItemsServiceCreator} from '../ItemsServiceCreator';
+import {EventContext} from '@directus/types';
 
 export class AutoTranslationSettingsHelper {
   private readonly apiExtensionContext: ApiContext;

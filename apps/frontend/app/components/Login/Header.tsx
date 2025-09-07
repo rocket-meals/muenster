@@ -1,19 +1,19 @@
-import { View, Platform, TouchableOpacity, Text } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { styles } from './styles';
-import { isWeb } from '@/constants/Constants';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useLocales } from 'expo-localization';
-import { useDispatch, useSelector } from 'react-redux';
-import { SET_DRAWER_POSITION } from '@/redux/Types/types';
+import {Platform, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useTheme} from '@/hooks/useTheme';
+import {styles} from './styles';
+import {isWeb} from '@/constants/Constants';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useLocales} from 'expo-localization';
+import {useDispatch, useSelector} from 'react-redux';
+import {SET_DRAWER_POSITION} from '@/redux/Types/types';
 import ModalComponent from '../ModalSetting/ModalComponent';
-import { languages } from '../../constants/SettingData';
+import {languages} from '../../constants/SettingData';
 import MyImage from '@/components/MyImage';
-import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {Entypo, MaterialCommunityIcons} from '@expo/vector-icons';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const LoginHeader = () => {
 	const { translate, setLanguageMode, language } = useLanguage();

@@ -1,19 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Linking, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import { useTheme } from '@/hooks/useTheme';
+import React, {useEffect, useMemo, useState} from 'react';
+import {Linking, Text, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
 import FoodLabelingInfo from '../FoodLabelingInfo';
 import MarkingLabels from '../MarkingLabels/MarkingLabels';
-import { getFoodOffer } from '@/constants/HelperFunctions';
-import { studentUnionUrl } from '@/constants/Constants';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { createSelector } from 'reselect';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
-import { sortMarkingsByGroup } from 'repo-depkit-common';
-import { MarkingGroupsHelper } from '@/redux/actions/MarkingGroups/MarkingGroups';
+import {getFoodOffer} from '@/constants/HelperFunctions';
+import {DatabaseTypes, sortMarkingsByGroup} from 'repo-depkit-common';
+import {createSelector} from 'reselect';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
+import {MarkingGroupsHelper} from '@/redux/actions/MarkingGroups/MarkingGroups';
 
 interface LabelsProps {
 	foodDetails: any;

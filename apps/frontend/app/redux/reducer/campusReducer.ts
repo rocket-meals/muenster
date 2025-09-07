@@ -1,4 +1,10 @@
-import { CLEAR_CAMPUSES, SET_CAMPUSES, SET_CAMPUSES_DICT, SET_CAMPUSES_LOCAL, SET_UNSORTED_CAMPUSES } from '../Types/types';
+import {
+    CLEAR_CAMPUSES,
+    SET_CAMPUSES,
+    SET_CAMPUSES_DICT,
+    SET_CAMPUSES_LOCAL,
+    SET_UNSORTED_CAMPUSES
+} from '../Types/types';
 
 const initialState = {
 	campuses: [],

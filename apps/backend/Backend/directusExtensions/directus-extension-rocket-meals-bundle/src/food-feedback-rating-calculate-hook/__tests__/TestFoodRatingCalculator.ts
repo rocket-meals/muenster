@@ -1,7 +1,7 @@
 // small jest test
-import { describe, expect, it } from '@jest/globals';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { FoodRatingCalculator } from '../FoodRatingCalculator';
+import {describe, expect, it} from '@jest/globals';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {FoodRatingCalculator} from '../FoodRatingCalculator';
 
 describe('FoodRatingCalculator Test', () => {
   const RATING_VALUE_AVG = (FoodRatingCalculator.MAX_RATING_VALUE + FoodRatingCalculator.MIN_RATING_VALUE) / 2;

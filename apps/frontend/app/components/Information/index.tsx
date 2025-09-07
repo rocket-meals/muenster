@@ -1,13 +1,13 @@
-import { Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
+import {Linking, Platform, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
 import * as Clipboard from 'expo-clipboard';
-import { Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import {Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
 import useToast from '@/hooks/useToast';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { TranslationKeys } from '@/locales/keys';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {TranslationKeys} from '@/locales/keys';
 
 const Information: React.FC<any> = ({ campusDetails }) => {
 	const { theme } = useTheme();

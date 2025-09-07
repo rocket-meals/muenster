@@ -1,11 +1,14 @@
-import React, { forwardRef, useCallback, useMemo } from 'react';
-import { Dimensions, View, TouchableOpacity } from 'react-native';
-import BottomSheet, { BottomSheetBackdrop, type BottomSheetProps, type BottomSheetBackdropProps } from '@gorhom/bottom-sheet';
-import { AntDesign } from '@expo/vector-icons';
-import { useTheme } from '@/hooks/useTheme';
-import { myContrastColor } from '@/helper/colorHelper';
-import { useSelector } from 'react-redux';
-import type { RootState } from '@/redux/reducer';
+import React, {forwardRef, useCallback, useMemo} from 'react';
+import {Dimensions, TouchableOpacity, View} from 'react-native';
+import BottomSheet, {
+    BottomSheetBackdrop,
+    type BottomSheetBackdropProps,
+    type BottomSheetProps
+} from '@gorhom/bottom-sheet';
+import {AntDesign} from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import type {RootState} from '@/redux/reducer';
 import styles from './styles';
 
 export interface BaseBottomSheetProps extends Omit<BottomSheetProps, 'backdropComponent'> {

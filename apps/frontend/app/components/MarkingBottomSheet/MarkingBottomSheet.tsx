@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, {forwardRef} from 'react';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import BaseBottomSheet from '../BaseBottomSheet';
 import MenuSheet from '../MenuSheet/MenuSheet';
-import { useTheme } from '@/hooks/useTheme';
+import {useTheme} from '@/hooks/useTheme';
 
 export interface MarkingBottomSheetProps {
 	onClose: () => void;

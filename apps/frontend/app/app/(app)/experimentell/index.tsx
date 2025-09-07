@@ -1,15 +1,15 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import React, { useMemo } from 'react';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useMemo} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
+import {useTheme} from '@/hooks/useTheme';
+import {Entypo, MaterialCommunityIcons} from '@expo/vector-icons';
+import {router} from 'expo-router';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.experimentell);

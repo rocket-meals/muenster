@@ -1,5 +1,5 @@
-import { CollectionNames, getAllCollectionNames } from 'repo-depkit-common';
-import { ApiContext } from './ApiContext';
+import {CollectionNames, getAllCollectionNames} from 'repo-depkit-common';
+import {ApiContext} from './ApiContext';
 
 /**
  * Helper for Account things

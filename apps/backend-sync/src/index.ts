@@ -1,11 +1,11 @@
-import { Command } from 'commander';
-import { DirectusDatabaseSync } from './DirectusDatabaseSync';
-import { DockerDirectusHelper } from './DockerDirectusHelper';
-import { ServerHelper } from 'repo-depkit-common';
+import {Command} from 'commander';
+import {DirectusDatabaseSync} from './DirectusDatabaseSync';
+import {DockerDirectusHelper} from './DockerDirectusHelper';
+import {ServerHelper} from 'repo-depkit-common';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
-import { DockerContainerManager } from './DockerContainerManager';
+import {DockerContainerManager} from './DockerContainerManager';
 
 const program = new Command();
 

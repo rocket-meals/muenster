@@ -1,10 +1,10 @@
 // small jest test
-import { describe, expect, it, jest } from '@jest/globals';
-import { StudentenwerkOsnabrueckWashingmachineParser } from '../StudentenwerkOsnabrueckWashingmachineParser';
+import {describe, expect, it, jest} from '@jest/globals';
+import {StudentenwerkOsnabrueckWashingmachineParser} from '../StudentenwerkOsnabrueckWashingmachineParser';
 import axios from 'axios';
 import path from 'path';
 import fs from 'fs';
-import { DateHelper } from 'repo-depkit-common';
+import {DateHelper} from 'repo-depkit-common';
 
 const xml = fs.readFileSync(path.resolve(__dirname, './getAllTerminals.xml'), 'utf8');
 const html = fs.readFileSync(path.resolve(__dirname, './getAllTerminalsWeb.html'), 'utf8');

@@ -1,7 +1,7 @@
-import { defineEndpoint } from '@directus/extensions-sdk';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { ApiContext } from '../helpers/ApiContext';
-import { RssBuilder } from './RssBuilder';
+import {defineEndpoint} from '@directus/extensions-sdk';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {ApiContext} from '../helpers/ApiContext';
+import {RssBuilder} from './RssBuilder';
 
 const EndpointTopName = 'rss-news.xml';
 

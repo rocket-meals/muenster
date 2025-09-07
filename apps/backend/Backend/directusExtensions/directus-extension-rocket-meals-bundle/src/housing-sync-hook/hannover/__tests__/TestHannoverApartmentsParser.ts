@@ -1,9 +1,9 @@
 // small jest test
-import { describe, expect, it, jest } from '@jest/globals';
+import {describe, expect, it, jest} from '@jest/globals';
 import axios from 'axios';
 import path from 'path';
 import fs from 'fs';
-import { StudentenwerkHannoverApartments_Parser } from '../StudentenwerkHannoverApartments_Parser';
+import {StudentenwerkHannoverApartments_Parser} from '../StudentenwerkHannoverApartments_Parser';
 
 const html = fs.readFileSync(path.resolve(__dirname, './Apartments.html'), 'utf8');
 

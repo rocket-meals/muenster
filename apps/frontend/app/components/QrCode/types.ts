@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from 'react-native';
+import {ImageSourcePropType} from 'react-native';
 
 /**
  * Error correction levels supported by the QR code component.

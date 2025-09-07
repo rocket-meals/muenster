@@ -1,8 +1,7 @@
-import { MarkingParserInterface, MarkingsTypeForParser } from './MarkingParserInterface';
-import { CSVExportParser } from './CSVExportParser';
-import { TranslationHelper, TranslationsFromParsingType } from '../helpers/TranslationHelper';
-import { SystemFileHelper } from '../helpers/SystemFileHelper';
-import { EventContext } from '@directus/types';
+import {MarkingParserInterface, MarkingsTypeForParser} from './MarkingParserInterface';
+import {CSVExportParser} from './CSVExportParser';
+import {TranslationHelper, TranslationsFromParsingType} from '../helpers/TranslationHelper';
+import {SystemFileHelper} from '../helpers/SystemFileHelper';
 
 const FIELD_MARKING_TRANSLATION_NAME = 'name';
 

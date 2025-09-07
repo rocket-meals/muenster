@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { router } from 'expo-router';
+import {FlatList, View} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {router} from 'expo-router';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { TranslationKeys } from '@/locales/keys';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
+import {TranslationKeys} from '@/locales/keys';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
 import SettingsList from '@/components/SettingsList';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import styles from './styles';
 
 const ChatsScreen = () => {

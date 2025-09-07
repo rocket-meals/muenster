@@ -1,18 +1,18 @@
-import { Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { CalendarSheetProps, Direction } from './types';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
-import { isWeb } from '@/constants/Constants';
-import { AntDesign } from '@expo/vector-icons';
-import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
-import { SET_SELECTED_DATE } from '@/redux/Types/types';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {CalendarSheetProps, Direction} from './types';
+import {BottomSheetView} from '@gorhom/bottom-sheet';
+import {isWeb} from '@/constants/Constants';
+import {AntDesign} from '@expo/vector-icons';
+import {Calendar, LocaleConfig} from 'react-native-calendars';
+import {useDispatch, useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {myContrastColor} from '@/helper/colorHelper';
+import {SET_SELECTED_DATE} from '@/redux/Types/types';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet }) => {
 	const { theme } = useTheme();

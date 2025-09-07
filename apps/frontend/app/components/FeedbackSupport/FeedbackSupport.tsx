@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useSelector } from 'react-redux';
-import { excerpt } from '@/constants/HelperFunctions';
-import { RootState } from '@/redux/reducer';
+import {MaterialIcons} from '@expo/vector-icons';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useSelector} from 'react-redux';
+import {excerpt} from '@/constants/HelperFunctions';
+import {RootState} from '@/redux/reducer';
 
 type FeedbackItemProps = {
 	icon?: string;

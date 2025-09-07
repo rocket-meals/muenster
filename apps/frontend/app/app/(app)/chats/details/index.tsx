@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
-import { router } from 'expo-router';
+import React, {useEffect, useState} from 'react';
+import {FlatList, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {router, useLocalSearchParams} from 'expo-router';
 import SupportFAQ from '../../../../components/SupportFAQ/SupportFAQ';
-import { useTheme } from '@/hooks/useTheme';
-import { useLocalSearchParams } from 'expo-router';
+import {useTheme} from '@/hooks/useTheme';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { TranslationKeys } from '@/locales/keys';
+import {TranslationKeys} from '@/locales/keys';
 import MyMarkdown from '@/components/MyMarkdown/MyMarkdown';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
-import { ChatMessagesHelper } from '@/redux/actions/Chats/ChatMessages';
-import { useLanguage } from '@/hooks/useLanguage';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { DatabaseTypes, DateHelper } from 'repo-depkit-common';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
+import {myContrastColor} from '@/helper/colorHelper';
+import {ChatMessagesHelper} from '@/redux/actions/Chats/ChatMessages';
+import {useLanguage} from '@/hooks/useLanguage';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {DatabaseTypes, DateHelper} from 'repo-depkit-common';
 import styles from './styles';
 
 const ChatDetailsScreen = () => {

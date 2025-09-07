@@ -1,22 +1,22 @@
-import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useTheme } from '@/hooks/useTheme';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
-import { NotificationSheetProps } from './types';
-import { useDispatch, useSelector } from 'react-redux';
+import {NotificationSheetProps} from './types';
+import {useDispatch, useSelector} from 'react-redux';
 import usePlatformHelper from '@/helper/platformHelper';
-import { FoodFeedbackHelper } from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
-import { DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL } from '@/redux/Types/types';
-import { useLanguage } from '@/hooks/useLanguage';
+import {FoodFeedbackHelper} from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
+import {DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL} from '@/redux/Types/types';
+import {useLanguage} from '@/hooks/useLanguage';
 import animation from '@/assets/animations/notificationBell.json';
 import LottieView from 'lottie-react-native';
-import { useFocusEffect } from 'expo-router';
-import { replaceLottieColors } from '@/helper/animationHelper';
-import { myContrastColor } from '@/helper/colorHelper';
-import { TranslationKeys } from '@/locales/keys';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { RootState } from '@/redux/reducer';
+import {useFocusEffect} from 'expo-router';
+import {replaceLottieColors} from '@/helper/animationHelper';
+import {myContrastColor} from '@/helper/colorHelper';
+import {TranslationKeys} from '@/locales/keys';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {RootState} from '@/redux/reducer';
 
 const NotificationSheet: React.FC<NotificationSheetProps> = ({ closeSheet, previousFeedback, foodDetails }) => {
 	const { theme } = useTheme();

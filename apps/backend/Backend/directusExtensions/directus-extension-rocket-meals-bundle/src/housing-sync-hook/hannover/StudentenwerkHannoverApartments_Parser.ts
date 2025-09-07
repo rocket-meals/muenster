@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { CheerioAPI, load as cheerioLoad } from 'cheerio';
-import type { Element as CheerioElement } from 'domhandler';
-import { ApartmentParserInterface, ApartmentsForParser } from '../ApartmentParserInterface';
+import {CheerioAPI, load as cheerioLoad} from 'cheerio';
+import type {Element as CheerioElement} from 'domhandler';
+import {ApartmentParserInterface, ApartmentsForParser} from '../ApartmentParserInterface';
 
 export class StudentenwerkHannoverApartments_Parser implements ApartmentParserInterface {
   static baseUrl = 'https://www.studentenwerk-hannover.de';

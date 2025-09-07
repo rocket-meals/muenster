@@ -1,5 +1,5 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { CollectionHelper } from './collectionHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {CollectionHelper} from './collectionHelper';
 
 export async function loadMostLikedOrDislikedFoods(limit: number, offset: number, minRatingAmount: number | undefined, bestFirst: boolean) {
 	const collectionHelper = new CollectionHelper<DatabaseTypes.Foods>('foods');

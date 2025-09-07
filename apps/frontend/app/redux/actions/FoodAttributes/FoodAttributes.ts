@@ -1,6 +1,6 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { CollectionHelper } from '@/helper/collectionHelper';
-import { ServerAPI } from '@/redux/actions/Auth/Auth';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {CollectionHelper} from '@/helper/collectionHelper';
+import {ServerAPI} from '@/redux/actions/Auth/Auth';
 
 export class FoodAttributesHelper extends CollectionHelper<DatabaseTypes.FoodsAttributes> {
 	constructor(client?: any) {

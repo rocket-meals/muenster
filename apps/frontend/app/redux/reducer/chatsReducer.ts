@@ -1,4 +1,4 @@
-import { CLEAR_CHATS, SET_CHATS } from '../Types/types';
+import {CLEAR_CHATS, SET_CHATS} from '../Types/types';
 
 const initialState = {
 	chats: [],

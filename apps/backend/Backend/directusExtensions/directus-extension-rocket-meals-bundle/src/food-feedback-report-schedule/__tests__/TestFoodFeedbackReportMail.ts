@@ -1,11 +1,19 @@
 // small jest test
-import { describe, it } from '@jest/globals';
-import { HtmlGenerator, HtmlTemplatesEnum } from '../../helpers/html/HtmlGenerator';
-import { EmojiHelper } from '../../helpers/EmojiHelper';
-import { ReportCanteenEntryLabelsType, ReportCanteenEntryType, ReportFoodEntryLabelType, ReportFoodEntryType, ReportGenerator, ReportStatusTrafficLightValues, ReportType } from '../ReportGenerator';
-import { TestArtifacts } from '../../helpers/TestArtifacts';
-import { MailHelper } from '../../helpers/mail/MailHelper';
-import { MyDatabaseTestableHelper } from '../../helpers/MyDatabaseHelperInterface';
+import {describe, it} from '@jest/globals';
+import {HtmlTemplatesEnum} from '../../helpers/html/HtmlGenerator';
+import {EmojiHelper} from '../../helpers/EmojiHelper';
+import {
+    ReportCanteenEntryLabelsType,
+    ReportCanteenEntryType,
+    ReportFoodEntryLabelType,
+    ReportFoodEntryType,
+    ReportGenerator,
+    ReportStatusTrafficLightValues,
+    ReportType
+} from '../ReportGenerator';
+import {TestArtifacts} from '../../helpers/TestArtifacts';
+import {MailHelper} from '../../helpers/mail/MailHelper';
+import {MyDatabaseTestableHelper} from '../../helpers/MyDatabaseHelperInterface';
 
 describe('Food Feedback Html Template', () => {
   it('ReferenceDate on same Date', async () => {

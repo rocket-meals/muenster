@@ -1,17 +1,17 @@
-import { ActivityIndicator, Dimensions, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { sheetProps } from './types';
-import { useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { router } from 'expo-router';
-import { FormsSubmissionsHelper } from '@/redux/actions/Forms/FormSubmitions';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {sheetProps} from './types';
+import {useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {router} from 'expo-router';
+import {FormsSubmissionsHelper} from '@/redux/actions/Forms/FormSubmitions';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const SubmissionWarningSheet: React.FC<sheetProps> = ({ id, closeSheet }) => {
 	const { theme } = useTheme();

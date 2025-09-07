@@ -9,8 +9,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useApi, useRouter } from '@directus/extensions-sdk';
+import {onMounted, ref} from 'vue';
+import {useApi, useRouter} from '@directus/extensions-sdk';
 
 const api = useApi();
 const router = useRouter();

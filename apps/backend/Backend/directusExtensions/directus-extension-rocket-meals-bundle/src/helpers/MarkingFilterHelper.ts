@@ -1,4 +1,4 @@
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 export type DictMarkingsExclusions = Record<string, DatabaseTypes.MarkingsExclusions>;
 

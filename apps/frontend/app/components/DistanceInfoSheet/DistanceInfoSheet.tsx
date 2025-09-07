@@ -1,13 +1,13 @@
 import React from 'react';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
-import { Text, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
-import { useSelector } from 'react-redux';
-import { TranslationKeys } from '@/locales/keys';
-import type { RootState } from '@/redux/reducer';
-import { DistanceInfoSheetProps } from './types';
+import {BottomSheetView} from '@gorhom/bottom-sheet';
+import {Text, TouchableOpacity} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {myContrastColor} from '@/helper/colorHelper';
+import {useSelector} from 'react-redux';
+import {TranslationKeys} from '@/locales/keys';
+import type {RootState} from '@/redux/reducer';
+import {DistanceInfoSheetProps} from './types';
 
 const DistanceInfoSheet: React.FC<DistanceInfoSheetProps> = ({ closeSheet, onUseCurrentPosition }) => {
 	const { theme } = useTheme();

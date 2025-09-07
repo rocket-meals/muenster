@@ -1,4 +1,4 @@
-import { FoodTL1Parser_GetRawReportInterface } from './FoodTL1Parser_GetRawReportInterface';
+import {FoodTL1Parser_GetRawReportInterface} from './FoodTL1Parser_GetRawReportInterface';
 import axios from 'axios';
 
 export class FoodTL1Parser_RawReportUrlReader implements FoodTL1Parser_GetRawReportInterface {

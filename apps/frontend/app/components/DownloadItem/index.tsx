@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, useWindowDimensions } from 'react-native';
+import {Text, useWindowDimensions, View} from 'react-native';
 import CardWithText from '../CardWithText/CardWithText';
-import { DownloadItemProps } from './types';
+import {DownloadItemProps} from './types';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
 import QrCode from '@/components/QrCode';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 

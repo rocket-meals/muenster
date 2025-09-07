@@ -1,19 +1,19 @@
-import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {ActivityIndicator, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { getTextFromTranslation, getTitleFromTranslation } from '@/helper/resourceHelper';
-import { router, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { isWeb } from '@/constants/Constants';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {getTextFromTranslation, getTitleFromTranslation} from '@/helper/resourceHelper';
+import {router, useGlobalSearchParams, useLocalSearchParams} from 'expo-router';
+import {Ionicons} from '@expo/vector-icons';
+import {isWeb} from '@/constants/Constants';
 import DeviceMock from '@/components/DeviceMock/DeviceMock';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { DatabaseTypes, AppLinks, AppScreens } from 'repo-depkit-common';
+import {AppScreens, DatabaseTypes} from 'repo-depkit-common';
 import CustomMarkdown from '@/components/CustomMarkdown/CustomMarkdown';
-import { RootState } from '@/redux/reducer';
-import { TranslationKeys } from '@/locales/keys';
-import { useLanguage } from '@/hooks/useLanguage';
+import {RootState} from '@/redux/reducer';
+import {TranslationKeys} from '@/locales/keys';
+import {useLanguage} from '@/hooks/useLanguage';
 
 const Index = () => {
 	const { theme } = useTheme();

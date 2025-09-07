@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-import { useSelector } from 'react-redux';
-import { useTheme } from '@/hooks/useTheme';
-import { useMyContrastColor } from '@/helper/colorHelper';
-import { iconLibraries } from '../Drawer/CustomDrawerContent';
-import { getImageUrl } from '@/constants/HelperFunctions';
+import {Image, Text, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {useTheme} from '@/hooks/useTheme';
+import {useMyContrastColor} from '@/helper/colorHelper';
+import {iconLibraries} from '../Drawer/CustomDrawerContent';
+import {getImageUrl} from '@/constants/HelperFunctions';
 import styles from './styles';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { RootState } from '@/redux/reducer';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {RootState} from '@/redux/reducer';
 
 interface MarkingIconProps {
 	marking: DatabaseTypes.Markings;

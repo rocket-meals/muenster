@@ -1,6 +1,6 @@
 import Color from 'tinycolor2';
-import { useMemo } from 'react';
-import { Theme } from '@/context/ThemeContext';
+import {useMemo} from 'react';
+import {Theme} from '@/context/ThemeContext';
 
 // TODO: memorize this function to reduce computation load and improve performance
 /**

@@ -1,6 +1,23 @@
-import { resolveComponent as e, openBlock as n, createBlock as t, withCtx as a, createVNode as r, createElementBlock as o, Fragment as i, renderList as s, createElementVNode as l, createTextVNode as c, toDisplayString as u, pushScopeId as d, popScopeId as p, computed as g, createCommentVNode as m } from 'vue';
-import { useStores as h } from '@directus/extensions-sdk';
-import { useI18n as f } from 'vue-i18n';
+import {
+    computed as g,
+    createBlock as t,
+    createCommentVNode as m,
+    createElementBlock as o,
+    createElementVNode as l,
+    createTextVNode as c,
+    createVNode as r,
+    Fragment as i,
+    openBlock as n,
+    popScopeId as p,
+    pushScopeId as d,
+    renderList as s,
+    resolveComponent as e,
+    toDisplayString as u,
+    withCtx as a
+} from 'vue';
+import {useStores as h} from '@directus/extensions-sdk';
+import {useI18n as f} from 'vue-i18n';
+
 const v = {
   ts: {
     name: 'TypeScript',

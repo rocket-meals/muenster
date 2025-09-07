@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useSelector } from 'react-redux';
+import {Text, View} from 'react-native';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useSelector} from 'react-redux';
 import styles from './styles';
-import { DrawerPositionSheetProps } from './types';
+import {DrawerPositionSheetProps} from './types';
 import DrawerPosition from '@/components/Drawer/DrawerPosition';
-import { drawers } from '@/constants/SettingData';
-import { isWeb } from '@/constants/Constants';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {drawers} from '@/constants/SettingData';
+import {isWeb} from '@/constants/Constants';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const DrawerPositionSheet: React.FC<DrawerPositionSheetProps> = ({ closeSheet, selectedPosition, onSelect }) => {
 	const { theme } = useTheme();

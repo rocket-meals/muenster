@@ -1,14 +1,14 @@
-import { ActivityIndicator, Dimensions, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {ActivityIndicator, Dimensions, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Modal from 'react-native-modal';
-import { styles } from './styles';
-import { AntDesign } from '@expo/vector-icons';
-import { ManagementModalProps } from './types';
-import { useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useTheme } from '@/hooks/useTheme';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {styles} from './styles';
+import {AntDesign} from '@expo/vector-icons';
+import {ManagementModalProps} from './types';
+import {useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useTheme} from '@/hooks/useTheme';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const ManagementModal: React.FC<ManagementModalProps> = ({ isVisible, setIsVisible, handleLogin, loading }) => {
 	const { theme } = useTheme();

@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import type { LeafletWebViewEvent, MapMarker } from './model';
-import { LatLng, LeafletView, MapMarker as LeafletViewMapMarkers, WebviewLeafletMessage } from 'react-native-leaflet-view';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import type {LeafletWebViewEvent, MapMarker} from './model';
+import {
+    LatLng,
+    LeafletView,
+    MapMarker as LeafletViewMapMarkers,
+    WebviewLeafletMessage
+} from 'react-native-leaflet-view';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { TranslationKeys } from '@/locales/keys';
-import { Asset } from 'expo-asset';
+import {TranslationKeys} from '@/locales/keys';
+import {Asset} from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
-import { MyMapProps } from '@/components/MyMap/MyMapHelper';
+import {MyMapProps} from '@/components/MyMap/MyMapHelper';
 
 const MyMap: React.FC<MyMapProps> = ({ mapCenterPosition, zoom, mapMarkers, onMarkerClick, onMapEvent, renderMarkerModal, onMarkerSelectionChange }) => {
 	const { theme } = useTheme();

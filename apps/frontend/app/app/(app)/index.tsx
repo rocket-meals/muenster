@@ -1,21 +1,20 @@
-import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {ActivityIndicator, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { CanteenHelper } from '@/redux/actions/Canteens/Canteens';
-import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
-import { SET_BUILDINGS, SET_CANTEENS, SET_SELECTED_CANTEEN } from '@/redux/Types/types';
-import { useFocusEffect, useRouter } from 'expo-router';
-import { useNavigation } from 'expo-router';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { DatabaseTypes, AppScreens } from 'repo-depkit-common';
-import { Ionicons } from '@expo/vector-icons';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { RootState } from '@/redux/reducer';
-import { TranslationKeys } from '@/locales/keys';
-import { useLanguage } from '@/hooks/useLanguage';
+import {useTheme} from '@/hooks/useTheme';
+import {CanteenHelper} from '@/redux/actions/Canteens/Canteens';
+import {BuildingsHelper} from '@/redux/actions/Buildings/Buildings';
+import {SET_BUILDINGS, SET_CANTEENS, SET_SELECTED_CANTEEN} from '@/redux/Types/types';
+import {useFocusEffect, useNavigation, useRouter} from 'expo-router';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {AppScreens, DatabaseTypes} from 'repo-depkit-common';
+import {Ionicons} from '@expo/vector-icons';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
+import {RootState} from '@/redux/reducer';
+import {TranslationKeys} from '@/locales/keys';
+import {useLanguage} from '@/hooks/useLanguage';
 import CanteenSelection from '@/components/CanteenSelection/CanteenSelection';
 
 const Home = () => {

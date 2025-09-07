@@ -1,4 +1,4 @@
-import { CLEAR_NEWS, SET_NEWS } from '../Types/types';
+import {CLEAR_NEWS, SET_NEWS} from '../Types/types';
 
 const initialState = {
 	news: [],

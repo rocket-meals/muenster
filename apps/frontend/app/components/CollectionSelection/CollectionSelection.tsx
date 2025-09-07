@@ -1,11 +1,11 @@
-import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {ActivityIndicator, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
-import { isWeb } from '@/constants/Constants';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useSelector} from 'react-redux';
+import {isWeb} from '@/constants/Constants';
+import {RootState} from '@/redux/reducer';
 
 const CollectionSelection = ({ id, value, onChange, error, isDisabled, loading, data, custom_type }: { id: string; value: any; onChange: (id: string, value: any, custom_type: string) => void; error: string; isDisabled: boolean; loading: boolean; data: any; custom_type: string }) => {
 	const { theme } = useTheme();

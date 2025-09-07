@@ -1,7 +1,7 @@
-import { CollectionHelper } from 'repo-depkit-common-backend';
+import {CollectionHelper} from 'repo-depkit-common-backend';
 
-import { CollectionNames } from 'repo-depkit-common';
-import { FIELD_VALUE_KEY_PREFIX, FormAnswersValueFieldKeys } from '../FormImportTypes';
+import {CollectionNames} from 'repo-depkit-common';
+import {FIELD_VALUE_KEY_PREFIX, FormAnswersValueFieldKeys} from '../FormImportTypes';
 
 describe('Form Answer Value Fields Test', () => {
   it('All value_ keys from KeyOfFormAnswersValueFieldsType should be present in FormAnswersValueFieldKeys (compile-time check)', () => {

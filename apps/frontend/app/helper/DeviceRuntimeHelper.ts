@@ -1,4 +1,4 @@
-import { UrlHelper } from '@/constants/UrlHelper';
+import {UrlHelper} from '@/constants/UrlHelper';
 
 export function isInExpoGo() {
 	const urlToLogin = UrlHelper.getURLToLogin();

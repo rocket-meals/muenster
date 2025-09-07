@@ -1,11 +1,16 @@
 // small jest test
-import { describe, expect, it } from '@jest/globals';
-import { BaseGermanMarkdownTemplateHelper, HTML_TEMPLATE_FILE_ENDING, HtmlGenerator, HtmlTemplatesEnum } from '../HtmlGenerator';
+import {describe, expect, it} from '@jest/globals';
+import {
+    BaseGermanMarkdownTemplateHelper,
+    HTML_TEMPLATE_FILE_ENDING,
+    HtmlGenerator,
+    HtmlTemplatesEnum
+} from '../HtmlGenerator';
 import path from 'path';
 import fse from 'fs-extra';
-import { TestArtifacts } from '../../TestArtifacts';
-import { MarkdownHelper } from '../MarkdownHelper';
-import { MyDatabaseTestableHelper } from '../../MyDatabaseHelperInterface';
+import {TestArtifacts} from '../../TestArtifacts';
+import {MarkdownHelper} from '../MarkdownHelper';
+import {MyDatabaseTestableHelper} from '../../MyDatabaseHelperInterface';
 
 export async function getTestHtmlForBaseGermanMarkdownContent() {
   let exampleMarkdown = MarkdownHelper.EXAMPLE_MARKDOWN;

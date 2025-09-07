@@ -1,9 +1,8 @@
 // small jest test
-import { describe, it } from '@jest/globals';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { DateHelper } from 'repo-depkit-common';
-import { ReportSchedule } from '../ReportSchedule';
-import { FoodofferDateType } from '../../food-sync-hook/FoodParserInterface';
+import {describe, it} from '@jest/globals';
+import {DatabaseTypes, DateHelper} from 'repo-depkit-common';
+import {ReportSchedule} from '../ReportSchedule';
+import {FoodofferDateType} from '../../food-sync-hook/FoodParserInterface';
 
 describe('TestFoodFeedbackReportScheduleGetReferenceDate Test', () => {
   it('ReferenceDate on same Date', async () => {

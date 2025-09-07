@@ -1,17 +1,17 @@
-import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import {ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { Entypo } from '@expo/vector-icons';
-import { FormCategoriesHelper } from '@/redux/actions/Forms/FormCategories';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { router, useFocusEffect } from 'expo-router';
-import { useSelector } from 'react-redux';
-import { getFromCategoryTranslation } from '@/helper/resourceHelper';
-import { iconLibraries } from '@/components/Drawer/CustomDrawerContent';
-import { TranslationKeys } from '@/locales/keys';
+import {useTheme} from '@/hooks/useTheme';
+import {Entypo} from '@expo/vector-icons';
+import {FormCategoriesHelper} from '@/redux/actions/Forms/FormCategories';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {router, useFocusEffect} from 'expo-router';
+import {useSelector} from 'react-redux';
+import {getFromCategoryTranslation} from '@/helper/resourceHelper';
+import {iconLibraries} from '@/components/Drawer/CustomDrawerContent';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.select_a_form_category);

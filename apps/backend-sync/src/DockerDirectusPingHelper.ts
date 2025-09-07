@@ -1,5 +1,5 @@
-import { DockerDirectusHelper } from './DockerDirectusHelper';
-import { FetchIngoreSelfSignedCertHelper } from './FetchIngoreSelfSignedCertHelper';
+import {DockerDirectusHelper} from './DockerDirectusHelper';
+import {FetchIngoreSelfSignedCertHelper} from './FetchIngoreSelfSignedCertHelper';
 
 export class DockerDirectusPingHelper {
   // Ping-Check-Funktion für Directus

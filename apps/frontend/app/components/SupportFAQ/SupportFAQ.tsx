@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View, Text, Dimensions } from 'react-native';
-import { Entypo, FontAwesome6, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
+import {Entypo, FontAwesome6, Ionicons, MaterialIcons} from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { useTheme } from '@/hooks/useTheme';
+import {useTheme} from '@/hooks/useTheme';
 import styles from '../../app/(app)/support-FAQ/styles';
 
 type SupportFAQProps = {

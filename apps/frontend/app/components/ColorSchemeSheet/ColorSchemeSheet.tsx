@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useSelector } from 'react-redux';
+import {Text, View} from 'react-native';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useSelector} from 'react-redux';
 import styles from './styles';
-import { ColorSchemeSheetProps } from './types';
+import {ColorSchemeSheetProps} from './types';
 import ColorScheme from '@/components/ColorScheme/ColorScheme';
-import { themes } from '@/constants/SettingData';
-import { isWeb } from '@/constants/Constants';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {themes} from '@/constants/SettingData';
+import {isWeb} from '@/constants/Constants';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const ColorSchemeSheet: React.FC<ColorSchemeSheetProps> = ({ closeSheet, selectedTheme, onSelect }) => {
 	const { theme } = useTheme();

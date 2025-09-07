@@ -1,7 +1,7 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { CollectionNames } from 'repo-depkit-common';
-import { DatabaseInitializedCheck } from '../helpers/DatabaseInitializedCheck';
-import { FoodRatingCalculator } from './FoodRatingCalculator';
+import {defineHook} from '@directus/extensions-sdk';
+import {CollectionNames} from 'repo-depkit-common';
+import {DatabaseInitializedCheck} from '../helpers/DatabaseInitializedCheck';
+import {FoodRatingCalculator} from './FoodRatingCalculator';
 
 const SCHEDULE_NAME = 'food_feedback_rating_calculate';
 

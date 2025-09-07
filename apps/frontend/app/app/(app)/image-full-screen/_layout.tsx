@@ -1,6 +1,6 @@
 import React from 'react';
-import { Stack } from 'expo-router';
-import { useTheme } from '@/hooks/useTheme';
+import {Stack} from 'expo-router';
+import {useTheme} from '@/hooks/useTheme';
 
 export default function Layout() {
 	const { theme } = useTheme();

@@ -1,6 +1,6 @@
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import { DockerDirectusPingHelper } from './DockerDirectusPingHelper';
+import {exec} from 'child_process';
+import {promisify} from 'util';
+import {DockerDirectusPingHelper} from './DockerDirectusPingHelper';
 
 const execAsync = promisify(exec);
 

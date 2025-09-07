@@ -1,13 +1,13 @@
-import { Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
 import styles from './styles';
-import { MaterialIcons } from '@expo/vector-icons';
+import {MaterialIcons} from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
-import { useTheme } from '@/hooks/useTheme';
-import { CustomCollapsibleProps } from './types';
-import { useSelector } from 'react-redux';
-import { myContrastColor } from '@/helper/colorHelper';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {CustomCollapsibleProps} from './types';
+import {useSelector} from 'react-redux';
+import {myContrastColor} from '@/helper/colorHelper';
+import {RootState} from '@/redux/reducer';
 
 const CustomCollapsible: React.FC<CustomCollapsibleProps> = ({ headerText, children, customColor = '' }) => {
 	const [collapsed, setCollapsed] = useState(true);

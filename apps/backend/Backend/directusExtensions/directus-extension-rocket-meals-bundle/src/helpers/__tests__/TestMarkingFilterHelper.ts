@@ -1,7 +1,7 @@
 // small jest test
-import { describe, expect, it } from '@jest/globals';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { MarkingFilterHelper, MarkingWithIdAndExclusionRulesOnly } from '../MarkingFilterHelper';
+import {describe, expect, it} from '@jest/globals';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {MarkingFilterHelper, MarkingWithIdAndExclusionRulesOnly} from '../MarkingFilterHelper';
 
 const marking_id_meat = 'meat_marking_id';
 const marking_id_vegan = 'vegan_marking_id';

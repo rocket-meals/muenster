@@ -1,19 +1,18 @@
-import { ActivityIndicator, Dimensions, Image, Linking, Pressable, Text, View } from 'react-native';
+import {ActivityIndicator, Image, Linking, Pressable, Text, View} from 'react-native';
 import React from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import RedirectButton from '../RedirectButton';
+import {useTheme} from '@/hooks/useTheme';
 import FoodLabelingInfo from '../FoodLabelingInfo';
-import { useSelector } from 'react-redux';
-import { formatFoodInformationValue, getImageUrl } from '@/constants/HelperFunctions';
-import { getFoodAttributesTranslation } from '@/helper/resourceHelper';
-import { useLanguage } from '@/hooks/useLanguage';
-import { DetailsProps } from './types';
-import { iconLibraries } from '../Drawer/CustomDrawerContent';
-import { useMyContrastColor } from '@/helper/colorHelper';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useSelector} from 'react-redux';
+import {formatFoodInformationValue, getImageUrl} from '@/constants/HelperFunctions';
+import {getFoodAttributesTranslation} from '@/helper/resourceHelper';
+import {useLanguage} from '@/hooks/useLanguage';
+import {DetailsProps} from './types';
+import {iconLibraries} from '../Drawer/CustomDrawerContent';
+import {useMyContrastColor} from '@/helper/colorHelper';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const Details: React.FC<DetailsProps> = ({ groupedAttributes, loading }) => {
 	const { translate } = useLanguage();

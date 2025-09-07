@@ -1,8 +1,8 @@
-import { useGlobalSearchParams } from 'expo-router';
+import {useGlobalSearchParams} from 'expo-router';
 import useKioskMode from './useKioskMode';
-import { useSelector } from 'react-redux';
-import { useMemo } from 'react';
-import { RootState } from '@/redux/reducer';
+import {useSelector} from 'react-redux';
+import {useMemo} from 'react';
+import {RootState} from '@/redux/reducer';
 
 export default function useSelectedCanteen() {
 	const kioskMode = useKioskMode();

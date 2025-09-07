@@ -1,6 +1,14 @@
-import { Entypo, FontAwesome, FontAwesome5, FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { IconProps as DefaultIconProps } from '@expo/vector-icons/build/createIconSet';
-import { Text } from 'react-native';
+import {
+    Entypo,
+    FontAwesome,
+    FontAwesome5,
+    FontAwesome6,
+    Ionicons,
+    MaterialCommunityIcons,
+    MaterialIcons
+} from '@expo/vector-icons';
+import {IconProps as DefaultIconProps} from '@expo/vector-icons/build/createIconSet';
+import {Text} from 'react-native';
 import React from 'react';
 
 // Define the available icon families as a union type

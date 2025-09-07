@@ -1,24 +1,24 @@
-import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
-import { Linking, Platform, Text, TouchableOpacity, View } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { useFocusEffect } from 'expo-router';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Linking, Platform, Text, TouchableOpacity, View} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import {useFocusEffect} from 'expo-router';
 import TimeTableData from '@/constants/TimeTable';
 import CourseTimetable from '../../../components/CourseTimeTable/CourseTimetable';
 import CourseBottomSheet from '../../../components/CourseTimeTable/CourseBottomSheet';
 import styles from './styles';
-import { FontAwesome } from '@expo/vector-icons';
+import {FontAwesome} from '@expo/vector-icons';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import { useSelector } from 'react-redux';
-import { EventTypes } from './types';
-import { courseTimetableDescriptionEmpty } from '@/constants/translationConstants';
+import {useSelector} from 'react-redux';
+import {EventTypes} from './types';
+import {courseTimetableDescriptionEmpty} from '@/constants/translationConstants';
 import RedirectButton from '@/components/RedirectButton';
 import useToast from '@/hooks/useToast';
-import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
-import { TranslationKeys } from '@/locales/keys';
+import {useLanguage} from '@/hooks/useLanguage';
+import {myContrastColor} from '@/helper/colorHelper';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const extractTextAndLink = (description: string) => {
 	// Remove unintended spaces between `]` and `(`

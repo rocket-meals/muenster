@@ -1,6 +1,6 @@
 // small jest test
-import { describe, it } from '@jest/globals';
-import { CSVExportParser } from '../CSVExportParser';
+import {describe, it} from '@jest/globals';
+import {CSVExportParser} from '../CSVExportParser';
 
 const expectedParsedReportItem: { [key: string]: string } = {
   MENSA: 'Contine',

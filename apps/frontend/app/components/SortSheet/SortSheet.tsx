@@ -1,21 +1,30 @@
-import { Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { AntDesign, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {AntDesign, FontAwesome5, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 
-import { SortSheetProps } from './types';
+import {SortSheetProps} from './types';
 import Checkbox from 'expo-checkbox';
-import { FoodSortOption } from 'repo-depkit-common';
-import { SET_SELECTED_CANTEEN_FOOD_OFFERS, SET_SORTING } from '@/redux/Types/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { intelligentSort, sortByPrice, sortByEatingHabits, sortByFoodName, sortByOwnFavorite, sortByPublicFavorite, sortByFoodCategory, sortByFoodOfferCategory } from 'repo-depkit-common';
-import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {
+    FoodSortOption,
+    intelligentSort,
+    sortByEatingHabits,
+    sortByFoodCategory,
+    sortByFoodName,
+    sortByFoodOfferCategory,
+    sortByOwnFavorite,
+    sortByPrice,
+    sortByPublicFavorite
+} from 'repo-depkit-common';
+import {SET_SELECTED_CANTEEN_FOOD_OFFERS, SET_SORTING} from '@/redux/Types/types';
+import {useDispatch, useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {myContrastColor} from '@/helper/colorHelper';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const SortSheet: React.FC<SortSheetProps> = ({ closeSheet }) => {
 	const { theme } = useTheme();

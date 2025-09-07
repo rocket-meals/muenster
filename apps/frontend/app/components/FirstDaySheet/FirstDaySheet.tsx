@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { days } from '@/constants/SettingData';
+import {Text, View} from 'react-native';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {days} from '@/constants/SettingData';
 import FirstDayOfWeek from '@/components/FirstDay/FirstDayOfWeek';
-import { isWeb } from '@/constants/Constants';
+import {isWeb} from '@/constants/Constants';
 import styles from './styles';
-import { FirstDaySheetProps } from './types';
-import { TranslationKeys } from '@/locales/keys';
+import {FirstDaySheetProps} from './types';
+import {TranslationKeys} from '@/locales/keys';
 
 const FirstDaySheet: React.FC<FirstDaySheetProps> = ({ closeSheet, selectedDay, onSelect }) => {
 	const { theme } = useTheme();

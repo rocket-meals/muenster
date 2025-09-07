@@ -1,15 +1,15 @@
-import { NewsParseSchedule } from './NewsParseSchedule';
-import { defineHook } from '@directus/extensions-sdk';
-import { DemoNews_Parser } from './DemoNews_Parser';
-import { NewsParserInterface } from './NewsParserInterface';
-import { EnvVariableHelper, SyncForCustomerEnum } from '../helpers/EnvVariableHelper';
-import { StudentenwerkHannoverNews_Parser } from './hannover/StudentenwerkHannoverNews_Parser';
-import { StudentenwerkOsnabrueckNews_Parser } from './osnabrueck/StudentenwerkOsnabrueckNews_Parser';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { WorkflowScheduleHelper } from '../workflows-runs-hook';
-import { SingleWorkflowRun, WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {NewsParseSchedule} from './NewsParseSchedule';
+import {defineHook} from '@directus/extensions-sdk';
+import {DemoNews_Parser} from './DemoNews_Parser';
+import {NewsParserInterface} from './NewsParserInterface';
+import {EnvVariableHelper, SyncForCustomerEnum} from '../helpers/EnvVariableHelper';
+import {StudentenwerkHannoverNews_Parser} from './hannover/StudentenwerkHannoverNews_Parser';
+import {StudentenwerkOsnabrueckNews_Parser} from './osnabrueck/StudentenwerkOsnabrueckNews_Parser';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {WorkflowScheduleHelper} from '../workflows-runs-hook';
+import {SingleWorkflowRun, WorkflowRunLogger} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 
 class NewsParseWorkflow extends SingleWorkflowRun {
   private readonly newsParserInterface: NewsParserInterface;

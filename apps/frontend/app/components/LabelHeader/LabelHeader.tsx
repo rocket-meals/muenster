@@ -1,9 +1,9 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
 import CompanyImage from '@/components/CompanyImage';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const LabelHeader: React.FC<{ Label: any; isConnected?: Boolean }> = ({ Label, isConnected = true }) => {
 	const { theme } = useTheme();

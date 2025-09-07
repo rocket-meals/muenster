@@ -1,55 +1,79 @@
-import React, { useEffect } from 'react';
-import { Drawer } from 'expo-router/drawer';
+import React, {useEffect} from 'react';
+import {Drawer} from 'expo-router/drawer';
 import CustomDrawerContent from '@/components/Drawer/CustomDrawerContent';
-import { useTheme } from '@/hooks/useTheme';
-import { useDispatch, useSelector } from 'react-redux';
+import {useTheme} from '@/hooks/useTheme';
+import {useDispatch, useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { Redirect, useGlobalSearchParams } from 'expo-router';
+import {Redirect, useGlobalSearchParams} from 'expo-router';
 import useKioskMode from '@/hooks/useKioskMode';
-import { ProfileHelper } from '@/redux/actions/Profile/Profile';
-import { DatabaseTypes, AppLinks, AppScreens } from 'repo-depkit-common';
-import { SET_APP_ELEMENTS, SET_APP_SETTINGS, SET_BUSINESS_HOURS, SET_BUSINESS_HOURS_GROUPS, SET_COLLECTION_DATES_LAST_UPDATED, SET_FOOD_ATTRIBUTE_GROUPS, SET_FOOD_ATTRIBUTES, SET_FOOD_ATTRIBUTES_DICT, SET_FOOD_CATEGORIES, SET_FOOD_COLLECTION, SET_FOOD_OFFERS_CATEGORIES, SET_FOODOFFERS_INFO_ITEMS, SET_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES, SET_POPUP_EVENTS, SET_POPUP_EVENTS_HASH, SET_SELECTED_DATE, SET_WIKIS, UPDATE_FOOD_FEEDBACK_LABELS, UPDATE_MARKINGS, UPDATE_OWN_FOOD_FEEDBACK, UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES, UPDATE_PROFILE } from '@/redux/Types/types';
-import { FoodFeedbackLabelHelper } from '@/redux/actions/FoodFeedbacksLabel/FoodFeedbacksLabel';
-import { FoodFeedbackHelper } from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
-import { FoodFeedbackLabelEntryHelper } from '@/redux/actions/FoodFeeedbackLabelEntries/FoodFeedbackLabelEntries';
-import { MarkingHelper } from '@/redux/actions/Markings/Markings';
+import {ProfileHelper} from '@/redux/actions/Profile/Profile';
+import {AppScreens, DatabaseTypes, sortBySortField, sortMarkingsByGroup} from 'repo-depkit-common';
+import {
+    SET_APP_ELEMENTS,
+    SET_APP_SETTINGS,
+    SET_BUSINESS_HOURS,
+    SET_BUSINESS_HOURS_GROUPS,
+    SET_CANTEENS,
+    SET_CHATS,
+    SET_COLLECTION_DATES_LAST_UPDATED,
+    SET_FOOD_ATTRIBUTE_GROUPS,
+    SET_FOOD_ATTRIBUTES,
+    SET_FOOD_ATTRIBUTES_DICT,
+    SET_FOOD_CATEGORIES,
+    SET_FOOD_COLLECTION,
+    SET_FOOD_OFFERS_CATEGORIES,
+    SET_FOODOFFERS_INFO_ITEMS,
+    SET_NEWS,
+    SET_OWN_CANTEEN_FEEDBACK_LABEL_ENTRIES,
+    SET_POPUP_EVENTS,
+    SET_POPUP_EVENTS_HASH,
+    SET_SELECTED_CANTEEN,
+    SET_SELECTED_DATE,
+    SET_WIKIS,
+    UPDATE_FOOD_FEEDBACK_LABELS,
+    UPDATE_MARKINGS,
+    UPDATE_OWN_FOOD_FEEDBACK,
+    UPDATE_OWN_FOOD_FEEDBACK_LABEL_ENTRIES,
+    UPDATE_PRIVACY_POLICY_DATE,
+    UPDATE_PROFILE
+} from '@/redux/Types/types';
+import {FoodFeedbackLabelHelper} from '@/redux/actions/FoodFeedbacksLabel/FoodFeedbacksLabel';
+import {FoodFeedbackHelper} from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
+import {FoodFeedbackLabelEntryHelper} from '@/redux/actions/FoodFeeedbackLabelEntries/FoodFeedbackLabelEntries';
+import {MarkingHelper} from '@/redux/actions/Markings/Markings';
 import CustomMenuHeader from '@/components/CustomMenuHeader/CustomMenuHeader';
-import { CanteenFeedbackLabelEntryHelper } from '@/redux/actions/CanteenFeedbackLabelEntries/CanteenFeedbackLabelEntries';
-import { FoodCategoriesHelper } from '@/redux/actions/FoodCategories/FoodCategories';
-import { FoodOffersCategoriesHelper } from '@/redux/actions/FoodOffersCategories/FoodOffersCategories';
-import { FoodOffersInfoItemsHelper } from '@/redux/actions/FoodOffersInfoItems/FoodOffersInfoItems';
-import { BusinessHoursHelper } from '@/redux/actions/BusinessHours/BusinessHours';
+import {CanteenFeedbackLabelEntryHelper} from '@/redux/actions/CanteenFeedbackLabelEntries/CanteenFeedbackLabelEntries';
+import {FoodCategoriesHelper} from '@/redux/actions/FoodCategories/FoodCategories';
+import {FoodOffersCategoriesHelper} from '@/redux/actions/FoodOffersCategories/FoodOffersCategories';
+import {FoodOffersInfoItemsHelper} from '@/redux/actions/FoodOffersInfoItems/FoodOffersInfoItems';
+import {BusinessHoursHelper} from '@/redux/actions/BusinessHours/BusinessHours';
 import CustomStackHeader from '@/components/CustomStackHeader/CustomStackHeader';
-import { useLanguage } from '@/hooks/useLanguage';
-import { WikisHelper } from '@/redux/actions/Wikis/Wikis';
-import { AppSettingsHelper } from '@/redux/actions/AppSettings/AppSettings';
-import { MarkingGroupsHelper } from '@/redux/actions/MarkingGroups/MarkingGroups';
-import { NewsHelper } from '@/redux/actions/News/News';
-import { ChatsHelper } from '@/redux/actions/Chats/Chats';
-import { FoodAttributeGroupHelper } from '@/redux/actions/FoodAttributes/FoodAttributeGroup';
-import { FoodAttributesHelper } from '@/redux/actions/FoodAttributes/FoodAttributes';
+import {useLanguage} from '@/hooks/useLanguage';
+import {WikisHelper} from '@/redux/actions/Wikis/Wikis';
+import {AppSettingsHelper} from '@/redux/actions/AppSettings/AppSettings';
+import {MarkingGroupsHelper} from '@/redux/actions/MarkingGroups/MarkingGroups';
+import {NewsHelper} from '@/redux/actions/News/News';
+import {ChatsHelper} from '@/redux/actions/Chats/Chats';
+import {FoodAttributeGroupHelper} from '@/redux/actions/FoodAttributes/FoodAttributeGroup';
+import {FoodAttributesHelper} from '@/redux/actions/FoodAttributes/FoodAttributes';
 import DeviceMock from '@/components/DeviceMock/DeviceMock';
-import { isWeb } from '@/constants/Constants';
-import { fetchSpecificField } from '@/redux/actions/Fields/Fields';
-import { BusinessHoursGroupsHelper } from '@/redux/actions/BusinessHours/BusinessHoursGroups';
-import { PopupEventsHelper } from '@/redux/actions/PopupEvents/PopupEvents';
-import { Platform } from 'react-native';
-import { AppElementsHelper } from '@/redux/actions/AppElements/AppElements';
-import { TranslationKeys } from '@/locales/keys';
-import { CollectionLastUpdateHelper } from '@/redux/actions/CollectionLastUpdate/CollectionLastUpdate';
-import { transformUpdateDatesToMap } from '@/helper/dateMap';
-import { shouldFetch } from '@/helper/shouldFetch';
-import { updateLoginStatus } from '@/constants/HelperFunctions';
-import { format } from 'date-fns';
-import { CanteenHelper } from '@/redux/actions/Canteens/Canteens';
-import { SET_CANTEENS, SET_SELECTED_CANTEEN, UPDATE_PRIVACY_POLICY_DATE } from '@/redux/Types/types';
+import {isWeb} from '@/constants/Constants';
+import {fetchSpecificField} from '@/redux/actions/Fields/Fields';
+import {BusinessHoursGroupsHelper} from '@/redux/actions/BusinessHours/BusinessHoursGroups';
+import {PopupEventsHelper} from '@/redux/actions/PopupEvents/PopupEvents';
+import {Platform} from 'react-native';
+import {AppElementsHelper} from '@/redux/actions/AppElements/AppElements';
+import {TranslationKeys} from '@/locales/keys';
+import {CollectionLastUpdateHelper} from '@/redux/actions/CollectionLastUpdate/CollectionLastUpdate';
+import {transformUpdateDatesToMap} from '@/helper/dateMap';
+import {shouldFetch} from '@/helper/shouldFetch';
+import {updateLoginStatus} from '@/constants/HelperFunctions';
+import {format} from 'date-fns';
+import {CanteenHelper} from '@/redux/actions/Canteens/Canteens';
 // TODO: replace HashHelper with expo-crypto once packages can be installed
-import { HashHelper } from '@/helper/hashHelper';
-import { CollectionKeys } from '@/constants/collectionKeys';
-import { RootState } from '@/redux/reducer';
-import { sortMarkingsByGroup, sortBySortField } from 'repo-depkit-common';
-import { SET_NEWS } from '@/redux/Types/types';
-import { SET_CHATS } from '@/redux/Types/types';
+import {HashHelper} from '@/helper/hashHelper';
+import {CollectionKeys} from '@/constants/collectionKeys';
+import {RootState} from '@/redux/reducer';
 
 export default function Layout() {
 	const { theme } = useTheme();

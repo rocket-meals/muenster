@@ -1,4 +1,4 @@
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 export interface FeedbackLabelProps {
 	label: Array<DatabaseTypes.FoodsFeedbacksLabelsTranslations>;

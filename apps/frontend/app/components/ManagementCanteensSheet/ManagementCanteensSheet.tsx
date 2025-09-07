@@ -1,20 +1,20 @@
-import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { CanteenProps, ManagementCanteensSheetProps } from './types';
-import { isWeb, canteensData } from '@/constants/Constants';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { excerpt, getImageUrl } from '@/constants/HelperFunctions';
-import { useLanguage } from '@/hooks/useLanguage';
-import { CanteenHelper } from '@/redux/actions';
-import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { SET_BUILDINGS, SET_CANTEENS } from '@/redux/Types/types';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {ManagementCanteensSheetProps} from './types';
+import {canteensData, isWeb} from '@/constants/Constants';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {excerpt, getImageUrl} from '@/constants/HelperFunctions';
+import {useLanguage} from '@/hooks/useLanguage';
+import {CanteenHelper} from '@/redux/actions';
+import {BuildingsHelper} from '@/redux/actions/Buildings/Buildings';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {SET_BUILDINGS, SET_CANTEENS} from '@/redux/Types/types';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const ManagementCanteensSheet: React.FC<ManagementCanteensSheetProps> = ({ closeSheet, handleSelectCanteen }) => {
 	const { theme } = useTheme();

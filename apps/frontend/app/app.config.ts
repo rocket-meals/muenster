@@ -1,4 +1,4 @@
-import type { ConfigContext } from '@expo/config';
+import type {ConfigContext} from '@expo/config';
 
 // Register ts-node so Expo can load TypeScript config helpers without a
 // precompiled JavaScript file.

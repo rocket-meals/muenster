@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import authReducer from './authReducer';
 import canteenReducer from './canteenReducer';
 import settingReducer from './settingsReducer';
@@ -13,7 +13,22 @@ import appElementsReducer from './appElementsReducer';
 import lastUpdatedReducer from './lastUpdatedReducer';
 import popupEventsHashReducer from './popupEventsHashReducer';
 import chatsReducer from './chatsReducer';
-import { ApartmentsState, AppElementState, AuthState, CampusState, CanteensState, FoodAttributesState, FoodState, FormState, LastUpdatedState, ManagementState, NewsState, SettingsState, PopupEventsHashState, ChatsState } from '../Types/stateTypes';
+import {
+    ApartmentsState,
+    AppElementState,
+    AuthState,
+    CampusState,
+    CanteensState,
+    ChatsState,
+    FoodAttributesState,
+    FoodState,
+    FormState,
+    LastUpdatedState,
+    ManagementState,
+    NewsState,
+    PopupEventsHashState,
+    SettingsState
+} from '../Types/stateTypes';
 
 export const reducer = combineReducers({
 	state: (state = {}) => state,

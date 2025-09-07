@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Modal from 'react-native-modal';
-import { AntDesign } from '@expo/vector-icons';
-import { styles } from './styles';
-import { useTheme } from '@/hooks/useTheme';
+import {AntDesign} from '@expo/vector-icons';
+import {styles} from './styles';
+import {useTheme} from '@/hooks/useTheme';
 
 export interface BaseModalProps {
 	isVisible: boolean;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTheme } from '@/hooks/useTheme';
-import { Stack } from 'expo-router';
+import {useTheme} from '@/hooks/useTheme';
+import {Stack} from 'expo-router';
 import CustomStackHeader from '@/components/CustomStackHeader/CustomStackHeader';
 
 export default function FoodOfferLayout() {

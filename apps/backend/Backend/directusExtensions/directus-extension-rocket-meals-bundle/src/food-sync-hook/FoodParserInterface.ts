@@ -1,6 +1,6 @@
-import { DatabaseTypes } from 'repo-depkit-common';
-import { TranslationsFromParsingType } from '../helpers/TranslationHelper';
-import { MarkingsTypeForParser } from './MarkingParserInterface';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {TranslationsFromParsingType} from '../helpers/TranslationHelper';
+import {MarkingsTypeForParser} from './MarkingParserInterface';
 
 export type FoodParseFoodAttributeValueType = {
   external_identifier: string;

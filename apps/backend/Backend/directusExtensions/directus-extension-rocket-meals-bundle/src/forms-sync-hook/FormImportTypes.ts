@@ -1,4 +1,4 @@
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes} from 'repo-depkit-common';
 // Define the extracted value_ keys
 export const FIELD_VALUE_KEY_PREFIX = 'value_';
 export type KeyOfFormAnswersValueFieldsType = Extract<keyof DatabaseTypes.FormAnswers, `${typeof FIELD_VALUE_KEY_PREFIX}${string}`>;

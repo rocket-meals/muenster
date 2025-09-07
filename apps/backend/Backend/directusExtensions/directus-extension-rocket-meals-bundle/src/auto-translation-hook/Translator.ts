@@ -1,8 +1,8 @@
-import { DeepLTranslator } from './DeepLTranslator';
-import { MyTranslatorInterface } from './MyTranslatorInterface';
-import { TranslatorSettings } from './TranslatorSettings';
-import { EnvVariableHelper } from '../helpers/EnvVariableHelper';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
+import {DeepLTranslator} from './DeepLTranslator';
+import {MyTranslatorInterface} from './MyTranslatorInterface';
+import {TranslatorSettings} from './TranslatorSettings';
+import {EnvVariableHelper} from '../helpers/EnvVariableHelper';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
 
 export class Translator {
   private readonly logger: any;

@@ -1,9 +1,9 @@
 // small jest test
-import { describe, expect, it, jest } from '@jest/globals';
+import {describe, expect, it, jest} from '@jest/globals';
 import axios from 'axios';
 import path from 'path';
 import fs from 'fs';
-import { Cashregisters_SWOSY } from '../../Cashregisters_SWOSY';
+import {Cashregisters_SWOSY} from '../../Cashregisters_SWOSY';
 
 describe('Test Swosy Cashregister Parser', () => {
   const html = fs.readFileSync(path.resolve(__dirname, './Kassendaten.html'), 'utf8');

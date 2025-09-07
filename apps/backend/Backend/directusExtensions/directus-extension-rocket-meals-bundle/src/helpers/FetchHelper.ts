@@ -1,4 +1,4 @@
-import undici, { Agent } from 'undici';
+import undici, {Agent} from 'undici';
 
 const agent = new Agent({ maxHeaderSize: 32 * 1024 });
 

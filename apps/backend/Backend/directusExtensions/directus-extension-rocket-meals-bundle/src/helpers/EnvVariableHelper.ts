@@ -1,4 +1,4 @@
-import { DateHelperTimezone } from 'repo-depkit-common';
+import {DateHelperTimezone} from 'repo-depkit-common';
 
 export enum SyncForCustomerEnum {
   TEST = 'Test',

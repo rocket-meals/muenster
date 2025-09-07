@@ -1,4 +1,4 @@
-import { StringHelper } from './StringHelper';
+import {StringHelper} from './StringHelper';
 
 export class NumberHelper {
   // Improved version of toFixedNoRounding

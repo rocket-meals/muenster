@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text } from 'react-native';
+import {Text} from 'react-native';
 import BaseBottomModal from '@/components/BaseBottomModal';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
 
 export interface AvailableFromModalProps {
 	visible: boolean;

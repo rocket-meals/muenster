@@ -1,4 +1,16 @@
-import { DatabaseTypes, FoodSortOption, intelligentSort, sortByPrice, sortByEatingHabits, sortByFoodName, sortByOwnFavorite, sortByPublicFavorite, sortByFoodCategory, sortByFoodOfferCategory, sortByFoodOfferCategoryOnly } from 'repo-depkit-common';
+import {
+    DatabaseTypes,
+    FoodSortOption,
+    intelligentSort,
+    sortByEatingHabits,
+    sortByFoodCategory,
+    sortByFoodName,
+    sortByFoodOfferCategory,
+    sortByFoodOfferCategoryOnly,
+    sortByOwnFavorite,
+    sortByPrice,
+    sortByPublicFavorite
+} from 'repo-depkit-common';
 
 interface SortContext {
 	languageCode: string;

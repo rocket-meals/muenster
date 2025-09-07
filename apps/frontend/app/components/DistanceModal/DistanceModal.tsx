@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useSelector } from 'react-redux';
-import { myContrastColor } from '@/helper/colorHelper';
-import { TranslationKeys } from '@/locales/keys';
-import type { RootState } from '@/redux/reducer';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useSelector} from 'react-redux';
+import {myContrastColor} from '@/helper/colorHelper';
+import {TranslationKeys} from '@/locales/keys';
+import type {RootState} from '@/redux/reducer';
 import BaseBottomModal from '@/components/BaseBottomModal';
 
 export interface DistanceModalProps {

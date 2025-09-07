@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
-import { useSelector } from 'react-redux';
+import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {BottomSheetView} from '@gorhom/bottom-sheet';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
+import {useSelector} from 'react-redux';
 import styles from './styles';
-import { NicknameSheetProps } from './types';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import {NicknameSheetProps} from './types';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
+import {myContrastColor} from '@/helper/colorHelper';
 
 const NicknameSheet: React.FC<NicknameSheetProps> = ({ closeSheet, value, onChange, onSave, disableSave }) => {
 	const { theme } = useTheme();

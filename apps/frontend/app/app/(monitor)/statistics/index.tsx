@@ -1,19 +1,19 @@
-import { Dimensions, ScrollView, Text, View } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {Dimensions, ScrollView, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
+import {useTheme} from '@/hooks/useTheme';
 import StatisticsCard from '@/components/StatisticsCard/StatisticsCard';
-import { loadMostLikedOrDislikedFoods } from '@/helper/FoodHelper';
-import { useDispatch, useSelector } from 'react-redux';
-import { SET_MOST_DISLIKED_FOODS, SET_MOST_LIKED_FOODS } from '@/redux/Types/types';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {loadMostLikedOrDislikedFoods} from '@/helper/FoodHelper';
+import {useDispatch, useSelector} from 'react-redux';
+import {SET_MOST_DISLIKED_FOODS, SET_MOST_LIKED_FOODS} from '@/redux/Types/types';
+import {DatabaseTypes} from 'repo-depkit-common';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
 import ImageManagementSheet from '@/components/ImageManagementSheet/ImageManagementSheet';
-import { useFocusEffect } from 'expo-router';
+import {useFocusEffect} from 'expo-router';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.statistiken);

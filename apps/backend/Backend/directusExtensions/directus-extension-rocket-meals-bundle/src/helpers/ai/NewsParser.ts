@@ -1,5 +1,5 @@
-import { OpenAIChat } from './OpenAIChat';
-import { LLMMessage } from './LLMInterface';
+import {OpenAIChat} from './OpenAIChat';
+import {LLMMessage} from './LLMInterface';
 
 export type NewsItem = {
   title: string;

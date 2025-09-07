@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
-import { router } from 'expo-router';
-import { useTheme } from '@/hooks/useTheme';
+import React, {useState} from 'react';
+import {ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {router} from 'expo-router';
+import {useTheme} from '@/hooks/useTheme';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { TranslationKeys } from '@/locales/keys';
-import { useLanguage } from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {useLanguage} from '@/hooks/useLanguage';
 import styles from './styles';
 
 const RssFeedConfig = () => {

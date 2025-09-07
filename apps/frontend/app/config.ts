@@ -1,5 +1,5 @@
 // This file can not have any imports. See app.config.ts as it will transpile this file to  JavaScript
-import { ServerHelper } from 'repo-depkit-common';
+import {ServerHelper} from 'repo-depkit-common';
 
 export type CustomerConfig = {
 	projectName: string;

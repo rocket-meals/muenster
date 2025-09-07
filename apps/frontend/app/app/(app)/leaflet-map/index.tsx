@@ -1,18 +1,15 @@
-import React, { useMemo, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useMemo, useState} from 'react';
+import {useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
-import { Text, Platform, View, ScrollView } from 'react-native';
-import { TranslationKeys } from '@/locales/keys';
+import {Platform, ScrollView, Text, View} from 'react-native';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 import MyMap from '@/components/MyMap/MyMap';
-import { MARKER_DEFAULT_SIZE, MyMapMarkerIcons, getDefaultIconAnchor } from '@/components/MyMap/markerUtils';
-import { Asset } from 'expo-asset';
+import {getDefaultIconAnchor, MARKER_DEFAULT_SIZE, MyMapMarkerIcons} from '@/components/MyMap/markerUtils';
+import {Asset} from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
-import styles from '@/app/(app)/settings/styles';
-import CanteenSelectionSheet from '@/components/CanteenSelectionSheet/CanteenSelectionSheet';
-import BaseBottomSheet from '@/components/BaseBottomSheet';
-import { MapMarker } from '@/components/MyMap/model';
+import {MapMarker} from '@/components/MyMap/model';
 
 const POSITION_BUNDESTAG = {
 	lat: 52.518594247456804,

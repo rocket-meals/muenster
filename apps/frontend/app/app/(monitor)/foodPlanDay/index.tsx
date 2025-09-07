@@ -1,24 +1,25 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, ScrollView, TouchableOpacity, Dimensions, Text, TextInput } from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Dimensions, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
-import { useTheme } from '@/hooks/useTheme';
-import { router, useFocusEffect } from 'expo-router';
-import { useDispatch, useSelector } from 'react-redux';
+import {useTheme} from '@/hooks/useTheme';
+import {router, useFocusEffect} from 'expo-router';
+import {useDispatch, useSelector} from 'react-redux';
 import styles from './styles';
 import BaseBottomSheet from '@/components/BaseBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
-import { AntDesign, Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useLanguage } from '@/hooks/useLanguage';
+import {BottomSheetView} from '@gorhom/bottom-sheet';
+import {AntDesign, Entypo, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
+import {useLanguage} from '@/hooks/useLanguage';
 import ManagementCanteensSheet from '@/components/ManagementCanteensSheet/ManagementCanteensSheet';
-import { SET_DAY_PLAN } from '@/redux/Types/types';
+import {SET_DAY_PLAN} from '@/redux/Types/types';
 import ManagementFoodCategorySheet from '@/components/ManagementFoodCategorySheet/ManagementFoodCategorySheet';
-import { CanteenProps } from '@/components/CanteenSelectionSheet/types';
-import { Switch } from '@gluestack-ui/themed';
-import { myContrastColor } from '@/helper/colorHelper';
-import { TranslationKeys } from '@/locales/keys';
+import {CanteenProps} from '@/components/CanteenSelectionSheet/types';
+import {Switch} from '@gluestack-ui/themed';
+import {myContrastColor} from '@/helper/colorHelper';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
+
 const Index = () => {
 	useSetPageTitle(TranslationKeys.food_plan_day);
 	const { theme } = useTheme();

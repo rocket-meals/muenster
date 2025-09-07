@@ -1,7 +1,6 @@
 import React from 'react';
-import { MaterialCommunityIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { StringHelper } from 'repo-depkit-common';
+import {FontAwesome, MaterialCommunityIcons, MaterialIcons} from '@expo/vector-icons';
+import {DatabaseTypes, StringHelper} from 'repo-depkit-common';
 
 export type TranslationEntry = {
 	languages_code: string;

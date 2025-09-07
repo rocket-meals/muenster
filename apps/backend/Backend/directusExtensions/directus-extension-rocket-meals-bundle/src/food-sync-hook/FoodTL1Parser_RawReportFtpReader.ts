@@ -1,5 +1,5 @@
-import { FoodTL1Parser_GetRawReportInterface } from './FoodTL1Parser_GetRawReportInterface';
-import { SystemFileHelper } from '../helpers/SystemFileHelper';
+import {FoodTL1Parser_GetRawReportInterface} from './FoodTL1Parser_GetRawReportInterface';
+import {SystemFileHelper} from '../helpers/SystemFileHelper';
 
 export class FoodTL1Parser_RawReportFtpReader implements FoodTL1Parser_GetRawReportInterface {
   private readonly path_to_tl1_export: string;

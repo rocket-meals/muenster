@@ -1,13 +1,13 @@
-import { ParseSchedule } from './ParseSchedule';
-import { Cashregisters_SWOSY } from './Cashregisters_SWOSY';
-import { defineHook } from '@directus/extensions-sdk';
-import { EnvVariableHelper, SyncForCustomerEnum } from '../helpers/EnvVariableHelper';
-import { CashregisterTransactionParserInterface } from './CashregisterTransactionParserInterface';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { SingleWorkflowRun, WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { CronObject, WorkflowScheduleHelper, WorkflowScheduler } from '../workflows-runs-hook';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {ParseSchedule} from './ParseSchedule';
+import {Cashregisters_SWOSY} from './Cashregisters_SWOSY';
+import {defineHook} from '@directus/extensions-sdk';
+import {EnvVariableHelper, SyncForCustomerEnum} from '../helpers/EnvVariableHelper';
+import {CashregisterTransactionParserInterface} from './CashregisterTransactionParserInterface';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {SingleWorkflowRun, WorkflowRunLogger} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {CronObject, WorkflowScheduleHelper, WorkflowScheduler} from '../workflows-runs-hook';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 
 class CashRegisterWorkflow extends SingleWorkflowRun {
   private readonly usedParser: CashregisterTransactionParserInterface;

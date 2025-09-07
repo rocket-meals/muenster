@@ -1,16 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import React, {useEffect, useMemo, useState} from 'react';
+import {Dimensions, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { days, timeSlots } from './constant';
-import { CourseTimetableProps, EventTypes } from './types';
-import { Feather, FontAwesome5, MaterialCommunityIcons, MaterialIcons, Octicons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
-import { daysData } from '@/constants/SettingData';
-import { useLanguage } from '@/hooks/useLanguage';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {days, timeSlots} from './constant';
+import {CourseTimetableProps, EventTypes} from './types';
+import {Feather, FontAwesome5, MaterialCommunityIcons, MaterialIcons, Octicons} from '@expo/vector-icons';
+import {useSelector} from 'react-redux';
+import {daysData} from '@/constants/SettingData';
+import {useLanguage} from '@/hooks/useLanguage';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
+
 const CourseTimetable: React.FC<CourseTimetableProps> = ({ events, openSheet, setIsUpdate, setTimeTableData, setSelectedEventId }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();

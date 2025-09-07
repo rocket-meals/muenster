@@ -1,25 +1,24 @@
-import { ActivityIndicator, Dimensions, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useMemo, useState } from 'react';
+import {ActivityIndicator, Dimensions, Platform, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useMemo, useState} from 'react';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {AntDesign, Ionicons, MaterialIcons} from '@expo/vector-icons';
 import FeedbackLabel from '../FeedbackLabel';
-import { isWeb } from '@/constants/Constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { getpreviousFeedback, numToOneDecimal } from '@/constants/HelperFunctions';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { FoodFeedbackHelper } from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
+import {isWeb} from '@/constants/Constants';
+import {useDispatch, useSelector} from 'react-redux';
+import {getpreviousFeedback, numToOneDecimal} from '@/constants/HelperFunctions';
+import {DatabaseTypes, DateHelper} from 'repo-depkit-common';
+import {FoodFeedbackHelper} from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
 import useToast from '@/hooks/useToast';
-import { DateHelper } from 'repo-depkit-common';
-import { DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL } from '@/redux/Types/types';
+import {DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL} from '@/redux/Types/types';
 import PermissionModal from '../PermissionModal/PermissionModal';
-import { createSelector } from 'reselect';
-import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { TranslationKeys } from '@/locales/keys';
-import { FeedbacksProps } from './types';
-import { RootState } from '@/redux/reducer';
+import {createSelector} from 'reselect';
+import {useLanguage} from '@/hooks/useLanguage';
+import {myContrastColor} from '@/helper/colorHelper';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {TranslationKeys} from '@/locales/keys';
+import {FeedbacksProps} from './types';
+import {RootState} from '@/redux/reducer';
 
 const loadingState = {
 	submitLoading: false,

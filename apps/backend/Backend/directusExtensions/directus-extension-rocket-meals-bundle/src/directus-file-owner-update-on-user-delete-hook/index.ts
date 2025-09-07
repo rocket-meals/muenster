@@ -1,8 +1,8 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { FileServiceCreator } from '../helpers/ItemsServiceCreator';
-import { EventHelper } from '../helpers/EventHelper';
-import { Filter } from '@directus/types/dist/filter';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {defineHook} from '@directus/extensions-sdk';
+import {FileServiceCreator} from '../helpers/ItemsServiceCreator';
+import {EventHelper} from '../helpers/EventHelper';
+import {Filter} from '@directus/types/dist/filter';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 export default defineHook(async ({ action, filter }, apiContext) => {
   const fileServiceCreator = new FileServiceCreator(apiContext);

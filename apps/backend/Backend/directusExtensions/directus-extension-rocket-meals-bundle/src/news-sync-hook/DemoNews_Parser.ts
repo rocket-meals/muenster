@@ -1,7 +1,7 @@
-import { TranslationHelper } from '../helpers/TranslationHelper';
-import { NewsParserInterface, NewsTypeForParser } from './NewsParserInterface';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {TranslationHelper} from '../helpers/TranslationHelper';
+import {NewsParserInterface, NewsTypeForParser} from './NewsParserInterface';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {WorkflowRunLogger} from '../workflows-runs-hook/WorkflowRunJobInterface';
 
 export class DemoNews_Parser implements NewsParserInterface {
   constructor() {}

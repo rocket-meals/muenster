@@ -1,25 +1,39 @@
-import { Image, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect } from 'react';
-import { AntDesign, Entypo, EvilIcons, Feather, FontAwesome, FontAwesome5, FontAwesome6, Foundation, Ionicons, MaterialCommunityIcons, Octicons, SimpleLineIcons, Zocial } from '@expo/vector-icons';
-import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import { useTheme } from '@/hooks/useTheme';
-import { styles } from './styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'expo-router';
-import { SET_WIKIS } from '@/redux/Types/types';
-import { performLogout } from '@/helper/logoutHelper';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { useLanguage } from '@/hooks/useLanguage';
+import {Image, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+    AntDesign,
+    Entypo,
+    EvilIcons,
+    Feather,
+    FontAwesome,
+    FontAwesome5,
+    FontAwesome6,
+    Foundation,
+    Ionicons,
+    MaterialCommunityIcons,
+    Octicons,
+    SimpleLineIcons,
+    Zocial
+} from '@expo/vector-icons';
+import {DrawerContentComponentProps} from '@react-navigation/drawer';
+import {useTheme} from '@/hooks/useTheme';
+import {styles} from './styles';
+import {useDispatch, useSelector} from 'react-redux';
+import {useRouter} from 'expo-router';
+import {SET_WIKIS} from '@/redux/Types/types';
+import {performLogout} from '@/helper/logoutHelper';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {useLanguage} from '@/hooks/useLanguage';
 import * as Linking from 'expo-linking';
 import useToast from '@/hooks/useToast';
-import { getTitleFromTranslation } from '@/helper/resourceHelper';
-import { WikisHelper } from '@/redux/actions/Wikis/Wikis';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { IconProps } from '@expo/vector-icons/build/createIconSet';
-import { myContrastColor } from '@/helper/colorHelper';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
-import { ServerInfoHelper } from '@/helper/ServerInfoHelper';
+import {getTitleFromTranslation} from '@/helper/resourceHelper';
+import {WikisHelper} from '@/redux/actions/Wikis/Wikis';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {IconProps} from '@expo/vector-icons/build/createIconSet';
+import {myContrastColor} from '@/helper/colorHelper';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
+import {ServerInfoHelper} from '@/helper/ServerInfoHelper';
 
 export const iconLibraries: Record<string, any> = {
 	Ionicons,

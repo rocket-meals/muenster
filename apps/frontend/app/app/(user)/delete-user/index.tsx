@@ -1,22 +1,22 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ScrollView, Dimensions, View, Image, Platform, Linking, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { router, useFocusEffect } from 'expo-router';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {ActivityIndicator, Dimensions, Linking, Platform, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import {router, useFocusEffect} from 'expo-router';
 import SupportFAQ from '../../../components/SupportFAQ/SupportFAQ';
 import styles from './styles';
-import { useLanguage } from '@/hooks/useLanguage';
+import {useLanguage} from '@/hooks/useLanguage';
 import useToast from '@/hooks/useToast';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import animation from '@/assets/animations/astronaut-computer.json';
 import LottieView from 'lottie-react-native';
-import { replaceLottieColors } from '@/helper/animationHelper';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
-import { isWeb } from '@/constants/Constants';
+import {replaceLottieColors} from '@/helper/animationHelper';
+import {AntDesign, MaterialCommunityIcons} from '@expo/vector-icons';
+import {isWeb} from '@/constants/Constants';
 import ModalComponent from '@/components/ModalSetting/ModalComponent';
-import { deleteProfileRemote } from '@/redux/actions/Profile/Profile';
-import { performLogout } from '@/helper/logoutHelper';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {deleteProfileRemote} from '@/redux/actions/Profile/Profile';
+import {performLogout} from '@/helper/logoutHelper';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const Index = () => {
 	const { translate } = useLanguage();

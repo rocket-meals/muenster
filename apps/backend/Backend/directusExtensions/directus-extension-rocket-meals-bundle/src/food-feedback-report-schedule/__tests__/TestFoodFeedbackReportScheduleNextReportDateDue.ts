@@ -1,8 +1,7 @@
 // small jest test
-import { describe, it } from '@jest/globals';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { DateHelper } from 'repo-depkit-common';
-import { ReportSchedule } from '../ReportSchedule';
+import {describe, it} from '@jest/globals';
+import {DatabaseTypes, DateHelper} from 'repo-depkit-common';
+import {ReportSchedule} from '../ReportSchedule';
 
 describe('TestFoodFeedbackReportScheduleNextReportDateDue Test', () => {
   it('Generation due for the same day', async () => {

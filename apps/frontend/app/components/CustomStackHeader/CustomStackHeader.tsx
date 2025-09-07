@@ -1,19 +1,19 @@
-import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { isWeb } from '@/constants/Constants';
-import { useTheme } from '@/hooks/useTheme';
-import { Ionicons } from '@expo/vector-icons';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {isWeb} from '@/constants/Constants';
+import {useTheme} from '@/hooks/useTheme';
+import {Ionicons} from '@expo/vector-icons';
 import styles from './styles';
-import { CustomStackHeaderProps } from './types';
-import { useRouter } from 'expo-router';
-import { usePathname } from 'expo-router';
-import { useSelector } from 'react-redux';
-import { excerpt } from '@/constants/HelperFunctions';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
-import { AppLinks, AppScreens } from 'repo-depkit-common';
+import {CustomStackHeaderProps} from './types';
+import {usePathname, useRouter} from 'expo-router';
+import {useSelector} from 'react-redux';
+import {excerpt} from '@/constants/HelperFunctions';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
+import {AppScreens} from 'repo-depkit-common';
+
 const CustomStackHeader: React.FC<CustomStackHeaderProps> = ({ label }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();

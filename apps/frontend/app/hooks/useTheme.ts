@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Appearance, StatusBar } from 'react-native';
-import { lightTheme, darkTheme } from '@/styles/themes';
-import { configureStore } from '@/redux/store';
+import {useEffect, useMemo, useState} from 'react';
+import {Appearance, StatusBar} from 'react-native';
+import {darkTheme, lightTheme} from '@/styles/themes';
+import {configureStore} from '@/redux/store';
 
 export const useTheme = () => {
 	const [theme, setTheme] = useState(configureStore.getState().settings.selectedTheme);

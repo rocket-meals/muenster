@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { isWeb } from '@/constants/Constants';
-import { FormAnswersHelper } from '@/redux/actions/Forms/FormAnswers';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { deleteDirectusFile } from '@/constants/HelperFunctions';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {Ionicons, MaterialIcons} from '@expo/vector-icons';
+import {useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {isWeb} from '@/constants/Constants';
+import {FormAnswersHelper} from '@/redux/actions/Forms/FormAnswers';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {deleteDirectusFile} from '@/constants/HelperFunctions';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const ImageUpload = ({ id, value, onChange, error, isDisabled, custom_type }: { id: string; value: any; onChange: (id: string, value: any, custom_type: string) => void; error: string; isDisabled: boolean; custom_type: string }) => {
 	const { translate } = useLanguage();

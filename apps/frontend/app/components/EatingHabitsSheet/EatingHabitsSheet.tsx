@@ -1,15 +1,15 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
-import { isWeb } from '@/constants/Constants';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useTheme } from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
-import { EatingHabitsSheetProps } from './types';
+import {EatingHabitsSheetProps} from './types';
 import MarkingLabels from '../MarkingLabels/MarkingLabels';
-import { useSelector } from 'react-redux';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useSelector} from 'react-redux';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const EatingHabitsSheet: React.FC<EatingHabitsSheetProps> = ({ closeSheet }) => {
 	const { theme } = useTheme();

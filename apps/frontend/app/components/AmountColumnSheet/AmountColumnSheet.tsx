@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useTheme } from '@/hooks/useTheme';
-import { useLanguage } from '@/hooks/useLanguage';
+import {Text, View} from 'react-native';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useTheme} from '@/hooks/useTheme';
+import {useLanguage} from '@/hooks/useLanguage';
 import AmountColumns from '@/components/AmountColumn/AmountColumns';
-import { AmountColumn } from '@/constants/SettingData';
-import { isWeb } from '@/constants/Constants';
+import {AmountColumn} from '@/constants/SettingData';
+import {isWeb} from '@/constants/Constants';
 import styles from './styles';
-import { AmountColumnSheetProps } from './types';
-import { TranslationKeys } from '@/locales/keys';
+import {AmountColumnSheetProps} from './types';
+import {TranslationKeys} from '@/locales/keys';
 
 const AmountColumnSheet: React.FC<AmountColumnSheetProps> = ({ closeSheet, selectedAmount, onSelect }) => {
 	const { theme } = useTheme();

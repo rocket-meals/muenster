@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '@/hooks/useTheme';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
+import React, {useEffect, useRef, useState} from 'react';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
 import CardDimensionHelper from '@/helper/CardDimensionHelper';
 import AutoImageScroller from '@/components/AutoImageScroller';
 import styles from './styles';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { loadMostLikedOrDislikedFoods } from '@/helper/FoodHelper';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {loadMostLikedOrDislikedFoods} from '@/helper/FoodHelper';
 
 const PAGE_SIZE = 20;
 const MAX_ITEMS = 100;

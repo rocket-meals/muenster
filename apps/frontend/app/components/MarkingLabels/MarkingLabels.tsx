@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { MarkingLabelProps } from './types';
+import React, {useState} from 'react';
+import {ActivityIndicator, Pressable, Text, View} from 'react-native';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useDispatch, useSelector} from 'react-redux';
+import {MarkingLabelProps} from './types';
 
-import { SET_MARKING_DETAILS } from '@/redux/Types/types';
+import {SET_MARKING_DETAILS} from '@/redux/Types/types';
 import PermissionModal from '../PermissionModal/PermissionModal';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
 import styles from './styles';
-import { getTextFromTranslation } from '@/helper/resourceHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {getTextFromTranslation} from '@/helper/resourceHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
 import MarkingIcon from '../MarkingIcon';
-import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
-import { useLanguage } from '@/hooks/useLanguage';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {Tooltip, TooltipContent, TooltipText} from '@gluestack-ui/themed';
+import {useLanguage} from '@/hooks/useLanguage';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet, size = 30 }) => {
 	const { theme } = useTheme();

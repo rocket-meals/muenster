@@ -1,9 +1,9 @@
-import { ApiContext } from './ApiContext';
-import { EventContext as ExtentContextDirectusTypes } from '@directus/types';
-import { ItemsServiceHelper } from './ItemsServiceHelper';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { ServerInfo } from './ItemsServiceCreator';
-import { createDirectus, rest, serverInfo } from '@directus/sdk';
+import {ApiContext} from './ApiContext';
+import {EventContext as ExtentContextDirectusTypes} from '@directus/types';
+import {ItemsServiceHelper} from './ItemsServiceHelper';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {ServerInfo} from './ItemsServiceCreator';
+import {createDirectus, rest, serverInfo} from '@directus/sdk';
 
 export interface MyDatabaseTestableHelperInterface {
   getServerInfo(): Promise<ServerInfo>;

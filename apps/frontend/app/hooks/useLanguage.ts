@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
-import { configureStore } from '@/redux/store';
+import {useEffect, useMemo, useState} from 'react';
+import {configureStore} from '@/redux/store';
 import translations from '@/locales/translations.json';
-import { CHANGE_LANGUAGE } from '@/redux/Types/types';
+import {CHANGE_LANGUAGE} from '@/redux/Types/types';
 
 const changeLanguage = (language: 'en' | 'de' | 'fr' | 'ar' | 'es' | 'ru' | 'tr' | 'zh') => ({
 	type: CHANGE_LANGUAGE,

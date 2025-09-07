@@ -1,7 +1,7 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { ActionInitFilterEventHelper } from '../helpers/ActionInitFilterEventHelper';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { EnvVariableHelper } from '../helpers/EnvVariableHelper';
+import {defineHook} from '@directus/extensions-sdk';
+import {ActionInitFilterEventHelper} from '../helpers/ActionInitFilterEventHelper';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {EnvVariableHelper} from '../helpers/EnvVariableHelper';
 
 const SCHEDULE_NAME = 'activity_auto_cleanup';
 

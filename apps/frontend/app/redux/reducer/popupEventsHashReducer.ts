@@ -1,4 +1,4 @@
-import { CLEAR_POPUP_EVENTS_HASH, SET_POPUP_EVENTS_HASH } from '@/redux/Types/types';
+import {CLEAR_POPUP_EVENTS_HASH, SET_POPUP_EVENTS_HASH} from '@/redux/Types/types';
 
 const initialState = {
 	hashValue: '',

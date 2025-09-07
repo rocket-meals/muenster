@@ -1,9 +1,9 @@
-import { SingleWorkflowRun, WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
-import { FormImportSyncFormSubmissions } from './FormImportTypes';
-import { WorkflowResultHash } from '../helpers/itemServiceHelpers/WorkflowsRunHelper';
+import {SingleWorkflowRun, WorkflowRunLogger} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {FormImportSyncFormSubmissions} from './FormImportTypes';
+import {WorkflowResultHash} from '../helpers/itemServiceHelpers/WorkflowsRunHelper';
 
 export abstract class FormImportSyncWorkflow extends SingleWorkflowRun {
   constructor() {

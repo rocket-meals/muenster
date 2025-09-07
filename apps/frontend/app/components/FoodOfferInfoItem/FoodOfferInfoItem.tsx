@@ -1,15 +1,14 @@
-import React, { memo } from 'react';
-import { Text } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { FoodOfferInfoItemProps } from './types';
+import React, {memo} from 'react';
+import {Text} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
+import {FoodOfferInfoItemProps} from './types';
 import styles from './styles';
 import CardWithText from '../CardWithText/CardWithText';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { isWeb } from '@/constants/Constants';
+import {getImageUrl} from '@/constants/HelperFunctions';
 import useFoodCard from '@/hooks/useFoodCard';
-import { CommonSystemActionHelper } from '@/helper/SystemActionHelper';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
+import {CommonSystemActionHelper} from '@/helper/SystemActionHelper';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
 
 const FoodOfferInfoItem: React.FC<FoodOfferInfoItemProps> = memo(({ item, content }) => {
 	const { theme } = useTheme();

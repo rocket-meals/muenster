@@ -1,11 +1,15 @@
 // small jest test
-import { describe, it, expect } from '@jest/globals';
-import { FoodTL1ParserHannover } from '../FoodTL1ParserHannover';
-import { FoodTL1Parser_GetRawReportInterface } from '../../FoodTL1Parser_GetRawReportInterface';
-import { FoodTL1Parser_RawReportTestReaderHannover } from '../FoodTL1Parser_RawReportTestReaderHannover';
-import { FoodoffersTypeForParser, FoodParseFoodAttributeValueType, FoodsInformationTypeForParser } from '../../FoodParserInterface';
-import { FoodTL1Parser, Tl1AttributeType, TL1AttributeValueType } from '../../FoodTL1Parser';
-import { MarkingsTypeForParser } from '../../MarkingParserInterface';
+import {describe, expect, it} from '@jest/globals';
+import {FoodTL1ParserHannover} from '../FoodTL1ParserHannover';
+import {FoodTL1Parser_GetRawReportInterface} from '../../FoodTL1Parser_GetRawReportInterface';
+import {FoodTL1Parser_RawReportTestReaderHannover} from '../FoodTL1Parser_RawReportTestReaderHannover';
+import {
+    FoodoffersTypeForParser,
+    FoodParseFoodAttributeValueType,
+    FoodsInformationTypeForParser
+} from '../../FoodParserInterface';
+import {FoodTL1Parser, Tl1AttributeType, TL1AttributeValueType} from '../../FoodTL1Parser';
+import {MarkingsTypeForParser} from '../../MarkingParserInterface';
 
 function generateFoodId(foodIds: number[], markingExternalIdentifiers: string[]): string | null {
   return FoodTL1ParserHannover.getHannoverFoodIdByRecipeIdsAndMarkings(foodIds, markingExternalIdentifiers);

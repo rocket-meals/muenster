@@ -4,7 +4,7 @@
 // contain: Fit the image within the specified dimensions, do not crop, leaving blank space
 // inside: Fit the image within the specified dimensions, maintaining aspect ratio, crop if necessary
 // outside: Fill the specified dimensions, maintaining aspect ratio, do not crop
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 export interface ImageTransform {
   fit?: string;

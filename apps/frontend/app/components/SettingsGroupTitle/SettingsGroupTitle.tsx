@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
+import {StyleSheet, Text} from 'react-native';
+import {useTheme} from '@/hooks/useTheme';
 
 type Props = {
 	children: React.ReactNode;

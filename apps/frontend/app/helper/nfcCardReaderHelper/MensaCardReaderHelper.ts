@@ -2,6 +2,7 @@
 import CardReader from './CardReader';
 import APDUCommands from './APDUCommands';
 import CardResponse from './CardResponse';
+
 /**
  * MensaCardReaderHelper for easy reading of the mensacard
  */

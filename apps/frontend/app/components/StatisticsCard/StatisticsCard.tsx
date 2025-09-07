@@ -1,13 +1,13 @@
-import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import MyImage from '@/components/MyImage';
-import React, { useEffect, useState } from 'react';
-import { useTheme } from '@/hooks/useTheme';
+import React, {useEffect, useState} from 'react';
+import {useTheme} from '@/hooks/useTheme';
 import styles from './styles';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { StatisticsCardProps } from './types';
-import { getImageUrl } from '@/constants/HelperFunctions';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/reducer';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {StatisticsCardProps} from './types';
+import {getImageUrl} from '@/constants/HelperFunctions';
+import {useSelector} from 'react-redux';
+import {RootState} from '@/redux/reducer';
 
 const StatisticsCard: React.FC<StatisticsCardProps> = ({ food, handleImageSheet, setSelectedFoodId }) => {
 	const { theme } = useTheme();

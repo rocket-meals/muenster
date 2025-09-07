@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native';
-import { FontAwesome6, Ionicons } from '@expo/vector-icons';
+import React, {useState} from 'react';
+import {ScrollView, Text, TouchableOpacity, useWindowDimensions, View} from 'react-native';
+import {FontAwesome6, Ionicons} from '@expo/vector-icons';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { useDispatch, useSelector } from 'react-redux';
+import {useTheme} from '@/hooks/useTheme';
+import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
-import { useRouter } from 'expo-router';
-import { SET_WEEK_PLAN } from '@/redux/Types/types';
-import { myContrastColor } from '@/helper/colorHelper';
+import {useRouter} from 'expo-router';
+import {SET_WEEK_PLAN} from '@/redux/Types/types';
+import {myContrastColor} from '@/helper/colorHelper';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { RootState } from '@/redux/reducer';
+import {RootState} from '@/redux/reducer';
 
 const Index = () => {
 	useSetPageTitle('FoodPlan:Week');

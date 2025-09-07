@@ -1,7 +1,7 @@
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
     <soap:Body>
         <ns1:getAllTerminalsResponse xmlns:ns1="http://washservice.intercard.org/">
-            <return xmlns:ns2="http://washservice.intercard.org/">
+            <return>
                 <list>
                     <automatenNR>1</automatenNR>
                     <expectedFreeTime>0</expectedFreeTime>

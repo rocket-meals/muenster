@@ -1,8 +1,12 @@
 import axios from 'axios';
-import { CheerioAPI, load as cheerioLoad } from 'cheerio';
+import {CheerioAPI, load as cheerioLoad} from 'cheerio';
 
-import { WashingmachineParserInterface, WashingmachinesTypeForParser, WashingmachinesTypeForParserOmmited } from './../WashingmachineParserInterface';
-import { DateHelper } from 'repo-depkit-common';
+import {
+    WashingmachineParserInterface,
+    WashingmachinesTypeForParser,
+    WashingmachinesTypeForParserOmmited
+} from './../WashingmachineParserInterface';
+import {DateHelper} from 'repo-depkit-common';
 
 type IntercardWasher = {
   terminalNr: number;

@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
-import { EnvVariableHelper } from '../EnvVariableHelper';
-import { LLMInterface, LLMMessage, LLMResponse } from './LLMInterface';
+import {EnvVariableHelper} from '../EnvVariableHelper';
+import {LLMInterface, LLMMessage, LLMResponse} from './LLMInterface';
 
 export class OpenAIChat implements LLMInterface {
   protected openai: OpenAI | null = null;

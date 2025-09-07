@@ -1,10 +1,10 @@
 import fetch from 'node-fetch';
-import { CookieJar } from 'cookiejar';
+import {CookieJar} from 'cookiejar';
 import fs from 'fs';
 import FormData from 'form-data';
-import { spawn } from 'child_process';
+import {spawn} from 'child_process';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import {fileURLToPath} from 'url';
 import https from 'https';
 import inquirer from 'inquirer';
 

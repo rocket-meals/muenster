@@ -1,4 +1,4 @@
-import { GestureResponderEvent } from 'react-native-modal';
+import {GestureResponderEvent} from 'react-native-modal';
 
 export interface TimeTableListProps {
 	leftIcon: React.ReactNode;

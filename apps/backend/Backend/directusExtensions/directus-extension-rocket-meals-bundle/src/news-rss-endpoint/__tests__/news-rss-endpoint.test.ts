@@ -1,6 +1,6 @@
-import { describe, it, expect } from '@jest/globals';
-import { RssBuilder } from '../RssBuilder';
-import { DatabaseTypes } from 'repo-depkit-common';
+import {describe, expect, it} from '@jest/globals';
+import {RssBuilder} from '../RssBuilder';
+import {DatabaseTypes} from 'repo-depkit-common';
 
 describe('news rss endpoint', () => {
   it('builds rss xml from items', () => {

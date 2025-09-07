@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Dimensions, Text, TouchableOpacity, View } from 'react-native';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, Dimensions, Text, View} from 'react-native';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useSelector} from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { isWeb } from '@/constants/Constants';
-import { useLanguage } from '@/hooks/useLanguage';
-import { BuildingsHelper } from '@/redux/actions/Buildings/Buildings';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { BusinessHoursHelper } from '@/redux/actions/BusinessHours/BusinessHours';
-import { BusinessHour, HourSheetProps } from './types';
-import { getTextFromTranslation } from '@/helper/resourceHelper';
-import { TranslationKeys } from '@/locales/keys';
-import { RootState } from '@/redux/reducer';
+import {useTheme} from '@/hooks/useTheme';
+import {isWeb} from '@/constants/Constants';
+import {useLanguage} from '@/hooks/useLanguage';
+import {BuildingsHelper} from '@/redux/actions/Buildings/Buildings';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {BusinessHoursHelper} from '@/redux/actions/BusinessHours/BusinessHours';
+import {BusinessHour, HourSheetProps} from './types';
+import {getTextFromTranslation} from '@/helper/resourceHelper';
+import {TranslationKeys} from '@/locales/keys';
+import {RootState} from '@/redux/reducer';
 
 const getSortedBusinessHoursGroups = (groups: { id: string; sort?: number | null }[]) => {
 	return [...groups].sort((a, b) => {

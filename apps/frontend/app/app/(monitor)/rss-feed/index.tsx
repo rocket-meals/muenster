@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocalSearchParams } from 'expo-router';
+import {useLocalSearchParams} from 'expo-router';
 import RssFeed from '@/components/RssFeed';
 
 const RssFeedScreen = () => {

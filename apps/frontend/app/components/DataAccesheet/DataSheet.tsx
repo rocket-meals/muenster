@@ -1,11 +1,11 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import { useTheme } from '@/hooks/useTheme';
-import { DataSheetProps } from './types';
-import { isWeb } from '@/constants/Constants';
-import { useLanguage } from '@/hooks/useLanguage';
+import {useTheme} from '@/hooks/useTheme';
+import {DataSheetProps} from './types';
+import {isWeb} from '@/constants/Constants';
+import {useLanguage} from '@/hooks/useLanguage';
 
 const DataSheet: React.FC<DataSheetProps> = ({ closeSheet, content }) => {
 	const { theme } = useTheme();

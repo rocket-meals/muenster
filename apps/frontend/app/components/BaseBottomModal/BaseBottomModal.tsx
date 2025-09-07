@@ -1,9 +1,17 @@
-import React, { useRef } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, StyleSheet, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, {useRef} from 'react';
+import {
+    Dimensions,
+    NativeScrollEvent,
+    NativeSyntheticEvent,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
-import { AntDesign } from '@expo/vector-icons';
-import { useTheme } from '@/hooks/useTheme';
+import {AntDesign} from '@expo/vector-icons';
+import {useTheme} from '@/hooks/useTheme';
 
 export interface BaseBottomModalProps {
 	visible: boolean;

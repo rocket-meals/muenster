@@ -1,9 +1,12 @@
-import { TimerHelper } from '../helpers/TimerHelper';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { CashregistersTransactionsForParser, CashregisterTransactionParserInterface } from './CashregisterTransactionParserInterface';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { WorkflowRunLogger } from '../workflows-runs-hook/WorkflowRunJobInterface';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {TimerHelper} from '../helpers/TimerHelper';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {
+    CashregistersTransactionsForParser,
+    CashregisterTransactionParserInterface
+} from './CashregisterTransactionParserInterface';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {WorkflowRunLogger} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 
 export class ParseSchedule {
   private readonly workflowRun: DatabaseTypes.WorkflowsRuns;

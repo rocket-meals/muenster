@@ -1,11 +1,30 @@
-import { authentication, AuthenticationClient, AuthenticationConfig, AuthenticationData, AuthenticationStorage, createDirectus, deleteUser, DirectusClient, graphql, GraphqlClient, readMe, readPermissions, readPolicies, ReadProviderOutput, readProviders, readRoles, rest, RestClient, serverInfo, ServerInfoOutput } from '@directus/sdk';
+import {
+    authentication,
+    AuthenticationClient,
+    AuthenticationConfig,
+    AuthenticationData,
+    AuthenticationStorage,
+    createDirectus,
+    deleteUser,
+    DirectusClient,
+    graphql,
+    GraphqlClient,
+    readMe,
+    readPolicies,
+    readProviders,
+    readRoles,
+    rest,
+    RestClient,
+    serverInfo,
+    ServerInfoOutput
+} from '@directus/sdk';
 
-import { DatabaseTypes } from 'repo-depkit-common';
+import {DatabaseTypes} from 'repo-depkit-common';
 
-import { UrlHelper } from '@/constants/UrlHelper';
+import {UrlHelper} from '@/constants/UrlHelper';
 import ServerConfiguration from '@/constants/ServerUrl';
-import { setApiBaseUrl } from '@/redux/actions/ApiService/ApiService';
-import { setBaseURL } from '@/interceptor';
+import {setApiBaseUrl} from '@/redux/actions/ApiService/ApiService';
+import {setBaseURL} from '@/interceptor';
 
 interface ExtendedProperties {
 	project: {

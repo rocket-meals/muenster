@@ -1,14 +1,13 @@
-import { DimensionValue, Linking, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import {DimensionValue, Image, Linking, Text, View} from 'react-native';
+import React, {useState} from 'react';
 import CustomCollapsible from '../CustomCollapsible/CustomCollapsible';
 import RedirectButton from '../RedirectButton';
-import { Image } from 'react-native';
 import styles from './styles';
-import { CustomMarkdownProps } from './types';
-import { myContrastColor } from '@/helper/colorHelper';
-import { useSelector } from 'react-redux';
-import { useTheme } from '@/hooks/useTheme';
-import { RootState } from '@/redux/reducer';
+import {CustomMarkdownProps} from './types';
+import {myContrastColor} from '@/helper/colorHelper';
+import {useSelector} from 'react-redux';
+import {useTheme} from '@/hooks/useTheme';
+import {RootState} from '@/redux/reducer';
 
 const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content, backgroundColor, imageWidth, imageHeight }) => {
 	const { theme } = useTheme();

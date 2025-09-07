@@ -1,5 +1,5 @@
-import { createURL } from 'expo-linking';
-import { EnvHelper } from './EnvHelper';
+import {createURL} from 'expo-linking';
+import {EnvHelper} from './EnvHelper';
 
 // import app.json
 

@@ -1,19 +1,19 @@
-import React, { useRef } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import React, {useRef} from 'react';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { getTextFromTranslation } from '@/helper/resourceHelper';
-import { useMyContrastColor } from '@/helper/colorHelper';
-import { useTheme } from '@/hooks/useTheme';
+import {useDispatch, useSelector} from 'react-redux';
+import {getTextFromTranslation} from '@/helper/resourceHelper';
+import {useMyContrastColor} from '@/helper/colorHelper';
+import {useTheme} from '@/hooks/useTheme';
 import LabelHeader from '@/components/LabelHeader/LabelHeader';
 import MarkingIcon from '@/components/MarkingIcon';
 import MarkingBottomSheet from '@/components/MarkingBottomSheet';
 import type BottomSheet from '@gorhom/bottom-sheet';
-import { TranslationKeys } from '@/locales/keys';
+import {TranslationKeys} from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
-import { useLanguage } from '@/hooks/useLanguage';
-import { SET_MARKING_DETAILS } from '@/redux/Types/types';
-import { RootState } from '@/redux/reducer';
+import {useLanguage} from '@/hooks/useLanguage';
+import {SET_MARKING_DETAILS} from '@/redux/Types/types';
+import {RootState} from '@/redux/reducer';
 
 const MarkingItem = ({ marking, index, onPress }: { marking: any; index: number; onPress: () => void }) => {
 	const { theme } = useTheme();
