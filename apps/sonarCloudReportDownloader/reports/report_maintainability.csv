@@ -206,7 +206,7 @@ Key,Message,Component,Line
 "AZkUSvKWS4VhJojFFAWE","'If' statement should not be the only statement in 'else' block","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/details/index.tsx",369
 "AZkUSvKWS4VhJojFFAWF","Missing ""key"" prop for element in iterator","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/details/index.tsx",485
 "AZkUSvKWS4VhJojFFAWH","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/details/index.tsx",488
-"AZkUSvKIS4VhJojFFAUp","Refactor this function to reduce its Cognitive Complexity from 32 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/index.tsx",65
+"AZkUSvKIS4VhJojFFAUp","Refactor this function to reduce its Cognitive Complexity from 31 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/index.tsx",65
 "AZkUSvKJS4VhJojFFAVm","A fragment with only one child is redundant.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/index.tsx",492
 "AZkUSvKJS4VhJojFFAV1","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/index.tsx",795
 "AZkUSvKJS4VhJojFFAV2","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/index.tsx",796
@@ -909,7 +909,6 @@ Key,Message,Component,Line
 "AZkUSvOxS4VhJojFFAbT","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/settings/index.tsx",255
 "AZkUSvQvS4VhJojFFAdk","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/support-FAQ/index.tsx",26
 "AZkUSvToS4VhJojFFAhL","Use the ""RegExp.exec()"" method instead.","rocket-meals_rocket-meals:apps/frontend/app/app/(auth)/login.tsx",193
-"AZkUSvSGS4VhJojFFAfC","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(monitor)/bigScreen/index.tsx",190
 "AZkUSvSGS4VhJojFFAfD","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(monitor)/bigScreen/index.tsx",191
 "AZkUSvR6S4VhJojFFAe8","Unnecessary use of boolean literals in conditional expression.","rocket-meals_rocket-meals:apps/frontend/app/app/(monitor)/foodPlanDay/index.tsx",295
 "AZkUSvR6S4VhJojFFAe9","Use concise character class syntax '\D' instead of '[^0-9]'.","rocket-meals_rocket-meals:apps/frontend/app/app/(monitor)/foodPlanDay/index.tsx",391
