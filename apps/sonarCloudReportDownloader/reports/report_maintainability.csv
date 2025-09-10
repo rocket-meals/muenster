@@ -1,4 +1,5 @@
 Key,Message,Component,Line
+"AZkzSqb43nmvPY2tpuqI","Remove this unused import of 'ServerAPI'.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",7
 "AZkybLRC_ky8HW5FJkUk","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/Details/index.tsx",49
 "AZkybLLr_ky8HW5FJkUg","Refactor this function to reduce its Cognitive Complexity from 27 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/components/Details/AttributeItem.tsx",18
 "AZkybLLr_ky8HW5FJkUh","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/Details/AttributeItem.tsx",64
@@ -682,13 +683,13 @@ Key,Message,Component,Line
 "AZkUSveRS4VhJojFFCVq","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/constants/IconNames.ts",160
 "AZkUSveRS4VhJojFFCVr","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/constants/IconNames.ts",162
 "AZkUSveRS4VhJojFFCVs","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/constants/IconNames.ts",163
+"AZkUSvT9S4VhJojFFAhS","Redundant double negation.","rocket-meals_rocket-meals:apps/frontend/app/helper/ColorHelper.tsx",19
 "AZkUSvU7S4VhJojFFAiF","Expected a `for-of` loop instead of a `for` loop with this simple iteration.","rocket-meals_rocket-meals:apps/frontend/app/helper/DeviceHelper.ts",85
 "AZkUSvUHS4VhJojFFAhW","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",13
 "AZkUSvUHS4VhJojFFAhX","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",14
 "AZkUSvUHS4VhJojFFAhY","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",15
 "AZkUSvUHS4VhJojFFAhZ","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",16
 "AZkUSvUHS4VhJojFFAhf","Rename class ""iPhoneSystemActionHelper"" to match the regular expression ^[A-Z][a-zA-Z0-9]*$.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",92
-"AZkUSvT9S4VhJojFFAhS","Redundant double negation.","rocket-meals_rocket-meals:apps/frontend/app/helper/colorHelper.tsx",19
 "AZkUSvaJS4VhJojFFCSi","This assertion is unnecessary since it does not change the type of the expression.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/Auth/Auth.ts",170
 "AZkUSvdrS4VhJojFFCTY","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/constants/SettingData.ts",1
 "AZkUSvfzS4VhJojFFCWd","Prefer using nullish coalescing operator (`??=`) instead of an assignment expression, as it is simpler to read.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/form/FormHelper.ts",259
@@ -749,8 +750,8 @@ Key,Message,Component,Line
 "AZkUSvJTS4VhJojFFAUG","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/RssFeed/index.tsx",33
 "AZkUSvMQS4VhJojFFAXK","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/news/index.tsx",88
 "AZkUSva0S4VhJojFFCTB","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/FoodFeedbacks/FoodFeedbacks.ts",91
-"AZkUSvanS4VhJojFFCS6","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",73
-"AZkUSvanS4VhJojFFCS9","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",89
+"AZkUSvanS4VhJojFFCS6","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",66
+"AZkUSvanS4VhJojFFCS9","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",82
 "AZkUSv3FS4VhJojFFCsQ","Make this public static property readonly.","rocket-meals_rocket-meals:packages/common/src/DateHelper.ts",35
 "AZkUSv3FS4VhJojFFCsR","Redundant double negation.","rocket-meals_rocket-meals:packages/common/src/DateHelper.ts",75
 "AZkUSv3FS4VhJojFFCsS","Expected a `for-of` loop instead of a `for` loop with this simple iteration.","rocket-meals_rocket-meals:packages/common/src/DateHelper.ts",94
@@ -1025,6 +1026,8 @@ Key,Message,Component,Line
 "AZkUSvelS4VhJojFFCVx","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/constants/UrlHelper.ts",8
 "AZkUSvelS4VhJojFFCVy","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/constants/UrlHelper.ts",11
 "AZkUSvelS4VhJojFFCVz","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/constants/UrlHelper.ts",26
+"AZkUSvT9S4VhJojFFAhR","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/helper/ColorHelper.tsx",5
+"AZkUSvT9S4VhJojFFAhU","Remove this useless assignment to variable ""isDark"".","rocket-meals_rocket-meals:apps/frontend/app/helper/ColorHelper.tsx",63
 "AZkUSvU7S4VhJojFFAiE","Remove this useless assignment to variable ""widthScaled"".","rocket-meals_rocket-meals:apps/frontend/app/helper/DeviceHelper.ts",79
 "AZkUSvVPS4VhJojFFAiH","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/NotificationHelper.ts",9
 "AZkUSvVPS4VhJojFFAiI","Handle this exception or don't catch it at all.","rocket-meals_rocket-meals:apps/frontend/app/helper/NotificationHelper.ts",98
@@ -1045,8 +1048,6 @@ Key,Message,Component,Line
 "AZkUSvUHS4VhJojFFAhj","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",103
 "AZkUSvUQS4VhJojFFAhl","'any' overrides all other types in this union type.","rocket-meals_rocket-meals:apps/frontend/app/helper/collectionHelper.ts",11
 "AZkUSvUQS4VhJojFFAhm","Member 'collection' is never reassigned; mark it as `readonly`.","rocket-meals_rocket-meals:apps/frontend/app/helper/collectionHelper.ts",30
-"AZkUSvT9S4VhJojFFAhR","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/helper/colorHelper.tsx",5
-"AZkUSvT9S4VhJojFFAhU","Remove this useless assignment to variable ""isDark"".","rocket-meals_rocket-meals:apps/frontend/app/helper/colorHelper.tsx",63
 "AZkUSvVYS4VhJojFFAiO","Redundant double negation.","rocket-meals_rocket-meals:apps/frontend/app/helper/iconHelper.tsx",53
 "AZkUSvfAS4VhJojFFCV4","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/hooks/useLanguage.ts",12
 "AZkUSve2S4VhJojFFCV3","Remove this useless assignment to variable ""systemTheme"".","rocket-meals_rocket-meals:apps/frontend/app/hooks/useTheme.ts",32
@@ -1065,19 +1066,18 @@ Key,Message,Component,Line
 "AZkUSvanS4VhJojFFCSt","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",1
 "AZkUSvanS4VhJojFFCSv","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",5
 "AZkUSvanS4VhJojFFCSw","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",8
-"AZkUSvanS4VhJojFFCSy","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",18
-"AZkUSvanS4VhJojFFCSz","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",22
-"AZkUSvanS4VhJojFFCS0","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",27
-"AZkUSvanS4VhJojFFCS1","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",32
-"AZkUSvanS4VhJojFFCS2","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",35
-"AZkUSvanS4VhJojFFCS3","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",45
-"AZkUSvanS4VhJojFFCS4","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",62
-"AZkUSvanS4VhJojFFCS5","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",68
-"AZkUSvanS4VhJojFFCS7","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",75
-"AZkUSvanS4VhJojFFCS8","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",86
-"AZkUSvanS4VhJojFFCS-","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",103
-"AZkUSvanS4VhJojFFCS_","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",108
-"AZkUSvanS4VhJojFFCTA","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",114
+"AZkUSvanS4VhJojFFCSz","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",15
+"AZkUSvanS4VhJojFFCS0","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",20
+"AZkUSvanS4VhJojFFCS1","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",25
+"AZkUSvanS4VhJojFFCS2","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",28
+"AZkUSvanS4VhJojFFCS3","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",38
+"AZkUSvanS4VhJojFFCS4","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",55
+"AZkUSvanS4VhJojFFCS5","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",61
+"AZkUSvanS4VhJojFFCS7","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",68
+"AZkUSvanS4VhJojFFCS8","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",79
+"AZkUSvanS4VhJojFFCS-","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",96
+"AZkUSvanS4VhJojFFCS_","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",101
+"AZkUSvanS4VhJojFFCTA","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",107
 "AZkUSvblS4VhJojFFCTG","Default parameters should be last.","rocket-meals_rocket-meals:apps/frontend/app/redux/reducer/FoodAttributes.ts",9
 "AZkUSvcJS4VhJojFFCTL","Default parameters should be last.","rocket-meals_rocket-meals:apps/frontend/app/redux/reducer/apartmentReducer.ts",10
 "AZkUSvc0S4VhJojFFCTQ","Default parameters should be last.","rocket-meals_rocket-meals:apps/frontend/app/redux/reducer/appElementsReducer.ts",7

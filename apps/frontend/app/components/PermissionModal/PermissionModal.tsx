@@ -4,7 +4,7 @@ import BaseModal from '@/components/BaseModal';
 import { styles } from './styles';
 import { PermissionModalProps } from './types';
 import { useRouter } from 'expo-router';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useTheme } from '@/hooks/useTheme';
 import { TranslationKeys } from '@/locales/keys';
