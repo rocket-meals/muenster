@@ -239,7 +239,7 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 															}
 															style={{
 																...styles.categoryLogo,
-                                                                                                                               backgroundColor: mark?.background_color,
+																backgroundColor: mark?.background_color,
 																borderRadius: mark?.background_color ? 8 : mark.hide_border ? 5 : 0,
 															}}
 														/>
