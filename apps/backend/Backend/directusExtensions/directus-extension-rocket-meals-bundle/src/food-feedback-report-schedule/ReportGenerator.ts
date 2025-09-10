@@ -97,7 +97,7 @@ export class ReportGenerator {
     let canteen_alias_list = [];
     for (let canteenKey in canteenEntries) {
       let canteen = canteenEntries[canteenKey];
-      if (!!canteen && canteen.alias) {
+      if (canteen && Boolean(canteen.alias)) {
         canteen_alias_list.push(canteen.alias);
       }
     }
@@ -460,7 +460,7 @@ export class ReportGenerator {
       }
 
       let status_rating = ReportStatusTrafficLightValues.YELLOW;
-      if (food?.rating_average && foodAverageRating) {
+      if (food?.rating_average != null && foodAverageRating != null) {
         const epsilon = FoodRatingCalculator.MAX_RATING_VALUE * ReportGenerator.THRESHOLD_PERCENTAGE;
         if (food.rating_average > foodAverageRating + epsilon) {
           status_rating = ReportStatusTrafficLightValues.GREEN;
@@ -611,7 +611,7 @@ export class ReportGenerator {
       },
     ];
 
-    if (startDate && endDate) {
+    if (startDate != null && endDate != null) {
       let filterDateUpdated = ReportGenerator.getFilterDateUpdatedForReportFeedbackPeriodDays(startDate, endDate);
       if (filterDateUpdated) {
         filter.push(...filterDateUpdated);

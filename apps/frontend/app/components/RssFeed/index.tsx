@@ -115,8 +115,14 @@ const RssFeed: React.FC<RssFeedProps> = ({ urls, switchIntervalInSeconds }) => {
 
 	return (
 		<ScrollView style={[styles.container, { backgroundColor: theme.screen.background }]} contentContainerStyle={styles.contentContainer}>
-			<TouchableOpacity onPress={() => currentItem.link && Linking.openURL(currentItem.link)}>
-				<Text style={[styles.title, { color: theme.screen.text }]}>{currentItem.title}</Text>
+                        <TouchableOpacity
+                                onPress={() => {
+                                        if (currentItem.link) {
+                                                Linking.openURL(currentItem.link);
+                                        }
+                                }}
+                        >
+                                <Text style={[styles.title, { color: theme.screen.text }]}>{currentItem.title}</Text>
 				{currentItem.image && <Image source={{ uri: currentItem.image }} style={styles.image} resizeMode="cover" />}
 				{currentItem.content && <Text style={[styles.body, { color: theme.screen.text }]}>{currentItem.content}</Text>}
 			</TouchableOpacity>
