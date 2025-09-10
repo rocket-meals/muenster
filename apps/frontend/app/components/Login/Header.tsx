@@ -23,6 +23,7 @@ const LoginHeader = () => {
 	const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
 	const [selectedLanguage, setSelectedLanguage] = useState<string>('');
 	const { primaryColor, serverInfo } = useSelector((state: RootState) => state.settings);
+	const deviceLocale: any = useDeviceLocaleCodesWithoutRegionCode();
 
 	function useDeviceLocaleCodesWithoutRegionCode(): string[] {
 		let localeCodes: string[] = [];
@@ -52,7 +53,6 @@ const LoginHeader = () => {
 
 	useEffect(() => {
 		if (!language) {
-			const deviceLocale: any = useDeviceLocaleCodesWithoutRegionCode();
 			const langCode = deviceLocale[0]?.split('-')[0];
 			setLanguageMode(langCode);
 			if (langCode === 'ar') {
