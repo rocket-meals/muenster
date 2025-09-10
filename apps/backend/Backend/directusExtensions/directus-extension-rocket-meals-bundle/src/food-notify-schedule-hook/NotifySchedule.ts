@@ -121,12 +121,13 @@ export class NotifySchedule {
           for (let device of profileDevices) {
             await this.logger.appendLog('--- Notify device: ' + device.id + ' about food: ' + food_id);
             // Step 4: Send the notification to the device, where pushTokenObj is not null
-            if (device.pushTokenObj !== null) {
-              // Step 5: Send the notification to the device
-              // TODO: Es kann mehrere Devices mit dem gleichen pushToken geben. Wir sollten nur einmal senden
-            } else {
-              //console.log("Device has no push token");
+            if (device.pushTokenObj === null) {
+              // Device has no push token
+              continue;
             }
+
+            // Step 5: Send the notification to the device
+            // TODO: Es kann mehrere Devices mit dem gleichen pushToken geben. Wir sollten nur einmal senden
           }
         }
       }
