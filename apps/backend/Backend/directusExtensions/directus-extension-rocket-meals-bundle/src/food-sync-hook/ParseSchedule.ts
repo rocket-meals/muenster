@@ -757,7 +757,7 @@ export class ParseSchedule {
     }
 
     const foodoffersToCreate: Partial<DatabaseTypes.Foodoffers>[] = [];
-    foodofferListForParser.forEach(async (foodofferForParser, index) => {
+    for (const [index, foodofferForParser] of foodofferListForParser.entries()) {
       const canteen = dictCanteenExternalIdentifierToCanteen[foodofferForParser.canteen_external_identifier];
       const canteenFound = !!canteen;
 
@@ -789,7 +789,7 @@ export class ParseSchedule {
       } else {
         await this.logger.appendLog('Error Foodoffer ' + (index + 1) + ' / ' + amountOfRawMealOffers + ' - canteenFound: ' + canteenFound + ' - markingsAllFound: ' + markingsAllFound + ' - foodFound: ' + foodFound);
       }
-    });
+    }
 
     const batchSize = 10;
 
