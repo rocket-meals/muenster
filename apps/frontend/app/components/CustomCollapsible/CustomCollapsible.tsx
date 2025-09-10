@@ -6,7 +6,7 @@ import Collapsible from 'react-native-collapsible';
 import { useTheme } from '@/hooks/useTheme';
 import { CustomCollapsibleProps } from './types';
 import { useSelector } from 'react-redux';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { RootState } from '@/redux/reducer';
 
 const CustomCollapsible: React.FC<CustomCollapsibleProps> = ({ headerText, children, customColor = '' }) => {

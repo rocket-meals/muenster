@@ -14,7 +14,7 @@ import { DELETE_FOOD_FEEDBACK_LOCAL, UPDATE_FOOD_FEEDBACK_LOCAL } from '@/redux/
 import PermissionModal from '../PermissionModal/PermissionModal';
 import { createSelector } from 'reselect';
 import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { TranslationKeys } from '@/locales/keys';
 import { FeedbacksProps } from './types';

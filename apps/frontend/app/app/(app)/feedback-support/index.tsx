@@ -18,7 +18,7 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 
 const FeedbackScreen = () => {
 	useSetPageTitle(TranslationKeys.feedback_and_support);

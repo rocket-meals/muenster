@@ -6,7 +6,7 @@ import { isWeb } from '@/constants/Constants';
 import { useSelector } from 'react-redux';
 import { useLanguage } from '@/hooks/useLanguage';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 // Define the type for the theme prop
 type Theme = {
 	id: string;

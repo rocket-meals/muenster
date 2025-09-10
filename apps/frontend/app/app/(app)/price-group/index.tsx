@@ -17,7 +17,7 @@ import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { PriceGroupKey } from '@/app/(app)/settings/types';
 import { UserHelper } from '@/helper/UserHelper';
 

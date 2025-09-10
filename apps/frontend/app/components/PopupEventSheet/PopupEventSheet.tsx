@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { PopupEventSheetProps } from './types';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import CustomCollapsible from '../CustomCollapsible/CustomCollapsible';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { getTextFromTranslation, getTitleFromTranslation } from '@/helper/resourceHelper';
 import RedirectButton from '../RedirectButton';
 import ProjectButton from '../ProjectButton';

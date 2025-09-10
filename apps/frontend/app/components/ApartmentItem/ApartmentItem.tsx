@@ -9,7 +9,7 @@ import { router } from 'expo-router';
 import { getDistanceUnit } from '@/helper/distanceHelper';
 import { BuildingItemProps } from './types';
 import styles from './styles';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';

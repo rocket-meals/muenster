@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from '
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { SettingsListProps } from './types';
 
 const padding = 0; // px used for additional padding and border radius

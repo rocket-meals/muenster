@@ -8,7 +8,7 @@ import { TranslationKeys } from '@/locales/keys';
 import MyMarkdown from '@/components/MyMarkdown/MyMarkdown';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { ChatMessagesHelper } from '@/redux/actions/Chats/ChatMessages';
 import { useLanguage } from '@/hooks/useLanguage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';

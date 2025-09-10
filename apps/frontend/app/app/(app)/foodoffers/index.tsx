@@ -39,7 +39,7 @@ import { getAppElementTranslation } from '@/helper/resourceHelper';
 import noFoodOffersFound from '@/assets/animations/noFoodOffersFound.json';
 import LottieView from 'lottie-react-native';
 import { replaceLottieColors } from '@/helper/animationHelper';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 
 import useSetPageTitle from '@/hooks/useSetPageTitle';

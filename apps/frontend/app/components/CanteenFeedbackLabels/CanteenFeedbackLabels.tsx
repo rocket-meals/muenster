@@ -14,7 +14,7 @@ import PermissionModal from '../PermissionModal/PermissionModal';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import { CanteenFeedbackLabelEntryHelper } from '@/redux/actions/CanteenFeedbackLabelEntries/CanteenFeedbackLabelEntries';
 import { isSameDay } from 'date-fns';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';

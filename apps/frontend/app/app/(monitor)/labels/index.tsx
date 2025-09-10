@@ -3,7 +3,7 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
-import { useMyContrastColor } from '@/helper/colorHelper';
+import { useMyContrastColor } from '@/helper/ColorHelper';
 import { useTheme } from '@/hooks/useTheme';
 import LabelHeader from '@/components/LabelHeader/LabelHeader';
 import MarkingIcon from '@/components/MarkingIcon';

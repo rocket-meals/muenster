@@ -8,7 +8,7 @@ import { TranslationKeys } from '@/locales/keys';
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { isInExpoGo } from '@/helper/DeviceRuntimeHelper';
 
 interface ExpoUpdateCheckerProps {

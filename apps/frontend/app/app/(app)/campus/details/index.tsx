@@ -7,7 +7,7 @@ import Information from '@/components/Information';
 import BuildingDescription from '@/components/BuildingDescription';
 import { useLocalSearchParams } from 'expo-router';
 import { useSelector } from 'react-redux';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';

@@ -12,7 +12,7 @@ import { SET_APARTMENTS_SORTING, SET_CAMPUSES_SORTING } from '@/redux/Types/type
 import { ApartmentSortOption, BuildingSortOption, CampusSortOption } from 'repo-depkit-common';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 

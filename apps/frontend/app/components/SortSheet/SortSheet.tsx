@@ -12,7 +12,7 @@ import { FoodSortOption, intelligentSort, sortByEatingHabits, sortByFoodCategory
 import { SET_SELECTED_CANTEEN_FOOD_OFFERS, SET_SORTING } from '@/redux/Types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 

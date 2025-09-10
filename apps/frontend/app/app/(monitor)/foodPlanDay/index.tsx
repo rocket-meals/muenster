@@ -15,7 +15,7 @@ import { SET_DAY_PLAN } from '@/redux/Types/types';
 import ManagementFoodCategorySheet from '@/components/ManagementFoodCategorySheet/ManagementFoodCategorySheet';
 import { CanteenProps } from '@/components/CanteenSelectionSheet/types';
 import { Switch } from '@gluestack-ui/themed';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';

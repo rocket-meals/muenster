@@ -4,13 +4,13 @@ import BaseModal from '@/components/BaseModal';
 import { styles } from './styles';
 import { PermissionModalProps } from './types';
 import { useRouter } from 'expo-router';
-import { useSelector } from 'react-redux';
-import { useLogoutCallback } from '@/redux/actions/User/User';
+import {useDispatch, useSelector} from 'react-redux';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useTheme } from '@/hooks/useTheme';
 import { TranslationKeys } from '@/locales/keys';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { RootState } from '@/redux/reducer';
+import { performLogout } from '@/helper/logoutHelper';
 
 const PermissionModal: React.FC<PermissionModalProps> = ({ isVisible, setIsVisible }) => {
 	const { theme } = useTheme();
@@ -18,11 +18,10 @@ const PermissionModal: React.FC<PermissionModalProps> = ({ isVisible, setIsVisib
 	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 	const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	const router = useRouter();
-	const onLogout = useLogoutCallback();
+	const dispatch = useDispatch();
 
 	const handleLogout = () => {
-		onLogout();
-		router.replace('/(auth)/login');
+		performLogout(dispatch, router);
 	};
 
 	return (

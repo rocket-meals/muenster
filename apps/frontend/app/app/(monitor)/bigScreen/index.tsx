@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchFoodsByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
 import { getImageUrl, showDayPlanPrice, showFormatedPrice } from '@/constants/HelperFunctions';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useLocalSearchParams } from 'expo-router';
 import NetInfo from '@react-native-community/netinfo';

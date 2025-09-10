@@ -8,7 +8,7 @@ import { FoodCategoriesHelper } from '@/redux/actions/FoodCategories/FoodCategor
 import { fetchFoodsByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
 import { getTextFromTranslation } from '@/helper/resourceHelper';
 import { getImageUrl, showDayPlanPrice, showFormatedPrice } from '@/constants/HelperFunctions';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { useLocalSearchParams } from 'expo-router';
 import moment from 'moment';
 import { useLanguage } from '@/hooks/useLanguage';

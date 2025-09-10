@@ -15,7 +15,7 @@ import { courseTimetableDescriptionEmpty } from '@/constants/translationConstant
 import RedirectButton from '@/components/RedirectButton';
 import useToast from '@/hooks/useToast';
 import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';

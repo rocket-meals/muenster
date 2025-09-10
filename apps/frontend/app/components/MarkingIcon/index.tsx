@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@/hooks/useTheme';
-import { useMyContrastColor } from '@/helper/colorHelper';
+import { useMyContrastColor } from '@/helper/ColorHelper';
 import { iconLibraries } from '../Drawer/CustomDrawerContent';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import styles from './styles';

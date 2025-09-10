@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useRouter } from 'expo-router';
 import { SET_WEEK_PLAN } from '@/redux/Types/types';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 

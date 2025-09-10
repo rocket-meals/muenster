@@ -11,7 +11,7 @@ import styles from './styles';
 import { LanguageSheetProps } from './types';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import MyImage from '@/components/MyImage';
 
 const LanguageSheet: React.FC<LanguageSheetProps> = ({ closeSheet, selectedLanguage, onSelect }) => {

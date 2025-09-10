@@ -7,7 +7,7 @@ import RenderHtml, { CustomBlockRenderer, CustomMixedRenderer, CustomTextualRend
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import ProjectButton from '../ProjectButton';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 
 export interface MyMarkdownProps {
 	content: string;

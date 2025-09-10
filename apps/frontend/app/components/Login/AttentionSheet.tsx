@@ -13,7 +13,7 @@ import animationJson from '@/assets/animations/astronaut-computer.json';
 import { useFocusEffect } from 'expo-router';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 
 const AttentionSheet: React.FC<AttentionSheetProps> = ({ closeSheet, handleLogin, isBottomSheetVisible }) => {
 	const { translate } = useLanguage();

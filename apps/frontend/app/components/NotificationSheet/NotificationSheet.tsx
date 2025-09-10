@@ -13,7 +13,7 @@ import animation from '@/assets/animations/notificationBell.json';
 import LottieView from 'lottie-react-native';
 import { useFocusEffect } from 'expo-router';
 import { replaceLottieColors } from '@/helper/animationHelper';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';

@@ -14,7 +14,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_PRIVACY_POLICY_DATE } from '@/redux/Types/types';
 import { format } from 'date-fns';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 

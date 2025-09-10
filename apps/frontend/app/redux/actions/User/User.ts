@@ -12,13 +12,6 @@ import { ServerAPI } from '@/redux/actions/Auth/Auth';
 
 export type CachedUserInformation = DatabaseTypes.DirectusUsers | undefined;
 
-export function useLogoutCallback(): () => void {
-	return async () => {
-		ServerAPI.client = null;
-		// await SyncState.getInstance().reset();
-	};
-}
-
 // export function useAccessToken(): string | null | undefined {
 // 	const [authData, setAuthData] = useSyncState<AuthenticationData>(PersistentSecureStore.authentificationData)
 // 	return authData?.access_token

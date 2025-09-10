@@ -9,7 +9,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { SET_SELECTED_DATE } from '@/redux/Types/types';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';

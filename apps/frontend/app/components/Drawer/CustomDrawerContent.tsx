@@ -16,7 +16,7 @@ import { getTitleFromTranslation } from '@/helper/resourceHelper';
 import { WikisHelper } from '@/redux/actions/Wikis/Wikis';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { IconProps } from '@expo/vector-icons/build/createIconSet';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 import { ServerInfoHelper } from '@/helper/ServerInfoHelper';

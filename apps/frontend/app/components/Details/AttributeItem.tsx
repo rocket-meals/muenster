@@ -8,7 +8,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { iconLibraries } from '../Drawer/CustomDrawerContent';
 import { formatFoodInformationValue, getImageUrl } from '@/constants/HelperFunctions';
 import { getFoodAttributesTranslation } from '@/helper/resourceHelper';
-import { useMyContrastColor } from '@/helper/colorHelper';
+import { useMyContrastColor } from '@/helper/ColorHelper';
 import styles from './styles';
 
 interface AttributeItemProps {

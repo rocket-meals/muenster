@@ -15,7 +15,7 @@ import { CanteenProps } from '@/components/CanteenSelectionSheet/types';
 import CustomCollapsible from '@/components/CustomCollapsible/CustomCollapsible';
 import { isWeb } from '@/constants/Constants';
 import { getFoodAttributesTranslation } from '@/helper/resourceHelper';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';

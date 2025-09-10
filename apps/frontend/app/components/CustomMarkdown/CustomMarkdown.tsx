@@ -4,7 +4,7 @@ import CustomCollapsible from '../CustomCollapsible/CustomCollapsible';
 import RedirectButton from '../RedirectButton';
 import styles from './styles';
 import { CustomMarkdownProps } from './types';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@/hooks/useTheme';
 import { RootState } from '@/redux/reducer';

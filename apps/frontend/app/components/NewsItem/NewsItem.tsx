@@ -8,7 +8,7 @@ import { format, parseISO } from 'date-fns';
 import { getNewsTranslationByLanguageCode } from '@/helper/resourceHelper';
 import useToast from '@/hooks/useToast';
 import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';

@@ -2,7 +2,7 @@ import React from 'react';
 import { Appearance, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { darkTheme, lightTheme } from '@/styles/themes';
 import { ProjectButtonProps } from './types';
 

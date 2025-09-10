@@ -5,7 +5,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { getImageUrl, showDayPlanPrice, showFormatedPrice } from '@/constants/HelperFunctions';
 import { getFoodAttributesTranslation, getTextFromTranslation } from '@/helper/resourceHelper';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import styles from './styles';
 import { fetchFoodsByCanteen } from '@/redux/actions/FoodOffers/FoodOffers';
 import { useFocusEffect, useLocalSearchParams } from 'expo-router';

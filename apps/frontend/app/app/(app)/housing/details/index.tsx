@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { getImageUrl } from '@/constants/HelperFunctions';
 import WashingMachines from '@/components/WashingMachines';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { TranslationKeys } from '@/locales/keys';

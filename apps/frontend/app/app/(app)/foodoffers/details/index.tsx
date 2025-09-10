@@ -27,7 +27,7 @@ import { getCurrentDevice, getDeviceIdentifier, getDeviceInformationWithoutPushT
 import { ProfileHelper } from '@/redux/actions/Profile/Profile';
 import { createSelector } from 'reselect';
 import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';

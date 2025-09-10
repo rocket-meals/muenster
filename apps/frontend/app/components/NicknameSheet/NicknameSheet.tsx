@@ -8,7 +8,7 @@ import styles from './styles';
 import { NicknameSheetProps } from './types';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 
 const NicknameSheet: React.FC<NicknameSheetProps> = ({ closeSheet, value, onChange, onSave, disableSave }) => {
 	const { theme } = useTheme();

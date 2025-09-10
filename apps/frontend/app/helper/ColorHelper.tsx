@@ -45,10 +45,10 @@ export function useLighterOrDarkerColorForSelection(color: string | undefined): 
 }
 
 export function useColorForSelectionWithOption(color: string | undefined, lightenUpColor: boolean): string {
-	return getLighterOrDarkerColorByContrastWithOptions(color, ContrastThresholdSelectedItems.MaternaLandNiedersachsen, lightenUpColor);
+	return useLighterOrDarkerColorByContrastWithOptions(color, ContrastThresholdSelectedItems.MaternaLandNiedersachsen, lightenUpColor);
 }
 
-function getLighterOrDarkerColorByContrastWithOptions(color: string | undefined, contrastRatio: number, lightenUpColor: boolean): string {
+function useLighterOrDarkerColorByContrastWithOptions(color: string | undefined, contrastRatio: number, lightenUpColor: boolean): string {
 	const start = performance.now();
 
 	const dependencyKey = '' + color + contrastRatio;

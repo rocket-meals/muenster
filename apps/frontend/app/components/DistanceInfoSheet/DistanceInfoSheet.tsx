@@ -3,7 +3,7 @@ import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { Text, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { useSelector } from 'react-redux';
 import { TranslationKeys } from '@/locales/keys';
 import type { RootState } from '@/redux/reducer';

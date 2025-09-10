@@ -5,7 +5,7 @@ import { isWeb } from '@/constants/Constants';
 import { excerpt, getImageUrl } from '@/constants/HelperFunctions';
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import styles from './styles';
 import { BuildingItemProps } from './types';
 import { router } from 'expo-router';

@@ -4,7 +4,7 @@ import styles from './styles';
 import { FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
 import { RedirectButtonProps } from './types';
 import usePlatformHelper from '@/helper/platformHelper';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';

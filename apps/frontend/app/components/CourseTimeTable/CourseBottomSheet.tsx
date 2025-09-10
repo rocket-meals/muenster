@@ -16,7 +16,7 @@ import TimeTableData from '@/constants/TimeTable';
 import useToast from '@/hooks/useToast';
 import { isBefore, isEqual, parse } from 'date-fns';
 import { useLanguage } from '@/hooks/useLanguage';
-import { myContrastColor } from '@/helper/colorHelper';
+import { myContrastColor } from '@/helper/ColorHelper';
 import { TranslationKeys } from '@/locales/keys';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { RootState } from '@/redux/reducer';
