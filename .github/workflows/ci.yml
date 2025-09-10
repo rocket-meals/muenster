@@ -138,6 +138,18 @@ jobs:
           node-version: "22.16.0"
       - name: "🩺 Run data-clumps-doctor"
         uses: ./.github/actions/analyse-data-clumps
+      - name: "📁 Prepare badge directory"
+        run: mkdir -p reports/data-clumps-doctor/badges
+      - name: "📊 Extract data clumps count"
+        id: data-clumps-count
+        run: echo "count=$(jq '.report_summary.amount_data_clumps' reports/data-clumps-doctor/data-clumps.json)" >> "$GITHUB_OUTPUT"
+      - name: "🏷️ Generate data clumps badge"
+        uses: emibcn/badge-action@v2.0.2
+        with:
+          label: "data clumps"
+          status: ${{ steps.data-clumps-count.outputs.count }}
+          color: "blue,555,daf"
+          path: "reports/data-clumps-doctor/badges/data-clumps.svg"
       - name: "💾 Commit reports"
         run: |
           git config user.name "github-actions"
