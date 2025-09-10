@@ -74,7 +74,7 @@ const Index = () => {
 								let IconComponent: any = null;
 								let iconName = '';
 								if (category?.icon_expo) {
-									const [library, name] = category?.icon_expo?.split(':');
+									const [library, name] = category?.icon_expo?.split(':') ?? [];
 									if (iconLibraries[library]) {
 										IconComponent = iconLibraries[library];
 										iconName = name;

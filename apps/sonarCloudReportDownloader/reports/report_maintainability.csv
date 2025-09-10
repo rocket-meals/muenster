@@ -93,9 +93,9 @@ Key,Message,Component,Line
 "AZkUSvotS4VhJojFFCZj","Refactor this function to reduce its Cognitive Complexity from 19 to the 15 allowed.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportGenerator.ts",231
 "AZkUSvotS4VhJojFFCZn","Refactor this function to reduce its Cognitive Complexity from 34 to the 15 allowed.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportGenerator.ts",385
 "AZkUSvn1S4VhJojFFCY2","Refactor this function to reduce its Cognitive Complexity from 30 to the 15 allowed.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportSchedule.ts",334
-"AZkUSvn1S4VhJojFFCY4","This assertion is unnecessary since it does not change the type of the expression.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportSchedule.ts",466
-"AZkUSvn1S4VhJojFFCY5","This assertion is unnecessary since it does not change the type of the expression.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportSchedule.ts",467
-"AZkUSvn1S4VhJojFFCY6","This assertion is unnecessary since it does not change the type of the expression.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportSchedule.ts",468
+"AZkUSvn1S4VhJojFFCY4","This assertion is unnecessary since it does not change the type of the expression.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportSchedule.ts",465
+"AZkUSvn1S4VhJojFFCY5","This assertion is unnecessary since it does not change the type of the expression.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportSchedule.ts",466
+"AZkUSvn1S4VhJojFFCY6","This assertion is unnecessary since it does not change the type of the expression.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportSchedule.ts",467
 "AZkUSvffS4VhJojFFCWA","Refactor this function to reduce its Cognitive Complexity from 67 to the 15 allowed.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-notify-schedule-hook/NotifySchedule.ts",20
 "AZkUSvffS4VhJojFFCWL","Remove this useless assignment to variable ""pushNotification"".","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-notify-schedule-hook/NotifySchedule.ts",216
 "AZkUSvscS4VhJojFFCds","Replace this union type with a type alias.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-sync-hook/CSVExportParser.ts",6
@@ -281,9 +281,9 @@ Key,Message,Component,Line
 "AZkUSvC_S4VhJojFFARr","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseBottomSheet.tsx",290
 "AZkUSvC_S4VhJojFFARs","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseBottomSheet.tsx",296
 "AZkUSvC_S4VhJojFFARu","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseBottomSheet.tsx",321
-"AZkUSvC0S4VhJojFFARg","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",241
-"AZkUSvC0S4VhJojFFARh","Missing ""key"" prop for element in iterator","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",255
-"AZkUSvC0S4VhJojFFARj","Refactor this code to not nest functions more than 4 levels deep.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",270
+"AZkUSvC0S4VhJojFFARg","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",242
+"AZkUSvC0S4VhJojFFARh","Missing ""key"" prop for element in iterator","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",256
+"AZkUSvC0S4VhJojFFARj","Refactor this code to not nest functions more than 4 levels deep.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",271
 "AZkUSvCCS4VhJojFFARH","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",122
 "AZkUSu8DS4VhJojFFAO3","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomStackHeader/CustomStackHeader.tsx",98
 "AZkUSvHUS4VhJojFFATX","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/DataAcces/DataAccess.tsx",24
@@ -518,7 +518,7 @@ Key,Message,Component,Line
 "AZkUSu_jS4VhJojFFAP7","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/CanteenFeedbackLabels/CanteenFeedbackLabels.tsx",129
 "AZkUSu_jS4VhJojFFAP8","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/CanteenFeedbackLabels/CanteenFeedbackLabels.tsx",154
 "AZkUSu66S4VhJojFFAOf","Move this array ""sort"" operation to a separate statement or replace it with ""toSorted"".","rocket-meals_rocket-meals:apps/frontend/app/components/CanteenSelectionSheet/CanteenSelectionSheet.tsx",62
-"AZkUSvC0S4VhJojFFARi","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",257
+"AZkUSvC0S4VhJojFFARi","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",258
 "AZkUSvCCS4VhJojFFARG","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",107
 "AZkUSvErS4VhJojFFASb","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMenuHeader/CustomMenuHeader.tsx",44
 "AZkUSu8DS4VhJojFFAO2","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomStackHeader/CustomStackHeader.tsx",85
@@ -833,7 +833,7 @@ Key,Message,Component,Line
 "AZkUSvfLS4VhJojFFCV5","Duplicate enum member value May.","rocket-meals_rocket-meals:apps/frontend/app/locales/keys.ts",380
 "AZkUSu_GS4VhJojFFAPv","Replace this ""Boolean"" wrapper object with primitive type ""boolean"".","rocket-meals_rocket-meals:apps/frontend/app/components/Login/types.ts",18
 "AZkUSvKJS4VhJojFFAVD","useState call is not destructured into value + setter pair","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/index.tsx",92
-"AZkUSvC0S4VhJojFFARc","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",202
+"AZkUSvC0S4VhJojFFARc","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",203
 "AZkUSvADS4VhJojFFAQO","Remove this useless assignment to variable ""translate"".","rocket-meals_rocket-meals:apps/frontend/app/components/ListWeekHeader/ListWeekHeader.tsx",13
 "AZkUSu-IS4VhJojFFAPt","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/Login/Form.tsx",111
 "AZkUSvc9S4VhJojFFCTR","Default parameters should be last.","rocket-meals_rocket-meals:apps/frontend/app/redux/reducer/lastUpdatedReducer.ts",7
@@ -945,9 +945,9 @@ Key,Message,Component,Line
 "AZkUSvC_S4VhJojFFARp","Use concise character class syntax '\d' instead of '[0-9]'.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseBottomSheet.tsx",76
 "AZkUSvC_S4VhJojFFARq","Use concise character class syntax '\d' instead of '[0-9]'.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseBottomSheet.tsx",76
 "AZkUSvC_S4VhJojFFARt","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseBottomSheet.tsx",308
-"AZkUSvC0S4VhJojFFARd","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",205
-"AZkUSvC0S4VhJojFFARe","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",227
-"AZkUSvC0S4VhJojFFARf","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",237
+"AZkUSvC0S4VhJojFFARd","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",206
+"AZkUSvC0S4VhJojFFARe","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",228
+"AZkUSvC0S4VhJojFFARf","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/CourseTimetable.tsx",238
 "AZkUSvDJS4VhJojFFARv","'any' overrides all other types in this union type.","rocket-meals_rocket-meals:apps/frontend/app/components/CourseTimeTable/types.ts",15
 "AZkUSu8MS4VhJojFFAO7","Use concise character class syntax '\D' instead of '[^0-9]'.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomDateInput/CustomDateInput.tsx",28
 "AZkUSvHUS4VhJojFFATW","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/DataAcces/DataAccess.tsx",18

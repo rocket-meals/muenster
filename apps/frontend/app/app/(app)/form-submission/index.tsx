@@ -609,7 +609,7 @@ const Index = () => {
 									let IconComponent: any = null;
 									let iconName = '';
 									if (answer?.form_field?.icon_expo) {
-										const [library, name] = answer?.form_field?.icon_expo?.split(':');
+										const [library, name] = answer?.form_field?.icon_expo?.split(':') ?? [];
 										if (iconLibraries[library]) {
 											IconComponent = iconLibraries[library];
 											iconName = name;
