@@ -395,7 +395,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 					}}
 					contentContainerStyle={{
 						...styles.compusContentContainer,
-                                                paddingHorizontal: 5,
+						paddingHorizontal: 5,
 					}}
 					refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
 				>
@@ -409,7 +409,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 					>
 						<TextInput style={[styles.searchInput, { color: theme.screen.text }]} cursorColor={theme.screen.text} placeholderTextColor={theme.screen.placeholder} onChangeText={setQuery} value={query} placeholder={translate(TranslationKeys.search_apartment_here)} />
 					</View>
-                                        <View style={{ ...styles.campusContainer, gap: 10 }}>
+					<View style={{ ...styles.campusContainer, gap: 10 }}>
 						{loading ? (
 							<View
 								style={{

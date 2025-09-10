@@ -187,7 +187,7 @@ const Index = () => {
 
 	const updateLogoStyle = useCallback(() => {
 		setLogoStyle({
-                        width: width < 600 ? 150 : 300,
+			width: width < 600 ? 150 : 300,
 			height: width < 600 ? 70 : width > 600 ? 75 : 70,
 			marginRight: width > 600 ? 20 : 10,
 		});

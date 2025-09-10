@@ -226,7 +226,7 @@ const Feedbacks: React.FC<FeedbacksProps> = ({ foodDetails, offerId, canteenId }
 						style={{
 							...styles.commentButton,
 							width: resp ? 220 : '90%',
-                                                        borderRadius: 50,
+							borderRadius: 50,
 							backgroundColor: foods_area_color,
 						}}
 						onPress={() => {

@@ -133,7 +133,7 @@ const Index = () => {
 					key: 'day',
 					title: 'Day',
 					isFixed: true,
-                                        flex: dayFlexDesign,
+					flex: dayFlexDesign,
 				},
 			]; // <-- Added flex for day column
 		}
@@ -192,7 +192,7 @@ const Index = () => {
 				key: 'day',
 				title: 'Day',
 				isFixed: true,
-                                flex: dayFlexDynamic,
+				flex: dayFlexDynamic,
 			}, // <-- Ensure day column has its fixed flex
 			// Category columns with their dynamically calculated flex
 			...categoryArray.map(({ key, title, flex }) => ({
@@ -389,11 +389,11 @@ const Index = () => {
 						style={{ flex: 1 }}
 						contentContainerStyle={[
 							styles.container,
-                                                        {
-                                                                width: '100%',
-                                                                backgroundColor: theme.rowBg,
-                                                                paddingBottom: 10,
-                                                        },
+							{
+								width: '100%',
+								backgroundColor: theme.rowBg,
+								paddingBottom: 10,
+							},
 						]}
 					>
 						<View ref={printRef}>
