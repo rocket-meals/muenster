@@ -133,7 +133,7 @@ const Index = () => {
 					key: 'day',
 					title: 'Day',
 					isFixed: true,
-					flex: isMobile ? dayFlexDesign : dayFlexDesign,
+                                        flex: dayFlexDesign,
 				},
 			]; // <-- Added flex for day column
 		}
@@ -192,7 +192,7 @@ const Index = () => {
 				key: 'day',
 				title: 'Day',
 				isFixed: true,
-				flex: isMobile ? dayFlexDynamic : dayFlexDynamic,
+                                flex: dayFlexDynamic,
 			}, // <-- Ensure day column has its fixed flex
 			// Category columns with their dynamically calculated flex
 			...categoryArray.map(({ key, title, flex }) => ({
@@ -389,11 +389,11 @@ const Index = () => {
 						style={{ flex: 1 }}
 						contentContainerStyle={[
 							styles.container,
-							{
-								width: isMobile ? '100%' : '100%',
-								backgroundColor: theme.rowBg,
-								paddingBottom: 10,
-							},
+                                                        {
+                                                                width: '100%',
+                                                                backgroundColor: theme.rowBg,
+                                                                paddingBottom: 10,
+                                                        },
 						]}
 					>
 						<View ref={printRef}>
@@ -580,7 +580,7 @@ const Index = () => {
 																		style={[
 																			styles.itemText,
 																			{
-																				fontSize: isMobile ? fontSize : fontSize,
+																				fontSize: fontSize,
 																				fontFamily: isMobile ? 'Poppins_400Regular' : 'Poppins_700Bold',
 																				textAlign: 'center',
 																				color: theme.screen.text,
@@ -593,7 +593,7 @@ const Index = () => {
 																		style={[
 																			styles.itemText,
 																			{
-																				fontSize: isMobile ? fontSize : fontSize,
+																				fontSize: fontSize,
 																				fontFamily: isMobile ? 'Poppins_400Regular' : 'Poppins_700Bold',
 																				textAlign: 'center',
 																				color: theme.screen.text,
@@ -628,7 +628,7 @@ const Index = () => {
 																style={[
 																	styles.itemText,
 																	{
-																		fontSize: isMobile ? fontSize : fontSize,
+																		fontSize: fontSize,
 																		fontFamily: isMobile ? 'Poppins_400Regular' : 'Poppins_700Bold',
 																		textAlign: 'center',
 																		color: theme.screen.text,
@@ -641,7 +641,7 @@ const Index = () => {
 																style={[
 																	styles.itemText,
 																	{
-																		fontSize: isMobile ? fontSize : fontSize,
+																		fontSize: fontSize,
 																		fontFamily: isMobile ? 'Poppins_400Regular' : 'Poppins_700Bold',
 																		textAlign: 'center',
 																		color: theme.screen.text,

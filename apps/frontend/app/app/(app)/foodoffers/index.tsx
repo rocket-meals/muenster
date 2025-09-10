@@ -778,7 +778,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 						<View
 							style={{
 								...styles.foodContainer,
-								gap: screenWidth > 550 ? 10 : 10,
+                                                                gap: 10,
 								justifyContent: 'center',
 							}}
 						>

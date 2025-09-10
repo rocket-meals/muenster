@@ -231,7 +231,7 @@ export default function Login() {
 				contentContainerStyle={{
 					...styles.contentContainer,
 					backgroundColor: theme.login.background,
-					padding: isWebVisible ? 20 : 20,
+                                        padding: 20,
 					justifyContent: isWeb ? 'space-between' : 'flex-start',
 				}}
 			>
