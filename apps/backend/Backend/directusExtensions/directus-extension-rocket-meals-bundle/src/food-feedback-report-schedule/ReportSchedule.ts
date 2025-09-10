@@ -447,14 +447,13 @@ export class ReportSchedule {
     let tablename = TABLENAME_CANTEEN_FOOD_FEEDBACK_REPORT_SCHEDULES;
     let itemService = await itemsServiceCreator.getItemsService<DatabaseTypes.CanteenFoodFeedbackReportSchedules>(tablename);
     try {
-      let reportSchedule = await itemService.readOne(id);
-      return reportSchedule;
+      const reportSchedule = await itemService.readOne(id);
+      return reportSchedule ?? null;
     } catch (err) {
       console.log('getCanteenFoodFeedbackReportScheduleById failed:');
       console.log(err);
       return null;
     }
-    return null;
   }
 
   public static haveTimeSettingsChanged(currentCanteenFoodFeedbackReportSchedules: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules>, newCanteenFoodFeedbackReportSchedules: Partial<DatabaseTypes.CanteenFoodFeedbackReportSchedules>): boolean {
