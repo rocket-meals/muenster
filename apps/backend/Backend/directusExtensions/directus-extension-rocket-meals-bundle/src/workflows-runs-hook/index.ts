@@ -277,13 +277,12 @@ async function modifyInputForCreateOrUpdateWorkflowRunToRunning(
   return input;
 }
 
-async function handleActionWorkflowRunUpdatedOrCreated(payload: Partial<DatabaseTypes.WorkflowsRuns>, myDatabaseHelper: MyDatabaseHelper, keys: PrimaryKey[], apiContext: any, eventContext: any): Promise<void> {
-  await handleActionRunningCreatedOrUpdatedWorkflow(payload, myDatabaseHelper, keys, apiContext, eventContext);
-  await handleActionOnUpdateOrCreateIfWorkflowRunShouldBeDeleted(payload, myDatabaseHelper, keys, apiContext, eventContext);
+async function handleActionWorkflowRunUpdatedOrCreated(payload: Partial<DatabaseTypes.WorkflowsRuns>, myDatabaseHelper: MyDatabaseHelper, keys: PrimaryKey[]): Promise<void> {
+  await handleActionRunningCreatedOrUpdatedWorkflow(payload, myDatabaseHelper, keys);
+  await handleActionOnUpdateOrCreateIfWorkflowRunShouldBeDeleted(payload, myDatabaseHelper, keys);
 }
 
-async function handleActionRunningCreatedOrUpdatedWorkflow(payload: Partial<DatabaseTypes.WorkflowsRuns>, myDatabaseHelper: MyDatabaseHelper, keys: PrimaryKey[], apiContext: any, eventContext: any): Promise<void> {
-  myDatabaseHelper = new MyDatabaseHelper(apiContext, eventContext);
+async function handleActionRunningCreatedOrUpdatedWorkflow(payload: Partial<DatabaseTypes.WorkflowsRuns>, myDatabaseHelper: MyDatabaseHelper, keys: PrimaryKey[]): Promise<void> {
   if (payload.state === WORKFLOW_RUN_STATE.RUNNING) {
     //console.log("Action: WorkflowRun update to running");
     let item_ids = keys as PrimaryKey[];
@@ -344,7 +343,7 @@ async function handleActionRunningCreatedOrUpdatedWorkflow(payload: Partial<Data
   }
 }
 
-async function handleActionOnUpdateOrCreateIfWorkflowRunShouldBeDeleted(payload: Partial<DatabaseTypes.WorkflowsRuns>, myDatabaseHelper: MyDatabaseHelper, keys: PrimaryKey[], apiContext: any, eventContext: any): Promise<void> {
+async function handleActionOnUpdateOrCreateIfWorkflowRunShouldBeDeleted(payload: Partial<DatabaseTypes.WorkflowsRuns>, myDatabaseHelper: MyDatabaseHelper, keys: PrimaryKey[]): Promise<void> {
   if (payload.state === WORKFLOW_RUN_STATE.DELETE) {
     let item_ids = keys as PrimaryKey[];
     let existingWorkflowRuns = await myDatabaseHelper.getWorkflowsRunsHelper().readMany(item_ids);
@@ -360,9 +359,8 @@ export default defineHook(async ({ action, init, filter, schedule }, apiContext)
     return;
   }
 
-  let myDatabaseHelper = new MyDatabaseHelper(apiContext);
-
   init(ActionInitFilterEventHelper.INIT_APP_STARTED, async () => {
+    let myDatabaseHelper = new MyDatabaseHelper(apiContext);
     // App started, resetting workflow parsing
     let workflowsNotFinished: DatabaseTypes.WorkflowsRuns[] = [];
 
@@ -391,6 +389,7 @@ export default defineHook(async ({ action, init, filter, schedule }, apiContext)
 
   // Filter: WorkflowRun created - setzt log, output, date_finished, date_started auf null und state auf "pending"
   filter<Partial<DatabaseTypes.WorkflowsRuns>>(CollectionNames.WORKFLOWS_RUNS + '.items.create', async (input, { keys, collection }, eventContext) => {
+    let myDatabaseHelper = new MyDatabaseHelper(apiContext, eventContext);
     console.log('WorkflowRun created');
     if (input.state === undefined) {
       // default state is "running"
@@ -408,6 +407,7 @@ export default defineHook(async ({ action, init, filter, schedule }, apiContext)
 
   // Filter: WorkflowRun update when set to "running" - check if another workflow_run is already running
   filter<Partial<DatabaseTypes.WorkflowsRuns>>(CollectionNames.WORKFLOWS_RUNS + '.items.update', async (input, { keys, collection }, eventContext) => {
+    let myDatabaseHelper = new MyDatabaseHelper(apiContext, eventContext);
     if (input.state === WORKFLOW_RUN_STATE.RUNNING) {
       let item_ids = keys as PrimaryKey[];
       let existingWorkflowRuns = await myDatabaseHelper.getWorkflowsRunsHelper().readMany(item_ids);
@@ -433,10 +433,12 @@ export default defineHook(async ({ action, init, filter, schedule }, apiContext)
   action(CollectionNames.WORKFLOWS_RUNS + '.items.create', async (meta, eventContext) => {
     let { payload, key } = meta;
     let keys = [key];
-    await handleActionWorkflowRunUpdatedOrCreated(payload, myDatabaseHelper, keys, apiContext, eventContext);
+    let myDatabaseHelper = new MyDatabaseHelper(apiContext, eventContext);
+    await handleActionWorkflowRunUpdatedOrCreated(payload, myDatabaseHelper, keys);
   });
 
   action(CollectionNames.WORKFLOWS_RUNS + '.items.update', async ({ payload, keys }, eventContext) => {
-    await handleActionWorkflowRunUpdatedOrCreated(payload, myDatabaseHelper, keys, apiContext, eventContext);
+    let myDatabaseHelper = new MyDatabaseHelper(apiContext, eventContext);
+    await handleActionWorkflowRunUpdatedOrCreated(payload, myDatabaseHelper, keys);
   });
 });
