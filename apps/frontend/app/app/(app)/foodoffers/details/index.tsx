@@ -239,8 +239,8 @@ export default function FoodDetailsScreen() {
 	const getFoodDetails = async () => {
 		try {
 			const foodData = await fetchFoodOffersDetailsById(id.toString());
-                        if (foodData && foodData.data) {
-                                const { food, attribute_values, foodoffer_category } = foodData?.data ?? {};
+			if (foodData && foodData.data) {
+				const { food, attribute_values, foodoffer_category } = foodData?.data ?? {};
 
 				const translation = food?.translations?.find((val: FoodsTranslations) => String(val?.languages_code)?.split('-')[0] === languageCode);
 				setFoodDetails({

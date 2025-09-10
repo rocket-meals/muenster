@@ -859,8 +859,8 @@ const Index = () => {
 														);
 													}
 
-                                                                                                        const { number_value } = attr?.value ?? {};
-                                                                                                        const { prefix, suffix } = attr?.value?.food_attribute ?? {};
+													const { number_value } = attr?.value ?? {};
+													const { prefix, suffix } = attr?.value?.food_attribute ?? {};
 
 													if (number_value === undefined || number_value === null) {
 														return (

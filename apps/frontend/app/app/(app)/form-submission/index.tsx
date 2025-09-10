@@ -608,13 +608,13 @@ const Index = () => {
 									const isDisabled = answer?.form_field?.is_disabled || false;
 									let IconComponent: any = null;
 									let iconName = '';
-                                                                        if (answer?.form_field?.icon_expo) {
-                                                                                const [library, name] = answer?.form_field?.icon_expo?.split(':') ?? [];
-                                                                                if (iconLibraries[library]) {
-                                                                                        IconComponent = iconLibraries[library];
-                                                                                        iconName = name;
-                                                                                }
-                                                                        }
+									if (answer?.form_field?.icon_expo) {
+										const [library, name] = answer?.form_field?.icon_expo?.split(':') ?? [];
+										if (iconLibraries[library]) {
+											IconComponent = iconLibraries[library];
+											iconName = name;
+										}
+									}
 
 									return (
 										<View

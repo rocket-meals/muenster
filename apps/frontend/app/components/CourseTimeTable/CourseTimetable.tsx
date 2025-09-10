@@ -151,13 +151,13 @@ const CourseTimetable: React.FC<CourseTimetableProps> = ({ events, openSheet, se
 		openSheet();
 	};
 
-        const reorderedDays = useMemo(() => {
-                if (!days) return [];
-                const firstDayIndex = days.findIndex(day => day.id.toLocaleLowerCase() === firstDayOfTheWeek.id);
-                console.log('firstDayIndex', firstDayOfTheWeek);
-                if (firstDayIndex === -1) return days; // Fallback if the firstDayOfTheWeek is invalid
-                return [...days.slice(firstDayIndex), ...days.slice(0, firstDayIndex)];
-        }, [days, firstDayOfTheWeek]);
+	const reorderedDays = useMemo(() => {
+		if (!days) return [];
+		const firstDayIndex = days.findIndex(day => day.id.toLocaleLowerCase() === firstDayOfTheWeek.id);
+		console.log('firstDayIndex', firstDayOfTheWeek);
+		if (firstDayIndex === -1) return days; // Fallback if the firstDayOfTheWeek is invalid
+		return [...days.slice(firstDayIndex), ...days.slice(0, firstDayIndex)];
+	}, [days, firstDayOfTheWeek]);
 
 	console.log('Events', events);
 	console.log('reorderedDays', reorderedDays);

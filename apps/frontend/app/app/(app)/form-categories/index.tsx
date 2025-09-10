@@ -73,13 +73,13 @@ const Index = () => {
 							formCategories?.map((category, index) => {
 								let IconComponent: any = null;
 								let iconName = '';
-                                                                if (category?.icon_expo) {
-                                                                        const [library, name] = category?.icon_expo?.split(':') ?? [];
-                                                                        if (iconLibraries[library]) {
-                                                                                IconComponent = iconLibraries[library];
-                                                                                iconName = name;
-                                                                        }
-                                                                }
+								if (category?.icon_expo) {
+									const [library, name] = category?.icon_expo?.split(':') ?? [];
+									if (iconLibraries[library]) {
+										IconComponent = iconLibraries[library];
+										iconName = name;
+									}
+								}
 								return (
 									<TouchableOpacity
 										style={{
