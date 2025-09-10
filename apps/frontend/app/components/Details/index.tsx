@@ -14,9 +14,9 @@ import { RootState } from '@/redux/reducer';
 const Details: React.FC<DetailsProps> = ({ groupedAttributes, loading }) => {
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
-        const { primaryColor, appSettings, language } = useSelector((state: RootState) => state.settings);
+	const { primaryColor, appSettings, language } = useSelector((state: RootState) => state.settings);
 
-        const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
 
 	return (
 		<View style={styles.container}>
@@ -46,10 +46,7 @@ const Details: React.FC<DetailsProps> = ({ groupedAttributes, loading }) => {
 									justifyContent: 'flex-start',
 								}}
 							>
-                                                                {item?.attributes &&
-                                                                        item?.attributes?.map((attr: any) => (
-                                                                                <AttributeItem attr={attr} key={attr?.id} />
-                                                                        ))}
+								{item?.attributes && item?.attributes?.map((attr: any) => <AttributeItem attr={attr} key={attr?.id} />)}
 							</View>
 						</View>
 					);
