@@ -4,7 +4,6 @@
 
 [![🚀 CI](https://github.com/rocket-meals/rocket-meals/actions/workflows/ci.yml/badge.svg)](https://github.com/rocket-meals/rocket-meals/actions/workflows/ci.yml)
 [![Screenshots CI](https://github.com/rocket-meals/rocket-meals/actions/workflows/frontend_screenshot.yml/badge.svg)](https://github.com/rocket-meals/rocket-meals/actions/workflows/frontend_screenshot.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=rocket-meals_rocket-meals&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=rocket-meals_rocket-meals)
 
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=rocket-meals_rocket-meals&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=rocket-meals_rocket-meals)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=rocket-meals_rocket-meals&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=rocket-meals_rocket-meals)
