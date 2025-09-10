@@ -54,3 +54,4 @@ apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/t
 .pnp.*
 
 reports/sonarCloud/
+reports/data-clumps-doctor/
