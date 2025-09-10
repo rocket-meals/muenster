@@ -145,8 +145,8 @@ function registerCollectionAutoTranslation(filter: any, apiContext: ApiContext) 
   }
 }
 
-export default defineHook(({ filter, action, init, schedule }, apiContext) => {
-  let collectionFound = DatabaseInitializedCheck.checkTablesExist(scheduleNameAutoTranslation, apiContext, [CollectionNames.AUTO_TRANSLATION_SETTINGS]);
+export default defineHook(async ({ filter, action, init, schedule }, apiContext) => {
+  let collectionFound = await DatabaseInitializedCheck.checkTablesExist(scheduleNameAutoTranslation, apiContext, [CollectionNames.AUTO_TRANSLATION_SETTINGS]);
   if (!collectionFound) {
     console.log('Collection ' + CollectionNames.AUTO_TRANSLATION_SETTINGS + ' not found. Skipping auto-translation initialization.');
     return;
