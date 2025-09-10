@@ -7,18 +7,18 @@ runs:
     - name: Clone data-clumps-doctor
       shell: bash
       run: |
-        git clone https://github.com/NilsBaumgartner1994/data-clumps-doctor data-clumps-doctor
+        git clone https://github.com/NilsBaumgartner1994/data-clumps-doctor "$RUNNER_TEMP/data-clumps-doctor"
     - name: Build data-clumps-doctor
       shell: bash
       run: |
-        cd data-clumps-doctor/analyse
+        cd "$RUNNER_TEMP/data-clumps-doctor/analyse"
         npm ci
         npm run build
     - name: Run data-clumps analysis
       shell: bash
       run: |
         mkdir -p reports/data-clumps-doctor
-        node data-clumps-doctor/analyse/build/ignoreCoverage/cli.js \
+        node "$RUNNER_TEMP/data-clumps-doctor/analyse/build/ignoreCoverage/cli.js" \
           --source_type typescript \
           --commit_selection current \
           --output reports/data-clumps-doctor/data-clumps.json \
