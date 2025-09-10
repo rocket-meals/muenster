@@ -163,7 +163,7 @@ Key,Message,Component,Line
 "AZkUSvxcS4VhJojFFCiZ","Unexpected `await` of a non-Promise (non-""Thenable"") value.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/workflows-runs-hook/index.ts",266
 "AZkUSvxcS4VhJojFFCia","Refactor this function to reduce its Cognitive Complexity from 35 to the 15 allowed.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/workflows-runs-hook/index.ts",285
 "AZkUSvxcS4VhJojFFCim","Remove this useless assignment to variable ""workflow"".","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/workflows-runs-hook/index.ts",386
-"AZkUSvP-S4VhJojFFAcg","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/_layout.tsx",395
+"AZkUSvP-S4VhJojFFAcg","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/_layout.tsx",391
 "AZkUSvP-S4VhJojFFAcj","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/_layout.tsx",549
 "AZkUSvP-S4VhJojFFAck","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/_layout.tsx",571
 "AZkUSvP-S4VhJojFFAcl","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/_layout.tsx",577
@@ -991,7 +991,7 @@ Key,Message,Component,Line
 "AZkUSvADS4VhJojFFAQQ","Remove this useless assignment to variable ""handleSecondaryClick"".","rocket-meals_rocket-meals:apps/frontend/app/components/ListWeekHeader/ListWeekHeader.tsx",25
 "AZkUSu_PS4VhJojFFAPx","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/Login/Footer.tsx",20
 "AZkUSu-IS4VhJojFFAPr","useState call is not destructured into value + setter pair","rocket-meals_rocket-meals:apps/frontend/app/components/Login/Form.tsx",22
-"AZkUSu_ZS4VhJojFFAPy","Expected a `for-of` loop instead of a `for` loop with this simple iteration.","rocket-meals_rocket-meals:apps/frontend/app/components/Login/Header.tsx",30
+"AZkUSu_ZS4VhJojFFAPy","Expected a `for-of` loop instead of a `for` loop with this simple iteration.","rocket-meals_rocket-meals:apps/frontend/app/components/Login/Header.tsx",31
 "AZkUSu_ZS4VhJojFFAP0","'If' statement should not be the only statement in 'else' block","rocket-meals_rocket-meals:apps/frontend/app/components/Login/Header.tsx",65
 "AZkUSu_GS4VhJojFFAPu","Replace this ""Boolean"" wrapper object with primitive type ""boolean"".","rocket-meals_rocket-meals:apps/frontend/app/components/Login/types.ts",5
 "AZkUSu9AS4VhJojFFAPE","Move this array ""sort"" operation to a separate statement or replace it with ""toSorted"".","rocket-meals_rocket-meals:apps/frontend/app/components/ManagementCanteensSheet/ManagementCanteensSheet.tsx",57

@@ -1,4 +1,1 @@
 Key,Message,Component,Line
-"AZkUSvP-S4VhJojFFAcf","React Hook ""useEffect"" is called conditionally. React Hooks must be called in the exact same order in every component render.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/_layout.tsx",143
-"AZkUSvP-S4VhJojFFAch","React Hook ""useEffect"" is called conditionally. React Hooks must be called in the exact same order in every component render.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/_layout.tsx",507
-"AZkUSu_ZS4VhJojFFAPz","React Hook ""useDeviceLocaleCodesWithoutRegionCode"" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function.","rocket-meals_rocket-meals:apps/frontend/app/components/Login/Header.tsx",55
