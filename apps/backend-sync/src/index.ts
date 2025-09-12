@@ -73,6 +73,7 @@ async function main() {
     directusInstanceUrl = DockerDirectusHelper.getDirectusServerUrl();
     pathToDataDirectusSync = DockerDirectusHelper.getDataPathToDirectusSyncData();
   }
+
   if (options.pullFromTestSystem) {
     directusInstanceUrl = ServerHelper.TEST_SERVER_CONFIG.server_url;
     let envFilePath = await findEnvFile();
@@ -81,6 +82,11 @@ async function main() {
       dotenv.config({ path: envFilePath });
       adminEmail = process.env.ADMIN_EMAIL;
       adminPassword = process.env.ADMIN_PASSWORD;
+
+      if(!pathToDataDirectusSync){
+        let folderOfEnvFile = path.dirname(envFilePath || '');
+        pathToDataDirectusSync = path.join(folderOfEnvFile, DockerDirectusHelper.getRelativePathToDirectusSyncFromProjectRoot());
+      }
     }
   }
 

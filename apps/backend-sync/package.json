@@ -6,7 +6,8 @@
     "start:docker-push": "tsx src/index.ts --docker-push",
     "start:pull-from-test-system": "tsx src/index.ts --pull-from-test-system",
     "start:push": "tsx src/index.ts --push",
-    "start:pull": "tsx src/index.ts --pull"
+    "start:pull": "tsx src/index.ts --pull",
+    "start": "tsx src/index.ts"
   },
   "author": "",
   "license": "ISC",

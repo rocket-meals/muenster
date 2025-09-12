@@ -9,6 +9,11 @@ export class DockerDirectusHelper {
   }
 
   public static getDataPathToDirectusSyncData(): string {
-    return '/rocket-meals/data/directus-sync-data';
+    return '/rocket-meals/' + DockerDirectusHelper.getRelativePathToDirectusSyncFromProjectRoot();
   }
+
+  public static getRelativePathToDirectusSyncFromProjectRoot(): string {
+    return 'data/directus-sync-data';
+  }
+
 }
