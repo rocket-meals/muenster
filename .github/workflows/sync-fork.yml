@@ -53,7 +53,7 @@ jobs:
         id: sync-result
         if: steps.check-repo.outputs.is-fork == 'true' && steps.check-updates.outputs.has-updates == 'true'
         env:
-          GH_TOKEN: ${{ PRIVATE_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
         run: |
           REPO_FULL_NAME="${{ steps.check-repo.outputs.repository-name }}"
           echo "Syncing fork: $REPO_FULL_NAME"
@@ -73,7 +73,7 @@ jobs:
       - name: 🚀 Trigger Combined CI
         if: steps.check-repo.outputs.is-fork == 'true' && steps.sync-result.outputs.sync-success == 'true'
         env:
-          GH_TOKEN: ${{ PRIVATE_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
         run: |
           echo "🚀 Triggering Combined CI workflow after successful sync..."
           gh workflow run combined-ci.yml --ref master
