@@ -1,4 +1,4 @@
-import React, {useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,12 +31,11 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
 	const { markings } = useSelector((state: RootState) => state.food);
 	const marking = markings?.find((mark: any) => mark.id === markingId);
-	const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId)
+	const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId);
 	const [likeLoading, setLikeLoading] = useState(false);
 	const [dislikeLoading, setDislikeLoading] = useState(false);
 	const profileHelper = new ProfileHelper();
 	const isAnonymousUser = UserHelper.isAnonymousUser(user);
-
 
 	const openMarkingLabel = (marking: DatabaseTypes.Markings) => {
 		if (handleMenuSheet) {
