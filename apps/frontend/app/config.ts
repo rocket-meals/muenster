@@ -22,7 +22,7 @@ export function getBuildNumber() {
 }
 
 export function getVersionPatch() {
-	return 0;
+	return 1;
 }
 
 export function getVersion() {

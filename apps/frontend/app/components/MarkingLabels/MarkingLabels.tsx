@@ -17,6 +17,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
 import {ProfileHelper} from "@/redux/actions/Profile/Profile";
+import {UserHelper} from "@/helper/UserHelper";
 
 const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet, size = 30 }) => {
 	const { theme } = useTheme();
@@ -34,6 +35,7 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 	const [likeLoading, setLikeLoading] = useState(false);
 	const [dislikeLoading, setDislikeLoading] = useState(false);
 	const profileHelper = new ProfileHelper();
+	const isAnonymousUser = UserHelper.isAnonymousUser(user);
 
 
 	const openMarkingLabel = (marking: DatabaseTypes.Markings) => {
@@ -101,7 +103,7 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 			} else {
 				setDislikeLoading(true);
 			}
-			if (!user?.id) {
+			if (isAnonymousUser) {
 				handleAnonymousMarking(like);
 				if (like) {
 					setLikeLoading(false);
@@ -109,55 +111,55 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 					setDislikeLoading(false);
 				}
 				return;
-			}
+			} else {
+				try {
+					const likeStats = ownMarking?.like === like ? null : like;
+					const updatedMarking = { ...ownMarking, like: likeStats };
 
-			try {
-				const likeStats = ownMarking?.like === like ? null : like;
-				const updatedMarking = { ...ownMarking, like: likeStats };
+					const profileData = { ...profile };
+					let markingFound = false;
 
-				const profileData = { ...profile };
-				let markingFound = false;
+					// Update or remove marking in the profile
+					profileData?.markings.forEach((profileMarkings: any, index: number) => {
+						if (profileMarkings.markings_id === updatedMarking?.markings_id) {
+							markingFound = true;
+							if (updatedMarking?.like === null) {
+								profileData.markings.splice(index, 1); // Remove if unliked
+							} else {
+								profileData.markings[index] = updatedMarking; // Update like status
+							}
+						}
+					});
 
-				// Update or remove marking in the profile
-				profileData?.markings.forEach((profileMarkings: any, index: number) => {
-					if (profileMarkings.markings_id === updatedMarking?.markings_id) {
-						markingFound = true;
-						if (updatedMarking?.like === null) {
-							profileData.markings.splice(index, 1); // Remove if unliked
+					// If the marking doesn't exist, add it
+					if (!markingFound) {
+						profileData.markings.push({
+							...updatedMarking,
+							markings_id: markingId,
+							profiles_id: profileData?.id,
+						});
+					}
+
+					dispatch({ type: UPDATE_PROFILE, payload: profileData });
+
+					// Update profile on the server
+					const result = (await profileHelper.updateProfile(profileData)) as DatabaseTypes.Profiles;
+					if (result) {
+						fetchProfile();
+						if (like) {
+							setLikeLoading(false);
 						} else {
-							profileData.markings[index] = updatedMarking; // Update like status
+							setDislikeLoading(false);
 						}
 					}
-				});
-
-				// If the marking doesn't exist, add it
-				if (!markingFound) {
-					profileData.markings.push({
-						...updatedMarking,
-						markings_id: markingId,
-						profiles_id: profileData?.id,
-					});
-				}
-
-				dispatch({ type: UPDATE_PROFILE, payload: profileData });
-
-				// Update profile on the server
-				const result = (await profileHelper.updateProfile(profileData)) as DatabaseTypes.Profiles;
-				if (result) {
-					fetchProfile();
+				} catch (error) {
+					console.error('Error updating marking:', error);
+				} finally {
 					if (like) {
 						setLikeLoading(false);
 					} else {
 						setDislikeLoading(false);
 					}
-				}
-			} catch (error) {
-				console.error('Error updating marking:', error);
-			} finally {
-				if (like) {
-					setLikeLoading(false);
-				} else {
-					setDislikeLoading(false);
 				}
 			}
 		},
