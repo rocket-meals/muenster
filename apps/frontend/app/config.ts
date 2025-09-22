@@ -30,11 +30,11 @@ export function getVersionPatch() {
 }
 
 export function getVersionInternalForAppsettingsScreen() {
-	return getMajorVersion()+'.' + getBuildNumber() + '.' + getVersionPatch();
+	return getMajorVersion() + '.' + getBuildNumber() + '.' + getVersionPatch();
 }
 
 export function getVersion() {
-	return getMajorVersion()+'.' + getBuildNumber() + '.' + 0;
+	return getMajorVersion() + '.' + getBuildNumber() + '.' + 0;
 }
 
 export function getIosBuildNumber() {
