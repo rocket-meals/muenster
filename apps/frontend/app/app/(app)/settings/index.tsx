@@ -14,7 +14,7 @@ import ColorSchemeSheet from '@/components/ColorSchemeSheet/ColorSchemeSheet';
 import DrawerPositionSheet from '@/components/DrawerPositionSheet/DrawerPositionSheet';
 import ServerSelectionSheet from '@/components/ServerSelectionSheet/ServerSelectionSheet';
 import { router, useFocusEffect } from 'expo-router';
-import { type CustomerConfig, getVersion } from '@/config';
+import {type CustomerConfig, getVersionInternalForAppsettingsScreen} from '@/config';
 import { useDispatch, useSelector } from 'react-redux';
 import useSelectedCanteen from '@/hooks/useSelectedCanteen';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -345,7 +345,7 @@ const Settings = () => {
 							<SettingsList iconBgColor={primaryColor} leftIcon={<MaterialIcons name="image" size={24} color={theme.screen.icon} />} label="Use WebP images" value={useWebpForAssets ? 'WebP' : 'Default'} rightIcon={<Octicons name="chevron-right" size={24} color={theme.screen.icon} />} handleFunction={toggleWebpForAssets} />
 						</>
 					)}
-					<SettingsList iconBgColor={primaryColor} leftIcon={<MaterialCommunityIcons name="numeric" size={24} color={theme.screen.icon} />} label="Version" value={getVersion().toString()} handleFunction={() => {}} />
+					<SettingsList iconBgColor={primaryColor} leftIcon={<MaterialCommunityIcons name="numeric" size={24} color={theme.screen.icon} />} label="Version" value={getVersionInternalForAppsettingsScreen().toString()} handleFunction={() => {}} />
 				</View>
 			</ScrollView>
 			{isActive && (

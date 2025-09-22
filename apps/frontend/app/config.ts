@@ -21,12 +21,20 @@ export function getBuildNumber() {
 	return 166;
 }
 
+export function getMajorVersion() {
+	return 20;
+}
+
 export function getVersionPatch() {
-	return 0;
+	return 2;
+}
+
+export function getVersionInternalForAppsettingsScreen() {
+	return getMajorVersion()+'.' + getBuildNumber() + '.' + getVersionPatch();
 }
 
 export function getVersion() {
-	return '20.' + getBuildNumber() + '.' + getVersionPatch();
+	return getMajorVersion()+'.' + getBuildNumber() + '.' + 0;
 }
 
 export function getIosBuildNumber() {
