@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useCallback, useState } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { MarkingLabelProps } from './types';
 
-import { SET_MARKING_DETAILS } from '@/redux/Types/types';
+import { SET_MARKING_DETAILS, UPDATE_PROFILE } from '@/redux/Types/types';
 import PermissionModal from '../PermissionModal/PermissionModal';
 import { useTheme } from '@/hooks/useTheme';
 import { isWeb } from '@/constants/Constants';
@@ -16,6 +16,7 @@ import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
+import {ProfileHelper} from "@/redux/actions/Profile/Profile";
 
 const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet, size = 30 }) => {
 	const { theme } = useTheme();
@@ -23,15 +24,17 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 	const { translate } = useLanguage();
 	const [warning, setWarning] = useState(false);
 	const [showTooltip, setShowTooltip] = useState(false);
-	const likeLoading = false;
-	const dislikeLoading = false;
 	const { primaryColor, language, appSettings } = useSelector((state: RootState) => state.settings);
 
-	const { profile } = useSelector((state: RootState) => state.authReducer);
+	const { user, profile } = useSelector((state: RootState) => state.authReducer);
 	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
 	const { markings } = useSelector((state: RootState) => state.food);
 	const marking = markings?.find((mark: any) => mark.id === markingId);
-	const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId);
+	const ownMarking = profile?.markings?.find((mark: any) => mark.markings_id === markingId)
+	const [likeLoading, setLikeLoading] = useState(false);
+	const [dislikeLoading, setDislikeLoading] = useState(false);
+	const profileHelper = new ProfileHelper();
+
 
 	const openMarkingLabel = (marking: DatabaseTypes.Markings) => {
 		if (handleMenuSheet) {
@@ -48,6 +51,118 @@ const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet
 
 	const markingText = getTextFromTranslation(marking?.translations, language);
 	const iconSize = isWeb ? 24 : 22;
+
+	const handleAnonymousMarking = (like: boolean) => {
+		const profileData = { ...profile };
+		let markingFound = false;
+
+		// Update or remove marking in the profile
+		profileData?.markings?.forEach((profileMarkings: any, index: number) => {
+			if (profileMarkings?.markings_id === markingId) {
+				const likeStats = profileMarkings?.like === like ? null : like;
+				markingFound = true;
+				if (likeStats === null) {
+					profileData?.markings.splice(index, 1); // Remove if unliked
+				} else {
+					profileData.markings[index] = { ...ownMarking, like: like }; // Update like status
+				}
+			}
+		});
+
+		// If the marking doesn't exist, add it
+		if (!markingFound) {
+			profileData?.markings?.push({
+				...ownMarking,
+				like: like,
+				markings_id: markingId,
+				profiles_id: profileData?.id,
+			});
+		}
+
+		dispatch({ type: UPDATE_PROFILE, payload: profileData });
+	};
+
+	// Fetch profile function
+	const fetchProfile = async () => {
+		try {
+			const profile = (await profileHelper.fetchProfileById(user?.profile, {})) as DatabaseTypes.Profiles;
+			if (profile) {
+				dispatch({ type: UPDATE_PROFILE, payload: profile });
+			}
+		} catch (error) {
+			console.error('Error fetching profiles:', error);
+		}
+	};
+
+	const handleUpdateMarking = useCallback(
+		async (like: boolean) => {
+			if (like) {
+				setLikeLoading(true);
+			} else {
+				setDislikeLoading(true);
+			}
+			if (!user?.id) {
+				handleAnonymousMarking(like);
+				if (like) {
+					setLikeLoading(false);
+				} else {
+					setDislikeLoading(false);
+				}
+				return;
+			}
+
+			try {
+				const likeStats = ownMarking?.like === like ? null : like;
+				const updatedMarking = { ...ownMarking, like: likeStats };
+
+				const profileData = { ...profile };
+				let markingFound = false;
+
+				// Update or remove marking in the profile
+				profileData?.markings.forEach((profileMarkings: any, index: number) => {
+					if (profileMarkings.markings_id === updatedMarking?.markings_id) {
+						markingFound = true;
+						if (updatedMarking?.like === null) {
+							profileData.markings.splice(index, 1); // Remove if unliked
+						} else {
+							profileData.markings[index] = updatedMarking; // Update like status
+						}
+					}
+				});
+
+				// If the marking doesn't exist, add it
+				if (!markingFound) {
+					profileData.markings.push({
+						...updatedMarking,
+						markings_id: markingId,
+						profiles_id: profileData?.id,
+					});
+				}
+
+				dispatch({ type: UPDATE_PROFILE, payload: profileData });
+
+				// Update profile on the server
+				const result = (await profileHelper.updateProfile(profileData)) as DatabaseTypes.Profiles;
+				if (result) {
+					fetchProfile();
+					if (like) {
+						setLikeLoading(false);
+					} else {
+						setDislikeLoading(false);
+					}
+				}
+			} catch (error) {
+				console.error('Error updating marking:', error);
+			} finally {
+				if (like) {
+					setLikeLoading(false);
+				} else {
+					setDislikeLoading(false);
+				}
+			}
+		},
+		[user?.id, profile, ownMarking, markingId, dispatch, profileHelper, fetchProfile]
+	);
 
 	return (
 		<View style={styles.row}>
