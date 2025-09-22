@@ -16,8 +16,8 @@ import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
-import {ProfileHelper} from "@/redux/actions/Profile/Profile";
-import {UserHelper} from "@/helper/UserHelper";
+import { ProfileHelper } from '@/redux/actions/Profile/Profile';
+import { UserHelper } from '@/helper/UserHelper';
 
 const MarkingLabels: React.FC<MarkingLabelProps> = ({ markingId, handleMenuSheet, size = 30 }) => {
 	const { theme } = useTheme();
