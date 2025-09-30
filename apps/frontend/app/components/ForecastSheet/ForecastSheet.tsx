@@ -86,6 +86,13 @@ const ForecastSheet: React.FC<ForecastSheetProps> = ({ closeSheet, forDate }) =>
 	const getUtilization = async (forDate: string) => {
 		try {
 			setLoading(true);
+			
+			if (!selectedCanteen || !selectedCanteen.utilization_group) {
+			setLoading(false);
+			setChartData({ labels: [], datasets: [{ data: [] }] });
+			return;
+			}
+			
 			const utilizationData = (await utilizationEntryHelper.fetchUtilizationEntries({}, selectedCanteen?.utilization_group, forDate)) as DatabaseTypes.UtilizationsEntries[];
 			if (utilizationData) {
 				const processedData = processData(utilizationData);
