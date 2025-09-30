@@ -174,7 +174,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 
 	const fetchSelectedBuilding = async () => {
 		if (selectedCanteen?.building) {
-			const buildingData = (await buildingsHelper.fetchBuildingById(selectedCanteen.building)) as DatabaseTypes.Buildings;
+			const buildingData = (await buildingsHelper.fetchBuildingById(String(selectedCanteen.building))) as DatabaseTypes.Buildings;
 			const building = buildingData || [];
 			if (building) {
 				setSelectedBuilding(building);
