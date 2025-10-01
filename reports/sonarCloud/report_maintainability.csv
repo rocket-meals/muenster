@@ -1,4 +1,6 @@
 Key,Message,Component,Line
+"AZmdJmINCgqk4M2JlB1O","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/Drawer/CustomDrawerContent.tsx",369
+"AZmdJmM-Cgqk4M2JlB1P","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/ForecastSheet/ForecastSheet.tsx",90
 "AZlylR8Uafb6tpRtN87P","Refactor this function to reduce its Cognitive Complexity from 22 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",99
 "AZlylR8Uafb6tpRtN87Q","Remove this redundant jump.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",112
 "AZlyj_Mg0YdgFOBafBLL","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",61
@@ -975,14 +977,14 @@ Key,Message,Component,Line
 "AZkUSu7vS4VhJojFFAOs","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMap/MyMap.web.tsx",20
 "AZkUSu_ZS4VhJojFFAP1","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/Login/Header.tsx",132
 "AZkUSvJ7S4VhJojFFAUl","'any' overrides all other types in this union type.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/events/index.tsx",28
-"AZkUSvCgS4VhJojFFART","Refactor this function to reduce its Cognitive Complexity from 19 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/components/ForecastSheet/ForecastSheet.tsx",121
+"AZkUSvCgS4VhJojFFART","Refactor this function to reduce its Cognitive Complexity from 19 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/components/ForecastSheet/ForecastSheet.tsx",128
 "AZkUSvJKS4VhJojFFAT7","Prefer using nullish coalescing operator (`??=`) instead of an assignment expression, as it is simpler to read.","rocket-meals_rocket-meals:apps/frontend/app/components/AutoImageScroller/index.tsx",32
 "AZkUSvVsS4VhJojFFAiU","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/helper/CardDimensionHelper.ts",29
 "AZkUSu9iS4VhJojFFAPk","Remove this useless assignment to variable ""backgroundColor"".","rocket-meals_rocket-meals:apps/frontend/app/components/Drawer/CustomDrawerContent.tsx",70
 "AZkUSu75S4VhJojFFAOu","Remove this useless assignment to variable ""theme"".","rocket-meals_rocket-meals:apps/frontend/app/components/MyMap/MyMap.tsx",13
 "AZlyj_Bu0YdgFOBafBKn","Do not call `Array#push()` multiple times.","rocket-meals_rocket-meals:apps/frontend/app/components/Drawer/CustomDrawerContent.tsx",259
 "AZkUSvItS4VhJojFFAT3","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/ExpoUpdateLoader/ExpoUpdateLoader.tsx",40
-"AZlyj_It0YdgFOBafBLF","Unexpected negated condition.","rocket-meals_rocket-meals:apps/frontend/app/components/ForecastSheet/ForecastSheet.tsx",129
+"AZlyj_It0YdgFOBafBLF","Unexpected negated condition.","rocket-meals_rocket-meals:apps/frontend/app/components/ForecastSheet/ForecastSheet.tsx",136
 "AZkUSu_tS4VhJojFFAQB","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",78
 "AZkUSu_tS4VhJojFFAQC","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",99
 "AZkUSu_tS4VhJojFFAQD","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",104
@@ -1213,7 +1215,7 @@ Key,Message,Component,Line
 "AZkUSvA-S4VhJojFFAQd","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/components/FileUpload/FileUpload.tsx",75
 "AZkUSvA-S4VhJojFFAQf","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/FileUpload/FileUpload.tsx",194
 "AZkUSvA-S4VhJojFFAQg","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/FileUpload/FileUpload.tsx",209
-"AZkUSvCgS4VhJojFFARU","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/ForecastSheet/ForecastSheet.tsx",122
+"AZkUSvCgS4VhJojFFARU","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/ForecastSheet/ForecastSheet.tsx",129
 "AZlyj_Fi0YdgFOBafBKs","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/components/HoursSheet/HoursSheet.tsx",146
 "AZkUSvBTS4VhJojFFAQl","Empty block statement.","rocket-meals_rocket-meals:apps/frontend/app/components/HoursSheet/HoursSheet.tsx",180
 "AZkUSvBTS4VhJojFFAQp","Remove this useless assignment to variable ""isSame"".","rocket-meals_rocket-meals:apps/frontend/app/components/HoursSheet/HoursSheet.tsx",209
