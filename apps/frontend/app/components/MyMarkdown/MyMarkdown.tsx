@@ -38,20 +38,32 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({ content, textColor: textColorPr
 	const { width } = useWindowDimensions();
 	const md = new MarkdownIt({ html: true });
 
-	const defaultValidateLink = md.validateLink.bind(md);
-	md.validateLink = (url: string | null | undefined) => {
-		if (!url) {
-			return false;
-		}
+        const defaultValidateLink = md.validateLink.bind(md);
+        md.validateLink = (url: string | null | undefined) => {
+                if (!url) {
+                        console.log('[MyMarkdown] validateLink called with empty url');
+                        return false;
+                }
 
-		const normalizedUrl = url.toLowerCase();
+                const normalizedUrl = url.toLowerCase();
+                const isGeoLink = normalizedUrl.startsWith(UriScheme.GEO);
+                const isMapsLink = normalizedUrl.startsWith(UriScheme.MAPS);
 
-		if (normalizedUrl.startsWith(UriScheme.GEO)) {
-			return true;
-		}
+                console.log('[MyMarkdown] validateLink evaluating url', {
+                        url,
+                        normalizedUrl,
+                        isGeoLink,
+                        isMapsLink,
+                });
 
-		return defaultValidateLink(url);
-	};
+                if (isGeoLink || isMapsLink) {
+                        return true;
+                }
+
+                const isValid = defaultValidateLink(url);
+                console.log('[MyMarkdown] validateLink fallback result', { url, isValid });
+                return isValid;
+        };
 
 	let sourceContent = content || '';
 	const option_find_linebreaks = true;
@@ -59,8 +71,17 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({ content, textColor: textColorPr
 		sourceContent = replaceLinebreaks(sourceContent);
 	}
 
-	const result = md.render(sourceContent);
-	const source = { html: result || '' };
+        console.log('[MyMarkdown] Rendering markdown', {
+                originalContentLength: content?.length ?? 0,
+                processedContentLength: sourceContent.length,
+                preview: sourceContent.slice(0, 1000),
+        });
+
+        const result = md.render(sourceContent);
+        console.log('[MyMarkdown] Markdown render complete', {
+                htmlLength: result.length,
+        });
+        const source = { html: result || '' };
 
 	const fontSize = 16;
 	const textColor = textColorProp ?? theme.sheet.text;
@@ -98,18 +119,48 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({ content, textColor: textColorPr
 			const text = data || props.children[0]?.data;
 
 			let finalHref = href;
-			if (href?.toLowerCase().startsWith(UriScheme.GEO)) {
-				const coordinateString = href.slice(UriScheme.GEO.length);
-				const [coordinatePart] = coordinateString.split(/[;?]/);
-				const [latitudeRaw, longitudeRaw] = coordinatePart.split(',');
+                        const hrefLowerCase = href?.toLowerCase();
 
-				const latitude = parseFloat(latitudeRaw?.trim() ?? '');
-				const longitude = parseFloat(longitudeRaw?.trim() ?? '');
+                        const parseCoordinatesFromUri = (uri: string, scheme: UriScheme) => {
+                                const coordinateString = uri.slice(scheme.length);
+                                const [coordinatePart] = coordinateString.split(/[;?]/);
+                                const [latitudeRaw, longitudeRaw] = coordinatePart.split(',');
+                                const latitude = parseFloat(latitudeRaw?.trim() ?? '');
+                                const longitude = parseFloat(longitudeRaw?.trim() ?? '');
 
-				if (!Number.isNaN(latitude) && !Number.isNaN(longitude)) {
-					finalHref = CommonSystemActionHelper.getGoogleMapsUrl(latitude, longitude);
-				}
-			}
+                                console.log('[MyMarkdown] Parsing coordinates from URI', {
+                                        uri,
+                                        scheme,
+                                        latitudeRaw,
+                                        longitudeRaw,
+                                        latitude,
+                                        longitude,
+                                });
+
+                                if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
+                                        return null;
+                                }
+
+                                return { latitude, longitude };
+                        };
+
+                        if (hrefLowerCase?.startsWith(UriScheme.GEO)) {
+                                const coordinates = parseCoordinatesFromUri(hrefLowerCase, UriScheme.GEO);
+                                if (coordinates) {
+                                        finalHref = CommonSystemActionHelper.getGoogleMapsUrl(
+                                                coordinates.latitude,
+                                                coordinates.longitude,
+                                        );
+                                }
+                        } else if (hrefLowerCase?.startsWith(UriScheme.MAPS)) {
+                                const coordinates = parseCoordinatesFromUri(hrefLowerCase, UriScheme.MAPS);
+                                if (coordinates) {
+                                        finalHref = CommonSystemActionHelper.getGoogleMapsUrl(
+                                                coordinates.latitude,
+                                                coordinates.longitude,
+                                        );
+                                }
+                        }
 
 			const handlePress = () => {
 				if (finalHref) {
@@ -119,19 +170,20 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({ content, textColor: textColorPr
 
 			let iconLeft = <FontAwesome6 name="arrow-up-right-from-square" size={20} color={contrastColor} />;
 
-			if (finalHref?.startsWith(UriScheme.TEL)) {
-				iconLeft = <FontAwesome6 name="phone" size={20} color={contrastColor} />;
-			} else if (finalHref?.startsWith(UriScheme.MAILTO)) {
-				iconLeft = <MaterialCommunityIcons name="email" size={24} color={contrastColor} />;
-			} else if (href?.toLowerCase().startsWith(UriScheme.GEO)) {
-				iconLeft = <Ionicons name="navigate" size={24} color={contrastColor} />;
-			}
+                        if (finalHref?.startsWith(UriScheme.TEL)) {
+                                iconLeft = <FontAwesome6 name="phone" size={20} color={contrastColor} />;
+                        } else if (finalHref?.startsWith(UriScheme.MAILTO)) {
+                                iconLeft = <MaterialCommunityIcons name="email" size={24} color={contrastColor} />;
+                        } else if (hrefLowerCase?.startsWith(UriScheme.GEO) || hrefLowerCase?.startsWith(UriScheme.MAPS)) {
+                                iconLeft = <Ionicons name="navigate" size={24} color={contrastColor} />;
+                        }
 
-			console.log('[MyMarkdown] Rendering link', {
-				href,
-				finalHref,
-				text,
-			});
+                        console.log('[MyMarkdown] Rendering link', {
+                                href,
+                                hrefLowerCase,
+                                finalHref,
+                                text,
+                        });
 
 			return <ProjectButton text={text} onPress={handlePress} iconLeft={iconLeft} />;
 		},
