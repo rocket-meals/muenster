@@ -21,19 +21,23 @@ const ANDROID_PARAM_NEW_ACTIVITY = {
 };
 
 export class CommonSystemActionHelper {
-	static async openExternalURL(url: string, newWindow = false) {
-		if (isMobile) {
-			await Linking.openURL(url);
-		} else {
-			let target = '_self';
-			if (newWindow) {
-				target = '_blank';
-			}
-			await window.open(url, target);
-		}
-	}
+        static async openExternalURL(url: string, newWindow = false) {
+                if (isMobile) {
+                        await Linking.openURL(url);
+                } else {
+                        let target = '_self';
+                        if (newWindow) {
+                                target = '_blank';
+                        }
+                        await window.open(url, target);
+                }
+        }
 
-	// static async openMaps(location: LocationType, useGoogleMaps?: boolean) {
+        static getGoogleMapsUrl(latitude: number, longitude: number) {
+                return `https://www.google.com/maps?q=${latitude},${longitude}`;
+        }
+
+        // static async openMaps(location: LocationType, useGoogleMaps?: boolean) {
 	// 	const latitude = location?.latitude;
 	// 	const longitude = location?.longitude;
 

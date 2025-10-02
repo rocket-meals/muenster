@@ -1,6 +1,6 @@
 import React from 'react';
 import { Appearance, Linking, Text, useWindowDimensions, View } from 'react-native';
-import { FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome6, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import MarkdownIt from 'markdown-it';
 import { darkTheme, lightTheme } from '@/styles/themes';
 import RenderHtml, { CustomBlockRenderer, CustomMixedRenderer, CustomTextualRenderer, HTMLContentModel, HTMLElementModel } from 'react-native-render-html';
@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import ProjectButton from '../ProjectButton';
 import { myContrastColor } from '@/helper/ColorHelper';
+import { CommonSystemActionHelper } from '@/helper/SystemActionHelper';
 
 export interface MyMarkdownProps {
 	content: string;
@@ -74,28 +75,43 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({ content, textColor: textColorPr
 		fontStyle: 'normal',
 	};
 
-	const customRenderers: Record<string, CustomBlockRenderer | CustomTextualRenderer | CustomMixedRenderer> = {
-		a: (props: any) => {
-			const { href } = props.tnode.attributes;
-			const { data } = props.tnode;
-			const text = data || props.children[0]?.data;
+        const customRenderers: Record<string, CustomBlockRenderer | CustomTextualRenderer | CustomMixedRenderer> = {
+                a: (props: any) => {
+                        const { href } = props.tnode.attributes;
+                        const { data } = props.tnode;
+                        const text = data || props.children[0]?.data;
 
-			const handlePress = () => {
-				if (href) {
-					Linking.openURL(href).catch(err => console.error('Failed to open URL:', err));
-				}
-			};
+                        let finalHref = href;
+                        if (href?.toLowerCase().startsWith('latlon:')) {
+                                const coordinateString = href.slice('latlon:'.length);
+                                const [latitudeRaw, longitudeRaw] = coordinateString.split(',');
 
-			let iconLeft = <FontAwesome6 name="arrow-up-right-from-square" size={20} color={contrastColor} />;
+                                const latitude = parseFloat(latitudeRaw?.trim() ?? '');
+                                const longitude = parseFloat(longitudeRaw?.trim() ?? '');
 
-			if (href?.startsWith('tel:')) {
-				iconLeft = <FontAwesome6 name="phone" size={20} color={contrastColor} />;
-			} else if (href?.startsWith('mailto:')) {
-				iconLeft = <MaterialCommunityIcons name="email" size={24} color={contrastColor} />;
-			}
+                                if (!Number.isNaN(latitude) && !Number.isNaN(longitude)) {
+                                        finalHref = CommonSystemActionHelper.getGoogleMapsUrl(latitude, longitude);
+                                }
+                        }
 
-			return <ProjectButton text={text} onPress={handlePress} iconLeft={iconLeft} />;
-		},
+                        const handlePress = () => {
+                                if (finalHref) {
+                                        Linking.openURL(finalHref).catch(err => console.error('Failed to open URL:', err));
+                                }
+                        };
+
+                        let iconLeft = <FontAwesome6 name="arrow-up-right-from-square" size={20} color={contrastColor} />;
+
+                        if (finalHref?.startsWith('tel:')) {
+                                iconLeft = <FontAwesome6 name="phone" size={20} color={contrastColor} />;
+                        } else if (finalHref?.startsWith('mailto:')) {
+                                iconLeft = <MaterialCommunityIcons name="email" size={24} color={contrastColor} />;
+                        } else if (href?.toLowerCase().startsWith('latlon:')) {
+                                iconLeft = <Ionicons name="navigate" size={24} color={contrastColor} />;
+                        }
+
+                        return <ProjectButton text={text} onPress={handlePress} iconLeft={iconLeft} />;
+                },
 		sub: (props: any) => {
 			const { data } = props.tnode;
 			const text = data || props.children[0]?.data;
