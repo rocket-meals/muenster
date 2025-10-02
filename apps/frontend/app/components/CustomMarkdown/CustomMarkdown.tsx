@@ -8,17 +8,19 @@ import { myContrastColor } from '@/helper/ColorHelper';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@/hooks/useTheme';
 import { RootState } from '@/redux/reducer';
-import { UriScheme } from '@/constants/UriScheme';
-import { markdownContentPatterns } from '@/constants/MarkdownPatterns';
-import { resolveLocationHref } from '@/helper/MarkdownLinkHelper';
-import { CommonSystemActionHelper } from '@/helper/SystemActionHelper';
 
 const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content, backgroundColor, imageWidth, imageHeight }) => {
 	const { theme } = useTheme();
 	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
 	const getContent = () => {
-		const contentPatterns = markdownContentPatterns;
+		// Regex patterns for different content types
+		const contentPatterns = {
+			email: /\[([^\]]+)]\((mailto:[^\)]+)\)/,
+			link: /\[([^\]]+)]\((https?:\/\/[^\)]+)\)/,
+			image: /!\[([^\]]*)]\(([^)]+)\)/,
+			heading: /^#{1,3}\s*(.*)$/,
+		};
 
 		if (content) {
 			const rawText = content;
@@ -134,13 +136,10 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content, backgroundColo
 					if (contentPatterns.link.test(trimmedForMatch)) {
 						flushTextContent();
 						const match = trimmedForMatch.match(contentPatterns.link);
-						const rawUrl = match?.[2] || '';
-						const { resolvedHref } = resolveLocationHref(rawUrl);
-						const normalizedUrl = resolvedHref ?? rawUrl;
 						stack[stack.length - 1].items.push({
 							type: 'link',
 							displayText: match?.[1],
-							url: normalizedUrl,
+							url: match?.[2],
 							indent: indentLength,
 						});
 						continue;
@@ -265,24 +264,14 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content, backgroundColo
 					case 'email':
 						return (
 							<View key={`email-${level}-${index}`} style={{ marginLeft: calculateMarginLeft(level, item.indent || 0), marginBottom: 10 }}>
-								<RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`${UriScheme.MAILTO}${item.email}`)} backgroundColor={backgroundColor || ''} color={contrastColor} />
+								<RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`mailto:${item.email}`)} backgroundColor={backgroundColor || ''} color={contrastColor} />
 							</View>
 						);
 
 					case 'link':
 						return (
 							<View key={`link-${level}-${index}`} style={{ marginLeft: calculateMarginLeft(level, item.indent || 0), marginBottom: 10 }}>
-								<RedirectButton
-									type="link"
-									label={item.displayText || item.url}
-									onClick={() => {
-										if (item.url) {
-											void CommonSystemActionHelper.openExternalURL(item.url, true);
-										}
-									}}
-									backgroundColor={backgroundColor || ''}
-									color={contrastColor}
-								/>
+								<RedirectButton type="link" label={item.displayText} onClick={() => Linking.openURL(item.url)} backgroundColor={backgroundColor || ''} color={contrastColor} />
 							</View>
 						);
 

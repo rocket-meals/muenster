@@ -2,7 +2,6 @@ import { Linking } from 'react-native';
 // import {LocationType} from '@/helper/geo/LocationType';
 import usePlatformHelper from '@/helper/platformHelper';
 import * as IntentLauncher from 'expo-intent-launcher';
-import { UriScheme } from '@/constants/UriScheme';
 
 const { isAndroid, isIOS } = usePlatformHelper();
 
@@ -11,10 +10,10 @@ const isIOSDevice = isIOS();
 const isMobile = isAndroidDevice || isIOSDevice;
 
 export class HrefHelper {
-	static MAILTO: string = UriScheme.MAILTO;
-	static TEL: string = UriScheme.TEL;
-	static GEO_ANDROID: string = UriScheme.GEO;
-	static GEO_IOS: string = UriScheme.MAPS;
+	static MAILTO: string = 'mailto:';
+	static TEL: string = 'tel:';
+	static GEO_ANDROID: string = 'geo:';
+	static GEO_IOS: string = 'maps:';
 }
 
 const ANDROID_PARAM_NEW_ACTIVITY = {
@@ -22,23 +21,23 @@ const ANDROID_PARAM_NEW_ACTIVITY = {
 };
 
 export class CommonSystemActionHelper {
-	static async openExternalURL(url: string, newWindow = false) {
-		if (isMobile) {
-			await Linking.openURL(url);
-		} else {
-			let target = '_self';
-			if (newWindow) {
-				target = '_blank';
-			}
-			await window.open(url, target);
-		}
-	}
+        static async openExternalURL(url: string, newWindow = false) {
+                if (isMobile) {
+                        await Linking.openURL(url);
+                } else {
+                        let target = '_self';
+                        if (newWindow) {
+                                target = '_blank';
+                        }
+                        await window.open(url, target);
+                }
+        }
 
-	static getGoogleMapsUrl(latitude: number, longitude: number) {
-		return `https://www.google.com/maps?q=${latitude},${longitude}`;
-	}
+        static getGoogleMapsUrl(latitude: number, longitude: number) {
+                return `https://www.google.com/maps?q=${latitude},${longitude}`;
+        }
 
-	// static async openMaps(location: LocationType, useGoogleMaps?: boolean) {
+        // static async openMaps(location: LocationType, useGoogleMaps?: boolean) {
 	// 	const latitude = location?.latitude;
 	// 	const longitude = location?.longitude;
 

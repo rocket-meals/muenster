@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
-import { UriScheme } from '@/constants/UriScheme';
 
 const SupportFaq = () => {
 	useSetPageTitle(TranslationKeys.feedback_support_faq);
@@ -109,7 +108,7 @@ const SupportFaq = () => {
 							value="info@rocket-meals.de"
 							rightIcon={<Octicons name="chevron-right" size={24} color={theme.screen.icon} />}
 							handleFunction={() => {
-								Linking.openURL(`${UriScheme.MAILTO}info@rocket-meals.de`);
+								Linking.openURL('mailto:info@rocket-meals.de');
 							}}
 							groupPosition="bottom"
 						/>

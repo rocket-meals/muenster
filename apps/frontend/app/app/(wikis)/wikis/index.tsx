@@ -10,7 +10,7 @@ import { isWeb } from '@/constants/Constants';
 import DeviceMock from '@/components/DeviceMock/DeviceMock';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { AppScreens, DatabaseTypes } from 'repo-depkit-common';
-import MyMarkdown from '@/components/MyMarkdown/MyMarkdown';
+import CustomMarkdown from '@/components/CustomMarkdown/CustomMarkdown';
 import { RootState } from '@/redux/reducer';
 import { TranslationKeys } from '@/locales/keys';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -20,7 +20,7 @@ const Index = () => {
 	const { translate } = useLanguage();
 	const [wiki, setWiki] = useState<DatabaseTypes.Wikis>();
 	const [loading, setLoading] = useState(true);
-	const { wikis, language } = useSelector((state: RootState) => state.settings);
+	const { wikis, language, primaryColor } = useSelector((state: RootState) => state.settings);
 	const { deviceMock } = useGlobalSearchParams();
 	const { custom_id, id } = useLocalSearchParams();
 	//Set Page Title
@@ -83,7 +83,7 @@ const Index = () => {
 						<ActivityIndicator size={30} color={theme.screen.text} />
 					</View>
 				) : wiki?.translations && getTextFromTranslation(wiki.translations, language)?.trim() ? (
-					<MyMarkdown content={getTextFromTranslation(wiki.translations, language)} textColor={theme.screen.text} />
+					<CustomMarkdown content={getTextFromTranslation(wiki.translations, language)} backgroundColor={wiki?.color || primaryColor} imageWidth={'100%'} imageHeight={400} />
 				) : (
 					<Text style={{ color: theme.screen.text, padding: 16 }}>{translate(TranslationKeys.no_data_found)}</Text>
 				)}

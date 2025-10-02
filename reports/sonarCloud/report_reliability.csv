@@ -1,10 +1,6 @@
 Key,Message,Component,Line
-"AZmlpMbtdw_hdAYcor6g","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/helper/MarkdownLinkHelper.ts",30
-"AZmlpMbtdw_hdAYcor6h","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/helper/MarkdownLinkHelper.ts",31
-"AZmlpMbtdw_hdAYcor6i","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/helper/MarkdownLinkHelper.ts",73
-"AZmlpMbtdw_hdAYcor6k","Group parts of the regex together to make the intended operator precedence explicit.","rocket-meals_rocket-meals:apps/frontend/app/helper/MarkdownLinkHelper.ts",73
-"AZmhgvb7SH5T9lrKgP3j","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",49
-"AZmhgvb7SH5T9lrKgP3n","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",83
+"AZmhgvb7SH5T9lrKgP3j","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",51
+"AZmhgvb7SH5T9lrKgP3n","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",85
 "AZlyj_Mg0YdgFOBafBLM","React Hook ""useCallback"" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",98
 "AZlykAA80YdgFOBafBO3","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/sonarCloudReportDownloader/src/index.ts",108
 "AZlykAAE0YdgFOBafBOz","Prefer `Number.parseInt` over `parseInt`.","rocket-meals_rocket-meals:apps/sonarCloudReportDownloader/src/fixStaticReadonly.ts",37
