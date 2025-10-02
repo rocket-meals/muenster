@@ -1,6 +1,6 @@
 Key,Message,Component,Line
-"AZmkUOZylq4QPeN-JrS2","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",89
-"AZmkUOZylq4QPeN-JrS3","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",90
+"AZmkUOZylq4QPeN-JrS2","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",104
+"AZmkUOZylq4QPeN-JrS3","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",105
 "AZmhgvb7SH5T9lrKgP3j","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",51
 "AZmhgvb7SH5T9lrKgP3n","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",85
 "AZlyj_Mg0YdgFOBafBLM","React Hook ""useCallback"" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingLabels/MarkingLabels.tsx",98
