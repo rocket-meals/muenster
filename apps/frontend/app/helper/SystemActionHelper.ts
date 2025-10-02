@@ -2,6 +2,7 @@ import { Linking } from 'react-native';
 // import {LocationType} from '@/helper/geo/LocationType';
 import usePlatformHelper from '@/helper/platformHelper';
 import * as IntentLauncher from 'expo-intent-launcher';
+import { UriScheme } from '@/constants/UriScheme';
 
 const { isAndroid, isIOS } = usePlatformHelper();
 
@@ -10,10 +11,10 @@ const isIOSDevice = isIOS();
 const isMobile = isAndroidDevice || isIOSDevice;
 
 export class HrefHelper {
-	static MAILTO: string = 'mailto:';
-	static TEL: string = 'tel:';
-	static GEO_ANDROID: string = 'geo:';
-	static GEO_IOS: string = 'maps:';
+        static MAILTO: string = UriScheme.MAILTO;
+        static TEL: string = UriScheme.TEL;
+        static GEO_ANDROID: string = UriScheme.GEO;
+        static GEO_IOS: string = UriScheme.MAPS;
 }
 
 const ANDROID_PARAM_NEW_ACTIVITY = {

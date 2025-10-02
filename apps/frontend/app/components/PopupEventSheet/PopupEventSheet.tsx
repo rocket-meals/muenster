@@ -14,6 +14,8 @@ import { getTextFromTranslation, getTitleFromTranslation } from '@/helper/resour
 import RedirectButton from '../RedirectButton';
 import ProjectButton from '../ProjectButton';
 import { RootState } from '@/redux/reducer';
+import { UriScheme } from '@/constants/UriScheme';
+import { markdownContentPatterns } from '@/constants/MarkdownPatterns';
 
 const PopupEventSheet: React.FC<PopupEventSheetProps> = ({ closeSheet, eventData }) => {
 	const { theme } = useTheme();
@@ -24,13 +26,7 @@ const PopupEventSheet: React.FC<PopupEventSheetProps> = ({ closeSheet, eventData
 	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
 	const getContent = () => {
-		// Regex patterns for different content types
-		const contentPatterns = {
-			email: /\[([^\]]+)]\((mailto:[^\)]+)\)/,
-			link: /\[([^\]]+)]\((https?:\/\/[^\)]+)\)/,
-			image: /!\[([^\]]*)]\(([^)]+)\)/,
-			heading: /^#{1,3}\s*(.*)$/,
-		};
+                const contentPatterns = markdownContentPatterns;
 
 		if (eventData?.translations) {
 			const rawText = getTextFromTranslation(eventData?.translations, language);
@@ -173,7 +169,7 @@ const PopupEventSheet: React.FC<PopupEventSheetProps> = ({ closeSheet, eventData
 					case 'email':
 						return (
 							<View key={`email-${level}-${index}`} style={{ marginLeft: level * 16, marginBottom: 10 }}>
-								<RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`mailto:${item.email}`)} backgroundColor={foods_area_color} color={contrastColor} />
+                                                                <RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`${UriScheme.MAILTO}${item.email}`)} backgroundColor={foods_area_color} color={contrastColor} />
 							</View>
 						);
 
