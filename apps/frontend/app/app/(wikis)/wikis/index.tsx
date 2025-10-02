@@ -20,7 +20,7 @@ const Index = () => {
 	const { translate } = useLanguage();
 	const [wiki, setWiki] = useState<DatabaseTypes.Wikis>();
 	const [loading, setLoading] = useState(true);
-        const { wikis, language } = useSelector((state: RootState) => state.settings);
+	const { wikis, language } = useSelector((state: RootState) => state.settings);
 	const { deviceMock } = useGlobalSearchParams();
 	const { custom_id, id } = useLocalSearchParams();
 	//Set Page Title
@@ -82,9 +82,9 @@ const Index = () => {
 					>
 						<ActivityIndicator size={30} color={theme.screen.text} />
 					</View>
-                                ) : wiki?.translations && getTextFromTranslation(wiki.translations, language)?.trim() ? (
-                                        <MyMarkdown content={getTextFromTranslation(wiki.translations, language)} textColor={theme.screen.text} />
-                                ) : (
+				) : wiki?.translations && getTextFromTranslation(wiki.translations, language)?.trim() ? (
+					<MyMarkdown content={getTextFromTranslation(wiki.translations, language)} textColor={theme.screen.text} />
+				) : (
 					<Text style={{ color: theme.screen.text, padding: 16 }}>{translate(TranslationKeys.no_data_found)}</Text>
 				)}
 			</View>
