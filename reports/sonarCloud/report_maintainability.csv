@@ -1,4 +1,9 @@
 Key,Message,Component,Line
+"AZmmpWFoTT1E7gtUoReT","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",89
+"AZmmpWFoTT1E7gtUoReU","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",90
+"AZmlpMbtdw_hdAYcor6g","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/helper/MarkdownLinkHelper.ts",30
+"AZmlpMbtdw_hdAYcor6h","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/helper/MarkdownLinkHelper.ts",31
+"AZmlpMbtdw_hdAYcor6i","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/helper/MarkdownLinkHelper.ts",73
 "AZmhgvb7SH5T9lrKgP3g","Refactor this function to reduce its Cognitive Complexity from 29 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",31
 "AZmhgvb7SH5T9lrKgP3h","Refactor this code to not nest functions more than 4 levels deep.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",38
 "AZmhgvb7SH5T9lrKgP3i","Refactor this code to not nest functions more than 4 levels deep.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomMarkdown/CustomMarkdown.tsx",39
@@ -34,7 +39,6 @@ Key,Message,Component,Line
 "AZk5yCd3cqWn87Mc_lJF","Remove this unused import of 'DatabaseTypes'.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/housing-sync-hook/ApartmentsParseSchedule.ts",2
 "AZk5yCkicqWn87Mc_lJO","Unexpected `await` of a non-Promise (non-""Thenable"") value.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/news-sync-hook/NewsParseSchedule.ts",62
 "AZk5yCkicqWn87Mc_lJP","The signature '(item: DatabaseTypes.News, translationsFromParsing: TranslationsFromParsingType, items_primary_field_in_translation_table: string, itemsTablename: CollectionNames, myDatabaseHelper: MyDatabaseHelper): Promise<...>' of 'TranslationHelper.updateItemTranslations' is deprecated.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/news-sync-hook/NewsParseSchedule.ts",72
-"AZk5yClDcqWn87Mc_lJQ","This file is part of one cycle involving 2 files.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/workflows-runs-hook/WorkflowRunJobInterface.ts",1
 "AZlykAA80YdgFOBafBO2","Prefer `node:child_process` over `child_process`.","rocket-meals_rocket-meals:apps/sonarCloudReportDownloader/src/index.ts",6
 "AZkzSqb43nmvPY2tpuqI","Remove this unused import of 'ServerAPI'.","rocket-meals_rocket-meals:apps/frontend/app/redux/actions/User/User.ts",7
 "AZkybLRC_ky8HW5FJkUk","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/Details/index.tsx",49
@@ -56,13 +60,6 @@ Key,Message,Component,Line
 "AZkfCEQNZWk3l8lfAOUF","Unnecessary escape character: \"".","rocket-meals_rocket-meals:apps/sonarCloudReportDownloader/src/fixStaticReadonly.ts",32
 "AZkfCEQNZWk3l8lfAOUG","Unnecessary escape character: \"".","rocket-meals_rocket-meals:apps/sonarCloudReportDownloader/src/fixStaticReadonly.ts",32
 "AZlykAAE0YdgFOBafBOz","Prefer `Number.parseInt` over `parseInt`.","rocket-meals_rocket-meals:apps/sonarCloudReportDownloader/src/fixStaticReadonly.ts",37
-"AZkVA8BnGZIUGyy7Qqym","This file is part of one cycle involving 2 files.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/forms-sync-hook/index.ts",1
-"AZkVA79sGZIUGyy7Qqyk","This file is part of one cycle involving 2 files.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/ApiContext.ts",1
-"AZkVA79iGZIUGyy7Qqyj","This file is part of one cycle involving 2 files.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/ItemsServiceHelper.ts",1
-"AZkVA76eGZIUGyy7Qqyi","This file is part of 3 cycles involving 7 files.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/MyDatabaseHelper.ts",1
-"AZkVA794GZIUGyy7Qqyl","This file is part of one cycle involving 2 files.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/pdf/PdfGeneratorHelper.ts",1
-"AZkVA7whGZIUGyy7Qqyg","This file is part of 2 cycles involving 3 files.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/account-balance/MyCardReader.ts",1
-"AZkVA71_GZIUGyy7Qqyh","This file is part of one cycle involving 2 files.","rocket-meals_rocket-meals:apps/frontend/app/helper/nfcCardReaderHelper/CardReader.ts",1
 "AZkU8RhraFO0qV2RlEy2","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/campus/details/index.tsx",164
 "AZkU8RhraFO0qV2RlEy3","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/campus/details/index.tsx",199
 "AZkU8RhraFO0qV2RlEy4","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/campus/details/index.tsx",214
@@ -411,8 +408,8 @@ Key,Message,Component,Line
 "AZkUSvJeS4VhJojFFAUH","Refactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingIcon/index.tsx",19
 "AZkUSvJeS4VhJojFFAUI","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/MarkingIcon/index.tsx",28
 "AZkUSvGcS4VhJojFFAS8","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/MenuSheet/MenuSheet.tsx",50
-"AZkUSu_tS4VhJojFFAP_","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",34
-"AZkUSu_tS4VhJojFFAQA","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",34
+"AZkUSu_tS4VhJojFFAP_","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",35
+"AZkUSu_tS4VhJojFFAQA","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",35
 "AZkUSvCWS4VhJojFFARN","Refactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/components/NewsItem/NewsItem.tsx",16
 "AZkUSu5-S4VhJojFFAOS","Remove this useless assignment to variable ""ImageContent"".","rocket-meals_rocket-meals:apps/frontend/app/components/PopupEventSheet/PopupEventSheet.tsx",133
 "AZkUSu5-S4VhJojFFAOT","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/PopupEventSheet/PopupEventSheet.tsx",133
@@ -855,7 +852,7 @@ Key,Message,Component,Line
 "AZkUSvUHS4VhJojFFAhX","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",14
 "AZkUSvUHS4VhJojFFAhY","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",15
 "AZkUSvUHS4VhJojFFAhZ","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",16
-"AZkUSvUHS4VhJojFFAhf","Rename class ""iPhoneSystemActionHelper"" to match the regular expression ^[A-Z][a-zA-Z0-9]*$.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",92
+"AZkUSvUHS4VhJojFFAhf","Rename class ""iPhoneSystemActionHelper"" to match the regular expression ^[A-Z][a-zA-Z0-9]*$.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",96
 "AZlyj_mg0YdgFOBafBMO","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/helper/dateMap.ts",5
 "AZlyj_ok0YdgFOBafBMV","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/helper/resourceHelper.tsx",145
 "AZlyj_rP0YdgFOBafBMf","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/i18n.ts",9
@@ -997,9 +994,9 @@ Key,Message,Component,Line
 "AZlyj_Bu0YdgFOBafBKn","Do not call `Array#push()` multiple times.","rocket-meals_rocket-meals:apps/frontend/app/components/Drawer/CustomDrawerContent.tsx",259
 "AZkUSvItS4VhJojFFAT3","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/components/ExpoUpdateLoader/ExpoUpdateLoader.tsx",40
 "AZlyj_It0YdgFOBafBLF","Unexpected negated condition.","rocket-meals_rocket-meals:apps/frontend/app/components/ForecastSheet/ForecastSheet.tsx",136
-"AZkUSu_tS4VhJojFFAQB","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",78
-"AZkUSu_tS4VhJojFFAQC","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",99
-"AZkUSu_tS4VhJojFFAQD","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",104
+"AZkUSu_tS4VhJojFFAQB","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",79
+"AZkUSu_tS4VhJojFFAQC","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",115
+"AZkUSu_tS4VhJojFFAQD","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",120
 "AZkUSu9KS4VhJojFFAPI","Remove this useless assignment to variable ""primaryColor"".","rocket-meals_rocket-meals:apps/frontend/app/components/ColorSchemeSheet/ColorSchemeSheet.tsx",18
 "AZkUSvGvS4VhJojFFATJ","Remove this useless assignment to variable ""primaryColor"".","rocket-meals_rocket-meals:apps/frontend/app/components/DrawerPositionSheet/DrawerPositionSheet.tsx",18
 "AZkUSu7MS4VhJojFFAOl","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/LanguageSheet/LanguageSheet.tsx",46
@@ -1316,14 +1313,14 @@ Key,Message,Component,Line
 "AZkUSvVPS4VhJojFFAiN","Complete the task associated to this ""TODO"" comment.","rocket-meals_rocket-meals:apps/frontend/app/helper/NotificationHelper.ts",132
 "AZkUSvUHS4VhJojFFAhV","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",2
 "AZkUSvUHS4VhJojFFAha","Unexpected `await` of a non-Promise (non-""Thenable"") value.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",32
-"AZkUSvUHS4VhJojFFAhb","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",40
-"AZkUSvUHS4VhJojFFAhc","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",45
-"AZkUSvUHS4VhJojFFAhd","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",51
-"AZkUSvUHS4VhJojFFAhe","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",59
-"AZkUSvUHS4VhJojFFAhg","Rename class ""androidSystemActionHelper"" to match the regular expression ^[A-Z][a-zA-Z0-9]*$.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",94
-"AZkUSvUHS4VhJojFFAhh","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",101
-"AZkUSvUHS4VhJojFFAhi","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",102
-"AZkUSvUHS4VhJojFFAhj","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",103
+"AZkUSvUHS4VhJojFFAhb","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",44
+"AZkUSvUHS4VhJojFFAhc","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",49
+"AZkUSvUHS4VhJojFFAhd","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",55
+"AZkUSvUHS4VhJojFFAhe","Remove this commented out code.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",63
+"AZkUSvUHS4VhJojFFAhg","Rename class ""androidSystemActionHelper"" to match the regular expression ^[A-Z][a-zA-Z0-9]*$.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",98
+"AZkUSvUHS4VhJojFFAhh","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",105
+"AZkUSvUHS4VhJojFFAhi","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",106
+"AZkUSvUHS4VhJojFFAhj","Make this public static property readonly.","rocket-meals_rocket-meals:apps/frontend/app/helper/SystemActionHelper.ts",107
 "AZlyj_mS0YdgFOBafBMD","Prefer `Number.parseInt` over `parseInt`.","rocket-meals_rocket-meals:apps/frontend/app/helper/animationHelper.ts",10
 "AZlyj_mS0YdgFOBafBME","Prefer `Number.parseInt` over `parseInt`.","rocket-meals_rocket-meals:apps/frontend/app/helper/animationHelper.ts",11
 "AZlyj_mS0YdgFOBafBMF","Prefer `Number.parseInt` over `parseInt`.","rocket-meals_rocket-meals:apps/frontend/app/helper/animationHelper.ts",12
