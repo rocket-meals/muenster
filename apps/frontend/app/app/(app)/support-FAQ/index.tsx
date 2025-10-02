@@ -109,7 +109,7 @@ const SupportFaq = () => {
 							value="info@rocket-meals.de"
 							rightIcon={<Octicons name="chevron-right" size={24} color={theme.screen.icon} />}
 							handleFunction={() => {
-                                                                Linking.openURL(`${UriScheme.MAILTO}info@rocket-meals.de`);
+								Linking.openURL(`${UriScheme.MAILTO}info@rocket-meals.de`);
 							}}
 							groupPosition="bottom"
 						/>

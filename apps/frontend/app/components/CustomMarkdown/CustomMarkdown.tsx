@@ -16,7 +16,7 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content, backgroundColo
 	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
 	const getContent = () => {
-                const contentPatterns = markdownContentPatterns;
+		const contentPatterns = markdownContentPatterns;
 
 		if (content) {
 			const rawText = content;
@@ -260,7 +260,7 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content, backgroundColo
 					case 'email':
 						return (
 							<View key={`email-${level}-${index}`} style={{ marginLeft: calculateMarginLeft(level, item.indent || 0), marginBottom: 10 }}>
-                                                                <RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`${UriScheme.MAILTO}${item.email}`)} backgroundColor={backgroundColor || ''} color={contrastColor} />
+								<RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`${UriScheme.MAILTO}${item.email}`)} backgroundColor={backgroundColor || ''} color={contrastColor} />
 							</View>
 						);
 

@@ -26,7 +26,7 @@ const PopupEventSheet: React.FC<PopupEventSheetProps> = ({ closeSheet, eventData
 	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
 	const getContent = () => {
-                const contentPatterns = markdownContentPatterns;
+		const contentPatterns = markdownContentPatterns;
 
 		if (eventData?.translations) {
 			const rawText = getTextFromTranslation(eventData?.translations, language);
@@ -169,7 +169,7 @@ const PopupEventSheet: React.FC<PopupEventSheetProps> = ({ closeSheet, eventData
 					case 'email':
 						return (
 							<View key={`email-${level}-${index}`} style={{ marginLeft: level * 16, marginBottom: 10 }}>
-                                                                <RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`${UriScheme.MAILTO}${item.email}`)} backgroundColor={foods_area_color} color={contrastColor} />
+								<RedirectButton type="email" label={item.displayText} onClick={() => Linking.openURL(`${UriScheme.MAILTO}${item.email}`)} backgroundColor={foods_area_color} color={contrastColor} />
 							</View>
 						);
 

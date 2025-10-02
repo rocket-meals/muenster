@@ -46,9 +46,9 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({ content, textColor: textColorPr
 
 		const normalizedUrl = url.toLowerCase();
 
-    if (normalizedUrl.startsWith(UriScheme.GEO)) {
-            return true;
-    }
+		if (normalizedUrl.startsWith(UriScheme.GEO)) {
+			return true;
+		}
 
 		return defaultValidateLink(url);
 	};
@@ -98,18 +98,18 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({ content, textColor: textColorPr
 			const text = data || props.children[0]?.data;
 
 			let finalHref = href;
-                        if (href?.toLowerCase().startsWith(UriScheme.GEO)) {
-                                const coordinateString = href.slice(UriScheme.GEO.length);
-                                const [coordinatePart] = coordinateString.split(/[;?]/);
-                                const [latitudeRaw, longitudeRaw] = coordinatePart.split(',');
+			if (href?.toLowerCase().startsWith(UriScheme.GEO)) {
+				const coordinateString = href.slice(UriScheme.GEO.length);
+				const [coordinatePart] = coordinateString.split(/[;?]/);
+				const [latitudeRaw, longitudeRaw] = coordinatePart.split(',');
 
-                                const latitude = parseFloat(latitudeRaw?.trim() ?? '');
-                                const longitude = parseFloat(longitudeRaw?.trim() ?? '');
+				const latitude = parseFloat(latitudeRaw?.trim() ?? '');
+				const longitude = parseFloat(longitudeRaw?.trim() ?? '');
 
-                                if (!Number.isNaN(latitude) && !Number.isNaN(longitude)) {
-                                        finalHref = CommonSystemActionHelper.getGoogleMapsUrl(latitude, longitude);
-                                }
-                        }
+				if (!Number.isNaN(latitude) && !Number.isNaN(longitude)) {
+					finalHref = CommonSystemActionHelper.getGoogleMapsUrl(latitude, longitude);
+				}
+			}
 
 			const handlePress = () => {
 				if (finalHref) {
@@ -119,13 +119,13 @@ const MyMarkdown: React.FC<MyMarkdownProps> = ({ content, textColor: textColorPr
 
 			let iconLeft = <FontAwesome6 name="arrow-up-right-from-square" size={20} color={contrastColor} />;
 
-                        if (finalHref?.startsWith(UriScheme.TEL)) {
-                                iconLeft = <FontAwesome6 name="phone" size={20} color={contrastColor} />;
-                        } else if (finalHref?.startsWith(UriScheme.MAILTO)) {
-                                iconLeft = <MaterialCommunityIcons name="email" size={24} color={contrastColor} />;
-                        } else if (href?.toLowerCase().startsWith(UriScheme.GEO)) {
-                                iconLeft = <Ionicons name="navigate" size={24} color={contrastColor} />;
-                        }
+			if (finalHref?.startsWith(UriScheme.TEL)) {
+				iconLeft = <FontAwesome6 name="phone" size={20} color={contrastColor} />;
+			} else if (finalHref?.startsWith(UriScheme.MAILTO)) {
+				iconLeft = <MaterialCommunityIcons name="email" size={24} color={contrastColor} />;
+			} else if (href?.toLowerCase().startsWith(UriScheme.GEO)) {
+				iconLeft = <Ionicons name="navigate" size={24} color={contrastColor} />;
+			}
 
 			console.log('[MyMarkdown] Rendering link', {
 				href,

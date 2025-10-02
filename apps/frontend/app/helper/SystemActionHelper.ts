@@ -11,10 +11,10 @@ const isIOSDevice = isIOS();
 const isMobile = isAndroidDevice || isIOSDevice;
 
 export class HrefHelper {
-        static MAILTO: string = UriScheme.MAILTO;
-        static TEL: string = UriScheme.TEL;
-        static GEO_ANDROID: string = UriScheme.GEO;
-        static GEO_IOS: string = UriScheme.MAPS;
+	static MAILTO: string = UriScheme.MAILTO;
+	static TEL: string = UriScheme.TEL;
+	static GEO_ANDROID: string = UriScheme.GEO;
+	static GEO_IOS: string = UriScheme.MAPS;
 }
 
 const ANDROID_PARAM_NEW_ACTIVITY = {
