@@ -58,7 +58,12 @@ const FoodOffersNextDayTimeSheet: React.FC<FoodOffersNextDayTimeSheetProps> = ({
 
 	return (
 		<BottomSheetView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}>
-			<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={bottomInset + 16} style={styles.keyboardAvoidingView} contentContainerStyle={styles.keyboardAvoidingContent}>
+                        <KeyboardAvoidingView
+                                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                                keyboardVerticalOffset={Platform.OS === 'ios' ? bottomInset : 0}
+                                style={styles.keyboardAvoidingView}
+                                contentContainerStyle={styles.keyboardAvoidingContent}
+                        >
 				<View style={styles.sheetHeader}>
 					<Text style={{ ...styles.sheetHeading, color: theme.sheet.text }}>{translate(TranslationKeys.foodoffers_next_day_time)}</Text>
 				</View>

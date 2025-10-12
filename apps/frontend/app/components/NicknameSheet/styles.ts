@@ -1,20 +1,28 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-	sheetView: {
-		width: '100%',
-		height: '100%',
-		borderTopRightRadius: 28,
-		borderTopLeftRadius: 28,
-		padding: 10,
-		paddingBottom: 20,
-		alignItems: 'center',
-	},
-	sheetHeader: {
-		width: '100%',
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
+        sheetView: {
+                width: '100%',
+                height: '100%',
+                borderTopRightRadius: 28,
+                borderTopLeftRadius: 28,
+                padding: 10,
+                paddingBottom: 20,
+                alignItems: 'center',
+        },
+        keyboardAvoidingView: {
+                flex: 1,
+                width: '100%',
+        },
+        keyboardAvoidingContent: {
+                flexGrow: 1,
+                alignItems: 'center',
+        },
+        sheetHeader: {
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
 		borderTopRightRadius: 28,
 		borderTopLeftRadius: 28,
 	},
