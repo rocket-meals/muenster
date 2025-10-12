@@ -10,11 +10,14 @@ export default StyleSheet.create({
 		paddingBottom: 24,
 		alignItems: 'center',
 	},
-	keyboardAvoidingView: {
-		flex: 1,
-		width: '100%',
-		alignItems: 'center',
-	},
+        keyboardAvoidingView: {
+                flex: 1,
+                width: '100%',
+        },
+        keyboardAvoidingContent: {
+                flexGrow: 1,
+                alignItems: 'center',
+        },
 	sheetHeader: {
 		width: '100%',
 		flexDirection: 'row',

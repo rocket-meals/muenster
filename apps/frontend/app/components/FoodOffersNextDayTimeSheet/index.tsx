@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useSelector } from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RootState } from '@/redux/reducer';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -14,9 +15,10 @@ import { FoodOffersNextDayTimeSheetProps } from './types';
 const DEFAULT_THRESHOLD = '23:59';
 
 const FoodOffersNextDayTimeSheet: React.FC<FoodOffersNextDayTimeSheetProps> = ({ closeSheet, initialValue, onSave }) => {
-	const { theme } = useTheme();
-	const { translate } = useLanguage();
-	const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+        const { theme } = useTheme();
+        const { translate } = useLanguage();
+        const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+        const { bottom: bottomInset } = useSafeAreaInsets();
 	const contrastColor = useMemo(() => myContrastColor(primaryColor, theme, mode === 'dark'), [mode, primaryColor, theme]);
 
 	const [value, setValue] = useState(initialValue ?? DEFAULT_THRESHOLD);
@@ -56,7 +58,12 @@ const FoodOffersNextDayTimeSheet: React.FC<FoodOffersNextDayTimeSheetProps> = ({
 
 	return (
 		<BottomSheetView style={{ ...styles.sheetView, backgroundColor: theme.sheet.sheetBg }}>
-			<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keyboardAvoidingView}>
+                        <KeyboardAvoidingView
+                                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                                keyboardVerticalOffset={bottomInset + 16}
+                                style={styles.keyboardAvoidingView}
+                                contentContainerStyle={styles.keyboardAvoidingContent}
+                        >
 				<View style={styles.sheetHeader}>
 					<Text style={{ ...styles.sheetHeading, color: theme.sheet.text }}>{translate(TranslationKeys.foodoffers_next_day_time)}</Text>
 				</View>
