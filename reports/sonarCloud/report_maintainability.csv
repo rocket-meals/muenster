@@ -1055,6 +1055,9 @@ Key,Message,Component,Line
 "AZkUSvADS4VhJojFFAQO","Remove this useless assignment to variable ""translate"".","rocket-meals_rocket-meals:apps/frontend/app/components/ListWeekHeader/ListWeekHeader.tsx",13
 "AZkUSu-IS4VhJojFFAPt","Do not use Array index in keys","rocket-meals_rocket-meals:apps/frontend/app/components/Login/Form.tsx",111
 "AZkUSvc9S4VhJojFFCTR","Default parameters should be last.","rocket-meals_rocket-meals:apps/frontend/app/redux/reducer/lastUpdatedReducer.ts",7
+"AZnlPdtFjqHa6CjL-2W9","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/frontend/generateIcons.sh",70
+"AZnlPdtFjqHa6CjL-2W-","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/frontend/generateIcons.sh",80
+"AZnlPdtFjqHa6CjL-2W_","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/frontend/generateIcons.sh",92
 "AZkUSvKJS4VhJojFFAVV","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/foodoffers/index.tsx",185
 "AZkUSvNbS4VhJojFFAY4","useState call is not destructured into value + setter pair","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/account-balance/index.tsx",55
 "AZkUSvPSS4VhJojFFAbn","Move this component definition out of the parent component and pass data as props.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/campus/_layout.tsx",26
@@ -1683,6 +1686,9 @@ Key,Message,Component,Line
 "AZkUSvuoS4VhJojFFCe_","Unexpected lexical declaration in case block.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/cashregister-hook/Cashregisters_SWOSY.ts",115
 "AZkUSvuoS4VhJojFFCfA","Redundant double negation.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/cashregister-hook/Cashregisters_SWOSY.ts",116
 "AZkUSvuoS4VhJojFFCfC","Remove this commented out code.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/cashregister-hook/Cashregisters_SWOSY.ts",184
+"AZnlPd9GjqHa6CjL-2XS","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/backend/backupRestore.sh",9
+"AZnlPd9GjqHa6CjL-2XT","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/backend/backupRestore.sh",23
+"AZnlPd81jqHa6CjL-2XN","Redirect this error message to stderr (>&2).","rocket-meals_rocket-meals:apps/backend/dockerDatabaseBackupRestore/restore.sh",46
 "AZkUSv1cS4VhJojFFCrs","Replace deprecated instructions with an up-to-date equivalent.","rocket-meals_rocket-meals:apps/backend/dockerDatabaseBackup/Dockerfile",8
 "AZkUSvffS4VhJojFFCWD","Remove this commented out code.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-notify-schedule-hook/NotifySchedule.ts",67
 "AZkUSvffS4VhJojFFCWE","Remove this commented out code.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-notify-schedule-hook/NotifySchedule.ts",72
@@ -1759,12 +1765,26 @@ Key,Message,Component,Line
 "AZkUSvhNS4VhJojFFCXG","Consider removing 'undefined' type or '?' specifier, one of them is redundant.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/ItemsServiceCreator.ts",17
 "AZkUSvhOS4VhJojFFCXH","Consider removing 'undefined' type or '?' specifier, one of them is redundant.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/ItemsServiceCreator.ts",18
 "AZkUSvuzS4VhJojFFCfG","Rename class ""StudentenwerkHannoverNews_Parser"" to match the regular expression ^[A-Z][a-zA-Z0-9]*$.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/news-sync-hook/hannover/StudentenwerkHannoverNews_Parser.ts",13
+"AZnlPd9VjqHa6CjL-2XV","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/backend/genSSO_Apple.sh",4
+"AZnlPd9VjqHa6CjL-2XU","Redirect this error message to stderr (>&2).","rocket-meals_rocket-meals:apps/backend/genSSO_Apple.sh",80
+"AZnlPd9VjqHa6CjL-2XW","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/backend/genSSO_Apple.sh",104
+"AZnlPd9VjqHa6CjL-2XX","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/backend/genSSO_Apple.sh",123
 "AZkUSvpfS4VhJojFFCai","Redundant double negation.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/washingmachines-sync-hook/osnabrueck/StudentenwerkOsnabrueckWashingmachineParser.ts",29
 "AZlyj__P0YdgFOBafBOk","Prefer `node:child_process` over `child_process`.","rocket-meals_rocket-meals:apps/backend/sync/importSchema.js",5
 "AZkUSv1LS4VhJojFFCrh","Remove this commented out code.","rocket-meals_rocket-meals:apps/backend/sync/importSchema.js",202
 "AZkUSv1LS4VhJojFFCrj","Remove this commented out code.","rocket-meals_rocket-meals:apps/backend/sync/importSchema.js",400
 "AZlyj__P0YdgFOBafBOn","Prefer `node:https` over `https`.","rocket-meals_rocket-meals:apps/backend/sync/importSchema.js",8
 "AZkUSvn1S4VhJojFFCYw","Remove this useless assignment to variable ""logMessage"".","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-feedback-report-schedule/ReportSchedule.ts",233
+"AZnlPdtFjqHa6CjL-2W5","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/frontend/generateIcons.sh",4
+"AZnlPdtFjqHa6CjL-2W6","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/frontend/generateIcons.sh",19
+"AZnlPdtFjqHa6CjL-2W7","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/frontend/generateIcons.sh",46
+"AZnlPdtFjqHa6CjL-2W8","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/frontend/generateIcons.sh",65
+"AZnlPdtFjqHa6CjL-2XA","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:apps/frontend/generateIcons.sh",102
+"AZnlPdtFjqHa6CjL-2W2","Redirect this error message to stderr (>&2).","rocket-meals_rocket-meals:apps/frontend/generateIcons.sh",133
+"AZnlPeBljqHa6CjL-2Xa","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:generate_basic_auth_traefik.sh",4
+"AZnlPeBljqHa6CjL-2Xb","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:generate_basic_auth_traefik.sh",11
+"AZnlPeBljqHa6CjL-2Xc","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:generate_basic_auth_traefik.sh",33
+"AZnlPeBljqHa6CjL-2Xd","Add an explicit return statement at the end of the function.","rocket-meals_rocket-meals:generate_basic_auth_traefik.sh",39
 "AZlyj_3z0YdgFOBafBN5","`String.raw` should be used to avoid escaping `\`.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-sync-hook/CSVExportParser.ts",54
 "AZlyj_3z0YdgFOBafBN6","`String.raw` should be used to avoid escaping `\`.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-sync-hook/CSVExportParser.ts",57
 "AZkUSvs5S4VhJojFFCd8","Redundant double negation.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/food-sync-hook/MarkingTL1Parser.ts",35
