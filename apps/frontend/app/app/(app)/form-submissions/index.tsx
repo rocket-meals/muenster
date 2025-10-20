@@ -39,18 +39,18 @@ const Index = () => {
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
 	const { form_id } = useLocalSearchParams();
-	const sheetRef = useRef<BottomSheet>(null);
-	const sortSheetRef = useRef<BottomSheet>(null);
-	const [loading, setLoading] = useState(false);
-	const [query, setQuery] = useState<string>('');
-	const [isActive, setIsActive] = useState(false);
-	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-	const formsSubmissionsHelper = new FormsSubmissionsHelper();
-	const [formSubmissions, setFormSubmissions] = useState<DatabaseTypes.FormSubmissions[]>([]);
-	const [selectedOption, setSelectedOption] = useState<string>('draft');
-	const [sortOption, setSortOption] = useState<FormSubmissionSortOption>('alphabetical');
-	const { drawerPosition, language } = useSelector((state: RootState) => state.settings);
-	const [currentPath, setCurrentPath] = useState<string[]>([]);
+        const sortSheetRef = useRef<BottomSheet>(null);
+        const [loading, setLoading] = useState(false);
+        const [query, setQuery] = useState<string>('');
+        const [isActive, setIsActive] = useState(false);
+        const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+        const formsSubmissionsHelper = new FormsSubmissionsHelper();
+        const [formSubmissions, setFormSubmissions] = useState<DatabaseTypes.FormSubmissions[]>([]);
+        const [selectedOption, setSelectedOption] = useState<string>('draft');
+        const [sortOption, setSortOption] = useState<FormSubmissionSortOption>('alphabetical');
+        const { drawerPosition, language } = useSelector((state: RootState) => state.settings);
+        const [currentPath, setCurrentPath] = useState<string[]>([]);
+        const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
 	const folderPrefixes = useMemo(() => {
 		const prefixes = new Set<string>();
@@ -177,13 +177,13 @@ const Index = () => {
 		return rows;
 	}, [formSubmissions, currentPath, folderPrefixes, translate]);
 
-	const openFilterSheet = () => {
-		sheetRef.current?.expand();
-	};
+        const openFilterSheet = () => {
+                setIsFilterModalVisible(true);
+        };
 
-	const closeFilterSheet = () => {
-		sheetRef?.current?.close();
-	};
+        const closeFilterSheet = () => {
+                setIsFilterModalVisible(false);
+        };
 
 	const openSortSheet = () => {
 		sortSheetRef.current?.expand();
@@ -498,27 +498,22 @@ const Index = () => {
 					)}
 				</View>
 			</View>
-			{isActive && (
-				<>
-					<BaseBottomSheet
-						ref={sheetRef}
-						index={-1}
-						backgroundStyle={{
-							...styles.sheetBackground,
-							backgroundColor: theme.sheet.sheetBg,
-						}}
-						enablePanDownToClose
-						handleComponent={null}
-						onClose={closeFilterSheet}
-					>
-						<FilterFormSheet closeSheet={closeFilterSheet} isFormSubmission={true} setSelectedOption={setSelectedOption} selectedOption={selectedOption} options={filterOptions} />
-					</BaseBottomSheet>
-					<BaseBottomSheet
-						ref={sortSheetRef}
-						index={-1}
-						backgroundStyle={{
-							...styles.sheetBackground,
-							backgroundColor: theme.sheet.sheetBg,
+                        <FilterFormSheet
+                                isVisible={isFilterModalVisible}
+                                closeSheet={closeFilterSheet}
+                                isFormSubmission={true}
+                                setSelectedOption={setSelectedOption}
+                                selectedOption={selectedOption}
+                                options={filterOptions}
+                        />
+                        {isActive && (
+                                <>
+                                        <BaseBottomSheet
+                                                ref={sortSheetRef}
+                                                index={-1}
+                                                backgroundStyle={{
+                                                        ...styles.sheetBackground,
+                                                        backgroundColor: theme.sheet.sheetBg,
 						}}
 						enablePanDownToClose
 						handleComponent={null}

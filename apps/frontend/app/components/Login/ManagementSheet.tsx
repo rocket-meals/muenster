@@ -8,11 +8,13 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { useSelector } from 'react-redux';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
+import { myContrastColor } from '@/helper/ColorHelper';
 
 const ManagementSheet: React.FC<SheetProps> = ({ closeSheet, handleLogin, loading }) => {
 	const { translate } = useLanguage();
-	const { theme } = useTheme();
-	const { primaryColor } = useSelector((state: RootState) => state.settings);
+        const { theme } = useTheme();
+        const { primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+        const contrastColor = myContrastColor(primaryColor, theme, mode === 'dark');
 	const [formState, setFormState] = useState({
 		email: '',
 		password: '',
@@ -81,18 +83,18 @@ const ManagementSheet: React.FC<SheetProps> = ({ closeSheet, handleLogin, loadin
 				disabled={!isFormValid}
 				onPress={() => handleLogin(undefined, formState.email, formState.password)}
 			>
-				{loading ? (
-					<ActivityIndicator size={'small'} color={theme.screen.text} />
-				) : (
-					<Text
-						style={{
-							...styles.sheetLoginLabel,
-							color: isFormValid ? theme.activeText : theme.screen.text,
-						}}
-					>
-						{translate(TranslationKeys.sign_in)}
-					</Text>
-				)}
+                                {loading ? (
+                                        <ActivityIndicator size={'small'} color={theme.screen.text} />
+                                ) : (
+                                        <Text
+                                                style={{
+                                                        ...styles.sheetLoginLabel,
+                                                        color: isFormValid ? contrastColor : theme.screen.text,
+                                                }}
+                                        >
+                                                {translate(TranslationKeys.sign_in)}
+                                        </Text>
+                                )}
 			</TouchableOpacity>
 		</BottomSheetScrollView>
 	);

@@ -1,8 +1,9 @@
 export interface FilterFormSheetProps {
-	closeSheet: () => void;
-	isFormSubmission: boolean;
-	setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
-	selectedOption: string;
+        closeSheet: () => void;
+        isVisible: boolean;
+        isFormSubmission: boolean;
+        setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
+        selectedOption: string;
 	options: Array<{
 		id: string;
 		label: string;

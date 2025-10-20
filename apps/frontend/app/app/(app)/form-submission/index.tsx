@@ -78,24 +78,24 @@ const Index = () => {
 	const { form_submission_id } = useLocalSearchParams();
 	const formAnswersHelper = new FormAnswersHelper();
 	const formsSubmissionsHelper = new FormsSubmissionsHelper();
-	const sheetRef = useRef<BottomSheet>(null);
-	const editSheetRef = useRef<BottomSheet>(null);
-	const warningSheetRef = useRef<BottomSheet>(null);
-	const [loading, setLoading] = useState(false);
-	const [isActive, setIsActive] = useState(false);
+        const editSheetRef = useRef<BottomSheet>(null);
+        const warningSheetRef = useRef<BottomSheet>(null);
+        const [loading, setLoading] = useState(false);
+        const [isActive, setIsActive] = useState(false);
 	const [isWarning, setIsWarning] = useState(false);
 	const [formAnswers, setFormAnswers] = useState<DatabaseTypes.FormAnswers[]>([]);
 	const [loadingCollection, setLoadingCollection] = useState(false);
 	const [collectionData, setCollectionData] = useState<any>([]);
-	const [selectedState, setSelectedState] = useState('');
-	const { formSubmission } = useSelector((state: RootState) => state.form);
-	const { user } = useSelector((state: RootState) => state.authReducer);
-	const [submissionLoading, setSubmissionLoading] = useState(false);
-	const [formData, setFormData] = useState<{
-		[key: string]: { value: any; error: string; custom_type: string };
-	}>({});
-	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-	const { language, drawerPosition, primaryColor } = useSelector((state: RootState) => state.settings);
+        const [selectedState, setSelectedState] = useState('');
+        const { formSubmission } = useSelector((state: RootState) => state.form);
+        const { user } = useSelector((state: RootState) => state.authReducer);
+        const [submissionLoading, setSubmissionLoading] = useState(false);
+        const [formData, setFormData] = useState<{
+                [key: string]: { value: any; error: string; custom_type: string };
+        }>({});
+        const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+        const { language, drawerPosition, primaryColor } = useSelector((state: RootState) => state.settings);
+        const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
 	// Set Page Title
 	useSetPageTitle(formSubmission?.alias || TranslationKeys.form_submission);
@@ -147,13 +147,13 @@ const Index = () => {
 		}));
 	};
 
-	const openFilterSheet = () => {
-		sheetRef.current?.expand();
-	};
+        const openFilterSheet = () => {
+                setIsFilterModalVisible(true);
+        };
 
-	const closeFilterSheet = () => {
-		sheetRef?.current?.close();
-	};
+        const closeFilterSheet = () => {
+                setIsFilterModalVisible(false);
+        };
 
 	const openEditSheet = () => {
 		editSheetRef.current?.expand();
@@ -773,23 +773,17 @@ const Index = () => {
 					<SubmissionWarningSheet id={String(form_submission_id)} closeSheet={closeWarningSheet} />
 				</BaseBottomSheet>
 			)}
-			{isActive && (
-				<BaseBottomSheet
-					ref={sheetRef}
-					index={-1}
-					backgroundStyle={{
-						...styles.sheetBackground,
-						backgroundColor: theme.sheet.sheetBg,
-					}}
-					enablePanDownToClose
-					handleComponent={null}
-					onClose={closeFilterSheet}
-				>
-					<FilterFormSheet closeSheet={closeFilterSheet} isFormSubmission={true} setSelectedOption={setSelectedState} selectedOption={selectedState} options={filterOptions} isEditMode={isEditMode} />
-				</BaseBottomSheet>
-			)}
-		</View>
-	);
+                        <FilterFormSheet
+                                isVisible={isFilterModalVisible}
+                                closeSheet={closeFilterSheet}
+                                isFormSubmission={true}
+                                setSelectedOption={setSelectedState}
+                                selectedOption={selectedState}
+                                options={filterOptions}
+                                isEditMode={isEditMode}
+                        />
+                </View>
+        );
 };
 
 export default Index;
