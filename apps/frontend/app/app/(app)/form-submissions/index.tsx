@@ -19,18 +19,18 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 
 type FormSubmissionListRow =
-        | {
-                        type: 'header';
-                        id: string;
-                        title: string;
-                }
-        | {
-                        type: 'item';
-                        id: string;
-                        title: string;
-                        submission: DatabaseTypes.FormSubmissions;
-                        depth: number;
-                };
+	| {
+			type: 'header';
+			id: string;
+			title: string;
+	  }
+	| {
+			type: 'item';
+			id: string;
+			title: string;
+			submission: DatabaseTypes.FormSubmissions;
+			depth: number;
+	  };
 
 const Index = () => {
 	useSetPageTitle(TranslationKeys.select_a_form_submission);
@@ -43,94 +43,94 @@ const Index = () => {
 	const [isActive, setIsActive] = useState(false);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 	const formsSubmissionsHelper = new FormsSubmissionsHelper();
-        const [formSubmissions, setFormSubmissions] = useState<DatabaseTypes.FormSubmissions[]>([]);
-        const [selectedOption, setSelectedOption] = useState<string>('draft');
-        const { drawerPosition } = useSelector((state: RootState) => state.settings);
+	const [formSubmissions, setFormSubmissions] = useState<DatabaseTypes.FormSubmissions[]>([]);
+	const [selectedOption, setSelectedOption] = useState<string>('draft');
+	const { drawerPosition } = useSelector((state: RootState) => state.settings);
 
-        const listData = useMemo<FormSubmissionListRow[]>(() => {
-                if (!formSubmissions || formSubmissions.length === 0) {
-                        return [];
-                }
+	const listData = useMemo<FormSubmissionListRow[]>(() => {
+		if (!formSubmissions || formSubmissions.length === 0) {
+			return [];
+		}
 
-                const grouped = new Map<
-                        string,
-                        {
-                                firstIndex: number;
-                                children: Array<{
-                                        submission: DatabaseTypes.FormSubmissions;
-                                        title: string;
-                                        depth: number;
-                                }>;
-                        }
-                >();
-                const singles: Array<{ order: number; row: FormSubmissionListRow }> = [];
+		const grouped = new Map<
+			string,
+			{
+				firstIndex: number;
+				children: Array<{
+					submission: DatabaseTypes.FormSubmissions;
+					title: string;
+					depth: number;
+				}>;
+			}
+		>();
+		const singles: Array<{ order: number; row: FormSubmissionListRow }> = [];
 
-                formSubmissions.forEach((submission, index) => {
-                        const alias = submission.alias || '';
-                        const segments = alias.split('/').filter(Boolean);
+		formSubmissions.forEach((submission, index) => {
+			const alias = submission.alias || '';
+			const segments = alias.split('/').filter(Boolean);
 
-                        if (segments.length > 1) {
-                                const parent = segments[0];
-                                const childTitle = segments.slice(1).join('/');
+			if (segments.length > 1) {
+				const parent = segments[0];
+				const childTitle = segments.slice(1).join('/');
 
-                                if (!grouped.has(parent)) {
-                                        grouped.set(parent, {
-                                                firstIndex: index,
-                                                children: [],
-                                        });
-                                }
+				if (!grouped.has(parent)) {
+					grouped.set(parent, {
+						firstIndex: index,
+						children: [],
+					});
+				}
 
-                                grouped.get(parent)?.children.push({
-                                        submission,
-                                        title: childTitle || alias,
-                                        depth: Math.max(segments.length - 1, 1),
-                                });
-                        } else {
-                                singles.push({
-                                        order: index,
-                                        row: {
-                                                type: 'item',
-                                                id: submission.id.toString(),
-                                                title: alias,
-                                                submission,
-                                                depth: 0,
-                                        },
-                                });
-                        }
-                });
+				grouped.get(parent)?.children.push({
+					submission,
+					title: childTitle || alias,
+					depth: Math.max(segments.length - 1, 1),
+				});
+			} else {
+				singles.push({
+					order: index,
+					row: {
+						type: 'item',
+						id: submission.id.toString(),
+						title: alias,
+						submission,
+						depth: 0,
+					},
+				});
+			}
+		});
 
-                const combined: Array<{ order: number; rows: FormSubmissionListRow[] }> = singles.map(single => ({
-                        order: single.order,
-                        rows: [single.row],
-                }));
+		const combined: Array<{ order: number; rows: FormSubmissionListRow[] }> = singles.map(single => ({
+			order: single.order,
+			rows: [single.row],
+		}));
 
-                grouped.forEach((value, key) => {
-                        const sanitizedId = key.replace(/\s+/g, '-').replace(/\//g, '-');
-                        const rows: FormSubmissionListRow[] = [
-                                {
-                                        type: 'header',
-                                        id: `header-${sanitizedId}`,
-                                        title: key,
-                                },
-                                ...value.children.map(child => ({
-                                        type: 'item',
-                                        id: child.submission.id.toString(),
-                                        title: child.title,
-                                        submission: child.submission,
-                                        depth: child.depth,
-                                })),
-                        ];
+		grouped.forEach((value, key) => {
+			const sanitizedId = key.replace(/\s+/g, '-').replace(/\//g, '-');
+			const rows: FormSubmissionListRow[] = [
+				{
+					type: 'header',
+					id: `header-${sanitizedId}`,
+					title: key,
+				},
+				...value.children.map(child => ({
+					type: 'item',
+					id: child.submission.id.toString(),
+					title: child.title,
+					submission: child.submission,
+					depth: child.depth,
+				})),
+			];
 
-                        combined.push({
-                                order: value.firstIndex,
-                                rows,
-                        });
-                });
+			combined.push({
+				order: value.firstIndex,
+				rows,
+			});
+		});
 
-                combined.sort((a, b) => a.order - b.order);
+		combined.sort((a, b) => a.order - b.order);
 
-                return combined.flatMap(entry => entry.rows);
-        }, [formSubmissions]);
+		return combined.flatMap(entry => entry.rows);
+	}, [formSubmissions]);
 
 	const openFilterSheet = () => {
 		sheetRef.current?.expand();
@@ -197,44 +197,44 @@ const Index = () => {
 		return () => subscription?.remove();
 	}, []);
 
-        const renderItem = useCallback(
-                ({ item }: { item: FormSubmissionListRow }) => {
-                        if (item.type === 'header') {
-                                return (
-                                        <View
-                                                style={{
-                                                        ...styles.groupHeader,
-                                                        backgroundColor: theme.screen.iconBg,
-                                                        borderColor: theme.screen.placeholder,
-                                                }}
-                                        >
-                                                <Text style={{ ...styles.groupHeaderText, color: theme.screen.text }}>{item.title}</Text>
-                                        </View>
-                                );
-                        }
+	const renderItem = useCallback(
+		({ item }: { item: FormSubmissionListRow }) => {
+			if (item.type === 'header') {
+				return (
+					<View
+						style={{
+							...styles.groupHeader,
+							backgroundColor: theme.screen.iconBg,
+							borderColor: theme.screen.placeholder,
+						}}
+					>
+						<Text style={{ ...styles.groupHeaderText, color: theme.screen.text }}>{item.title}</Text>
+					</View>
+				);
+			}
 
-                        return (
-                                <TouchableOpacity
-                                        style={{
-                                                ...styles.formCategory,
-                                                backgroundColor: theme.screen.iconBg,
-                                                marginLeft: item.depth > 0 ? item.depth * 12 : 0,
-                                                paddingLeft: item.depth > 0 ? 20 + item.depth * 4 : 10,
-                                        }}
-                                        onPress={() => {
-                                                router.push({
-                                                        pathname: '/form-submission',
-                                                        params: { form_submission_id: item?.submission?.id },
-                                                });
-                                        }}
-                                >
-                                        <Text style={{ ...styles.body, color: theme.screen.text }}>{item.title || item.submission?.alias}</Text>
-                                        <Entypo name="chevron-small-right" color={theme.screen.icon} size={24} />
-                                </TouchableOpacity>
-                        );
-                },
-                [router, theme.screen.icon, theme.screen.iconBg, theme.screen.placeholder, theme.screen.text]
-        );
+			return (
+				<TouchableOpacity
+					style={{
+						...styles.formCategory,
+						backgroundColor: theme.screen.iconBg,
+						marginLeft: item.depth > 0 ? item.depth * 12 : 0,
+						paddingLeft: item.depth > 0 ? 20 + item.depth * 4 : 10,
+					}}
+					onPress={() => {
+						router.push({
+							pathname: '/form-submission',
+							params: { form_submission_id: item?.submission?.id },
+						});
+					}}
+				>
+					<Text style={{ ...styles.body, color: theme.screen.text }}>{item.title || item.submission?.alias}</Text>
+					<Entypo name="chevron-small-right" color={theme.screen.icon} size={24} />
+				</TouchableOpacity>
+			);
+		},
+		[router, theme.screen.icon, theme.screen.iconBg, theme.screen.placeholder, theme.screen.text]
+	);
 
 	return (
 		<View
@@ -352,13 +352,8 @@ const Index = () => {
 							<ActivityIndicator size={30} color={theme.screen.text} />
 						</View>
 					) : formSubmissions?.length > 0 ? (
-                                                <FlatList
-                                                        data={listData}
-                                                        keyExtractor={item => item.id}
-                                                        renderItem={renderItem}
-                                                        contentContainerStyle={{ paddingBottom: 10 }}
-                                                />
-                                        ) : (
+						<FlatList data={listData} keyExtractor={item => item.id} renderItem={renderItem} contentContainerStyle={{ paddingBottom: 10 }} />
+					) : (
 						<View style={{ padding: 20, alignItems: 'center' }}>
 							<Text style={{ color: theme.screen.text, fontSize: 16 }}>{translate(TranslationKeys.no_data_found)}</Text>
 						</View>
