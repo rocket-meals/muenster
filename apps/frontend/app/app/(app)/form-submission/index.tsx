@@ -24,6 +24,7 @@ import TriStateCheckbox from '@/components/TriStateCheckbox/TriStateCheckbox';
 import FileUpload from '@/components/FileUpload/FileUpload';
 import ImageUpload from '@/components/ImageUpload/ImageUpload';
 import SignatureInterface from '@/components/SignatureInterface/SignatureInterface';
+import DropdownInput from '@/components/DropdownInput/DropdownInput';
 import { getFromCategoryTranslation, getFromDescriptionTranslation } from '@/helper/resourceHelper';
 import { iconLibraries } from '@/components/Drawer/CustomDrawerContent';
 import { DynamicCollectionHelper } from '@/redux/actions/DynamicCollection/DynamicCollection';
@@ -40,6 +41,37 @@ import FilterFormSheet from '@/components/FilterFormSheet/FilterFormSheet';
 import { TranslationKeys } from '@/locales/keys';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
+
+const parseDropdownValues = (input: unknown): string[] => {
+        if (!input) return [];
+
+        if (Array.isArray(input)) {
+                return input
+                        .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+                        .map(value => value.trim());
+        }
+
+        if (typeof input === 'string') {
+                try {
+                        const parsed = JSON.parse(input);
+                        if (Array.isArray(parsed)) {
+                                return parsed
+                                        .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+                                        .map(value => value.trim());
+                        }
+                } catch (error) {
+                        const candidates = input
+                                .split(/\r?\n|,/)
+                                .map(value => value.trim())
+                                .filter(Boolean);
+                        if (candidates.length > 0) {
+                                return candidates;
+                        }
+                }
+        }
+
+        return [];
+};
 
 const Index = () => {
 	const toast = useToast();
@@ -598,12 +630,13 @@ const Index = () => {
 							{formAnswers &&
 								formAnswers.map((answer, index) => {
 									const fieldType = answer?.form_field?.field_type || '';
-									const prefix = answer?.form_field?.value_prefix;
-									const suffix = answer?.form_field?.value_suffix;
-									const [custom_type, ...idParts] = fieldType.split('-');
-									const custom_id = idParts.join('-');
-									const fieldId = String(answer?.id);
-									const description = answer?.form_field?.translations?.length > 0 ? getFromDescriptionTranslation(answer?.form_field?.translations, language) : '';
+                                                                        const prefix = answer?.form_field?.value_prefix;
+                                                                        const suffix = answer?.form_field?.value_suffix;
+                                                                        const [custom_type, ...idParts] = fieldType.split('-');
+                                                                        const custom_id = idParts.join('-');
+                                                                        const fieldId = String(answer?.id);
+                                                                        const dropdownValues = parseDropdownValues(answer?.form_field?.dropdown_values);
+                                                                        const description = answer?.form_field?.translations?.length > 0 ? getFromDescriptionTranslation(answer?.form_field?.translations, language) : '';
 									const showInForm = answer?.form_field?.is_visible_in_form || true;
 									const isDisabled = answer?.form_field?.is_disabled || false;
 									let IconComponent: any = null;
@@ -662,7 +695,20 @@ const Index = () => {
 												</View>
 											)}
 											{custom_id === 'string' && showInForm && <SingleLineInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
-											{custom_id === 'multiline' && showInForm && <MultiLineInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} />}
+                                                                                        {custom_id === 'dropdown' && showInForm && (
+                                                                                                <DropdownInput
+                                                                                                        id={fieldId}
+                                                                                                        value={formData[fieldId]?.value}
+                                                                                                        onChange={handleChange}
+                                                                                                        error={formData[fieldId]?.error}
+                                                                                                        isDisabled={isDisabled}
+                                                                                                        custom_type={custom_type}
+                                                                                                        options={dropdownValues}
+                                                                                                        prefix={prefix}
+                                                                                                        suffix={suffix}
+                                                                                                />
+                                                                                        )}
+                                                                                        {custom_id === 'multiline' && showInForm && <MultiLineInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} />}
 											{custom_id === 'bank_account_number' && showInForm && <IBANInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} onError={handleError} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
 											{custom_id === 'number' && showInForm && <NumberInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}
 											{custom_id === 'email' && showInForm && <EmailInput id={fieldId} value={formData[fieldId]?.value || ''} onChange={handleChange} onError={handleError} error={formData[fieldId]?.error} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />}

@@ -319,6 +319,16 @@
     "tr": "Buraya yaz...",
     "zh": "在这里输入..."
   },
+  "enter_custom_value": {
+    "de": "Eigenen Wert eingeben",
+    "en": "Enter custom value",
+    "ar": "أدخل قيمة مخصصة",
+    "es": "Introducir valor personalizado",
+    "fr": "Saisir une valeur personnalisée",
+    "ru": "Введите собственное значение",
+    "tr": "Özel değer girin",
+    "zh": "输入自定义值"
+  },
   "enter_number": {
     "de": "Nummer eingeben",
     "en": "Enter Number",
