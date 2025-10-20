@@ -1,9 +1,10 @@
 Key,Message,Component,Line
+"AZoCyrBgngjPLpUxvJ_b","Replace this ""switch"" statement by ""if"" statements to increase readability.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",205
 "AZoBN6Ntk_XXN4xGiRR3","Make this public static property readonly.","rocket-meals_rocket-meals:packages/common/src/FormCommonHelper.ts",2
-"AZoBL7nV8mOm1nvWUhPk","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",58
-"AZoBL7nV8mOm1nvWUhPl","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",83
-"AZoBL7nV8mOm1nvWUhPm","Prefer `.at(…)` over `[….length - index]`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",141
-"AZoBEy5kJpL2-5cCHSKB","'item' PropType is defined but prop is never used","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",266
+"AZoBL7nV8mOm1nvWUhPk","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",62
+"AZoBL7nV8mOm1nvWUhPl","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",87
+"AZoBL7nV8mOm1nvWUhPm","Prefer `.at(…)` over `[….length - index]`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",145
+"AZoBEy5kJpL2-5cCHSKB","'item' PropType is defined but prop is never used","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",326
 "AZoA9Ktmb6ci_Qvhj9oL","Handle this exception or don't catch it at all.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submission/index.tsx",58
 "AZoA9KoCb6ci_Qvhj9oJ","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/components/DropdownInput/DropdownInput.tsx",15
 "AZoA9KoCb6ci_Qvhj9oK","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/DropdownInput/DropdownInput.tsx",59
@@ -297,9 +298,9 @@ Key,Message,Component,Line
 "AZkUSvNxS4VhJojFFAZo","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submission/index.tsx",594
 "AZkUSvNxS4VhJojFFAZp","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submission/index.tsx",594
 "AZkUSvNxS4VhJojFFAZq","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submission/index.tsx",626
-"AZkUSvJzS4VhJojFFAUQ","Refactor this function to reduce its Cognitive Complexity from 20 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",35
-"AZkUSvJzS4VhJojFFAUj","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",355
-"AZkUSvJzS4VhJojFFAUk","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",429
+"AZkUSvJzS4VhJojFFAUQ","Refactor this function to reduce its Cognitive Complexity from 20 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",37
+"AZkUSvJzS4VhJojFFAUj","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",415
+"AZkUSvJzS4VhJojFFAUk","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",492
 "AZkUSvMHS4VhJojFFAXA","Prefer using an optional chain expression instead, as it's more concise and easier to read.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/forms/index.tsx",73
 "AZkUSvOSS4VhJojFFAaW","Refactor this function to reduce its Cognitive Complexity from 25 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/housing/details/index.tsx",20
 "AZkUSvOSS4VhJojFFAam","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/housing/details/index.tsx",140
