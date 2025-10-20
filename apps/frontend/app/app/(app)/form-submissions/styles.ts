@@ -95,14 +95,28 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		gap: 10,
 	},
-	body: {
-		maxWidth: '90%',
-		fontSize: 16,
-		fontFamily: 'Poppins_400Regular',
-	},
-	sheetBackground: {
-		borderTopRightRadius: 30,
-		borderTopLeftRadius: 30,
-	},
+        body: {
+                maxWidth: '90%',
+                fontSize: 16,
+                fontFamily: 'Poppins_400Regular',
+        },
+        groupHeader: {
+                width: '100%',
+                borderRadius: 10,
+                paddingVertical: 8,
+                paddingHorizontal: 14,
+                marginTop: 12,
+                marginBottom: 4,
+                borderWidth: 1,
+        },
+        groupHeaderText: {
+                fontSize: 14,
+                fontFamily: 'Poppins_600SemiBold',
+                textTransform: 'uppercase',
+        },
+        sheetBackground: {
+                borderTopRightRadius: 30,
+                borderTopLeftRadius: 30,
+        },
 	dummy: {},
 });
