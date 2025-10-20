@@ -8,5 +8,5 @@ export * from './src/GlobalParams';
 export * from './src/DistanceHelper';
 export * from './src/SortingHelper';
 export * from './src/SortingEnums';
-export * from './src/ServerHelper'
+export * from './src/ServerHelper';
 export * from './src/FormCommonHelper';

@@ -4,7 +4,7 @@ import { CSVExportParser } from '../../../food-sync-hook/CSVExportParser';
 import { HashHelper } from '../../../helpers/HashHelper';
 import iconv from 'iconv-lite';
 import { WorkflowRunLogger } from '../../../workflows-runs-hook/WorkflowRunJobInterface';
-import {DateHelper, DateHelperTimezone, FormCommonHelper, StringHelper} from 'repo-depkit-common';
+import { DateHelper, DateHelperTimezone, FormCommonHelper, StringHelper } from 'repo-depkit-common';
 
 // VONUMMER: Haus-Wohnung-Wohnungsnummer
 // 420-01-05-51-6
@@ -366,7 +366,7 @@ export class HannoverTL1HousingFileReader implements HannoverHousingFileReaderIn
 
     let nachname = housingContract[ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS.MIETER_PERSON_NACHNAME];
 
-    let dateAndMieter = mietende+"-"+nachname;
+    let dateAndMieter = mietende + '-' + nachname;
     partialIds.push(dateAndMieter);
 
     // if any partial id is missing, return id

@@ -617,13 +617,13 @@ export class DateHelper {
 
   static getHumanReadableDateReverseYYYYMMDD(date: Date): string {
     let numericString = date.toLocaleDateString('de-DE', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
     });
     const parts = numericString.split('.');
     if (parts.length !== 3) {
-        return numericString; // fallback
+      return numericString; // fallback
     }
     const day = parts[0];
     const month = parts[1];
