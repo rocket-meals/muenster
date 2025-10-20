@@ -38,18 +38,18 @@ const Index = () => {
 	useSetPageTitle(TranslationKeys.select_a_form_submission);
 	const { translate } = useLanguage();
 	const { theme } = useTheme();
-        const { form_id } = useLocalSearchParams();
-        const sheetRef = useRef<BottomSheet>(null);
-        const sortSheetRef = useRef<BottomSheet>(null);
-        const [loading, setLoading] = useState(false);
-        const [query, setQuery] = useState<string>('');
-        const [isActive, setIsActive] = useState(false);
-        const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-        const formsSubmissionsHelper = new FormsSubmissionsHelper();
-        const [formSubmissions, setFormSubmissions] = useState<DatabaseTypes.FormSubmissions[]>([]);
-        const [selectedOption, setSelectedOption] = useState<string>('draft');
-        const [sortOption, setSortOption] = useState<FormSubmissionSortOption>('alphabetical');
-        const { drawerPosition, language } = useSelector((state: RootState) => state.settings);
+	const { form_id } = useLocalSearchParams();
+	const sheetRef = useRef<BottomSheet>(null);
+	const sortSheetRef = useRef<BottomSheet>(null);
+	const [loading, setLoading] = useState(false);
+	const [query, setQuery] = useState<string>('');
+	const [isActive, setIsActive] = useState(false);
+	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+	const formsSubmissionsHelper = new FormsSubmissionsHelper();
+	const [formSubmissions, setFormSubmissions] = useState<DatabaseTypes.FormSubmissions[]>([]);
+	const [selectedOption, setSelectedOption] = useState<string>('draft');
+	const [sortOption, setSortOption] = useState<FormSubmissionSortOption>('alphabetical');
+	const { drawerPosition, language } = useSelector((state: RootState) => state.settings);
 	const [currentPath, setCurrentPath] = useState<string[]>([]);
 
 	const folderPrefixes = useMemo(() => {
@@ -177,103 +177,103 @@ const Index = () => {
 		return rows;
 	}, [formSubmissions, currentPath, folderPrefixes, translate]);
 
-        const openFilterSheet = () => {
-                sheetRef.current?.expand();
-        };
+	const openFilterSheet = () => {
+		sheetRef.current?.expand();
+	};
 
-        const closeFilterSheet = () => {
-                sheetRef?.current?.close();
-        };
+	const closeFilterSheet = () => {
+		sheetRef?.current?.close();
+	};
 
-        const openSortSheet = () => {
-                sortSheetRef.current?.expand();
-        };
+	const openSortSheet = () => {
+		sortSheetRef.current?.expand();
+	};
 
-        const closeSortSheet = () => {
-                sortSheetRef.current?.close();
-        };
+	const closeSortSheet = () => {
+		sortSheetRef.current?.close();
+	};
 
-        const sortFormSubmissions = useCallback(
-                (submissions: DatabaseTypes.FormSubmissions[], option: FormSubmissionSortOption) => {
-                        if (!submissions || submissions.length === 0) {
-                                return submissions;
-                        }
+	const sortFormSubmissions = useCallback(
+		(submissions: DatabaseTypes.FormSubmissions[], option: FormSubmissionSortOption) => {
+			if (!submissions || submissions.length === 0) {
+				return submissions;
+			}
 
-                        const normalizedLocale = language || undefined;
-                        const sortedSubmissions = [...submissions];
+			const normalizedLocale = language || undefined;
+			const sortedSubmissions = [...submissions];
 
-                        switch (option) {
-                                case 'alphabetical':
-                                default:
-                                        sortedSubmissions.sort((first, second) => {
-                                                const firstAlias = (first.alias || '').trim();
-                                                const secondAlias = (second.alias || '').trim();
+			switch (option) {
+				case 'alphabetical':
+				default:
+					sortedSubmissions.sort((first, second) => {
+						const firstAlias = (first.alias || '').trim();
+						const secondAlias = (second.alias || '').trim();
 
-                                                if (!firstAlias && !secondAlias) {
-                                                        return 0;
-                                                }
+						if (!firstAlias && !secondAlias) {
+							return 0;
+						}
 
-                                                if (!firstAlias) {
-                                                        return 1;
-                                                }
+						if (!firstAlias) {
+							return 1;
+						}
 
-                                                if (!secondAlias) {
-                                                        return -1;
-                                                }
+						if (!secondAlias) {
+							return -1;
+						}
 
-                                                return firstAlias.localeCompare(secondAlias, normalizedLocale, {
-                                                        sensitivity: 'base',
-                                                });
-                                        });
-                                        break;
-                        }
+						return firstAlias.localeCompare(secondAlias, normalizedLocale, {
+							sensitivity: 'base',
+						});
+					});
+					break;
+			}
 
-                        return sortedSubmissions;
-                },
-                [language]
-        );
+			return sortedSubmissions;
+		},
+		[language]
+	);
 
-        const loadFormSubmissions = async (pageNumber: number, append: boolean = false) => {
-                if (!form_id) return;
-                setLoading(true);
+	const loadFormSubmissions = async (pageNumber: number, append: boolean = false) => {
+		if (!form_id) return;
+		setLoading(true);
 
-                try {
-                        const result = (await formsSubmissionsHelper.fetchFormSubmissions({
-                                state: selectedOption || 'draft',
-                                form: form_id,
-                                alias: query ? query?.trim() : '',
-                        })) as DatabaseTypes.FormSubmissions[];
+		try {
+			const result = (await formsSubmissionsHelper.fetchFormSubmissions({
+				state: selectedOption || 'draft',
+				form: form_id,
+				alias: query ? query?.trim() : '',
+			})) as DatabaseTypes.FormSubmissions[];
 
-                        if (result) {
-                                const sortedResult = sortFormSubmissions(result, sortOption);
-                                if (append) {
-                                        setFormSubmissions(prev => {
-                                                const merged = [...(prev || []), ...sortedResult];
-                                                return sortFormSubmissions(merged, sortOption);
-                                        });
-                                } else {
-                                        setFormSubmissions(sortedResult);
-                                }
-                        }
-                } catch (error) {
-                        console.error('Error fetching form submissions', error);
-                } finally {
+			if (result) {
+				const sortedResult = sortFormSubmissions(result, sortOption);
+				if (append) {
+					setFormSubmissions(prev => {
+						const merged = [...(prev || []), ...sortedResult];
+						return sortFormSubmissions(merged, sortOption);
+					});
+				} else {
+					setFormSubmissions(sortedResult);
+				}
+			}
+		} catch (error) {
+			console.error('Error fetching form submissions', error);
+		} finally {
 			setLoading(false);
 		}
 	};
 
 	useFocusEffect(
-                useCallback(() => {
-                        if (form_id) {
-                                loadFormSubmissions(1, false);
-                        }
-                        return () => {};
-                }, [form_id, selectedOption, sortOption])
-        );
+		useCallback(() => {
+			if (form_id) {
+				loadFormSubmissions(1, false);
+			}
+			return () => {};
+		}, [form_id, selectedOption, sortOption])
+	);
 
-        useEffect(() => {
-                setFormSubmissions(prev => sortFormSubmissions(prev, sortOption));
-        }, [sortFormSubmissions, sortOption]);
+	useEffect(() => {
+		setFormSubmissions(prev => sortFormSubmissions(prev, sortOption));
+	}, [sortFormSubmissions, sortOption]);
 
 	const handleSearchFilter = () => {
 		loadFormSubmissions(1, false);
@@ -414,14 +414,14 @@ const Index = () => {
 						</TouchableOpacity>
 						<Text style={{ ...styles.heading, color: theme.header.text }}>{excerpt(translate(TranslationKeys.select_a_form_submission), screenWidth > 900 ? 100 : screenWidth > 700 ? 80 : 22)}</Text>
 					</View>
-                                        <View style={{ ...styles.col2, gap: isWeb ? 30 : 15 }}>
-                                                <TouchableOpacity onPress={openSortSheet} style={{ padding: 10 }}>
-                                                        <FontAwesome5 name="sort-alpha-down" size={22} color={theme.header.text} />
-                                                </TouchableOpacity>
-                                                <TouchableOpacity onPress={openFilterSheet} style={{ padding: 10 }}>
-                                                        <FontAwesome name="filter" size={24} color={theme.header.text} />
-                                                </TouchableOpacity>
-                                        </View>
+					<View style={{ ...styles.col2, gap: isWeb ? 30 : 15 }}>
+						<TouchableOpacity onPress={openSortSheet} style={{ padding: 10 }}>
+							<FontAwesome5 name="sort-alpha-down" size={22} color={theme.header.text} />
+						</TouchableOpacity>
+						<TouchableOpacity onPress={openFilterSheet} style={{ padding: 10 }}>
+							<FontAwesome name="filter" size={24} color={theme.header.text} />
+						</TouchableOpacity>
+					</View>
 				</View>
 			</View>
 			<View style={styles.contentContainer}>
@@ -498,38 +498,38 @@ const Index = () => {
 					)}
 				</View>
 			</View>
-                        {isActive && (
-                                <>
-                                        <BaseBottomSheet
-                                                ref={sheetRef}
-                                                index={-1}
-                                                backgroundStyle={{
-                                                        ...styles.sheetBackground,
-                                                        backgroundColor: theme.sheet.sheetBg,
-                                                }}
-                                                enablePanDownToClose
-                                                handleComponent={null}
-                                                onClose={closeFilterSheet}
-                                        >
-                                                <FilterFormSheet closeSheet={closeFilterSheet} isFormSubmission={true} setSelectedOption={setSelectedOption} selectedOption={selectedOption} options={filterOptions} />
-                                        </BaseBottomSheet>
-                                        <BaseBottomSheet
-                                                ref={sortSheetRef}
-                                                index={-1}
-                                                backgroundStyle={{
-                                                        ...styles.sheetBackground,
-                                                        backgroundColor: theme.sheet.sheetBg,
-                                                }}
-                                                enablePanDownToClose
-                                                handleComponent={null}
-                                                onClose={closeSortSheet}
-                                        >
-                                                <FormSubmissionSortSheet closeSheet={closeSortSheet} selectedOption={sortOption} setSelectedOption={setSortOption} />
-                                        </BaseBottomSheet>
-                                </>
-                        )}
-                </View>
-        );
+			{isActive && (
+				<>
+					<BaseBottomSheet
+						ref={sheetRef}
+						index={-1}
+						backgroundStyle={{
+							...styles.sheetBackground,
+							backgroundColor: theme.sheet.sheetBg,
+						}}
+						enablePanDownToClose
+						handleComponent={null}
+						onClose={closeFilterSheet}
+					>
+						<FilterFormSheet closeSheet={closeFilterSheet} isFormSubmission={true} setSelectedOption={setSelectedOption} selectedOption={selectedOption} options={filterOptions} />
+					</BaseBottomSheet>
+					<BaseBottomSheet
+						ref={sortSheetRef}
+						index={-1}
+						backgroundStyle={{
+							...styles.sheetBackground,
+							backgroundColor: theme.sheet.sheetBg,
+						}}
+						enablePanDownToClose
+						handleComponent={null}
+						onClose={closeSortSheet}
+					>
+						<FormSubmissionSortSheet closeSheet={closeSortSheet} selectedOption={sortOption} setSelectedOption={setSortOption} />
+					</BaseBottomSheet>
+				</>
+			)}
+		</View>
+	);
 };
 
 export default Index;
