@@ -1,4 +1,7 @@
 Key,Message,Component,Line
+"AZoFqp9qKXdq3X4vuPHv","Refactor this function to reduce its Cognitive Complexity from 24 to the 15 allowed.","rocket-meals_rocket-meals:apps/frontend/app/components/DropdownInput/DropdownInput.tsx",37
+"AZoFqp9qKXdq3X4vuPHw","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/DropdownInput/DropdownInput.tsx",101
+"AZoFqp9qKXdq3X4vuPHx","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/DropdownInput/DropdownInput.tsx",102
 "AZoDwebTxafqhH3JjAXa","A fragment with only one child is redundant.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",503
 "AZoCyrBgngjPLpUxvJ_b","Replace this ""switch"" statement by ""if"" statements to increase readability.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",205
 "AZoBN6Ntk_XXN4xGiRR3","Make this public static property readonly.","rocket-meals_rocket-meals:packages/common/src/FormCommonHelper.ts",2
@@ -7,8 +10,7 @@ Key,Message,Component,Line
 "AZoBL7nV8mOm1nvWUhPm","Prefer `.at(…)` over `[….length - index]`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",145
 "AZoBEy5kJpL2-5cCHSKB","'item' PropType is defined but prop is never used","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submissions/index.tsx",326
 "AZoA9Ktmb6ci_Qvhj9oL","Handle this exception or don't catch it at all.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submission/index.tsx",58
-"AZoA9KoCb6ci_Qvhj9oJ","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/components/DropdownInput/DropdownInput.tsx",15
-"AZoA9KoCb6ci_Qvhj9oK","Extract this nested ternary operation into an independent statement.","rocket-meals_rocket-meals:apps/frontend/app/components/DropdownInput/DropdownInput.tsx",59
+"AZoA9KoCb6ci_Qvhj9oJ","Use `for…of` instead of `.forEach(…)`.","rocket-meals_rocket-meals:apps/frontend/app/components/DropdownInput/DropdownInput.tsx",17
 "AZmmpWFoTT1E7gtUoReT","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",89
 "AZmmpWFoTT1E7gtUoReU","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/components/MyMarkdown/MyMarkdown.tsx",90
 "AZmlpMbtdw_hdAYcor6g","Prefer `Number.parseFloat` over `parseFloat`.","rocket-meals_rocket-meals:apps/frontend/app/helper/MarkdownLinkHelper.ts",30
