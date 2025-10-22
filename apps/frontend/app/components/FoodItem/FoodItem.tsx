@@ -102,7 +102,7 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 			[foodItem?.id, profile?.id, canteen?.id, previousFeedback, dispatch]
 		);
 
-		const markingsData = useMemo(() => markings?.filter((m: DatabaseTypes.Markings) => item?.markings.some(mark => mark.markings_id === m.id)).slice(0, 2), [markings, item?.markings]);
+		const markingsData = useMemo(() => markings?.filter((m: DatabaseTypes.Markings) => item?.markings.some(mark => mark.markings_id === m.id)), [markings, item?.markings]);
 
 		const openMarkingLabel = (marking: DatabaseTypes.Markings) => {
 			dispatch({
@@ -225,8 +225,7 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 									)}
 									<View style={styles.categoriesContainer}>
 										{markingsData?.map((mark: any) => {
-											const description = getDescriptionFromTranslation(mark?.translations, language);
-											if ((mark?.image_remote_url || mark?.image) && description)
+											if ((mark?.image_remote_url || mark?.image) && mark?.show_on_card)
 												return (
 													<TouchableOpacity key={mark.id} onPress={() => openMarkingLabel(mark)}>
 														<MyImage
