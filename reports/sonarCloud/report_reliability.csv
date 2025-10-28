@@ -66,7 +66,7 @@ Key,Message,Component,Line
 "AZnlPd34jqHa6CjL-2XC","Use '[[' instead of '[' for conditional tests. The '[[' construct is safer and more feature-rich.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/forms-sync-hook/customers/hannover/exampleData/convertToCharsetOfServer.sh",18
 "AZlyj_zK0YdgFOBafBND","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle/src/helpers/FilesServiceHelper.ts",35
 "AZlyj_WG0YdgFOBafBLh","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/course-timetable/index.tsx",25
-"AZlyj_Yk0YdgFOBafBLn","Prefer `Number.isNaN` over `isNaN`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submission/index.tsx",118
+"AZlyj_Yk0YdgFOBafBLn","Prefer `Number.isNaN` over `isNaN`.","rocket-meals_rocket-meals:apps/frontend/app/app/(app)/form-submission/index.tsx",159
 "AZlyj_eO0YdgFOBafBL3","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/app/(monitor)/foodPlanDay/index.tsx",391
 "AZlyj_f60YdgFOBafBMA","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/app/(monitor)/foodPlanList/index.tsx",415
 "AZlyj_AK0YdgFOBafBKj","Prefer `String#replaceAll()` over `String#replace()`.","rocket-meals_rocket-meals:apps/frontend/app/components/CustomDateInput/CustomDateInput.tsx",16
