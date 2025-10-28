@@ -1362,6 +1362,8 @@ export type FormFields = {
   sort?: number | null;
   status: string;
   translations: any[] | FormFieldsTranslations[];
+  visibility_depends_on_referenced_field?: string | FormFields | null;
+  visibility_depends_on_referenced_value_equals?: string | null;
   user_created?: string | DirectusUsers | null;
   user_updated?: string | DirectusUsers | null;
   value_prefix?: string | null;
