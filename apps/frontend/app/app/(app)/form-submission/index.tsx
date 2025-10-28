@@ -43,30 +43,75 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { RootState } from '@/redux/reducer';
 
 const parseDropdownValues = (input: unknown): string[] => {
-	if (!input) return [];
+        if (!input) return [];
 
-	if (Array.isArray(input)) {
-		return input.filter((value): value is string => typeof value === 'string' && value.trim().length > 0).map(value => value.trim());
-	}
+        if (Array.isArray(input)) {
+                return input.filter((value): value is string => typeof value === 'string' && value.trim().length > 0).map(value => value.trim());
+        }
 
-	if (typeof input === 'string') {
-		try {
-			const parsed = JSON.parse(input);
-			if (Array.isArray(parsed)) {
-				return parsed.filter((value): value is string => typeof value === 'string' && value.trim().length > 0).map(value => value.trim());
-			}
-		} catch (error) {
-			const candidates = input
-				.split(/\r?\n|,/)
-				.map(value => value.trim())
-				.filter(Boolean);
-			if (candidates.length > 0) {
-				return candidates;
-			}
-		}
-	}
+        if (typeof input === 'string') {
+                try {
+                        const parsed = JSON.parse(input);
+                        if (Array.isArray(parsed)) {
+                                return parsed.filter((value): value is string => typeof value === 'string' && value.trim().length > 0).map(value => value.trim());
+                        }
+                } catch (error) {
+                        const candidates = input
+                                .split(/\r?\n|,/)
+                                .map(value => value.trim())
+                                .filter(Boolean);
+                        if (candidates.length > 0) {
+                                return candidates;
+                        }
+                }
+        }
 
-	return [];
+        return [];
+};
+
+const isFormFieldEntity = (
+        field: DatabaseTypes.FormFields | string | null | undefined
+): field is DatabaseTypes.FormFields => typeof field === 'object' && field !== null && 'id' in field;
+
+const extractFormFieldId = (
+        field: DatabaseTypes.FormFields | string | null | undefined
+): string | undefined => {
+        if (!field) return undefined;
+        if (typeof field === 'string') return field;
+        if (isFormFieldEntity(field)) return field.id;
+
+        return undefined;
+};
+
+const normalizeExpectedValue = (value: unknown): string => {
+        if (value === null || value === undefined) return '';
+        if (typeof value === 'string') return value.trim().toLowerCase();
+        if (typeof value === 'boolean') return value ? 'true' : 'false';
+        if (Array.isArray(value)) {
+                return value.map(item => String(item).trim().toLowerCase()).join(',');
+        }
+
+        return String(value).trim().toLowerCase();
+};
+
+const normalizeCurrentValue = (value: unknown, customType?: string): string => {
+        if (value === null || value === undefined) return '';
+
+        if (customType === 'value_boolean') {
+                if (value === 1 || value === true) return 'true';
+                if (value === 0 || value === false) return 'false';
+
+                return 'null';
+        }
+
+        if (typeof value === 'string') return value.trim().toLowerCase();
+        if (typeof value === 'number') return String(value);
+        if (typeof value === 'boolean') return value ? 'true' : 'false';
+        if (Array.isArray(value)) {
+                return value.map(item => String(item).trim().toLowerCase()).join(',');
+        }
+
+        return String(value).trim().toLowerCase();
 };
 
 const Index = () => {
@@ -360,11 +405,11 @@ const Index = () => {
 		}
 	};
 
-	const parseDateForEdit = (custom_id: string, value: string): string => {
-		try {
-			if (!value) return '';
+        const parseDateForEdit = (custom_id: string, value: string): string => {
+                try {
+                        if (!value) return '';
 
-			let dateObj = parseISO(value);
+                        let dateObj = parseISO(value);
 			if (!isValid(dateObj)) return value; // Return raw value if parsing fails
 
 			switch (custom_id) {
@@ -386,8 +431,58 @@ const Index = () => {
 		} catch (error) {
 			console.error('Error parsing date:', error);
 			return value;
-		}
-	};
+                }
+        };
+
+        const getAnswerValue = useCallback(
+                (answer: DatabaseTypes.FormAnswers) => {
+                        const key = String(answer?.id);
+                        const formDataEntry = formData[key];
+
+                        if (formDataEntry !== undefined) {
+                                return formDataEntry.value;
+                        }
+
+                        const formField = isFormFieldEntity(answer?.form_field)
+                                ? answer.form_field
+                                : null;
+
+                        if (!formField) {
+                                return undefined;
+                        }
+
+                        const fieldType = formField.field_type || '';
+                        const [custom_type, ...idParts] = fieldType.split('-');
+                        const custom_id = idParts.join('-');
+                        const defaultValue = (answer as any)?.[custom_type];
+
+                        if (custom_type === 'value_custom') {
+                                return defaultValue ?? null;
+                        }
+
+                        if (custom_type === 'value_number') {
+                                if (typeof defaultValue === 'number') {
+                                        return String(defaultValue).replace('.', ',');
+                                }
+
+                                return defaultValue ?? null;
+                        }
+
+                        if (custom_type === 'value_boolean') {
+                                if (defaultValue === false) return 0;
+                                if (defaultValue === true) return 1;
+
+                                return null;
+                        }
+
+                        if (['date_hh_mm', 'date', 'hh_mm', 'timestamp'].includes(custom_id) && typeof defaultValue === 'string') {
+                                return parseDateForEdit(custom_id, defaultValue);
+                        }
+
+                        return defaultValue ?? null;
+                },
+                [formData]
+        );
 
 	const getDirectusUploadId = async (value: any) => {
 		const response = await fetch(value.image);
@@ -625,20 +720,61 @@ const Index = () => {
 							</View>
 							{formAnswers &&
 								formAnswers.map((answer, index) => {
-									const fieldType = answer?.form_field?.field_type || '';
-									const prefix = answer?.form_field?.value_prefix;
-									const suffix = answer?.form_field?.value_suffix;
-									const [custom_type, ...idParts] = fieldType.split('-');
-									const custom_id = idParts.join('-');
-									const fieldId = String(answer?.id);
-									const dropdownValues = parseDropdownValues(answer?.form_field?.dropdown_values);
-									const description = answer?.form_field?.translations?.length > 0 ? getFromDescriptionTranslation(answer?.form_field?.translations, language) : '';
-									const showInForm = answer?.form_field?.is_visible_in_form || true;
-									const isDisabled = answer?.form_field?.is_disabled || false;
-									let IconComponent: any = null;
-									let iconName = '';
-									if (answer?.form_field?.icon_expo) {
-										const [library, name] = answer?.form_field?.icon_expo?.split(':') ?? [];
+                                                                        const formField = isFormFieldEntity(answer?.form_field)
+                                                                                ? answer.form_field
+                                                                                : null;
+                                                                        const fieldType = formField?.field_type || '';
+                                                                        const prefix = answer?.form_field?.value_prefix;
+                                                                        const suffix = answer?.form_field?.value_suffix;
+                                                                        const [custom_type, ...idParts] = fieldType.split('-');
+                                                                        const custom_id = idParts.join('-');
+                                                                        const fieldId = String(answer?.id);
+                                                                        const dropdownValues = parseDropdownValues(answer?.form_field?.dropdown_values);
+                                                                        const description = answer?.form_field?.translations?.length > 0 ? getFromDescriptionTranslation(answer?.form_field?.translations, language) : '';
+                                                                        const visibilityDependsOnFieldId = formField
+                                                                                ? extractFormFieldId(formField.visibility_depends_on_referenced_field)
+                                                                                : undefined;
+                                                                        const expectedVisibilityValue = formField?.visibility_depends_on_referenced_value_equals;
+                                                                        const normalizedExpectedValue = normalizeExpectedValue(expectedVisibilityValue);
+                                                                        const baseVisibility = formField?.is_visible_in_form ?? true;
+                                                                        const hasVisibilityDependency = Boolean(
+                                                                                visibilityDependsOnFieldId && normalizedExpectedValue !== ''
+                                                                        );
+                                                                        let showInForm = baseVisibility;
+
+                                                                        if (showInForm && hasVisibilityDependency) {
+                                                                                const referencedAnswer = formAnswers.find(item => {
+                                                                                        const referencedField = isFormFieldEntity(item?.form_field)
+                                                                                                ? item.form_field
+                                                                                                : null;
+                                                                                        const referencedFieldId = extractFormFieldId(referencedField || item?.form_field);
+
+                                                                                        return referencedFieldId === visibilityDependsOnFieldId;
+                                                                                });
+
+                                                                                if (referencedAnswer) {
+                                                                                        const referencedField = isFormFieldEntity(referencedAnswer?.form_field)
+                                                                                                ? referencedAnswer.form_field
+                                                                                                : null;
+                                                                                        const referencedFieldType = referencedField?.field_type || '';
+                                                                                        const [referencedCustomType] = referencedFieldType.split('-');
+                                                                                        const currentValue = getAnswerValue(referencedAnswer);
+                                                                                        const normalizedCurrentValue = normalizeCurrentValue(currentValue, referencedCustomType);
+
+                                                                                        showInForm = normalizedCurrentValue === normalizedExpectedValue;
+                                                                                } else {
+                                                                                        showInForm = false;
+                                                                                }
+                                                                        }
+                                                                        if (!showInForm) {
+                                                                                return null;
+                                                                        }
+
+                                                                        const isDisabled = answer?.form_field?.is_disabled || false;
+                                                                        let IconComponent: any = null;
+                                                                        let iconName = '';
+                                                                        if (answer?.form_field?.icon_expo) {
+                                                                                const [library, name] = answer?.form_field?.icon_expo?.split(':') ?? [];
 										if (iconLibraries[library]) {
 											IconComponent = iconLibraries[library];
 											iconName = name;
