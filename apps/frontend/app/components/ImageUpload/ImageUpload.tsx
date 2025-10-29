@@ -12,7 +12,7 @@ import { DatabaseTypes } from 'repo-depkit-common';
 import { deleteDirectusFile } from '@/constants/HelperFunctions';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
-import {myContrastColor} from "@/helper/ColorHelper";
+import { myContrastColor } from '@/helper/ColorHelper';
 
 const ImageUpload = ({ id, value, onChange, error, isDisabled, custom_type }: { id: string; value: any; onChange: (id: string, value: any, custom_type: string) => void; error: string; isDisabled: boolean; custom_type: string }) => {
 	const { translate } = useLanguage();

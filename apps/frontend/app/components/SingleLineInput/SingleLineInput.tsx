@@ -33,12 +33,12 @@ const SingleLineInput = ({ id, value, onChange, error, isDisabled, custom_type, 
 					style={[
 						styles.input,
 						{
-								width: '100%',
-							    borderTopLeftRadius: prefix ? 0 : 10,
-								borderBottomLeftRadius: prefix ? 0 : 10,
-								borderTopRightRadius: suffix ? 0 : 10,
-								borderBottomRightRadius: suffix ? 0 : 10,
-							},
+							width: '100%',
+							borderTopLeftRadius: prefix ? 0 : 10,
+							borderBottomLeftRadius: prefix ? 0 : 10,
+							borderTopRightRadius: suffix ? 0 : 10,
+							borderBottomRightRadius: suffix ? 0 : 10,
+						},
 						{ color: theme.screen.text },
 					]}
 					cursorColor={theme.screen.text}
