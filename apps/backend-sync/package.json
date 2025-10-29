@@ -4,9 +4,10 @@
   "description": "",
   "scripts": {
     "start:docker-push": "tsx src/index.ts --docker-push",
-    "start:pull-from-test-system": "tsx src/index.ts --pull-from-test-system",
-    "start:push": "tsx src/index.ts --push",
-    "start:pull": "tsx src/index.ts --pull",
+    "start:pull-from-test-system": "yarn start --pull-from-test-system",
+    "start:push-to-test-system": "yarn start --push-to-test-system",
+    "start:push": "yarn start --push",
+    "start:pull": "yarn start --pull",
     "start": "tsx src/index.ts"
   },
   "author": "",

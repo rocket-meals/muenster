@@ -10,7 +10,7 @@
     "field": "form_fields",
     "group": null,
     "hidden": false,
-    "interface": "list-o2m-tree-view",
+    "interface": "list-o2m",
     "note": null,
     "options": {
       "enableLink": true,
@@ -20,7 +20,7 @@
         "alias",
         "field_type",
         "external_import_id",
-        "external_export_id"
+        "visibility_depends_on_referenced_field.alias"
       ],
       "layout": "table",
       "limit": 30,
