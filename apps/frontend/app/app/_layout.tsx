@@ -17,6 +17,7 @@ import ServerStatusLoader from '@/components/ServerStatusLoader/ServerStatusLoad
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { config } from '@gluestack-ui/config';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import ExpoUpdateLoader from '@/components/ExpoUpdateLoader/ExpoUpdateLoader';
 import ExpoUpdateChecker from '@/components/ExpoUpdateChecker/ExpoUpdateChecker';
 
@@ -87,19 +88,21 @@ export default function Layout() {
 				<Provider store={configureStore}>
 					<GluestackUIProvider config={config}>
 						<PersistGate loading={null} persistor={persistor}>
-							<RootSiblingParent>
-								<ThemeProvider>
-									<ServerStatusLoader>
-										<ExpoUpdateChecker>
-											<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1, backgroundColor: theme.screen.iconBg }}>
-												<SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.iconBg }} edges={pathname?.includes('image-full-screen') ? ['bottom'] : ['top', 'bottom']}>
-													<Slot />
-												</SafeAreaView>
-											</KeyboardAvoidingView>
-										</ExpoUpdateChecker>
-									</ServerStatusLoader>
-								</ThemeProvider>
-							</RootSiblingParent>
+                                                        <RootSiblingParent>
+                                                                <BottomSheetModalProvider>
+                                                                        <ThemeProvider>
+                                                                                <ServerStatusLoader>
+                                                                                        <ExpoUpdateChecker>
+                                                                                                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1, backgroundColor: theme.screen.iconBg }}>
+                                                                                                        <SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.iconBg }} edges={pathname?.includes('image-full-screen') ? ['bottom'] : ['top', 'bottom']}>
+                                                                                                                <Slot />
+                                                                                                        </SafeAreaView>
+                                                                                                </KeyboardAvoidingView>
+                                                                                        </ExpoUpdateChecker>
+                                                                                </ServerStatusLoader>
+                                                                        </ThemeProvider>
+                                                                </BottomSheetModalProvider>
+                                                        </RootSiblingParent>
 						</PersistGate>
 					</GluestackUIProvider>
 				</Provider>
