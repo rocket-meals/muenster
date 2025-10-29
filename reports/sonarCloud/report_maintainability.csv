@@ -128,7 +128,7 @@ Key,Message,Component,Line
 "AZlykACD0YdgFOBafBPE","Unexpected negated condition.","rocket-meals_rocket-meals:apps/backend-sync/src/DirectusDatabaseSync.ts",216
 "AZkUSv2VS4VhJojFFCr4","Make this public static property readonly.","rocket-meals_rocket-meals:apps/backend-sync/src/DockerDirectusHelper.ts",2
 "AZkUSv2VS4VhJojFFCr5","Remove this commented out code.","rocket-meals_rocket-meals:apps/backend-sync/src/DockerDirectusHelper.ts",7
-"AZlykABk0YdgFOBafBO8","Prefer `node:https` over `https`.","rocket-meals_rocket-meals:apps/backend-sync/src/FetchIngoreSelfSignedCertHelper.ts",1
+"AZlykABk0YdgFOBafBO8","Prefer `node:https` over `https`.","rocket-meals_rocket-meals:apps/backend-sync/src/FetchIgnoreSelfSignedCertHelper.ts",1
 "AZkUSv25S4VhJojFFCsN","Make this public static property readonly.","rocket-meals_rocket-meals:packages/common/src/ServerHelper.ts",6
 "AZkUSv25S4VhJojFFCsO","Make this public static property readonly.","rocket-meals_rocket-meals:packages/common/src/ServerHelper.ts",10
 "AZkUSv25S4VhJojFFCsP","Make this public static property readonly.","rocket-meals_rocket-meals:packages/common/src/ServerHelper.ts",14
