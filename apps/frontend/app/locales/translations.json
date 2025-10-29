@@ -3083,6 +3083,16 @@
     "tr": "Seç",
     "zh": "选择"
   },
+  "deselect": {
+    "de": "Abwählen",
+    "en": "Deselect",
+    "ar": "Deselect",
+    "es": "Deselect",
+    "fr": "Deselect",
+    "ru": "Deselect",
+    "tr": "Deselect",
+    "zh": "Deselect"
+  },
   "upload": {
     "de": "Hochladen",
     "en": "Upload",

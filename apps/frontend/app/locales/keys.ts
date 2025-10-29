@@ -310,6 +310,7 @@ export enum TranslationKeys {
 	send = 'send',
 	button_disabled = 'button_disabled',
 	select = 'select',
+	deselect = 'deselect',
 	upload = 'upload',
 	upload_file = 'upload_file',
 	upload_image = 'upload_image',

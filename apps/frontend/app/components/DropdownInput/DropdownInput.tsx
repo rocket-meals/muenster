@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import SingleLineInput from '@/components/SingleLineInput/SingleLineInput';
-import BaseBottomSheet from '@/components/BaseBottomSheet';
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import type BottomSheet from '@gorhom/bottom-sheet';
+import BaseBottomModal from '@/components/BaseBottomModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
@@ -15,7 +13,7 @@ import { RootState } from '@/redux/reducer';
 const ensureStringArray = (options: string[]): string[] => {
 	const uniqueValues = new Set<string>();
 	options.forEach(option => {
-		if (typeof option === 'string' && option.trim().length > 0) {
+		if (option && option.trim().length > 0) {
 			uniqueValues.add(option.trim());
 		}
 	});
@@ -32,9 +30,10 @@ type DropdownInputProps = {
 	options?: string[];
 	prefix?: string | null;
 	suffix?: string | null;
+	allowCustomValues?: boolean;
 };
 
-const DropdownInput = ({ id, value, onChange, error, isDisabled, custom_type, options = [], prefix, suffix }: DropdownInputProps) => {
+const DropdownInput = ({ id, value, onChange, error, isDisabled, custom_type, options = [], prefix, suffix, allowCustomValues = true }: DropdownInputProps) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
 	const { primaryColor } = useSelector((state: RootState) => state.settings);
@@ -43,33 +42,31 @@ const DropdownInput = ({ id, value, onChange, error, isDisabled, custom_type, op
 
 	const currentValue = typeof value === 'string' ? value : '';
 	const [showCustomInput, setShowCustomInput] = useState(() => {
-		if (currentValue.trim().length === 0) {
-			return false;
-		}
-
-		return !normalizedOptions.includes(currentValue);
+		if (currentValue.trim().length === 0) return false;
+		return allowCustomValues ? !normalizedOptions.includes(currentValue) : false;
 	});
 
 	useEffect(() => {
 		if (currentValue.trim().length > 0) {
-			setShowCustomInput(!normalizedOptions.includes(currentValue));
+			setShowCustomInput(allowCustomValues ? !normalizedOptions.includes(currentValue) : false);
 		} else if (normalizedOptions.includes(currentValue)) {
 			setShowCustomInput(false);
 		}
-	}, [currentValue, normalizedOptions]);
+	}, [currentValue, normalizedOptions, allowCustomValues]);
 
 	const valueMatchesOption = normalizedOptions.includes(currentValue);
 	const isCustomSelected = showCustomInput;
-	const sheetRef = useRef<BottomSheet>(null);
+
+	const [isModalVisible, setIsModalVisible] = useState(false);
 
 	const openSheet = useCallback(() => {
 		if (!isDisabled) {
-			sheetRef.current?.expand();
+			setIsModalVisible(true);
 		}
 	}, [isDisabled]);
 
 	const closeSheet = useCallback(() => {
-		sheetRef.current?.close();
+		setIsModalVisible(false);
 	}, []);
 
 	const selectPlaceholder = useCallback(() => {
@@ -79,11 +76,13 @@ const DropdownInput = ({ id, value, onChange, error, isDisabled, custom_type, op
 	}, [closeSheet, custom_type, id, onChange]);
 
 	const selectCustom = useCallback(() => {
+		if (!allowCustomValues) return;
 		setShowCustomInput(true);
+		// keep modal open so user can type directly
 		const nextValue = currentValue && !normalizedOptions.includes(currentValue) ? currentValue : '';
 		onChange(id, nextValue, custom_type);
-		closeSheet();
-	}, [closeSheet, currentValue, custom_type, normalizedOptions, id, onChange]);
+		// don't closeSheet();
+	}, [allowCustomValues, currentValue, normalizedOptions, custom_type, id, onChange]);
 
 	const selectOption = useCallback(
 		(option: string) => {
@@ -114,7 +113,7 @@ const DropdownInput = ({ id, value, onChange, error, isDisabled, custom_type, op
 					style={[
 						styles.selectorButton,
 						{
-							backgroundColor: theme.screen.inputBg,
+							backgroundColor: theme.sheet.inputBg,
 							borderColor: theme.screen.iconBg,
 							opacity: isDisabled ? 0.6 : 1,
 						},
@@ -146,15 +145,10 @@ const DropdownInput = ({ id, value, onChange, error, isDisabled, custom_type, op
 					</View>
 				)}
 			</View>
-			{isCustomSelected && (
-				<View style={styles.customInputContainer}>
-					<SingleLineInput id={id} value={currentValue} onChange={onChange} error={error || ''} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} />
-				</View>
-			)}
 			{Boolean(error) && <Text style={styles.errorText}>{error}</Text>}
-			<BaseBottomSheet ref={sheetRef} enablePanDownToClose onClose={closeSheet}>
-				<BottomSheetScrollView style={{ backgroundColor: theme.sheet.sheetBg }} contentContainerStyle={styles.sheetContent}>
-					<Text style={[styles.sheetHeading, { color: theme.sheet.text }]}>{placeholderLabel}</Text>
+
+			<BaseBottomModal visible={isModalVisible} onClose={closeSheet} title={placeholderLabel}>
+				<View style={[styles.sheetContent, { backgroundColor: theme.sheet.sheetBg }]}>
 					<View style={styles.optionsList}>
 						<TouchableOpacity
 							style={[
@@ -173,31 +167,38 @@ const DropdownInput = ({ id, value, onChange, error, isDisabled, custom_type, op
 									},
 								]}
 							>
-								{placeholderLabel}
+								{translate(TranslationKeys.deselect)}
 							</Text>
 							<MaterialCommunityIcons name={!isCustomSelected && trimmedValue.length === 0 ? 'checkbox-marked' : 'checkbox-blank-outline'} size={24} color={!isCustomSelected && trimmedValue.length === 0 ? theme.activeText : theme.screen.icon} />
 						</TouchableOpacity>
-						<TouchableOpacity
-							style={[
-								styles.optionRow,
-								{
-									backgroundColor: isCustomSelected ? primaryColor : theme.screen.iconBg,
-								},
-							]}
-							onPress={selectCustom}
-						>
-							<Text
+						{isCustomSelected && (
+							<View style={{ width: '100%', marginBottom: 12 }}>
+								<SingleLineInput id={id} value={currentValue} onChange={onChange} error={error || ''} isDisabled={isDisabled} custom_type={custom_type} prefix={prefix} suffix={suffix} autoFocus={true} />
+							</View>
+						)}
+						{!isCustomSelected && allowCustomValues && (
+							<TouchableOpacity
 								style={[
-									styles.optionLabel,
+									styles.optionRow,
 									{
-										color: isCustomSelected ? theme.activeText : theme.screen.text,
+										backgroundColor: isCustomSelected ? primaryColor : theme.screen.iconBg,
 									},
 								]}
+								onPress={selectCustom}
 							>
-								{customLabel}
-							</Text>
-							<MaterialCommunityIcons name={isCustomSelected ? 'checkbox-marked' : 'checkbox-blank-outline'} size={24} color={isCustomSelected ? theme.activeText : theme.screen.icon} />
-						</TouchableOpacity>
+								<Text
+									style={[
+										styles.optionLabel,
+										{
+											color: isCustomSelected ? theme.activeText : theme.screen.text,
+										},
+									]}
+								>
+									{customLabel}
+								</Text>
+								<MaterialCommunityIcons name={isCustomSelected ? 'checkbox-marked' : 'checkbox-blank-outline'} size={24} color={isCustomSelected ? theme.activeText : theme.screen.icon} />
+							</TouchableOpacity>
+						)}
 						{normalizedOptions.map(option => {
 							const isSelected = !isCustomSelected && currentValue === option;
 							return (
@@ -226,8 +227,8 @@ const DropdownInput = ({ id, value, onChange, error, isDisabled, custom_type, op
 							);
 						})}
 					</View>
-				</BottomSheetScrollView>
-			</BaseBottomSheet>
+				</View>
+			</BaseBottomModal>
 		</View>
 	);
 };
