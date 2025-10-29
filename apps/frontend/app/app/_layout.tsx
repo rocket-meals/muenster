@@ -88,21 +88,21 @@ export default function Layout() {
 				<Provider store={configureStore}>
 					<GluestackUIProvider config={config}>
 						<PersistGate loading={null} persistor={persistor}>
-                                                        <RootSiblingParent>
-                                                                <BottomSheetModalProvider>
-                                                                        <ThemeProvider>
-                                                                                <ServerStatusLoader>
-                                                                                        <ExpoUpdateChecker>
-                                                                                                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1, backgroundColor: theme.screen.iconBg }}>
-                                                                                                        <SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.iconBg }} edges={pathname?.includes('image-full-screen') ? ['bottom'] : ['top', 'bottom']}>
-                                                                                                                <Slot />
-                                                                                                        </SafeAreaView>
-                                                                                                </KeyboardAvoidingView>
-                                                                                        </ExpoUpdateChecker>
-                                                                                </ServerStatusLoader>
-                                                                        </ThemeProvider>
-                                                                </BottomSheetModalProvider>
-                                                        </RootSiblingParent>
+							<RootSiblingParent>
+								<BottomSheetModalProvider>
+									<ThemeProvider>
+										<ServerStatusLoader>
+											<ExpoUpdateChecker>
+												<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1, backgroundColor: theme.screen.iconBg }}>
+													<SafeAreaView style={{ flex: 1, backgroundColor: theme.screen.iconBg }} edges={pathname?.includes('image-full-screen') ? ['bottom'] : ['top', 'bottom']}>
+														<Slot />
+													</SafeAreaView>
+												</KeyboardAvoidingView>
+											</ExpoUpdateChecker>
+										</ServerStatusLoader>
+									</ThemeProvider>
+								</BottomSheetModalProvider>
+							</RootSiblingParent>
 						</PersistGate>
 					</GluestackUIProvider>
 				</Provider>

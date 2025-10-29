@@ -1,11 +1,6 @@
 import React, { forwardRef, useCallback, useMemo } from 'react';
 import { Dimensions, TouchableOpacity, View } from 'react-native';
-import BottomSheet, {
-        BottomSheetBackdrop,
-        BottomSheetPortal,
-        type BottomSheetBackdropProps,
-        type BottomSheetProps,
-} from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop, BottomSheetPortal, type BottomSheetBackdropProps, type BottomSheetProps } from '@gorhom/bottom-sheet';
 import { AntDesign } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import { useSelector } from 'react-redux';
@@ -37,20 +32,20 @@ const BaseBottomSheet = forwardRef<BottomSheet, BaseBottomSheetProps>(({ onClose
 		[onClose, onChange]
 	);
 
-        return (
-                <BottomSheetPortal>
-                        <BottomSheet ref={ref} snapPoints={snapPoints} enableDynamicSizing maxDynamicContentSize={MAX_HEIGHT} backdropComponent={renderBackdrop} backgroundStyle={backgroundStyle} handleComponent={null} onChange={handleChange} {...props}>
-                                <View style={[styles.header, { backgroundColor: headerBg }]}>
-                                        <View style={styles.placeholder} />
-                                        <View style={[styles.handle, { backgroundColor: handleColor }]} />
-                                        <TouchableOpacity style={[styles.closeButton, { backgroundColor: theme.sheet.closeBg }]} onPress={onClose}>
-                                                <AntDesign name="close" size={24} color={theme.sheet.closeIcon} />
-                                        </TouchableOpacity>
-                                </View>
-                                {children}
-                        </BottomSheet>
-                </BottomSheetPortal>
-        );
+	return (
+		<BottomSheetPortal>
+			<BottomSheet ref={ref} snapPoints={snapPoints} enableDynamicSizing maxDynamicContentSize={MAX_HEIGHT} backdropComponent={renderBackdrop} backgroundStyle={backgroundStyle} handleComponent={null} onChange={handleChange} {...props}>
+				<View style={[styles.header, { backgroundColor: headerBg }]}>
+					<View style={styles.placeholder} />
+					<View style={[styles.handle, { backgroundColor: handleColor }]} />
+					<TouchableOpacity style={[styles.closeButton, { backgroundColor: theme.sheet.closeBg }]} onPress={onClose}>
+						<AntDesign name="close" size={24} color={theme.sheet.closeIcon} />
+					</TouchableOpacity>
+				</View>
+				{children}
+			</BottomSheet>
+		</BottomSheetPortal>
+	);
 });
 
 export default BaseBottomSheet;
