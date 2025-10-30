@@ -47,12 +47,7 @@ const TriStateCheckbox = ({
 				{options.map(option => {
 					const isSelected = option.val === null ? currentValue === null : currentValue === option.val;
 					return (
-						<TouchableOpacity
-							key={option.key}
-							style={{ ...styles.optionContainer, backgroundColor: isSelected ? primaryColor : theme.screen.iconBg }}
-							onPress={() => !isDisabled && handlePress(option.val)}
-							disabled={isDisabled}
-						>
+						<TouchableOpacity key={option.key} style={{ ...styles.optionContainer, backgroundColor: isSelected ? primaryColor : theme.screen.iconBg }} onPress={() => !isDisabled && handlePress(option.val)} disabled={isDisabled}>
 							<View style={styles.optionBox}>
 								<MaterialIcons name={isSelected ? 'check-box' : 'check-box-outline-blank'} size={22} color={isSelected ? theme.activeText : theme.screen.icon} />
 							</View>
