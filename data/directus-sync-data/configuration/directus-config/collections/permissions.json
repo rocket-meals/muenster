@@ -2410,7 +2410,19 @@
     "validation": null,
     "collection": "directus_files",
     "action": "read",
-    "permissions": null,
+    "permissions": {
+      "_and": [
+        {
+          "folder": {
+            "parent": {
+              "name": {
+                "_eq": "Public Images"
+              }
+            }
+          }
+        }
+      ]
+    },
     "fields": [
       "*"
     ],

@@ -131,6 +131,10 @@ type Query {
   foods_by_id(id: ID!, version: String): foods
   foods_aggregated(groupBy: [String], filter: foods_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [foods_aggregated!]!
   foods_by_version(version: String!, id: ID!): version_foods
+  foodoffers(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foodoffers!]!
+  foodoffers_by_id(id: ID!, version: String): foodoffers
+  foodoffers_aggregated(groupBy: [String], filter: foodoffers_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [foodoffers_aggregated!]!
+  foodoffers_by_version(version: String!, id: ID!): version_foodoffers
   foodoffers_markings(filter: foodoffers_markings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foodoffers_markings!]!
   foodoffers_markings_by_id(id: ID!, version: String): foodoffers_markings
   foodoffers_markings_aggregated(groupBy: [String], filter: foodoffers_markings_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [foodoffers_markings_aggregated!]!
@@ -167,10 +171,6 @@ type Query {
   foods_feedbacks_foods_feedbacks_labels_by_id(id: ID!, version: String): foods_feedbacks_foods_feedbacks_labels
   foods_feedbacks_foods_feedbacks_labels_aggregated(groupBy: [String], filter: foods_feedbacks_foods_feedbacks_labels_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [foods_feedbacks_foods_feedbacks_labels_aggregated!]!
   foods_feedbacks_foods_feedbacks_labels_by_version(version: String!, id: ID!): version_foods_feedbacks_foods_feedbacks_labels
-  foodoffers(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foodoffers!]!
-  foodoffers_by_id(id: ID!, version: String): foodoffers
-  foodoffers_aggregated(groupBy: [String], filter: foodoffers_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [foodoffers_aggregated!]!
-  foodoffers_by_version(version: String!, id: ID!): version_foodoffers
   foodoffers_categories(filter: foodoffers_categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foodoffers_categories!]!
   foodoffers_categories_by_id(id: ID!, version: String): foodoffers_categories
   foodoffers_categories_aggregated(groupBy: [String], filter: foodoffers_categories_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [foodoffers_categories_aggregated!]!
@@ -450,6 +450,8 @@ type Mutation {
   create_chat_messages_item(data: create_chat_messages_input!): chat_messages
   create_foods_items(filter: foods_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foods_input!]): [foods!]!
   create_foods_item(data: create_foods_input!): foods
+  create_foodoffers_items(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foodoffers_input!]): [foodoffers!]!
+  create_foodoffers_item(data: create_foodoffers_input!): foodoffers
   create_foodoffers_markings_items(filter: foodoffers_markings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foodoffers_markings_input!]): [foodoffers_markings!]!
   create_foodoffers_markings_item(data: create_foodoffers_markings_input!): foodoffers_markings
   create_foods_attributes_groups_items(filter: foods_attributes_groups_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foods_attributes_groups_input!]): [foods_attributes_groups!]!
@@ -468,8 +470,6 @@ type Mutation {
   create_foods_feedbacks_item(data: create_foods_feedbacks_input!): foods_feedbacks
   create_foods_feedbacks_foods_feedbacks_labels_items(filter: foods_feedbacks_foods_feedbacks_labels_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foods_feedbacks_foods_feedbacks_labels_input!]): [foods_feedbacks_foods_feedbacks_labels!]!
   create_foods_feedbacks_foods_feedbacks_labels_item(data: create_foods_feedbacks_foods_feedbacks_labels_input!): foods_feedbacks_foods_feedbacks_labels
-  create_foodoffers_items(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foodoffers_input!]): [foodoffers!]!
-  create_foodoffers_item(data: create_foodoffers_input!): foodoffers
   create_foodoffers_categories_items(filter: foodoffers_categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foodoffers_categories_input!]): [foodoffers_categories!]!
   create_foodoffers_categories_item(data: create_foodoffers_categories_input!): foodoffers_categories
   create_foods_attributes_items(filter: foods_attributes_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foods_attributes_input!]): [foods_attributes!]!
@@ -674,6 +674,9 @@ type Mutation {
   update_foods_items(filter: foods_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_foods_input!): [foods!]!
   update_foods_batch(filter: foods_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_foods_input!]): [foods!]!
   update_foods_item(id: ID!, data: update_foods_input!): foods
+  update_foodoffers_items(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_foodoffers_input!): [foodoffers!]!
+  update_foodoffers_batch(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_foodoffers_input!]): [foodoffers!]!
+  update_foodoffers_item(id: ID!, data: update_foodoffers_input!): foodoffers
   update_foodoffers_markings_items(filter: foodoffers_markings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_foodoffers_markings_input!): [foodoffers_markings!]!
   update_foodoffers_markings_batch(filter: foodoffers_markings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_foodoffers_markings_input!]): [foodoffers_markings!]!
   update_foodoffers_markings_item(id: ID!, data: update_foodoffers_markings_input!): foodoffers_markings
@@ -701,9 +704,6 @@ type Mutation {
   update_foods_feedbacks_foods_feedbacks_labels_items(filter: foods_feedbacks_foods_feedbacks_labels_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_foods_feedbacks_foods_feedbacks_labels_input!): [foods_feedbacks_foods_feedbacks_labels!]!
   update_foods_feedbacks_foods_feedbacks_labels_batch(filter: foods_feedbacks_foods_feedbacks_labels_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_foods_feedbacks_foods_feedbacks_labels_input!]): [foods_feedbacks_foods_feedbacks_labels!]!
   update_foods_feedbacks_foods_feedbacks_labels_item(id: ID!, data: update_foods_feedbacks_foods_feedbacks_labels_input!): foods_feedbacks_foods_feedbacks_labels
-  update_foodoffers_items(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_foodoffers_input!): [foodoffers!]!
-  update_foodoffers_batch(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_foodoffers_input!]): [foodoffers!]!
-  update_foodoffers_item(id: ID!, data: update_foodoffers_input!): foodoffers
   update_foodoffers_categories_items(filter: foodoffers_categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_foodoffers_categories_input!): [foodoffers_categories!]!
   update_foodoffers_categories_batch(filter: foodoffers_categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_foodoffers_categories_input!]): [foodoffers_categories!]!
   update_foodoffers_categories_item(id: ID!, data: update_foodoffers_categories_input!): foodoffers_categories
@@ -927,6 +927,8 @@ type Mutation {
   delete_chat_messages_item(id: ID!): delete_one
   delete_foods_items(ids: [ID]!): delete_many
   delete_foods_item(id: ID!): delete_one
+  delete_foodoffers_items(ids: [ID]!): delete_many
+  delete_foodoffers_item(id: ID!): delete_one
   delete_foodoffers_markings_items(ids: [ID]!): delete_many
   delete_foodoffers_markings_item(id: ID!): delete_one
   delete_foods_attributes_groups_items(ids: [ID]!): delete_many
@@ -945,8 +947,6 @@ type Mutation {
   delete_foods_feedbacks_item(id: ID!): delete_one
   delete_foods_feedbacks_foods_feedbacks_labels_items(ids: [ID]!): delete_many
   delete_foods_feedbacks_foods_feedbacks_labels_item(id: ID!): delete_one
-  delete_foodoffers_items(ids: [ID]!): delete_many
-  delete_foodoffers_item(id: ID!): delete_one
   delete_foodoffers_categories_items(ids: [ID]!): delete_many
   delete_foodoffers_categories_item(id: ID!): delete_one
   delete_foods_attributes_items(ids: [ID]!): delete_many
@@ -1111,6 +1111,7 @@ type Subscription {
   directus_revisions_mutated(event: EventEnum): directus_revisions_mutated
   chat_messages_mutated(event: EventEnum): chat_messages_mutated
   foods_mutated(event: EventEnum): foods_mutated
+  foodoffers_mutated(event: EventEnum): foodoffers_mutated
   foodoffers_markings_mutated(event: EventEnum): foodoffers_markings_mutated
   foods_attributes_groups_mutated(event: EventEnum): foods_attributes_groups_mutated
   foods_attributes_groups_translations_mutated(event: EventEnum): foods_attributes_groups_translations_mutated
@@ -1120,7 +1121,6 @@ type Subscription {
   foods_categories_translations_mutated(event: EventEnum): foods_categories_translations_mutated
   foods_feedbacks_mutated(event: EventEnum): foods_feedbacks_mutated
   foods_feedbacks_foods_feedbacks_labels_mutated(event: EventEnum): foods_feedbacks_foods_feedbacks_labels_mutated
-  foodoffers_mutated(event: EventEnum): foodoffers_mutated
   foodoffers_categories_mutated(event: EventEnum): foodoffers_categories_mutated
   foods_attributes_mutated(event: EventEnum): foods_attributes_mutated
   foods_feedbacks_labels_translations_mutated(event: EventEnum): foods_feedbacks_labels_translations_mutated
@@ -3563,8 +3563,8 @@ type directus_settings {
   visual_editor_urls_func: count_functions
   storage_asset_presets: JSON
   storage_asset_presets_func: count_functions
-  storage_default_folder(filter: directus_folders_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_folders
   project_url: String
+  storage_default_folder(filter: directus_folders_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_folders
   basemaps: JSON
   basemaps_func: count_functions
   public_favicon(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
@@ -3735,8 +3735,8 @@ type directus_versions {
   delta: JSON
   delta_func: count_functions
   item: String!
-  id: ID!
   collection: String!
+  id: ID!
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   name: String
 }
@@ -3902,8 +3902,8 @@ type foodoffers_categories {
   date_created: Date
   date_created_func: datetime_functions
   id: ID!
-  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   sort: Int
+  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   translations(filter: foodoffers_categories_translations_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foodoffers_categories_translations]
   translations_func: count_functions
 }
@@ -3929,8 +3929,8 @@ type foodoffers_categories_aggregated_count {
   date_updated: Int
   date_created: Int
   id: Int
-  user_created: Int
   sort: Int
+  user_created: Int
   translations: Int
 }
 
@@ -4121,13 +4121,13 @@ type foodoffers_mutated {
 }
 
 type foods {
-  image_thumb_hash: String
   image_remote_url: String
   id: ID!
   extra: String
   category: String
   alias: String
   status: String
+  image_thumb_hash: String
   date_created: Date
   date_created_func: datetime_functions
   sort: Int
@@ -4165,13 +4165,13 @@ type foods_aggregated {
 }
 
 type foods_aggregated_count {
-  image_thumb_hash: Int
   image_remote_url: Int
   id: Int
   extra: Int
   category: Int
   alias: Int
   status: Int
+  image_thumb_hash: Int
   date_created: Int
   sort: Int
   user_updated: Int
@@ -4524,10 +4524,10 @@ type foods_categories_mutated {
 }
 
 type foods_categories_translations {
-  let_be_translated: Boolean
   languages_code(filter: languages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): languages
   be_source_for_translations: Boolean
   name: String
+  let_be_translated: Boolean
   id: ID!
   foods_categories_id(filter: foods_categories_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): foods_categories
 }
@@ -4546,10 +4546,10 @@ type foods_categories_translations_aggregated {
 }
 
 type foods_categories_translations_aggregated_count {
-  let_be_translated: Int
   languages_code: Int
   be_source_for_translations: Int
   name: Int
+  let_be_translated: Int
   id: Int
   foods_categories_id: Int
 }
@@ -5011,10 +5011,10 @@ type form_categories {
   status: String
   date_created: Date
   date_created_func: datetime_functions
+  sort: Int
 
   """https://icons.expo.fyi/Index"""
   icon_expo: String
-  sort: Int
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   id: ID!
   user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
@@ -5043,10 +5043,10 @@ type form_categories_aggregated {
 type form_categories_aggregated_count {
   status: Int
   date_created: Int
+  sort: Int
 
   """https://icons.expo.fyi/Index"""
   icon_expo: Int
-  sort: Int
   user_created: Int
   id: Int
   user_updated: Int
@@ -5120,9 +5120,9 @@ type form_extracts {
   internal_custom_id: String
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   id: ID!
-  recipient_email_field(filter: form_fields_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): form_fields
   date_created: Date
   date_created_func: datetime_functions
+  recipient_email_field(filter: form_fields_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): form_fields
   recipient_email_static: String
   recipient_user(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   fields(filter: form_extracts_form_fields_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [form_extracts_form_fields]
@@ -5154,8 +5154,8 @@ type form_extracts_aggregated_count {
   internal_custom_id: Int
   user_created: Int
   id: Int
-  recipient_email_field: Int
   date_created: Int
+  recipient_email_field: Int
   recipient_email_static: Int
   recipient_user: Int
   fields: Int
@@ -7351,8 +7351,8 @@ type version_foodoffers_categories {
   date_updated: Date
   date_created: Date
   id: ID
-  user_created: JSON
   sort: Int
+  user_created: JSON
   translations: JSON
 }
 
@@ -7400,13 +7400,13 @@ type version_foodoffers_markings {
 
 """"""
 type version_foods {
-  image_thumb_hash: String
   image_remote_url: String
   id: ID
   extra: String
   category: String
   alias: String
   status: String
+  image_thumb_hash: String
   date_created: Date
   sort: Int
   user_updated: JSON
@@ -7521,10 +7521,10 @@ type version_foods_categories {
 
 """"""
 type version_foods_categories_translations {
-  let_be_translated: Boolean
   languages_code: JSON
   be_source_for_translations: Boolean
   name: String
+  let_be_translated: Boolean
   id: ID
   foods_categories_id: JSON
 }
@@ -7650,10 +7650,10 @@ type version_form_answers_files {
 type version_form_categories {
   status: String
   date_created: Date
+  sort: Int
 
   """https://icons.expo.fyi/Index"""
   icon_expo: String
-  sort: Int
   user_created: JSON
   id: ID
   user_updated: JSON
@@ -7686,8 +7686,8 @@ type version_form_extracts {
   internal_custom_id: String
   user_created: JSON
   id: ID
-  recipient_email_field: JSON
   date_created: Date
+  recipient_email_field: JSON
   recipient_email_static: String
   recipient_user: JSON
   fields: JSON
@@ -8225,8 +8225,8 @@ type version_workflows_runs {
   runtime_in_seconds: Int
   date_updated: Date
   user_updated: JSON
-  result_hash: String
   date_created: Date
+  result_hash: String
   alias: String
   output: String
   user_created: JSON
@@ -8580,9 +8580,9 @@ type workflows_runs {
   date_updated: Date
   date_updated_func: datetime_functions
   user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
-  result_hash: String
   date_created: Date
   date_created_func: datetime_functions
+  result_hash: String
   alias: String
   output: String
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
@@ -8615,8 +8615,8 @@ type workflows_runs_aggregated_count {
   runtime_in_seconds: Int
   date_updated: Int
   user_updated: Int
-  result_hash: Int
   date_created: Int
+  result_hash: Int
   alias: Int
   output: Int
   user_created: Int
@@ -10241,8 +10241,8 @@ input create_foodoffers_categories_input {
   date_updated: Date
   date_created: Date
   id: ID
-  user_created: create_directus_users_input
   sort: Int
+  user_created: create_directus_users_input
   translations: [create_foodoffers_categories_translations_input]
 }
 
@@ -10397,10 +10397,10 @@ input create_foods_categories_input {
 }
 
 input create_foods_categories_translations_input {
-  let_be_translated: Boolean
   languages_code: create_languages_input
   be_source_for_translations: Boolean
   name: String
+  let_be_translated: Boolean
   id: ID
   foods_categories_id: create_foods_categories_input
 }
@@ -10474,13 +10474,13 @@ input create_foods_feedbacks_labels_translations_input {
 }
 
 input create_foods_input {
-  image_thumb_hash: String
   image_remote_url: String
   id: ID!
   extra: String
   category: String
   alias: String
   status: String
+  image_thumb_hash: String
   date_created: Date
   sort: Int
   user_updated: create_directus_users_input
@@ -10541,10 +10541,10 @@ input create_form_answers_input {
 input create_form_categories_input {
   status: String
   date_created: Date
+  sort: Int
 
   """https://icons.expo.fyi/Index"""
   icon_expo: String
-  sort: Int
   user_created: create_directus_users_input
   id: ID
   user_updated: create_directus_users_input
@@ -10581,8 +10581,8 @@ input create_form_extracts_input {
   internal_custom_id: String
   user_created: create_directus_users_input
   id: ID
-  recipient_email_field: create_form_fields_input
   date_created: Date
+  recipient_email_field: create_form_fields_input
   recipient_email_static: String
   recipient_user: create_directus_users_input
   fields: [create_form_extracts_form_fields_input]
@@ -11080,8 +11080,8 @@ input create_workflows_runs_input {
   runtime_in_seconds: Int
   date_updated: Date
   user_updated: create_directus_users_input
-  result_hash: String
   date_created: Date
+  result_hash: String
   alias: String
   output: String
   user_created: create_directus_users_input
@@ -11627,8 +11627,8 @@ input directus_versions_filter {
   delta: string_filter_operators
   delta_func: count_function_filter_operators
   item: string_filter_operators
-  id: id_filter_operators
   collection: string_filter_operators
+  id: id_filter_operators
   user_created: directus_users_filter
   name: string_filter_operators
   _and: [directus_versions_filter]
@@ -11662,8 +11662,8 @@ input foodoffers_categories_filter {
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
   id: id_filter_operators
-  user_created: directus_users_filter
   sort: number_filter_operators
+  user_created: directus_users_filter
   translations: foodoffers_categories_translations_quantifier_filter
   translations_func: count_function_filter_operators
   _and: [foodoffers_categories_filter]
@@ -11973,10 +11973,10 @@ input foods_categories_filter {
 }
 
 input foods_categories_translations_filter {
-  let_be_translated: boolean_filter_operators
   languages_code: languages_filter
   be_source_for_translations: boolean_filter_operators
   name: string_filter_operators
+  let_be_translated: boolean_filter_operators
   id: number_filter_operators
   foods_categories_id: foods_categories_filter
   _and: [foods_categories_translations_filter]
@@ -11985,10 +11985,10 @@ input foods_categories_translations_filter {
 
 """"""
 input foods_categories_translations_quantifier_filter {
-  let_be_translated: boolean_filter_operators
   languages_code: languages_filter
   be_source_for_translations: boolean_filter_operators
   name: string_filter_operators
+  let_be_translated: boolean_filter_operators
   id: number_filter_operators
   foods_categories_id: foods_categories_filter
   _and: [foods_categories_translations_filter]
@@ -12119,13 +12119,13 @@ input foods_feedbacks_quantifier_filter {
 }
 
 input foods_filter {
-  image_thumb_hash: string_filter_operators
   image_remote_url: string_filter_operators
   id: string_filter_operators
   extra: string_filter_operators
   category: string_filter_operators
   alias: string_filter_operators
   status: string_filter_operators
+  image_thumb_hash: string_filter_operators
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
   sort: number_filter_operators
@@ -12273,8 +12273,8 @@ input form_categories_filter {
   status: string_filter_operators
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
-  icon_expo: string_filter_operators
   sort: number_filter_operators
+  icon_expo: string_filter_operators
   user_created: directus_users_filter
   id: id_filter_operators
   user_updated: directus_users_filter
@@ -12327,9 +12327,9 @@ input form_extracts_filter {
   internal_custom_id: string_filter_operators
   user_created: directus_users_filter
   id: id_filter_operators
-  recipient_email_field: form_fields_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
+  recipient_email_field: form_fields_filter
   recipient_email_static: string_filter_operators
   recipient_user: directus_users_filter
   fields: form_extracts_form_fields_quantifier_filter
@@ -13919,8 +13919,8 @@ input update_foodoffers_categories_input {
   date_updated: Date
   date_created: Date
   id: ID
-  user_created: update_directus_users_input
   sort: Int
+  user_created: update_directus_users_input
   translations: [update_foodoffers_categories_translations_input]
 }
 
@@ -14075,10 +14075,10 @@ input update_foods_categories_input {
 }
 
 input update_foods_categories_translations_input {
-  let_be_translated: Boolean
   languages_code: update_languages_input
   be_source_for_translations: Boolean
   name: String
+  let_be_translated: Boolean
   id: ID
   foods_categories_id: update_foods_categories_input
 }
@@ -14152,13 +14152,13 @@ input update_foods_feedbacks_labels_translations_input {
 }
 
 input update_foods_input {
-  image_thumb_hash: String
   image_remote_url: String
   id: ID
   extra: String
   category: String
   alias: String
   status: String
+  image_thumb_hash: String
   date_created: Date
   sort: Int
   user_updated: update_directus_users_input
@@ -14219,10 +14219,10 @@ input update_form_answers_input {
 input update_form_categories_input {
   status: String
   date_created: Date
+  sort: Int
 
   """https://icons.expo.fyi/Index"""
   icon_expo: String
-  sort: Int
   user_created: update_directus_users_input
   id: ID
   user_updated: update_directus_users_input
@@ -14259,8 +14259,8 @@ input update_form_extracts_input {
   internal_custom_id: String
   user_created: update_directus_users_input
   id: ID
-  recipient_email_field: update_form_fields_input
   date_created: Date
+  recipient_email_field: update_form_fields_input
   recipient_email_static: String
   recipient_user: update_directus_users_input
   fields: [update_form_extracts_form_fields_input]
@@ -14758,8 +14758,8 @@ input update_workflows_runs_input {
   runtime_in_seconds: Int
   date_updated: Date
   user_updated: update_directus_users_input
-  result_hash: String
   date_created: Date
+  result_hash: String
   alias: String
   output: String
   user_created: update_directus_users_input
@@ -15047,9 +15047,9 @@ input workflows_runs_filter {
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
   user_updated: directus_users_filter
-  result_hash: string_filter_operators
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
+  result_hash: string_filter_operators
   alias: string_filter_operators
   output: string_filter_operators
   user_created: directus_users_filter
@@ -15074,9 +15074,9 @@ input workflows_runs_quantifier_filter {
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
   user_updated: directus_users_filter
-  result_hash: string_filter_operators
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
+  result_hash: string_filter_operators
   alias: string_filter_operators
   output: string_filter_operators
   user_created: directus_users_filter
