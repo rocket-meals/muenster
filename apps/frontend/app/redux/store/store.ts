@@ -6,7 +6,8 @@ import { createMigrate, persistReducer, persistStore } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { reducer } from '@/redux/reducer';
 
-const migrations = { // define migrations
+const migrations = {
+	// define migrations
 	1: () => {
 		// For now we return undefined to clear the store on first migration
 		return undefined;

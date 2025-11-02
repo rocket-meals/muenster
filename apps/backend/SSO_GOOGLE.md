@@ -2,8 +2,7 @@
 
 - Visit: https://console.cloud.google.com/apis/credentials
 - Select Project top left, then Create new Project
-- Anmelde Daten
-  -
+- ## Anmelde Daten
 - OAuth Zustimmungsbildschirm
   - Externen Benutzern Zugriff auf die App gewähren
   - Anwendungsname: `<Name des Projectes>`
