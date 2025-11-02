@@ -17,5 +17,5 @@ export class ServerHelper {
 
   public static MENDUSA_SERVER_CONFIG: ServerConfig = {
     server_url: 'https://mendusa.rocket-meals.de/rocket-meals/api',
-  }
+  };
 }

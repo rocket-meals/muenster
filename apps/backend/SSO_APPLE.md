@@ -21,15 +21,17 @@ https://sarunw.com/posts/sign-in-with-apple-4/
   - The identifier of the service will be our "AUTH_APPLE_CLIENT_ID"
     - Continue --> Register --> Done
   - Select the created Service ID
-  - Scroll down to "Sign In with Apple" 
+  - Scroll down to "Sign In with Apple"
   - Check "Sign in with Apple"
   - Click "Configure" (Sign in with Apple)
     - Select or create a primary App ID
     - Enter Domains:
       - test.rocket-meals.de
       - <project>.rocket-meals.de
-    - Enter the return URLs: "https://test.rocket-meals.de/rocket-meals/api/auth/login/apple/callback"
-    - Enter the return URLs: "https://<project>.rocket-meals.de/rocket-meals/api/auth/login/apple/callback"
+    - Enter the return URLs:
+      "https://test.rocket-meals.de/rocket-meals/api/auth/login/apple/callback"
+    - Enter the return URLs:
+      "https://<project>.rocket-meals.de/rocket-meals/api/auth/login/apple/callback"
       - Continue --> Save
 - Keys (https://developer.apple.com/account/resources/authkeys/list)
   - Create a new key

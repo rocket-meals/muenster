@@ -24,7 +24,7 @@
     - Before creating the app, create a new bundle id in Apple Developer account
       - https://developer.apple.com/account/resources/identifiers/bundleId/add/bundle
       - Bundle ID: `de.baumgartner-software.<project-slug>`
-      - Enable 
+      - Enable
         - "Sign in with Apple"
         - "Push Notifications"
         - "NFC"
