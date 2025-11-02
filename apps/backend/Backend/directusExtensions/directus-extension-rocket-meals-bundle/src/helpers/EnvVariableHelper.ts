@@ -4,6 +4,7 @@ export enum SyncForCustomerEnum {
   TEST = 'Test',
   OSNABRUECK = 'Osnabrück',
   HANNOVER = 'Hannover',
+  AACHEN = 'Aachen',
 }
 
 export class EnvVariableHelper {
