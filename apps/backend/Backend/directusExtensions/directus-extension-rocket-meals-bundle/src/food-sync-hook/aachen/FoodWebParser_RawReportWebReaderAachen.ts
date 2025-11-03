@@ -7,16 +7,16 @@ export class FoodWebParser_RawReportWebReaderAachen implements FoodWebParserAach
   constructor(reportToReturn?: string | undefined) {}
 
   static CanteensToUrlsMap: { [canteenAlias: string]: string } = {
-    "Mensa Academica": "https://www.studierendenwerk-aachen.de/speiseplaene/academica-w.html",
-    "Mensa Ahornstraße": "https://www.studierendenwerk-aachen.de/speiseplaene/ahornstrasse-w.html",
-    "Bistro Tempelgraben": "https://www.studierendenwerk-aachen.de/speiseplaene/templergraben-w.html",
-    "Mensa Bayernallee": "https://www.studierendenwerk-aachen.de/speiseplaene/bayernallee-w.html",
-    "Mensa Eupener Straße": "https://www.studierendenwerk-aachen.de/speiseplaene/eupenerstrasse-w.html",
-    "Mensa KMAC": "https://www.studierendenwerk-aachen.de/speiseplaene/goethestrasse-w.html",
-    "Mensa Südpark": "https://www.studierendenwerk-aachen.de/speiseplaene/suedpark-w.html",
-    "Mensa Vita": "https://www.studierendenwerk-aachen.de/speiseplaene/vita-w.html",
-    "Mensa Jülich": "https://www.studierendenwerk-aachen.de/speiseplaene/juelich-w.html",
-  }
+    'Mensa Academica': 'https://www.studierendenwerk-aachen.de/speiseplaene/academica-w.html',
+    'Mensa Ahornstraße': 'https://www.studierendenwerk-aachen.de/speiseplaene/ahornstrasse-w.html',
+    'Bistro Tempelgraben': 'https://www.studierendenwerk-aachen.de/speiseplaene/templergraben-w.html',
+    'Mensa Bayernallee': 'https://www.studierendenwerk-aachen.de/speiseplaene/bayernallee-w.html',
+    'Mensa Eupener Straße': 'https://www.studierendenwerk-aachen.de/speiseplaene/eupenerstrasse-w.html',
+    'Mensa KMAC': 'https://www.studierendenwerk-aachen.de/speiseplaene/goethestrasse-w.html',
+    'Mensa Südpark': 'https://www.studierendenwerk-aachen.de/speiseplaene/suedpark-w.html',
+    'Mensa Vita': 'https://www.studierendenwerk-aachen.de/speiseplaene/vita-w.html',
+    'Mensa Jülich': 'https://www.studierendenwerk-aachen.de/speiseplaene/juelich-w.html',
+  };
 
   public async getHtmlFilesForCanteens(): Promise<CanteenNamesToHtmlFileDict> {
     const canteensHtmlFilesMap: CanteenNamesToHtmlFileDict = {};
