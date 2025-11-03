@@ -15,7 +15,7 @@ export class ServerHelper {
     server_url: 'https://studi-futter.rocket-meals.de/rocket-meals/api',
   };
 
-  public static MENDUSA_SERVER_CONFIG: ServerConfig = {
-    server_url: 'https://mendusa.rocket-meals.de/rocket-meals/api',
+  public static AACHEN_SERVER_CONFIG: ServerConfig = {
+    server_url: 'https://aachen.rocket-meals.de/rocket-meals/api',
   };
 }

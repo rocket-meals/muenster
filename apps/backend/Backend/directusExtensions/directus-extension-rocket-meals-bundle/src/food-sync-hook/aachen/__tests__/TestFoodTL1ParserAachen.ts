@@ -1,50 +1,67 @@
-import { describe, expect, it } from '@jest/globals';
-import { FoodTL1ParserAachen } from '../FoodTL1ParserAachen';
-import { FoodTL1Parser_GetRawReportInterface } from '../../FoodTL1Parser_GetRawReportInterface';
-import { FoodTL1Parser_RawReportTestReaderAachen } from '../FoodTL1Parser_RawReportTestReaderAachen';
-import { FoodTL1Parser } from '../../FoodTL1Parser';
-import { FoodsInformationTypeForParser } from '../../FoodParserInterface';
+import {describe, expect, it} from '@jest/globals';
+import {FoodAndMarkingWebParserAachen} from '../FoodAndMarkingWebParserAachen';
+import {FoodWebParser_RawReportTestReaderAachen} from '../FoodWebParser_RawReportTestReaderAachen';
+import {FoodParserInterface} from '../../FoodParserInterface';
+import {MarkingParserInterface} from "../../MarkingParserInterface";
 
-function createParser(reportToReturn?: string): FoodTL1Parser {
-  const reader: FoodTL1Parser_GetRawReportInterface = new FoodTL1Parser_RawReportTestReaderAachen(reportToReturn);
-  return new FoodTL1ParserAachen(reader);
+function getTestParser(): FoodParserInterface {
+  return new FoodAndMarkingWebParserAachen(new FoodWebParser_RawReportTestReaderAachen());
 }
 
-function getSavedWeeklyPlanHtml(): string {
-  return FoodTL1Parser_RawReportTestReaderAachen.getSavedWeeklyPlanIframeReportFromFile();
+function getMarkingParser(): MarkingParserInterface {
+  return new FoodAndMarkingWebParserAachen(new FoodWebParser_RawReportTestReaderAachen());
 }
 
-describe('FoodTL1ParserAachen', () => {
+describe('dev', () => {
   it('parses more than one food offer', async () => {
-    const parser = createParser(getSavedWeeklyPlanHtml());
+    const parser = getTestParser();
     await parser.createNeededData();
-    const foodOffers = await parser.getFoodoffersForParser();
-    expect(foodOffers.length).toBeGreaterThan(0);
+    const foodsList = await parser.getFoodsListForParser();
+    expect(foodsList.length).toBeGreaterThan(1);
   });
 
-  it('parses the vegetarian soup with correct markings and price', async () => {
-    const parser = createParser(getSavedWeeklyPlanHtml());
+  it('parses canteens', async () => {
+    const parser = getTestParser();
     await parser.createNeededData();
-    const foodOffers = await parser.getFoodoffersForParser();
+    const canteensList = await parser.getCanteensList();
+    expect(canteensList.length).toBeGreaterThan(0);
+  });
 
-    const soupOffer = foodOffers.find(offer => offer.basicFoodofferData.alias?.includes('Rauchige schwarze Bohnensuppe'));
-    expect(soupOffer).toBeDefined();
-    if (!soupOffer) {
-      return;
+  it('parses markings', async () => {
+    const parser = getMarkingParser();
+    await parser.createNeededData();
+    const markingsList = await parser.getMarkingsJSONList();
+    expect(markingsList.length).toBeGreaterThan(0);
+
+    let expectedMarkingIds: string[] = [];
+    // Zusatzstoffe 1,2,3,8
+    expectedMarkingIds.push("1");
+    expectedMarkingIds.push("2");
+    expectedMarkingIds.push("3");
+    expectedMarkingIds.push("8");
+
+    // Allergene A-K + A1,A3,A4 + I1
+    expectedMarkingIds.push("A");
+    expectedMarkingIds.push("B");
+    expectedMarkingIds.push("C");
+    expectedMarkingIds.push("D");
+    expectedMarkingIds.push("E");
+    expectedMarkingIds.push("F");
+    expectedMarkingIds.push("G");
+    expectedMarkingIds.push("H");
+    expectedMarkingIds.push("I");
+    expectedMarkingIds.push("J");
+    expectedMarkingIds.push("K");
+    expectedMarkingIds.push("A1");
+    expectedMarkingIds.push("A3");
+    expectedMarkingIds.push("A4");
+    expectedMarkingIds.push("I1");
+
+    for(const expectedMarkingId of expectedMarkingIds) {
+      const found = markingsList.find(marking => marking.external_identifier === expectedMarkingId);
+      expect(found).toBeDefined();
     }
-
-    expect(soupOffer.date).toEqual({ day: 29, month: 10, year: 2025 });
-    expect(soupOffer.basicFoodofferData.price_student).toBeCloseTo(1.6, 2);
-    expect(soupOffer.marking_external_identifiers).toEqual(expect.arrayContaining(['B', 'A', 'A1', 'A3', 'A5']));
-    expect(soupOffer.marking_external_identifiers).toContain('menu_line_Tellergericht vegetarisch');
   });
 
-  it('creates foods with categories for all entries', async () => {
-    const parser = createParser(getSavedWeeklyPlanHtml());
-    await parser.createNeededData();
-    const foods: FoodsInformationTypeForParser[] = await parser.getFoodsListForParser();
 
-    expect(foods.length).toBeGreaterThan(0);
-    expect(foods.every(food => !!food.category_external_identifier)).toBe(true);
-  });
 });

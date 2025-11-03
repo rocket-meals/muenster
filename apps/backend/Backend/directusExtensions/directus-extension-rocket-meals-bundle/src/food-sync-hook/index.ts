@@ -1,18 +1,19 @@
-import { ParseSchedule } from './ParseSchedule';
-import { defineHook } from '@directus/extensions-sdk';
-import { FoodParserInterface } from './FoodParserInterface';
-import { FoodTL1Parser_RawReportFtpReader } from './FoodTL1Parser_RawReportFtpReader';
-import { FoodTL1Parser_RawReportUrlReader } from './FoodTL1Parser_RawReportUrlReader';
-import { MarkingTL1Parser } from './MarkingTL1Parser';
-import { MarkingParserInterface } from './MarkingParserInterface';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { FoodParserWithCustomerAdaptions } from './FoodParserWithCustomerAdaptions';
-import { EnvVariableHelper } from '../helpers/EnvVariableHelper';
-import { WorkflowScheduleHelper } from '../workflows-runs-hook';
-import { SingleWorkflowRun } from '../workflows-runs-hook/WorkflowRunJobInterface';
-import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
-import { DatabaseTypes } from 'repo-depkit-common';
-import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {ParseSchedule} from './ParseSchedule';
+import {defineHook} from '@directus/extensions-sdk';
+import {FoodParserInterface} from './FoodParserInterface';
+import {FoodTL1Parser_RawReportFtpReader} from './FoodTL1Parser_RawReportFtpReader';
+import {FoodTL1Parser_RawReportUrlReader} from './FoodTL1Parser_RawReportUrlReader';
+import {MarkingTL1Parser} from './MarkingTL1Parser';
+import {MarkingParserInterface} from './MarkingParserInterface';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {FoodParserWithCustomerAdaptions} from './FoodParserWithCustomerAdaptions';
+import {EnvVariableHelper, SyncForCustomerEnum} from '../helpers/EnvVariableHelper';
+import {WorkflowScheduleHelper} from '../workflows-runs-hook';
+import {SingleWorkflowRun} from '../workflows-runs-hook/WorkflowRunJobInterface';
+import {WorkflowRunContext} from '../helpers/WorkflowRunContext';
+import {DatabaseTypes} from 'repo-depkit-common';
+import {WORKFLOW_RUN_STATE} from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {FoodAndMarkingWebParserAachen} from "./aachen/FoodAndMarkingWebParserAachen";
 
 const SCHEDULE_NAME = 'food_parse';
 
@@ -20,6 +21,12 @@ const DIRECTUS_TL1_FOOD_PATH = '/directus/tl1/foodPlan.csv'; // This is defined 
 const DIRECTUS_TL1_MARKING_PATH = '/directus/tl1/markings.csv'; // This is defined in docker-compose.yaml statically
 
 function getFoodParser(): FoodParserInterface | null {
+  switch (EnvVariableHelper.getSyncForCustomer()) {
+    case SyncForCustomerEnum.AACHEN:
+      let parser: FoodAndMarkingWebParserAachen = new FoodAndMarkingWebParserAachen();
+      return parser;
+  }
+
   const FOOD_SYNC_MODE = EnvVariableHelper.getFoodSyncMode();
 
   switch (FOOD_SYNC_MODE) {
@@ -43,13 +50,6 @@ function getFoodParser(): FoodParserInterface | null {
       console.log(SCHEDULE_NAME + ': Using TL1 CSV file from URL: ' + FOOD_SYNC_TL1WEB_EXPORT_URL);
       const urlReader = new FoodTL1Parser_RawReportUrlReader(FOOD_SYNC_TL1WEB_EXPORT_URL);
       return FoodParserWithCustomerAdaptions.getFoodParser(urlReader);
-    case 'SWOSY_API':
-      const FOOD_SYNC_SWOSY_API_URL = EnvVariableHelper.getFoodImageSyncSwosyApiServerUrl();
-      if (!!FOOD_SYNC_SWOSY_API_URL && FOOD_SYNC_SWOSY_API_URL.length > 0) {
-        //return new FoodParserWithCustomerAdaptions(new SWOSY_API_Parser(FOOD_SYNC_SWOSY_API_URL, 7));
-      } else {
-        console.log(SCHEDULE_NAME + ': no URL configured for SWOSY_API, please set the environment variable FOOD_IMAGE_SYNC_SWOSY_API_SERVER_URL');
-      }
   }
 
   return null;

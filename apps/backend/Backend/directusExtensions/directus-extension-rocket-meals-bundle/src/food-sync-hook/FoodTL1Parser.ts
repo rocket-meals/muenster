@@ -7,7 +7,7 @@ import { PriceGroupEnum } from './PriceGroupEnum';
 import { DictHelper } from '../helpers/DictHelper';
 import { MarkingsTypeForParser } from './MarkingParserInterface';
 
-type FoodofferIdentifierType = string;
+export type FoodofferIdentifierType = string;
 export type RawTL1FoodofferType = { [x: string]: string };
 
 export type RawFoodofferInformationType = {
@@ -17,7 +17,7 @@ export type RawFoodofferInformationType = {
   canteen_external_identifier: string;
 };
 
-type RawFoodofferInformationListType = RawFoodofferInformationType[];
+export type RawFoodofferInformationListType = RawFoodofferInformationType[];
 
 export enum TL1AttributeValueType {
   NUMBER = 'number',

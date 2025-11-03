@@ -167,6 +167,7 @@
     "build": "yarn run test && yarn run cleanTestArtifacts && yarn run buildWithoutTest",
     "test": "yarn typecheck && yarn buildWithoutTest && yarn testOnly",
     "testOnly": "jest",
+    "testDev": "jest -t 'dev'",
     "cleanTestArtifacts": "rimraf ./test-artifacts",
     "dev": "directus-extension build -w --no-minify",
     "link": "directus-extension link",
