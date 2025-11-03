@@ -86,7 +86,7 @@ export const aachenConfig: CustomerConfig = {
 	appScheme: 'app-rocket-meals-aachen',
 	bundleIdIos: 'de.rocket-meals.aachen',
 	bundleIdAndroid: 'com.baumgartner_software.aachen',
-	baseUrl: '/aachen',
+	baseUrl: '/aachpetito',
 	server_url: ServerHelper.AACHEN_SERVER_CONFIG.server_url,
 };
 
