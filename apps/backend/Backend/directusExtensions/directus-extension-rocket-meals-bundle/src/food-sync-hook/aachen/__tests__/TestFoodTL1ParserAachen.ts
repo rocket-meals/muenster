@@ -1,8 +1,8 @@
-import {describe, expect, it} from '@jest/globals';
-import {FoodAndMarkingWebParserAachen} from '../FoodAndMarkingWebParserAachen';
-import {FoodWebParser_RawReportTestReaderAachen} from '../FoodWebParser_RawReportTestReaderAachen';
-import {FoodParserInterface} from '../../FoodParserInterface';
-import {MarkingParserInterface} from "../../MarkingParserInterface";
+import { describe, expect, it } from '@jest/globals';
+import { FoodAndMarkingWebParserAachen } from '../FoodAndMarkingWebParserAachen';
+import { FoodWebParser_RawReportTestReaderAachen } from '../FoodWebParser_RawReportTestReaderAachen';
+import { FoodParserInterface } from '../../FoodParserInterface';
+import { MarkingParserInterface } from '../../MarkingParserInterface';
 
 function getTestParser(): FoodParserInterface {
   return new FoodAndMarkingWebParserAachen(new FoodWebParser_RawReportTestReaderAachen());
@@ -35,33 +35,31 @@ describe('dev', () => {
 
     let expectedMarkingIds: string[] = [];
     // Zusatzstoffe 1,2,3,8
-    expectedMarkingIds.push("1");
-    expectedMarkingIds.push("2");
-    expectedMarkingIds.push("3");
-    expectedMarkingIds.push("8");
+    expectedMarkingIds.push('1');
+    expectedMarkingIds.push('2');
+    expectedMarkingIds.push('3');
+    expectedMarkingIds.push('8');
 
     // Allergene A-K + A1,A3,A4 + I1
-    expectedMarkingIds.push("A");
-    expectedMarkingIds.push("B");
-    expectedMarkingIds.push("C");
-    expectedMarkingIds.push("D");
-    expectedMarkingIds.push("E");
-    expectedMarkingIds.push("F");
-    expectedMarkingIds.push("G");
-    expectedMarkingIds.push("H");
-    expectedMarkingIds.push("I");
-    expectedMarkingIds.push("J");
-    expectedMarkingIds.push("K");
-    expectedMarkingIds.push("A1");
-    expectedMarkingIds.push("A3");
-    expectedMarkingIds.push("A4");
-    expectedMarkingIds.push("I1");
+    expectedMarkingIds.push('A');
+    expectedMarkingIds.push('B');
+    expectedMarkingIds.push('C');
+    expectedMarkingIds.push('D');
+    expectedMarkingIds.push('E');
+    expectedMarkingIds.push('F');
+    expectedMarkingIds.push('G');
+    expectedMarkingIds.push('H');
+    expectedMarkingIds.push('I');
+    expectedMarkingIds.push('J');
+    expectedMarkingIds.push('K');
+    expectedMarkingIds.push('A1');
+    expectedMarkingIds.push('A3');
+    expectedMarkingIds.push('A4');
+    expectedMarkingIds.push('I1');
 
-    for(const expectedMarkingId of expectedMarkingIds) {
+    for (const expectedMarkingId of expectedMarkingIds) {
       const found = markingsList.find(marking => marking.external_identifier === expectedMarkingId);
       expect(found).toBeDefined();
     }
   });
-
-
 });

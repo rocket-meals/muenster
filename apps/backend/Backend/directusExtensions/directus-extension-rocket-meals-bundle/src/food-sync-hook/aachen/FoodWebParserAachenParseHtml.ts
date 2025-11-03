@@ -1,16 +1,10 @@
-import {CheerioAPI, load} from 'cheerio';
-import {
-  FoodofferDateType,
-  FoodoffersTypeForParser,
-  FoodofferTypeWithBasicData,
-  FoodParseFoodAttributeValueType
-} from "../FoodParserInterface";
-import {MarkingsTypeForParser} from "../MarkingParserInterface";
-import {LanguageCodes} from "../../helpers/TranslationHelper";
-import {MarkingTranslationFields} from "../MarkingTranslationFields";
+import { CheerioAPI, load } from 'cheerio';
+import { FoodofferDateType, FoodoffersTypeForParser, FoodofferTypeWithBasicData, FoodParseFoodAttributeValueType } from '../FoodParserInterface';
+import { MarkingsTypeForParser } from '../MarkingParserInterface';
+import { LanguageCodes } from '../../helpers/TranslationHelper';
+import { MarkingTranslationFields } from '../MarkingTranslationFields';
 
 export class FoodWebParserAachenParseHtml {
-
   public static getMarkingsJSONListFromWebHtml(rawReport: string | Buffer | undefined): MarkingsTypeForParser[] {
     const html = rawReport?.toString();
     if (!html) {
@@ -105,8 +99,7 @@ export class FoodWebParserAachenParseHtml {
     return rawFoodoffers;
   }
 
-  private static createRawFoodofferFromRow($: CheerioAPI, tr: any, context: {dayIndex: number, rowIndex: number, dateObj: Date, canteenName: string}): FoodoffersTypeForParser | null {
-
+  private static createRawFoodofferFromRow($: CheerioAPI, tr: any, context: { dayIndex: number; rowIndex: number; dateObj: Date; canteenName: string }): FoodoffersTypeForParser | null {
     // category text
     const category = tr.find('.menue-item.menue-category').first().text().trim() || null;
 
@@ -147,7 +140,11 @@ export class FoodWebParserAachenParseHtml {
     let priceStudent: number | null = null;
     if (priceText) {
       // price may contain euro symbol and comma as decimal separator
-      const normalized = priceText.replace(/\u0000/g, '').replace('€', '').replace(/[^0-9,\.]/g, '').trim();
+      const normalized = priceText
+        .replace(/\u0000/g, '')
+        .replace('€', '')
+        .replace(/[^0-9,\.]/g, '')
+        .trim();
       const withDot = normalized.replace(',', '.');
       const parsed = parseFloat(withDot);
       if (!isNaN(parsed)) {
@@ -230,8 +227,8 @@ export class FoodWebParserAachenParseHtml {
     let id = `recipe_`;
     id += `${aliasPart}`;
     let involveMarkings = false;
-    if (involveMarkings){
-        id += `__${markingsPart}`;
+    if (involveMarkings) {
+      id += `__${markingsPart}`;
     }
     return id;
   }

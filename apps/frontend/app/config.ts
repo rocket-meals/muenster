@@ -77,7 +77,8 @@ export const studiFutterConfig: CustomerConfig = {
 	server_url: ServerHelper.STUDI_FUTTER_SERVER_CONFIG.server_url,
 };
 
-export const aachenConfig: CustomerConfig = { // apple app id: 6754844700
+export const aachenConfig: CustomerConfig = {
+	// apple app id: 6754844700
 	projectName: 'AachenMensa',
 	projectSlug: 'rocket-meals-aachen',
 	easUpdateId: '88b123c6-b8d8-4968-9ab5-86cd0c8b9657',

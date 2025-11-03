@@ -2,7 +2,7 @@ import { MarkingParserInterface, MarkingsTypeForParser } from './MarkingParserIn
 import { CSVExportParser } from './CSVExportParser';
 import { TranslationHelper, TranslationsFromParsingType } from '../helpers/TranslationHelper';
 import { SystemFileHelper } from '../helpers/SystemFileHelper';
-import {MarkingTranslationFields} from "./MarkingTranslationFields";
+import { MarkingTranslationFields } from './MarkingTranslationFields';
 
 export class MarkingTL1Parser implements MarkingParserInterface {
   private readonly path_to_tl1_export: string;
