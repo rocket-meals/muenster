@@ -12,7 +12,7 @@ function getMarkingParser(): MarkingParserInterface {
   return new FoodAndMarkingWebParserAachen(new FoodWebParser_RawReportTestReaderAachen());
 }
 
-describe('dev', () => {
+describe('FoodAndMarkingWebParserAachen Test', () => {
   it('parses more than one food offer', async () => {
     const parser = getTestParser();
     await parser.createNeededData();
