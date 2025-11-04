@@ -102,6 +102,7 @@ export type AppSettings = {
   foods_placeholder_image?: string | DirectusFiles | null;
   foods_placeholder_image_remote_url?: string | null;
   foods_placeholder_image_thumb_hash?: string | null;
+  foods_image_ai_generation_enabled?: boolean | null;
   foods_ratings_amount_display?: boolean | null;
   foods_ratings_average_display?: boolean | null;
   foods_ratings_type?: string | null;
@@ -1063,6 +1064,7 @@ export type Foods = {
   image?: string | DirectusFiles | null;
   image_remote_url?: string | null;
   image_thumb_hash?: string | null;
+  image_generated?: boolean | null;
   markings: any[] | FoodsMarkings[];
   rating_amount?: number | null;
   rating_amount_legacy?: number | null;
