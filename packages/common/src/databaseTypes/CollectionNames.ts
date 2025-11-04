@@ -60,3 +60,9 @@ export enum CollectionNames {
   WORKFLOWS = 'workflows',
   WORKFLOWS_RUNS = 'workflows_runs',
 }
+
+export const CollectionFieldNames = {
+  [CollectionNames.FOODS]: {
+    IMAGE: 'image',
+  }
+}

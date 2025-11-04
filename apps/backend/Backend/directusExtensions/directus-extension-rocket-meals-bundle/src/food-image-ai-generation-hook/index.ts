@@ -52,6 +52,13 @@ class FoodImageAiGenerationWorkflow extends SingleWorkflowRun {
         });
       }
 
+      const foodsImageFolderId = await context.myDatabaseHelper.getFoodsImageFolderId();
+      if (foodsImageFolderId) {
+        await context.logger.appendLog(`Using foods image folder: ${foodsImageFolderId}`);
+      } else {
+        await context.logger.appendLog('No specific foods image folder configured (directus_fields.options.folder). Files will be stored in root.');
+      }
+
       const itemsServiceCreator = new ItemsServiceCreator(
         context.myDatabaseHelper.apiContext,
         context.myDatabaseHelper.eventContext
@@ -154,7 +161,8 @@ class FoodImageAiGenerationWorkflow extends SingleWorkflowRun {
               imageBuffer,
               filename,
               MyFileTypes.PNG,
-              context.myDatabaseHelper
+              context.myDatabaseHelper,
+              foodsImageFolderId
             );
             const fileIdString = String(fileId);
 
