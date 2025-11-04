@@ -11,6 +11,8 @@ export class FoodAndMarkingWebParserAachen implements FoodParserInterface, Marki
   private readonly htmlFileReader: FoodWebParserAachenReadHtmlFiles;
   private canteensHtmlFilesMap: CanteenNamesToHtmlFileDict = {};
 
+  private filterDuplicatedOffersPerCanteen: boolean = true;
+
   constructor(htmlFileReader?: FoodWebParserAachenReadHtmlFiles) {
     if (!htmlFileReader) {
       this.htmlFileReader = new FoodWebParser_RawReportWebReaderAachen();
@@ -92,7 +94,8 @@ export class FoodAndMarkingWebParserAachen implements FoodParserInterface, Marki
     const canteenNames = Object.keys(canteensHtmlFilesMap);
     for (const canteenName of canteenNames) {
       const htmlContent = canteensHtmlFilesMap[canteenName];
-      const foodoffersForCanteen = FoodWebParserAachenParseHtml.getRawFoodofferJSONListFromWebHtml(htmlContent, canteenName);
+
+      const foodoffersForCanteen = FoodWebParserAachenParseHtml.getRawFoodofferJSONListFromWebHtml(htmlContent, canteenName, this.filterDuplicatedOffersPerCanteen);
       foodoffersList = foodoffersList.concat(foodoffersForCanteen);
     }
     return foodoffersList;

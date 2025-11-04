@@ -55,7 +55,7 @@ export class FoodWebParserAachenParseHtml {
     return rawMarkings;
   }
 
-  public static getRawFoodofferJSONListFromWebHtml(rawReport: string | Buffer | undefined, canteenName: string): FoodoffersTypeForParser[] {
+  public static getRawFoodofferJSONListFromWebHtml(rawReport: string | Buffer | undefined, canteenName: string, filterDuplicatedOffersPerCanteen: boolean): FoodoffersTypeForParser[] {
     const html = rawReport?.toString();
     if (!html) {
       return [];
@@ -97,7 +97,19 @@ export class FoodWebParserAachenParseHtml {
       });
     });
 
-    return rawFoodoffers;
+    if(filterDuplicatedOffersPerCanteen) {
+        // filter duplicated offers per canteen based on food_id
+        const uniqueOffersMap: Map<string, FoodoffersTypeForParser> = new Map();
+        for(const offer of rawFoodoffers) {
+            const key = offer.food_id
+            if(!uniqueOffersMap.has(key)) {
+                uniqueOffersMap.set(key, offer);
+            }
+        }
+        return Array.from(uniqueOffersMap.values());
+    } else {
+      return rawFoodoffers;
+    }
   }
 
   private static createRawFoodofferFromRow($: CheerioAPI, tr: any, context: { dayIndex: number; rowIndex: number; dateObj: Date; canteenName: string }): FoodoffersTypeForParser | null {

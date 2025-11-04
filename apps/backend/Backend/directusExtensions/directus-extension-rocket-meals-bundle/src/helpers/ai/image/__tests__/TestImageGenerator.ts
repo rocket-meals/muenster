@@ -11,7 +11,7 @@ import {ImageSafeGeneratorFood} from "../ImageSafeGeneratorFood";
 
 const SECONDS = 1000;
 
-describe('dev', () => {
+describe('Image Generation Tests', () => {
   // should find atleast one meal offer
   it('Food Image Generation', async () => {
     let apiKey = ""

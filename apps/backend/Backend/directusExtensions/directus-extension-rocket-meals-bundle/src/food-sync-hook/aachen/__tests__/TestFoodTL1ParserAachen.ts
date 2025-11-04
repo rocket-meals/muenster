@@ -1,8 +1,8 @@
-import { describe, expect, it } from '@jest/globals';
-import { FoodAndMarkingWebParserAachen } from '../FoodAndMarkingWebParserAachen';
-import { FoodWebParser_RawReportTestReaderAachen } from '../FoodWebParser_RawReportTestReaderAachen';
-import { FoodParserInterface } from '../../FoodParserInterface';
-import { MarkingParserInterface } from '../../MarkingParserInterface';
+import {describe, expect, it} from '@jest/globals';
+import {FoodAndMarkingWebParserAachen} from '../FoodAndMarkingWebParserAachen';
+import {FoodWebParser_RawReportTestReaderAachen} from '../FoodWebParser_RawReportTestReaderAachen';
+import {FoodParserInterface} from '../../FoodParserInterface';
+import {MarkingParserInterface} from '../../MarkingParserInterface';
 
 function getTestParser(): FoodParserInterface {
   return new FoodAndMarkingWebParserAachen(new FoodWebParser_RawReportTestReaderAachen());
@@ -13,7 +13,7 @@ function getMarkingParser(): MarkingParserInterface {
 }
 
 describe('FoodAndMarkingWebParserAachen Test', () => {
-  it('parses more than one food offer', async () => {
+  it('parses more than one food', async () => {
     const parser = getTestParser();
     await parser.createNeededData();
     const foodsList = await parser.getFoodsListForParser();
