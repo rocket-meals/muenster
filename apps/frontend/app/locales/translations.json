@@ -1469,6 +1469,36 @@
     "tr": "Destek",
     "zh": "支持"
   },
+  "ai_generated_badge_label": {
+    "de": "KI",
+    "en": "AI",
+    "ar": "ذكاء",
+    "es": "IA",
+    "fr": "IA",
+    "ru": "ИИ",
+    "tr": "YZ",
+    "zh": "AI"
+  },
+  "ai_generated_image": {
+    "de": "KI generiert",
+    "en": "AI generated",
+    "ar": "تم إنشاؤه بواسطة الذكاء الاصطناعي",
+    "es": "Generado por IA",
+    "fr": "Généré par l'IA",
+    "ru": "Сгенерировано ИИ",
+    "tr": "Yapay zeka tarafından oluşturuldu",
+    "zh": "由人工智能生成"
+  },
+  "ai_generated_image_hint": {
+    "de": "Dieses Bild wurde mithilfe künstlicher Intelligenz generiert.",
+    "en": "This image was generated with the help of artificial intelligence.",
+    "ar": "تم إنشاء هذه الصورة بمساعدة الذكاء الاصطناعي.",
+    "es": "Esta imagen fue generada con la ayuda de inteligencia artificial.",
+    "fr": "Cette image a été générée à l'aide de l'intelligence artificielle.",
+    "ru": "Это изображение создано с помощью искусственного интеллекта.",
+    "tr": "Bu görsel yapay zekânın yardımıyla oluşturuldu.",
+    "zh": "此图像由人工智能生成。"
+  },
   "price": {
     "de": "Preis",
     "en": "Price",

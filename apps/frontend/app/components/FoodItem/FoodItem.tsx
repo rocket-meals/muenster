@@ -32,18 +32,20 @@ const selectMarkings = createSelector([selectFoodState], foodState => foodState.
 const FoodItem: React.FC<FoodItemProps> = memo(
 	({ item, canteen, handleMenuSheet, handleImageSheet, setSelectedFoodId, handleEatingHabitsSheet }) => {
 		const toast = useToast();
-		const [warning, setWarning] = useState(false);
+                const [warning, setWarning] = useState(false);
 		const dispatch = useDispatch();
 		const { theme } = useTheme();
 		const { translate } = useLanguage();
 		const { food } = item;
 		const foodItem = food as DatabaseTypes.Foods;
-		const markings = useSelector(selectMarkings);
-		const { user, profile, isManagement } = useSelector((state: RootState) => state.authReducer);
-		const previousFeedback = useSelector(state => selectPreviousFeedback(state, foodItem.id));
-		const { language, serverInfo, appSettings, primaryColor } = useSelector((state: RootState) => state.settings);
-		const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
-		const defaultImage = getImageUrl(String(appSettings.foods_placeholder_image)) || appSettings.foods_placeholder_image_remote_url || getImageUrl(serverInfo?.info?.project?.project_logo);
+                const markings = useSelector(selectMarkings);
+                const { user, profile, isManagement } = useSelector((state: RootState) => state.authReducer);
+                const previousFeedback = useSelector(state => selectPreviousFeedback(state, foodItem.id));
+                const { language, serverInfo, appSettings, primaryColor } = useSelector((state: RootState) => state.settings);
+                const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+                const defaultImage = getImageUrl(String(appSettings.foods_placeholder_image)) || appSettings.foods_placeholder_image_remote_url || getImageUrl(serverInfo?.info?.project?.project_logo);
+                const isImageGenerated = Boolean(foodItem?.image_generated);
+
 
 		const getPriceGroup = (price_group: string) => {
 			if (price_group) {
@@ -168,61 +170,89 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 											</TooltipContent>
 										</Tooltip>
 									)}
-									<TouchableOpacity style={styles.favContainer}>
-										{previousFeedback?.rating === 5 ? (
-											<Tooltip
-												placement="top"
-												trigger={triggerProps => (
-													<TouchableOpacity {...triggerProps} onPress={() => updateRating(null)}>
-														<AntDesign name="star" size={20} color={foods_area_color} />
-													</TouchableOpacity>
-												)}
-											>
-												<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
-													<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-														{translate(TranslationKeys.set_rate_as_not_favorite)}
-													</TooltipText>
-												</TooltipContent>
-											</Tooltip>
-										) : (
-											<Tooltip
-												placement="top"
-												trigger={triggerProps => (
-													<TouchableOpacity {...triggerProps} onPress={() => updateRating(5)}>
-														<AntDesign name="staro" size={20} color={'white'} />
-													</TouchableOpacity>
-												)}
-											>
-												<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
-													<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-														{translate(TranslationKeys.set_rate_as_favorite)}
-													</TooltipText>
-												</TooltipContent>
-											</Tooltip>
-										)}
-									</TouchableOpacity>
-									{dislikedMarkings.length > 0 && (
-										<Tooltip
-											placement="top"
-											trigger={triggerProps => (
-												<TouchableOpacity
-													style={{
-														...styles.favContainerWarn,
-													}}
-													{...triggerProps}
-													onPress={handleOpenSheet}
-												>
-													<MaterialIcons name="warning" size={20} color={foods_area_color} />
-												</TouchableOpacity>
-											)}
-										>
-											<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
-												<TooltipText fontSize="$sm" color={theme.tooltip.text}>
-													{`${translate(TranslationKeys.attention)} ${translate(TranslationKeys.eating_habits)}`}
-												</TooltipText>
-											</TooltipContent>
-										</Tooltip>
-									)}
+                                                                        <View style={styles.overlayActionsContainer}>
+                                                                                {previousFeedback?.rating === 5 ? (
+                                                                                        <Tooltip
+                                                                                                placement="top"
+                                                                                                trigger={triggerProps => (
+                                                                                                        <TouchableOpacity
+                                                                                                                {...triggerProps}
+                                                                                                                style={styles.overlayIconButton}
+                                                                                                                onPress={() => updateRating(null)}
+                                                                                                        >
+                                                                                                                <AntDesign name="star" size={20} color={foods_area_color} />
+                                                                                                        </TouchableOpacity>
+                                                                                                )}
+                                                                                        >
+                                                                                                <TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
+                                                                                                        <TooltipText fontSize="$sm" color={theme.tooltip.text}>
+                                                                                                                {translate(TranslationKeys.set_rate_as_not_favorite)}
+                                                                                                        </TooltipText>
+                                                                                                </TooltipContent>
+                                                                                        </Tooltip>
+                                                                                ) : (
+                                                                                        <Tooltip
+                                                                                                placement="top"
+                                                                                                trigger={triggerProps => (
+                                                                                                        <TouchableOpacity
+                                                                                                                {...triggerProps}
+                                                                                                                style={styles.overlayIconButton}
+                                                                                                                onPress={() => updateRating(5)}
+                                                                                                        >
+                                                                                                                <AntDesign name="staro" size={20} color={'white'} />
+                                                                                                        </TouchableOpacity>
+                                                                                                )}
+                                                                                        >
+                                                                                                <TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
+                                                                                                        <TooltipText fontSize="$sm" color={theme.tooltip.text}>
+                                                                                                                {translate(TranslationKeys.set_rate_as_favorite)}
+                                                                                                        </TooltipText>
+                                                                                                </TooltipContent>
+                                                                                        </Tooltip>
+                                                                                )}
+                                                                                {dislikedMarkings.length > 0 && (
+                                                                                        <Tooltip
+                                                                                                placement="top"
+                                                                                                trigger={triggerProps => (
+                                                                                                        <TouchableOpacity
+                                                                                                                {...triggerProps}
+                                                                                                                style={styles.overlayIconButton}
+                                                                                                                onPress={handleOpenSheet}
+                                                                                                        >
+                                                                                                                <MaterialIcons name="warning" size={20} color={foods_area_color} />
+                                                                                                        </TouchableOpacity>
+                                                                                                )}
+                                                                                        >
+                                                                                                <TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
+                                                                                                        <TooltipText fontSize="$sm" color={theme.tooltip.text}>
+                                                                                                                {`${translate(TranslationKeys.attention)} ${translate(TranslationKeys.eating_habits)}`}
+                                                                                                        </TooltipText>
+                                                                                                </TooltipContent>
+                                                                                        </Tooltip>
+                                                                                )}
+                                                                                {isImageGenerated && (
+                                                                                        <Tooltip
+                                                                                                placement="top"
+                                                                                                trigger={triggerProps => (
+                                                                                                        <TouchableOpacity
+                                                                                                                {...triggerProps}
+                                                                                                                style={styles.overlayIconButton}
+                                                                                                                onPress={() => handleEatingHabitsSheet('aiGeneratedInfo')}
+                                                                                                        >
+                                                                                                                <Text style={styles.aiGeneratedBadgeText}>
+                                                                                                                        {translate(TranslationKeys.ai_generated_badge_label)}
+                                                                                                                </Text>
+                                                                                                        </TouchableOpacity>
+                                                                                                )}
+                                                                                        >
+                                                                                                <TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
+                                                                                                        <TooltipText fontSize="$sm" color={theme.tooltip.text}>
+                                                                                                                {translate(TranslationKeys.ai_generated_image)}
+                                                                                                        </TooltipText>
+                                                                                                </TooltipContent>
+                                                                                        </Tooltip>
+                                                                                )}
+                                                                        </View>
 									<View style={styles.categoriesContainer}>
 										{markingsData?.map((mark: any) => {
 											if ((mark?.image_remote_url || mark?.image) && mark?.show_on_card)
@@ -246,12 +276,12 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 												);
 										})}
 									</View>
-									<Tooltip
-										placement="top"
-										trigger={triggerProps => (
-											<TouchableOpacity style={styles.priceTag} {...triggerProps} onPress={handlePriceChange}>
-												<Text style={styles.priceText}>{showFormatedPrice(showPrice(item, profile))}</Text>
-											</TouchableOpacity>
+                                                                        <Tooltip
+                                                                                placement="top"
+                                                                                trigger={triggerProps => (
+                                                                                        <TouchableOpacity style={styles.priceTag} {...triggerProps} onPress={handlePriceChange}>
+                                                                                                <Text style={styles.priceText}>{showFormatedPrice(showPrice(item, profile))}</Text>
+                                                                                        </TouchableOpacity>
 										)}
 									>
 										<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
@@ -274,10 +304,10 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 					</TooltipContent>
 				</Tooltip>
 
-				<PermissionModal isVisible={warning} setIsVisible={setWarning} />
-			</>
-		);
-	},
+                                <PermissionModal isVisible={warning} setIsVisible={setWarning} />
+                        </>
+                );
+        },
 	(prevProps, nextProps) => prevProps.item === nextProps.item
 );
 
