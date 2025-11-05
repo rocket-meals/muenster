@@ -1,6 +1,6 @@
 import { Linking, Text, TouchableOpacity, View } from 'react-native';
 import MyImage from '@/components/MyImage';
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import styles from './styles';
 import { isWeb } from '@/constants/Constants';
 import { useTheme } from '@/hooks/useTheme';
@@ -22,7 +22,6 @@ import { handleFoodRating } from '@/helper/feedback';
 import { RootState } from '@/redux/reducer';
 import CardWithText from '../CardWithText/CardWithText';
 import useFoodCard from '@/hooks/useFoodCard';
-import BaseModal from '@/components/BaseModal';
 
 const selectFoodState = (state: RootState) => state.food;
 
@@ -34,7 +33,6 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 	({ item, canteen, handleMenuSheet, handleImageSheet, setSelectedFoodId, handleEatingHabitsSheet }) => {
 		const toast = useToast();
                 const [warning, setWarning] = useState(false);
-                const [isAIGeneratedModalVisible, setIsAIGeneratedModalVisible] = useState(false);
 		const dispatch = useDispatch();
 		const { theme } = useTheme();
 		const { translate } = useLanguage();
@@ -48,11 +46,6 @@ const FoodItem: React.FC<FoodItemProps> = memo(
                 const defaultImage = getImageUrl(String(appSettings.foods_placeholder_image)) || appSettings.foods_placeholder_image_remote_url || getImageUrl(serverInfo?.info?.project?.project_logo);
                 const isImageGenerated = Boolean(foodItem?.image_generated);
 
-                useEffect(() => {
-                        if (!isImageGenerated) {
-                                setIsAIGeneratedModalVisible(false);
-                        }
-                }, [isImageGenerated]);
 
 		const getPriceGroup = (price_group: string) => {
 			if (price_group) {
@@ -244,7 +237,7 @@ const FoodItem: React.FC<FoodItemProps> = memo(
                                                                                                         <TouchableOpacity
                                                                                                                 {...triggerProps}
                                                                                                                 style={styles.overlayIconButton}
-                                                                                                                onPress={() => setIsAIGeneratedModalVisible(true)}
+                                                                                                                onPress={() => handleEatingHabitsSheet('aiGeneratedInfo')}
                                                                                                         >
                                                                                                                 <Text style={styles.aiGeneratedBadgeText}>
                                                                                                                         {translate(TranslationKeys.ai_generated_badge_label)}
@@ -312,17 +305,6 @@ const FoodItem: React.FC<FoodItemProps> = memo(
 				</Tooltip>
 
                                 <PermissionModal isVisible={warning} setIsVisible={setWarning} />
-                                {isImageGenerated && (
-                                        <BaseModal
-                                                isVisible={isAIGeneratedModalVisible}
-                                                title={translate(TranslationKeys.ai_generated_image)}
-                                                onClose={() => setIsAIGeneratedModalVisible(false)}
-                                        >
-                                                <Text style={{ ...styles.aiGeneratedModalText, color: theme.modal.text }}>
-                                                        {translate(TranslationKeys.ai_generated_image_hint)}
-                                                </Text>
-                                        </BaseModal>
-                                )}
                         </>
                 );
         },

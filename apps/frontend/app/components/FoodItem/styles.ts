@@ -89,10 +89,4 @@ export default StyleSheet.create({
                 fontFamily: 'Poppins_600SemiBold',
                 textTransform: 'uppercase',
         },
-        aiGeneratedModalText: {
-                fontSize: 16,
-                fontFamily: 'Poppins_400Regular',
-                textAlign: 'center',
-                paddingHorizontal: 24,
-        },
 });

@@ -46,16 +46,18 @@ import useSetPageTitle from '@/hooks/useSetPageTitle';
 import CustomMarkdown from '@/components/CustomMarkdown/CustomMarkdown';
 import { RootState } from '@/redux/reducer';
 import MarkingBottomSheet from '@/components/MarkingBottomSheet';
+import AIGeneratedHintSheet from '@/components/AIGeneratedHintSheet';
 import useFoodOffersDefaultDate from '@/hooks/useFoodOffersDefaultDate';
 
 export const SHEET_COMPONENTS = {
-	canteen: CanteenSelectionSheet,
-	sort: SortSheet,
-	hours: HourSheet,
-	calendar: CalendarSheet,
-	forecast: ForecastSheet,
-	imageManagement: ImageManagementSheet,
-	eatingHabits: EatingHabitsSheet,
+        canteen: CanteenSelectionSheet,
+        sort: SortSheet,
+        hours: HourSheet,
+        calendar: CalendarSheet,
+        forecast: ForecastSheet,
+        imageManagement: ImageManagementSheet,
+        aiGeneratedInfo: AIGeneratedHintSheet,
+        eatingHabits: EatingHabitsSheet,
 };
 
 interface DayItem {
