@@ -1,4 +1,3 @@
-import crypto from 'crypto';
 import jwt from "jsonwebtoken";
 
 export const APPLE_AUDIENCE = 'https://appleid.apple.com';
@@ -74,33 +73,34 @@ export function generateAppleClientSecret(config: AppleClientSecretConfig): Appl
     throw new Error('Missing configuration for Apple client secret generation.');
   }
 
-  const nowInSeconds = Math.floor(Date.now() / 1000);
-  const requestedLifetime = config.lifetimeSeconds ?? MAX_TOKEN_LIFETIME_SECONDS;
-  const lifetimeSeconds = Math.min(requestedLifetime, MAX_TOKEN_LIFETIME_SECONDS);
-  const privateKeyNormalized = normalisePrivateKey(config.privateKey);
+  // Normalise private key formatting (handle escaped newlines)
+  const privateKey = normalisePrivateKey(config.privateKey);
 
-  const privateKey = privateKeyNormalized
-      .replace(/ /g, "\n")
-      .replace(/-----BEGIN\nPRIVATE\nKEY-----/, "-----BEGIN PRIVATE KEY-----")
-      .replace(/-----END\nPRIVATE\nKEY-----/, "-----END PRIVATE KEY-----");
+  const lifetime = Math.min(config.lifetimeSeconds ?? 60 * 60, MAX_TOKEN_LIFETIME_SECONDS);
 
-  const exp = Math.floor(Date.now() / 1000) + 3600 * 24 * days; // Token expiry (max 6 months, set as needed)
-
-  const payload = {
-    iss: teamId,
+  const payload: AppleJwtPayload = {
+    iss: config.teamId,
     iat: Math.floor(Date.now() / 1000),
-    exp: exp,
-    aud: "https://appleid.apple.com",
-    sub: clientId,
+    exp: Math.floor(Date.now() / 1000) + lifetime, // expiration in seconds
+    aud: APPLE_AUDIENCE,
+    sub: config.clientId,
   };
 
-  const clientSecret = jwt.sign(payload, privateKey, {
-    algorithm: "ES256",
-    keyid: keyId, // Key ID for .p8 file
-  });
+  const options = {
+    algorithm: 'ES256' as const,
+    header: {
+      kid: config.keyId,
+      typ: 'JWT',
+    },
+  };
+
+  // Pass the private key as a Buffer to satisfy the typings for jwt.sign
+  const clientSecret = jwt.sign(payload as object, Buffer.from(privateKey), options as any);
+
+  const expiresAt = payload.exp ?? (Math.floor(Date.now() / 1000) + lifetime);
 
   return {
     token: clientSecret,
-    expiresAt: exp,
+    expiresAt,
   };
 }

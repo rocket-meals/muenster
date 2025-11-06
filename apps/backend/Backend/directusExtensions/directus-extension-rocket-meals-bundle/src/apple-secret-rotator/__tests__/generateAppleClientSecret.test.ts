@@ -18,7 +18,7 @@ KG9Q0bXEHhrMtUa0ks9yOTBixnBWRO2jmC+ocn0fqywTIpkTrJFUI0s4lA==
 -----END PUBLIC KEY-----`;
 
 // Only the header and payload parts, signature will differ
-const expectedTokenPartials = "eyJraWQiOiJBQkMxMjNYWVoiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJURUFNSUQxMjMiLCJpYXQiOjE2MDAwMDAwMDAsImV4cCI6MTYxNTU1MjAwMCwiYXVkIjoiaHR0cHM6Ly9hcHBsZWlkLmFwcGxlLmNvbSIsInN1YiI6ImNvbS5leGFtcGxlLmFwcCJ9.Z2fNWUqVkTCiptwAMvYi9qLrZyD7bqF8RKeuzhHK1NE0CTy9kh-cgglRiZWLKxVLjvVCp-k_q19yMBBWmJW_zA"
+const expectedTokenPartials = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFCQzEyM1hZWiJ9.eyJpc3MiOiJURUFNSUQxMjMiLCJpYXQiOjE2MDAwMDAwMDAsImV4cCI6MTYwNzc3NjAwMCwiYXVkIjoiaHR0cHM6Ly9hcHBsZWlkLmFwcGxlLmNvbSIsInN1YiI6ImNvbS5leGFtcGxlLmFwcCJ9.Z2fNWUqVkTCiptwAMvYi9qLrZyD7bqF8RKeuzhHK1NE0CTy9kh-cgglRiZWLKxVLjvVCp-k_q19yMBBWmJW_zA"
 
 const TEST_TEAM_ID = 'TEAMID123';
 const TEST_CLIENT_ID = 'com.example.app';
