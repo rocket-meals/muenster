@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import {generateAppleJWTClaude} from "./generateAppleClientSecretClaude";
+import {generateAppleJWTShell} from "./generateAppleClientSecretShell";
 
 export const APPLE_AUDIENCE = 'https://appleid.apple.com';
 const days = 90;
@@ -74,12 +75,11 @@ export function generateAppleClientSecret(config: AppleClientSecretConfig): Appl
     throw new Error('Missing configuration for Apple client secret generation.');
   }
 
-  let result = generateAppleJWTClaude({
+  let result = generateAppleJWTShell({
     teamId: config.teamId,
     clientId: config.clientId,
     keyId: config.keyId,
     keyFileContent: config.privateKey,
-    keyFilePath: undefined,
   })
 
   return {

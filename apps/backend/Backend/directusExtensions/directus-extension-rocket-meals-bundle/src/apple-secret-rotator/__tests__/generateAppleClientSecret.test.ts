@@ -50,4 +50,18 @@ describe('dev', () => {
       expect(decoded?.iat).toBe(1762470054);
       expect(decoded?.exp).toBe(1778022054);
   });
+
+  it('generates a valid Apple client secret', () => {
+    const result = generateAppleClientSecret({
+      teamId: TEST_TEAM_ID,
+      clientId: TEST_CLIENT_ID,
+      keyId: TEST_KEY_ID,
+      privateKey: TEST_PRIVATE_KEY,
+      lifetimeSeconds: MAX_TOKEN_LIFETIME_SECONDS,
+    });
+
+    console.info(JSON.stringify(result, null, 2));
+    expect(result).toHaveProperty('token');
+  });
+
 });

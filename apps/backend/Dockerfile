@@ -24,6 +24,8 @@ RUN apk update && apk add --no-cache \
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
+# Install vim for openssl and xxd
+RUN apk add vim
 
 # Switch back to the 'node' user for safety
 USER node
