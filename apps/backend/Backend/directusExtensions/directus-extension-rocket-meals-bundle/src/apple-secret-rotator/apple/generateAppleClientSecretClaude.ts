@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+import * as fs from 'fs';
 
 interface AppleJWTParams {
   teamId: string;
@@ -21,57 +22,72 @@ function base64UrlEncode(input: string | Buffer): string {
 
 /**
  * Convert EC signature from ASN.1 DER format to raw format (r|s)
+ * This matches the bash script's convert_ec function
  */
 function convertECSignature(derSignature: Buffer): Buffer {
-  // Parse ASN.1 DER encoded signature
-  // DER structure: SEQUENCE { r INTEGER, s INTEGER }
-
+  // Parse ASN.1 DER structure
   let offset = 0;
 
-  // Skip SEQUENCE tag and length
+  // Check SEQUENCE tag (0x30)
   if (derSignature[offset] !== 0x30) {
-    throw new Error('Invalid DER signature format');
+    throw new Error('Invalid DER signature: missing SEQUENCE tag');
   }
-  offset += 2; // Skip tag and length byte
+  offset += 1;
 
-  // Parse R
+  // Skip sequence length
+  const sequenceLength = derSignature[offset];
+  offset += 1;
+
+  // Parse R value
   if (derSignature[offset] !== 0x02) {
-    throw new Error('Invalid DER signature format - R');
+    throw new Error('Invalid DER signature: missing R INTEGER tag');
   }
   offset += 1;
-  const rLength = derSignature[offset];
+
+  let rLength = derSignature[offset];
   offset += 1;
 
-  let r = derSignature.slice(offset, offset + rLength);
+  let rOffset = offset;
+  let r = derSignature.slice(rOffset, rOffset + rLength);
   offset += rLength;
 
-  // Parse S
+  // Parse S value
   if (derSignature[offset] !== 0x02) {
-    throw new Error('Invalid DER signature format - S');
+    throw new Error('Invalid DER signature: missing S INTEGER tag');
   }
   offset += 1;
-  const sLength = derSignature[offset];
+
+  let sLength = derSignature[offset];
   offset += 1;
 
-  let s = derSignature.slice(offset, offset + sLength);
+  let sOffset = offset;
+  let s = derSignature.slice(sOffset, sOffset + sLength);
 
-  // Remove leading zero bytes if present (added for sign bit in ASN.1)
-  if (r.length === 33 && r[0] === 0x00) {
+  // Remove leading zero padding if present (for positive integers in ASN.1)
+  while (r.length > 32 && r[0] === 0x00) {
     r = r.slice(1);
   }
-  if (s.length === 33 && s[0] === 0x00) {
+  while (s.length > 32 && s[0] === 0x00) {
     s = s.slice(1);
   }
 
-  // Pad to 32 bytes if needed
-  if (r.length < 32) {
-    r = Buffer.concat([Buffer.alloc(32 - r.length, 0), r]);
+  // Pad to exactly 32 bytes if shorter
+  while (r.length < 32) {
+    r = Buffer.concat([Buffer.from([0x00]), r]);
   }
-  if (s.length < 32) {
-    s = Buffer.concat([Buffer.alloc(32 - s.length, 0), s]);
+  while (s.length < 32) {
+    s = Buffer.concat([Buffer.from([0x00]), s]);
   }
 
-  // Concatenate R and S
+  // Ensure exactly 32 bytes each
+  if (r.length > 32) {
+    r = r.slice(r.length - 32);
+  }
+  if (s.length > 32) {
+    s = s.slice(s.length - 32);
+  }
+
+  // Concatenate R and S (64 bytes total for ES256)
   return Buffer.concat([r, s]);
 }
 
@@ -98,13 +114,17 @@ export function generateAppleJWTClaude(params: AppleJWTParams) {
   // Read the EC key
   let ecdsaKey: string;
   if (keyFilePath) {
-    const fs = require('fs');
     if (!fs.existsSync(keyFilePath)) {
       throw new Error(`Key file '${keyFilePath}' not found.`);
     }
     ecdsaKey = fs.readFileSync(keyFilePath, 'utf8');
   } else {
     ecdsaKey = keyFileContent!;
+  }
+
+  // Ensure key has proper line breaks (handle escaped \n)
+  if (ecdsaKey.includes('\\n')) {
+    ecdsaKey = ecdsaKey.replace(/\\n/g, '\n');
   }
 
   // Generate timestamps
@@ -130,7 +150,7 @@ export function generateAppleJWTClaude(params: AppleJWTParams) {
   const jwtHeaderBase64 = base64UrlEncode(JSON.stringify(header));
   const jwtClaimsBase64 = base64UrlEncode(JSON.stringify(claims));
 
-  // Create signature
+  // Create signature input
   const signatureInput = `${jwtHeaderBase64}.${jwtClaimsBase64}`;
 
   // Sign with ES256 (ECDSA with SHA-256)
@@ -138,9 +158,10 @@ export function generateAppleJWTClaude(params: AppleJWTParams) {
   sign.update(signatureInput);
   sign.end();
 
+  // Get DER signature
   const derSignature = sign.sign(ecdsaKey);
 
-  // Convert DER signature to raw format
+  // Convert DER signature to raw format (r|s concatenated)
   const rawSignature = convertECSignature(derSignature);
 
   // Base64 URL encode the signature
