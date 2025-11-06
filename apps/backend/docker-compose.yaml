@@ -50,6 +50,8 @@ services:
       - ${MARKING_SYNC_TL1FILE_EXPORT_CSV_FILE_PATH:-/dev/null}:/directus/tl1/markings.csv
       # TL1 housing contracts
       - ${HOUSING_CONTRACT_SYNC_TL1FILE_EXPORT_CSV_FILE_PATH:-/dev/null}:/directus/tl1/housingContracts.csv
+      # Generate Apple SSO client secret
+      - ./genSSO_Apple.sh:/directus/genSSO_Apple.sh:ro
     environment:
       # Traefik configuration
       PUBLIC_URL: "https://${MYHOST}/${ROCKET_MEALS_PATH}/${ROCKET_MEALS_BACKEND_PATH}"
