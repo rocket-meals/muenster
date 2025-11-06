@@ -11,6 +11,7 @@ import { ImageSafeGeneratorFood } from '../helpers/ai/image/ImageSafeGeneratorFo
 import { ModerationCheckChatGpt } from '../helpers/ai/moderation/ModerationCheckChatGpt';
 import { ImageRawGeneratorChatGpt } from '../helpers/ai/image/ImageRawGeneratorChatGpt';
 import { MyFileTypes } from '../helpers/FilesServiceHelper';
+import {CronHelper} from "../helpers/CronHelper";
 
 const WORKFLOW_ID = 'food-image-ai-generation';
 
@@ -210,6 +211,6 @@ export default defineHook(async (registerFunctions, apiContext) => {
     workflowRunInterface: new FoodImageAiGenerationWorkflow(),
     myDatabaseHelper: myDatabaseHelper,
     schedule: schedule,
-    cronOject: WorkflowScheduleHelper.EVERY_DAY_AT_4AM,
+    cronOject: CronHelper.EVERY_DAY_AT_4AM,
   });
 });

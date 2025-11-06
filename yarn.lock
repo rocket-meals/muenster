@@ -22575,7 +22575,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "repo-depkit-common-backend@workspace:packages/common-backend"
   dependencies:
+    "@types/jest": "npm:^29.5.12"
+    "@types/jsonwebtoken": "npm:^9.0.9"
+    jest: "npm:^29.7.0"
+    jsonwebtoken: "npm:^9.0.2"
     path: "npm:^0.12.7"
+    ts-jest: "npm:^29.1.3"
     ts-morph: "npm:^26.0.0"
     typescript: "npm:*"
   languageName: unknown

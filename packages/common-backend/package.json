@@ -5,7 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "testDev": "jest -t 'dev'"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

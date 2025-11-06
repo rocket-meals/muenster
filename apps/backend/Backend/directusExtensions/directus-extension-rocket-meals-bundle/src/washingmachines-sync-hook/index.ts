@@ -11,6 +11,7 @@ import { RegisterFunctions } from '@directus/extensions';
 import { SingleWorkflowRun } from '../workflows-runs-hook/WorkflowRunJobInterface';
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {CronHelper} from "../helpers/CronHelper";
 
 function registerWashingmachinesFilterUpdate(apiContext: any, registerFunctions: RegisterFunctions) {
   const { filter } = registerFunctions;
@@ -136,6 +137,6 @@ export default defineHook(async (registerFunctions: RegisterFunctions, apiContex
     workflowRunInterface: new WashingmachinesWorkflow(usedParser),
     myDatabaseHelper: myDatabaseHelper,
     schedule: schedule,
-    cronOject: WorkflowScheduleHelper.EVERY_DAY_AT_17_59,
+    cronOject: CronHelper.EVERY_DAY_AT_17_59,
   });
 });

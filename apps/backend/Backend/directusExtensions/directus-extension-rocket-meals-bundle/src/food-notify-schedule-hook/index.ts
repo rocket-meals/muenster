@@ -6,6 +6,7 @@ import { SingleWorkflowRun } from '../workflows-runs-hook/WorkflowRunJobInterfac
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {CronHelper} from "../helpers/CronHelper";
 
 class FoodNotifyWorkflow extends SingleWorkflowRun {
   getWorkflowId(): string {
@@ -35,6 +36,6 @@ export default defineHook(async ({ action, schedule }, apiContext) => {
     workflowRunInterface: new FoodNotifyWorkflow(),
     myDatabaseHelper: myDatabaseHelper,
     schedule: schedule,
-    cronOject: WorkflowScheduleHelper.EVERY_DAY_AT_17_59,
+    cronOject: CronHelper.EVERY_DAY_AT_17_59,
   });
 });

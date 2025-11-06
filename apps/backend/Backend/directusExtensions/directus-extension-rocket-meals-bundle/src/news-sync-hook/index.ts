@@ -11,6 +11,7 @@ import { SingleWorkflowRun } from '../workflows-runs-hook/WorkflowRunJobInterfac
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {CronHelper} from "../helpers/CronHelper";
 
 class NewsParseWorkflow extends SingleWorkflowRun {
   private readonly newsParserInterface: NewsParserInterface;
@@ -61,6 +62,6 @@ export default defineHook(async ({ action, init, schedule }, apiContext) => {
     workflowRunInterface: new NewsParseWorkflow(usedParser),
     myDatabaseHelper: myDatabaseHelper,
     schedule: schedule,
-    cronOject: WorkflowScheduleHelper.EVERY_DAY_AT_4AM,
+    cronOject: CronHelper.EVERY_DAY_AT_4AM,
   });
 });

@@ -7,8 +7,9 @@ import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
 import { SingleWorkflowRun } from '../workflows-runs-hook/WorkflowRunJobInterface';
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
-import { CronObject, WorkflowScheduleHelper, WorkflowScheduler } from '../workflows-runs-hook';
+import { WorkflowScheduleHelper, WorkflowScheduler } from '../workflows-runs-hook';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {CronHelper, CronObject} from "../helpers/CronHelper";
 
 class CashRegisterWorkflow extends SingleWorkflowRun {
   private readonly usedParser: CashregisterTransactionParserInterface;
@@ -51,7 +52,7 @@ export default defineHook(async ({ action, init, filter, schedule }, apiContext)
       break;
     case SyncForCustomerEnum.OSNABRUECK:
       usedParser = new Cashregisters_SWOSY('https://share.sw-os.de/swosy-kassendaten-2h', `Nils:qYoTHeyPyRljfEGRWW52`);
-      cronObject = WorkflowScheduleHelper.EVERY_HOUR;
+      cronObject = CronHelper.EVERY_HOUR;
       break;
   }
 

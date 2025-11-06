@@ -1,44 +1,77 @@
-/**
- * ┌────────────── second (0-59)
- *  │ ┌──────────── minute (0-59)
- *  │ │ ┌────────── hour (0-23)
- *  │ │ │ ┌──────── day of month (1-31)
- *  │ │ │ │ ┌────── month (1-12)
- *  │ │ │ │ │ ┌──── day of week (0-7)
- *  │ │ │ │ │ │
- *  │ │ │ │ │ │
- *  * * * * * *
- */
-
-type CronObject = {
-  second: string;
-  minute: string;
-  hour: string;
-  dayOfMonth: string;
-  month: string;
-  dayOfWeek: string;
+export type CronObject = {
+  seconds: string | number;
+  minutes: string | number;
+  hours: string | number;
+  dayOfMonth: string | number;
+  month: string | number;
+  dayOfWeek: string | number;
 };
 
 export class CronHelper {
-  public static createCronString(cronObject: CronObject): string {
-    return `${cronObject.second} ${cronObject.minute} ${cronObject.hour} ${cronObject.dayOfMonth} ${cronObject.month} ${cronObject.dayOfWeek}`;
+  static getCronString(cronObject: CronObject): string {
+    return cronObject.seconds + ' ' + cronObject.minutes + ' ' + cronObject.hours + ' ' + cronObject.dayOfMonth + ' ' + cronObject.month + ' ' + cronObject.dayOfWeek;
   }
 
-  public static EVERY_MINUTE: string = CronHelper.createCronString({
-    second: '0',
-    minute: '*',
-    hour: '*',
+  static EVERY_HOUR: CronObject = {
+    seconds: 0,
+    minutes: 0,
+    hours: '*',
     dayOfMonth: '*',
     month: '*',
     dayOfWeek: '*',
-  });
+  };
 
-  public static EVERY_TEN_SECONDS: string = CronHelper.createCronString({
-    second: '*/10',
-    minute: '*',
-    hour: '*',
+  static EVERY_MINUTE: CronObject = {
+    seconds: 0,
+    minutes: '*',
+    hours: '*',
     dayOfMonth: '*',
     month: '*',
     dayOfWeek: '*',
-  });
+  };
+
+  static EVERY_5_MINUTES: CronObject = {
+    seconds: 0,
+    minutes: '*/5',
+    hours: '*',
+    dayOfMonth: '*',
+    month: '*',
+    dayOfWeek: '*',
+  };
+
+  static EVERY_MONTH_AT_1AM: CronObject = {
+    seconds: 0,
+    minutes: 0,
+    hours: 1,
+    dayOfMonth: 1,
+    month: '*',
+    dayOfWeek: '*',
+  };
+
+  static EVERY_15_MINUTES: CronObject = {
+    seconds: 0,
+    minutes: '*/15',
+    hours: '*',
+    dayOfMonth: '*',
+    month: '*',
+    dayOfWeek: '*',
+  };
+
+  static EVERY_DAY_AT_17_59: CronObject = {
+    seconds: 0,
+    minutes: 59,
+    hours: 17,
+    dayOfMonth: '*',
+    month: '*',
+    dayOfWeek: '*',
+  };
+
+  static EVERY_DAY_AT_4AM: CronObject = {
+    seconds: 0,
+    minutes: 0,
+    hours: 4,
+    dayOfMonth: '*',
+    month: '*',
+    dayOfWeek: '*',
+  };
 }

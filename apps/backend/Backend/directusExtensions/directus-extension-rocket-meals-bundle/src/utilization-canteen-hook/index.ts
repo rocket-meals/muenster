@@ -6,6 +6,7 @@ import { SingleWorkflowRun } from '../workflows-runs-hook/WorkflowRunJobInterfac
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
+import {CronHelper} from "../helpers/CronHelper";
 
 class UtilizationCanteenCalculationWorkflow extends SingleWorkflowRun {
   getWorkflowId(): string {
@@ -34,6 +35,6 @@ export default defineHook(async ({ init, action, schedule }, apiContext) => {
     workflowRunInterface: new UtilizationCanteenCalculationWorkflow(),
     myDatabaseHelper: myDatabaseHelper,
     schedule: schedule,
-    cronOject: WorkflowScheduleHelper.EVERY_15_MINUTES,
+    cronOject: CronHelper.EVERY_15_MINUTES,
   });
 });

@@ -14,6 +14,7 @@ import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import { FoodAndMarkingWebParserAachen } from './aachen/FoodAndMarkingWebParserAachen';
+import {CronHelper} from "../helpers/CronHelper";
 
 const SCHEDULE_NAME = 'food_parse';
 
@@ -116,6 +117,6 @@ export default defineHook(async ({ action, init, filter, schedule }, apiContext)
     workflowRunInterface: new FoodParseWorkflow(),
     myDatabaseHelper: myDatabaseHelper,
     schedule: schedule,
-    cronOject: WorkflowScheduleHelper.EVERY_5_MINUTES,
+    cronOject: CronHelper.EVERY_5_MINUTES,
   });
 });
