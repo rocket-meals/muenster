@@ -1,7 +1,6 @@
 import { defineHook } from '@directus/extensions-sdk';
 import Redis from 'ioredis';
-import * as jwt from 'jsonwebtoken';
-import type { JwtPayload } from 'jsonwebtoken';
+import { decodeAppleClientSecret } from './apple/generateAppleClientSecret';
 import { ActionInitFilterEventHelper } from '../helpers/ActionInitFilterEventHelper';
 import {
   AppleClientSecretConfig,
@@ -51,7 +50,7 @@ function buildConfigFromEnv(): AppleClientSecretConfig | null {
 }
 
 function decodeExpiry(token: string): number | null {
-  const decoded = jwt.decode(token) as JwtPayload | null;
+  const decoded = decodeAppleClientSecret(token);
   return decoded?.exp ?? null;
 }
 
