@@ -45,8 +45,6 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
     try {
       token = execSync(command, { encoding: 'utf-8' }).trim();
     } catch (error) {
-      // Clean up the temporary script file
-      fs.unlinkSync(scriptPath);
       throw new Error(`Failed to generate Apple JWT: ${error}`);
     }
 
