@@ -71,6 +71,10 @@ export const SyncDataBaseOptionDockerPush: SyncDatabaseOptions = {
 }
 
 export async function syncDatabase(options: SyncDatabaseOptions) {
+  console.log("Starting Backend Sync Service...");
+  console.log("Options:");
+  console.log(JSON.stringify(options, null, 2));
+
   let adminEmail = options.adminEmail || process.env.ADMIN_EMAIL;
   let adminPassword = options.adminPassword || process.env.ADMIN_PASSWORD;
   let directusInstanceUrl = options.directusUrl;

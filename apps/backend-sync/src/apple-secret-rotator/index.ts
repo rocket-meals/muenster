@@ -58,38 +58,6 @@ function setEnvValue(key: string, value: string) {
   console.log("["+HOOK_NAME+"] Updated " + key + " in " + configPath);
 }
 
-function loadAppleClientSecretFromHostEnvSync() {
-  const hostEnvFilePath = process.env.HOST_ENV_FILE_PATH;
-  if (!hostEnvFilePath) {
-    console.log('['+HOOK_NAME+'] HOST_ENV_FILE_PATH not set at module load time. Skipping early secret load.');
-    return;
-  }
-
-  try {
-    const envContent = fs.readFileSync(hostEnvFilePath, 'utf8');
-    const lines = envContent.split(/\r?\n/);
-    for (const line of lines) {
-      if (!line) continue;
-      if (line.startsWith('AUTH_APPLE_CLIENT_SECRET=')) {
-        const idx = line.indexOf('=');
-        const value = idx >= 0 ? line.substring(idx + 1) : '';
-        if (value) {
-          process.env.AUTH_APPLE_CLIENT_SECRET = value;
-          console.log('['+HOOK_NAME+'] (early load) Loaded AUTH_APPLE_CLIENT_SECRET from host env file into runtime environment.');
-        } else {
-          console.log('['+HOOK_NAME+'] (early load) AUTH_APPLE_CLIENT_SECRET present in host env file but empty.');
-        }
-        return;
-      }
-    }
-    console.log('['+HOOK_NAME+'] (early load) AUTH_APPLE_CLIENT_SECRET not found in host env file.');
-  } catch (err) {
-    console.warn('['+HOOK_NAME+'] (early load) Failed to read host env file at', hostEnvFilePath, (err as any)?.message || String(err));
-  }
-}
-
-loadAppleClientSecretFromHostEnvSync();
-
 async function refreshSecret(config: AppleClientSecretConfig) {
   try {
     const result = generateAppleClientSecret(config);
