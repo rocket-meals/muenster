@@ -51,7 +51,7 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
   }
 
     // Execute the shell script with parameters
-    let command = `./sso/genSSO_Apple.sh --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
+    let command = `/directus/sso/genSSO_Apple.sh --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
 
     let token: string;
     try {
