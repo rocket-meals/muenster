@@ -36,7 +36,14 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
   const currentTime = Math.floor(Date.now() / 1000);
   const expirationTime = currentTime + (86400 * 180); // 180 days
 
-    const scriptPath = path.join("/directus/genSSO_Apple.sh");
+  try {
+    let commandResult = execSync("pwd", { encoding: 'utf-8' }).trim();
+    console.log(commandResult);
+  } catch (error) {
+    throw new Error(`Failed: ${error}`);
+  }
+
+  let scriptPath = path.resolve("/directus/genSSO_Apple.sh")
 
     // Execute the shell script with parameters
     let command = `"${scriptPath}" --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
@@ -47,9 +54,6 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
     } catch (error) {
       throw new Error(`Failed to generate Apple JWT: ${error}`);
     }
-
-    // Clean up the temporary script file
-    fs.unlinkSync(scriptPath);
 
   return {
     token: token,
