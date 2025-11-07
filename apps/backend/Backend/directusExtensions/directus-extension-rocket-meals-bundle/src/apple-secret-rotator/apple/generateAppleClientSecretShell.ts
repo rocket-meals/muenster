@@ -61,6 +61,7 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
     let token: string;
     try {
       token = execSync(command, { encoding: 'utf-8' }).trim();
+      console.log('Generated Apple JWT token successfully: ', token);
     } catch (error) {
       throw new Error(`Failed to generate Apple JWT: ${error}`);
     }

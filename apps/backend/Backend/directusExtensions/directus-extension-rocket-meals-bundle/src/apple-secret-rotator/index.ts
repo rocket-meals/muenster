@@ -115,6 +115,7 @@ async function refreshSecret(redis: Redis | null, config: AppleClientSecretConfi
     }
 
     // Ensure process.env is updated with the token
+    console.log("########: Setting process.env.AUTH_APPLE_CLIENT_SECRET in post-lock wait");
     process.env.AUTH_APPLE_CLIENT_SECRET = token;
 
     return {
@@ -128,6 +129,7 @@ async function refreshSecret(redis: Redis | null, config: AppleClientSecretConfi
     const ttlSeconds = Math.max(1, result.expiresAt - Math.floor(Date.now() / 1000));
     await redis.set(APPLE_SECRET_REDIS_KEY, result.token, 'EX', ttlSeconds);
     // Set process.env so other parts of the app can read the current secret
+    console.log("########: Setting process.env.AUTH_APPLE_CLIENT_SECRET after generating new token");
     process.env.AUTH_APPLE_CLIENT_SECRET = result.token;
     console.log('[AppleSecretRotator] Generated new Apple client secret. Expires at', new Date(result.expiresAt * 1000).toISOString());
     return result;
