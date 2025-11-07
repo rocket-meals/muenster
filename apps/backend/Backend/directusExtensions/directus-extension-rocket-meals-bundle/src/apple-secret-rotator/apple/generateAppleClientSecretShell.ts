@@ -50,10 +50,8 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
     throw new Error(`Failed: ${error}`);
   }
 
-  let scriptPath = path.resolve("./genSSO_Apple.sh")
-
     // Execute the shell script with parameters
-    let command = `"${scriptPath}" --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
+    let command = `./sso/genSSO_Apple.sh --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
 
     let token: string;
     try {
