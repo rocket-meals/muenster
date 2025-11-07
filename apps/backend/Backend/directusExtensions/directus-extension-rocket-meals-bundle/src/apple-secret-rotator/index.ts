@@ -70,6 +70,41 @@ function setEnvValue(key: string, value: string) {
   console.log("["+HOOK_NAME+"] Updated " + key + " in " + configPath);
 }
 
+// New: load AUTH_APPLE_CLIENT_SECRET synchronously at module load time from host env file
+function loadAppleClientSecretFromHostEnvSync() {
+  const hostEnvFilePath = process.env.HOST_ENV_FILE_PATH;
+  if (!hostEnvFilePath) {
+    // No host env file path configured; nothing to do.
+    console.log('['+HOOK_NAME+'] HOST_ENV_FILE_PATH not set at module load time. Skipping early secret load.');
+    return;
+  }
+
+  try {
+    const envContent = fs.readFileSync(hostEnvFilePath, 'utf8');
+    const lines = envContent.split(/\r?\n/);
+    for (const line of lines) {
+      if (!line) continue;
+      if (line.startsWith('AUTH_APPLE_CLIENT_SECRET=')) {
+        const idx = line.indexOf('=');
+        const value = idx >= 0 ? line.substring(idx + 1) : '';
+        if (value) {
+          process.env.AUTH_APPLE_CLIENT_SECRET = value;
+          console.log('['+HOOK_NAME+'] (early load) Loaded AUTH_APPLE_CLIENT_SECRET from host env file into runtime environment.');
+        } else {
+          console.log('['+HOOK_NAME+'] (early load) AUTH_APPLE_CLIENT_SECRET present in host env file but empty.');
+        }
+        return;
+      }
+    }
+    console.log('['+HOOK_NAME+'] (early load) AUTH_APPLE_CLIENT_SECRET not found in host env file.');
+  } catch (err) {
+    console.warn('['+HOOK_NAME+'] (early load) Failed to read host env file at', hostEnvFilePath, (err as any)?.message || String(err));
+  }
+}
+
+// Attempt an early, synchronous load so other modules that read process.env during import get the real secret.
+loadAppleClientSecretFromHostEnvSync();
+
 async function refreshSecret(config: AppleClientSecretConfig) {
   try {
     const result = generateAppleClientSecret(config);
@@ -133,7 +168,6 @@ export default defineHook(async ({ init, schedule }) => {
         await refreshSecret(config);
         return;
       }
-      return;
     } catch (error) {
       console.error(`[${HOOK_NAME}] Failed to refresh Apple client secret during ${reason}:`, error);
     }
@@ -163,6 +197,10 @@ export default defineHook(async ({ init, schedule }) => {
     console.warn('['+HOOK_NAME+'] AUTH_APPLE_CLIENT_SECRET not found in host env file.');
   }
 
+  /**
+   * As Docker containers cache environment variables on start, we need to read the Apple client secret
+   * from the host environment file and set it into the runtime environment before the app fully initializes.
+   */
   init(ActionInitFilterEventHelper.INIT_APP_BEFORE, async () => {
     await readSecretFromHostEnvAndSetToRuntime(ActionInitFilterEventHelper.INIT_APP_BEFORE);
   });
