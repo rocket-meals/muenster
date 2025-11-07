@@ -36,22 +36,6 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
   const currentTime = Math.floor(Date.now() / 1000);
   const expirationTime = currentTime + (86400 * 180); // 180 days
 
-
-
-  try {
-    let commandResult = execSync("pwd", { encoding: 'utf-8' }).trim();
-    console.log(commandResult);
-  } catch (error) {
-    throw new Error(`Failed: ${error}`);
-  }
-
-  try {
-    let commandResult = execSync("ls /directus", { encoding: 'utf-8' }).trim();
-    console.log(commandResult);
-  } catch (error) {
-    throw new Error(`Failed: ${error}`);
-  }
-
   try {
     let commandResult = execSync("ls /directus/sso", { encoding: 'utf-8' }).trim();
     console.log(commandResult);
@@ -59,15 +43,20 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
     throw new Error(`Failed: ${error}`);
   }
 
-  try {
-    let commandResult = execSync("chmod +x /directus/sso/genSSO_Apple.sh", { encoding: 'utf-8' }).trim();
-    console.log(commandResult);
-  } catch (error) {
-    throw new Error(`Failed: ${error}`);
-  }
+  const source = '/directus/sso/genSSO_Apple.sh';
+  const target = '/directus/sso_runtime/genSSO_Apple.sh';
+
+  // Stelle sicher, dass der Zielordner existiert
+  execSync('mkdir -p /directus/sso_runtime');
+
+  // Kopiere die Datei ins beschreibbare Verzeichnis
+  execSync(`cp ${source} ${target}`);
+
+  // Mache sie ausführbar
+  execSync(`chmod +x ${target}`);
 
     // Execute the shell script with parameters
-    let command = `/directus/sso/genSSO_Apple.sh --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
+    let command = `${target} --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
 
     let token: string;
     try {
