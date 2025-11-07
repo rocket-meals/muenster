@@ -52,8 +52,22 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
     throw new Error(`Failed: ${error}`);
   }
 
+  try {
+    let commandResult = execSync("ls /sso", { encoding: 'utf-8' }).trim();
+    console.log(commandResult);
+  } catch (error) {
+    throw new Error(`Failed: ${error}`);
+  }
+
+  try {
+    let commandResult = execSync("chmod+x /sso/genSSO_Apple.sh", { encoding: 'utf-8' }).trim();
+    console.log(commandResult);
+  } catch (error) {
+    throw new Error(`Failed: ${error}`);
+  }
+
     // Execute the shell script with parameters
-    let command = `/directus/sso/genSSO_Apple.sh --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
+    let command = `/sso/genSSO_Apple.sh --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
 
     let token: string;
     try {
