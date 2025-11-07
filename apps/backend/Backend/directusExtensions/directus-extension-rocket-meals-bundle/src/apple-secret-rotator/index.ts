@@ -100,6 +100,7 @@ async function ensureSecret(config: AppleClientSecretConfig) {
       console.log('[AppleSecretRotator] Apple client secret is nearing expiration. Triggering refresh.');
     } else {
       console.log('[AppleSecretRotator] Apple client secret found in Redis, but expiration could not be determined. Triggering refresh.');
+      await refreshSecret(config);
     }
   } else {
     console.log('[AppleSecretRotator] No Apple client secret found in Redis. Generating a new one.');
