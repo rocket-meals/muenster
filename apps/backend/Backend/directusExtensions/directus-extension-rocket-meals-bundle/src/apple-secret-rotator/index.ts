@@ -223,11 +223,6 @@ export default defineHook(async ({ init, schedule }) => {
 
   init(ActionInitFilterEventHelper.INIT_APP_STARTED, async () => {
     await runRefresh('startup');
-    if(redis) {
-      await refreshSecret(redis, config);
-    } else {
-      await refreshSecret(null, config);
-    }
   });
 
   // Run once per day at 02:00 server time.
