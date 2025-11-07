@@ -37,7 +37,7 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
   const expirationTime = currentTime + (86400 * 180); // 180 days
 
   try {
-    let commandResult = execSync("pwd", { encoding: 'utf-8' }).trim();
+    let commandResult = execSync("cd /directus && pwd", { encoding: 'utf-8' }).trim();
     console.log(commandResult);
   } catch (error) {
     throw new Error(`Failed: ${error}`);
