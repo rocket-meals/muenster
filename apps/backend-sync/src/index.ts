@@ -6,6 +6,7 @@ import {buildConfigFromEnv, ensureAppleClientSecret} from "./apple-secret-rotato
 import {HOST_ENV_FILE_PATH} from "./apple-secret-rotator/DirectusEnvFileHelper";
 import {DockerContainerManager} from "./DockerContainerManager";
 import {DockerDirectusHelper} from "./DockerDirectusHelper";
+import {DockerDirectusPingHelper} from "./DockerDirectusPingHelper";
 
 async function registerAppleClientSecretChecker(){
   console.log("registerAppleClientSecretChecker");
@@ -24,6 +25,8 @@ async function registerAppleClientSecretChecker(){
             console.log("[AppleClientSecretChecker] Apple client secret was refreshed. Reason:", result.reason);
             // Restart Docker container to apply new secret
             let lokalDockerDirectusServerUrl = DockerDirectusHelper.getDirectusServerUrl();
+
+            await DockerDirectusPingHelper.waitForDirectusHealthy(lokalDockerDirectusServerUrl);
             const restartSuccess = await DockerContainerManager.restartDirectusContainers(lokalDockerDirectusServerUrl as string);
             if(restartSuccess){
                 console.log("[AppleClientSecretChecker] Successfully restarted Directus Docker containers to apply new Apple client secret.");
@@ -45,6 +48,7 @@ async function main() {
   registerShutdownJobs(); // Registriere sauberes Shutdown-Verhalten
 
   await registerAppleClientSecretChecker();
+
 
   let runSyncDatabase = false;
   if (runSyncDatabase){

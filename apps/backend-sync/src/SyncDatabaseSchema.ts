@@ -138,31 +138,6 @@ export async function syncDatabase(options: SyncDatabaseOptions): Promise<boolea
       }
     }
 
-    /**
-    // Ensure Apple client secret is present/rotated before restarting containers
-    try {
-      const result = await ensureAppleClientSecret();
-      if (result.changed) {
-        console.log(`🔁 Apple client secret was changed (reason=${result.reason}).`);
-        if (dockerDirectusRestart) {
-          console.log('🔄 Neustart der Directus Docker Container aufgrund geänderten Apple-Secrets...');
-          const restartSuccess = await DockerContainerManager.restartDirectusContainers(directusInstanceUrl as string);
-          if (restartSuccess) {
-            console.log('✅ Directus Docker Container erfolgreich neu gestartet nach Secret-Rotation!');
-            didRestartDueToSecret = true;
-          } else {
-            console.error('❌ Fehler: Directus Docker Container Neustart nach Secret-Rotation fehlgeschlagen!');
-            process.exit(1);
-          }
-        } else {
-          console.log('ℹ️ Apple-Secret geändert, aber --docker-push/--docker-directus-restart nicht gesetzt. Bitte Container manuell neu starten.');
-        }
-      }
-    } catch (err) {
-      console.error('Fehler beim Prüfen/Roten des Apple Secrets:', err);
-    }
-    */
-
   } catch (error) {
     console.error('💥 Fehler im Backend Sync Service:', error);
     return false;

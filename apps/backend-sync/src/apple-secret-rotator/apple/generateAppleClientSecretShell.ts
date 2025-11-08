@@ -1,8 +1,6 @@
 // import child_process for execSync
 import {execSync} from 'child_process';
 
-const genFile = '/sso/genSSO_Apple.sh';
-
 interface AppleJWTParams {
   teamId: string;
   clientId: string;
@@ -41,16 +39,28 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
     throw new Error(`Failed: ${error}`);
   }
 
-    // Execute the shell script with parameters
-    let command = `${genFile} --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
+  const source = '/sso/genSSO_Apple.sh';
+  const target = '/sso_runtime/genSSO_Apple.sh';
 
-    let token: string;
-    try {
-      token = execSync(command, { encoding: 'utf-8' }).trim();
-      console.log('Generated Apple JWT token successfully: ', token);
-    } catch (error) {
-      throw new Error(`Failed to generate Apple JWT: ${error}`);
-    }
+  // Stelle sicher, dass der Zielordner existiert
+  execSync('mkdir -p /sso_runtime');
+
+  // Kopiere die Datei ins beschreibbare Verzeichnis
+  execSync(`cp ${source} ${target}`);
+
+  // Mache sie ausführbar
+  execSync(`chmod +x ${target}`);
+
+  // Execute the shell script with parameters
+  let command = `${target} --team_id "${teamId}" --client_id "${clientId}" --key_id "${keyId}" --key_file_content '${keyFileContent}'`;
+
+  let token: string;
+  try {
+    token = execSync(command, { encoding: 'utf-8' }).trim();
+    console.log('Generated Apple JWT token successfully: ', token);
+  } catch (error) {
+    throw new Error(`Failed to generate Apple JWT: ${error}`);
+  }
 
   return {
     token: token,
