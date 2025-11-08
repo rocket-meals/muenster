@@ -7,6 +7,9 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /
 RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian bookworm stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 RUN apt-get update && apt-get install -y docker-ce-cli
 
+## Install openssl and xxd for Apple Token generation
+RUN apt-get install -y openssl xxd
+
 # Install yarn
 RUN corepack enable && corepack prepare yarn@stable --activate
 

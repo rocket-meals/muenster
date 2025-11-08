@@ -19,12 +19,7 @@ RUN apk update && apk add --no-cache \
     ttf-freefont \
     udev \
     dbus \
-    curl \
-    openssl \
-    bash \
-    xxd \
-    vim \
-    nano
+    curl
 
 # openssl # Apple Token generation# Apple Token generation
 # xxd # Apple Token generation
