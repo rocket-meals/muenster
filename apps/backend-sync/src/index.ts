@@ -10,17 +10,27 @@ import {DockerDirectusPingHelper} from "./DockerDirectusPingHelper";
 
 async function registerAppleClientSecretChecker(){
   console.log("registerAppleClientSecretChecker");
+
+  // Initial check beim Startup
+  let hostEnvFilePath = HOST_ENV_FILE_PATH;
+  let config = buildConfigFromEnv(hostEnvFilePath);
+  if(config){
+    let result = await ensureAppleClientSecret(config, hostEnvFilePath);
+  }
+
   // Beispiel-Registrierung: Ein Job, der alle 10 Sekunden läuft
   registerCronJob({
-    id: 'sync-database-every-10-seconds',
-    schedule: '*/10 * * * * *', // alle 10 Sekunden
+    id: 'sync-database-every-day',
+    schedule: '0 0 * * *', // Täglich um Mitternacht
     task: async () => {
-        let hostEnvFilePath = HOST_ENV_FILE_PATH;
-        const config = buildConfigFromEnv(hostEnvFilePath);
+        hostEnvFilePath = HOST_ENV_FILE_PATH;
+        config = buildConfigFromEnv(hostEnvFilePath);
         if(config){
           console.log("[AppleClientSecretChecker] Loaded config:");
           console.log(JSON.stringify(config, null, 2));
           let result = await ensureAppleClientSecret(config, hostEnvFilePath);
+
+          /**
           if(result.changed){
             console.log("[AppleClientSecretChecker] Apple client secret was refreshed. Reason:", result.reason);
             // Restart Docker container to apply new secret
@@ -34,6 +44,7 @@ async function registerAppleClientSecretChecker(){
                 console.error("[AppleClientSecretChecker] Failed to restart Directus Docker containers after Apple client secret refresh.");
             }
           }
+              */
         } else {
             console.warn('[AppleClientSecretChecker] Rotator disabled due to missing configuration.');
         }
@@ -47,11 +58,7 @@ async function main() {
 
   registerShutdownJobs(); // Registriere sauberes Shutdown-Verhalten
 
-  let debugTesting = false;
-
-  if(debugTesting){
-    await registerAppleClientSecretChecker();
-  }
+  await registerAppleClientSecretChecker();
 
   let runSyncDatabase = true
   if (runSyncDatabase){
