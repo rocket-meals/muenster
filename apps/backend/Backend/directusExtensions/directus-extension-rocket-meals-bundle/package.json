@@ -35,6 +35,11 @@
       },
       {
         "type": "hook",
+        "name": "apple-secret-rotator",
+        "source": "src/apple-secret-rotator/index.ts"
+      },
+      {
+        "type": "hook",
         "name": "admin-password-setup-from-env-hook",
         "source": "src/admin-password-setup-from-env/index.ts"
       },
