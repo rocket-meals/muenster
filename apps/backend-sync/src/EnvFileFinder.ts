@@ -24,10 +24,3 @@ export async function findEnvFile(): Promise<string | null> {
   const startDir = process.cwd();
   return findFileUpwards(startDir, '.env');
 }
-
-export async function readEnvFile(){
-    const envFilePath = await findEnvFile();
-    if(!envFilePath) return null;
-    const content = fs.readFileSync(envFilePath, 'utf8');
-    return content;
-}

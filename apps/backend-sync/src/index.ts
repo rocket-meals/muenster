@@ -1,11 +1,14 @@
 import {syncDatabase, SyncDataBaseOptionDockerPush} from "./SyncDatabaseSchema";
 import {registerCronJob, registerShutdownJobs} from "./CronHelperManager";
-import {readEnvFile} from "./EnvFileFinder";
+import * as path from 'path';
+import * as fs from 'fs';
 
 async function registerAppleClientSecretChecker(){
   console.log("registerAppleClientSecretChecker");
   // Beispiel-Registrierung: Ein Job, der alle 10 Sekunden läuft
-  let envFile = await readEnvFile();
+  let envFilePathOfHost = "/directus/host.env"
+  let fileContent = await fs.promises.readFile(envFilePathOfHost, 'utf-8');
+  let envFile = fileContent.toString();
   console.log("Env file content:\n");
   console.log(envFile);
 
