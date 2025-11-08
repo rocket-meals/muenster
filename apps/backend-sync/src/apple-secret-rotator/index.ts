@@ -104,7 +104,7 @@ export async function ensureAppleClientSecret(config: AppleClientSecretConfig, h
     }
 
     let token = getEnvValue(hostEnvFilePath, 'AUTH_APPLE_CLIENT_SECRET');
-    
+
     if (token) {
       const expiresAt = decodeAppleClientSecretExpiry(token);
       if (expiresAt) {
