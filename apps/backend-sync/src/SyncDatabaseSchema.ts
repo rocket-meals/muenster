@@ -1,20 +1,10 @@
-import { Command } from 'commander';
-import { DirectusDatabaseSync } from './DirectusDatabaseSync';
-import { DockerDirectusHelper } from './DockerDirectusHelper';
-import { ServerHelper } from 'repo-depkit-common';
+import {DirectusDatabaseSync} from './DirectusDatabaseSync';
+import {DockerDirectusHelper} from './DockerDirectusHelper';
+import {ServerHelper} from 'repo-depkit-common';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
-import { DockerContainerManager } from './DockerContainerManager';
-import { ensureAppleClientSecret } from './apple-secret-rotator/index';
-
-const program = new Command();
-
-// Programm-Konfiguration
-program.name('backend-sync').description('Directus Backend Synchronization Tool').version('1.0.0');
-
-// Push Command
-program.option('--push', 'Push local schema to Directus').option('--pull', 'Pull schema from Directus to local').option('--pull-from-test-system', 'Pull schema from remote test system').option('--push-to-test-system', 'Push to remote test system').option('--docker-push', 'Push inside Docker container').option('--docker-directus-restart', 'Restart Directus Docker containers after push').option('--directus-url <url>', 'Directus instance URL').option('--admin-email <email>', 'Admin email').option('--admin-password <password>', 'Admin password').option('--path-to-data-directus-sync <path>', 'Path to sync data');
+import {DockerContainerManager} from './DockerContainerManager';
 
 enum SyncOperation {
   NONE = 'none',
@@ -46,13 +36,6 @@ async function findEnvFile(): Promise<string | null> {
   return findFileUpwards(startDir, '.env');
 }
 
-// Main function
-async function main() {
-  program.parse();
-  const options = program.opts();
-  await syncDatabase(options);
-}
-
 export type SyncDatabaseOptions = {
     adminEmail?: string;
     adminPassword?: string;
@@ -70,7 +53,7 @@ export const SyncDataBaseOptionDockerPush: SyncDatabaseOptions = {
   dockerPush: true,
 }
 
-export async function syncDatabase(options: SyncDatabaseOptions) {
+export async function syncDatabase(options: SyncDatabaseOptions): Promise<boolean> {
   console.log("Starting Backend Sync Service...");
   console.log("Options:");
   console.log(JSON.stringify(options, null, 2));
@@ -138,11 +121,9 @@ export async function syncDatabase(options: SyncDatabaseOptions) {
   }
 
   if (errors) {
-    program.help();
-    process.exit(1);
+    return false;
   }
 
-  let didRestartDueToSecret = false;
   try {
     console.log('🚀 Starte Backend Sync Service...');
     console.log(`📡 Directus URL: ${directusInstanceUrl}`);
@@ -170,6 +151,18 @@ export async function syncDatabase(options: SyncDatabaseOptions) {
         break;
     }
 
+    if (dockerDirectusRestart) {
+      console.log('🔄 Starte Directus Docker Container neu...');
+      const restartSuccess = await DockerContainerManager.restartDirectusContainers(directusInstanceUrl as string);
+      if (restartSuccess) {
+        console.log('✅ Directus Docker Container erfolgreich neu gestartet!');
+      } else {
+        console.error('❌ Fehler: Directus Docker Container Neustart fehlgeschlagen!');
+        return false;
+      }
+    }
+
+    /**
     // Ensure Apple client secret is present/rotated before restarting containers
     try {
       const result = await ensureAppleClientSecret();
@@ -192,27 +185,11 @@ export async function syncDatabase(options: SyncDatabaseOptions) {
     } catch (err) {
       console.error('Fehler beim Prüfen/Roten des Apple Secrets:', err);
     }
+    */
 
-    if (dockerDirectusRestart) {
-      // Wenn wir bereits wegen Secret-Rotation neu gestartet haben, überspringe den zweiten Restart
-      if (didRestartDueToSecret) {
-        console.log('ℹ️ Direktus Container wurden bereits wegen Secret-Rotation neu gestartet. Überspringe zusätzlichen Restart.');
-      } else {
-        console.log('🔄 Starte Directus Docker Container neu...');
-        const restartSuccess = await DockerContainerManager.restartDirectusContainers(directusInstanceUrl as string);
-        if (restartSuccess) {
-          console.log('✅ Directus Docker Container erfolgreich neu gestartet!');
-        } else {
-          console.error('❌ Fehler: Directus Docker Container Neustart fehlgeschlagen!');
-          process.exit(1);
-        }
-      }
-    }
   } catch (error) {
     console.error('💥 Fehler im Backend Sync Service:', error);
-    process.exit(1);
+    return false;
   }
+    return true;
 }
-
-// Starte den Service
-main();

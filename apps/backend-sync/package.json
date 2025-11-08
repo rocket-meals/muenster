@@ -8,7 +8,7 @@
     "sync:push-to-test-system": "yarn start --push-to-test-system",
     "sync:push": "yarn start --push",
     "sync:pull": "yarn start --pull",
-    "sync": "tsx src/SyncDatabaseSchema.ts"
+    "sync": "tsx src/SyncDatabaseSchemaProgramm.ts"
   },
   "author": "",
   "license": "ISC",
