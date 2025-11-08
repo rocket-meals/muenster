@@ -33,17 +33,17 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
   const expirationTime = currentTime + (86400 * 180); // 180 days
 
   try {
-    let commandResult = execSync("ls /sso", { encoding: 'utf-8' }).trim();
+    let commandResult = execSync("ls /directus/sso", { encoding: 'utf-8' }).trim();
     console.log(commandResult);
   } catch (error) {
     throw new Error(`Failed: ${error}`);
   }
 
-  const source = '/sso/genSSO_Apple.sh';
-  const target = '/sso_runtime/genSSO_Apple.sh';
+  const source = '/directus/sso/genSSO_Apple.sh';
+  const target = '/directus/sso_runtime/genSSO_Apple.sh';
 
   // Stelle sicher, dass der Zielordner existiert
-  execSync('mkdir -p /sso_runtime');
+  execSync('mkdir -p /directus/sso_runtime');
 
   // Kopiere die Datei ins beschreibbare Verzeichnis
   execSync(`cp ${source} ${target}`);
@@ -56,7 +56,11 @@ export function generateAppleJWTShell(params: AppleJWTParams) {
 
   let token: string;
   try {
-    token = execSync(command, { encoding: 'utf-8' }).trim();
+    let tokenRaw = execSync(command, { encoding: 'utf-8' });
+    console.log("Raw token output: ", tokenRaw);
+    token = tokenRaw.trim();
+    console.log("Token: ", token);
+
     console.log('Generated Apple JWT token successfully: ', token);
   } catch (error) {
     throw new Error(`Failed to generate Apple JWT: ${error}`);
