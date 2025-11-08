@@ -103,27 +103,24 @@ export async function ensureAppleClientSecret(config: AppleClientSecretConfig, h
       return { changed: false, reason: 'missing_host_env' };
     }
 
-    let tokenLine = getEnvValue(hostEnvFilePath, 'AUTH_APPLE_CLIENT_SECRET');
-
-    if (tokenLine) {
-      const token = tokenLine.split('=')[1] || '';
-      if (token) {
-        const expiresAt = decodeAppleClientSecretExpiry(token);
-        if (expiresAt) {
-          const secondsRemaining = expiresAt - now;
-          if (secondsRemaining < REFRESH_THRESHOLD_SECONDS) {
-            console.log('['+HOOK_NAME+'] Token is nearing expiry. Refreshing...');
-            await refreshSecret(config, hostEnvFilePath);
-            return { changed: true, reason: 'refreshed_near_expiry' };
-          } else {
-            console.log('['+HOOK_NAME+'] Token is valid. No action.');
-            return { changed: false, reason: 'valid' };
-          }
-        } else {
-          console.log('['+HOOK_NAME+'] Token found but expiry not parseable. Refreshing...');
+    let token = getEnvValue(hostEnvFilePath, 'AUTH_APPLE_CLIENT_SECRET');
+    
+    if (token) {
+      const expiresAt = decodeAppleClientSecretExpiry(token);
+      if (expiresAt) {
+        const secondsRemaining = expiresAt - now;
+        if (secondsRemaining < REFRESH_THRESHOLD_SECONDS) {
+          console.log('['+HOOK_NAME+'] Token is nearing expiry. Refreshing...');
           await refreshSecret(config, hostEnvFilePath);
-          return { changed: true, reason: 'no_expiry' };
+          return { changed: true, reason: 'refreshed_near_expiry' };
+        } else {
+          console.log('['+HOOK_NAME+'] Token is valid. No action.');
+          return { changed: false, reason: 'valid' };
         }
+      } else {
+        console.log('['+HOOK_NAME+'] Token found but expiry not parseable. Refreshing...');
+        await refreshSecret(config, hostEnvFilePath);
+        return { changed: true, reason: 'no_expiry' };
       }
     }
 
