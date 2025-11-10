@@ -115,6 +115,10 @@ type Query {
   cashregisters_by_id(id: ID!, version: String): cashregisters
   cashregisters_aggregated(groupBy: [String], filter: cashregisters_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [cashregisters_aggregated!]!
   cashregisters_by_version(version: String!, id: ID!): version_cashregisters
+  chat_messages(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [chat_messages!]!
+  chat_messages_by_id(id: ID!, version: String): chat_messages
+  chat_messages_aggregated(groupBy: [String], filter: chat_messages_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [chat_messages_aggregated!]!
+  chat_messages_by_version(version: String!, id: ID!): version_chat_messages
   files_shares(filter: files_shares_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [files_shares!]!
   files_shares_by_id(id: ID!, version: String): files_shares
   files_shares_aggregated(groupBy: [String], filter: files_shares_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [files_shares_aggregated!]!
@@ -123,10 +127,6 @@ type Query {
   directus_sync_id_map_by_id(id: ID!, version: String): directus_sync_id_map
   directus_sync_id_map_aggregated(groupBy: [String], filter: directus_sync_id_map_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [directus_sync_id_map_aggregated!]!
   directus_sync_id_map_by_version(version: String!, id: ID!): version_directus_sync_id_map
-  chat_messages(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [chat_messages!]!
-  chat_messages_by_id(id: ID!, version: String): chat_messages
-  chat_messages_aggregated(groupBy: [String], filter: chat_messages_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [chat_messages_aggregated!]!
-  chat_messages_by_version(version: String!, id: ID!): version_chat_messages
   foods_feedbacks(filter: foods_feedbacks_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foods_feedbacks!]!
   foods_feedbacks_by_id(id: ID!, version: String): foods_feedbacks
   foods_feedbacks_aggregated(groupBy: [String], filter: foods_feedbacks_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [foods_feedbacks_aggregated!]!
@@ -442,12 +442,12 @@ type Mutation {
   create_canteens_foodservice_hours_during_semester_break_item(data: create_canteens_foodservice_hours_during_semester_break_input!): canteens_foodservice_hours_during_semester_break
   create_cashregisters_items(filter: cashregisters_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_cashregisters_input!]): [cashregisters!]!
   create_cashregisters_item(data: create_cashregisters_input!): cashregisters
+  create_chat_messages_items(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_chat_messages_input!]): [chat_messages!]!
+  create_chat_messages_item(data: create_chat_messages_input!): chat_messages
   create_files_shares_items(filter: files_shares_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_files_shares_input!]): [files_shares!]!
   create_files_shares_item(data: create_files_shares_input!): files_shares
   create_directus_sync_id_map_items(filter: directus_sync_id_map_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_directus_sync_id_map_input!]): [directus_sync_id_map!]!
   create_directus_sync_id_map_item(data: create_directus_sync_id_map_input!): directus_sync_id_map
-  create_chat_messages_items(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_chat_messages_input!]): [chat_messages!]!
-  create_chat_messages_item(data: create_chat_messages_input!): chat_messages
   create_foods_feedbacks_items(filter: foods_feedbacks_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foods_feedbacks_input!]): [foods_feedbacks!]!
   create_foods_feedbacks_item(data: create_foods_feedbacks_input!): foods_feedbacks
   create_foodoffers_items(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_foodoffers_input!]): [foodoffers!]!
@@ -662,15 +662,15 @@ type Mutation {
   update_cashregisters_items(filter: cashregisters_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_cashregisters_input!): [cashregisters!]!
   update_cashregisters_batch(filter: cashregisters_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_cashregisters_input!]): [cashregisters!]!
   update_cashregisters_item(id: ID!, data: update_cashregisters_input!): cashregisters
+  update_chat_messages_items(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_chat_messages_input!): [chat_messages!]!
+  update_chat_messages_batch(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_chat_messages_input!]): [chat_messages!]!
+  update_chat_messages_item(id: ID!, data: update_chat_messages_input!): chat_messages
   update_files_shares_items(filter: files_shares_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_files_shares_input!): [files_shares!]!
   update_files_shares_batch(filter: files_shares_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_files_shares_input!]): [files_shares!]!
   update_files_shares_item(id: ID!, data: update_files_shares_input!): files_shares
   update_directus_sync_id_map_items(filter: directus_sync_id_map_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_directus_sync_id_map_input!): [directus_sync_id_map!]!
   update_directus_sync_id_map_batch(filter: directus_sync_id_map_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_directus_sync_id_map_input!]): [directus_sync_id_map!]!
   update_directus_sync_id_map_item(id: ID!, data: update_directus_sync_id_map_input!): directus_sync_id_map
-  update_chat_messages_items(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_chat_messages_input!): [chat_messages!]!
-  update_chat_messages_batch(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_chat_messages_input!]): [chat_messages!]!
-  update_chat_messages_item(id: ID!, data: update_chat_messages_input!): chat_messages
   update_foods_feedbacks_items(filter: foods_feedbacks_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_foods_feedbacks_input!): [foods_feedbacks!]!
   update_foods_feedbacks_batch(filter: foods_feedbacks_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_foods_feedbacks_input!]): [foods_feedbacks!]!
   update_foods_feedbacks_item(id: ID!, data: update_foods_feedbacks_input!): foods_feedbacks
@@ -919,12 +919,12 @@ type Mutation {
   delete_canteens_foodservice_hours_during_semester_break_item(id: ID!): delete_one
   delete_cashregisters_items(ids: [ID]!): delete_many
   delete_cashregisters_item(id: ID!): delete_one
+  delete_chat_messages_items(ids: [ID]!): delete_many
+  delete_chat_messages_item(id: ID!): delete_one
   delete_files_shares_items(ids: [ID]!): delete_many
   delete_files_shares_item(id: ID!): delete_one
   delete_directus_sync_id_map_items(ids: [ID]!): delete_many
   delete_directus_sync_id_map_item(id: ID!): delete_one
-  delete_chat_messages_items(ids: [ID]!): delete_many
-  delete_chat_messages_item(id: ID!): delete_one
   delete_foods_feedbacks_items(ids: [ID]!): delete_many
   delete_foods_feedbacks_item(id: ID!): delete_one
   delete_foodoffers_items(ids: [ID]!): delete_many
@@ -1100,6 +1100,7 @@ type Subscription {
   directus_flows_mutated(event: EventEnum): directus_flows_mutated
   directus_versions_mutated(event: EventEnum): directus_versions_mutated
   directus_presets_mutated(event: EventEnum): directus_presets_mutated
+  chat_messages_mutated(event: EventEnum): chat_messages_mutated
   directus_webhooks_mutated(event: EventEnum): directus_webhooks_mutated
   files_shares_mutated(event: EventEnum): files_shares_mutated
   directus_sync_id_map_mutated(event: EventEnum): directus_sync_id_map_mutated
@@ -1109,7 +1110,6 @@ type Subscription {
   directus_settings_mutated(event: EventEnum): directus_settings_mutated
   directus_users_mutated(event: EventEnum): directus_users_mutated
   directus_revisions_mutated(event: EventEnum): directus_revisions_mutated
-  chat_messages_mutated(event: EventEnum): chat_messages_mutated
   foods_feedbacks_mutated(event: EventEnum): foods_feedbacks_mutated
   foodoffers_mutated(event: EventEnum): foodoffers_mutated
   foodoffers_markings_mutated(event: EventEnum): foodoffers_markings_mutated
@@ -1563,8 +1563,8 @@ type app_settings_balance_translations {
   let_be_translated: Boolean
   languages_code(filter: languages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): languages
   id: ID!
-  app_settings_id(filter: app_settings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): app_settings
   content: String
+  app_settings_id(filter: app_settings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): app_settings
 }
 
 type app_settings_balance_translations_aggregated {
@@ -1585,8 +1585,8 @@ type app_settings_balance_translations_aggregated_count {
   let_be_translated: Int
   languages_code: Int
   id: Int
-  app_settings_id: Int
   content: Int
+  app_settings_id: Int
 }
 
 type app_settings_balance_translations_aggregated_fields {
@@ -2741,10 +2741,10 @@ type chat_messages {
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   sort: Int
   image(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
+  chat(filter: chats_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): chats
   attachment(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
   date_created: Date
   date_created_func: datetime_functions
-  chat(filter: chats_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): chats
   user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   date_updated: Date
   date_updated_func: datetime_functions
@@ -2771,9 +2771,9 @@ type chat_messages_aggregated_count {
   user_created: Int
   sort: Int
   image: Int
+  chat: Int
   attachment: Int
   date_created: Int
-  chat: Int
   user_updated: Int
   date_updated: Int
   message: Int
@@ -2804,10 +2804,10 @@ type chats {
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   food_feedbacks(filter: foods_feedbacks_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foods_feedbacks]
   food_feedbacks_func: count_functions
-  participants(filter: chats_participants_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [chats_participants]
-  participants_func: count_functions
   messages(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [chat_messages]
   messages_func: count_functions
+  participants(filter: chats_participants_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [chats_participants]
+  participants_func: count_functions
 }
 
 type chats_aggregated {
@@ -2835,8 +2835,8 @@ type chats_aggregated_count {
   id: Int
   user_created: Int
   food_feedbacks: Int
-  participants: Int
   messages: Int
+  participants: Int
 }
 
 type chats_aggregated_fields {
@@ -4581,11 +4581,11 @@ type foods_feedbacks {
   notify: Boolean
   rating: Int
   chat(filter: chats_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): chats
-  profile(filter: profiles_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): profiles
   canteen(filter: canteens_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): canteens
   user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   date_created: Date
   date_created_func: datetime_functions
+  profile(filter: profiles_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): profiles
   date_updated: Date
   date_updated_func: datetime_functions
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
@@ -4614,10 +4614,10 @@ type foods_feedbacks_aggregated_count {
   notify: Int
   rating: Int
   chat: Int
-  profile: Int
   canteen: Int
   user_updated: Int
   date_created: Int
+  profile: Int
   date_updated: Int
   user_created: Int
   sort: Int
@@ -4732,9 +4732,9 @@ type foods_feedbacks_labels_entries {
   like: Boolean
   dislike: Boolean
   user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   date_created: Date
   date_created_func: datetime_functions
-  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   id: ID!
   foodoffer(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): foodoffers
   label(filter: foods_feedbacks_labels_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): foods_feedbacks_labels
@@ -4763,8 +4763,8 @@ type foods_feedbacks_labels_entries_aggregated_count {
   like: Int
   dislike: Int
   user_updated: Int
-  date_created: Int
   user_created: Int
+  date_created: Int
   id: Int
   foodoffer: Int
   label: Int
@@ -6439,11 +6439,11 @@ type push_notifications {
   """
   expo_push_tokens: JSON
   expo_push_tokens_func: count_functions
+  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   date_created: Date
   date_created_func: datetime_functions
   message_data: JSON
   message_data_func: count_functions
-  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   richContent: String
   date_updated: Date
   date_updated_func: datetime_functions
@@ -6482,9 +6482,9 @@ type push_notifications_aggregated_count {
   Format: ExponentPushToken[xxxxxxxxxxxxxxxxx] with prefix and brackets, then press enter for more
   """
   expo_push_tokens: Int
+  user_updated: Int
   date_created: Int
   message_data: Int
-  user_updated: Int
   richContent: Int
   date_updated: Int
   sort: Int
@@ -6848,8 +6848,8 @@ type version_app_settings_balance_translations {
   let_be_translated: Boolean
   languages_code: JSON
   id: ID
-  app_settings_id: JSON
   content: String
+  app_settings_id: JSON
 }
 
 """"""
@@ -7193,9 +7193,9 @@ type version_chat_messages {
   user_created: JSON
   sort: Int
   image: JSON
+  chat: JSON
   attachment: JSON
   date_created: Date
-  chat: JSON
   user_updated: JSON
   date_updated: Date
   message: String
@@ -7214,8 +7214,8 @@ type version_chats {
   id: ID
   user_created: JSON
   food_feedbacks: JSON
-  participants: JSON
   messages: JSON
+  participants: JSON
 }
 
 """"""
@@ -7556,10 +7556,10 @@ type version_foods_feedbacks {
   notify: Boolean
   rating: Int
   chat: JSON
-  profile: JSON
   canteen: JSON
   user_updated: JSON
   date_created: Date
+  profile: JSON
   date_updated: Date
   user_created: JSON
   sort: Int
@@ -7603,8 +7603,8 @@ type version_foods_feedbacks_labels_entries {
   like: Boolean
   dislike: Boolean
   user_updated: JSON
-  date_created: Date
   user_created: JSON
+  date_created: Date
   id: ID
   foodoffer: JSON
   label: JSON
@@ -8083,9 +8083,9 @@ type version_push_notifications {
   Format: ExponentPushToken[xxxxxxxxxxxxxxxxx] with prefix and brackets, then press enter for more
   """
   expo_push_tokens: JSON
+  user_updated: JSON
   date_created: Date
   message_data: JSON
-  user_updated: JSON
   richContent: String
   date_updated: Date
   sort: Int
@@ -8789,8 +8789,8 @@ input app_settings_balance_translations_filter {
   let_be_translated: boolean_filter_operators
   languages_code: languages_filter
   id: number_filter_operators
-  app_settings_id: app_settings_filter
   content: string_filter_operators
+  app_settings_id: app_settings_filter
   _and: [app_settings_balance_translations_filter]
   _or: [app_settings_balance_translations_filter]
 }
@@ -8801,8 +8801,8 @@ input app_settings_balance_translations_quantifier_filter {
   let_be_translated: boolean_filter_operators
   languages_code: languages_filter
   id: number_filter_operators
-  app_settings_id: app_settings_filter
   content: string_filter_operators
+  app_settings_id: app_settings_filter
   _and: [app_settings_balance_translations_filter]
   _or: [app_settings_balance_translations_filter]
   _some: app_settings_balance_translations_filter
@@ -9364,10 +9364,10 @@ input chat_messages_filter {
   user_created: directus_users_filter
   sort: number_filter_operators
   image: directus_files_filter
+  chat: chats_filter
   attachment: directus_files_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
-  chat: chats_filter
   user_updated: directus_users_filter
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
@@ -9384,10 +9384,10 @@ input chat_messages_quantifier_filter {
   user_created: directus_users_filter
   sort: number_filter_operators
   image: directus_files_filter
+  chat: chats_filter
   attachment: directus_files_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
-  chat: chats_filter
   user_updated: directus_users_filter
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
@@ -9413,10 +9413,10 @@ input chats_filter {
   user_created: directus_users_filter
   food_feedbacks: foods_feedbacks_quantifier_filter
   food_feedbacks_func: count_function_filter_operators
-  participants: chats_participants_quantifier_filter
-  participants_func: count_function_filter_operators
   messages: chat_messages_quantifier_filter
   messages_func: count_function_filter_operators
+  participants: chats_participants_quantifier_filter
+  participants_func: count_function_filter_operators
   _and: [chats_filter]
   _or: [chats_filter]
 }
@@ -9628,8 +9628,8 @@ input create_app_settings_balance_translations_input {
   let_be_translated: Boolean
   languages_code: create_languages_input
   id: ID
-  app_settings_id: create_app_settings_input
   content: String
+  app_settings_id: create_app_settings_input
 }
 
 input create_app_settings_housing_translations_input {
@@ -10015,9 +10015,9 @@ input create_chat_messages_input {
   user_created: create_directus_users_input
   sort: Int
   image: create_directus_files_input
+  chat: create_chats_input
   attachment: create_directus_files_input
   date_created: Date
-  chat: create_chats_input
   user_updated: create_directus_users_input
   date_updated: Date
   message: String
@@ -10035,8 +10035,8 @@ input create_chats_input {
   id: ID
   user_created: create_directus_users_input
   food_feedbacks: [create_foods_feedbacks_input]
-  participants: [create_chats_participants_input]
   messages: [create_chat_messages_input]
+  participants: [create_chats_participants_input]
 }
 
 input create_chats_participants_input {
@@ -10448,10 +10448,10 @@ input create_foods_feedbacks_input {
   notify: Boolean
   rating: Int
   chat: create_chats_input
-  profile: create_profiles_input
   canteen: create_canteens_input
   user_updated: create_directus_users_input
   date_created: Date
+  profile: create_profiles_input
   date_updated: Date
   user_created: create_directus_users_input
   sort: Int
@@ -10467,8 +10467,8 @@ input create_foods_feedbacks_labels_entries_input {
   like: Boolean
   dislike: Boolean
   user_updated: create_directus_users_input
-  date_created: Date
   user_created: create_directus_users_input
+  date_created: Date
   id: ID
   foodoffer: create_foodoffers_input
   label: create_foods_feedbacks_labels_input
@@ -10959,9 +10959,9 @@ input create_push_notifications_input {
   Format: ExponentPushToken[xxxxxxxxxxxxxxxxx] with prefix and brackets, then press enter for more
   """
   expo_push_tokens: JSON
+  user_updated: create_directus_users_input
   date_created: Date
   message_data: JSON
-  user_updated: create_directus_users_input
   richContent: String
   date_updated: Date
   sort: Int
@@ -12036,11 +12036,11 @@ input foods_feedbacks_filter {
   notify: boolean_filter_operators
   rating: number_filter_operators
   chat: chats_filter
-  profile: profiles_filter
   canteen: canteens_filter
   user_updated: directus_users_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
+  profile: profiles_filter
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
   user_created: directus_users_filter
@@ -12069,9 +12069,9 @@ input foods_feedbacks_labels_entries_filter {
   like: boolean_filter_operators
   dislike: boolean_filter_operators
   user_updated: directus_users_filter
+  user_created: directus_users_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
-  user_created: directus_users_filter
   id: id_filter_operators
   foodoffer: foodoffers_filter
   label: foods_feedbacks_labels_filter
@@ -12135,11 +12135,11 @@ input foods_feedbacks_quantifier_filter {
   notify: boolean_filter_operators
   rating: number_filter_operators
   chat: chats_filter
-  profile: profiles_filter
   canteen: canteens_filter
   user_updated: directus_users_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
+  profile: profiles_filter
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
   user_created: directus_users_filter
@@ -13162,11 +13162,11 @@ input push_notifications_filter {
   message_ttl: number_filter_operators
   expo_push_tokens: string_filter_operators
   expo_push_tokens_func: count_function_filter_operators
+  user_updated: directus_users_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
   message_data: string_filter_operators
   message_data_func: count_function_filter_operators
-  user_updated: directus_users_filter
   richContent: string_filter_operators
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
@@ -13296,8 +13296,8 @@ input update_app_settings_balance_translations_input {
   let_be_translated: Boolean
   languages_code: update_languages_input
   id: ID
-  app_settings_id: update_app_settings_input
   content: String
+  app_settings_id: update_app_settings_input
 }
 
 input update_app_settings_housing_translations_input {
@@ -13703,9 +13703,9 @@ input update_chat_messages_input {
   user_created: update_directus_users_input
   sort: Int
   image: update_directus_files_input
+  chat: update_chats_input
   attachment: update_directus_files_input
   date_created: Date
-  chat: update_chats_input
   user_updated: update_directus_users_input
   date_updated: Date
   message: String
@@ -13723,8 +13723,8 @@ input update_chats_input {
   id: ID
   user_created: update_directus_users_input
   food_feedbacks: [update_foods_feedbacks_input]
-  participants: [update_chats_participants_input]
   messages: [update_chat_messages_input]
+  participants: [update_chats_participants_input]
 }
 
 input update_chats_participants_input {
@@ -14136,10 +14136,10 @@ input update_foods_feedbacks_input {
   notify: Boolean
   rating: Int
   chat: update_chats_input
-  profile: update_profiles_input
   canteen: update_canteens_input
   user_updated: update_directus_users_input
   date_created: Date
+  profile: update_profiles_input
   date_updated: Date
   user_created: update_directus_users_input
   sort: Int
@@ -14155,8 +14155,8 @@ input update_foods_feedbacks_labels_entries_input {
   like: Boolean
   dislike: Boolean
   user_updated: update_directus_users_input
-  date_created: Date
   user_created: update_directus_users_input
+  date_created: Date
   id: ID
   foodoffer: update_foodoffers_input
   label: update_foods_feedbacks_labels_input
@@ -14647,9 +14647,9 @@ input update_push_notifications_input {
   Format: ExponentPushToken[xxxxxxxxxxxxxxxxx] with prefix and brackets, then press enter for more
   """
   expo_push_tokens: JSON
+  user_updated: update_directus_users_input
   date_created: Date
   message_data: JSON
-  user_updated: update_directus_users_input
   richContent: String
   date_updated: Date
   sort: Int
