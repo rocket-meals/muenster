@@ -2,6 +2,7 @@ import { TranslationHelper } from '../helpers/TranslationHelper';
 import { DatabaseTypes, DateHelper } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
+import { PushNotificationHelper } from '../helpers/PushNotificationHelper';
 
 const SCHEDULE_NAME = 'FoodNotifySchedule';
 
@@ -59,7 +60,9 @@ export class NotifySchedule {
 
           const profileDevices = profile.devices as DatabaseTypes.Devices[];
 
-          let expoPushTokensDict = this.getExpoPushTokensToDevicesDict(profileDevices);
+          let expoPushTokensDict = PushNotificationHelper.getExpoPushTokensToDevicesDict(
+            profileDevices
+          );
 
           let expoPushTokens = Object.keys(expoPushTokensDict);
           for (let expoPushToken of expoPushTokens) {
@@ -137,26 +140,6 @@ export class NotifySchedule {
         state: WORKFLOW_RUN_STATE.FAILED,
       });
     }
-  }
-
-  getExpoPushTokenFromDevice(device: DatabaseTypes.Devices) {
-    let pushTokenObj = device.pushTokenObj as any;
-    return pushTokenObj?.pushtokenObj?.data;
-  }
-
-  getExpoPushTokensToDevicesDict(devices: DatabaseTypes.Devices[]): {
-    [key: string]: DatabaseTypes.Devices[];
-  } {
-    let expoPushTokensDict: { [key: string]: DatabaseTypes.Devices[] } = {};
-    for (let device of devices) {
-      let expoPushToken = this.getExpoPushTokenFromDevice(device);
-      if (expoPushToken) {
-        let devicesWithSamePushToken = expoPushTokensDict[expoPushToken] || [];
-        devicesWithSamePushToken.push(device);
-        expoPushTokensDict[expoPushToken] = devicesWithSamePushToken;
-      }
-    }
-    return expoPushTokensDict;
   }
 
   async notifyExpoPushTokenAboutFoodOffer(expoPushToken: string, foodOffer: DatabaseTypes.Foodoffers, foodWithTranslations: DatabaseTypes.Foods, language: string, aboutMealsInDays: number, date: Date) {

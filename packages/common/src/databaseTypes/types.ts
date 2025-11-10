@@ -1183,6 +1183,7 @@ export type FoodsCategoriesTranslations = {
 
 export type FoodsFeedbacks = {
   canteen?: string | Canteens | null;
+  chat?: string | Chats | null;
   comment?: string | null;
   date_created?: string | null;
   date_updated?: string | null;
