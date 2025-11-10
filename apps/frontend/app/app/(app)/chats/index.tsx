@@ -12,6 +12,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { myContrastColor } from '@/helper/ColorHelper';
 import { MARK_ALL_CHATS_AS_READ } from '@/redux/Types/types';
+import { persistChatReadStatus } from '@/helper/chatReadStatus';
 import styles from './styles';
 
 const ChatsScreen = () => {
@@ -50,7 +51,7 @@ const ChatsScreen = () => {
                 });
         }, [sortedChats, readStatus]);
 
-        const markAllAsRead = () => {
+        const markAllAsRead = async () => {
                 const updates = sortedChats.reduce((acc, chat) => {
                         if (!chat?.id) {
                                 return acc;
@@ -61,10 +62,15 @@ const ChatsScreen = () => {
                 }, {} as Record<string, string>);
 
                 if (Object.keys(updates).length > 0) {
+                        const nextStatus = {
+                                ...readStatus,
+                                ...updates,
+                        };
                         dispatch({
                                 type: MARK_ALL_CHATS_AS_READ,
                                 payload: updates,
                         });
+                        await persistChatReadStatus(nextStatus);
                 }
         };
 
@@ -78,7 +84,9 @@ const ChatsScreen = () => {
                 return (
                         <View style={styles.headerActions}>
                                 <TouchableOpacity
-                                        onPress={markAllAsRead}
+                                        onPress={() => {
+                                                void markAllAsRead();
+                                        }}
                                         style={[
                                                 styles.markAllButton,
                                                 { backgroundColor: primaryColor },

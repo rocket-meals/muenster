@@ -15,6 +15,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DatabaseTypes, DateHelper } from 'repo-depkit-common';
 import styles from './styles';
 import { MARK_CHAT_AS_READ } from '@/redux/Types/types';
+import { persistChatReadStatus } from '@/helper/chatReadStatus';
 
 const ChatDetailsScreen = () => {
 	useSetPageTitle(TranslationKeys.chat);
@@ -78,6 +79,11 @@ const ChatDetailsScreen = () => {
                         return;
                 }
 
+                const updatedStatus = {
+                        ...readStatus,
+                        [chat.id]: latestMessageTimestamp,
+                };
+
                 dispatch({
                         type: MARK_CHAT_AS_READ,
                         payload: {
@@ -85,6 +91,8 @@ const ChatDetailsScreen = () => {
                                 timestamp: latestMessageTimestamp,
                         },
                 });
+
+                void persistChatReadStatus(updatedStatus);
         }, [chat_id, chat?.id, latestMessageTimestamp, dispatch, readStatus, chat?.date_updated]);
 
 	const lastMessageDate = sortedMessages[0]?.date_created || sortedMessages[0]?.date_updated;
