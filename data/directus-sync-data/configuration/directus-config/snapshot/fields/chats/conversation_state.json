@@ -1,21 +1,44 @@
 {
   "collection": "chats",
-  "field": "alias",
+  "field": "conversation_state",
   "type": "string",
   "meta": {
     "collection": "chats",
     "conditions": null,
     "display": null,
     "display_options": null,
-    "field": "alias",
+    "field": "conversation_state",
     "group": null,
     "hidden": false,
-    "interface": "input",
+    "interface": "select-dropdown",
     "note": null,
-    "options": null,
+    "options": {
+      "allowNone": true,
+      "allowOther": true,
+      "choices": [
+        {
+          "color": "#FFA439",
+          "icon": "notification_add",
+          "text": "Wartet auf Support",
+          "value": "waiting_for_support"
+        },
+        {
+          "color": "#3399FF",
+          "icon": "account_circle",
+          "text": "Wartet auf Nutzer",
+          "value": "waiting_for_user"
+        },
+        {
+          "color": "#2ECDA7",
+          "icon": "check_circle",
+          "text": "Beantwortet",
+          "value": "resolved"
+        }
+      ]
+    },
     "readonly": false,
     "required": false,
-    "sort": 11,
+    "sort": 3,
     "special": null,
     "translations": null,
     "validation": null,
@@ -23,10 +46,10 @@
     "width": "full"
   },
   "schema": {
-    "name": "alias",
+    "name": "conversation_state",
     "table": "chats",
     "data_type": "character varying",
-    "default_value": null,
+    "default_value": "waiting_for_user",
     "max_length": 255,
     "numeric_precision": null,
     "numeric_scale": null,
