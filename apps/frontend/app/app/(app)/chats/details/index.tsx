@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import SupportFAQ from '../../../../components/SupportFAQ/SupportFAQ';
@@ -6,7 +6,7 @@ import { useTheme } from '@/hooks/useTheme';
 import useSetPageTitle from '@/hooks/useSetPageTitle';
 import { TranslationKeys } from '@/locales/keys';
 import MyMarkdown from '@/components/MyMarkdown/MyMarkdown';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducer';
 import { myContrastColor } from '@/helper/ColorHelper';
 import { ChatMessagesHelper } from '@/redux/actions/Chats/ChatMessages';
@@ -14,6 +14,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DatabaseTypes, DateHelper } from 'repo-depkit-common';
 import styles from './styles';
+import { MARK_CHAT_AS_READ } from '@/redux/Types/types';
 
 const ChatDetailsScreen = () => {
 	useSetPageTitle(TranslationKeys.chat);
@@ -21,7 +22,8 @@ const ChatDetailsScreen = () => {
 	const { chat_id } = useLocalSearchParams<{ chat_id?: string }>();
 	const { primaryColor: projectColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
 
-	const { chats } = useSelector((state: RootState) => state.chats);
+        const dispatch = useDispatch();
+        const { chats, readStatus } = useSelector((state: RootState) => state.chats);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const [messages, setMessages] = useState<DatabaseTypes.ChatMessages[]>([]);
 	const [newMessage, setNewMessage] = useState('');
@@ -50,11 +52,40 @@ const ChatDetailsScreen = () => {
         const chatInitialMessage = (chat as { initial_message?: string } | undefined)?.initial_message;
         const initialMessage = typeof chatInitialMessage === 'string' ? chatInitialMessage.trim() : undefined;
 
-	const sortedMessages = [...messages].sort((a, b) => {
-		const da = a.date_created || a.date_updated || '';
-		const db = b.date_created || b.date_updated || '';
-		return da < db ? 1 : -1;
-	});
+        const sortedMessages = useMemo(() => {
+                return [...messages].sort((a, b) => {
+                        const da = a.date_created || a.date_updated || '';
+                        const db = b.date_created || b.date_updated || '';
+                        return da < db ? 1 : -1;
+                });
+        }, [messages]);
+
+        const latestMessageTimestamp = useMemo(() => {
+                if (sortedMessages.length > 0) {
+                        const latest = sortedMessages[0];
+                        return latest.date_updated || latest.date_created || null;
+                }
+                return chat?.date_updated || chat?.date_created || null;
+        }, [sortedMessages, chat?.date_updated, chat?.date_created]);
+
+        useEffect(() => {
+                if (!chat_id || !chat?.id || !latestMessageTimestamp) {
+                        return;
+                }
+
+                const lastRead = readStatus[chat.id];
+                if (lastRead && new Date(lastRead).getTime() >= new Date(latestMessageTimestamp).getTime()) {
+                        return;
+                }
+
+                dispatch({
+                        type: MARK_CHAT_AS_READ,
+                        payload: {
+                                chatId: chat.id,
+                                timestamp: latestMessageTimestamp,
+                        },
+                });
+        }, [chat_id, chat?.id, latestMessageTimestamp, dispatch, readStatus, chat?.date_updated]);
 
 	const lastMessageDate = sortedMessages[0]?.date_created || sortedMessages[0]?.date_updated;
 	let amountDaysForOldMessages = 7; // Default to 7 days

@@ -2643,6 +2643,16 @@
     "tr": "Sohbet",
     "zh": "聊天"
   },
+  "mark_all_chats_as_read": {
+    "de": "Alle Nachrichten als gelesen markieren",
+    "en": "Mark all messages as read",
+    "ar": "تمييز كل الرسائل كمقروءة",
+    "es": "Marcar todos los mensajes como leídos",
+    "fr": "Marquer tous les messages comme lus",
+    "ru": "Отметить все сообщения прочитанными",
+    "tr": "Tüm mesajları okundu olarak işaretle",
+    "zh": "将所有消息标记为已读"
+  },
   "rss_feed": {
     "de": "RSS Feed",
     "en": "RSS Feed",

@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { isWeb } from '@/constants/Constants';
 import { useTheme } from '@/hooks/useTheme';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,8 +16,23 @@ import { RootState } from '@/redux/reducer';
 const CustomMenuHeader: React.FC<CustomMenuHeaderProps> = ({ label }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
-	const { drawerPosition } = useSelector((state: RootState) => state.settings);
-	const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
+        const { drawerPosition } = useSelector((state: RootState) => state.settings);
+        const { chats, readStatus } = useSelector((state: RootState) => state.chats);
+        const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
+
+        const hasUnreadChats = useMemo(() => {
+                return chats.some(chat => {
+                        const latestTimestamp = chat?.date_updated || chat?.date_created;
+                        if (!chat?.id || !latestTimestamp) {
+                                return false;
+                        }
+                        const lastRead = readStatus[chat.id];
+                        if (!lastRead) {
+                                return true;
+                        }
+                        return new Date(latestTimestamp).getTime() > new Date(lastRead).getTime();
+                });
+        }, [chats, readStatus]);
 
 	return (
 		<View
@@ -42,11 +57,28 @@ const CustomMenuHeader: React.FC<CustomMenuHeaderProps> = ({ label }) => {
 					<Tooltip
 						placement="top"
 						trigger={triggerProps => (
-							<TouchableOpacity {...triggerProps} onPress={() => navigation.toggleDrawer()} style={{ padding: 10 }}>
-								<Ionicons name="menu" size={24} color={theme.header.text} />
-							</TouchableOpacity>
-						)}
-					>
+                                                        <TouchableOpacity
+                                                                {...triggerProps}
+                                                                onPress={() => navigation.toggleDrawer()}
+                                                                style={styles.menuButton}
+                                                        >
+                                                                <View style={styles.menuIconWrapper}>
+                                                                        <Ionicons name="menu" size={24} color={theme.header.text} />
+                                                                        {hasUnreadChats ? (
+                                                                                <View
+                                                                                        style={[
+                                                                                                styles.notificationDot,
+                                                                                                {
+                                                                                                        backgroundColor: theme.accent,
+                                                                                                        borderColor: theme.header.background,
+                                                                                                },
+                                                                                        ]}
+                                                                                />
+                                                                        ) : null}
+                                                                </View>
+                                                        </TouchableOpacity>
+                                                )}
+                                        >
 						<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 							<TooltipText fontSize="$sm" color={theme.tooltip.text}>
 								{`${translate(TranslationKeys.open_drawer)}`}
