@@ -738,14 +738,18 @@
     "validation": {
       "_and": [
         {
-          "profile": {
-            "_eq": "$CURRENT_USER.profile"
-          }
-        },
-        {
-          "chat": {
-            "_nnull": true
-          }
+          "_and": [
+            {
+              "profile": {
+                "_eq": "$CURRENT_USER.profile"
+              }
+            },
+            {
+              "chat": {
+                "_nnull": true
+              }
+            }
+          ]
         }
       ]
     },
@@ -821,9 +825,7 @@
                 "food_feedbacks": {
                   "profile": {
                     "id": {
-                      "_in": [
-                        "$CURRENT_USER.profile"
-                      ]
+                      "_eq": "$CURRENT_USER.profile"
                     }
                   }
                 }
@@ -908,13 +910,26 @@
     "permissions": {
       "_and": [
         {
-          "participants": {
-            "profiles_id": {
-              "id": {
-                "_eq": "$CURRENT_USER.profile"
+          "_or": [
+            {
+              "participants": {
+                "profiles_id": {
+                  "id": {
+                    "_eq": "$CURRENT_USER.profile"
+                  }
+                }
+              }
+            },
+            {
+              "food_feedbacks": {
+                "profile": {
+                  "id": {
+                    "_eq": "$CURRENT_USER.profile"
+                  }
+                }
               }
             }
-          }
+          ]
         }
       ]
     },
@@ -930,11 +945,52 @@
       "alias",
       "messages",
       "foods_feedback",
-      "linked_entities"
+      "linked_entities",
+      "conversation_state",
+      "initial_message"
     ],
     "policy": "abe3a726-f85c-4d70-a86c-15e7092e5da2",
     "presets": null,
     "_syncId": "6286436a-f502-4408-ad19-18ccdbd6c2d4"
+  },
+  {
+    "validation": null,
+    "collection": "chats",
+    "action": "update",
+    "permissions": {
+      "_and": [
+        {
+          "_or": [
+            {
+              "participants": {
+                "profiles_id": {
+                  "id": {
+                    "_nin": [
+                      "$CURRENT_USER.profile"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "food_feedbacks": {
+                "profile": {
+                  "id": {
+                    "_eq": "$CURRENT_USER.profile"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "fields": [
+      "conversation_state"
+    ],
+    "policy": "abe3a726-f85c-4d70-a86c-15e7092e5da2",
+    "presets": null,
+    "_syncId": "3e049916-fcb4-4644-8842-0adf8d5abba3"
   },
   {
     "validation": {
