@@ -45,7 +45,10 @@ const ChatDetailsScreen = () => {
 		fetchMsgs();
 	}, [chat_id]);
 
-	const chatTitle = chats.find(c => c.id === chat_id)?.alias || 'Chat';
+        const chat = chats.find(c => c.id === chat_id);
+        const chatTitle = chat?.alias || 'Chat';
+        const chatInitialMessage = (chat as { initial_message?: string } | undefined)?.initial_message;
+        const initialMessage = typeof chatInitialMessage === 'string' ? chatInitialMessage.trim() : undefined;
 
 	const sortedMessages = [...messages].sort((a, b) => {
 		const da = a.date_created || a.date_updated || '';
@@ -109,9 +112,33 @@ const ChatDetailsScreen = () => {
 		);
 	};
 
-	return (
-		<View style={[styles.container, { backgroundColor: theme.screen.background }]}>
-			<FlatList data={sortedMessages} keyExtractor={item => item.id} renderItem={renderItem} contentContainerStyle={styles.list} inverted />
+        const renderInitialMessage = () => {
+                if (!initialMessage) {
+                        return null;
+                }
+
+                const bgColor = theme.card.background;
+                const textColor = myContrastColor(bgColor, theme, mode === 'dark');
+
+                return (
+                        <View style={styles.initialMessageWrapper}>
+                                <View style={[styles.bubble, styles.initialMessageBubble, { backgroundColor: bgColor }]}>
+                                        <MyMarkdown content={initialMessage} textColor={textColor} />
+                                </View>
+                        </View>
+                );
+        };
+
+        return (
+                <View style={[styles.container, { backgroundColor: theme.screen.background }]}>        
+                        <FlatList
+                                data={sortedMessages}
+                                keyExtractor={item => item.id}
+                                renderItem={renderItem}
+                                contentContainerStyle={styles.list}
+                                inverted
+                                ListFooterComponent={renderInitialMessage()}
+                        />
 			{showOldMessageNotice && (
 				<View style={styles.oldMessageContainer}>
 					<Text style={[styles.oldMessageText, { color: theme.screen.text }]}>{translate(TranslationKeys.chat_last_message_unanswered)}</Text>
