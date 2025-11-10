@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import SupportFAQ from '../../../../components/SupportFAQ/SupportFAQ';
@@ -30,17 +30,18 @@ type LinkedFoodInfo = {
 const ChatDetailsScreen = () => {
 	useSetPageTitle(TranslationKeys.chat);
 	const { theme } = useTheme();
-	const { chat_id } = useLocalSearchParams<{ chat_id?: string }>();
+        const { chat_id, refreshKey } = useLocalSearchParams<{ chat_id?: string; refreshKey?: string }>();
         const { primaryColor: projectColor, selectedTheme: mode, appSettings, serverInfo } = useSelector((state: RootState) => state.settings);
 
 	const { chats } = useSelector((state: RootState) => state.chats);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const [messages, setMessages] = useState<DatabaseTypes.ChatMessages[]>([]);
-	const [newMessage, setNewMessage] = useState('');
-    const [sending, setSending] = useState(false);
-    const { translate, language } = useLanguage();
-    const [linkedFoodFeedback, setLinkedFoodFeedback] = useState<LinkedFoodInfo | null>(null);
-    const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
+        const [newMessage, setNewMessage] = useState('');
+        const [sending, setSending] = useState(false);
+        const { translate, language } = useLanguage();
+        const [linkedFoodFeedback, setLinkedFoodFeedback] = useState<LinkedFoodInfo | null>(null);
+        const [refreshing, setRefreshing] = useState(false);
+        const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
 
     const foodsAreaColor = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
     const placeholderImageId = appSettings?.foods_placeholder_image ? String(appSettings.foods_placeholder_image) : undefined;
@@ -49,25 +50,37 @@ const ChatDetailsScreen = () => {
             appSettings?.foods_placeholder_image_remote_url ||
             getImageUrl(serverInfo?.info?.project?.project_logo);
 
-	useEffect(() => {
-		const fetchMsgs = async () => {
-			if (chat_id) {
-				try {
-					const helper = new ChatMessagesHelper();
-					const result = (await helper.fetchMessagesByChat(chat_id)) as DatabaseTypes.ChatMessages[];
-					if (result) {
-						setMessages(result);
-					}
-				} catch (e) {
-					console.error('Error fetching chat messages:', e);
-				}
-			}
-		};
-		fetchMsgs();
-	}, [chat_id]);
+        const fetchMessages = useCallback(async () => {
+                if (!chat_id) {
+                        return;
+                }
+
+                setRefreshing(true);
+
+                try {
+                        const helper = new ChatMessagesHelper();
+                        const result = (await helper.fetchMessagesByChat(chat_id)) as DatabaseTypes.ChatMessages[];
+                        if (result) {
+                                setMessages(result);
+                        }
+                } catch (e) {
+                        console.error('Error fetching chat messages:', e);
+                } finally {
+                        setRefreshing(false);
+                }
+        }, [chat_id]);
+
+        useEffect(() => {
+                fetchMessages();
+        }, [fetchMessages]);
+
+        useEffect(() => {
+                if (refreshKey) {
+                        fetchMessages();
+                }
+        }, [fetchMessages, refreshKey]);
 
         const chat = chats.find(c => c.id === chat_id);
-        const chatTitle = chat?.alias || 'Chat';
         const chatInitialMessage = (chat as { initial_message?: string } | undefined)?.initial_message;
         const initialMessage = typeof chatInitialMessage === 'string' ? chatInitialMessage.trim() : undefined;
 
@@ -172,8 +185,6 @@ const ChatDetailsScreen = () => {
                 };
 
                 const resolveFeedbackRelation = (chatEntity: DatabaseTypes.Chats | undefined) => {
-                    console.log("Resolving feedback relation for chat entity:", chatEntity);
-
                         if (!chatEntity) {
                                 return null;
                         }
@@ -202,7 +213,6 @@ const ChatDetailsScreen = () => {
                         }
 
                         const feedbackId = getEntityId(chatFeedbackRelations[0]);
-                        console.log("Resolved feedback ID:", feedbackId);
 
                         if (!feedbackId) {
                                 if (isMounted) {
@@ -332,6 +342,13 @@ const ChatDetailsScreen = () => {
                                                                                         />
                                                                                 )
                                                                         }
+                                                                        rightIcon={
+                                                                                <MaterialCommunityIcons
+                                                                                        name="chevron-right"
+                                                                                        size={24}
+                                                                                        color={theme.screen.icon}
+                                                                                />
+                                                                        }
                                                                         onPress={food?.id ? handlePress : undefined}
                                                                         iconBackgroundColor={foodsAreaColor}
                                                                         groupPosition="top"
@@ -380,6 +397,8 @@ const ChatDetailsScreen = () => {
                                 renderItem={renderItem}
                                 contentContainerStyle={styles.list}
                                 inverted
+                                refreshing={refreshing}
+                                onRefresh={fetchMessages}
                                 ListFooterComponent={renderInitialMessage()}
                         />
 			{showOldMessageNotice && (
