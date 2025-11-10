@@ -37,17 +37,17 @@ const ChatDetailsScreen = () => {
 	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const [messages, setMessages] = useState<DatabaseTypes.ChatMessages[]>([]);
 	const [newMessage, setNewMessage] = useState('');
-        const [sending, setSending] = useState(false);
-        const { translate, language } = useLanguage();
-        const [linkedFoodFeedback, setLinkedFoodFeedback] = useState<LinkedFoodInfo | null>(null);
-        const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
+    const [sending, setSending] = useState(false);
+    const { translate, language } = useLanguage();
+    const [linkedFoodFeedback, setLinkedFoodFeedback] = useState<LinkedFoodInfo | null>(null);
+    const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
 
-        const foodsAreaColor = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
-        const placeholderImageId = appSettings?.foods_placeholder_image ? String(appSettings.foods_placeholder_image) : undefined;
-        const defaultFoodImage =
-                (placeholderImageId && getImageUrl(placeholderImageId)) ||
-                appSettings?.foods_placeholder_image_remote_url ||
-                getImageUrl(serverInfo?.info?.project?.project_logo);
+    const foodsAreaColor = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
+    const placeholderImageId = appSettings?.foods_placeholder_image ? String(appSettings.foods_placeholder_image) : undefined;
+    const defaultFoodImage =
+            (placeholderImageId && getImageUrl(placeholderImageId)) ||
+            appSettings?.foods_placeholder_image_remote_url ||
+            getImageUrl(serverInfo?.info?.project?.project_logo);
 
 	useEffect(() => {
 		const fetchMsgs = async () => {
@@ -161,8 +161,8 @@ const ChatDetailsScreen = () => {
                                 return entity;
                         }
                         if (typeof entity === 'object') {
-                                if ('foods_feedbacks_id' in entity && entity.foods_feedbacks_id) {
-                                        return getEntityId((entity as any).foods_feedbacks_id);
+                                if ('food_feedbacks_id' in entity && entity.food_feedbacks_id) {
+                                        return getEntityId((entity as any).food_feedbacks_id);
                                 }
                                 if ('id' in entity && entity.id) {
                                         return String(entity.id);
@@ -171,45 +171,38 @@ const ChatDetailsScreen = () => {
                         return null;
                 };
 
-                const resolveFeedbackRelation = (chatEntity: typeof chat) => {
+                const resolveFeedbackRelation = (chatEntity: DatabaseTypes.Chats | undefined) => {
+                    console.log("Resolving feedback relation for chat entity:", chatEntity);
+
                         if (!chatEntity) {
                                 return null;
                         }
 
-                        const relation: unknown = (chatEntity as any).foods_feedbacks ?? (chatEntity as any).foods_feedback;
+                        const relations: string[] | null = chatEntity.food_feedbacks as string[] | null;
 
-                        if (!relation) {
+                        if (!relations) {
                                 return null;
                         }
 
-                        if (Array.isArray(relation)) {
-                                const firstEntry = relation[0];
-
-                                if (!firstEntry) {
-                                        return null;
-                                }
-
-                                if (typeof firstEntry === 'object' && firstEntry !== null && 'foods_feedbacks_id' in firstEntry) {
-                                        return (firstEntry as any).foods_feedbacks_id;
-                                }
-
-                                return firstEntry;
+                        if (Array.isArray(relations)) {
+                                return relations;
                         }
 
-                        return relation;
+                        return null;
                 };
 
                 const resolveLinkedFoodFeedback = async () => {
-                        const chatFeedbackRelation = resolveFeedbackRelation(chat);
+                        const chatFeedbackRelations = resolveFeedbackRelation(chat);
 
-                        if (!chatFeedbackRelation) {
+                        if (!chatFeedbackRelations || chatFeedbackRelations.length === 0) {
                                 if (isMounted) {
                                         setLinkedFoodFeedback(null);
                                 }
                                 return;
                         }
 
-                        const feedbackId = getEntityId(chatFeedbackRelation);
+                        const feedbackId = getEntityId(chatFeedbackRelations[0]);
+                        console.log("Resolved feedback ID:", feedbackId);
 
                         if (!feedbackId) {
                                 if (isMounted) {
@@ -267,7 +260,7 @@ const ChatDetailsScreen = () => {
                 return () => {
                         isMounted = false;
                 };
-        }, [chat?.foods_feedbacks, chat?.foods_feedback, foodFeedbackHelper]);
+        }, [chat, chat?.food_feedbacks, foodFeedbackHelper]);
 
         const renderLinkedElements = () => {
                 if (!linkedFoodFeedback) {

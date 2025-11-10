@@ -285,6 +285,7 @@ type Subscription {
   directus_flows_mutated(event: EventEnum): directus_flows_mutated
   directus_versions_mutated(event: EventEnum): directus_versions_mutated
   directus_presets_mutated(event: EventEnum): directus_presets_mutated
+  chat_messages_mutated(event: EventEnum): chat_messages_mutated
   directus_webhooks_mutated(event: EventEnum): directus_webhooks_mutated
   files_shares_mutated(event: EventEnum): files_shares_mutated
   directus_sync_id_map_mutated(event: EventEnum): directus_sync_id_map_mutated
@@ -294,7 +295,6 @@ type Subscription {
   directus_settings_mutated(event: EventEnum): directus_settings_mutated
   directus_users_mutated(event: EventEnum): directus_users_mutated
   directus_revisions_mutated(event: EventEnum): directus_revisions_mutated
-  chat_messages_mutated(event: EventEnum): chat_messages_mutated
   foods_feedbacks_mutated(event: EventEnum): foods_feedbacks_mutated
   foodoffers_mutated(event: EventEnum): foodoffers_mutated
   foodoffers_markings_mutated(event: EventEnum): foodoffers_markings_mutated
@@ -622,8 +622,8 @@ type app_settings_balance_translations {
   let_be_translated: Boolean
   languages_code(filter: languages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): languages
   id: ID!
-  app_settings_id(filter: app_settings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): app_settings
   content: String
+  app_settings_id(filter: app_settings_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): app_settings
 }
 
 type app_settings_balance_translations_mutated {
@@ -1128,10 +1128,10 @@ type chat_messages {
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   sort: Int
   image(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
+  chat(filter: chats_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): chats
   attachment(filter: directus_files_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_files
   date_created: Date
   date_created_func: datetime_functions
-  chat(filter: chats_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): chats
   user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   date_updated: Date
   date_updated_func: datetime_functions
@@ -1159,10 +1159,10 @@ type chats {
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   food_feedbacks(filter: foods_feedbacks_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [foods_feedbacks]
   food_feedbacks_func: count_functions
-  participants(filter: chats_participants_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [chats_participants]
-  participants_func: count_functions
   messages(filter: chat_messages_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [chat_messages]
   messages_func: count_functions
+  participants(filter: chats_participants_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [chats_participants]
+  participants_func: count_functions
 }
 
 type chats_mutated {
@@ -2916,11 +2916,11 @@ type foods_feedbacks {
   notify: Boolean
   rating: Int
   chat(filter: chats_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): chats
-  profile(filter: profiles_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): profiles
   canteen(filter: canteens_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): canteens
   user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   date_created: Date
   date_created_func: datetime_functions
+  profile(filter: profiles_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): profiles
   date_updated: Date
   date_updated_func: datetime_functions
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
@@ -2972,9 +2972,9 @@ type foods_feedbacks_labels_entries {
   like: Boolean
   dislike: Boolean
   user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   date_created: Date
   date_created_func: datetime_functions
-  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   id: ID!
   foodoffer(filter: foodoffers_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): foodoffers
   label(filter: foods_feedbacks_labels_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): foods_feedbacks_labels
@@ -3700,11 +3700,11 @@ type push_notifications {
   """
   expo_push_tokens: JSON
   expo_push_tokens_func: count_functions
+  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   date_created: Date
   date_created_func: datetime_functions
   message_data: JSON
   message_data_func: count_functions
-  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
   richContent: String
   date_updated: Date
   date_updated_func: datetime_functions
@@ -4217,8 +4217,8 @@ input app_settings_balance_translations_filter {
   let_be_translated: boolean_filter_operators
   languages_code: languages_filter
   id: number_filter_operators
-  app_settings_id: app_settings_filter
   content: string_filter_operators
+  app_settings_id: app_settings_filter
   _and: [app_settings_balance_translations_filter]
   _or: [app_settings_balance_translations_filter]
 }
@@ -4229,8 +4229,8 @@ input app_settings_balance_translations_quantifier_filter {
   let_be_translated: boolean_filter_operators
   languages_code: languages_filter
   id: number_filter_operators
-  app_settings_id: app_settings_filter
   content: string_filter_operators
+  app_settings_id: app_settings_filter
   _and: [app_settings_balance_translations_filter]
   _or: [app_settings_balance_translations_filter]
   _some: app_settings_balance_translations_filter
@@ -4741,10 +4741,10 @@ input chat_messages_filter {
   user_created: directus_users_filter
   sort: number_filter_operators
   image: directus_files_filter
+  chat: chats_filter
   attachment: directus_files_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
-  chat: chats_filter
   user_updated: directus_users_filter
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
@@ -4761,10 +4761,10 @@ input chat_messages_quantifier_filter {
   user_created: directus_users_filter
   sort: number_filter_operators
   image: directus_files_filter
+  chat: chats_filter
   attachment: directus_files_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
-  chat: chats_filter
   user_updated: directus_users_filter
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
@@ -4790,10 +4790,10 @@ input chats_filter {
   user_created: directus_users_filter
   food_feedbacks: foods_feedbacks_quantifier_filter
   food_feedbacks_func: count_function_filter_operators
-  participants: chats_participants_quantifier_filter
-  participants_func: count_function_filter_operators
   messages: chat_messages_quantifier_filter
   messages_func: count_function_filter_operators
+  participants: chats_participants_quantifier_filter
+  participants_func: count_function_filter_operators
   _and: [chats_filter]
   _or: [chats_filter]
 }
@@ -5048,9 +5048,9 @@ input create_chat_messages_input {
   user_created: create_directus_users_input
   sort: Int
   image: create_directus_files_input
+  chat: create_chats_input
   attachment: create_directus_files_input
   date_created: Date
-  chat: create_chats_input
   user_updated: create_directus_users_input
   date_updated: Date
   message: String
@@ -5068,8 +5068,8 @@ input create_chats_input {
   id: ID
   user_created: create_directus_users_input
   food_feedbacks: [create_foods_feedbacks_input]
-  participants: [create_chats_participants_input]
   messages: [create_chat_messages_input]
+  participants: [create_chats_participants_input]
 }
 
 input create_chats_participants_input {
@@ -5538,10 +5538,10 @@ input create_foods_feedbacks_input {
   notify: Boolean
   rating: Int
   chat: create_chats_input
-  profile: create_profiles_input
   canteen: create_canteens_input
   user_updated: create_directus_users_input
   date_created: Date
+  profile: create_profiles_input
   date_updated: Date
   user_created: create_directus_users_input
   sort: Int
@@ -6734,11 +6734,11 @@ input foods_feedbacks_filter {
   notify: boolean_filter_operators
   rating: number_filter_operators
   chat: chats_filter
-  profile: profiles_filter
   canteen: canteens_filter
   user_updated: directus_users_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
+  profile: profiles_filter
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
   user_created: directus_users_filter
@@ -6803,11 +6803,11 @@ input foods_feedbacks_quantifier_filter {
   notify: boolean_filter_operators
   rating: number_filter_operators
   chat: chats_filter
-  profile: profiles_filter
   canteen: canteens_filter
   user_updated: directus_users_filter
   date_created: date_filter_operators
   date_created_func: datetime_function_filter_operators
+  profile: profiles_filter
   date_updated: date_filter_operators
   date_updated_func: datetime_function_filter_operators
   user_created: directus_users_filter
@@ -7992,9 +7992,9 @@ input update_chat_messages_input {
   user_created: update_directus_users_input
   sort: Int
   image: update_directus_files_input
+  chat: update_chats_input
   attachment: update_directus_files_input
   date_created: Date
-  chat: update_chats_input
   user_updated: update_directus_users_input
   date_updated: Date
   message: String
@@ -8012,8 +8012,8 @@ input update_chats_input {
   id: ID
   user_created: update_directus_users_input
   food_feedbacks: [update_foods_feedbacks_input]
-  participants: [update_chats_participants_input]
   messages: [update_chat_messages_input]
+  participants: [update_chats_participants_input]
 }
 
 input update_chats_participants_input {
@@ -8536,10 +8536,10 @@ input update_foods_feedbacks_input {
   notify: Boolean
   rating: Int
   chat: update_chats_input
-  profile: update_profiles_input
   canteen: update_canteens_input
   user_updated: update_directus_users_input
   date_created: Date
+  profile: update_profiles_input
   date_updated: Date
   user_created: update_directus_users_input
   sort: Int
