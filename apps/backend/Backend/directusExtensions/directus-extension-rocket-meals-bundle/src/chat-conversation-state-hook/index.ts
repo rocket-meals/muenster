@@ -77,6 +77,8 @@ export default defineHook(async ({ action }, apiContext) => {
       return;
     }
 
+    console.log(`${HOOK_NAME}: Processing new chat message with ID ${messageId}`);
+
     const myDatabaseHelper = new MyDatabaseHelper(apiContext, eventContext);
     const chatMessagesHelper = new ItemsServiceHelper<DatabaseTypes.ChatMessages>(
       myDatabaseHelper,
@@ -91,12 +93,16 @@ export default defineHook(async ({ action }, apiContext) => {
       fields: ['id', 'chat', 'user_created'],
     });
 
+    console.log(`${HOOK_NAME}: Retrieved chat message:`, message);
+
     const chatId = message?.chat as string | undefined;
+    console.log(`${HOOK_NAME}: Associated chat ID:`, chatId);
     if (!chatId) {
       return;
     }
 
     let messageFromAdmin = isAdminAccountability(eventContext?.accountability || null);
+    console.log(`${HOOK_NAME}: Message from admin (accountability check):`, messageFromAdmin);
 
     if (!messageFromAdmin) {
       const creatorId = message?.user_created as string | undefined;
@@ -108,6 +114,8 @@ export default defineHook(async ({ action }, apiContext) => {
     const conversationState = messageFromAdmin
       ? ChatConversationState.WAITING_FOR_USER
       : ChatConversationState.WAITING_FOR_SUPPORT;
+
+    console.log(`${HOOK_NAME}: Conversation state:`, conversationState);
 
     await chatsHelper.updateOne(chatId, { conversation_state: conversationState });
   });
