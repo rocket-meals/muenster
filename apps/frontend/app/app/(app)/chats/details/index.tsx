@@ -160,21 +160,56 @@ const ChatDetailsScreen = () => {
                         if (typeof entity === 'string') {
                                 return entity;
                         }
-                        if (typeof entity === 'object' && 'id' in entity && entity.id) {
-                                return String(entity.id);
+                        if (typeof entity === 'object') {
+                                if ('foods_feedbacks_id' in entity && entity.foods_feedbacks_id) {
+                                        return getEntityId((entity as any).foods_feedbacks_id);
+                                }
+                                if ('id' in entity && entity.id) {
+                                        return String(entity.id);
+                                }
                         }
                         return null;
                 };
 
+                const resolveFeedbackRelation = (chatEntity: typeof chat) => {
+                        if (!chatEntity) {
+                                return null;
+                        }
+
+                        const relation: unknown = (chatEntity as any).foods_feedbacks ?? (chatEntity as any).foods_feedback;
+
+                        if (!relation) {
+                                return null;
+                        }
+
+                        if (Array.isArray(relation)) {
+                                const firstEntry = relation[0];
+
+                                if (!firstEntry) {
+                                        return null;
+                                }
+
+                                if (typeof firstEntry === 'object' && firstEntry !== null && 'foods_feedbacks_id' in firstEntry) {
+                                        return (firstEntry as any).foods_feedbacks_id;
+                                }
+
+                                return firstEntry;
+                        }
+
+                        return relation;
+                };
+
                 const resolveLinkedFoodFeedback = async () => {
-                        if (!chat?.foods_feedback) {
+                        const chatFeedbackRelation = resolveFeedbackRelation(chat);
+
+                        if (!chatFeedbackRelation) {
                                 if (isMounted) {
                                         setLinkedFoodFeedback(null);
                                 }
                                 return;
                         }
 
-                        const feedbackId = getEntityId(chat.foods_feedback);
+                        const feedbackId = getEntityId(chatFeedbackRelation);
 
                         if (!feedbackId) {
                                 if (isMounted) {
@@ -232,7 +267,7 @@ const ChatDetailsScreen = () => {
                 return () => {
                         isMounted = false;
                 };
-        }, [chat?.foods_feedback, foodFeedbackHelper]);
+        }, [chat?.foods_feedbacks, chat?.foods_feedback, foodFeedbackHelper]);
 
         const renderLinkedElements = () => {
                 if (!linkedFoodFeedback) {
