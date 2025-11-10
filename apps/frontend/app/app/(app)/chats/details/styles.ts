@@ -4,10 +4,33 @@ export default StyleSheet.create({
 	container: {
 		flex: 1,
 	},
-	list: {
-		padding: 20,
-		gap: 2,
-	},
+        list: {
+                padding: 20,
+                gap: 2,
+        },
+        linkedElementsContainer: {
+                paddingHorizontal: 20,
+                paddingTop: 20,
+                paddingBottom: 10,
+                gap: 8,
+        },
+        linkedElementsTitle: {
+                fontFamily: 'Poppins_600SemiBold',
+                fontSize: 16,
+        },
+        linkedListWrapper: {
+                borderRadius: 12,
+                overflow: 'hidden',
+        },
+        linkedElementsNote: {
+                fontFamily: 'Poppins_400Regular',
+                fontSize: 13,
+        },
+        linkedFoodImage: {
+                width: '100%',
+                height: '100%',
+                borderRadius: 8,
+        },
         messageItem: {
                 maxWidth: '80%',
                 gap: 4,

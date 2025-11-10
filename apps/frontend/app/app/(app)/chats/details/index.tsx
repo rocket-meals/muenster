@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import SupportFAQ from '../../../../components/SupportFAQ/SupportFAQ';
@@ -13,20 +13,41 @@ import { ChatMessagesHelper } from '@/redux/actions/Chats/ChatMessages';
 import { useLanguage } from '@/hooks/useLanguage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DatabaseTypes, DateHelper } from 'repo-depkit-common';
+import SettingsList from '@/components/SettingsList';
+import MyImage from '@/components/MyImage';
+import { getFoodName } from '@/helper/resourceHelper';
+import { getImageUrl } from '@/constants/HelperFunctions';
+import { FoodFeedbackHelper } from '@/redux/actions/FoodFeedbacks/FoodFeedbacks';
+import { loadFoodById } from '@/helper/FoodHelper';
 import styles from './styles';
+
+type LinkedFoodInfo = {
+        food: DatabaseTypes.Foods;
+        feedback: DatabaseTypes.FoodsFeedbacks;
+        foodOfferId?: string | null;
+};
 
 const ChatDetailsScreen = () => {
 	useSetPageTitle(TranslationKeys.chat);
 	const { theme } = useTheme();
 	const { chat_id } = useLocalSearchParams<{ chat_id?: string }>();
-	const { primaryColor: projectColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+        const { primaryColor: projectColor, selectedTheme: mode, appSettings, serverInfo } = useSelector((state: RootState) => state.settings);
 
 	const { chats } = useSelector((state: RootState) => state.chats);
 	const { profile } = useSelector((state: RootState) => state.authReducer);
 	const [messages, setMessages] = useState<DatabaseTypes.ChatMessages[]>([]);
 	const [newMessage, setNewMessage] = useState('');
-	const [sending, setSending] = useState(false);
-	const { translate } = useLanguage();
+        const [sending, setSending] = useState(false);
+        const { translate, language } = useLanguage();
+        const [linkedFoodFeedback, setLinkedFoodFeedback] = useState<LinkedFoodInfo | null>(null);
+        const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
+
+        const foodsAreaColor = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
+        const placeholderImageId = appSettings?.foods_placeholder_image ? String(appSettings.foods_placeholder_image) : undefined;
+        const defaultFoodImage =
+                (placeholderImageId && getImageUrl(placeholderImageId)) ||
+                appSettings?.foods_placeholder_image_remote_url ||
+                getImageUrl(serverInfo?.info?.project?.project_logo);
 
 	useEffect(() => {
 		const fetchMsgs = async () => {
@@ -129,8 +150,197 @@ const ChatDetailsScreen = () => {
                 );
         };
 
+        useEffect(() => {
+                let isMounted = true;
+
+                const getEntityId = (entity: any): string | null => {
+                        if (!entity) {
+                                return null;
+                        }
+                        if (typeof entity === 'string') {
+                                return entity;
+                        }
+                        if (typeof entity === 'object' && 'id' in entity && entity.id) {
+                                return String(entity.id);
+                        }
+                        return null;
+                };
+
+                const resolveLinkedFoodFeedback = async () => {
+                        if (!chat?.foods_feedback) {
+                                if (isMounted) {
+                                        setLinkedFoodFeedback(null);
+                                }
+                                return;
+                        }
+
+                        const feedbackId = getEntityId(chat.foods_feedback);
+
+                        if (!feedbackId) {
+                                if (isMounted) {
+                                        setLinkedFoodFeedback(null);
+                                }
+                                return;
+                        }
+
+                        try {
+                                const feedbackQuery = {
+                                        fields: ['id', 'rating', 'comment', 'food', 'foodoffer'],
+                                };
+
+                                const feedback = (await foodFeedbackHelper.fetchFoodFeedbackById(
+                                        feedbackId,
+                                        feedbackQuery
+                                )) as DatabaseTypes.FoodsFeedbacks;
+
+                                if (!feedback?.food) {
+                                        if (isMounted) {
+                                                setLinkedFoodFeedback(null);
+                                        }
+                                        return;
+                                }
+
+                                const foodId = getEntityId(feedback.food);
+
+                                if (!foodId) {
+                                        if (isMounted) {
+                                                setLinkedFoodFeedback(null);
+                                        }
+                                        return;
+                                }
+
+                                const food = (await loadFoodById(foodId)) as DatabaseTypes.Foods;
+                                const foodOfferId = getEntityId(feedback.foodoffer);
+
+                                if (isMounted) {
+                                        setLinkedFoodFeedback({
+                                                food,
+                                                feedback,
+                                                foodOfferId,
+                                        });
+                                }
+                        } catch (error) {
+                                console.error('Error resolving linked food feedback for chat:', error);
+                                if (isMounted) {
+                                        setLinkedFoodFeedback(null);
+                                }
+                        }
+                };
+
+                resolveLinkedFoodFeedback();
+
+                return () => {
+                        isMounted = false;
+                };
+        }, [chat?.foods_feedback, foodFeedbackHelper]);
+
+        const renderLinkedElements = () => {
+                if (!linkedFoodFeedback) {
+                        return null;
+                }
+
+                return (
+                        <View style={styles.linkedElementsContainer}>
+                                <Text style={[styles.linkedElementsTitle, { color: theme.screen.text }]}>
+                                        {translate(TranslationKeys.linked_elements)}
+                                </Text>
+                                <View style={styles.linkedListWrapper}>
+                                        {(() => {
+                                                const { food, feedback, foodOfferId } = linkedFoodFeedback;
+                                                const alias = food.alias || '';
+                                                const fallbackName = alias ? alias.charAt(0).toUpperCase() + alias.slice(1) : undefined;
+                                                const foodName =
+                                                        getFoodName(food, language) || fallbackName || translate(TranslationKeys.unknown);
+                                                const imageSource =
+                                                        food?.image_remote_url
+                                                                ? { uri: food.image_remote_url }
+                                                                : food?.image
+                                                                ? { uri: getImageUrl(String(food.image)) }
+                                                                : defaultFoodImage
+                                                                ? { uri: defaultFoodImage }
+                                                                : undefined;
+
+                                                const handlePress = () => {
+                                                        if (foodOfferId && food?.id) {
+                                                                router.push({
+                                                                        pathname: '/(app)/foodoffers/details',
+                                                                        params: { id: foodOfferId, foodId: food.id },
+                                                                });
+                                                        }
+                                                };
+
+                                                const ratingValueRaw = typeof feedback.rating === 'number' ? feedback.rating : Number(feedback.rating);
+                                                const ratingValue = Number.isFinite(ratingValueRaw)
+                                                        ? ratingValueRaw.toLocaleString(language, {
+                                                                  maximumFractionDigits: 2,
+                                                                  minimumFractionDigits: 0,
+                                                          })
+                                                        : null;
+                                                const commentValue = typeof feedback.comment === 'string' && feedback.comment.trim().length
+                                                        ? feedback.comment.trim()
+                                                        : null;
+
+                                                return (
+                                                        <>
+                                                                <SettingsList
+                                                                        label={translate(TranslationKeys.linked_elements_food_image)}
+                                                                        value={foodName}
+                                                                        leftIcon={
+                                                                                imageSource ? (
+                                                                                        <MyImage source={imageSource} style={styles.linkedFoodImage} />
+                                                                                ) : (
+                                                                                        <MaterialCommunityIcons
+                                                                                                name="silverware-fork-knife"
+                                                                                                size={20}
+                                                                                                color={theme.screen.icon}
+                                                                                        />
+                                                                                )
+                                                                        }
+                                                                        onPress={foodOfferId ? handlePress : undefined}
+                                                                        iconBackgroundColor={foodsAreaColor}
+                                                                        groupPosition="top"
+                                                                />
+                                                                <SettingsList
+                                                                        label={translate(TranslationKeys.linked_elements_rating)}
+                                                                        value={ratingValue ?? translate(TranslationKeys.no_value)}
+                                                                        leftIcon={
+                                                                                <MaterialCommunityIcons
+                                                                                        name="star-circle"
+                                                                                        size={20}
+                                                                                        color={theme.screen.icon}
+                                                                                />
+                                                                        }
+                                                                        iconBackgroundColor={foodsAreaColor}
+                                                                        groupPosition="middle"
+                                                                />
+                                                                <SettingsList
+                                                                        label={translate(TranslationKeys.linked_elements_comment)}
+                                                                        value={commentValue ?? translate(TranslationKeys.no_value)}
+                                                                        leftIcon={
+                                                                                <MaterialCommunityIcons
+                                                                                        name="message-text"
+                                                                                        size={20}
+                                                                                        color={theme.screen.icon}
+                                                                                />
+                                                                        }
+                                                                        iconBackgroundColor={foodsAreaColor}
+                                                                        groupPosition="bottom"
+                                                                        showSeparator={false}
+                                                                />
+                                                        </>
+                                                );
+                                        })()}
+                                </View>
+                                <Text style={[styles.linkedElementsNote, { color: theme.screen.text }]}>
+                                        {translate(TranslationKeys.linked_elements_more_entities_none)}
+                                </Text>
+                        </View>
+                );
+        };
+
         return (
-                <View style={[styles.container, { backgroundColor: theme.screen.background }]}>        
+                <View style={[styles.container, { backgroundColor: theme.screen.background }]}>
+                        {renderLinkedElements()}
                         <FlatList
                                 data={sortedMessages}
                                 keyExtractor={item => item.id}

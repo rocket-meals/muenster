@@ -2643,6 +2643,56 @@
     "tr": "Sohbet",
     "zh": "聊天"
   },
+  "linked_elements": {
+    "de": "Verknüpfte Elemente",
+    "en": "Linked elements",
+    "ar": "العناصر المرتبطة",
+    "es": "Elementos vinculados",
+    "fr": "Éléments liés",
+    "ru": "Связанные элементы",
+    "tr": "Bağlantılı öğeler",
+    "zh": "关联元素"
+  },
+  "linked_elements_food_image": {
+    "de": "Speisebild",
+    "en": "Food image",
+    "ar": "صورة الوجبة",
+    "es": "Imagen del plato",
+    "fr": "Image du plat",
+    "ru": "Изображение блюда",
+    "tr": "Yemek görseli",
+    "zh": "菜品图片"
+  },
+  "linked_elements_rating": {
+    "de": "Bewertung",
+    "en": "Rating",
+    "ar": "التقييم",
+    "es": "Valoración",
+    "fr": "Note",
+    "ru": "Оценка",
+    "tr": "Değerlendirme",
+    "zh": "评分"
+  },
+  "linked_elements_comment": {
+    "de": "Kommentar",
+    "en": "Comment",
+    "ar": "تعليق",
+    "es": "Comentario",
+    "fr": "Commentaire",
+    "ru": "Комментарий",
+    "tr": "Yorum",
+    "zh": "评论"
+  },
+  "linked_elements_more_entities_none": {
+    "de": "Weitere Referenz-Entitäten (aktuell keine)",
+    "en": "Further referenced entities (currently none)",
+    "ar": "كيانات مرجعية إضافية (لا يوجد حالياً)",
+    "es": "Otras entidades referenciadas (actualmente ninguna)",
+    "fr": "Autres entités référencées (aucune pour le moment)",
+    "ru": "Другие связанные сущности (пока отсутствуют)",
+    "tr": "Diğer referanslı varlıklar (şu anda yok)",
+    "zh": "更多关联实体（当前无）"
+  },
   "rss_feed": {
     "de": "RSS Feed",
     "en": "RSS Feed",
