@@ -1,14 +1,14 @@
 {
-  "collection": "chats",
-  "field": "foods_feedback",
+  "collection": "foods_feedbacks",
+  "field": "chat",
   "type": "uuid",
   "meta": {
-    "collection": "chats",
+    "collection": "foods_feedbacks",
     "conditions": null,
     "display": null,
     "display_options": null,
-    "field": "foods_feedback",
-    "group": "linked_entities",
+    "field": "chat",
+    "group": null,
     "hidden": false,
     "interface": "select-dropdown-m2o",
     "note": null,
@@ -17,7 +17,7 @@
     },
     "readonly": false,
     "required": false,
-    "sort": 1,
+    "sort": 16,
     "special": [
       "m2o"
     ],
@@ -27,8 +27,8 @@
     "width": "full"
   },
   "schema": {
-    "name": "foods_feedback",
-    "table": "chats",
+    "name": "chat",
+    "table": "foods_feedbacks",
     "data_type": "uuid",
     "default_value": null,
     "max_length": null,
@@ -41,7 +41,7 @@
     "is_generated": false,
     "generation_expression": null,
     "has_auto_increment": false,
-    "foreign_key_table": "foods_feedbacks",
+    "foreign_key_table": "chats",
     "foreign_key_column": "id"
   }
 }

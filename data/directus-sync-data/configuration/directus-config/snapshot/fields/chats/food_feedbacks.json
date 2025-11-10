@@ -1,25 +1,23 @@
 {
   "collection": "chats",
-  "field": "linked_entities",
+  "field": "food_feedbacks",
   "type": "alias",
   "meta": {
     "collection": "chats",
     "conditions": null,
     "display": null,
     "display_options": null,
-    "field": "linked_entities",
-    "group": null,
+    "field": "food_feedbacks",
+    "group": "linked_entities",
     "hidden": false,
-    "interface": "group-raw",
+    "interface": "list-o2m",
     "note": null,
     "options": null,
     "readonly": false,
     "required": false,
-    "sort": 13,
+    "sort": 1,
     "special": [
-      "alias",
-      "no-data",
-      "group"
+      "o2m"
     ],
     "translations": null,
     "validation": null,

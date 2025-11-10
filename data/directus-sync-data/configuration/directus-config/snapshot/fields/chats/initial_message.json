@@ -1,35 +1,33 @@
 {
   "collection": "chats",
-  "field": "user_created",
-  "type": "uuid",
+  "field": "initial_message",
+  "type": "text",
   "meta": {
     "collection": "chats",
     "conditions": null,
-    "display": "user",
+    "display": null,
     "display_options": null,
-    "field": "user_created",
+    "field": "initial_message",
     "group": null,
-    "hidden": true,
-    "interface": "select-dropdown-m2o",
+    "hidden": false,
+    "interface": "input-multiline",
     "note": null,
     "options": {
-      "template": "{{avatar}} {{first_name}} {{last_name}}"
+      "softLength": 2048
     },
-    "readonly": true,
+    "readonly": false,
     "required": false,
-    "sort": 6,
-    "special": [
-      "user-created"
-    ],
+    "sort": 4,
+    "special": null,
     "translations": null,
     "validation": null,
     "validation_message": null,
-    "width": "half"
+    "width": "full"
   },
   "schema": {
-    "name": "user_created",
+    "name": "initial_message",
     "table": "chats",
-    "data_type": "uuid",
+    "data_type": "text",
     "default_value": null,
     "max_length": null,
     "numeric_precision": null,
@@ -41,7 +39,7 @@
     "is_generated": false,
     "generation_expression": null,
     "has_auto_increment": false,
-    "foreign_key_table": "directus_users",
-    "foreign_key_column": "id"
+    "foreign_key_table": null,
+    "foreign_key_column": null
   }
 }
