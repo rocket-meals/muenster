@@ -289,10 +289,18 @@ const ChatDetailsScreen = () => {
                                                                 : undefined;
 
                                                 const handlePress = () => {
-                                                        if (foodOfferId && food?.id) {
+                                                        if (food?.id) {
+                                                                const params: Record<string, string> = {
+                                                                        foodId: String(food.id),
+                                                                };
+
+                                                                if (foodOfferId) {
+                                                                        params.id = String(foodOfferId);
+                                                                }
+
                                                                 router.push({
                                                                         pathname: '/(app)/foodoffers/details',
-                                                                        params: { id: foodOfferId, foodId: food.id },
+                                                                        params,
                                                                 });
                                                         }
                                                 };
@@ -324,7 +332,7 @@ const ChatDetailsScreen = () => {
                                                                                         />
                                                                                 )
                                                                         }
-                                                                        onPress={foodOfferId ? handlePress : undefined}
+                                                                        onPress={food?.id ? handlePress : undefined}
                                                                         iconBackgroundColor={foodsAreaColor}
                                                                         groupPosition="top"
                                                                 />
@@ -359,9 +367,6 @@ const ChatDetailsScreen = () => {
                                                 );
                                         })()}
                                 </View>
-                                <Text style={[styles.linkedElementsNote, { color: theme.screen.text }]}>
-                                        {translate(TranslationKeys.linked_elements_more_entities_none)}
-                                </Text>
                         </View>
                 );
         };

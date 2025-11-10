@@ -22,10 +22,6 @@ export default StyleSheet.create({
                 borderRadius: 12,
                 overflow: 'hidden',
         },
-        linkedElementsNote: {
-                fontFamily: 'Poppins_400Regular',
-                fontSize: 13,
-        },
         linkedFoodImage: {
                 width: '100%',
                 height: '100%',
