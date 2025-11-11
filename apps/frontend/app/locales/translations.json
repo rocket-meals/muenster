@@ -2653,6 +2653,26 @@
     "tr": "Sohbet",
     "zh": "聊天"
   },
+  "mark_all_chats_as_read": {
+    "de": "Alle Nachrichten als gelesen markieren",
+    "en": "Mark all messages as read",
+    "ar": "تمييز كل الرسائل كمقروءة",
+    "es": "Marcar todos los mensajes como leídos",
+    "fr": "Marquer tous les messages comme lus",
+    "ru": "Отметить все сообщения прочитанными",
+    "tr": "Tüm mesajları okundu olarak işaretle",
+    "zh": "将所有消息标记为已读"
+  },
+  "mark_all_chats_as_unread": {
+    "de": "Alle Nachrichten als ungelesen markieren",
+    "en": "Mark all messages as unread",
+    "ar": "وضع علامة على كل الرسائل كغير مقروءة",
+    "es": "Marcar todos los mensajes como no leídos",
+    "fr": "Marquer tous les messages comme non lus",
+    "ru": "Отметить все сообщения как непрочитанные",
+    "tr": "Tüm mesajları okunmadı olarak işaretle",
+    "zh": "将所有消息标记为未读"
+  },
   "linked_elements": {
     "de": "Verknüpfte Elemente",
     "en": "Linked elements",

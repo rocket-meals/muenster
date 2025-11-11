@@ -66,6 +66,7 @@ import {RootState} from '@/redux/reducer';
 import MarkingBottomSheet from '@/components/MarkingBottomSheet';
 import AIGeneratedHintSheet from '@/components/AIGeneratedHintSheet';
 import useFoodOffersDefaultDate from '@/hooks/useFoodOffersDefaultDate';
+import useChatUnreadStatus from '@/hooks/useChatUnreadStatus';
 
 export const SHEET_COMPONENTS = {
         canteen: CanteenSelectionSheet,
@@ -106,8 +107,8 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const [sessionDismissed, setSessionDismissed] = useState<Set<string>>(PopupEventHelper.getAll());
 	const [currentPopupEvent, setCurrentPopupEvent] = useState<any | null>(null);
 
-	const { sortBy, language: languageCode, drawerPosition, appSettings, primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
-	const { ownFoodFeedbacks, popupEvents, selectedDate, foodCategories, foodOfferCategories, foodOffersInfoItems } = useSelector((state: RootState) => state.food);
+    const { sortBy, language: languageCode, drawerPosition, appSettings, primaryColor, selectedTheme: mode } = useSelector((state: RootState) => state.settings);
+    const { ownFoodFeedbacks, popupEvents, selectedDate, foodCategories, foodOfferCategories, foodOffersInfoItems } = useSelector((state: RootState) => state.food);
 	const [autoPlay, setAutoPlay] = useState(appSettings?.animations_auto_start);
 	const animationRef = useRef<LottieView>(null);
 	const [animationJson, setAmimationJson] = useState<any>(null);
@@ -118,7 +119,8 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	useFoodOffersDefaultDate();
 	const kioskMode = useKioskMode();
 	const [prefetchedFoodOffers, setPrefetchedFoodOffers] = useState<Record<string, Record<string, DatabaseTypes.Foodoffers[]>>>({});
-	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+    const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
+    const { hasUnreadChats } = useChatUnreadStatus();
 	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
 
 	const dayItems = useMemo(() => {
@@ -538,20 +540,33 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 								]}
 							>
 								{/* Menu */}
-								<Tooltip
-									placement="top"
-									trigger={triggerProps => (
-										<TouchableOpacity
-											{...triggerProps}
-											onPress={() => drawerNavigation.toggleDrawer()}
-											style={{
-												padding: isWeb ? (screenWidth < 500 ? 5 : 10) : 5,
-											}}
-										>
-											<Ionicons name="menu" size={24} color={theme.header.text} />
-										</TouchableOpacity>
-									)}
-								>
+                                                            <Tooltip
+                                                                    placement="top"
+                                                                    trigger={triggerProps => (
+                                                                            <TouchableOpacity
+                                                                                    {...triggerProps}
+                                                                                    onPress={() => drawerNavigation.toggleDrawer()}
+                                                                                    style={{
+                                                                                            padding: isWeb ? (screenWidth < 500 ? 5 : 10) : 5,
+                                                                                    }}
+                                                                            >
+                                                                                    <View style={styles.menuIconWrapper}>
+                                                                                            <Ionicons name="menu" size={24} color={theme.header.text} />
+                                                                                            {hasUnreadChats ? (
+                                                                                                    <View
+                                                                                                            style={[
+                                                                                                                    styles.notificationDot,
+                                                                                                                    {
+                                                                                                                            backgroundColor: theme.accent,
+                                                                                                                            borderColor: theme.header.background,
+                                                                                                                    },
+                                                                                                            ]}
+                                                                                                    />
+                                                                                            ) : null}
+                                                                                    </View>
+                                                                            </TouchableOpacity>
+                                                                    )}
+                                                            >
 									<TooltipContent bg={theme.tooltip.background} py="$1" px="$2">
 										<TooltipText fontSize="$sm" color={theme.tooltip.text}>
 											{`${translate(TranslationKeys.open_drawer)}`}
