@@ -42,6 +42,7 @@ const ChatDetailsScreen = () => {
         const [linkedFoodFeedback, setLinkedFoodFeedback] = useState<LinkedFoodInfo | null>(null);
         const [refreshing, setRefreshing] = useState(false);
         const listRef = useRef<FlatList<DatabaseTypes.ChatMessages> | null>(null);
+        const [isAtBottom, setIsAtBottom] = useState(true);
         const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
 
     const foodsAreaColor = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
@@ -94,6 +95,7 @@ const ChatDetailsScreen = () => {
         const scrollToBottom = useCallback((animated = true) => {
                 requestAnimationFrame(() => {
                         listRef.current?.scrollToEnd({ animated });
+                        setIsAtBottom(true);
                 });
         }, []);
 
@@ -424,8 +426,16 @@ const ChatDetailsScreen = () => {
                                 onRefresh={fetchMessages}
                                 ListHeaderComponent={renderInitialMessage()}
                                 onContentSizeChange={() => scrollToBottom(false)}
+                                onScroll={({ nativeEvent }) => {
+                                        const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+                                        const isBottom =
+                                                layoutMeasurement.height + contentOffset.y >= contentSize.height - 24;
+
+                                        setIsAtBottom(prev => (prev !== isBottom ? isBottom : prev));
+                                }}
+                                scrollEventThrottle={16}
                         />
-                        {sortedMessages.length > 0 && (
+                        {sortedMessages.length > 0 && !isAtBottom && (
                                 <TouchableOpacity
                                         style={[
                                                 styles.scrollToEndButton,
