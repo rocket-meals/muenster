@@ -945,9 +945,10 @@
       "alias",
       "messages",
       "foods_feedback",
-      "linked_entities",
       "conversation_state",
-      "initial_message"
+      "initial_message",
+      "food_feedbacks",
+      "linked_entities"
     ],
     "policy": "abe3a726-f85c-4d70-a86c-15e7092e5da2",
     "presets": null,
