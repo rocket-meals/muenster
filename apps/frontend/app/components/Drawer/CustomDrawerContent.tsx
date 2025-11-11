@@ -180,7 +180,7 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation
 		getWikis();
 	}, []);
 
-	const generateMenuItems = (): MenuItemProps[] => {
+        const generateMenuItems = (): MenuItemProps[] => {
 		let menuItems: MenuItemProps[] = [];
 
 		// Static menu items with positions
@@ -344,29 +344,25 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = ({ navigation
                                                                 style={getMenuItemStyle(item.activeKey)}
                                                                 onPress={() => (item.route ? navigation.navigate(item.route) : item.action?.())}
                                                         >
-                                                                <View style={styles.menuItemContent}>
-                                                                        <View style={styles.menuIconWrapper}>
-                                                                                <item.iconLibName
-                                                                                        name={item.iconName}
-                                                                                        size={24}
-                                                                                        color={isActive(item.activeKey) ? getContrastColor(item.activeKey) : theme.inactiveIcon}
+                                                                <View style={styles.menuIconWrapper}>
+                                                                        <item.iconLibName
+                                                                                name={item.iconName}
+                                                                                size={24}
+                                                                                color={isActive(item.activeKey) ? getContrastColor(item.activeKey) : theme.inactiveIcon}
+                                                                        />
+                                                                        {item.hasUnread ? (
+                                                                                <View
+                                                                                        style={[
+                                                                                                styles.notificationDot,
+                                                                                                {
+                                                                                                        backgroundColor: theme.accent,
+                                                                                                        borderColor: theme.drawerBg,
+                                                                                                },
+                                                                                        ]}
                                                                                 />
-                                                                        </View>
-                                                                        <View style={styles.menuLabelWrapper}>
-                                                                                <Text style={getMenuLabelStyle(item.activeKey)}>{item.label}</Text>
-                                                                                {item.hasUnread ? (
-                                                                                        <View
-                                                                                                style={[
-                                                                                                        styles.notificationDot,
-                                                                                                        {
-                                                                                                                backgroundColor: theme.accent,
-                                                                                                                borderColor: theme.drawerBg,
-                                                                                                        },
-                                                                                                ]}
-                                                                                        />
-                                                                                ) : null}
-                                                                        </View>
+                                                                        ) : null}
                                                                 </View>
+                                                                <Text style={getMenuLabelStyle(item.activeKey)}>{item.label}</Text>
                                                         </TouchableOpacity>
                                                 ))}
 						<View style={styles.divider} />

@@ -35,11 +35,11 @@ export const styles = StyleSheet.create({
 		width: 72,
 		height: 72,
 	},
-	menuContainer: {
-		flex: 1,
-		paddingVertical: 10,
-		marginTop: 10,
-	},
+        menuContainer: {
+                flex: 1,
+                paddingVertical: 10,
+                marginTop: 10,
+        },
         menuItem: {
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -48,29 +48,25 @@ export const styles = StyleSheet.create({
                 paddingHorizontal: 20,
                 borderRadius: 10,
                 marginBottom: 5,
-        },
-        menuItemContent: {
-                flexDirection: 'row',
-                alignItems: 'center',
+                width: '100%',
         },
         menuIconWrapper: {
                 marginRight: 12,
+                position: 'relative',
         },
         menuLabel: {
-                width: '80%',
+                flex: 1,
                 fontSize: 16,
                 fontFamily: 'Poppins_400Regular',
                 marginTop: 4,
         },
-        menuLabelWrapper: {
-                flexDirection: 'row',
-                alignItems: 'center',
-        },
         notificationDot: {
+                position: 'absolute',
+                top: -2,
+                right: -2,
                 width: 10,
                 height: 10,
                 borderRadius: 5,
-                marginLeft: 8,
                 borderWidth: 1,
         },
 	divider: {
