@@ -198,6 +198,7 @@ export class FoodTL1Parser implements FoodParserInterface {
         price_employee: FoodTL1Parser.getPriceForGroup(parsedReportItem, PriceGroupEnum.PRICE_GROUP_EMPLOYEE),
         price_guest: FoodTL1Parser.getPriceForGroup(parsedReportItem, PriceGroupEnum.PRICE_GROUP_GUEST),
         price_student: FoodTL1Parser.getPriceForGroup(parsedReportItem, PriceGroupEnum.PRICE_GROUP_STUDENT),
+        foodoffer_components: [],
       };
 
       const foodofferForParser: FoodoffersTypeForParser = {

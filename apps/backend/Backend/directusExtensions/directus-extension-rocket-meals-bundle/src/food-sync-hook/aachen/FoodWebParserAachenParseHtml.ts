@@ -198,6 +198,7 @@ export class FoodWebParserAachenParseHtml {
       price_employee: priceStudent,
       price_guest: priceStudent,
       price_student: priceStudent,
+      foodoffer_components: []
     };
 
     const attibute_values: FoodParseFoodAttributeValueType[] = [];
