@@ -9,7 +9,9 @@ export const getChatTimestamp = (chat: DatabaseTypes.Chats): string | null => {
 };
 
 const useChatUnreadStatus = () => {
-        const { chats, readStatus } = useSelector((state: RootState) => state.chats);
+        const { chats = [], readStatus = {} } = useSelector((state: RootState) => state.chats ?? {});
+
+        const readStatusMap = readStatus ?? {};
 
         const hasUnreadChats = useMemo(() => {
                 return chats.some(chat => {
@@ -22,7 +24,7 @@ const useChatUnreadStatus = () => {
                                 return false;
                         }
 
-                        const lastRead = readStatus[chat.id];
+                        const lastRead = readStatusMap[chat.id];
                         if (!lastRead) {
                                 return true;
                         }
@@ -42,7 +44,7 @@ const useChatUnreadStatus = () => {
                                 return false;
                         }
 
-                        const lastRead = readStatus[chat.id];
+                        const lastRead = readStatusMap[chat.id];
                         if (!lastRead) {
                                 return true;
                         }
@@ -52,7 +54,7 @@ const useChatUnreadStatus = () => {
                 [readStatus],
         );
 
-        return { chats, readStatus, hasUnreadChats, isChatUnread };
+        return { chats, readStatus: readStatusMap, hasUnreadChats, isChatUnread };
 };
 
 export default useChatUnreadStatus;
