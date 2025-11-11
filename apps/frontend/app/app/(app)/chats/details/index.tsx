@@ -84,13 +84,17 @@ const ChatDetailsScreen = () => {
         const chatInitialMessage = (chat as { initial_message?: string } | undefined)?.initial_message;
         const initialMessage = typeof chatInitialMessage === 'string' ? chatInitialMessage.trim() : undefined;
 
-	const sortedMessages = [...messages].sort((a, b) => {
-		const da = a.date_created || a.date_updated || '';
-		const db = b.date_created || b.date_updated || '';
-		return da < db ? 1 : -1;
-	});
+        const sortedMessages = [...messages].sort((a, b) => {
+                const da = a.date_created || a.date_updated || '';
+                const db = b.date_created || b.date_updated || '';
+                return da > db ? 1 : -1;
+        });
 
-	const lastMessageDate = sortedMessages[0]?.date_created || sortedMessages[0]?.date_updated;
+        const lastMessageIndex = sortedMessages.length - 1;
+        const lastMessageDate =
+                lastMessageIndex >= 0
+                        ? sortedMessages[lastMessageIndex]?.date_created || sortedMessages[lastMessageIndex]?.date_updated
+                        : undefined;
 	let amountDaysForOldMessages = 7; // Default to 7 days
 
 	const showOldMessageNotice = lastMessageDate ? DateHelper.isDateOlderThan(new Date(lastMessageDate), amountDaysForOldMessages) : false;
@@ -108,7 +112,7 @@ const ChatDetailsScreen = () => {
 				message: newMessage.trim(),
 			})) as DatabaseTypes.ChatMessages;
 			if (created) {
-				setMessages(prev => [created, ...prev]);
+                                setMessages(prev => [...prev, created]);
 				setNewMessage('');
 			}
 		} catch (e) {
@@ -396,10 +400,9 @@ const ChatDetailsScreen = () => {
                                 keyExtractor={item => item.id}
                                 renderItem={renderItem}
                                 contentContainerStyle={styles.list}
-                                inverted
                                 refreshing={refreshing}
                                 onRefresh={fetchMessages}
-                                ListFooterComponent={renderInitialMessage()}
+                                ListHeaderComponent={renderInitialMessage()}
                         />
 			{showOldMessageNotice && (
 				<View style={styles.oldMessageContainer}>

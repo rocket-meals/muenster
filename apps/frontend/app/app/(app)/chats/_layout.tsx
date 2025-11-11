@@ -3,6 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CustomStackHeader from '@/components/CustomStackHeader/CustomStackHeader';
+import CustomMenuHeader from '@/components/CustomMenuHeader/CustomMenuHeader';
 import { useTheme } from '@/hooks/useTheme';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
@@ -18,12 +19,12 @@ export default function ChatsLayout() {
 				headerTintColor: theme.header.text,
 			}}
 		>
-			<Stack.Screen
-				name="index"
-				options={{
-					header: () => <CustomStackHeader label={translate(TranslationKeys.chats)} />,
-				}}
-			/>
+                        <Stack.Screen
+                                name="index"
+                                options={{
+                                        header: () => <CustomMenuHeader label={translate(TranslationKeys.chats)} />,
+                                }}
+                        />
                         <Stack.Screen
                                 name="details/index"
                                 options={{
