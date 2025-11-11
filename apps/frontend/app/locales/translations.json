@@ -319,6 +319,16 @@
     "tr": "Buraya yaz...",
     "zh": "在这里输入..."
   },
+  "scroll_to_bottom": {
+    "de": "Zum Ende springen",
+    "en": "Scroll to bottom",
+    "ar": "التمرير إلى الأسفل",
+    "es": "Desplazarse al final",
+    "fr": "Aller en bas",
+    "ru": "Прокрутить вниз",
+    "tr": "En alta git",
+    "zh": "滚动到底部"
+  },
   "enter_custom_value": {
     "de": "Eigenen Wert eingeben",
     "en": "Enter custom value",

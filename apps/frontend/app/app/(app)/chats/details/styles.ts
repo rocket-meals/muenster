@@ -8,6 +8,9 @@ export default StyleSheet.create({
                 padding: 20,
                 gap: 2,
         },
+        listContentPadding: {
+                paddingBottom: 140,
+        },
         linkedElementsContainer: {
                 paddingHorizontal: 20,
                 paddingTop: 20,
@@ -71,7 +74,23 @@ export default StyleSheet.create({
 		paddingBottom: 10,
 		gap: 10,
 	},
-	oldMessageText: {
-		fontFamily: 'Poppins_400Regular',
-	},
+        oldMessageText: {
+                fontFamily: 'Poppins_400Regular',
+        },
+        scrollToEndButton: {
+                position: 'absolute',
+                right: 20,
+                bottom: 80,
+                width: 44,
+                height: 44,
+                borderRadius: 22,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderWidth: 1,
+                shadowColor: '#000000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.15,
+                shadowRadius: 4,
+                elevation: 4,
+        },
 });

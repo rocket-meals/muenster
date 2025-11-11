@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import SupportFAQ from '../../../../components/SupportFAQ/SupportFAQ';
@@ -41,6 +41,7 @@ const ChatDetailsScreen = () => {
         const { translate, language } = useLanguage();
         const [linkedFoodFeedback, setLinkedFoodFeedback] = useState<LinkedFoodInfo | null>(null);
         const [refreshing, setRefreshing] = useState(false);
+        const listRef = useRef<FlatList<DatabaseTypes.ChatMessages> | null>(null);
         const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
 
     const foodsAreaColor = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
@@ -90,6 +91,22 @@ const ChatDetailsScreen = () => {
                 return da > db ? 1 : -1;
         });
 
+        const scrollToBottom = useCallback((animated = true) => {
+                requestAnimationFrame(() => {
+                        listRef.current?.scrollToEnd({ animated });
+                });
+        }, []);
+
+        useEffect(() => {
+                const timeout = setTimeout(() => {
+                        scrollToBottom(false);
+                }, 150);
+
+                return () => {
+                        clearTimeout(timeout);
+                };
+        }, [messages.length, scrollToBottom]);
+
         const lastMessageIndex = sortedMessages.length - 1;
         const lastMessageDate =
                 lastMessageIndex >= 0
@@ -97,7 +114,8 @@ const ChatDetailsScreen = () => {
                         : undefined;
 	let amountDaysForOldMessages = 7; // Default to 7 days
 
-	const showOldMessageNotice = lastMessageDate ? DateHelper.isDateOlderThan(new Date(lastMessageDate), amountDaysForOldMessages) : false;
+        const showOldMessageNotice = lastMessageDate ? DateHelper.isDateOlderThan(new Date(lastMessageDate), amountDaysForOldMessages) : false;
+        const scrollButtonOffset = showOldMessageNotice ? 180 : 80;
 
 	const handleSendMessage = async () => {
 		if (!newMessage.trim() || !chat_id || !profile?.id) {
@@ -111,10 +129,11 @@ const ChatDetailsScreen = () => {
 				profile: profile.id,
 				message: newMessage.trim(),
 			})) as DatabaseTypes.ChatMessages;
-			if (created) {
+                        if (created) {
                                 setMessages(prev => [...prev, created]);
-				setNewMessage('');
-			}
+                                setNewMessage('');
+                                scrollToBottom();
+                        }
 		} catch (e) {
 			console.error('Error creating chat message:', e);
 		} finally {
@@ -396,14 +415,33 @@ const ChatDetailsScreen = () => {
                 <View style={[styles.container, { backgroundColor: theme.screen.background }]}>
                         {renderLinkedElements()}
                         <FlatList
+                                ref={listRef}
                                 data={sortedMessages}
                                 keyExtractor={item => item.id}
                                 renderItem={renderItem}
-                                contentContainerStyle={styles.list}
+                                contentContainerStyle={[styles.list, styles.listContentPadding]}
                                 refreshing={refreshing}
                                 onRefresh={fetchMessages}
                                 ListHeaderComponent={renderInitialMessage()}
+                                onContentSizeChange={() => scrollToBottom(false)}
                         />
+                        {sortedMessages.length > 0 && (
+                                <TouchableOpacity
+                                        style={[
+                                                styles.scrollToEndButton,
+                                                {
+                                                        backgroundColor: theme.card.background,
+                                                        borderColor: theme.screen.icon,
+                                                        bottom: scrollButtonOffset,
+                                                },
+                                        ]}
+                                        onPress={() => scrollToBottom()}
+                                        accessibilityRole="button"
+                                        accessibilityLabel={translate(TranslationKeys.scroll_to_bottom)}
+                                >
+                                        <MaterialCommunityIcons name="chevron-down" size={24} color={theme.screen.icon} />
+                                </TouchableOpacity>
+                        )}
 			{showOldMessageNotice && (
 				<View style={styles.oldMessageContainer}>
 					<Text style={[styles.oldMessageText, { color: theme.screen.text }]}>{translate(TranslationKeys.chat_last_message_unanswered)}</Text>
