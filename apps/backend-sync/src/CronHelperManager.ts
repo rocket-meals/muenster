@@ -1,4 +1,5 @@
 import * as cron from 'node-cron';
+import {CronHelper, CronObject} from "repo-depkit-common";
 
 // Kurze Contract-Beschreibung:
 // - Inputs: keine (Jobs werden intern oder über registerCronJob() registriert)
@@ -8,7 +9,7 @@ import * as cron from 'node-cron';
 // Kleines API zum Registrieren von Cron-Jobs
 export type CronTask = {
   id: string;
-  schedule: string; // cron expression
+  schedule: CronObject; // cron expression
   task: () => Promise<void> | void;
 };
 
@@ -36,13 +37,14 @@ export function registerCronJob(task: CronTask) {
     return;
   }
 
+  const cronString = CronHelper.getCronString(task.schedule);
   // Validierung der Cron-Expression
-  if (!cron.validate(task.schedule)) {
-    console.error(`Ungültige Cron-Expression für Job ${task.id}: ${task.schedule}`);
+  if (!cron.validate(cronString)) {
+    console.error(`Ungültige Cron-Expression für Job ${task.id}: ${cronString}`);
     return;
   }
 
-  const scheduled = cron.schedule(task.schedule, async () => {
+  const scheduled = cron.schedule(cronString, async () => {
     // Verhindere gleichzeitige Ausführungen desselben Jobs
     if (runningTasks.has(task.id)) {
       console.log(`Überspringe Start von Cron-Job ${task.id}, da bereits eine Ausführung läuft.`);
@@ -65,7 +67,7 @@ export function registerCronJob(task: CronTask) {
   });
 
   registeredTasks.set(task.id, scheduled);
-  console.log(`Cron-Job registriert: ${task.id} -> ${task.schedule}`);
+  console.log(`Cron-Job registriert: ${task.id} -> ${cronString}`);
 }
 
 export function stopAllCronJobs() {

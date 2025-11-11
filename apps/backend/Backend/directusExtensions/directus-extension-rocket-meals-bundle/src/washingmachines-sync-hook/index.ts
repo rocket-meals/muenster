@@ -11,7 +11,7 @@ import { RegisterFunctions } from '@directus/extensions';
 import { SingleWorkflowRun } from '../workflows-runs-hook/WorkflowRunJobInterface';
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
-import {CronHelper} from "../helpers/CronHelper";
+import {CronHelper, CronObject} from "repo-depkit-common";
 import {MyDefineHook} from "../helpers/MyDefineHook";
 const HOOK_NAME = 'washingmachines-sync-hook';
 function registerWashingmachinesFilterUpdate(apiContext: any, registerFunctions: RegisterFunctions) {

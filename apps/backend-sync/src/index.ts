@@ -1,12 +1,8 @@
 import {syncDatabase, SyncDataBaseOptionDockerPush} from "./SyncDatabaseSchema";
 import {registerCronJob, registerShutdownJobs} from "./CronHelperManager";
-import * as path from 'path';
-import * as fs from 'fs';
 import {buildConfigFromEnv, ensureAppleClientSecret} from "./apple-secret-rotator";
 import {HOST_ENV_FILE_PATH} from "./apple-secret-rotator/DirectusEnvFileHelper";
-import {DockerContainerManager} from "./DockerContainerManager";
-import {DockerDirectusHelper} from "./DockerDirectusHelper";
-import {DockerDirectusPingHelper} from "./DockerDirectusPingHelper";
+import {CronHelper} from "repo-depkit-common";
 
 async function registerAppleClientSecretChecker(){
   console.log("registerAppleClientSecretChecker");
@@ -21,7 +17,7 @@ async function registerAppleClientSecretChecker(){
   // Beispiel-Registrierung: Ein Job, der alle 10 Sekunden läuft
   registerCronJob({
     id: 'sync-database-every-day',
-    schedule: '0 0 * * *', // Täglich um Mitternacht
+    schedule: CronHelper.EVERY_DAY_AT_2AM, // Täglich um Mitternacht
     task: async () => {
         hostEnvFilePath = HOST_ENV_FILE_PATH;
         config = buildConfigFromEnv(hostEnvFilePath);

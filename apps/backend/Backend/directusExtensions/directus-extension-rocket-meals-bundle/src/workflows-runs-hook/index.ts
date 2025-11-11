@@ -7,7 +7,7 @@ import { PrimaryKey, ScheduleHandler } from '@directus/types';
 import { WorkflowRunJobInterface, WorkflowRunLogger } from './WorkflowRunJobInterface';
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
-import {CronHelper, CronObject} from "../helpers/CronHelper";
+import {CronHelper, CronObject} from "repo-depkit-common";
 import {MyDefineHook} from "../helpers/MyDefineHook";
 
 const SCHEDULE_NAME = 'workflows_hook';

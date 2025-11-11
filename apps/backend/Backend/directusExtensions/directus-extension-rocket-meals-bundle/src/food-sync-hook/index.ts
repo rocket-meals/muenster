@@ -14,7 +14,7 @@ import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import { FoodAndMarkingWebParserAachen } from './aachen/FoodAndMarkingWebParserAachen';
-import {CronHelper} from "../helpers/CronHelper";
+import {CronHelper, CronObject} from "repo-depkit-common";
 import {MyDefineHook} from "../helpers/MyDefineHook";
 
 const SCHEDULE_NAME = 'food-sync-hook';

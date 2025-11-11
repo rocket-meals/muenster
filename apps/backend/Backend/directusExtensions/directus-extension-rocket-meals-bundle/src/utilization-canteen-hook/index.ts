@@ -6,7 +6,7 @@ import { SingleWorkflowRun } from '../workflows-runs-hook/WorkflowRunJobInterfac
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
-import {CronHelper} from "../helpers/CronHelper";
+import {CronHelper, CronObject} from "repo-depkit-common";
 import {MyDefineHook} from "../helpers/MyDefineHook";
 const HOOK_NAME = 'utilization-canteen-hook';
 class UtilizationCanteenCalculationWorkflow extends SingleWorkflowRun {

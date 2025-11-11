@@ -11,7 +11,7 @@ import { ImageSafeGeneratorFood } from '../helpers/ai/image/ImageSafeGeneratorFo
 import { ModerationCheckChatGpt } from '../helpers/ai/moderation/ModerationCheckChatGpt';
 import { ImageRawGeneratorChatGpt } from '../helpers/ai/image/ImageRawGeneratorChatGpt';
 import { MyFileTypes } from '../helpers/FilesServiceHelper';
-import {CronHelper} from "../helpers/CronHelper";
+import {CronHelper, CronObject} from "repo-depkit-common";
 import {MyDefineHook} from "../helpers/MyDefineHook";
 
 const WORKFLOW_ID = 'food-image-ai-generation';

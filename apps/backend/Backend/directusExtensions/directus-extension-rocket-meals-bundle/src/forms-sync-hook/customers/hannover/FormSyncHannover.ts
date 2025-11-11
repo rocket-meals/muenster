@@ -3,7 +3,7 @@ import { MyDatabaseHelper } from '../../../helpers/MyDatabaseHelper';
 import { WorkflowScheduleHelper } from '../../../workflows-runs-hook';
 import { FormHousingContractsWorkflowHannover } from './FormHousingContractsWorkflowHannover';
 import { EnvVariableHelper } from '../../../helpers/EnvVariableHelper';
-import {CronHelper} from "../../../helpers/CronHelper";
+import {CronHelper} from "repo-depkit-common";
 
 const DIRECTUS_TL1_HOUSING_EXPORT_PATH = '/directus/tl1/housingContracts.csv'; // This is defined in docker-compose.yaml statically
 

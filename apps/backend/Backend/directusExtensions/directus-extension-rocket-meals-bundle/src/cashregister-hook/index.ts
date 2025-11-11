@@ -9,7 +9,7 @@ import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WorkflowScheduleHelper, WorkflowScheduler } from '../workflows-runs-hook';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
-import {CronHelper, CronObject} from "../helpers/CronHelper";
+import {CronHelper, CronObject} from "repo-depkit-common";
 import {MyDefineHook} from "../helpers/MyDefineHook";
 
 const HOOK_NAME = 'cashregister-hook';

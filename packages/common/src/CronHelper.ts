@@ -83,4 +83,13 @@ export class CronHelper {
     month: '*',
     dayOfWeek: '*',
   }
+
+  static EVERY_DAY_AT_2AM: CronObject = {
+    seconds: 0,
+    minutes: 0,
+    hours: 2,
+    dayOfMonth: '*',
+    month: '*',
+    dayOfWeek: '*',
+  }
 }
