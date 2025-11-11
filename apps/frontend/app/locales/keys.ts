@@ -265,6 +265,7 @@ export enum TranslationKeys {
 	chats = 'chats',
         chat = 'chat',
         mark_all_chats_as_read = 'mark_all_chats_as_read',
+        mark_all_chats_as_unread = 'mark_all_chats_as_unread',
         rss_feed = 'rss_feed',
 	eating_habits = 'eating_habits',
 	markings = 'markings',

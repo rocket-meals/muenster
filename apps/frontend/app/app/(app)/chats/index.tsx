@@ -11,9 +11,10 @@ import SettingsList from '@/components/SettingsList';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { myContrastColor } from '@/helper/ColorHelper';
-import { MARK_ALL_CHATS_AS_READ } from '@/redux/Types/types';
+import { MARK_ALL_CHATS_AS_READ, MARK_ALL_CHATS_AS_UNREAD } from '@/redux/Types/types';
 import { persistChatReadStatus } from '@/helper/chatReadStatus';
 import styles from './styles';
+import useChatUnreadStatus, { getChatTimestamp } from '@/hooks/useChatUnreadStatus';
 
 const ChatsScreen = () => {
         useSetPageTitle(TranslationKeys.chats);
@@ -21,7 +22,7 @@ const ChatsScreen = () => {
         const { translate } = useLanguage();
         const dispatch = useDispatch();
 
-        const { chats, readStatus } = useSelector((state: RootState) => state.chats);
+        const { chats, readStatus, hasUnreadChats, isChatUnread } = useChatUnreadStatus();
         const { primaryColor, selectedTheme } = useSelector((state: RootState) => state.settings);
 
         const sortedChats = useMemo(() => {
@@ -31,25 +32,6 @@ const ChatsScreen = () => {
                         return da < db ? 1 : -1;
                 });
         }, [chats]);
-
-        const getChatTimestamp = (chat: DatabaseTypes.Chats) => chat?.date_updated || chat?.date_created || null;
-
-        const hasUnreadChats = useMemo(() => {
-                return sortedChats.some(chat => {
-                        if (!chat?.id) {
-                                return false;
-                        }
-                        const latestTimestamp = getChatTimestamp(chat);
-                        if (!latestTimestamp) {
-                                return false;
-                        }
-                        const lastRead = readStatus[chat.id];
-                        if (!lastRead) {
-                                return true;
-                        }
-                        return new Date(latestTimestamp).getTime() > new Date(lastRead).getTime();
-                });
-        }, [sortedChats, readStatus]);
 
         const markAllAsRead = async () => {
                 const updates = sortedChats.reduce((acc, chat) => {
@@ -74,6 +56,32 @@ const ChatsScreen = () => {
                 }
         };
 
+        const markAllAsUnread = async () => {
+                const updatedStatus = { ...readStatus };
+                let hasChanges = false;
+
+                sortedChats.forEach(chat => {
+                        if (!chat?.id) {
+                                return;
+                        }
+
+                        if (updatedStatus[chat.id]) {
+                                delete updatedStatus[chat.id];
+                                hasChanges = true;
+                        }
+                });
+
+                if (hasChanges) {
+                        dispatch({
+                                type: MARK_ALL_CHATS_AS_UNREAD,
+                                payload: sortedChats
+                                        .map(chat => chat.id)
+                                        .filter((id): id is string => Boolean(id)),
+                        });
+                        await persistChatReadStatus(updatedStatus);
+                }
+        };
+
         const renderHeader = () => {
                 if (!sortedChats.length) {
                         return null;
@@ -88,14 +96,24 @@ const ChatsScreen = () => {
                                                 void markAllAsRead();
                                         }}
                                         style={[
-                                                styles.markAllButton,
+                                                styles.actionButton,
                                                 { backgroundColor: primaryColor },
-                                                !hasUnreadChats && styles.markAllButtonDisabled,
+                                                !hasUnreadChats && styles.actionButtonDisabled,
                                         ]}
                                         disabled={!hasUnreadChats}
                                 >
-                                        <Text style={[styles.markAllButtonText, { color: buttonTextColor }]}>
+                                        <Text style={[styles.actionButtonText, { color: buttonTextColor }]}>
                                                 {translate(TranslationKeys.mark_all_chats_as_read)}
+                                        </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                        onPress={() => {
+                                                void markAllAsUnread();
+                                        }}
+                                        style={[styles.actionButton, styles.secondaryActionButton, { borderColor: theme.screen.icon }]}
+                                >
+                                        <Text style={[styles.actionButtonText, { color: theme.screen.text }]}>
+                                                {translate(TranslationKeys.mark_all_chats_as_unread)}
                                         </Text>
                                 </TouchableOpacity>
                         </View>
@@ -106,19 +124,7 @@ const ChatsScreen = () => {
                 const last = index === sortedChats.length - 1;
                 const first = index === 0;
                 const groupPosition = sortedChats.length === 1 ? 'single' : first ? 'top' : last ? 'bottom' : 'middle';
-                const isUnread = item?.id
-                        ? (() => {
-                                  const latestTimestamp = getChatTimestamp(item);
-                                  if (!latestTimestamp) {
-                                          return false;
-                                  }
-                                  const lastRead = readStatus[item.id];
-                                  if (!lastRead) {
-                                          return true;
-                                  }
-                                  return new Date(latestTimestamp).getTime() > new Date(lastRead).getTime();
-                          })()
-                        : false;
+                const isUnread = isChatUnread(item);
 
                 const rightElement = (
                         <View style={styles.rightIconWrapper}>

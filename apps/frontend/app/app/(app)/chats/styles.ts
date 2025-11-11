@@ -17,19 +17,27 @@ export default StyleSheet.create({
         },
         headerActions: {
                 marginBottom: 16,
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                columnGap: 12,
+                rowGap: 8,
         },
-        markAllButton: {
+        actionButton: {
                 alignSelf: 'flex-start',
                 paddingHorizontal: 16,
                 paddingVertical: 8,
                 borderRadius: 8,
         },
-        markAllButtonDisabled: {
+        actionButtonDisabled: {
                 opacity: 0.6,
         },
-        markAllButtonText: {
+        actionButtonText: {
                 fontSize: 14,
                 fontFamily: 'Poppins_400Regular',
+        },
+        secondaryActionButton: {
+                backgroundColor: 'transparent',
+                borderWidth: 1,
         },
         rightIconWrapper: {
                 position: 'relative',

@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, View } from 'react-native';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { isWeb } from '@/constants/Constants';
 import { useTheme } from '@/hooks/useTheme';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,29 +12,16 @@ import { Tooltip, TooltipContent, TooltipText } from '@gluestack-ui/themed';
 import { useLanguage } from '@/hooks/useLanguage';
 import { TranslationKeys } from '@/locales/keys';
 import { RootState } from '@/redux/reducer';
+import useChatUnreadStatus from '@/hooks/useChatUnreadStatus';
 
 const CustomMenuHeader: React.FC<CustomMenuHeaderProps> = ({ label }) => {
 	const { theme } = useTheme();
 	const { translate } = useLanguage();
         const { drawerPosition } = useSelector((state: RootState) => state.settings);
-        const { chats, readStatus } = useSelector((state: RootState) => state.chats);
+        const { hasUnreadChats } = useChatUnreadStatus();
         const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
 
-        const hasUnreadChats = useMemo(() => {
-                return chats.some(chat => {
-                        const latestTimestamp = chat?.date_updated || chat?.date_created;
-                        if (!chat?.id || !latestTimestamp) {
-                                return false;
-                        }
-                        const lastRead = readStatus[chat.id];
-                        if (!lastRead) {
-                                return true;
-                        }
-                        return new Date(latestTimestamp).getTime() > new Date(lastRead).getTime();
-                });
-        }, [chats, readStatus]);
-
-	return (
+        return (
 		<View
 			style={{
 				...styles.header,

@@ -1,4 +1,4 @@
-import { CLEAR_CHATS, MARK_ALL_CHATS_AS_READ, MARK_CHAT_AS_READ, SET_CHATS, SET_CHAT_READ_STATUS } from '../Types/types';
+import { CLEAR_CHATS, MARK_ALL_CHATS_AS_READ, MARK_ALL_CHATS_AS_UNREAD, MARK_CHAT_AS_READ, SET_CHATS, SET_CHAT_READ_STATUS } from '../Types/types';
 
 const initialState = {
         chats: [],
@@ -33,6 +33,21 @@ const chatsReducer = (state = initialState, actions: any) => {
                                         ...actions.payload,
                                 },
                         };
+                case MARK_ALL_CHATS_AS_UNREAD: {
+                        const nextStatus = { ...state.readStatus };
+                        const ids: string[] = Array.isArray(actions.payload) ? actions.payload : [];
+
+                        ids.forEach(id => {
+                                if (id in nextStatus) {
+                                        delete nextStatus[id];
+                                }
+                        });
+
+                        return {
+                                ...state,
+                                readStatus: nextStatus,
+                        };
+                }
                 case CLEAR_CHATS:
                         return {
                                 ...initialState,
