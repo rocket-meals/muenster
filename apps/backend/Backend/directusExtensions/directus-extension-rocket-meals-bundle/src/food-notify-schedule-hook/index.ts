@@ -7,6 +7,8 @@ import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import {CronHelper} from "../helpers/CronHelper";
+import {MyDefineHook} from "../helpers/MyDefineHook";
+const HOOK_NAME = 'food-notify-schedule';
 
 class FoodNotifyWorkflow extends SingleWorkflowRun {
   getWorkflowId(): string {
@@ -29,7 +31,7 @@ class FoodNotifyWorkflow extends SingleWorkflowRun {
   }
 }
 
-export default defineHook(async ({ action, schedule }, apiContext) => {
+export default MyDefineHook.defineHookWithAllTablesExisting(HOOK_NAME,async ({ action, schedule }, apiContext) => {
   let myDatabaseHelper = new MyDatabaseHelper(apiContext);
 
   WorkflowScheduleHelper.registerScheduleToRunWorkflowRuns({

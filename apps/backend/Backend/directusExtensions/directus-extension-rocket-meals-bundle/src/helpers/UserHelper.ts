@@ -1,11 +1,12 @@
 import { Accountability } from '@directus/types';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { MyDatabaseHelper } from './MyDatabaseHelper';
+import {ItemsServiceHelper} from "./ItemsServiceHelper";
 
 const HELPER_NAME = 'UserHelper';
 
-export class UserHelper {
-  static isAdminAccountability(accountability?: Accountability | null): boolean {
+export class UserHelper extends ItemsServiceHelper<DatabaseTypes.DirectusUsers> {
+  isAdminAccountability(accountability?: Accountability | null): boolean {
     if (!accountability) {
       return false;
     }
@@ -17,10 +18,9 @@ export class UserHelper {
     return (accountability as { adminAccess?: boolean }).adminAccess === true;
   }
 
-  static async isAdminUser(userId: string, myDatabaseHelper: MyDatabaseHelper): Promise<boolean> {
+  async isAdminUser(userId: string): Promise<boolean> {
     try {
-      const usersHelper = myDatabaseHelper.getUsersHelper();
-      const user = await usersHelper.readOne(userId, {
+      const user = await this.readOne(userId, {
         fields: ['id', 'policies.policy.admin_access', 'policies.directus_policies_id.admin_access'],
       });
 

@@ -1,23 +1,14 @@
-import { defineHook } from '@directus/extensions-sdk';
-import { ChatConversationState, CollectionNames, DatabaseTypes } from 'repo-depkit-common';
-import { DatabaseInitializedCheck } from '../helpers/DatabaseInitializedCheck';
-import { ItemsServiceHelper } from '../helpers/ItemsServiceHelper';
-import { MyDatabaseHelper } from '../helpers/MyDatabaseHelper';
-import { PushNotificationHelper } from '../helpers/PushNotificationHelper';
-import { UserHelper } from '../helpers/UserHelper';
+import {ChatConversationState, CollectionNames, DatabaseTypes} from 'repo-depkit-common';
+import {ItemsServiceHelper} from '../helpers/ItemsServiceHelper';
+import {MyDatabaseHelper} from '../helpers/MyDatabaseHelper';
+import {PushNotificationHelper} from '../helpers/PushNotificationHelper';
+import {AccountabilityHelper} from "../helpers/AccountabilityHelper";
+import {PrimaryKey} from "@directus/types";
+import {MyDefineHook} from "../helpers/MyDefineHook";
 
 const HOOK_NAME = 'chat_conversation_state';
 
-export default defineHook(async ({ action }, apiContext) => {
-  const allTablesExist = await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(
-    HOOK_NAME,
-    apiContext
-  );
-
-  if (!allTablesExist) {
-    return;
-  }
-
+export default MyDefineHook.defineHookWithAllTablesExisting(HOOK_NAME, async ({ action }, apiContext) => {
   action(CollectionNames.CHAT_MESSAGES + '.items.create', async (meta, eventContext) => {
     const messageId = meta?.key as string | undefined;
     if (!messageId) {
@@ -36,9 +27,7 @@ export default defineHook(async ({ action }, apiContext) => {
       CollectionNames.CHATS
     );
 
-    const message = await chatMessagesHelper.readOne(messageId, {
-      fields: ['id', 'chat', 'user_created', 'profile', 'profile.id'],
-    });
+    const message = await chatMessagesHelper.readOne(messageId);
 
     console.log(`${HOOK_NAME}: Retrieved chat message:`, message);
 
@@ -48,13 +37,13 @@ export default defineHook(async ({ action }, apiContext) => {
       return;
     }
 
-    let messageFromAdmin = UserHelper.isAdminAccountability(eventContext?.accountability || null);
+    let messageFromAdmin = AccountabilityHelper.isAdminAccountability(eventContext?.accountability || null);
     console.log(`${HOOK_NAME}: Message from admin (accountability check):`, messageFromAdmin);
 
     if (!messageFromAdmin) {
       const creatorId = message?.user_created as string | undefined;
       if (creatorId) {
-        messageFromAdmin = await UserHelper.isAdminUser(creatorId, myDatabaseHelper);
+        messageFromAdmin = await myDatabaseHelper.getUsersHelper().isAdminUser(creatorId);
       }
     }
 
@@ -79,41 +68,23 @@ export default defineHook(async ({ action }, apiContext) => {
   });
 });
 
-function resolveProfileId(
-  profile: string | DatabaseTypes.Profiles | null | undefined
-): string | undefined {
-  if (!profile) {
-    return undefined;
-  }
-
-  if (typeof profile === 'string') {
-    return profile;
-  }
-
-  const profileId = (profile as DatabaseTypes.Profiles).id;
-  return typeof profileId === 'string' ? profileId : undefined;
-}
-
 async function collectProfilesToNotify(
   chatId: string,
   message: DatabaseTypes.ChatMessages,
   myDatabaseHelper: MyDatabaseHelper
-): Promise<Set<string>> {
-  const profileIds = new Set<string>();
+): Promise<Set<PrimaryKey>> {
+  const profileIds = new Set<PrimaryKey>();
 
   try {
     const chatParticipantsHelper = new ItemsServiceHelper<DatabaseTypes.ChatsParticipants>(
       myDatabaseHelper,
       CollectionNames.CHATS_PARTICIPANTS
     );
-    const participants = await chatParticipantsHelper.findItems(
-      { chats_id: chatId },
-      { fields: ['id', 'profiles_id', 'profiles_id.id'] }
-    );
-    console.log(`${HOOK_NAME}: Found ${participants.length} chat participants for chat ${chatId}`);
+    const participantLinks = await chatParticipantsHelper.findItems({ chats_id: chatId });
+    console.log(`${HOOK_NAME}: Found ${participantLinks.length} chat participantLinks for chat ${chatId}`);
 
-    for (const participant of participants) {
-      const participantProfileId = resolveProfileId(participant?.profiles_id as string | DatabaseTypes.Profiles | null);
+    for (const participantLink of participantLinks) {
+      const participantProfileId = ItemsServiceHelper.getPrimaryKeyFromItemOrString(participantLink?.profiles_id); // Attention, not participant directly.
       if (participantProfileId) {
         profileIds.add(participantProfileId);
       }
@@ -124,14 +95,11 @@ async function collectProfilesToNotify(
 
   try {
     const foodFeedbacksHelper = myDatabaseHelper.getFoodFeedbacksHelper();
-    const relatedFoodFeedbacks = await foodFeedbacksHelper.findItems(
-      { chat: chatId },
-      { fields: ['id', 'profile', 'profile.id'] }
-    );
+    const relatedFoodFeedbacks = await foodFeedbacksHelper.findItems({ chat: chatId });
     console.log(`${HOOK_NAME}: Found ${relatedFoodFeedbacks.length} food feedbacks for chat ${chatId}`);
 
     for (const foodFeedback of relatedFoodFeedbacks) {
-      const feedbackProfileId = resolveProfileId(foodFeedback?.profile as string | DatabaseTypes.Profiles | null);
+      const feedbackProfileId = ItemsServiceHelper.getPrimaryKeyFromItemOrString(foodFeedback?.profile);
       if (feedbackProfileId) {
         profileIds.add(feedbackProfileId);
       }
@@ -140,7 +108,7 @@ async function collectProfilesToNotify(
     console.error(`${HOOK_NAME}: Failed to load related food feedbacks for chat ${chatId}`, error);
   }
 
-  const senderProfileId = resolveProfileId(message?.profile as string | DatabaseTypes.Profiles | null);
+  const senderProfileId = ItemsServiceHelper.getPrimaryKeyFromItemOrString(message?.profile);
   if (senderProfileId) {
     profileIds.delete(senderProfileId);
     console.log(`${HOOK_NAME}: Removed sender profile ${senderProfileId} from notification recipients`);
@@ -150,7 +118,7 @@ async function collectProfilesToNotify(
 }
 
 async function collectExpoPushTokensForProfiles(
-  profileIds: Set<string>,
+  profileIds: Set<PrimaryKey>,
   myDatabaseHelper: MyDatabaseHelper
 ): Promise<string[]> {
   const expoTokens = new Set<string>();
@@ -159,23 +127,12 @@ async function collectExpoPushTokensForProfiles(
     return [];
   }
 
-  const profilesHelper = myDatabaseHelper.getProfilesHelper();
+  const deviceHelper = myDatabaseHelper.getDevicesHelper();
   const profileIdArray = Array.from(profileIds);
 
   try {
-    const profiles = await profilesHelper.readByQuery({
-      filter: {
-        id: {
-          _in: profileIdArray,
-        },
-      },
-      fields: ['id', 'devices.id', 'devices.pushTokenObj'],
-      limit: -1,
-    });
-
-    for (const profile of profiles || []) {
-      const profileId = profile?.id as string | undefined;
-      const devices = (profile?.devices || []) as DatabaseTypes.Devices[];
+    for (const profileId of profileIdArray || []) {
+      const devices = await deviceHelper.readManyByProfileId(profileId);
       console.log(
         `${HOOK_NAME}: Found ${devices.length} devices for profile ${profileId ?? 'unknown'}`
       );

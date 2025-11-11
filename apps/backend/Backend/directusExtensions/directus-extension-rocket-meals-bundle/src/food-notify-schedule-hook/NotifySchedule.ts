@@ -14,7 +14,8 @@ export class NotifySchedule {
   }
 
   async notify(aboutMealsInDays = 1): Promise<Partial<DatabaseTypes.WorkflowsRuns>> {
-    let devicesService = this.context.myDatabaseHelper.getDevicesHelper();
+    let myDatabaseHelper = this.context.myDatabaseHelper;
+    let devicesService = myDatabaseHelper.getDevicesHelper();
 
     await this.context.logger.appendLog('Start food notify schedule');
     await this.context.logger.appendLog('Notify about meals in ' + aboutMealsInDays + ' days');
@@ -45,7 +46,7 @@ export class NotifySchedule {
           let profile_id = foodFeedback.profile as string;
           await this.context.logger.appendLog('-- Notify profile: ' + profile_id + ' about food: ' + food_id);
           // Step 3: Get the profile and all devices of the profile
-          let profile = await this.getProfileAndDevicesForProfile(profile_id);
+          let profile = await myDatabaseHelper.getProfilesHelper().readOne(profile_id);
           let language = profile.language as string;
           let profile_canteen_id = profile.canteen;
 
@@ -58,7 +59,8 @@ export class NotifySchedule {
             await this.context.logger.appendLog('-- Profile is interested in this canteen');
           }
 
-          const profileDevices = profile.devices as DatabaseTypes.Devices[];
+          //const profileDevices = profile.devices as DatabaseTypes.Devices[];
+          const profileDevices = await devicesService.readManyByProfile(profile);
 
           let expoPushTokensDict = PushNotificationHelper.getExpoPushTokensToDevicesDict(
             profileDevices
@@ -220,13 +222,6 @@ export class NotifySchedule {
     const foodsService = this.context.myDatabaseHelper.getFoodsHelper();
     return await foodsService.readOne(food_id, {
       fields: ['*', 'translations.*'],
-    });
-  }
-
-  async getProfileAndDevicesForProfile(profile_id: string) {
-    let profileService = this.context.myDatabaseHelper.getProfilesHelper();
-    return await profileService.readOne(profile_id, {
-      fields: ['*', 'devices.*'],
     });
   }
 

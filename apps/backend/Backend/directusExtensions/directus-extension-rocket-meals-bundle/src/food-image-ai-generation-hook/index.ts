@@ -12,8 +12,10 @@ import { ModerationCheckChatGpt } from '../helpers/ai/moderation/ModerationCheck
 import { ImageRawGeneratorChatGpt } from '../helpers/ai/image/ImageRawGeneratorChatGpt';
 import { MyFileTypes } from '../helpers/FilesServiceHelper';
 import {CronHelper} from "../helpers/CronHelper";
+import {MyDefineHook} from "../helpers/MyDefineHook";
 
 const WORKFLOW_ID = 'food-image-ai-generation';
+const HOOK_NAME = 'food-image-ai-generation-hook';
 
 function getFileId(image: DatabaseTypes.Foods['image']): string | undefined {
   if (!image) {
@@ -203,7 +205,7 @@ class FoodImageAiGenerationWorkflow extends SingleWorkflowRun {
   }
 }
 
-export default defineHook(async (registerFunctions, apiContext) => {
+export default MyDefineHook.defineHookWithAllTablesExisting(HOOK_NAME,async (registerFunctions, apiContext) => {
   const { schedule } = registerFunctions;
   const myDatabaseHelper = new MyDatabaseHelper(apiContext);
 

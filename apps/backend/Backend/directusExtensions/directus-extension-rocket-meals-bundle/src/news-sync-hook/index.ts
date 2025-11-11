@@ -12,6 +12,8 @@ import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import {CronHelper} from "../helpers/CronHelper";
+import {MyDefineHook} from "../helpers/MyDefineHook";
+const HOOK_NAME = 'news-sync';
 
 class NewsParseWorkflow extends SingleWorkflowRun {
   private readonly newsParserInterface: NewsParserInterface;
@@ -39,7 +41,7 @@ class NewsParseWorkflow extends SingleWorkflowRun {
   }
 }
 
-export default defineHook(async ({ action, init, schedule }, apiContext) => {
+export default MyDefineHook.defineHookWithAllTablesExisting(HOOK_NAME,async ({ action, init, schedule }, apiContext) => {
   let usedParser: NewsParserInterface | null = null;
   switch (EnvVariableHelper.getSyncForCustomer()) {
     case SyncForCustomerEnum.TEST:
