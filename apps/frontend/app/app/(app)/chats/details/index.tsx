@@ -46,6 +46,7 @@ const ChatDetailsScreen = () => {
         const [refreshing, setRefreshing] = useState(false);
         const listRef = useRef<FlatList<DatabaseTypes.ChatMessages> | null>(null);
         const [isAtBottom, setIsAtBottom] = useState(true);
+        const hasAutoScrolledToBottomRef = useRef(false);
         const foodFeedbackHelper = useMemo(() => new FoodFeedbackHelper(), []);
 
     const foodsAreaColor = appSettings?.foods_area_color ? appSettings?.foods_area_color : projectColor;
@@ -139,14 +140,25 @@ const ChatDetailsScreen = () => {
         }, []);
 
         useEffect(() => {
+                if (hasAutoScrolledToBottomRef.current || sortedMessages.length === 0) {
+                        return;
+                }
+
                 const timeout = setTimeout(() => {
                         scrollToBottom(false);
+                        hasAutoScrolledToBottomRef.current = true;
                 }, 150);
 
                 return () => {
                         clearTimeout(timeout);
                 };
-        }, [messages.length, scrollToBottom]);
+        }, [sortedMessages.length, scrollToBottom]);
+
+        const handleContentSizeChange = useCallback(() => {
+                if (isAtBottom) {
+                        scrollToBottom(false);
+                }
+        }, [isAtBottom, scrollToBottom]);
 
         const lastMessageIndex = sortedMessages.length - 1;
         const lastMessageDate =
@@ -470,7 +482,7 @@ const ChatDetailsScreen = () => {
                                 onRefresh={fetchMessages}
                                 ListHeaderComponent={renderInitialMessage()}
                                 ListFooterComponent={renderFooter}
-                                onContentSizeChange={() => scrollToBottom(false)}
+                                onContentSizeChange={handleContentSizeChange}
                                 onScroll={({ nativeEvent }) => {
                                         const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
                                         const distanceFromBottom = Math.max(
