@@ -5,11 +5,10 @@ export default StyleSheet.create({
 		flex: 1,
 	},
         list: {
-                padding: 20,
+                paddingHorizontal: 20,
+                paddingTop: 20,
+                paddingBottom: 20,
                 gap: 2,
-        },
-        listContentPadding: {
-                paddingBottom: 140,
         },
         linkedElementsContainer: {
                 paddingHorizontal: 20,

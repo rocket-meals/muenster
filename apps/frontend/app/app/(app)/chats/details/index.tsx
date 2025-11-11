@@ -118,6 +118,11 @@ const ChatDetailsScreen = () => {
 
         const showOldMessageNotice = lastMessageDate ? DateHelper.isDateOlderThan(new Date(lastMessageDate), amountDaysForOldMessages) : false;
         const scrollButtonOffset = showOldMessageNotice ? 180 : 80;
+        const bottomSpacerHeight = useMemo(
+                () => (isAtBottom ? 24 : scrollButtonOffset + 24),
+                [isAtBottom, scrollButtonOffset]
+        );
+        const renderFooter = useCallback(() => <View style={{ height: bottomSpacerHeight }} />, [bottomSpacerHeight]);
 
 	const handleSendMessage = async () => {
 		if (!newMessage.trim() || !chat_id || !profile?.id) {
@@ -421,15 +426,19 @@ const ChatDetailsScreen = () => {
                                 data={sortedMessages}
                                 keyExtractor={item => item.id}
                                 renderItem={renderItem}
-                                contentContainerStyle={[styles.list, styles.listContentPadding]}
+                                contentContainerStyle={styles.list}
                                 refreshing={refreshing}
                                 onRefresh={fetchMessages}
                                 ListHeaderComponent={renderInitialMessage()}
+                                ListFooterComponent={renderFooter}
                                 onContentSizeChange={() => scrollToBottom(false)}
                                 onScroll={({ nativeEvent }) => {
                                         const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-                                        const isBottom =
-                                                layoutMeasurement.height + contentOffset.y >= contentSize.height - 24;
+                                        const distanceFromBottom = Math.max(
+                                                0,
+                                                contentSize.height - layoutMeasurement.height - contentOffset.y
+                                        );
+                                        const isBottom = distanceFromBottom <= 24;
 
                                         setIsAtBottom(prev => (prev !== isBottom ? isBottom : prev));
                                 }}
