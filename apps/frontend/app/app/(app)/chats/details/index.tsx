@@ -131,7 +131,6 @@ const ChatDetailsScreen = () => {
                 void persistChatReadStatus(updatedStatus);
         }, [chat_id, chat?.id, latestMessageTimestamp, dispatch, readStatus, chat?.date_updated]);
 
-	const lastMessageDate = sortedMessages[0]?.date_created || sortedMessages[0]?.date_updated;
         const scrollToBottom = useCallback((animated = true) => {
                 requestAnimationFrame(() => {
                         listRef.current?.scrollToEnd({ animated });
