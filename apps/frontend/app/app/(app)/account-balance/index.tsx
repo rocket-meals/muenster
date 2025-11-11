@@ -254,6 +254,45 @@ const AccountBalanceScreen = () => {
 				<View style={styles.additionalInfoContainer}>{appSettings && appSettings?.balance_translations && <CustomMarkdown content={getTextFromTranslation(appSettings?.balance_translations, language) || ''} backgroundColor={balance_area_color} imageWidth={'100%'} imageHeight={400} />}</View>
 			</View>
 			<View style={styles.additionalInfoContainer}>
+				{/* Dev mode: Simulate NFC reads */}
+				{isDevMode && (
+					<View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 12 }}>
+						{[1, 5, 20].map(amount => (
+							<TouchableOpacity
+								key={`simulate-${amount}`}
+								style={{
+									paddingVertical: 8,
+									paddingHorizontal: 14,
+									borderRadius: 8,
+									borderWidth: 1,
+									borderColor: theme.screen.iconBg,
+									marginHorizontal: 6,
+								}}
+								onPress={async () => {
+									const mock: CardResponse = {
+										currentBalance: amount.toFixed(2),
+										currentBalanceRaw: null,
+										lastTransaction: undefined,
+										lastTransactionRaw: null,
+										chooseAppRaw: null,
+										tag: null,
+										readTime: new Date(),
+									};
+									try {
+										await callBack(mock);
+										toast(`Simulated NFC read: ${amount}€`, 'info');
+									} catch (e: any) {
+										console.error('Error in simulated read', e);
+										addDebugError(e, 'Simulated NFC Read');
+									}
+								}}
+							>
+								<Text style={{ color: theme.screen.text }}>{`Simulate ${amount}€`}</Text>
+							</TouchableOpacity>
+						))}
+					</View>
+				)}
+
 				{/* Debug Logs if isDevMode active*/}
 				{isDevMode && debugErrors.length > 0 && (
 					<View style={{ marginTop: 20 }}>
