@@ -41,6 +41,7 @@ export enum CollectionNames {
   NEWS = 'news',
   CHATS = 'chats',
   CHAT_MESSAGES = 'chat_messages',
+  CHATS_PARTICIPANTS = 'chats_participants',
   LANGUAGES = 'languages',
   PROFILES = 'profiles',
   UTILIZATION_GROUPS = 'utilizations_groups',

@@ -7,7 +7,8 @@ import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import {CronHelper} from "../helpers/CronHelper";
-
+import {MyDefineHook} from "../helpers/MyDefineHook";
+const HOOK_NAME = 'utilization-canteen-hook';
 class UtilizationCanteenCalculationWorkflow extends SingleWorkflowRun {
   getWorkflowId(): string {
     return 'utilization-canteen-calculation';
@@ -28,7 +29,7 @@ class UtilizationCanteenCalculationWorkflow extends SingleWorkflowRun {
   }
 }
 
-export default defineHook(async ({ init, action, schedule }, apiContext) => {
+export default MyDefineHook.defineHookWithAllTablesExisting(HOOK_NAME,async ({ init, action, schedule }, apiContext) => {
   let myDatabaseHelper = new MyDatabaseHelper(apiContext);
 
   WorkflowScheduleHelper.registerScheduleToRunWorkflowRuns({

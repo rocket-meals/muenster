@@ -15,8 +15,9 @@ import { DatabaseTypes } from 'repo-depkit-common';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import { FoodAndMarkingWebParserAachen } from './aachen/FoodAndMarkingWebParserAachen';
 import {CronHelper} from "../helpers/CronHelper";
+import {MyDefineHook} from "../helpers/MyDefineHook";
 
-const SCHEDULE_NAME = 'food_parse';
+const SCHEDULE_NAME = 'food-sync-hook';
 
 const DIRECTUS_TL1_FOOD_PATH = '/directus/tl1/foodPlan.csv'; // This is defined in docker-compose.yaml statically
 const DIRECTUS_TL1_MARKING_PATH = '/directus/tl1/markings.csv'; // This is defined in docker-compose.yaml statically
@@ -110,7 +111,7 @@ class FoodParseWorkflow extends SingleWorkflowRun {
   }
 }
 
-export default defineHook(async ({ action, init, filter, schedule }, apiContext) => {
+export default MyDefineHook.defineHookWithAllTablesExisting(SCHEDULE_NAME,async ({ action, init, filter, schedule }, apiContext) => {
   let myDatabaseHelper = new MyDatabaseHelper(apiContext);
 
   WorkflowScheduleHelper.registerScheduleToRunWorkflowRuns({

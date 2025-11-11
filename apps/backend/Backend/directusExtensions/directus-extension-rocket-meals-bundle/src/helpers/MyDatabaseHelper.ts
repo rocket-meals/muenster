@@ -17,6 +17,8 @@ import ms from 'ms';
 import jwt from 'jsonwebtoken';
 import {NanoidHelper} from './NanoidHelper';
 import {DirectusFieldsServiceHelper} from "./DirectusFieldsServiceHelper";
+import {UserHelper} from "./UserHelper";
+import {DevicesServiceHelper} from "./DevicesServiceHelper";
 
 export type MyEventContext = EventContext;
 
@@ -209,7 +211,7 @@ export class MyDatabaseHelper implements MyDatabaseHelperInterface {
   }
 
   getDevicesHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.Devices>(this, CollectionNames.DEVICES);
+    return new DevicesServiceHelper(this, CollectionNames.DEVICES);
   }
 
   getPushNotificationsHelper() {
@@ -245,7 +247,7 @@ export class MyDatabaseHelper implements MyDatabaseHelperInterface {
   }
 
   getUsersHelper() {
-    return new ItemsServiceHelper<DatabaseTypes.DirectusUsers>(this, CollectionNames.USERS);
+    return new UserHelper(this, CollectionNames.USERS);
   }
 
   getShareServiceHelper() {

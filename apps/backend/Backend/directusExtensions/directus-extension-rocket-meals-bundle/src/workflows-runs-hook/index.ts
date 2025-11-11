@@ -8,6 +8,7 @@ import { WorkflowRunJobInterface, WorkflowRunLogger } from './WorkflowRunJobInte
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import {CronHelper, CronObject} from "../helpers/CronHelper";
+import {MyDefineHook} from "../helpers/MyDefineHook";
 
 const SCHEDULE_NAME = 'workflows_hook';
 
@@ -281,12 +282,7 @@ async function handleActionOnUpdateOrCreateIfWorkflowRunShouldBeDeleted(payload:
   }
 }
 
-export default defineHook(async ({ action, init, filter, schedule }, apiContext) => {
-  let allTablesExist = await DatabaseInitializedCheck.checkAllTablesExistWithApiContext(SCHEDULE_NAME, apiContext);
-  if (!allTablesExist) {
-    return;
-  }
-
+export default MyDefineHook.defineHookWithAllTablesExisting(SCHEDULE_NAME,async ({ action, init, filter, schedule }, apiContext) => {
   init(ActionInitFilterEventHelper.INIT_APP_STARTED, async () => {
     let myDatabaseHelper = new MyDatabaseHelper(apiContext);
     // App started, resetting workflow parsing

@@ -12,7 +12,8 @@ import { SingleWorkflowRun } from '../workflows-runs-hook/WorkflowRunJobInterfac
 import { WorkflowRunContext } from '../helpers/WorkflowRunContext';
 import { WORKFLOW_RUN_STATE } from '../helpers/itemServiceHelpers/WorkflowsRunEnum';
 import {CronHelper} from "../helpers/CronHelper";
-
+import {MyDefineHook} from "../helpers/MyDefineHook";
+const HOOK_NAME = 'washingmachines-sync-hook';
 function registerWashingmachinesFilterUpdate(apiContext: any, registerFunctions: RegisterFunctions) {
   const { filter } = registerFunctions;
   // Washingmachines Jobs Creation
@@ -108,7 +109,7 @@ class WashingmachinesWorkflow extends SingleWorkflowRun {
   }
 }
 
-export default defineHook(async (registerFunctions: RegisterFunctions, apiContext) => {
+export default MyDefineHook.defineHookWithAllTablesExisting(HOOK_NAME,async (registerFunctions: RegisterFunctions, apiContext) => {
   const { action, filter, schedule } = registerFunctions;
 
   registerWashingmachinesFilterUpdate(apiContext, registerFunctions);
