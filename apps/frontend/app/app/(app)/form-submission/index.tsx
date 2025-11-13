@@ -127,7 +127,7 @@ const Index = () => {
 	const [formAnswers, setFormAnswers] = useState<DatabaseTypes.FormAnswers[]>([]);
 	const [loadingCollection, setLoadingCollection] = useState(false);
 	const [collectionData, setCollectionData] = useState<any>([]);
-	const [selectedState, setSelectedState] = useState('');
+	const [selectedState, setSelectedState] = useState('submitted');
 	const { formSubmission } = useSelector((state: RootState) => state.form);
 	const { user } = useSelector((state: RootState) => state.authReducer);
 	const [submissionLoading, setSubmissionLoading] = useState(false);
@@ -263,7 +263,7 @@ const Index = () => {
 		const formSubmissionPayload = await checkValidity();
 
 		if (formSubmissionPayload) {
-			setSelectedState(formSubmissionPayload?.state || 'draft');
+			setSelectedState(formSubmissionPayload?.state || 'submitted');
 		}
 
 		const result = (await formAnswersHelper.fetchFormAnswers({
@@ -839,6 +839,8 @@ const Index = () => {
 				}}
 			>
 				<View style={styles.pickerContainer}>
+					{/* Neuer Status label as requested */}
+					<Text style={{ ...styles.body, marginBottom: 6, color: theme.screen.text }}>Neuer Status: "Einreichen"</Text>
 					<TouchableOpacity
 						style={{
 							...styles.stateChangeButton,

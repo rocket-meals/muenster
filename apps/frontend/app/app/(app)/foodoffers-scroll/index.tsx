@@ -69,7 +69,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const [selectedFoodId, setSelectedFoodId] = useState('');
 	const [sheetProps, setSheetProps] = useState<Record<string, any>>({});
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-	const [selectedSheet, setSelectedSheet] = useState<keyof typeof SHEET_COMPONENTS | null>(null);
+	const [selectedSheet, setSelectedSheet] = useState<'menu' | keyof typeof SHEET_COMPONENTS | null>(null);
 	const [sessionDismissed, setSessionDismissed] = useState<Set<string>>(PopupEventHelper.getAll());
 	const [currentPopupEvent, setCurrentPopupEvent] = useState<any | null>(null);
 
@@ -80,7 +80,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const [animationJson, setAmimationJson] = useState<any>(null);
 	const { profile, user } = useSelector((state: RootState) => state.authReducer);
 	const selectedCanteen = useSelectedCanteen();
-	const kioskMode = useKioskMode();
+		const kioskMode = useKioskMode();
 	const [prefetchedFoodOffers, setPrefetchedFoodOffers] = useState<Record<string, Record<string, DatabaseTypes.Foodoffers[]>>>({});
 	const foods_area_color = appSettings?.foods_area_color ? appSettings?.foods_area_color : primaryColor;
 	const contrastColor = myContrastColor(foods_area_color, theme, mode === 'dark');
@@ -123,12 +123,12 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const setDefaultPriceGroupForAnonymousUser = () => {
 		dispatch({
 			type: UPDATE_PROFILE,
-			payload: { ...profile, price_group: 'student' },
+			payload: { ...(profile as any), price_group: 'student' },
 		});
 	};
 
 	useEffect(() => {
-		if (!user.id) {
+		if (!user?.id) {
 			setDefaultPriceGroupForAnonymousUser();
 		}
 	}, [user]);
@@ -282,7 +282,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		const sortedOffers = sortFoodOffers(id, foodOffers, {
 			languageCode,
 			ownFoodFeedbacks,
-			profile,
+			profile: profile as any,
 			foodCategories,
 			foodOfferCategories,
 		});
@@ -303,9 +303,9 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		return () => subscription?.remove();
 	}, []);
 
-	const getPriceGroup = (price_group: string) => {
+	const getPriceGroup = (price_group?: string | null) => {
 		if (price_group) {
-			return `price_group_${price_group?.toLocaleLowerCase()}`;
+			return `price_group_${price_group.toLocaleLowerCase()}`;
 		}
 		return '';
 	};
@@ -388,7 +388,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		return days[new Date(date).getDay()];
 	};
 
-	const SheetComponent = selectedSheet && selectedSheet !== 'menu' ? SHEET_COMPONENTS[selectedSheet] : null;
+	const SheetComponent = selectedSheet && selectedSheet !== 'menu' ? SHEET_COMPONENTS[selectedSheet as keyof typeof SHEET_COMPONENTS] : null;
 
 	return (
 		<>
@@ -578,7 +578,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 									trigger={triggerProps => (
 										<TouchableOpacity
 											{...triggerProps}
-											onPress={() => openSheet('calendar')}
+											onPress={() => openSheet('calendar', { updateGlobal: true })}
 											style={{
 												padding: isWeb ? (screenWidth < 500 ? 2 : 5) : 2,
 											}}
@@ -698,7 +698,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 							onClose={closeSheet}
 							handleComponent={null}
 						>
-							{SheetComponent && <SheetComponent closeSheet={closeSheet} {...sheetProps} />}
+							{SheetComponent && React.createElement(SheetComponent as any, { closeSheet: closeSheet, ...sheetProps })}
 						</BaseBottomSheet>
 					))}
 
