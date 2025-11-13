@@ -128,6 +128,7 @@ const Index = () => {
 	const [loadingCollection, setLoadingCollection] = useState(false);
 	const [collectionData, setCollectionData] = useState<any>([]);
 	const [selectedState, setSelectedState] = useState('submitted');
+	const [currentState, setCurrentState] = useState<string | null>(null);
 	const { formSubmission } = useSelector((state: RootState) => state.form);
 	const { user } = useSelector((state: RootState) => state.authReducer);
 	const [submissionLoading, setSubmissionLoading] = useState(false);
@@ -258,12 +259,23 @@ const Index = () => {
 		return result;
 	};
 
+	// Helfer: finde den nächsten Zustand in der filterOptions-Liste (fallback: 'submitted')
+	const getNextState = (current?: string | null | undefined) => {
+		if (!current) return 'submitted';
+		const idx = filterOptions.findIndex(opt => opt.id === current);
+		if (idx === -1) return 'submitted';
+		if (idx < filterOptions.length - 1) return filterOptions[idx + 1].id;
+		return filterOptions[idx].id; // letzter Zustand bleibt gleich
+	};
+
 	const fetchAllFormAnswers = async () => {
 		setLoading(true);
 		const formSubmissionPayload = await checkValidity();
 
 		if (formSubmissionPayload) {
-			setSelectedState(formSubmissionPayload?.state || 'submitted');
+			// Merke den aktuellen Zustand und setze die Auswahl auf den nächsten Zustand
+			setCurrentState(formSubmissionPayload?.state || null);
+			setSelectedState(getNextState(formSubmissionPayload?.state));
 		}
 
 		const result = (await formAnswersHelper.fetchFormAnswers({
@@ -838,29 +850,31 @@ const Index = () => {
 					width: screenWidth > 768 ? '70%' : '90%',
 				}}
 			>
-				<View style={styles.pickerContainer}>
-					{/* Neuer Status label as requested */}
-					<Text style={{ ...styles.body, marginBottom: 6, color: theme.screen.text }}>Neuer Status: "Einreichen"</Text>
-					<TouchableOpacity
+			<View style={styles.pickerContainer}>
+				{/* Aktueller Zustand und Auswahl des nächsten Zustands */}
+				<Text style={{ ...styles.body, marginBottom: 6, color: theme.screen.text }}>
+					{`${translate(TranslationKeys.state_current)}: ${translate(currentState || formSubmission?.state || 'draft')}`}
+				</Text>
+				<TouchableOpacity
+					style={{
+						...styles.stateChangeButton,
+						backgroundColor: theme.screen.iconBg,
+					}}
+					onPress={openFilterSheet}
+				>
+					<View
 						style={{
-							...styles.stateChangeButton,
-							backgroundColor: theme.screen.iconBg,
+							marginLeft: -34,
+							flexDirection: 'row',
+							alignItems: 'center',
+							gap: 10,
 						}}
-						onPress={openFilterSheet}
 					>
-						<View
-							style={{
-								marginLeft: -34,
-								flexDirection: 'row',
-								alignItems: 'center',
-								gap: 10,
-							}}
-						>
-							<MaterialIcons name="edit" size={20} color={theme.screen.text} />
-							<Text style={{ ...styles.state, color: theme.screen.text }}>{translate(selectedState)}</Text>
-						</View>
-					</TouchableOpacity>
-				</View>
+						<MaterialIcons name="edit" size={20} color={theme.screen.text} />
+						<Text style={{ ...styles.state, color: theme.screen.text }}>{`${translate(TranslationKeys.state_next)}: ${translate(selectedState)}`}</Text>
+					</View>
+				</TouchableOpacity>
+			</View>
 				<TouchableOpacity style={{ ...styles.button, backgroundColor: primaryColor }} onPress={handleFormSubmission}>
 					{submissionLoading ? <ActivityIndicator size={22} color={theme.screen.text} /> : <Text style={{ ...styles.buttonLabel, color: theme.activeText }}>{translate(TranslationKeys.save)}</Text>}
 				</TouchableOpacity>
