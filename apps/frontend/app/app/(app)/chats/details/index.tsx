@@ -94,7 +94,7 @@ const ChatDetailsScreen = () => {
                 return [...messages].sort((a, b) => {
                         const da = a.date_created || a.date_updated || '';
                         const db = b.date_created || b.date_updated || '';
-                        return da < db ? 1 : -1;
+                        return da < db ? -1 : 1;
                 });
         }, [messages]);
 

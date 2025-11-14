@@ -103,7 +103,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const [sheetProps, setSheetProps] = useState<Record<string, any>>({});
 	const [feedbackLabelsLoading, setFeedbackLabelsLoading] = useState(true);
 	const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-	const [selectedSheet, setSelectedSheet] = useState<'menu' | keyof typeof SHEET_COMPONENTS | null>(null);
+	const [selectedSheet, setSelectedSheet] = useState<keyof typeof SHEET_COMPONENTS | null>(null);
 	const [sessionDismissed, setSessionDismissed] = useState<Set<string>>(PopupEventHelper.getAll());
 	const [currentPopupEvent, setCurrentPopupEvent] = useState<any | null>(null);
 
@@ -189,7 +189,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 	const setDefaultPriceGroupForAnonymousUser = () => {
 		dispatch({
 			type: UPDATE_PROFILE,
-			payload: { ...(profile as any), price_group: 'student' },
+			payload: { ...profile, price_group: 'student' },
 		});
 	};
 
@@ -380,7 +380,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		const sortedOffers = sortFoodOffers(id, foodOffers, {
 			languageCode,
 			ownFoodFeedbacks,
-			profile: profile as any,
+			profile,
 			foodCategories,
 			foodOfferCategories,
 		});
@@ -401,9 +401,9 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		return () => subscription?.remove();
 	}, []);
 
-	const getPriceGroup = (price_group?: string | null) => {
+	const getPriceGroup = (price_group: string) => {
 		if (price_group) {
-			return `price_group_${price_group.toLocaleLowerCase()}`;
+			return `price_group_${price_group?.toLocaleLowerCase()}`;
 		}
 		return '';
 	};
@@ -510,7 +510,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 		return days[new Date(date).getDay()];
 	};
 
-	const SheetComponent = selectedSheet && selectedSheet !== 'menu' ? SHEET_COMPONENTS[selectedSheet as keyof typeof SHEET_COMPONENTS] : null;
+	const SheetComponent = selectedSheet && selectedSheet !== 'menu' ? SHEET_COMPONENTS[selectedSheet] : null;
 
 	return (
 		<>
@@ -713,7 +713,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 									trigger={triggerProps => (
 										<TouchableOpacity
 											{...triggerProps}
-											onPress={() => openSheet('calendar', { updateGlobal: true })}
+											onPress={() => openSheet('calendar')}
 											style={{
 												padding: isWeb ? (screenWidth < 500 ? 2 : 5) : 2,
 											}}
@@ -830,25 +830,7 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 									<ActivityIndicator size={'large'} color={theme.screen.icon} />
 								</View>
 							) : dayItems && dayItems.length > 0 ? (
-								dayItems.map((dayItem: DayItem, index: number) =>
-									dayItem.foodoffer ? (
-										<FoodItem
-											canteen={selectedCanteen as any}
-											item={dayItem.foodoffer}
-											key={dayItem.foodoffer.id || `food-item-${index}`}
-											handleMenuSheet={openSheet}
-											handleImageSheet={openManagementSheet}
-											handleEatingHabitsSheet={openSheet}
-											setSelectedFoodId={setSelectedFoodId}
-										/>
-									) : dayItem.foodofferInfoItem ? (
-										<FoodOfferInfoItem
-											key={dayItem.foodofferInfoItem.id || `info-item-${index}`}
-											item={dayItem.foodofferInfoItem}
-											content={getInfoItemContent(dayItem.foodofferInfoItem).content || ''}
-										/>
-									) : null
-								)
+								dayItems.map((dayItem: DayItem, index: number) => (dayItem.foodoffer ? <FoodItem canteen={selectedCanteen} item={dayItem.foodoffer} key={dayItem.foodoffer.id || `food-item-${index}`} handleMenuSheet={openSheet} handleImageSheet={openManagementSheet} handleEatingHabitsSheet={openSheet} setSelectedFoodId={setSelectedFoodId} /> : dayItem.foodofferInfoItem ? <FoodOfferInfoItem key={dayItem.foodofferInfoItem.id || `info-item-${index}`} item={dayItem.foodofferInfoItem} content={getInfoItemContent(dayItem.foodofferInfoItem).content || ''} /> : null))
 							) : (
 								<View style={styles.noFoodContainer}>
 									<Text style={{ ...styles.noFoodOffer, color: theme.screen.text }}>{translate(TranslationKeys.no_foodoffers_found_for_selection)}</Text>
@@ -863,14 +845,14 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 											}
 											style={[styles.jumpButton, { backgroundColor: foods_area_color }]}
 										>
-											<Text style={[styles.jumpButtonText, { color: contrastColor }]}>{`${translate(TranslationKeys.show_offers_on)} ${translate(TranslationKeys[(getWeekdayKey(nextAvailableDate) as any)])}`}</Text>
+											<Text style={[styles.jumpButtonText, { color: contrastColor }]}>{`${translate(TranslationKeys.show_offers_on)} ${translate(TranslationKeys[getWeekdayKey(nextAvailableDate)])}`}</Text>
 										</TouchableOpacity>
 									)}
 								</View>
 							)}
 						</View>
 						<View style={styles.elementContainer}>{afterElement && <CustomMarkdown content={afterElement?.content || ''} backgroundColor={foods_area_color} imageWidth={440} imageHeight={293} />}</View>
-						{!feedbackLabelsLoading && canteenFeedbackLabelsExist && (
+						{!feedbackLabelsLoading && canteenFeedbackLabelsExist > 0 && (
 							<View style={styles.feebackContainer}>
 								<View>
 									<Text
@@ -883,58 +865,61 @@ const Index: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
 									</Text>
 								</View>
 								{memoizedCanteenFeedbackLabels}
-                             </View>
-                         )}
-                     </ScrollView>
-
-                     {/* Sheets: menu or any selected sheet */}
-                     {isActive && !kioskMode && (
-                        selectedSheet === 'menu' ? (
-                            <MarkingBottomSheet ref={bottomSheetRef} onClose={closeSheet} />
-                        ) : (
-                            <BaseBottomSheet
-                                key={selectedSheet}
-                                ref={bottomSheetRef}
-                                backgroundStyle={{
-                                    ...styles.sheetBackground,
-                                    backgroundColor: theme.sheet.sheetBg,
-                                }}
-                                enablePanDownToClose={selectedSheet !== 'forecast'}
-                                enableContentPanningGesture={selectedSheet !== 'forecast'}
-                                enableHandlePanningGesture={selectedSheet !== 'forecast'}
-                                enableDynamicSizing={selectedSheet !== 'forecast'}
-                                onChange={index => {
-                                    if (index === -1) {
-                                        closeSheet();
-                                    }
-                                }}
-                                onClose={closeSheet}
-                                handleComponent={null}
-                            >
-                                {SheetComponent && React.createElement(SheetComponent as any, { closeSheet: closeSheet, ...sheetProps })}
-                            </BaseBottomSheet>
-                        )
-                    )}
-
-                    {isActive && currentPopupEvent && (
-                        <BaseBottomSheet
-                            ref={eventSheetRef}
-                            index={-1}
-                            backgroundStyle={{
-                                ...styles.sheetBackground,
-                                backgroundColor: theme.sheet.sheetBg,
-                            }}
-                            enablePanDownToClose={false}
-                            handleComponent={null}
-                            onClose={closeEventSheetForSession}
-                        >
-                            <PopupEventSheet closeSheet={closeEventSheet} eventData={currentPopupEvent} />
-                        </BaseBottomSheet>
-                    )}
-                </View>
-            </SafeAreaView>
-        </>
-    );
+							</View>
+						)}
+					</ScrollView>
+				</View>
+				{isActive &&
+					!kioskMode &&
+					(selectedSheet === 'menu' ? (
+						<MarkingBottomSheet ref={bottomSheetRef} onClose={closeSheet} />
+					) : (
+						<BaseBottomSheet
+							key={selectedSheet}
+							ref={bottomSheetRef}
+							backgroundStyle={{
+								...styles.sheetBackground,
+								backgroundColor: theme.sheet.sheetBg,
+							}}
+							enablePanDownToClose={selectedSheet === 'forecast' ? false : true}
+							enableContentPanningGesture={selectedSheet === 'forecast' ? false : true}
+							enableHandlePanningGesture={selectedSheet === 'forecast' ? false : true}
+							enableDynamicSizing={selectedSheet === 'forecast' ? false : true}
+							onChange={index => {
+								if (index === -1) {
+									closeSheet();
+								}
+							}}
+							onClose={closeSheet}
+							handleComponent={null}
+						>
+							{SheetComponent && (
+								selectedSheet === 'calendar' ? (
+									<SheetComponent closeSheet={closeSheet} {...sheetProps} updateGlobal={true} />
+								) : (
+									<SheetComponent closeSheet={closeSheet} {...sheetProps} />
+								)
+							)}
+						</BaseBottomSheet>
+					))}
+				{isActive && currentPopupEvent && (
+					<BaseBottomSheet
+						ref={eventSheetRef}
+						index={-1}
+						backgroundStyle={{
+							...styles.sheetBackground,
+							backgroundColor: theme.sheet.sheetBg,
+						}}
+						enablePanDownToClose={false}
+						handleComponent={null}
+						onClose={closeEventSheetForSession}
+					>
+						<PopupEventSheet closeSheet={closeEventSheet} eventData={currentPopupEvent} />
+					</BaseBottomSheet>
+				)}
+			</SafeAreaView>
+		</>
+	);
 };
 
 export default Index;

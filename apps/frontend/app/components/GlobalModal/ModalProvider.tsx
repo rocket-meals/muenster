@@ -14,11 +14,13 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 	const sheetRef = useRef<any>(null);
 
 	const open = (c: ReactNode, options?: { backgroundStyle?: any }) => {
+		console.log('[GlobalModal] open called');
 		setContent(c);
 		if (options?.backgroundStyle) setBackgroundStyle(options.backgroundStyle);
 	};
 
 	const close = () => {
+		console.log('[GlobalModal] close called');
 		sheetRef.current?.close?.();
 		setTimeout(() => setContent(null), 200);
 	};
@@ -26,8 +28,10 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 	// When content is set, ensure the sheet expands once the sheet ref is available
 	useEffect(() => {
 		if (!content) return;
+		console.log('[GlobalModal] content set, scheduling expand');
 		// small timeout to allow ref attachment/render
 		const t = setTimeout(() => {
+			console.log('[GlobalModal] attempting sheetRef.expand');
 			sheetRef.current?.expand?.();
 		}, 20);
 		return () => clearTimeout(t);

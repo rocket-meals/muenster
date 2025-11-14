@@ -1,9 +1,9 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import styles from './styles';
 import { useTheme } from '@/hooks/useTheme';
 import { CalendarSheetProps, Direction } from './types';
-import { BottomSheetView } from '@gorhom/bottom-sheet';
+import MyScrollViewModal from '@/components/MyScrollViewModal';
 import { isWeb } from '@/constants/Constants';
 import { AntDesign } from '@expo/vector-icons';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
@@ -52,26 +52,10 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet, onSelect, sel
     LocaleConfig.defaultLocale = 'custom';
 
     return (
-        <BottomSheetView style={{ ...styles.container, backgroundColor: theme.sheet.sheetBg }}>
-            <View
-                style={{
-                    ...styles.sheetHeader,
-                    paddingRight: isWeb ? 10 : 0,
-                    paddingTop: isWeb ? 10 : 0,
-                }}
-            >
-                <View />
-                <Text
-                    style={{
-                        ...styles.sheetHeading,
-                        fontSize: isWeb ? 40 : 28,
-                        color: theme.sheet.text,
-                    }}
-                >
-                    {translate(TranslationKeys.select)} : {translate(TranslationKeys.date)}
-                </Text>
-            </View>
-
+        <MyScrollViewModal
+            title={`${translate(TranslationKeys.select)} : ${translate(TranslationKeys.date)}`}
+            closeSheet={closeSheet}
+        >
             <View
                 style={{
                     ...styles.calendarView,
@@ -103,7 +87,7 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet, onSelect, sel
                         [selectedDateProp ? selectedDateProp : selectedDate]: {
                             selected: true,
                             disableTouchEvent: true,
-                            selectedDotColor: foods_area_color,
+                            selectedColor: foods_area_color,
                         },
                     }}
                     renderArrow={(direction: Direction) => (
@@ -142,7 +126,7 @@ const CalendarSheet: React.FC<CalendarSheetProps> = ({ closeSheet, onSelect, sel
                     }}
                 />
             </View>
-        </BottomSheetView>
+        </MyScrollViewModal>
     );
 };
 
