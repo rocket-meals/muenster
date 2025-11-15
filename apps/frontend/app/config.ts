@@ -11,6 +11,7 @@ export type CustomerConfig = {
 	bundleIdAndroid: string;
 	baseUrl: string;
 	server_url: string;
+	appleAppId?: string;
 };
 
 // DO NOT CHANGE THE NAME OF THIS FUNCTION: getBuildNumber
@@ -51,6 +52,7 @@ export const devConfig: CustomerConfig = {
 	bundleIdAndroid: 'com.baumgartnersoftware.rocketmealsdev',
 	baseUrl: '/rocket-meals',
 	server_url: ServerHelper.TEST_SERVER_CONFIG.server_url,
+	appleAppId: '6483930801',
 };
 
 export const swosyConfig: CustomerConfig = {
@@ -63,6 +65,7 @@ export const swosyConfig: CustomerConfig = {
 	bundleIdAndroid: 'de.baumgartnersoftware.swosy',
 	baseUrl: '/swosy',
 	server_url: ServerHelper.SWOSY_SERVER_CONFIG.server_url,
+	appleAppId: '6667117575',
 };
 
 export const studiFutterConfig: CustomerConfig = {
@@ -75,10 +78,10 @@ export const studiFutterConfig: CustomerConfig = {
 	bundleIdAndroid: 'de.baumgartnersoftware.studifutter',
 	baseUrl: '/studi-futter',
 	server_url: ServerHelper.STUDI_FUTTER_SERVER_CONFIG.server_url,
+	appleAppId: '1548108390',
 };
 
 export const aachenConfig: CustomerConfig = {
-	// apple app id: 6754844700
 	projectName: 'AachenMensa',
 	projectSlug: 'rocket-meals-aachen',
 	easUpdateId: '88b123c6-b8d8-4968-9ab5-86cd0c8b9657',
@@ -123,6 +126,7 @@ export function getFinalConfig(config?: any) {
 				supportsTablet: true,
 				bundleIdentifier: customerConfig.bundleIdIos,
 				buildNumber: getIosBuildNumber(),
+				...(customerConfig.appleAppId ? { appId: customerConfig.appleAppId } : {}),
 				infoPlist: {
 					NSPhotoLibraryUsageDescription: 'We need access to your photo library to select files',
 					NSDocumentDirectoryUsageDescription: 'We need access to your document directory to select files',
