@@ -44,3 +44,7 @@ runs:
     - name: 📦 Install dependencies
       run: yarn install --immutable
       shell: bash
+
+    - name: 🛠️ Generate EAS config
+      run: yarn workspace rocket-meals-scripts generate:eas
+      shell: bash

@@ -23022,6 +23022,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"rocket-meals-scripts@workspace:apps/scripts":
+  version: 0.0.0-use.local
+  resolution: "rocket-meals-scripts@workspace:apps/scripts"
+  dependencies:
+    ts-node: "npm:^10.9.2"
+    typescript: "npm:~5.8.3"
+  languageName: unknown
+  linkType: soft
+
 "rollup-plugin-esbuild@npm:6.2.1":
   version: 6.2.1
   resolution: "rollup-plugin-esbuild@npm:6.2.1"
