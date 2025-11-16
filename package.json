@@ -17,6 +17,7 @@
   "workspaces": [
     "apps/frontend/app",
     "apps/backend/Backend/directusExtensions/directus-extension-rocket-meals-bundle",
+    "apps/scripts",
     "apps/*",
     "packages/*"
   ],
