@@ -13,3 +13,4 @@ export * from './src/FormCommonHelper';
 export * from './src/ChatConversationState';
 export * from './src/CronHelper';
 export * from './src/EmailHelper';
+export * from './src/EventHelper';
