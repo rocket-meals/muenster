@@ -1,4 +1,4 @@
-import { DatabaseTypes } from './databaseTypes/types';
+import * as DatabaseTypes from './databaseTypes/types';
 
 export type PopupEventPlatformKey = 'show_on_ios' | 'show_on_android' | 'show_on_web';
 
