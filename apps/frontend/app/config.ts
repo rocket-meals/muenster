@@ -94,7 +94,7 @@ export const configMuenster: CustomerConfig = {
 };
 
 export function getCustomerConfig(): CustomerConfig {
-	return configMuenster;
+	return configMuenster; 
 }
 
 export function getFinalConfig(config?: any) {
