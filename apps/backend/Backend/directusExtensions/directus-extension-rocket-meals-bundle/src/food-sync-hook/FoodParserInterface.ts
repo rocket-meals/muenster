@@ -1,5 +1,5 @@
 import { DatabaseTypes } from 'repo-depkit-common';
-import { TranslationsFromParsingType } from '../helpers/TranslationHelper';
+import {LanguageCodes, TranslationsFromParsingType} from '../helpers/TranslationHelper';
 import { MarkingsTypeForParser } from './MarkingParserInterface';
 
 export type FoodParseFoodAttributeValueType = {
@@ -47,6 +47,51 @@ export type FoodofferTypeForCreation = FoodofferTypeWithBasicData & {
   canteen: string; // we require the primary key of the canteen
   food: string; // we require the primary key of the food
 };
+
+export class FoodParserHelper {
+  static getFoodTypeForParserFromFoodofferTypeForParser(foodoffer: FoodoffersTypeForParser): FoodsInformationTypeForParser | null {
+    const food_id = foodoffer.food_id;
+    if (!food_id) {
+      return null;
+    }
+    const alias = foodoffer.basicFoodofferData.alias;
+    if (!alias) {
+      return null;
+    }
+
+
+    const translations: TranslationsFromParsingType = {
+      [LanguageCodes.DE]: {
+        name: alias,
+      },
+    };
+
+    const basicFoodData: FoodWithBasicData = {
+      id: food_id,
+      alias: alias,
+    };
+
+    return {
+      basicFoodData: basicFoodData,
+      attribute_values: foodoffer.attribute_values,
+      translations: translations,
+      category_external_identifier: foodoffer.category_external_identifier,
+      marking_external_identifiers: foodoffer.marking_external_identifiers,
+    };
+  }
+
+  static getFoodsListFromFoodoffersList(foodoffersList: FoodoffersTypeForParser[]): FoodsInformationTypeForParser[] {
+    let foodsInformationDict: { [key: string]: FoodsInformationTypeForParser } = {};
+    for (let rawFoodoffer of foodoffersList) {
+      const foodInformation = FoodParserHelper.getFoodTypeForParserFromFoodofferTypeForParser(rawFoodoffer);
+      if (foodInformation) {
+        foodsInformationDict[foodInformation.basicFoodData.id] = foodInformation;
+      }
+    }
+    const foodsInformationList = Object.values(foodsInformationDict);
+    return foodsInformationList
+  }
+}
 
 export interface FoodParserInterface {
   /**

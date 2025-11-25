@@ -3,12 +3,12 @@ import { ServerHelper } from 'repo-depkit-common';
 
 export type CustomerConfig = {
 	projectName: string;
-	projectSlug: string;
-	easUpdateId: string;
-	easProjectId: string;
-	appScheme: string;
-	bundleIdIos: string;
-	bundleIdAndroid: string;
+	projectSlug: string | undefined;
+	easUpdateId: string | undefined;
+	easProjectId: string | undefined;
+	appScheme: string | undefined;
+	bundleIdIos: string | undefined;
+	bundleIdAndroid: string | undefined;
 	baseUrl: string;
 	server_url: string;
 	appleAppId?: string;
@@ -81,16 +81,16 @@ export const studiFutterConfig: CustomerConfig = {
 	appleAppId: '1548108390',
 };
 
-export const aachenConfig: CustomerConfig = {
-	projectName: 'AachenMensa',
-	projectSlug: 'rocket-meals-aachen',
-	easUpdateId: '88b123c6-b8d8-4968-9ab5-86cd0c8b9657',
-	easProjectId: '88b123c6-b8d8-4968-9ab5-86cd0c8b9657',
-	appScheme: 'app-rocket-meals-aachen',
-	bundleIdIos: 'de.rocket-meals.aachen',
-	bundleIdAndroid: 'com.baumgartner_software.aachen',
-	baseUrl: '/aachpetito',
-	server_url: ServerHelper.AACHEN_SERVER_CONFIG.server_url,
+export const configMuenster: CustomerConfig = {
+	projectName: 'Münster',
+	projectSlug: undefined,
+	easUpdateId:  undefined,
+	easProjectId:  undefined,
+	appScheme:  undefined,
+	bundleIdIos:  undefined,
+	bundleIdAndroid:  undefined,
+	baseUrl: '/muenster',
+	server_url: ServerHelper.SERVER_CONFIG_MUENSTER.server_url,
 };
 
 export function getCustomerConfig(): CustomerConfig {

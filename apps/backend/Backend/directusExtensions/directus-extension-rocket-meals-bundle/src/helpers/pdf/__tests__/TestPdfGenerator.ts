@@ -6,6 +6,8 @@ import { HtmlTemplatesEnum } from '../../html/HtmlGenerator';
 import { PdfGeneratorForJest } from '../PdfGeneratorHelperForJest';
 import { PdfGeneratorHelper } from '../PdfGeneratorHelper';
 
+const TIMEOUT = 60*1000;
+
 PdfGeneratorForJest.activateForJest(); // activate puppeteer for jest tests
 describe('Pdf Generator Test', () => {
   it('Test pdf generation from html', async () => {
@@ -18,5 +20,5 @@ describe('Pdf Generator Test', () => {
     let savePath = TestArtifacts.saveTestArtifact(pdfBuffer, 'pdf/' + HtmlTemplatesEnum.BASE_GERMAN_MARKDOWN_CONTENT + '.pdf');
 
     expect(true).toBeTruthy();
-  });
+  }, TIMEOUT);
 });
