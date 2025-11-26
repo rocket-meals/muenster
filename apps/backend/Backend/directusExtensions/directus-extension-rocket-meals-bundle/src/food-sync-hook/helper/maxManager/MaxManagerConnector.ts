@@ -42,101 +42,133 @@ type CanteenData = {
 
 export class MaxManagerConnector implements FoodParserInterface, MarkingParserInterface {
 
-  private config: MaxManagerConnectorConfig;
+    private config: MaxManagerConnectorConfig;
 
-  static PAGE_INDEX = "/index.php";
-  static PAGE_AJAX_KONNEKTOR = "/inc/ajax-php_konnektor.inc.php";
+    static PAGE_INDEX = "/index.php";
+    static PAGE_AJAX_KONNEKTOR = "/inc/ajax-php_konnektor.inc.php";
 
-  private canteenIdToNameMap: Record<string, string> = {};
-  private canteenIdToDataMap: Record<string, CanteenData[]> = {};
+    private canteenIdToNameMap: Record<string, string> = {};
+    private canteenIdToDataMap: Record<string, CanteenData[]> = {};
 
-  private urlCookies: string | null = null;
+    private urlCookies: string | null = null;
 
-  constructor(config: MaxManagerConnectorConfig) {
-    this.config = config;
-  }
+    constructor(config: MaxManagerConnectorConfig) {
+        this.config = config;
+    }
 
-  async createNeededData(){
-    this.canteenIdToNameMap = {};
-    this.canteenIdToDataMap = {};
+    async createNeededData(){
+        this.canteenIdToNameMap = {};
+        this.canteenIdToDataMap = {};
 
-    let now = new Date();
+        let now = new Date();
 
+
+        let amountDays = this.config.fetchAmountDays;
+        if(amountDays === undefined || amountDays === null){
+            amountDays = 14; // default to 14 days
+        }
         //console.log("MaxManagerConnector: created needed data");
-      if(this.config.fileContentReader){
+
+
+        let initialHtml: string | null = null;
+        if(this.config.fileContentReader){
+            const fileContentReader = this.config.fileContentReader;
+            initialHtml = await fileContentReader.getContent();
+        }
+        if(this.config.url){
+            const url = this.config.url + MaxManagerConnector.PAGE_INDEX;
+            let response = await FetchHelper.fetch(url)
+            initialHtml = await response.text();
+        }
+
+        if(!initialHtml){
+            console.error("MaxManagerConnector: createNeededData: initialHtml is null. Cannot proceed.");
+            return;
+        }
+
+        let canteenMap = this.getCanteenMap(initialHtml);
+        //console.log("Selected canteen id from file: " + selectedCanteenId);
+        this.canteenIdToNameMap = canteenMap;
+
+        //console.log("Fetching foodoffers for " + amountDays + " days for all canteens...");
+        for(let dayOffset = 0; dayOffset < amountDays; dayOffset++) {
+            let fetchDate = new Date(now.getTime() + dayOffset * 24 * 60 * 60 * 1000);
+
+            //console.log(" Fetching date: " + fetchDate.toDateString());
+            for(const canteenId in canteenMap){
+
+                const html = await this.getHtml(canteenId, fetchDate, initialHtml);
+                if(!html){
+                    console.error("MaxManagerConnector: createNeededData: html is null for canteen id: " + canteenId + " date: " + fetchDate.toDateString());
+                    continue;
+                }
+
+                let data = {
+                    date: new Date(fetchDate),
+                    html: html
+                }
+
+                this.canteenIdToDataMap[canteenId] = this.canteenIdToDataMap[canteenId] || [];
+                this.canteenIdToDataMap[canteenId].push(data);
+            }
+        }
+
+        // print the canteenIdToDataMap keys and number of entries
+        console.log("Canteen data map:");
+        for(const canteenId in this.canteenIdToDataMap){
+            const dataList = this.canteenIdToDataMap[canteenId];
+            if(dataList){
+                console.log(" - Canteen ID: " + canteenId + " has " + dataList.length + " entries");
+            }
+        }
+
+
+    }
+
+    private async getHtml(canteenId: string, fetchDate: Date, initialHtml: string): Promise<string | undefined> {
+        if(this.config.fileContentReader){
             const fileContentReader = this.config.fileContentReader;
             let fileContent = await fileContentReader.getContent();
-            let selectedCanteenId = this.getCurrentSelectedCanteenId(fileContent);
-            let canteenMap = this.getCanteenMap(fileContent);
-            //console.log("Selected canteen id from file: " + selectedCanteenId);
-            this.canteenIdToNameMap = canteenMap;
-            this.canteenIdToDataMap[selectedCanteenId || ""] = [{
-                date: now,
-                html: fileContent
-            }];
-      }
-      if(this.config.url){
+            return fileContent;
+        }
+        if(this.config.url){
 
-          const url = this.config.url + MaxManagerConnector.PAGE_INDEX;
+            const url = this.config.url + MaxManagerConnector.PAGE_INDEX;
             let response = await FetchHelper.fetch(url)
             let cookies = response.headers.get("set-cookie");
-              // node-fetch: alle Set-Cookie-Header holen
+            // node-fetch: alle Set-Cookie-Header holen
             let setCookieHeaders = (response.headers as any).raw?.()['set-cookie'] as string[] | undefined;
             setCookieHeaders = [cookies || ''];
 
-          //console.log("Set cookie: " + setCookieHeaders);
-              if (setCookieHeaders && setCookieHeaders.length > 0) {
-                  // Nur "name=value"-Teil nehmen und zu einem Cookie-Header zusammenbauen
-                  this.urlCookies = setCookieHeaders
-                      .map(c => c.split(';')[0])
-                      .join('; ');
-              }
-
-            let html = await response.text();
-            let selectedCanteenId = this.getCurrentSelectedCanteenId(html);
-            //console.log("Selected canteen id from endpoint: " + selectedCanteenId);
-            let canteenMap = this.getCanteenMap(html);
-            this.canteenIdToNameMap = canteenMap;
-
-            let amountDays = this.config.fetchAmountDays;
-            if(amountDays === undefined || amountDays === null){
-                amountDays = 14; // default to 14 days
+            //console.log("Set cookie: " + setCookieHeaders);
+            if (setCookieHeaders && setCookieHeaders.length > 0) {
+                // Nur "name=value"-Teil nehmen und zu einem Cookie-Header zusammenbauen
+                this.urlCookies = setCookieHeaders
+                    .map(c => c.split(';')[0])
+                    .join('; ');
             }
 
-            for(let dayOffset = 0; dayOffset < amountDays; dayOffset++) {
-                let fetchDate = new Date(now.getTime() + dayOffset * 24 * 60 * 60 * 1000);
-                for(const canteenId in canteenMap){
-                    if(canteenId !== selectedCanteenId){
-                        const postParameters: MyMaxManagerPostParameters = {
-                            external_identifier: canteenId,
-                            date: fetchDate
-                        };
-                        try{
-                            const partialCanteenHtml = await this.getSpeiseplanFromEndpoint(postParameters);
+            const postParameters: MyMaxManagerPostParameters = {
+                external_identifier: canteenId,
+                date: fetchDate
+            };
 
-                            //console.log("")
+            try{
+                const partialCanteenHtml = await this.getSpeiseplanFromEndpoint(postParameters);
 
-                            // max Manager loads only the speiseplan part via ajax, so we need to insert it into the full html
-                            let searchStringStart = "<div id='speiseplan'>";
-                            let completeHtmlForCanteen = html.replace(searchStringStart, searchStringStart+partialCanteenHtml);
-                            
-                            let data = {
-                                date: fetchDate,
-                                html: completeHtmlForCanteen
-                            }
+                //console.log("")
 
-                            this.canteenIdToDataMap[canteenId] = this.canteenIdToDataMap[canteenId] || [];
-                            this.canteenIdToDataMap[canteenId].push(data);
-                            //console.log(" - Fetched speiseplan for canteen id: " + canteenId + " for date: " + fetchDate.toDateString()+" HTML length: " + completeHtmlForCanteen.length);
-                        } catch (error) {
-                            console.error("Failed to fetch speiseplan for canteen id: " + canteenId);
-                        }
-                    }
-                }
+                // max Manager loads only the speiseplan part via ajax, so we need to insert it into the full html
+                let searchStringStart = "<div id='speiseplan'>";
+                let completeHtmlForCanteen = initialHtml.replace(searchStringStart, searchStringStart+partialCanteenHtml);
+
+                return completeHtmlForCanteen;
+                //console.log(" - Fetched speiseplan for canteen id: " + canteenId + " for date: " + data.date.toDateString()+" HTML length: " + completeHtmlForCanteen.length);
+            } catch (error) {
+                console.error("Failed to fetch speiseplan for canteen id: " + canteenId);
             }
-      }
-
-
+        }
+        return undefined;
     }
 
     private getStartThisWeek(date: Date): Date {
@@ -158,16 +190,17 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
     }
 
     private async getSpeiseplanFromEndpoint(myPostParameters: MyMaxManagerPostParameters): Promise<string> {
-      //console.log("Fetching speiseplan for locId: " + myPostParameters.external_identifier);
+        //console.log("Fetching speiseplan for locId: " + myPostParameters.external_identifier);
         let url = this.config.url;
         if(!url){
             throw new Error("No URL configured for MaxManagerConnector");
         }
         url += MaxManagerConnector.PAGE_AJAX_KONNEKTOR;
 
-        let date = this.getDateFormatForMaxManager(myPostParameters.date);
-        let startThisWeekDate = this.getStartThisWeek(myPostParameters.date);
-        let startNextWeekDate = this.getStartNextWeek(myPostParameters.date);
+        let dateCopy = new Date(myPostParameters.date);
+        let date = this.getDateFormatForMaxManager(dateCopy);
+        let startThisWeekDate = this.getStartThisWeek(dateCopy);
+        let startNextWeekDate = this.getStartNextWeek(dateCopy);
         let startThisWeek = this.getDateFormatForMaxManager(startThisWeekDate);
         let startNextWeek = this.getDateFormatForMaxManager(startNextWeekDate);
         const postParameters: MaxManagerPostParameters = {
@@ -188,29 +221,29 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
         })
 
         /**
-        console.log("Post parameters:");
-        console.log(JSON.stringify(postParameters, null, 2));
-        console.log("Post parameters body:");
-        console.log(body.toString());
-        */
+         console.log("Post parameters:");
+         console.log(JSON.stringify(postParameters, null, 2));
+         console.log("Post parameters body:");
+         console.log(body.toString());
+         */
 
-        //console.log(body.toString());
+            //console.log(body.toString());
 
-      const cookieHeaderParts: string[] = [];
+        const cookieHeaderParts: string[] = [];
 
-    // Cookies vom Server (z. B. splswmunster=...)
-          if (this.urlCookies) {
-              cookieHeaderParts.push(this.urlCookies);
-          }
+        // Cookies vom Server (z. B. splswmunster=...)
+        if (this.urlCookies) {
+            cookieHeaderParts.push(this.urlCookies);
+        }
 
 
 // Clientseitiger Cookie aus dem Browser (savekennzfilterinput=0)
 // Den setzt dein Node-Skript ja nicht automatisch, also einfach manuell ergänzen:
-      cookieHeaderParts.push('savekennzfilterinput=0');
+        cookieHeaderParts.push('savekennzfilterinput=0');
 
-      const cookieHeader = cookieHeaderParts.join('; ');
+        const cookieHeader = cookieHeaderParts.join('; ');
 
-      //console.log("Fetch from url: ", url);
+        //console.log("Fetch from url: ", url);
 
         const response = await FetchHelper.fetch(url, {
             method: 'POST',
@@ -286,10 +319,10 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
     }
 
     async getFoodoffersForParser(): Promise<FoodoffersTypeForParser[]> {
-      let foodoffers: FoodoffersTypeForParser[] = [];
+        let foodoffers: FoodoffersTypeForParser[] = [];
 
-      // we need the markings list since some foods have markings but only as image or sup elements
-      let allMarkings = await this.getMarkingsJSONList();
+        // we need the markings list since some foods have markings but only as image or sup elements
+        let allMarkings = await this.getMarkingsJSONList();
 
         for(const canteenId in this.canteenIdToDataMap){
             //console.log("------");
@@ -300,6 +333,7 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
             if(canteenDataList){
                 for(const canteenData of canteenDataList){
                     const date = canteenData.date;
+                    console.log(" Parsing foodoffers for canteen id: " + canteenId + " for date: " + date.toDateString());
                     const html = canteenData.html;
                     const $ = load(html);
 
@@ -468,33 +502,33 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
     }
 
     async getMarkingsJSONList(): Promise<MarkingsTypeForParser[]> {
-      let markingsList: MarkingsTypeForParser[] = [];
-      let html = this.getFirstNotEmptyHtml();
-      if(html) {
-          const $ = load(html);
+        let markingsList: MarkingsTypeForParser[] = [];
+        let html = this.getFirstNotEmptyHtml();
+        if(html) {
+            const $ = load(html);
 
-          // search for id legende-content
-          // <div id="legende-content" class="container-fluid legende hidden mt-3">
+            // search for id legende-content
+            // <div id="legende-content" class="container-fluid legende hidden mt-3">
             const legendeContent = $('#legende-content');
 
             // search for tr which is not in thead
-          //                         <table class="table table-sm">
-          //                             <thead>
-          //                             <tr>
-          //                                 <th colspan="2">ALLERGENE</th>
-          //                             </tr>
-          //                             </thead>
-          //                             <tbody>
-          //                             <tr>
-          //                                 <td class="text-center" style="width: 50px;">(A)</td>
-          //                                 <td>enthält glutenhaltiges Getreide</td>
-          //                             </tr>
-          // <tr>
-          //   <td class="text-center" style="width: 50px;">
-          //   <img src="https://sw-muenster-spl24.maxmanager.xyz/assets/icons/A.png?v=1" style="height:20px" alt="Piktogramm Alkohol" title="Piktogramm Alkohol">
-          //   </td>
-          //   <td>Alkohol</td>
-          // </tr>
+            //                         <table class="table table-sm">
+            //                             <thead>
+            //                             <tr>
+            //                                 <th colspan="2">ALLERGENE</th>
+            //                             </tr>
+            //                             </thead>
+            //                             <tbody>
+            //                             <tr>
+            //                                 <td class="text-center" style="width: 50px;">(A)</td>
+            //                                 <td>enthält glutenhaltiges Getreide</td>
+            //                             </tr>
+            // <tr>
+            //   <td class="text-center" style="width: 50px;">
+            //   <img src="https://sw-muenster-spl24.maxmanager.xyz/assets/icons/A.png?v=1" style="height:20px" alt="Piktogramm Alkohol" title="Piktogramm Alkohol">
+            //   </td>
+            //   <td>Alkohol</td>
+            // </tr>
             legendeContent.find('table.table.table-sm tbody tr').each((index, element) => {
                 // the external identifier is either the text in parentheses or if an image is present the image filename
                 const codeElement = $(element).find('td').first();
@@ -550,7 +584,7 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
                 }
             });
 
-      }
+        }
 
         return markingsList;
     }

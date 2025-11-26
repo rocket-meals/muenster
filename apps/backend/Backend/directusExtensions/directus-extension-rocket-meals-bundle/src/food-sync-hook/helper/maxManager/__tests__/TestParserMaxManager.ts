@@ -4,45 +4,59 @@ import {MarkingParserInterface} from "../../../MarkingParserInterface";
 import {MaxManagerConnector, MaxManagerConnectorConfig} from "../MaxManagerConnector";
 import {MaxManagerFileContentReader} from "../MaxManagerFileContentReader";
 
-const configMaxManagerTest = {
-  fileContentReader: new MaxManagerFileContentReader()
+
+
+const configMaxManagerTestLocal = {
+  fileContentReader: new MaxManagerFileContentReader(),
+  fetchAmountDays: 3,
 }
 
 const configMaxManagerTestOnline: MaxManagerConnectorConfig = {
     url: "https://sw-muenster-spl24.maxmanager.xyz",
-    fetchAmountDays: 14,
+    fetchAmountDays: 3,
 };
 
-function getTestParser(): FoodParserInterface {
-  return new MaxManagerConnector(configMaxManagerTest);
-}
+const configMaxManagerTest = configMaxManagerTestLocal;
+const amountDaysToFetch = configMaxManagerTest.fetchAmountDays || 14;
 
-function getMarkingParser(): MarkingParserInterface {
-  return new MaxManagerConnector(configMaxManagerTest);
-}
+let foodParser: FoodParserInterface;
+let markingParser: MarkingParserInterface;
 
-describe('dev', () => {
+describe('MaxManagerConnector Parser Tests', () => {
+
+    beforeAll(async () => {
+        let foodAndMarkingParser = new MaxManagerConnector(configMaxManagerTestOnline);
+        await foodAndMarkingParser.createNeededData();
+
+        foodParser = foodAndMarkingParser;
+        markingParser = foodAndMarkingParser;
+    });
 
   it('parses canteens', async () => {
-    const parser = getTestParser();
-    await parser.createNeededData();
-    const canteensList = await parser.getCanteensList();
+    const canteensList = await foodParser.getCanteensList();
     expect(canteensList.length).toBeGreaterThan(0);
   });
 
 
   it('parses more than one foodoffer', async () => {
-    const parser = getTestParser();
-    await parser.createNeededData();
-    const foodsOfferList = await parser.getFoodoffersForParser();
+    const foodsOfferList = await foodParser.getFoodoffersForParser();
     expect(foodsOfferList.length).toBeGreaterThan(1);
   });
 
+    it('parses more than one foodoffer', async () => {
+        const foodsOfferList = await foodParser.getFoodoffersForParser();
+        let datesFoundDict: {[key: string]: boolean} = {};
+        for (const foodOffer of foodsOfferList) {
+            const dateStr = foodOffer.date.year+"-"+String(foodOffer.date.month).padStart(2,'0')+"-"+String(foodOffer.date.day).padStart(2,'0');
+            datesFoundDict[dateStr] = true;
+        }
+        const datesFound = Object.keys(datesFoundDict);
+        console.log(datesFound);
+        expect(datesFound.length).toBeGreaterThan(amountDaysToFetch -1);
+    });
 
    it('parses markings', async () => {
-    const parser = getMarkingParser();
-    await parser.createNeededData();
-    const markingsList = await parser.getMarkingsJSONList();
+    const markingsList = await markingParser.getMarkingsJSONList();
 
     expect(markingsList.length).toBeGreaterThan(0);
 

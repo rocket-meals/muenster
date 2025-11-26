@@ -3,41 +3,40 @@ import {FoodAndMarkingWebParserMuenster} from '../FoodAndMarkingWebParserMuenste
 import {FoodParserInterface} from '../../FoodParserInterface';
 import {MarkingParserInterface} from '../../MarkingParserInterface';
 import {MaxManagerFileContentReaderMuenster} from "../MaxManagerFileContentReaderMuenster";
+import {MaxManagerConnector} from "../../helper/maxManager/MaxManagerConnector";
 
 const configMaxManagerTest = {
   fileContentReader: new MaxManagerFileContentReaderMuenster(),
   // fetchAmountDays: 1,
 }
 
-function getTestParser(): FoodParserInterface {
-  return new FoodAndMarkingWebParserMuenster(configMaxManagerTest);
-}
-
-function getMarkingParser(): MarkingParserInterface {
-  return new FoodAndMarkingWebParserMuenster(configMaxManagerTest);
-}
+let foodParser: FoodParserInterface;
+let markingParser: MarkingParserInterface;
 
 describe('FoodAndMarkingWebParserMünster Test', () => {
+
+  beforeAll(async () => {
+    let foodAndMarkingParser = new FoodAndMarkingWebParserMuenster(configMaxManagerTest);
+    await foodAndMarkingParser.createNeededData();
+
+    foodParser = foodAndMarkingParser;
+    markingParser = foodAndMarkingParser;
+  });
+
   it('parses canteens', async () => {
-    const parser = getTestParser();
-    await parser.createNeededData();
-    const canteensList = await parser.getCanteensList();
+    const canteensList = await foodParser.getCanteensList();
     expect(canteensList.length).toBeGreaterThan(0);
   });
 
 
   it('parses more than one foodoffer', async () => {
-    const parser = getTestParser();
-    await parser.createNeededData();
-    const foodsOfferList = await parser.getFoodoffersForParser();
+    const foodsOfferList = await foodParser.getFoodoffersForParser();
     expect(foodsOfferList.length).toBeGreaterThan(1);
   });
 
 
   it('parses markings', async () => {
-    const parser = getMarkingParser();
-    await parser.createNeededData();
-    const markingsList = await parser.getMarkingsJSONList();
+    const markingsList = await markingParser.getMarkingsJSONList();
 
     expect(markingsList.length).toBeGreaterThan(0);
 
