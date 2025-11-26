@@ -1,12 +1,17 @@
 import {describe, expect, it} from '@jest/globals';
 import {FoodParserInterface} from "../../../FoodParserInterface";
 import {MarkingParserInterface} from "../../../MarkingParserInterface";
-import {MaxManagerConnector} from "../MaxManagerConnector";
+import {MaxManagerConnector, MaxManagerConnectorConfig} from "../MaxManagerConnector";
 import {MaxManagerFileContentReader} from "../MaxManagerFileContentReader";
 
 const configMaxManagerTest = {
   fileContentReader: new MaxManagerFileContentReader()
 }
+
+const configMaxManagerTestOnline: MaxManagerConnectorConfig = {
+    url: "https://sw-muenster-spl24.maxmanager.xyz",
+    fetchAmountDays: 14,
+};
 
 function getTestParser(): FoodParserInterface {
   return new MaxManagerConnector(configMaxManagerTest);
