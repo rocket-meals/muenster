@@ -98,7 +98,10 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
             let canteenMap = this.getCanteenMap(html);
             this.canteenIdToNameMap = canteenMap;
 
-            let amountDays = this.config.fetchAmountDays || 1;
+            let amountDays = this.config.fetchAmountDays;
+            if(amountDays === undefined || amountDays === null){
+                amountDays = 14; // default to 14 days
+            }
 
             for(let dayOffset = 0; dayOffset < amountDays; dayOffset++) {
                 let fetchDate = new Date(now.getTime() + dayOffset * 24 * 60 * 60 * 1000);

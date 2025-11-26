@@ -5,7 +5,8 @@ import {MarkingParserInterface} from '../../MarkingParserInterface';
 import {MaxManagerFileContentReaderMuenster} from "../MaxManagerFileContentReaderMuenster";
 
 const configMaxManagerTest = {
-  fileContentReader: new MaxManagerFileContentReaderMuenster()
+  fileContentReader: new MaxManagerFileContentReaderMuenster(),
+  // fetchAmountDays: 1,
 }
 
 function getTestParser(): FoodParserInterface {
