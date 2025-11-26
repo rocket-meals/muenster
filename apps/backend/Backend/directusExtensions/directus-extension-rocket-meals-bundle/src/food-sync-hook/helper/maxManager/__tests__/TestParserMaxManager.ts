@@ -22,7 +22,8 @@ const amountDaysToFetch = configMaxManagerTest.fetchAmountDays || 14;
 let foodParser: FoodParserInterface;
 let markingParser: MarkingParserInterface;
 
-describe('MaxManagerConnector Parser Tests', () => {
+//describe('MaxManagerConnector Parser Tests', () => {
+describe('dev', () => {
 
     beforeAll(async () => {
         let foodAndMarkingParser = new MaxManagerConnector(configMaxManagerTestOnline);
@@ -43,6 +44,27 @@ describe('MaxManagerConnector Parser Tests', () => {
     expect(foodsOfferList.length).toBeGreaterThan(1);
   });
 
+  it("foodoffer has price", async () => {
+        let searchForFoodWithAlias = "Schokoladenpudding"
+        const foodsOfferList = await foodParser.getFoodoffersForParser();
+        const foodOffer = foodsOfferList.find( foodOffer => foodOffer.basicFoodofferData.alias === searchForFoodWithAlias);
+        //console.log("Searching for foodoffer with alias "+searchForFoodWithAlias);
+        //console.log(JSON.stringify(foodOffer, null, 2));
+        expect(foodOffer).toBeDefined();
+
+        // <div style="font-size:15px;padding:20px 0"> €&nbsp;0,90&nbsp;/&nbsp;1,35 </div>
+
+        let expectedPriceGuest = 1.35;
+        expect(foodOffer?.basicFoodofferData.price_guest ).toBeDefined();
+        expect(foodOffer?.basicFoodofferData.price_guest ).toBeGreaterThan(0);
+        expect(foodOffer?.basicFoodofferData.price_guest ).toBe(expectedPriceGuest);
+
+        let expectedPriceStudent = 0.90;
+        expect(foodOffer?.basicFoodofferData.price_student ).toBeDefined();
+        expect(foodOffer?.basicFoodofferData.price_student ).toBeGreaterThan(0);
+        expect(foodOffer?.basicFoodofferData.price_student ).toBe(expectedPriceStudent);
+    });
+
     it('parses more than one foodoffer', async () => {
         const foodsOfferList = await foodParser.getFoodoffersForParser();
         let datesFoundDict: {[key: string]: boolean} = {};
@@ -51,7 +73,6 @@ describe('MaxManagerConnector Parser Tests', () => {
             datesFoundDict[dateStr] = true;
         }
         const datesFound = Object.keys(datesFoundDict);
-        console.log(datesFound);
         expect(datesFound.length).toBeGreaterThan(amountDaysToFetch -1);
     });
 

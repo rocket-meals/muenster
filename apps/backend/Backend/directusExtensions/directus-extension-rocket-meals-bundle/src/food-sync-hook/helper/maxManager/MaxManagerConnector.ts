@@ -114,6 +114,7 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
         }
 
         // print the canteenIdToDataMap keys and number of entries
+        /**
         console.log("Canteen data map:");
         for(const canteenId in this.canteenIdToDataMap){
             const dataList = this.canteenIdToDataMap[canteenId];
@@ -121,6 +122,7 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
                 console.log(" - Canteen ID: " + canteenId + " has " + dataList.length + " entries");
             }
         }
+            */
 
 
     }
@@ -333,7 +335,7 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
             if(canteenDataList){
                 for(const canteenData of canteenDataList){
                     const date = canteenData.date;
-                    console.log(" Parsing foodoffers for canteen id: " + canteenId + " for date: " + date.toDateString());
+                    //console.log(" Parsing foodoffers for canteen id: " + canteenId + " for date: " + date.toDateString());
                     const html = canteenData.html;
                     const $ = load(html);
 
@@ -429,22 +431,31 @@ export class MaxManagerConnector implements FoodParserInterface, MarkingParserIn
 
 
                         // Preis
+                        // <div style="font-size:15px;padding:20px 0"> €&nbsp;0,90&nbsp;/&nbsp;1,35 </div>
                         const priceElement = $(element).find('div.col-md-3.d-none.d-md-block').last();
                         // price student / employee
                         let priceStudent: number | null = null;
                         let priceGuest: number | null = null;
+
+                        let log = mealName === "Schokoladenpudding" ? true : false;
+
                         if(priceElement){
                             let priceText = priceElement.text().trim();
+                            if(log){
+                                //console.log("Price text for "+mealName+": '"+priceText+"'");
+                            }
                             // split by "/"
                             let priceParts = priceText.split("/");
                             let priceStudentString = priceParts?.[0]
                             if(priceStudentString){
                                 priceStudentString = priceStudentString.replace("€", "").trim();
+                                priceStudentString = priceStudentString.replace(",", ".").trim();
                                 priceStudent = parseFloat(priceStudentString);
                             }
                             let priceGuestSting = priceParts?.[1];
                             if(priceGuestSting){
                                 priceGuestSting = priceGuestSting.replace("€", "").trim();
+                                priceGuestSting = priceGuestSting.replace(",", ".").trim();
                                 priceGuest = parseFloat(priceGuestSting);
                             }
                         }
