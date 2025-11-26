@@ -9,7 +9,9 @@ import { PdfGeneratorHelper } from '../PdfGeneratorHelper';
 const TIMEOUT = 60*1000;
 
 PdfGeneratorForJest.activateForJest(); // activate puppeteer for jest tests
+
 describe('Pdf Generator Test', () => {
+//describe('dev', () => {
   it('Test pdf generation from html', async () => {
     let html = await getTestHtmlForBaseGermanMarkdownContent();
     let requestOptions = {
