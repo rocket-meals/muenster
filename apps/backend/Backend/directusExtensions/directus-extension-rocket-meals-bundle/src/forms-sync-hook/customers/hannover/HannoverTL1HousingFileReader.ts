@@ -366,7 +366,15 @@ export class HannoverTL1HousingFileReader implements HannoverHousingFileReaderIn
 
     let nachname = housingContract[ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS.MIETER_PERSON_NACHNAME];
 
+
     let dateAndMieter = mietende + '-' + nachname;
+
+    // Include tenant number (MIETER_PERSONENNUMMER) in the alias if present
+    let mieternummer = housingContract[ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS.MIETER_PERSONENNUMMER];
+    if (mieternummer) {
+      // append the tenant number to make aliases more specific
+      dateAndMieter += `${dateAndMieter} - ${ROCKET_MEALS_HANNOVER_HOUSING_CONTRACT_FORM_FIELDS.MIETER_PERSONENNUMMER}: ${mieternummer}`;
+    }
     partialIds.push(dateAndMieter);
 
     // if any partial id is missing, return id
